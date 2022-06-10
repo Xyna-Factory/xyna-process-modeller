@@ -1,0 +1,11 @@
+<xc-form-autocomplete
+    *ngIf="!oisDataWrapper.values || oisDataWrapper.values.length > 0"
+    xc-i18n
+    label="label-order-input-source"
+    [(xc-form-autocomplete-option)]="oisDataWrapper.value" [xc-form-autocomplete-options]="oisDataWrapper.values"
+    xc-form-autocomplete-fulltextsearch
+    xc-form-field-suffix="clear"
+    xc-form-field-compact
+    (xc-form-autocomplete-optionsOpened)="openedDropdown()"
+></xc-form-autocomplete>
+<label *ngIf="oisDataWrapper.values?.length === 0" xc-i18n>label-no-order-input-sources</label>

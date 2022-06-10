@@ -1,0 +1,15 @@
+<!-- TODO remove id -->
+<div
+    id="{{ serviceArea ? serviceArea.id : '' }}"
+    [mod-drop-area]="serviceArea.items?.data"
+    [mod-drop-area-allow-item]="allowItem"
+    [mod-drop-area-can-drop]="canDrop"
+    (mod-drop-area-dropped)="dropped($event)"
+    [mod-drop-area-allow-parallel]="false"
+    class="drop-area"
+>
+    <div class ="service-row" *ngFor="let item of serviceArea.items">
+        <member-service [mod-draggable]="item" [memberService]="item" (triggerAction)="performAction($event)" tabindex="0"> </member-service>
+        <xc-icon-button *ngIf="item.deletable && !readonly" (click)="deleteService(item)" color="invert" xc-icon-name="delete"></xc-icon-button>
+    </div>
+</div>

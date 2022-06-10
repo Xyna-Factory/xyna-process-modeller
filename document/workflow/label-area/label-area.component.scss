@@ -1,0 +1,96 @@
+/*
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * Copyright 2022 GIP SmartMercial GmbH, Germany
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ */
+@import "const";
+
+:host {
+    display: flex;
+    flex: 0 1 auto;
+    z-index: $service-step-label-z;
+    padding: 8px 40px;
+    border-radius: $service-step-border-radius;
+    text-align: center;
+    position: relative;
+
+    color: $step-label-color;
+    background-color: $step-background-color;
+
+    &.locked {
+        background-color: $step-locked-background-color;
+    }
+
+    span {
+        display: inline-block;
+        flex: 0 1 auto;
+        padding: 0 8px;
+        margin: auto;
+        color: $step-label-color;
+        white-space: pre-wrap;
+        font-weight: bold;
+        font-size: $pmod-medium;
+
+        &:focus {
+            background-color: $color-gray-0;
+            border-radius: $variable-border-radius;
+            outline: none;
+            box-shadow: 0 0 2px 1px $color-focus-outline;
+        }
+
+        &:empty:not(:focus) {
+            &::after {
+                content: '<unnamed>';
+                color: $color-gray-3;
+            }
+        }
+    }
+
+    ::ng-deep .menu-button {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+
+        justify-content: center;
+    }
+
+    ::ng-deep[icon] {
+        position: absolute;
+        left: -12px;
+        top: -14px;
+
+        i {
+            padding: 4px;
+            color: $step-label-color;
+            background-color: $step-background-color;
+            border: 2px solid $workflow-area-background-color;
+            border-radius: 50%;
+        }
+    }
+}
+
+
+// restyle label area whose service step is erroneous
+::ng-deep .erroneous-runtime-info {
+    label-area {
+        background-color: $color-warn;
+    }
+    service-step:not(.erroneous-runtime-info) label-area {
+        background-color: $step-background-color;
+    }
+}

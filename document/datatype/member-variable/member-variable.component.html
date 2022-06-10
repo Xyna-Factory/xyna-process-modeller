@@ -1,0 +1,7 @@
+<div class="left-rim">{{memberVariable.isList ? 'n' : '1'}}</div>
+<div class="content-area">
+    <div [mod-content-editable]="!readonly" (mod-content-editable-after-edit)="finishEditing($event)" class="label-area">{{label}}</div>
+    <div class="fqn-area">
+        <div class="fqn-string" [xc-tooltip]="type">{{type}}</div>
+    </div>
+</div>

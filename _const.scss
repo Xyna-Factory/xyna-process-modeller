@@ -1,0 +1,99 @@
+/*
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * Copyright 2022 GIP SmartMercial GmbH, Germany
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ */
+@import 'zeta/const';
+
+
+/****************************************************
+ * Process Modeller Variables
+ ****************************************************/
+
+
+// *** W O R K F L O W ***************************
+
+// font sizes
+$pmod-large: 14px;
+$pmod-medium: 11px;
+$pmod-small: 10px;
+$pmod-tiny: 9px;
+
+// step
+$step-background-color: #000;
+$step-label-color: #fff;
+$step-fqn-area-background-color: #58585b;
+$step-fqn-area-label-color: #fff;
+$step-locked-background-color: #2a2a2b;
+
+// variable
+$variable-background-color: #fff;
+$variable-label-color: #000;
+$variable-left-rim-background-color: #58585b;
+$variable-left-rim-label-color: #fff;
+$variable-area-background-color: #ededef;
+$variable-link-state-border-color: #2a2a2b;
+$variable-fqn-area-background-color: #58585b;
+$variable-fqn-area-label-color: #fff;
+$variable-left-rim-font-size: 10px;
+
+$member-variable-area-background-color: #fff;
+
+// other
+$formula-background-color: $variable-area-background-color;
+$workflow-area-background-color: #ffffff;
+$workflow-area-background-color-dark: #ededef;
+$branch-area-background-color: #d0d0d1;
+$prototype-step-gradient-color: #474748;
+$prototype-variable-gradient-color: #d9d9da;
+
+$connection-line-color: $color-gray-3;
+$connection-line-width: 4px;
+
+$content-area-padding: 8px;
+
+$service-step-vertical-gap: 32px;
+$service-step-border-radius: 8px;
+$variable-border-radius: 4px;
+
+$choice_rhombus_size: 14px;
+$choice_rhombus_border_width: 1px;
+$choice_rhombus_border_color: $color-gray-3;
+$choice_rhombus_background_color: $workflow-area-background-color;
+
+$service-step-input-z: 0;
+$service-step-label-z: 2;       // higher than input and output because of focus shadow
+$service-step-output-z: 1;      // higher than 0 because of connection lines
+
+
+// link states
+$color-link-state-none: #ff2200;
+$color-link-state-ambigue: #ffcc33;
+$color-link-state-user: #5588ee;
+$color-link-state-constant: #000000;
+$color-link-state-auto: #fff;
+
+$fqn-max-width: 300px;
+
+
+// issues and warnings
+$color-step-error: #ff2200;
+$color-step-warning: #fabb00;
+
+
+
+// *** T Y P E S *******************************
+
+$type-info-badge-color: #ccc;

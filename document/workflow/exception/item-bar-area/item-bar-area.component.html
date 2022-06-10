@@ -1,0 +1,13 @@
+<div *ngFor="let item of itemBarArea.items" class="variable-wrapper">
+    <variable
+        [variable]="item"
+        [documentModel]="documentModel"
+        [hasMenu]="false"
+        tabindex="0"
+        (dblclick)="addBranch(item)"
+    ></variable>
+</div>
+<xc-button *ngIf="!readonly"
+    (click)="completeBranches()"
+    xc-i18n
+>button-add-all</xc-button>

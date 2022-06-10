@@ -1,0 +1,17 @@
+<div
+    id="{{variableArea ? variableArea.id : ''}}"
+    [mod-drop-area]="variableArea.items?.data"
+    [mod-drop-area-allow-item]="allowItem"
+    [mod-drop-area-can-drop]="canDrop"
+    mod-drop-area-direction="horizontal"
+    (mod-drop-area-dropped)="dropped($event)"
+    class="variable-drop-area">
+
+    <variable *ngFor="let variable of variableArea.items"
+        [mod-draggable]="variable" [mod-draggable-allowed-drag-type]="readonly ? 'copy' : 'move'"
+        [variable]="variable"
+        [documentModel]="documentModel"
+        (triggerAction)="performAction($event)"
+        tabindex="0"
+    ></variable>
+</div>

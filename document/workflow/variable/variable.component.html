@@ -1,0 +1,27 @@
+<div class="left-rim" (dblclick)="doubleClickRim($event)">{{variable.isList ? 'n' : '1'}}</div>
+<div class="content-area"
+    mod-drop-area
+    [mod-drop-area-allow-item]="allowItem"
+    mod-drop-area-hide-indicator
+    (mod-drop-area-dropped)="dropped($event)"
+>
+    <div [mod-content-editable]="!readonly" (mod-content-editable-after-edit)="finishEditing($event)"
+        class="label-area link-state-{{linkStateIn}}"
+        [class.exception]="isException()"
+        [class.show-fqn]="showFqn && !variable?.isAbstract"
+    >{{variable?.label ? variable.label : ' '}}</div>
+    <div *ngIf="variable.showName && variable.name" class="name-area">{{variable.name}}</div>
+    <div *ngIf="showFqn && !variable?.isAbstract" class="fqn-area">
+        <div class="fqn-string" [xc-tooltip]="tooltip">{{fqn}}</div>
+    </div>
+</div>
+<xc-icon-button
+    *xc-menu-service="showMenu; let menuService"
+    [xc-menu-trigger]="menuService.component"
+    (xc-menu-trigger)="menuService.set(menuItems, {withArrow: true, xNexttoTrigger: true, xOffset: 24})"
+    xc-icon-name="misc-contextmenu"
+    xc-icon-style="modeller"
+    xc-icon-size="small"
+    color="invert"
+    class="menu-button"
+></xc-icon-button>

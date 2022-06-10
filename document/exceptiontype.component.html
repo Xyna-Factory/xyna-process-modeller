@@ -1,0 +1,73 @@
+<div class="area-wrapper" xc-i18n-context="datatype">
+
+    <div class="exceptiontype-header">
+        <type-info-area
+            xc-i18n-context="type-info-area"
+            [typeInfoArea]="exceptionType.typeInfoArea"
+            (triggerAction)="performModellingAction($event)"
+            [documentModel]="document"
+            [showConverterButton]="true"
+            [showBaseTypeAutocomplete]="true"
+            [showAbstractCheckbox]="true"
+        ></type-info-area>
+        <type-documentation-area
+            xc-i18n-context="type-documentation-area"
+            [documentationArea]="exceptionType.documentationArea"
+            (triggerAction)="performModellingAction($event)"
+            [documentModel]="document"
+            [lines]="8"
+        ></type-documentation-area>
+        <exception-messages-area
+            xc-i18n-context="exception-messages-area"
+            [exceptionMessagesArea]="exceptionType.exceptionMessageArea"
+            (triggerAction)="performModellingAction($event)"
+            [documentModel]="document"
+        ></exception-messages-area>
+    </div>
+
+    <div class="exceptiontype-body">
+        <section class="members">
+            <!-- Inherited Variables -->
+            <member-area
+                *ngIf="exceptionType.hasBaseType()"
+                xc-i18n-context="member-area"
+                caption="Inherited Variables"
+                [area]="exceptionType.inheritedVarsArea"
+                (triggerAction)="performModellingAction($event)"
+                [documentModel]="document"
+                [allowAdd]="false"
+            >
+                <member-variable-area
+                    [memberVariableArea]="exceptionType.inheritedVarsArea"
+                    (triggerAction)="performModellingAction($event)"
+                    [documentModel]="document"
+                ></member-variable-area>
+            </member-area>
+            <!-- Member Variables -->
+            <member-area
+                xc-i18n-context="member-area"
+                caption="Member Variables"
+                [area]="exceptionType.memberVarsArea"
+                (added)="addMemberVariable()"
+                (triggerAction)="performModellingAction($event)"
+                [documentModel]="document"
+            >
+                <member-variable-area
+                    [memberVariableArea]="exceptionType.memberVarsArea"
+                    (triggerAction)="performModellingAction($event)"
+                    [documentModel]="document"
+                ></member-variable-area>
+            </member-area>
+        </section>
+
+        <section class="details">
+            <member-variable-details
+                *ngIf="selectedVariable"
+                xc-i18n-context="member-variable-details"
+                [memberVariable]="selectedVariable"
+                (triggerAction)="performModellingAction($event)"
+                [documentModel]="document"
+            ></member-variable-details>
+        </section>
+    </div>
+</div>

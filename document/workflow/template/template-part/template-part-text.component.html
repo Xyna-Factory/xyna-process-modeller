@@ -1,0 +1,8 @@
+<div #textInput
+    class="text-block"
+    [attr.contenteditable]="contentEditableValue"
+    (input)="edit($event.target.textContent)"
+    (keydown.enter)="$event.preventDefault(); enterKey()"
+    (keydown.backspace)="backspaceKey($event)"
+    (keydown)="keydown($event)"
+></div>

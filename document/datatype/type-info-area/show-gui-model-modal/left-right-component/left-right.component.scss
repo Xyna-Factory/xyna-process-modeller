@@ -1,0 +1,124 @@
+/*
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * Copyright 2022 GIP SmartMercial GmbH, Germany
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ */
+
+$left-title-background-color: rgb(180, 180, 180);
+$left-item-background-color: rgb(165, 165, 165);
+$left-item-background-color-hover:  darken($left-item-background-color, $amount: 5);
+$left-dropzone-background-color: rgb(211, 211, 211);
+$left-targeted-item-border: 2px solid rgb(50, 50, 200);
+
+$right-title-background-color: rgb(180, 180, 180);
+$right-item-background-color: rgb(179, 179, 179);
+$right-item-background-color-hover:  darken($right-item-background-color, $amount: 5);
+$right-dropzone-background-color: rgb(211, 211, 211);
+$right-targeted-item-border: 2px solid rgb(200, 50, 50);
+
+$focused-item-background: rgba(200, 190, 50, 0.479);
+
+:host {
+    width: 100%;
+    height: 100%;
+    display: flex;
+
+    .half {
+
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        
+        /* BEGIN - Static CSS-Rules - Basic structures */
+        .title {
+            height: 24px;
+            user-select: none;
+            padding: 4px;
+            text-align: center;
+        }
+
+        .dropzone {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+
+            .item {
+                user-select: none;
+                padding: 10px;
+                min-width: 20%;
+                max-width: 50%;
+                outline: 2px solid rgb(223, 223, 223);
+                outline-offset: -4px;
+                margin: 4px;
+                border-radius: 3px;
+                cursor: pointer;
+                text-align: center;
+
+                &.dragging {
+                    opacity: 0.25;
+                }
+                
+            }
+        }
+        /* END - Static Element's CSS-Rules - Basic structures */
+
+        /* BEGIN - Dynamic Element's CSS-Rules - Design, colors, eye catchers */
+        &.left {
+            .title {
+                background-color: $left-title-background-color;
+            }
+            .dropzone {
+                background-color: $left-dropzone-background-color;
+                .item {
+                    background-color: $left-item-background-color;
+                    &:hover {
+                        background-color: $left-item-background-color-hover;
+                    }
+                    &.targeted {
+                        border-top: $left-targeted-item-border;
+                    }
+                    &.focused {
+                        box-shadow: 0 0 100% 0 rgba(0, 0, 255, 0.486) inset;
+                        background-color: $focused-item-background;
+                    }
+                }
+            }
+        }
+
+        &.right {
+            .title {
+                background-color: $right-title-background-color;
+            }
+            .dropzone {
+                background-color: $right-dropzone-background-color;
+                .item {
+                    background-color: $right-item-background-color;
+                    &:hover {
+                        background-color: $right-item-background-color-hover;
+                    }
+                    &.targeted {
+                        border-top: $right-targeted-item-border;
+                    }
+                    &.focused {
+                        box-shadow: 0 0 100% 0 rgba(0, 0, 255, 0.486) inset;
+                        background-color: $focused-item-background;
+                    }
+                }
+            }
+        }
+
+    }
+
+}

@@ -1,0 +1,61 @@
+<branch *ngIf="isBranch()" [branch]="item" [dark-mode]="parentDirection === 'column'"
+    [documentModel]="documentModel"
+    (triggerAction)="performAction($event)"
+    [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
+></branch>
+<conditional-branching *ngIf="isConditionalBranching()" [choice]="item"
+    [documentModel]="documentModel"
+    (triggerAction)="performAction($event)"
+    [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
+></conditional-branching>
+<conditional-choice *ngIf="isConditionalChoice()" [choice]="item"
+    [documentModel]="documentModel"
+    (triggerAction)="performAction($event)"
+    [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
+></conditional-choice>
+<foreach *ngIf="isForeach()" [foreach]="item"
+    [documentModel]="documentModel"
+    (triggerAction)="performAction($event)"
+    [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
+></foreach>
+<invocation *ngIf="isInvocation()" [invocation]="item"
+    [documentModel]="documentModel"
+    (triggerAction)="performAction($event)"
+    [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
+    (doubleClickProxy)="doubleClick()"
+></invocation>
+<mapping *ngIf="isMapping()" [mapping]="item"
+    [documentModel]="documentModel"
+    (triggerAction)="performAction($event)"
+    [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
+></mapping>
+<parallelism *ngIf="isParallelism()" [parallelism]="item"
+    [documentModel]="documentModel"
+    (triggerAction)="performAction($event)"
+    [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
+></parallelism>
+<query *ngIf="isQuery()" [query]="item"
+    [documentModel]="documentModel"
+    (triggerAction)="performAction($event)"
+    [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
+></query>
+<retry *ngIf="isRetry()" [retry]="item"
+    [documentModel]="documentModel"
+    (triggerAction)="performAction($event)"
+    [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
+></retry>
+<template *ngIf="isTemplate()" [template]="item"
+    [documentModel]="documentModel"
+    (triggerAction)="performAction($event)"
+    [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
+></template>
+<throw *ngIf="isThrow()" [throw]="item"
+    [documentModel]="documentModel"
+    (triggerAction)="performAction($event)"
+    [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
+></throw>
+<type-choice *ngIf="isTypeChoice()" [choice]="item"
+    [documentModel]="documentModel"
+    (triggerAction)="performAction($event)"
+    [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
+></type-choice>

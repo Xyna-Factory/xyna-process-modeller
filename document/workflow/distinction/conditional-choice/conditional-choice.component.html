@@ -1,0 +1,18 @@
+<formula-input-area *ngIf="choice.formulaArea"
+    [formulaArea]="choice.formulaArea"
+    [documentModel]="documentModel"
+    questionmarkEditable="false"
+    (triggerAction)="performAction($event)"
+></formula-input-area>
+<content-area
+    [contentArea]="choice.contentArea"
+    [documentModel]="documentModel"
+    xc-content-area-direction="row"
+    (triggerAction)="performAction($event)"
+></content-area>
+<variable-area-choice *ngIf="choice.outputArea"
+    [variableArea]="choice.outputArea"
+    [documentModel]="documentModel"
+    xc-variable-area-kind="output-area"
+    (triggerAction)="performAction($event)"
+></variable-area-choice>

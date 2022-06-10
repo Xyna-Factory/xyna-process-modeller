@@ -1,0 +1,24 @@
+<xc-dialog-wrapper xc-i18n-context="pmod.label-path-dialog">
+    <ng-container header>{{injectedData.header}}</ng-container>
+    <section content xc-form>
+        <xc-form-input label="label-label" xc-i18n [(value)]="label" xc-form-validator-required></xc-form-input>
+        <xc-form-autocomplete
+            label="label-path"
+            placeholder="tooltip-select"
+            xc-i18n
+            [(xc-form-autocomplete-option)]="pathDataWrapper.value"
+            [xc-form-autocomplete-options]="pathDataWrapper.values"
+            xc-form-autocomplete-asinput
+            xc-form-autocomplete-fulltextsearch
+            xc-form-field-suffix="clear"
+            xc-form-validator-required
+        ></xc-form-autocomplete>
+        <span [xc-tooltip]="injectedData.forceTooltip">
+            <xc-checkbox *ngIf="injectedData.force" [(checked)]="force" [label]="injectedData.force"></xc-checkbox>
+        </span>
+    </section>
+    <ng-container footer>
+        <xc-button (click)="dismiss(null)" xc-focus-initial xc-i18n>button-cancel</xc-button>
+        <xc-button (click)="save()" [disabled]="form.invalid" color="primary">{{injectedData.confirm}}</xc-button>
+    </ng-container>
+</xc-dialog-wrapper>

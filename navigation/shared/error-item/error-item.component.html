@@ -1,0 +1,4 @@
+<div class="content" (click)="clickErrorHandler(error)" xc-tooltip="{{error.messageCode + '.tooltip'}}" xc-i18n>
+    <xc-icon [xc-icon-name]="checkable ? 'msginfo' : 'msgwarning'" xc-icon-style="xds" xc-icon-size="small" [class.checkable]="checkable" xc-i18n>{{error.messageCode}}</xc-icon>
+</div>
+<xc-icon-button *ngIf="checkable" xc-icon-name="close" xc-icon-size="small" color="invert" (click)="checkErrorHandler(error)" xc-tooltip="check" xc-i18n></xc-icon-button>

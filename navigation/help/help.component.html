@@ -1,0 +1,95 @@
+<h2 class="navigationbar-title" xc-i18n>header</h2>
+<div class="area-content">
+    <h2 xc-i18n>formula-shortcuts</h2>
+    <label class="subtitle" xc-i18n>subtitle-message</label>
+    <div class="row">
+        <span class="function"><span class="name">append</span><span class="params">(DT, DT[]): DT[]</span></span>
+        <span class="shortcut">ALT+a</span>
+    </div>
+    <div class="row">
+        <span class="function"><span class="name">#cast</span><span class="params">(FQN)</span></span>
+        <span class="shortcut">a</span>
+    </div>
+    <div class="row">
+        <span class="function"><span class="name">concat</span><span class="params">(String, ...): String</span></span>
+        <span class="shortcut">k</span>
+    </div>
+    <div class="row">
+        <span class="function"><span class="name">concat lists</span><span class="params">(DT[], DT[]): DT[]</span></span>
+        <span class="shortcut">ALT+k</span>
+    </div>
+    <div class="row">
+        <span class="function"><span class="name">contains</span><span class="params">(s, q: String): Bool</span></span>
+        <span class="shortcut">c</span>
+    </div>
+    <div class="row">
+        <span class="function"><span class="name">ends with</span><span class="params">(s, q: String): Bool</span></span>
+        <span class="shortcut">e</span>
+    </div>
+    <div class="row">
+        <span class="function"><span class="name">glob</span><span class="params">(s, q: String): Bool</span></span>
+        <span class="shortcut">g</span>
+    </div>
+    <div class="row">
+        <span class="function"><span class="name">index of</span><span class="params">(s, q: String): Int</span></span>
+        <span class="shortcut">i</span>
+    </div>
+    <div class="row">
+        <span class="function"><span class="name">length</span><span class="params">(String): Int</span></span>
+        <span class="shortcut">l</span>
+    </div>
+    <div class="row">
+        <span class="function"><span class="name">matches</span><span class="params">(String, RegExp): Bool</span></span>
+        <span class="shortcut">m</span>
+    </div>
+    <div class="row">
+        <span class="function"><span class="name">new</span><span class="params">(fqn: String): DT</span></span>
+        <span class="shortcut">n</span>
+    </div>
+    <div class="row" [xc-tooltip]="'replace all(String, RegExp, substitute: String): String'">
+        <span class="function"><span class="name">replace all</span><span class="params">(,,): String</span></span>
+        <span class="shortcut">r</span>
+    </div>
+    <div class="row">
+        <span class="function"><span class="name">starts with</span><span class="params">(s, q: String): Bool</span></span>
+        <span class="shortcut">s</span>
+    </div>
+    <div class="row" [xc-tooltip]="'substring(String, startIndex: Int, _optional_ endIndex: Int): String'">
+        <span class="function"><span class="name">substring</span><span class="params">(String, Int): String</span></span>
+        <span class="shortcut">ALT+s</span>
+    </div>
+    <div class="row">
+        <span class="function"><span class="name">to lowercase</span><span class="params">(String): String</span></span>
+        <span class="shortcut">ALT+l</span>
+    </div>
+    <div class="row">
+        <span class="function"><span class="name">to uppercase</span><span class="params">(String): String</span></span>
+        <span class="shortcut">u</span>
+    </div>
+    <div class="row">
+        <span class="function"><span class="name">type of</span><span class="params">(instance: DT, DT): Bool</span></span>
+        <span class="shortcut">ALT+i</span>
+    </div>
+    <div class="row" [xc-tooltip]="'xpath(XML, locationPath: String, _optional_ namespaceAware: Bool): String'">
+        <span class="function"><span class="name">xpath</span><span class="params">(XML, String, Bool): String</span></span>
+        <span class="shortcut">x</span>
+    </div>
+    <div class="row">
+        <span class="function"><span class="name">as XFL expression</span><span class="params">(Chain): String</span></span>
+        <span class="shortcut">ALT+x</span>
+    </div>
+
+    <div class="row"><span class="function">AND</span><span class="shortcut">&</span></div>
+    <div class="row"><span class="function">OR</span><span class="shortcut">|</span></div>
+    <div class="row" [xc-tooltip]="assignmentTooltip">
+                     <span class="function">:=</span><span class="shortcut">=</span>
+    </div>
+    <div class="row"><span class="function">≠</span><span class="shortcut">!=</span></div>
+    <div class="row"><span class="function">≥</span><span class="shortcut">&gt;=</span></div>
+    <div class="row"><span class="function">≤</span><span class="shortcut">&lt;=</span></div>
+    <div class="row"><span class="function">NOT</span><span class="shortcut">!</span></div>
+    <div class="row" [xc-tooltip]="comparisonTooltip">
+                     <span class="function">=</span><span class="shortcut">==</span>
+    </div>
+    <div class="row"><span class="function">null</span><span class="shortcut">0</span></div>
+</div>

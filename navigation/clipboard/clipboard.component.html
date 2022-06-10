@@ -1,0 +1,9 @@
+<div class="navigationbar-title item-bar">
+    <h2 xc-i18n>header</h2>
+    <xc-button xc-i18n (click)="clearClipboard()">clear</xc-button>
+</div>
+<clipboard-area
+    xc-i18n-context='clipboard-area'
+    [clipboardArea]="clipboardArea"
+    (triggerAction)="performAction($event)"
+></clipboard-area>

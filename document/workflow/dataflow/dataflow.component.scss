@@ -1,0 +1,111 @@
+/*
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * Copyright 2022 GIP SmartMercial GmbH, Germany
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ */
+@import 'const';
+
+:host {
+    .draw-area {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        pointer-events: none;
+    }
+
+    ::ng-deep {
+        svg path {
+            fill: none;
+
+            &.background-path {
+                pointer-events: all;
+                stroke: $color-gray-1;
+                stroke-width: 12;
+
+                &.selected {
+                    stroke: $color-gray-0;
+                }
+
+                &:not(.auto):hover,
+                &.selected {
+                    stroke-width: 14;
+                }
+            }
+
+            &.foreground-path {
+                stroke-width: 10;
+
+                &.auto {
+                    stroke: #ffffff;
+                }
+                &.ambigue {
+                    stroke: $color-link-state-ambigue;
+                }
+                &.user {
+                    stroke: $color-link-state-user;
+                }
+            }
+        }
+    }
+
+    .add-connection-button,
+    .remove-connection-button {
+        position: absolute;
+        display: none;
+        z-index: 10;
+
+        &.visible {
+            display: block;
+
+            ::ng-deep {
+                button {
+                    background-color: $color-gray-5;
+                    border: 2px solid $color-gray-0;
+
+                    &:hover {
+                        background-color: $color-gray-4 !important;
+                    }
+                }
+            }
+        }
+    }
+
+    .tooltip {
+        position: absolute;
+        pointer-events: none;
+        touch-action: none;
+        z-index: 10;
+
+        user-select: none;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        padding: 3px;
+        border-radius: 3px;
+        color: $color-white;
+        font-size: $font-size-small;
+        background-color: $color-gray-1;
+        border: 1px solid $color-gray-0;
+
+        display: none;
+        &.visible {
+            display: flex;
+        }
+        &.hidden {
+            display: none;
+        }
+    }
+}

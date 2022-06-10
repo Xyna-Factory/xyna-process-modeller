@@ -1,0 +1,48 @@
+/*
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * Copyright 2022 GIP SmartMercial GmbH, Germany
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ */
+import { Component } from '@angular/core';
+
+import { ModellingActionType } from '../../../api/xmom.service';
+import { XoChangeSortingRequest } from '../../../xo/change-sorting-request.model';
+import { XoInsertRequest } from '../../../xo/insert-request.model';
+import { XoInsertSortingCriterionRequest } from '../../../xo/insert-sort-criterion-request.model';
+import { XoSortingCriterion } from '../../../xo/sorting-criterion.model';
+import { FormulaAreaComponent } from './formula-area.component';
+
+
+@Component({
+    selector: 'sorting-criterion-area',
+    templateUrl: './sorting-criterion-area.component.html',
+    styleUrls: ['./sorting-criterion-area.component.scss', './formula-area.component.scss']
+})
+export class SortingCriterionAreaComponent extends FormulaAreaComponent {
+
+    get sortingCriteria(): XoSortingCriterion[] {
+        return this.formulaArea.formulas as XoSortingCriterion[];
+    }
+
+
+    getInsertRequest(expression?: string): XoInsertRequest {
+        return new XoInsertSortingCriterionRequest('', -1, expression ?? '');
+    }
+
+
+    toggleSorting(sortingCriterion: XoSortingCriterion) {
+        this.performAction({ type: ModellingActionType.change, objectId: sortingCriterion.id, request: XoChangeSortingRequest.sortAscending(!sortingCriterion.ascending) });
+    }
+}

@@ -1,0 +1,9 @@
+<div class="navigationbar-title item-bar">
+    <h2 xc-i18n>header</h2>
+</div>
+<div class="area-content">
+    <span *ngIf="errors.length === 0" xc-i18n>no-errors</span>
+    <ng-container *ngIf="errors.length > 0">
+        <xfm-mod-nav-error *ngFor="let error of errors" [error]="error" [checkable]="error.checkable" (errorSelectionChanged)="selectedError($event)" (errorCheckedChanged)="checkedError($event)"></xfm-mod-nav-error>
+    </ng-container>
+</div>

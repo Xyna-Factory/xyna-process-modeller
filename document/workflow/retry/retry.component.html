@@ -1,0 +1,18 @@
+<variable-area-service *ngIf="retry.inputArea"
+    [variableArea]="retry.inputArea"
+    [documentModel]="documentModel"
+    xc-variable-area-kind="input-area"
+    (triggerAction)="performAction($event)"
+></variable-area-service>
+<label-area *ngIf="retry.labelArea"
+    [labelArea]="retry.labelArea"
+    [documentModel]="documentModel"
+    (triggerAction)="performAction($event)"
+>
+    <xc-icon icon xc-icon-name="tb-rollup" xc-icon-style="modeller" xc-icon-size="large"></xc-icon>
+</label-area>
+<documentation-area *ngIf="documentationArea"
+    [documentationArea]="documentationArea"
+    [documentModel]="documentModel"
+    (triggerAction)="performAction($event)"
+></documentation-area>

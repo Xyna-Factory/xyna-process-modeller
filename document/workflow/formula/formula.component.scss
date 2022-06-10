@@ -1,0 +1,93 @@
+/*
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * Copyright 2022 GIP SmartMercial GmbH, Germany
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ */
+@import "const";
+
+$horizontal-gap: 4px;
+
+:host {
+    display: flex;
+    border-radius: 6px;
+
+    &.editable {
+        cursor: text;
+        border: 1px solid transparent;
+        padding: 4px;
+
+        .formula-wrapper {
+            padding-right: 24px;
+        }
+    }
+
+    .formula-wrapper {
+        display: flex;
+        flex-direction: row;
+        flex: 1 0 auto;
+        align-items: center;
+        outline: none;
+
+        &:empty {
+            width: 100%;
+            padding: 18px 16px 0 16px;
+            border-bottom: 1px dashed $color-gray-3;
+        }
+
+        & > *:not(.caret) {
+            padding: 0 ($horizontal-gap / 2);
+            margin-left: 0;
+            margin-right: 0;
+            flex: 0 0 auto;
+            position: relative;
+
+            &::ng-deep > drop-indicator {
+                padding: 0;
+                left: 0;
+                top: 0;
+            }
+        }
+
+        .member {
+            &::before {
+                content: ".";
+                align-self: center;
+                padding-right: $horizontal-gap;
+                font-weight: bold;
+            }
+        }
+
+        .caret {
+            color: transparent;     // use character only for height of caret
+            background-color: $color-black;
+            width: 2px;
+            margin: 0 -1px;
+            font-weight: normal;
+            animation: blinker 1s step-end infinite;
+
+            @keyframes blinker {
+                50% {
+                    opacity: 0;
+                }
+            }
+        }
+    }
+
+    &.selected, &:focus {
+        background-color: $color-white;
+        border-color: $color-gray-3;
+        outline: none;
+    }
+}

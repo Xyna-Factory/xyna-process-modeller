@@ -1,0 +1,23 @@
+<xc-form-label xc-i18n>exception-messages-label</xc-form-label>
+<div class="row">
+    <xc-form-autocomplete
+        [readonly]="readonly"
+        placeholder="select-tooltip"
+        [(xc-form-autocomplete-option)]="languageDataWrapper.value"
+        [xc-form-autocomplete-options]="languageDataWrapper.values"
+        xc-form-autocomplete-fulltextsearch
+        xc-form-field-suffix="clear"
+        xc-form-autocomplete-asdropdown
+        xc-form-field-compact
+        xc-i18n
+    ></xc-form-autocomplete>
+
+    <xc-form-input
+        [(value)]="currentMessage"
+        xc-form-field-compact
+    ></xc-form-input>
+
+    <xc-button (click)="set()" [disabled]="readonly" xc-i18n>set-button</xc-button>
+</div>
+
+<xc-rich-list [xc-rich-list-items]="exceptionMessageRichListItems"></xc-rich-list>

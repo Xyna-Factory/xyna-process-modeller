@@ -1,0 +1,24 @@
+<ng-container *ngIf="!case.isDefault">
+    <xc-icon-button
+        *ngIf="detachable"
+        class="detach"
+        (click)="detach()"
+        xc-icon-name="external"
+        xc-icon-size="small"
+        xc-i18n
+        xc-tooltip="tooltip-detach"
+        xc-tooltip-showdelay="500"
+        color="invert"
+    ></xc-icon-button>
+    <formula *ngIf="!case.isCollapsed || !case.label"
+        [formula]="case.formula"
+        [documentModel]="documentModel"
+        (triggerAction)="performAction($event)"
+        tabindex="0"
+    ></formula>
+    <input *ngIf="case.label" [value]="case.label" class="label-input" (blur)="finishEditLabel($event.target.value)"/>
+    <div class="handle"></div>
+</ng-container>
+<ng-container *ngIf="case.isDefault">
+    <span>default</span>
+</ng-container>

@@ -1,0 +1,35 @@
+<!-- will always be only one exception-handling -->
+<exception-handling *ngFor="let handling of exceptionHandlingArea?.exceptionHandlings"
+    [exceptionHandling]="handling"
+    [documentModel]="documentModel"
+    [inline]="inline"
+    (triggerAction)="performAction($event)"
+    class="handling"
+></exception-handling>
+
+<!-- will always be only one compensation -->
+<compensation *ngFor="let compensation of exceptionHandlingArea?.compensations"
+    [compensation]="compensation"
+    [documentModel]="documentModel"
+    (triggerAction)="performAction($event)"
+    class="handling"
+></compensation>
+
+<div class="toggle-buttons">
+    <xc-icon-button
+        class="exception button" xc-icon-style="modeller" xc-icon-name="tb-exception" xc-icon-size="small"
+        [color]="exceptionHandlingArea?.hasHandledExceptions() ? 'normal' : 'invert'"
+        [class.empty]="!exceptionHandlingArea?.hasHandledExceptions()"
+        (click)="toggleExceptionArea()"
+        xc-i18n
+        xc-tooltip="tooltip-open-close-exception-area"
+    ></xc-icon-button>
+    <xc-icon-button *ngIf="inline"
+        class="compensation button" xc-icon-style="modeller" xc-icon-name="mini-compensation" xc-icon-size="small"
+        [color]="exceptionHandlingArea?.hasCompensations() ? 'normal' : 'invert'"
+        [class.empty]="!exceptionHandlingArea?.hasCompensations()"
+        (click)="toggleCompensationArea()"
+        xc-i18n
+        xc-tooltip="tooltip-open-close-compensation-area"
+    ></xc-icon-button>
+</div>

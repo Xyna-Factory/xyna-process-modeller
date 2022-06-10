@@ -1,0 +1,51 @@
+<h2 class="navigationbar-title" xc-i18n>header</h2>
+<div class="area-content">
+    <xc-form-autocomplete
+        xc-form-field-compact
+        xc-form-field-suffix="clear"
+        xc-form-autocomplete-fulltextsearch
+        [(xc-form-autocomplete-option)]="factoryService.runtimeContextDataWrapper.value"
+        [xc-form-autocomplete-options]="factoryService.runtimeContextDataWrapper.values"
+        (xc-form-autocomplete-optionsOpened)="factoryService.refresh()"
+        (xc-form-autocomplete-optionsClosed)="!factoryService.runtimeContextDataWrapper.value && factoryService.resetToActiveWorkspace()"
+    ></xc-form-autocomplete>
+    <div class="factory-visualization" (pmod-outside-listener)="hoverDepartment(undefined)" pmod-outside-event="mouseout">
+        <svg class="factory-image" width="116" height="130" (click)="selectDepartment(hoveredDepartment)">
+            <polygon id="shape" points=
+                "1,1 115,1 107,14 61,14 68,21 68,27 72,27 74,23 101,23 104,25 104,33 101,35 74,35 72,31 68,31 68,45 72,45 74,41 101,41 104,43 104,51 101,53 74,53
+                72,49 68,49 68,63 72,63 74,59 101,59 104,61 104,69 101,71 74,71 72,67 68,67 68,81 72,81 74,77 101,77 104,79 104,87 101,89 74,89 72,85 68,85 68,99
+                72,99 74,95 101,95 104,97 104,105 101,107 74,107 72,103 68,103 68,109 61,116 107,116 115,129 1,129 9,116 55,116 48,109 48,103 44,103 42,107 15,107
+                12,105 12,97 15,95 42,95 44,99 48,99 48,85 44,85 42,89 15,89 12,87 12,79 15,77 42,77 44,81 48,81 48,67 44,67 42,71 15,71 12,69 12,61 15,59 42,59
+                44,63 48,63 48,49 44,49 42,53 15,53 12,51 12,43 15,41 42,41 44,45 48,45 48,31 44,31 42,35 15,35 12,33 12,25 15,23 42,23 44,27 48,27 48,21 55,14 9,14"
+            />
+            <polygon *xc-var="'xmcp'; let dep" (pmod-outside-listener)="hoverDepartment(dep)" pmod-outside-event="mousemove" [class.selected]="isDepartmentSelected(dep)" points="1,1 115,1 107,14 9,14"/>
+            <polygon *xc-var="'xprc'; let dep" (pmod-outside-listener)="hoverDepartment(dep)" pmod-outside-event="mousemove" [class.selected]="isDepartmentSelected(dep)" points="68,21 68,109 58,119 48,109 48,21 58,11"/>
+            <polygon *xc-var="'xint'; let dep" (pmod-outside-listener)="hoverDepartment(dep)" pmod-outside-event="mousemove" [class.selected]="isDepartmentSelected(dep)" points="72,27 74,23 101,23 104,25 104,33 101,35 74,35 72,31"/>
+            <polygon *xc-var="'xoss'; let dep" (pmod-outside-listener)="hoverDepartment(dep)" pmod-outside-event="mousemove" [class.selected]="isDepartmentSelected(dep)" points="72,45 74,41 101,41 104,43 104,51 101,53 74,53 72,49"/>
+            <polygon *xc-var="'xpmg'; let dep" (pmod-outside-listener)="hoverDepartment(dep)" pmod-outside-event="mousemove" [class.selected]="isDepartmentSelected(dep)" points="72,63 74,59 101,59 104,61 104,69 101,71 74,71 72,67"/>
+            <polygon *xc-var="'xprv'; let dep" (pmod-outside-listener)="hoverDepartment(dep)" pmod-outside-event="mousemove" [class.selected]="isDepartmentSelected(dep)" points="72,81 74,77 101,77 104,79 104,87 101,89 74,89 72,85"/>
+            <polygon *xc-var="'xdev'; let dep" (pmod-outside-listener)="hoverDepartment(dep)" pmod-outside-event="mousemove" [class.selected]="isDepartmentSelected(dep)" points="72,99 74,95 101,95 104,97 104,105 101,107 74,107 72,103"/>
+            <polygon *xc-var="'xfmg'; let dep" (pmod-outside-listener)="hoverDepartment(dep)" pmod-outside-event="mousemove" [class.selected]="isDepartmentSelected(dep)" points="44,103 42,107 15,107 12,105 12,97 15,95 42,95 44,99"/>
+            <polygon *xc-var="'xsas'; let dep" (pmod-outside-listener)="hoverDepartment(dep)" pmod-outside-event="mousemove" [class.selected]="isDepartmentSelected(dep)" points="44,85 42,89 15,89 12,87 12,79 15,77 42,77 44,81"/>
+            <polygon *xc-var="'xmes'; let dep" (pmod-outside-listener)="hoverDepartment(dep)" pmod-outside-event="mousemove" [class.selected]="isDepartmentSelected(dep)" points="44,67 42,71 15,71 12,69 12,61 15,59 42,59 44,63"/>
+            <polygon *xc-var="'xbss'; let dep" (pmod-outside-listener)="hoverDepartment(dep)" pmod-outside-event="mousemove" [class.selected]="isDepartmentSelected(dep)" points="44,49 42,53 15,53 12,51 12,43 15,41 42,41 44,45"/>
+            <polygon *xc-var="'xnwh'; let dep" (pmod-outside-listener)="hoverDepartment(dep)" pmod-outside-event="mousemove" [class.selected]="isDepartmentSelected(dep)" points="44,31 42,35 15,35 12,33 12,25 15,23 42,23 44,27"/>
+            <polygon *xc-var="'xact'; let dep" (pmod-outside-listener)="hoverDepartment(dep)" pmod-outside-event="mousemove" [class.selected]="isDepartmentSelected(dep)" points="107,116 115,129 1,129 9,116"/>
+        </svg>
+        <div class="factory-text">
+            <label *ngIf="hoveredDepartmentLabel">{{hoveredDepartmentLabel}}</label>
+        </div>
+    </div>
+    <div #factoryPaths class="factory-paths zeta-scrollbar">
+        <xfm-mod-nav-xmomtree
+            [xmomPaths]="xmomPaths"
+            [selectedXmomPaths]="selectedXmomPaths"
+            [expandedXmomPaths]="expandedXmomPaths"
+            (stateChange)="change($event)"
+        ></xfm-mod-nav-xmomtree>
+    </div>
+    <div #factoryObjects class="factory-objects zeta-scrollbar">
+        <label *ngIf="selectedPath">{{selectedPath}}</label>
+        <xfm-mod-nav-xmomlist xc-i18n-context='xfm-mod-nav-xmomlist'></xfm-mod-nav-xmomlist>
+    </div>
+</div>

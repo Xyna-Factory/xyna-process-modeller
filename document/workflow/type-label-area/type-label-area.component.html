@@ -1,0 +1,13 @@
+<label-area
+    [labelArea]="typeLabelArea"
+    [documentModel]="documentModel"
+    [menuItems]="menuItems"
+    [menuTemplateRef]="menuTemplateRef"
+    (triggerAction)="performAction($event)">
+</label-area>
+<div *ngIf="showFqn" class="fqn-area">
+    <div
+        class="fqn-string"
+        [xc-tooltip]="typeLabelArea.$fqn"
+    >{{typeLabelArea.$fqn}}</div>
+</div>

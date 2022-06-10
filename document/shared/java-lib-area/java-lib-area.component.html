@@ -1,0 +1,5 @@
+<div class="row">
+    <xc-form-label xc-i18n>java-libraries-label</xc-form-label>
+    <xc-icon-button (click)="addLibrary()" xc-icon-name="add" [disabled]="readonly"></xc-icon-button>
+</div>
+<xc-rich-list [xc-rich-list-items]="javaLibraryRichListItems"></xc-rich-list>

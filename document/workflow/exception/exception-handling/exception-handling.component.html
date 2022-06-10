@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="handled-exceptions-area">
+        <div class="area-side-title">
+            <h2 class="area-side-label" xc-i18n>header-handled-exceptions</h2>
+        </div>
+        <content-area
+            [contentArea]="exceptionHandling.contentArea"
+            [documentModel]="documentModel"
+            xc-content-area-direction="row"
+            (triggerAction)="performAction($event)"
+        ></content-area>
+    </div>
+    <div *ngIf="exceptionHandling.hasUnhandledExceptions()" class="unhandled-exceptions-area">
+        <item-bar-area
+            [itemBarArea]="exceptionHandling.unhandledExceptionsArea"
+            [branchArea]="exceptionHandling.contentArea"
+            [documentModel]="documentModel"
+            (triggerAction)="performAction($event)"
+        ></item-bar-area>
+        <div class="area-side-title">
+            <h2 class="area-side-label" xc-i18n>header-unhandled-exceptions</h2>
+        </div>
+    </div>
+</div>

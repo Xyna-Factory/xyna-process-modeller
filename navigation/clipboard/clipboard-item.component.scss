@@ -1,0 +1,320 @@
+/*
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * Copyright 2022 GIP SmartMercial GmbH, Germany
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ */
+@import "const";
+
+$link-state-width: 8px;
+$link-state-margin: 6px;
+
+
+:host {
+    display: flex;
+    flex: 0 1 auto;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    margin: ($service-step-vertical-gap / 4) auto;
+
+    &::ng-deep > drop-indicator {
+        padding: 8px;
+        left: -8px;
+        top: -8px;
+    }
+
+    &.variable > div,
+    &.invocation > div,
+    &.mapping > div,
+    &.query > div,
+    &.throw > div,
+    &.parallelism > div,
+    &.branching > div,
+    &.choice > div,
+    &.template > div {
+        display: flex;
+        flex: 0 0 auto;
+    }
+
+    &.variable.prototype > div {
+        background: repeating-linear-gradient(-60deg, $prototype-variable-gradient-color, $prototype-variable-gradient-color 12px, $color-white 0px, $color-white 24px);
+    }
+
+    &.invocation.prototype > div > .label {
+        background: repeating-linear-gradient(-60deg, $prototype-step-gradient-color, $prototype-step-gradient-color 20px, $color-black 20px, $color-black 40px);
+    }
+
+    &.variable > div {
+        position: relative;
+        background-color: $variable-background-color;
+        border-radius: $variable-border-radius;
+
+        > .rim {
+            border: 1px solid $color-gray-1;
+            border-right: none;
+            border-top-left-radius: $variable-border-radius;
+            border-bottom-left-radius: $variable-border-radius;
+            background-color: $variable-left-rim-background-color;
+            font-size: $variable-left-rim-font-size;
+            color: $variable-left-rim-label-color;
+            text-align: center;
+            width: 16px;
+            padding: 1px;
+        }
+
+        > .label {
+            border: 1px solid $color-gray-1;
+            border-left: none;
+            border-top-right-radius: $variable-border-radius;
+            border-bottom-right-radius: $variable-border-radius;
+            padding: 0 (8px + $link-state-width + $link-state-margin) 1px 8px;
+            color: $variable-label-color;
+            font-size: $pmod-medium;
+            white-space: pre;
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            right: $link-state-margin;
+            top: calc(50% - (#{$link-state-width} / 2 + 1px));
+            width: $link-state-width;
+            height: $link-state-width;
+            border: 1px solid $variable-link-state-border-color;
+            border-radius: 5px;
+            background-color: $color-link-state-auto;
+        }
+    }
+
+    &.variable > div,
+    &.parallelism > div,
+    &.branching > div,
+    &.choice > div,
+    &.template > div {
+        &:focus {
+            box-shadow: 0 0 2px 2px $color-focus-outline;
+            outline: none;
+        }
+    }
+
+    &.invocation > div,
+    &.mapping > div,
+    &.query > div,
+    &.throw > div {
+        min-width: 200px;
+        flex-direction: column;
+
+        > .label {
+            padding: 8px 32px;
+            border-radius: $service-step-border-radius;
+            background-color: $step-background-color;
+            z-index: $service-step-label-z;
+            position: relative;
+            display: flex;
+
+            span {
+                margin: 0 auto;
+                color: $step-label-color;
+                white-space: pre-wrap;
+                font-weight: bold;
+                font-size: $pmod-medium;
+                text-align: center;
+            }
+
+            xc-icon {
+                position: absolute;
+                left: -8px;
+                top: -14px;
+                padding: 4px;
+                border: 2px solid $workflow-area-background-color;
+                border-radius: 50%;
+                color: $step-label-color;
+                background-color: $step-background-color;
+            }
+        }
+
+        &:focus {
+            outline: none;
+
+            > .input, .output {
+                box-shadow: 0 0 2px 2px $color-focus-outline;
+            }
+        }
+
+        > .input, .output {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 20px;
+            background-color: $variable-area-background-color;
+            border-radius: $service-step-border-radius;
+            border: 1px solid $connection-line-color;
+            padding: 5px;
+
+            > .var {
+                width: 10px;
+                height: 10px;
+                background: $step-background-color;
+                margin: 5px;
+            }
+        }
+
+        > .input {
+            border-bottom: none;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        > .output {
+            border-top: none;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+    }
+
+    &.parallelism > div,
+    &.branching > div,
+    &.choice > div {
+        width: 260px;
+        background: #fff;
+        justify-content: space-around;
+
+        > .lane {
+            background: $connection-line-color;
+            width: $connection-line-width;
+            position: relative;
+            height: 60px;
+
+            &::after {
+                content: "";
+                width: 20px;
+                height: 10px;
+                top: calc(50% - 7px);
+                left: -10px;
+                background: #fff;
+                border: 2px solid $color-gray-3;
+                border-radius: 4px;
+                position: absolute;
+            }
+        }
+    }
+
+    &.parallelism > div {
+        border: 12px solid $color-gray-3;
+        border-left: none;
+        border-right: none;
+        border-radius: 8px;
+
+        > .lane {
+            height: 40px;
+        }
+    }
+
+    &.branching > div {
+        flex-direction: column;
+
+        > .lane {
+            margin: 0 auto;
+            height: 20px;
+
+            &:first-of-type {
+                margin-top: 10px;
+            }
+
+            &:last-of-type {
+                margin-bottom: 10px;
+            }
+
+            &::after {
+                width: 120px;
+                left: -60px;
+            }
+        }
+    }
+
+    &.branching > div,
+    &.choice > div {
+        position: relative;
+        min-height: 30px;
+        margin: 10px 0;
+        border: 1px solid $color-gray-3;
+        border-radius: $service-step-border-radius;
+
+        > .input, .output {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background-color: $variable-area-background-color;
+            border-radius: $service-step-border-radius;
+        }
+
+        > .input {
+            top: 0;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        > .output {
+            bottom: 0;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            display: flex;
+            left: calc(50% - #{$choice_rhombus_size} / 2 - #{$choice_rhombus_border_width});
+            width: $choice_rhombus_size;
+            height: $choice_rhombus_size;
+            border: $choice_rhombus_border_width solid $choice_rhombus_border_color;
+            background-color: $choice_rhombus_background_color;
+            transform: rotate(45deg);
+            z-index: $service-step-input-z + 1;
+        }
+
+        &::before {
+            top: -$choice_rhombus_size / 2 - $choice_rhombus_border_width / 2;
+        }
+
+        &::after {
+            bottom: -$choice_rhombus_size / 2 - $choice_rhombus_border_width / 2;
+        }
+    }
+
+    &.template > div {
+        padding: 8px 4px;
+
+        border: 1px solid $connection-line-color;
+        border-radius: $service-step-border-radius;
+        background-color: $workflow-area-background-color;
+
+        > .row {
+            width: 24px;
+            padding-left: 16px;
+            padding-right: 64px;
+            line-height: 24px;
+            color: $color-gray-3;
+            font-family: $font-family-code;
+            font-size: $font-size-small;
+
+            &::after {
+                content: "...";
+                padding-left: 12px;
+            }
+        }
+    }
+}

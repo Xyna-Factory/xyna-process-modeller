@@ -1,0 +1,143 @@
+<div class="area-wrapper" xc-i18n-context="datatype">
+    <div class="datatype-header">
+        <type-info-area
+            xc-i18n-context="type-info-area"
+            [typeInfoArea]="dataType.typeInfoArea"
+            (triggerAction)="performModellingAction($event)"
+            [documentModel]="document"
+            [showConverterButton]="true"
+            [showBaseTypeAutocomplete]="true"
+            [showAbstractCheckbox]="true"
+        ></type-info-area>
+        <global-storable-properties-area
+            *ngIf="isStorable"
+            xc-i18n-context="global-storable-properties-area"
+            [propertiesArea]="dataType.globalStorablePropertyArea"
+            (triggerAction)="performModellingAction($event)"
+            [documentModel]="document"
+        ></global-storable-properties-area>
+        <type-documentation-area
+            xc-i18n-context="type-documentation-area"
+            [documentationArea]="dataType.documentationArea"
+            (triggerAction)="performModellingAction($event)"
+            [documentModel]="document"
+            [lines]="8"
+        ></type-documentation-area>
+        <div class="lib-area">
+            <java-lib-area
+                xc-i18n-context="java-lib-area"
+                [javaLibArea]="dataType.javaLibrariesArea"
+                (triggerAction)="performModellingAction($event)"
+                [documentModel]="document"
+            ></java-lib-area>
+            <java-shared-lib-area
+                xc-i18n-context="java-shared-lib-area"
+                [javaSharedLibArea]="dataType.javaSharedLibrariesArea"
+                (triggerAction)="performModellingAction($event)"
+                [documentModel]="document"
+            ></java-shared-lib-area>
+        </div>
+    </div>
+
+    <div class="datatype-body">
+        <section class="members">
+            <!-- Inherited Variables -->
+            <member-area
+                *ngIf="dataType.hasBaseType()"
+                xc-i18n-context="member-area"
+                caption="Inherited Variables"
+                [area]="dataType.inheritedVarsArea"
+                (triggerAction)="performModellingAction($event)"
+                [documentModel]="document"
+                [allowAdd]="false"
+            >
+                <member-variable-area
+                    [memberVariableArea]="dataType.inheritedVarsArea"
+                    (triggerAction)="performModellingAction($event)"
+                    [documentModel]="document"
+                ></member-variable-area>
+            </member-area>
+            <!-- Member Variables -->
+            <member-area
+                xc-i18n-context="member-area"
+                caption="Member Variables"
+                [area]="dataType.memberVarsArea"
+                (added)="addMemberVariable()"
+                (triggerAction)="performModellingAction($event)"
+                [documentModel]="document"
+            >
+                <member-variable-area
+                    [memberVariableArea]="dataType.memberVarsArea"
+                    (triggerAction)="performModellingAction($event)"
+                    [documentModel]="document"
+                ></member-variable-area>
+            </member-area>
+            <!-- Inherited Services -->
+            <member-area
+                *ngIf="dataType.hasBaseType()"
+                xc-i18n-context="member-area"
+                caption="Inherited Services"
+                [area]="dataType.inheritedMethodsArea"
+                (triggerAction)="performModellingAction($event)"
+                [documentModel]="document"
+                [allowAdd]="false"
+            >
+                <service-area
+                    [serviceArea]="dataType.inheritedMethodsArea"
+                    (triggerAction)="performModellingAction($event)"
+                    [documentModel]="document"
+                ></service-area>
+            </member-area>
+            <!-- Overridden Services -->
+            <member-area
+                *ngIf="dataType.hasBaseType()"
+                xc-i18n-context="member-area"
+                caption="Overridden Services"
+                [area]="dataType.overriddenMethodsArea"
+                (triggerAction)="performModellingAction($event)"
+                [documentModel]="document"
+                [allowAdd]="false"
+            >
+                <service-area
+                    [serviceArea]="dataType.overriddenMethodsArea"
+                    (triggerAction)="performModellingAction($event)"
+                    [documentModel]="document"
+                ></service-area>
+            </member-area>
+            <!-- Member Services -->
+            <member-area
+                xc-i18n-context="member-area"
+                caption="Member Services"
+                [area]="dataType.memberMethodsArea"
+                (added)="addMemberService()"
+                (triggerAction)="performModellingAction($event)"
+                [documentModel]="document"
+            >
+                <service-area
+                    [serviceArea]="dataType.memberMethodsArea"
+                    (triggerAction)="performModellingAction($event)"
+                    [documentModel]="document"
+                ></service-area>
+            </member-area>
+        </section>
+
+        <section class="details">
+            <member-variable-details
+                *ngIf="selectedVariable"
+                xc-i18n-context="member-variable-details"
+                [memberVariable]="selectedVariable"
+                (triggerAction)="performModellingAction($event)"
+                [documentModel]="document"
+                [dataTypeRTC]="dataType.$rtc"
+                [isStorable]="isStorable"
+            ></member-variable-details>
+            <method-details
+                *ngIf="selectedMethod"
+                xc-i18n-context="method-details"
+                [method]="selectedMethod"
+                (triggerAction)="performModellingAction($event)"
+                [documentModel]="document"
+            ></method-details>
+        </section>
+    </div>
+</div>

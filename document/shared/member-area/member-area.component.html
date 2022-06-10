@@ -1,0 +1,17 @@
+<header>
+    <xc-icon-button
+        *ngIf="hasContent"
+        (click)="collapsed = !collapsed"
+        [xc-icon-name]="collapsed ? 'arrowright' : 'arrowdown'"
+        xc-icon-size="small"
+    ></xc-icon-button>
+    <h2 class="caption">{{caption | xcI18n}}</h2>
+    <xc-icon-button
+        *ngIf="allowAdd"
+        [disabled]="readonly"
+        (click)="addEmitter.emit()"
+        xc-icon-name="add"
+        xc-icon-size="small"
+    ></xc-icon-button>
+</header>
+<ng-content *ngIf="!collapsed"></ng-content>

@@ -1,0 +1,154 @@
+/*
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * Copyright 2022 GIP SmartMercial GmbH, Germany
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ */
+$service-step-vertical-gap: unset !default;
+$service-step-border-radius: unset !default;
+
+
+@import "const";
+
+
+// only set opacity for the first item without runtime info
+.no-runtime-info :host > .no-runtime-info {
+    opacity: 1 !important;
+}
+
+
+:host {
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 auto;
+    align-items: center;
+    margin: ($service-step-vertical-gap / 2);
+    position: relative;
+
+    &:focus {
+        outline: none;
+    }
+
+    & > .no-runtime-info {
+        opacity: 0.4;
+    }
+
+    &::ng-deep > drop-indicator {
+        padding: $service-step-vertical-gap / 2;
+        left: -$service-step-vertical-gap / 2;
+        top: -$service-step-vertical-gap / 2;
+    }
+}
+
+
+// connection-line
+::ng-deep service-step[parent-direction="column"]:not(:first-child),
+::ng-deep service-step[parent-direction="row"],
+::ng-deep branch > content-area > .drop-area,
+::ng-deep branch > case-area > .case-drop-area {
+    &::before {
+        content: "";
+        background-color: $connection-line-color;
+        left: calc(50% - #{$connection-line-width} / 2);
+        pointer-events: none;
+        position: absolute;
+        width: $connection-line-width;
+    }
+}
+::ng-deep service-step[parent-direction="column"]:not(:first-child) {
+    &::before {
+        top: -$service-step-vertical-gap;
+        height: $service-step-vertical-gap;
+    }
+}
+::ng-deep service-step[parent-direction="row"] {
+    &::before {       // connection-lines in a row always connect to the content-area at the top
+        top: -($service-step-vertical-gap / 2 + $content-area-padding);
+        height: $service-step-vertical-gap / 2 + $content-area-padding;
+    }
+}
+::ng-deep branch > content-area {
+    &[direction="column"] {
+        overflow: visible;
+    }
+
+    & > .drop-area {
+        &::before {
+            top: 0;
+            height: calc(100% + #{$service-step-vertical-gap} / 2 + #{$content-area-padding});
+        }
+    }
+}
+::ng-deep branch > case-area {
+    & > .case-drop-area {
+        &::before {
+            top: 0;
+            height: 100%;
+        }
+    }
+}
+// hide connection lines crossing lane-edges in Conditional Branching
+::ng-deep conditional-branching > content-area > .drop-area > service-step > branch > content-area {
+    & > .drop-area {
+        &::before {
+            display: none;
+        }
+    }
+}
+::ng-deep conditional-branching > content-area > .drop-area > service-step > branch > case-area {
+    & > .case-drop-area {
+        &::before {
+            display: none;
+        }
+    }
+}
+
+
+// focus / selection
+::ng-deep service-step.selected > * {
+    // content area
+    &:not(branch):not(.foreach) > content-area {
+        position: relative;
+        overflow: visible;
+
+        &::before, &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 2px;
+            height: 100%;
+        }
+
+        &::before {
+            left: 0;
+            box-shadow: -3px 0 $color-focus-outline;
+        }
+
+        &::after {
+            right: 0;
+            box-shadow: 3px 0 $color-focus-outline;
+        }
+    }
+
+    // other areas inside a service step
+    & > variable-area-service,
+    & > variable-area-choice,
+    & > formula-input-area,
+    &.foreach,
+    &.template,
+    & > .add-branch-button-area {
+        box-shadow: 0 0 0 2px $color-focus-outline;
+        z-index: 1;
+    }
+}

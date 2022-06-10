@@ -1,0 +1,25 @@
+<label #number class="line-number">{{lineNumber}}</label>
+<div class="row-drop-area"
+    [mod-drop-area]="row.templateParts"
+    [mod-drop-area-allow-item]="allowItem"
+    [mod-drop-area-update-indicator]="updateIndicator"
+    mod-drop-area-direction="horizontal"
+    (mod-drop-area-dropped)="dropped($event)"
+>
+    <ng-container *ngFor="let part of row.templateParts; let i = index">
+        <template-part-formula #templatePart *ngIf="isFormula(part)"
+            [part]="part"
+            [documentModel]="documentModel"
+            (switchFocus)="switchFocus($event)"
+            (triggerAction)="performAction($event)"
+        ></template-part-formula>
+        <template-part-text #templatePart #textPart *ngIf="!isFormula(part)"
+            [part]="part"
+            [documentModel]="documentModel"
+            (newline)="newlineInPart($event)"
+            (deletePart)="deletePart($event)"
+            (switchFocus)="switchFocus($event)"
+            (triggerAction)="performAction($event)"
+        ></template-part-text>
+    </ng-container>
+</div>

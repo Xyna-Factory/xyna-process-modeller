@@ -1,0 +1,13 @@
+<xc-form-autocomplete *ngIf="editing"
+    [(xc-form-autocomplete-option)]="memberDataWrapper.value"
+    [xc-form-autocomplete-options]="memberDataWrapper.values"
+    (xc-form-autocomplete-optionsOpened)="opened()"
+    (xc-form-autocomplete-optionsClosed)="closed()"
+    xc-form-autocomplete-fulltextsearch
+    xc-form-autocomplete-showtooltip
+    (focus)="startEditing()"
+    xc-form-field-compact
+    class="select-box">
+</xc-form-autocomplete>
+<variable *ngIf="!editing && formulaPart.isMemberVariable()" [variable]="formulaPart.variable" [hasMenu]="false"></variable>
+<span *ngIf="!editing && formulaPart.isMemberFunction()" class="member-function">{{formulaPart.text}}</span>

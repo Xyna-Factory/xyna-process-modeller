@@ -1,0 +1,48 @@
+/*
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * Copyright 2022 GIP SmartMercial GmbH, Germany
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ */
+@import "const";
+
+
+:host {
+    overflow: hidden;
+    display: flex;
+    flex: 1 1 auto;
+    background-color: $workflow-area-background-color;
+    position: relative;
+
+    > .drop-area {
+        overflow: auto;
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        transition: background-color 150ms linear;
+        padding: ($service-step-vertical-gap / 4) ($service-step-vertical-gap / 2);
+
+        &.mod-drop-area-hover {
+            background-color: #ffd988;  // shade of #fabb00
+        }
+    }
+
+    > span {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        color: $color-invert;
+        padding: 20px;
+    }
+}

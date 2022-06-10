@@ -1,0 +1,123 @@
+/*
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * Copyright 2022 GIP SmartMercial GmbH, Germany
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ */
+@import 'const';
+
+:host {
+    display         : flex;
+    flex-direction  : row;
+    padding-left    : 4px;
+    background-color: $color-background-bar;
+
+    ::ng-deep {
+        .navigationbar-title {
+            color         : $color-gray-5;
+            font-family   : $font-family-light;
+            padding       : 6px;
+            height        : 40px;
+            display       : flex;
+            flex          : 0 0 auto;
+            align-items   : center;
+            pointer-events: none;
+        }
+
+        .area-content {
+            display         : flex;
+            flex-direction  : column;
+            flex            : 1 1 auto;
+            background-color: $color-background-default;
+            padding         : 6px;
+        }
+    }
+
+    .area {
+        overflow-x: hidden;
+        height    : 100%;
+        display   : flex;
+
+        >* {
+            display       : flex;
+            flex-direction: column;
+            min-width     : 300px;
+
+            &.hidden {
+                display: none;
+            }
+        }
+    }
+
+    .iconbar {
+        display         : flex;
+        flex-direction  : column;
+        background-color: $color-background-bar;
+
+        .icons {
+            position: relative;
+
+            .badge {
+                background-color: #ff3333;
+                position: absolute;
+                right: 0px;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                color: #fff;
+                text-align: center;
+                z-index: 1;
+                /* font-size: 12px; */
+                top: -4px;
+                pointer-events: none;
+            }
+        }
+
+        ::ng-deep xc-icon-button {
+            margin: 2px;
+
+            &:first-child {
+                margin-top: 4px;
+            }
+
+            &.active i {
+                color: $color-primary;
+            }
+
+            &.toggle {
+
+                xc-icon {
+                    transform : rotate(180deg);
+                    transition: transform .15s ease-in-out;
+                }
+
+                &.rotated xc-icon {
+                    transform: rotate(0deg);
+                }
+            }
+
+            &.refresh {
+                margin-top: auto;
+            }
+
+            // style can be removed as soon as msgwarning-icon has been replaced
+            xc-icon[name="msgwarning"]>i {
+                background-color: #fff;
+                color           : #2a2a2b;
+                padding         : 1px;
+                border-radius   : 50%;
+            }
+        }
+    }
+}

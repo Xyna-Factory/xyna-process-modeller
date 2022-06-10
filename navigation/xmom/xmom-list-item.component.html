@@ -1,0 +1,23 @@
+<div class="title">
+    <xc-icon *ngIf="xmomIconName" [xc-icon-name]="xmomIconName" xc-icon-style="modeller" xc-icon-size="small"></xc-icon>
+    <div *ngIf="isServiceGroup" class="service-group"></div>    <!-- FIXME remove as soon as there is a Service Group icon -->
+    <span class="label-wrapper">
+        <label *ngIf="isCodedService || isInstanceService" class="container">{{parentContainer}}.</label>
+        <label class="name">{{xmomItem.label}}</label>
+    </span>
+    <xc-icon-button
+        *xc-menu-service="showMenu; let menuService"
+        [xc-menu-trigger]="menuService.component"
+        (xc-menu-trigger)="menuService.set(menuItems, {withArrow: true, xNexttoTrigger: true, xOffset: -5})"
+        xc-icon-name="misc-contextmenu"
+        xc-icon-style="modeller"
+        xc-icon-size="small"
+        [class.readonly]="isReadonly"
+        class="menu-button"
+        color="invert"
+        (menuOpened)="menuOpened.emit(xmomItem)"
+        (menuClosed)="menuClosed.emit(xmomItem)"
+    ></xc-icon-button>
+</div>
+<label *ngIf="isDuplicate" class="subtitle warning" xc-i18n xc-tooltip="tooltip-duplicate-element"><xc-icon xc-icon-name="msgwarning"></xc-icon><span>{{xmomRTC}}</span></label>
+<label *ngIf="showFQN" class="subtitle">{{xmomPath}}</label>

@@ -1,0 +1,8 @@
+<div
+    [mod-content-editable]="!readonly"
+    [mod-content-editable-value]="documentationArea.text"
+    mod-content-editable-trigger="mousedown"
+    mod-content-editable-should-finish-on-enter="false"
+    (mod-content-editable-after-edit)="finishEditing($event)"
+    class="text-area"
+></div>

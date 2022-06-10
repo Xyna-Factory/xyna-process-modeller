@@ -1,0 +1,44 @@
+<variable-area-service *ngIf="mapping.inputArea"
+    [variableArea]="mapping.inputArea"
+    [documentModel]="documentModel"
+    xc-variable-area-kind="input-area"
+    (triggerAction)="performAction($event)"
+></variable-area-service>
+<label-area *ngIf="mapping.labelArea"
+    [labelArea]="mapping.labelArea"
+    [documentModel]="documentModel"
+    [menuItems]="menuItems"
+    [menuTemplateRef]="menuTemplateRef"
+    (triggerAction)="performAction($event)"
+>
+    <xc-icon icon xc-icon-name="tb-mapping" xc-icon-style="modeller" xc-icon-size="large" (dblclick)="toggleCollapsed()"></xc-icon>
+</label-area>
+<documentation-area *ngIf="documentationArea"
+    [documentationArea]="documentationArea"
+    [documentModel]="documentModel"
+    (triggerAction)="performAction($event)"
+></documentation-area>
+<formula-area *ngIf="mapping.formulaArea"
+    [formulaArea]="mapping.formulaArea"
+    [documentModel]="documentModel"
+    [newFormulaExpression]="newFormulaExpression"
+    (triggerAction)="performAction($event)"
+></formula-area>
+<variable-area-service *ngIf="mapping.outputArea"
+    [variableArea]="mapping.outputArea"
+    [documentModel]="documentModel"
+    xc-variable-area-kind="output-area"
+    (triggerAction)="performAction($event)"
+></variable-area-service>
+
+<ng-template #menuTemplateRef>
+    <xc-icon-button
+        *xc-menu-service="showMenu; let menuService"
+        [xc-menu-trigger]="menuService.component"
+        (xc-menu-trigger)="menuService.set(menuItems, {withArrow: true, xNexttoTrigger: true, xOffset: 8})"
+        xc-icon-style="modeller"
+        xc-icon-name="misc-contextmenu"
+        xc-icon-size="small"
+        class="menu-button"
+    ></xc-icon-button>
+</ng-template>

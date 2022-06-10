@@ -1,0 +1,7 @@
+<div class="label" [xc-tooltip]="memberService.label">
+    <span
+        [mod-content-editable]="!readonly && !memberService.isLabelReadonly"
+        (mod-content-editable-after-edit)="finishEditing($event)"
+        [class.readonly]="!memberService.deletable || readonly"
+    >{{memberService.label || '&lt;unnamed&gt;'}}</span>
+</div>

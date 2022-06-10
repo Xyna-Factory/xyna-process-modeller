@@ -1,0 +1,99 @@
+<div class="row">
+    <xc-form-label [class.readonly]="readonly" class="badge" xc-i18n>{{title}}</xc-form-label>
+    <div class="checkboxes">
+        <xc-checkbox
+            *ngIf="showAbstractCheckbox"
+            label="abstract-label"
+            [(checked)]="isAbstract"
+            [readonly]="readonly"
+            xc-i18n
+        ></xc-checkbox>
+        <xc-checkbox
+            #isStorableCheckbox
+            *ngIf="isDataTypeDocument"
+            label="storable-label"
+            [(checked)]="isStorable"
+            [readonly]="readonly"
+            xc-tooltip="storable-tooltip"
+            xc-i18n
+        ></xc-checkbox>
+    </div>
+</div>
+
+<div class="identification">
+    <ng-container *ngIf="!isNewDocument">
+        <div class="id-left id-left-saved">
+            <div class="label">{{typeInfoArea.text}}</div>
+            <div class="fqn">{{typeInfoArea.$fqn}}</div>
+        </div>
+        <ng-container *ngIf="showConverterButton">
+            <ng-container *xc-has-right="'xmcp.xfm.processmodeller.datatype.converter'">
+                <xc-button class="converter-button" (click)="showConverter()" xc-i18n>open-in-converter-button</xc-button>
+            </ng-container>
+        </ng-container>
+        <ng-container *ngIf="showRefactorButton">
+            <xc-button class="converter-button" (click)="refactor()" xc-i18n>refactor-button</xc-button>
+        </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="isNewDocument">
+        <div class="id-left id-left-new-type">
+            <div class="row">
+                <xc-form-input
+                    label="label-label"
+                    [value]="label"
+                    [readonly]="readonly"
+                    (blur)="labelBlur($event)"
+                    xc-form-field-compact
+                    xc-form-validator-required
+                    xc-i18n
+                ></xc-form-input>
+            </div>
+            <div class="row">
+                <xc-form-autocomplete
+                    #pathAutocomplete
+                    label="path-label"
+                    placeholder="choose-placeholder"
+                    [readonly]="readonly"
+                    [(xc-form-autocomplete-option)]="pathDataWrapper.value"
+                    [xc-form-autocomplete-options]="pathDataWrapper.values"
+                    xc-form-autocomplete-fulltextsearch
+                    xc-form-autocomplete-asinput
+                    xc-form-field-suffix="nullify"
+                    xc-form-field-compact
+                    xc-i18n
+                ></xc-form-autocomplete>
+            </div>
+        </div>
+    </ng-container>
+</div>
+
+<div *ngIf="showBaseTypeAutocomplete" class="row base-type">
+    <div
+        [mod-drop-area]="typeInfoArea.baseType"
+        [mod-drop-area-allow-item]="allowItem"
+        (mod-drop-area-dropped)="dropped($event)"
+        mod-drop-area-direction="horizontal"
+        class="base-type-wrapper"
+    >
+        <xc-form-autocomplete
+            #baseTypeAutocomplete
+            label="base-type-label"
+            placeholder="select-placeholder"
+            [readonly]="readonly"
+            [xc-form-validator-required]="isExceptionTypeDocument"
+            [(xc-form-autocomplete-option)]="baseTypeDataWrapper.value"
+            [xc-form-autocomplete-options]="baseTypeDataWrapper.values"
+            xc-form-autocomplete-fulltextsearch
+            xc-form-field-suffix="nullify"
+            xc-form-field-compact
+            xc-i18n
+        ></xc-form-autocomplete>
+    </div>
+
+    <xc-button
+        (click)="openBaseType()"
+        [disabled]="!baseTypeDataWrapper.value"
+        xc-i18n
+    >open-button</xc-button>
+</div>

@@ -1,0 +1,21 @@
+<formula-input-area *ngIf="choice.formulaArea"
+    [formulaArea]="choice.formulaArea"
+    [documentModel]="documentModel"
+    questionmarkEditable="true"
+    (triggerAction)="performAction($event)"
+></formula-input-area>
+<content-area
+    [contentArea]="choice.contentArea"
+    [documentModel]="documentModel"
+    class="dark"
+    (triggerAction)="performAction($event)"
+></content-area>
+<div *ngIf="!readonly" class="add-branch-button-area">
+    <xc-icon-button xc-icon-name="add" color="invert" (click)="addBranch()"></xc-icon-button>
+</div>
+<variable-area-choice *ngIf="choice.outputArea"
+    [variableArea]="choice.outputArea"
+    [documentModel]="documentModel"
+    xc-variable-area-kind="output-area"
+    (triggerAction)="performAction($event)"
+></variable-area-choice>

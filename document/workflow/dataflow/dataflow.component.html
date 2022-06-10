@@ -1,0 +1,14 @@
+<svg #SVG class="draw-area" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"></svg>
+<div #addFrom [hidden]="readonly" class="add-connection-button">
+    <xc-icon-button xc-icon-name="add" color="invert" (click)="addConnection()"></xc-icon-button>
+</div>
+<div #addTo [hidden]="readonly" class="add-connection-button">
+    <xc-icon-button xc-icon-name="add" color="invert" (click)="addConnection()"></xc-icon-button>
+</div>
+<div #removeFrom [hidden]="readonly" class="remove-connection-button">
+    <xc-icon-button xc-icon-name="delete" color="invert" (click)="removeConnection()"></xc-icon-button>
+</div>
+<div #removeTo [hidden]="readonly" class="remove-connection-button">
+    <xc-icon-button xc-icon-name="delete" color="invert" (click)="removeConnection()"></xc-icon-button>
+</div>
+<div #tooltip class="tooltip"></div>

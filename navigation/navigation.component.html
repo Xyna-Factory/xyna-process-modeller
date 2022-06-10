@@ -1,0 +1,42 @@
+<div [@areaTrigger]="areaValue" class="area">
+    <xfm-mod-nav-factory xc-i18n-context='factory' [class.hidden]="area !== NavigationbarArea.Factory"></xfm-mod-nav-factory>
+    <xfm-mod-nav-search xc-i18n-context='search' [class.hidden]="area !== NavigationbarArea.Search"></xfm-mod-nav-search>
+    <xfm-mod-nav-details xc-i18n-context='details' [class.hidden]="area !== NavigationbarArea.Details"></xfm-mod-nav-details>
+    <xfm-mod-nav-clipboard xc-i18n-context='clipboard' [class.hidden]="area !== NavigationbarArea.Clipboard"></xfm-mod-nav-clipboard>
+    <xfm-mod-nav-errors xc-i18n-context='errors' [class.hidden]="area !== NavigationbarArea.Errors"></xfm-mod-nav-errors>
+    <xfm-mod-nav-workflowlauncher xc-i18n-context='workflowlauncher' [class.hidden]="area !== NavigationbarArea.WorklowLauncher"></xfm-mod-nav-workflowlauncher>
+    <xfm-mod-nav-help xc-i18n-context='help' [class.hidden]="area !== NavigationbarArea.Help"></xfm-mod-nav-help>
+</div>
+<div class="iconbar">
+    <xc-icon-button xc-i18n class="toggle" xc-icon-name="misc-collapse" xc-icon-style="modeller" [ngClass]="{'rotated': area}" (click)="toogle()"></xc-icon-button>
+    <div *ngFor="let button of buttons" class="icons">
+        <xc-icon-button
+            xc-i18n
+            [xc-icon-name]="button.iconName"
+            [xc-icon-style]="button.iconStyle"
+            [xc-tooltip]="button.label"
+            xc-tooltip-position="left"
+            [class.active]="area === button.areaType"
+            (click)="switchArea(button.areaType)"
+        ></xc-icon-button>
+        <span class="badge" *ngIf=button.badge>{{button.badge}}</span>
+    </div>
+    <ng-container *xc-has-right="'xmcp.xfm.processmodeller.devmenu'">
+        <xc-icon-button
+            xc-i18n
+            [xc-menu-trigger]="devMenu"
+            xc-icon-name="build"
+            xc-icon-material
+            xc-tooltip="icon-dev-tools"
+            xc-tooltip-position="left"
+        ></xc-icon-button>
+        <xc-menu #devMenu
+            [xc-menu-items]="devMenuItems"
+            [xc-menu-y-offset]="6"
+            [xc-menu-x-offset]="-10"
+            xc-menu-x-position="before"
+            xc-menu-with-arrow
+            xc-menu-x-nextto-trigger
+        ></xc-menu>
+    </ng-container>
+</div>

@@ -1,0 +1,8 @@
+<xfm-mod-nav-xmomtreeitem
+    *ngFor="let xmomPath of xmomPaths"
+    [root]="true"
+    [xmomPath]="xmomPath"
+    [selectedXmomPaths]="selectedXmomPaths"
+    [expandedXmomPaths]="expandedXmomPaths"
+    (stateChange)="change($event)"
+></xfm-mod-nav-xmomtreeitem>

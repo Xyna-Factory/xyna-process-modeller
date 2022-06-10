@@ -1,0 +1,10 @@
+<div xc-tooltip="{{message}}">
+    <div class="language">{{language}}</div>
+    <div class="message">{{message}}</div>
+    <xc-icon-button
+        xc-icon-size="small"
+        [disabled]="readonly"
+        (click)="delete($event)"
+        xc-icon-name="delete"
+    ></xc-icon-button>
+</div>
