@@ -17,6 +17,7 @@
  */
 import { ChangeDetectorRef, Component, Injector, LOCALE_ID, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
+import { QueryParamService, UrlQueryParam } from '@fman/misc/services/query-param.service';
 import { ApiService, FullQualifiedName, RuntimeContextSelectionSettings } from '@zeta/api';
 import { KeyboardEventType, KeyDistributionService, OutsideListenerService } from '@zeta/base';
 import { I18nService } from '@zeta/i18n';
@@ -39,7 +40,6 @@ import { ServiceGroupComponent } from './document/servicegroup.component';
 import { WorkflowDocumentComponent } from './document/workflow-document.component';
 import { PMOD_DE } from './locale/pmod.DE';
 import { PMOD_EN } from './locale/pmod.EN';
-import { PmodQueryParamService } from './misc/services/pmod-query-param.service';
 import { ShowXmlModalComponent, ShowXmlModalData } from './navigation/details/show-xml-modal/show-xml-modal.component';
 import { ErrorService } from './navigation/shared/error.service';
 import { ToolbarComponent } from './toolbar/toolbar.component';
@@ -93,7 +93,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
         private readonly dialogService: XcDialogService,
         readonly injector: Injector,
         private readonly i18nService: I18nService,
-        private readonly pmodQueryParamService: PmodQueryParamService,
+        private readonly queryParamService: QueryParamService,
         private readonly outsideListenerService: OutsideListenerService,
         private readonly keyService: KeyDistributionService,
         private readonly errorService: ErrorService
@@ -268,7 +268,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
 
         // open document(s) from URL
         this.urlProcessed = true;
-        const describers = this.pmodQueryParamService.getParamsStartWith('tab')
+        const describers = this.queryParamService.getParamsStartWith('tab')
             .map(tab => JSON.parse(decodeURI(tab.value)) as {rtc: string; fqn: string; type: XmomObjectType})
             .map(tab => ({
                 rtc: XoRuntimeContext.fromQueryParam(tab.rtc).runtimeContext(),
@@ -293,6 +293,14 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
                         describer.fqn,
                         describer.type
                     )
+                )
+            );
+        } else {
+            describers.forEach(
+                describer => this.documentService.loadDocument(
+                    describer.rtc,
+                    describer.fqn,
+                    describer.type
                 )
             );
         }
@@ -388,12 +396,12 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
         // const tabs = this._tabBar.items;
         const tabs: XcTabBarItem[] = [{ data: this.documentService.selectedDocument, component: null }];
 
-        this.pmodQueryParamService.removeParamsStartWith('tab');
+        this.queryParamService.removeParamsStartWith('tab');
 
         tabs.forEach(item => {
             const doc = item.data as DocumentModel;
             if (!!doc && doc.item.saved) {
-                this.pmodQueryParamService.add('tab' + i++, doc.item.toQueryValue());
+                this.queryParamService.add('tab' + i++, doc.item.toQueryValue());
             }
         });
     }

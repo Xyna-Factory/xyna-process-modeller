@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { FactoryManagerModule } from '@fman/factory-manager.module';
+import { QueryParamService } from '@fman/misc/services/query-param.service';
 import { I18nService } from '@zeta/i18n';
 import { ZetaModule } from '@zeta/zeta.module';
 
@@ -124,7 +125,6 @@ import { VariableComponent } from './document/workflow/variable/variable.compone
 import { WorkflowComponent } from './document/workflow/workflow/workflow.component';
 import { PmodOutsideListenerDirective } from './misc/directives/pmod-outside-listener.directives';
 import { LabelPathDialogComponent } from './misc/modal/label-path-dialog/label-path-dialog.component';
-import { PmodQueryParamService } from './misc/services/pmod-query-param.service';
 import { ModellerSettingsDialogComponent } from './modeller-settings-dialog/modeller-settings-dialog.component';
 import { ClipboardAreaComponent } from './navigation/clipboard/clipboard-area.component';
 import { ClipboardItemComponent } from './navigation/clipboard/clipboard-item.component';
@@ -291,7 +291,7 @@ import './xo/_import';
         FactoryService,
         I18nService,
         ModDragAndDropService,
-        PmodQueryParamService,
+        QueryParamService,
         WorkflowDetailSettingsService,
         WorkflowDetailLevelService,
         SelectionService,
