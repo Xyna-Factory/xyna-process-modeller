@@ -368,7 +368,7 @@ export const PMOD_DE: I18nTranslation[] = [
     },
     {
         key: 'pmod.nav.help.subtitle-message',
-        value: '(einige Funktionen sind nur in einem bestimmten Kontext verfügbar, z. B. in einer Zuordnung oder in einer Abfrage)'
+        value: '(einige Funktionen sind nur in einem bestimmten Kontext verfügbar, z. B. in einem Mapping- oder Query-Schritt)'
     },
 
     // Toolbar
