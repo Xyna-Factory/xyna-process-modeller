@@ -20,7 +20,7 @@ import { Component, HostBinding, Injector } from '@angular/core';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcRichListItemComponent } from '@zeta/xc';
 
-import { Subject } from 'rxjs/';
+import { Subject } from 'rxjs';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoDeleteRequest } from '../../../xo/delete-request.model';

@@ -17,7 +17,7 @@
  */
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, Observable, Subject } from 'rxjs/';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { SelectableModellingObjectComponent } from './workflow/shared/selectable-modelling-object.component';
 

@@ -20,7 +20,7 @@ import { Injectable } from '@angular/core';
 import { ApiService, RuntimeContext } from '@zeta/api';
 import { XcAutocompleteDataWrapper, XcOptionItem } from '@zeta/xc';
 
-import { BehaviorSubject, Observable } from 'rxjs/';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { XmomService } from '../api/xmom.service';
 

@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { XoArray, XoArrayClass, XoObjectClass, XoProperty, XoTransient } from '@zeta/api';
-import { Observable, Subject } from 'rxjs/';
+import { Observable, Subject } from 'rxjs';
 
 import { XoReferableObject } from './referable-object.model';
 import { XoRuntimeInfo } from './runtime-info.model';

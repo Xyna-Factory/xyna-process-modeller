@@ -22,7 +22,7 @@ import { ApiService } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
 import { XcRichListItem } from '@zeta/xc';
 
-import { Subject, Subscription } from 'rxjs/';
+import { Subject, Subscription } from 'rxjs';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoInsertFileRequest } from '../../../xo/insert-file-request.model';

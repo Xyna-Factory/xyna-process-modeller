@@ -20,7 +20,7 @@ import { AfterContentInit, AfterViewInit, Component, ViewChild } from '@angular/
 import { XoStructureField, XoStructureMethod, XoStructureObject } from '@zeta/api';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItem } from '@zeta/xc';
 
-import { Observable, of } from 'rxjs/';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { FormulaPartMember } from '../../../../../xo/util/formula-parts/formula-part-member';

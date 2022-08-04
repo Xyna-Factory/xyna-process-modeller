@@ -28,7 +28,7 @@ import { AuthService } from '@zeta/auth';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService } from '@zeta/xc';
 
-import { merge } from 'rxjs/';
+import { merge } from 'rxjs';
 import { filter, finalize, switchMapTo } from 'rxjs/operators';
 
 import { DocumentService } from '../../document/document.service';

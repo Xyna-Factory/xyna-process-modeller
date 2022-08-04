@@ -20,7 +20,7 @@ import { Injectable } from '@angular/core';
 
 import { ApiService, FullQualifiedName, RuntimeContext, XoDescriber, XoJson, XoStructureType } from '@zeta/api';
 
-import { Observable } from 'rxjs/';
+import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
 import { XoServiceReferenceCandidates } from '../xo/service-reference-candidates.model';

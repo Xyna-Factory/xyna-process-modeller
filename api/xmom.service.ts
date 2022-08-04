@@ -26,7 +26,7 @@ import { XoGetWarningsResponse } from '@pmod/xo/get-warnings-response.model';
 import { XoUnlockResponse } from '@pmod/xo/unlock-response.model';
 import { FullQualifiedName, RuntimeContext, XoClassInterface, XoJson } from '@zeta/api';
 
-import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs/';
+import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, finalize, map } from 'rxjs/operators';
 
 import { XoCloseResponse } from '../xo/close-response.model';

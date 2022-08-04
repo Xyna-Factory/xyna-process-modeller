@@ -21,7 +21,7 @@ import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model
 import { MessageBusService } from '@yggdrasil/events';
 import { XcMenuItem } from '@zeta/xc';
 
-import { Observable, Subject, Subscription } from 'rxjs/';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Vector2 } from 'three';
 

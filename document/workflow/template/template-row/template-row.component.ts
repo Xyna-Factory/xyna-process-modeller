@@ -214,17 +214,17 @@ export class TemplateRowComponent extends ModellingObjectComponent {
         const partIndex = this.row.templateParts.findIndex(part => part === event.part);
         if (event.direction === 'LEFT') {
             // focus previous text-part
-            // eslint-disable-next-line curly
             for (let i = partIndex - 1;
                 i >= 0 && !this.focusPart(this.row.templateParts[i]);
                 i--
+                // eslint-disable-next-line curly
             );
         } else if (event.direction === 'RIGHT') {
             // focus next text-part
-            // eslint-disable-next-line curly
             for (let i = partIndex + 1;
                 i < this.row.templateParts.length && !this.focusPart(this.row.templateParts[i], 0);
                 i++
+                // eslint-disable-next-line curly
             );
         } else if (event.direction === 'UP' || event.direction === 'DOWN') {
             this.switchRow.emit({

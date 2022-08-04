@@ -17,7 +17,7 @@
  */
 import { XoObjectClass, XoProperty } from '@zeta/api';
 
-import { ConnectionType } from './connection.model';
+import { DataConnectionType } from './connection.model';
 import { XoRequest } from './request.model';
 
 
@@ -35,10 +35,10 @@ export class XoSetDataflowConnectionRequest extends XoRequest {
 
     // eslint-disable-next-line zeta/xo
     @XoProperty()
-    type: ConnectionType;
+    type: DataConnectionType;
 
 
-    constructor(_ident?: string, sourceId?: string, targetId?: string, type?: ConnectionType, revision?: number, branchId?: string) {
+    constructor(_ident?: string, sourceId?: string, targetId?: string, type?: DataConnectionType, revision?: number, branchId?: string) {
         super(_ident);
 
         this.sourceId = sourceId;

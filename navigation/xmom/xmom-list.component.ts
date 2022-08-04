@@ -19,7 +19,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@a
 
 import { coerceBoolean } from '@zeta/base';
 
-import { BehaviorSubject, forkJoin, Observable } from 'rxjs/';
+import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { filter, first, map, switchMap, tap } from 'rxjs/operators';
 
 import { XmomService } from '../../api/xmom.service';

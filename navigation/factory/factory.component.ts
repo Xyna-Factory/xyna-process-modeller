@@ -19,7 +19,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, V
 
 import { MessageBusService } from '@yggdrasil/events';
 
-import { merge, of } from 'rxjs/';
+import { merge, of } from 'rxjs';
 import { debounceTime, filter, switchMap, tap } from 'rxjs/operators';
 
 import { XmomPath } from '../../api/xmom.service';

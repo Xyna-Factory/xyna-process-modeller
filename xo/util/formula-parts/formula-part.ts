@@ -17,7 +17,7 @@
  */
 import { ApiService, FullQualifiedName, RuntimeContext, XoDescriberCache, XoStructureObject } from '@zeta/api';
 
-import { Observable, of, Subject } from 'rxjs/';
+import { Observable, of, Subject } from 'rxjs';
 
 import { isOrderable, Orderable } from '../../../api/xmom-types';
 import { XoReferableObject } from '../../referable-object.model';

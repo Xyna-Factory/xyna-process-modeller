@@ -20,7 +20,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService } from '@zeta/xc';
 
-import { throwError } from 'rxjs/';
+import { throwError } from 'rxjs';
 import { catchError, switchMapTo } from 'rxjs/operators';
 
 import { DocumentService } from '../../document/document.service';

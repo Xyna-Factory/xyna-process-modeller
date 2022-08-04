@@ -22,9 +22,9 @@ import { FullQualifiedName, RuntimeContext } from '@zeta/api';
 import { AuthService } from '@zeta/auth';
 import { dispatchMouseClick, isString } from '@zeta/base';
 import { I18nService } from '@zeta/i18n';
-import { XcDialogOptions, XcDialogService, XcStatusBarEntryType, XcStatusBarService } from '@zeta/xc';
+import { XcDialogService, XcStatusBarEntryType, XcStatusBarService } from '@zeta/xc';
 
-import { BehaviorSubject, merge, Observable, of, Subject, Subscription, throwError } from 'rxjs/';
+import { BehaviorSubject, merge, Observable, of, Subject, Subscription, throwError } from 'rxjs';
 import { catchError, filter, finalize, map, mapTo, share, switchMap, switchMapTo, tap } from 'rxjs/operators';
 
 import { DeploymentState, XmomObjectType } from '../api/xmom-types';

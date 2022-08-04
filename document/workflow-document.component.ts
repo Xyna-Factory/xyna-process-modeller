@@ -21,8 +21,8 @@ import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflo
 import { copyToClipboard, KeyboardEventType, KeyDistributionService, pasteFromClipboard } from '@zeta/base';
 import { XcContentEditableDirective, XcMenuItem, XcStatusBarEntryType, XcStatusBarService } from '@zeta/xc';
 
-import { Subscription, throwError } from 'rxjs/';
-import { catchError, filter, map } from 'rxjs/operators/';
+import { Subscription, throwError } from 'rxjs';
+import { catchError, filter, map } from 'rxjs/operators';
 
 import { DeploymentState } from '../api/xmom-types';
 import { ModellingActionType } from '../api/xmom.service';

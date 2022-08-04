@@ -21,7 +21,7 @@ import { MessageBusService } from '@yggdrasil/events';
 import { AuthService } from '@zeta/auth';
 import { XcFormInputComponent } from '@zeta/xc';
 
-import { Subject } from 'rxjs/';
+import { Subject } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';

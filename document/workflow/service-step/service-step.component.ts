@@ -18,7 +18,7 @@
 import { AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostBinding, Injector, Input, OnDestroy, Optional } from '@angular/core';
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 
-import { Subscription } from 'rxjs/';
+import { Subscription } from 'rxjs';
 
 import { XoBranch } from '../../../xo/branch.model';
 import { XoConditionalBranching } from '../../../xo/conditional-branching.model';

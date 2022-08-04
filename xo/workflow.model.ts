@@ -17,7 +17,7 @@
  */
 import { XoObjectClass, XoProperty, XoTransient } from '@zeta/api';
 
-import { BehaviorSubject, Observable } from 'rxjs/';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { DeploymentState, Orderable, XmomObjectType } from '../api/xmom-types';
 import { XoContentArea } from './content-area.model';

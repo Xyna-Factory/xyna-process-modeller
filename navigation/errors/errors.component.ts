@@ -18,7 +18,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 
 import { DocumentService } from '../../document/document.service';
-import { of, Subscription } from 'rxjs/';
+import { of, Subscription } from 'rxjs';
 
 import { map } from 'rxjs/operators';
 

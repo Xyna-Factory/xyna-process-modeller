@@ -22,7 +22,7 @@ import { RuntimeContext } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcTabComponent } from '@zeta/xc';
 
-import { BehaviorSubject, Observable, Observer, of, Subject } from 'rxjs/';
+import { BehaviorSubject, Observable, Observer, of, Subject } from 'rxjs';
 import { distinctUntilChanged, filter, map, switchMap, takeUntil } from 'rxjs/operators';
 
 import { XmomObjectType } from '../api/xmom-types';

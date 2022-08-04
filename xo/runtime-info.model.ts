@@ -17,7 +17,7 @@
  */
 import { Xo, XoArray, XoArrayClass, XoObject, XoObjectClass, XoProperty } from '@zeta/api';
 
-import { BehaviorSubject, Observable } from 'rxjs/';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 
 export interface IterationInfo {

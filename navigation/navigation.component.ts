@@ -21,7 +21,7 @@ import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular
 import { XoArray } from '@zeta/api';
 import { XcDialogService, XcMenuItem } from '@zeta/xc';
 
-import { merge, of, Subscription } from 'rxjs/';
+import { merge, of, Subscription } from 'rxjs';
 
 import { XmomService } from '../api/xmom.service';
 import { DocumentService } from '../document/document.service';
