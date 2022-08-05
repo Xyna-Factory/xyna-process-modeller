@@ -19,10 +19,10 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnDe
 
 import { createSVGGroup, createSVGHorizontalCubicBezierPath, removeAllChildren } from '@zeta/base/draw';
 
-import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs/';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { Vector2 } from 'three';
 
-import { ConnectionType, XoConnection, XoConnectionArray } from '../../../xo/connection.model';
+import { DataConnectionType, XoConnection, XoConnectionArray } from '../../../xo/connection.model';
 import { XoSetDataflowConnectionRequest } from '../../../xo/set-dataflow-connection-request.model';
 import { XoWorkflow } from '../../../xo/workflow.model';
 import { ComponentMappingService } from '../../component-mapping.service';
@@ -40,7 +40,7 @@ class Flow {
     private inlet: Vector2;
     private bgElement: SVGElement;
     private fgElement: SVGElement;
-    private readonly _type: ConnectionType;
+    private readonly _type: DataConnectionType;
     private readonly connection: XoConnection;
     private readonly readonly: boolean;
     private hasEventListeners: boolean;
@@ -69,7 +69,7 @@ class Flow {
      * @param addButtons Buttons to use for adding a user connection
      * @param removeButtons Buttons to use for removing a user connection
      */
-    constructor(parent: SVGElement, from: ModellingObjectComponent, to: ModellingObjectComponent, type: ConnectionType, offsetFrom: number, offsetTo: number, addButtons: ElementRef[], removeButtons: ElementRef[], tooltip: ElementRef, connection: XoConnection, readonly: boolean) {
+    constructor(parent: SVGElement, from: ModellingObjectComponent, to: ModellingObjectComponent, type: DataConnectionType, offsetFrom: number, offsetTo: number, addButtons: ElementRef[], removeButtons: ElementRef[], tooltip: ElementRef, connection: XoConnection, readonly: boolean) {
         this.parent = parent;
         this._from = from;
         this._to = to;
@@ -120,7 +120,7 @@ class Flow {
 
 
     private updateButtonState() {
-        const buttons = this.type === ConnectionType.ambigue ? this.addButtons : (this.type === ConnectionType.user) ? this.removeButtons : null;
+        const buttons = this.type === DataConnectionType.ambigue ? this.addButtons : (this.type === DataConnectionType.user) ? this.removeButtons : null;
 
         /** @todo make it better */
         if (buttons) {
@@ -137,7 +137,7 @@ class Flow {
         this.selectionSubject.next(true);
         this.updateSelectionState();
 
-        const buttons = this.type === ConnectionType.ambigue ? this.addButtons : (this.type === ConnectionType.user) ? this.removeButtons : null;
+        const buttons = this.type === DataConnectionType.ambigue ? this.addButtons : (this.type === DataConnectionType.user) ? this.removeButtons : null;
         if (buttons && !this.readonly) {
             buttons[0].nativeElement.classList.add('visible');
             buttons[1].nativeElement.classList.add('visible');
@@ -236,7 +236,7 @@ class Flow {
         this.hasEventListeners = true;
 
         // Note that event listeners on old elements will be collected by the garbage collector
-        if (this.type !== ConnectionType.auto) {
+        if (this.type !== DataConnectionType.auto) {
             this.bgElement.addEventListener('click', (event: MouseEvent) => {
                 event.stopPropagation();
                 this.select();
@@ -268,7 +268,7 @@ class Flow {
     }
 
 
-    get type(): ConnectionType {
+    get type(): DataConnectionType {
         return this._type;
     }
 
@@ -377,15 +377,15 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
 
                 if (source && target) {
                     switch (connection.type) {
-                        case ConnectionType.auto:
+                        case DataConnectionType.auto:
                             addValue(this.incomingAutoConnections, target, { modellingObject: source, connection: connection });
                             addValue(this.outgoingAutoConnections, source, { modellingObject: target, connection: connection });
                             break;
-                        case ConnectionType.ambigue:
+                        case DataConnectionType.ambigue:
                             addValue(this.incomingAmbigueConnections, target, { modellingObject: source, connection: connection });
                             addValue(this.outgoingAmbigueConnections, source, { modellingObject: target, connection: connection });
                             break;
-                        case ConnectionType.user:
+                        case DataConnectionType.user:
                             addValue(this.incomingUserConnections, target, { modellingObject: source, connection: connection });
                             addValue(this.outgoingUserConnections, source, { modellingObject: target, connection: connection });
                             break;
@@ -441,7 +441,7 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
         let numFlowsOut = 0;
         let currentFlowOut = 0;
 
-        const drawConnections = (items: Array<ConnectionObject>, directionIn: boolean, type: ConnectionType) => {
+        const drawConnections = (items: Array<ConnectionObject>, directionIn: boolean, type: DataConnectionType) => {
             if (items) {
                 for (const item of items) {
                     // if a branch is selected, don't show connections belonging to another branch
@@ -474,7 +474,7 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
                     );
                     flow.doubleClicked.subscribe(
                         () => {
-                            if (flow.type === ConnectionType.ambigue) {
+                            if (flow.type === DataConnectionType.ambigue) {
                                 this.addConnection();
                             }
                         }
@@ -494,12 +494,12 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
             numFlowsIn = incomingAuto.length + incomingAmbigue.length + incomingUser.length;
             numFlowsOut = outgoingAuto.length + outgoingAmbigue.length + outgoingUser.length;
 
-            drawConnections(this.sortConnections(incomingAuto), true, ConnectionType.auto);
-            drawConnections(this.sortConnections(incomingAmbigue), true, ConnectionType.ambigue);
-            drawConnections(this.sortConnections(incomingUser), true, ConnectionType.user);
-            drawConnections(this.sortConnections(outgoingAuto), false, ConnectionType.auto);
-            drawConnections(this.sortConnections(outgoingAmbigue), false, ConnectionType.ambigue);
-            drawConnections(this.sortConnections(outgoingUser), false, ConnectionType.user);
+            drawConnections(this.sortConnections(incomingAuto), true, DataConnectionType.auto);
+            drawConnections(this.sortConnections(incomingAmbigue), true, DataConnectionType.ambigue);
+            drawConnections(this.sortConnections(incomingUser), true, DataConnectionType.user);
+            drawConnections(this.sortConnections(outgoingAuto), false, DataConnectionType.auto);
+            drawConnections(this.sortConnections(outgoingAmbigue), false, DataConnectionType.ambigue);
+            drawConnections(this.sortConnections(outgoingUser), false, DataConnectionType.user);
         }
     }
 
@@ -572,16 +572,16 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
 
 
     addConnection() {
-        this.changeConnection(ConnectionType.user);
+        this.changeConnection(DataConnectionType.user);
     }
 
 
     removeConnection() {
-        this.changeConnection(ConnectionType.none);
+        this.changeConnection(DataConnectionType.none);
     }
 
 
-    private changeConnection(type: ConnectionType) {
+    private changeConnection(type: DataConnectionType) {
         if (!this.readonly) {
             const branchId = this.selectedFlow.branchId;
             const request = new XoSetDataflowConnectionRequest(undefined, this.selectedFlow.from.getModel().id, this.selectedFlow.to.getModel().id, type, this.workflow.revision, branchId);

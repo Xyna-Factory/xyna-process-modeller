@@ -17,7 +17,7 @@
  */
 import { FullQualifiedName, Xo, XoArray, XoArrayClass, XoObjectClass, XoProperty, XoTransient } from '@zeta/api';
 
-import { ConnectionType, ConnectionTypeSeverity, XoConnection } from './connection.model';
+import { DataConnectionType, ConnectionTypeSeverity, XoConnection } from './connection.model';
 import { XoInsertRequestContent } from './insert-request-content.model';
 import { XoInsertVariableRequestContent } from './insert-variable-request-content.model';
 import { XoModellingItem } from './modelling-item.model';
@@ -78,7 +78,7 @@ export class XoVariable extends XoXmomItem {
 
     getConstant(branchId?: string): Xo {
         const connection = this.inConnections.find(c =>
-            (c.branchId === branchId) && (c.type === ConnectionType.constant)
+            (c.branchId === branchId) && (c.type === DataConnectionType.constant)
         );
         if (connection) {
             return connection.constantObject;
@@ -88,11 +88,11 @@ export class XoVariable extends XoXmomItem {
 
     /**
      * Returns
-     *   - ConnectionType.none for no connections
+     *   - DataConnectionType.none for no connections
      *   - most erroneous link state over all connections (matching branchId) otherwise
      */
     getLinkStateIn(branchId?: string): string {
-        let type: ConnectionType;
+        let type: DataConnectionType;
         this.inConnections
             .filter (c => (!branchId || c.branchId === branchId))
             .forEach(c => {
@@ -100,7 +100,7 @@ export class XoVariable extends XoXmomItem {
                     type = c.type;
                 }
             });
-        return type || ConnectionType.auto;
+        return type || DataConnectionType.auto;
     }
 
 

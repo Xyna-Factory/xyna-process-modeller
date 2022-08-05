@@ -17,14 +17,14 @@
  */
 import { ChangeDetectorRef, Component, Injector, LOCALE_ID, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
-import { QueryParamService, UrlQueryParam } from '@fman/misc/services/query-param.service';
+import { QueryParamService } from '@fman/misc/services/query-param.service';
 import { ApiService, FullQualifiedName, RuntimeContextSelectionSettings } from '@zeta/api';
 import { KeyboardEventType, KeyDistributionService, OutsideListenerService } from '@zeta/base';
 import { I18nService } from '@zeta/i18n';
 import { RouteComponent, RuntimeContextSelectionComponent } from '@zeta/nav';
 import { XcDialogService, XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 
-import { Subject, Subscription } from 'rxjs/';
+import { Subject, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
 import { XmomObjectType } from './api/xmom-types';
@@ -77,7 +77,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
     @ViewChild(XcTabBarComponent, { static: false })
     set tabBar(value: XcTabBarComponent) {
         this._tabBar = value;
-        this._tabBarInitialized.next();
+        this._tabBarInitialized.next(null);
         this._tabBarInitialized.complete();
     }
 

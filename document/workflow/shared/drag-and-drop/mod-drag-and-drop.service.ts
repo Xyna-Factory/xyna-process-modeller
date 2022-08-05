@@ -23,7 +23,7 @@ import { XoJson } from '@zeta/api';
 import { AuthService } from '@zeta/auth';
 import { randomUUID } from '@zeta/base';
 
-import { Observable, Subject } from 'rxjs/';
+import { Observable, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { XoBranch } from '../../../../xo/branch.model';

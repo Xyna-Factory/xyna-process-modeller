@@ -20,7 +20,7 @@ import { XoWarningArray } from '@pmod/xo/warning.model';
 import { RuntimeContext } from '@zeta/api';
 import { XcTabBarItem } from '@zeta/xc';
 
-import { BehaviorSubject, Observable } from 'rxjs/';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { DeploymentState } from '../../api/xmom-types';
@@ -35,7 +35,7 @@ export type DocumentItem = XoXmomItem & {
 };
 
 
-interface LockInfo {
+interface DocumentLockInfo {
     userLock: string;   // another user holds the lock
     rtcLock: boolean;   // document is locked due to globally mismatching RTC
     readonly: boolean;  // document model is completely readonly for some reason
@@ -46,7 +46,7 @@ export abstract class DocumentModel<T extends DocumentItem = DocumentItem> {
 
     static readonly UNLOCKED = Object.seal({userLock: undefined, rtcLock: false, readonly: false});
 
-    private readonly lockedSubject = new BehaviorSubject<LockInfo>(DocumentModel.UNLOCKED);
+    private readonly lockedSubject = new BehaviorSubject<DocumentLockInfo>(DocumentModel.UNLOCKED);
     private readonly issuesSubject = new BehaviorSubject<XoIssueArray>(null);
     private readonly warningsSubject = new BehaviorSubject<XoWarningArray>(null);
 
@@ -131,12 +131,12 @@ export abstract class DocumentModel<T extends DocumentItem = DocumentItem> {
     }
 
 
-    get lockInfo(): LockInfo {
+    get lockInfo(): DocumentLockInfo {
         return this.lockedSubject.value;
     }
 
 
-    updateLock(lockInfo: LockInfo) {
+    updateLock(lockInfo: DocumentLockInfo) {
         this.lockedSubject.next(lockInfo);
         this.updateTabBarLabel();
     }

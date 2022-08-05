@@ -20,7 +20,7 @@ import { Component, ElementRef, Injector, Input, OnDestroy, Optional } from '@an
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { XcMenuItem } from '@zeta/xc';
 
-import { Subscription } from 'rxjs/';
+import { Subscription } from 'rxjs';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { ComponentMappingService } from '../../../document/component-mapping.service';

@@ -23,7 +23,7 @@ import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model
 import { ErrorItem } from '@pmod/xo/issue.model';
 import { XoWorkflow } from '@pmod/xo/workflow.model';
 
-import { merge } from 'rxjs/';
+import { merge } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 

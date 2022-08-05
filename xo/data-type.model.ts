@@ -17,7 +17,7 @@
  */
 import { XoObjectClass, XoProperty, XoTransient } from '@zeta/api';
 
-import { BehaviorSubject, Observable } from 'rxjs/';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { DeploymentState, XmomObjectType } from '../api/xmom-types';
 import { XoDataTypeTypeLabelArea } from './data-type-type-label-area.model';

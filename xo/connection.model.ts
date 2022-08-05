@@ -18,7 +18,7 @@
 import { Xo, XoArray, XoArrayClass, XoClassInterfaceFrom, XoObject, XoObjectClass, XoProperty, XoTransient } from '@zeta/api';
 
 
-export enum ConnectionType {
+export enum DataConnectionType {
     auto = 'auto',
     ambigue = 'ambigue',
     user = 'user',
@@ -27,13 +27,13 @@ export enum ConnectionType {
 }
 
 
-export function ConnectionTypeSeverity(type: ConnectionType): number {
+export function ConnectionTypeSeverity(type: DataConnectionType): number {
     switch (type) {
-        case ConnectionType.auto: return 0;
-        case ConnectionType.user: return 1;
-        case ConnectionType.constant: return 2;
-        case ConnectionType.ambigue: return 3;
-        case ConnectionType.none: return 4;
+        case DataConnectionType.auto: return 0;
+        case DataConnectionType.user: return 1;
+        case DataConnectionType.constant: return 2;
+        case DataConnectionType.ambigue: return 3;
+        case DataConnectionType.none: return 4;
         default: return 0;
     }
 }
@@ -54,7 +54,7 @@ export class XoConnection extends XoObject {
 
     // eslint-disable-next-line zeta/xo
     @XoProperty()
-    type: ConnectionType;
+    type: DataConnectionType;
 
     @XoProperty()
     constant: string;
@@ -73,7 +73,7 @@ export class XoConnection extends XoObject {
             this.constantObject = new (XoClassInterfaceFrom(xoJson))().decode(xoJson);
         }
 
-        this.type = ConnectionType[this.type.toLowerCase()];
+        this.type = DataConnectionType[this.type.toLowerCase()];
     }
 }
 

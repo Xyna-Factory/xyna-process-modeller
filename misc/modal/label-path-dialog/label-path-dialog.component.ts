@@ -20,7 +20,7 @@ import { Component, HostListener, Injector, Optional, ViewChild } from '@angular
 import { I18nService } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcDialogComponent, XcFormDirective, XcOptionItem, XcOptionItemString } from '@zeta/xc';
 
-import { Observable } from 'rxjs/';
+import { Observable } from 'rxjs';
 
 import { labelPathDialog_translations_de_DE } from './locale/label-path-dialog-translations.de-DE';
 import { labelPathDialog_translations_en_US } from './locale/label-path-dialog-translations.en-US';

@@ -20,7 +20,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, O
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcMenuItem } from '@zeta/xc';
 
-import { merge, of, Subscription } from 'rxjs/';
+import { merge, of, Subscription } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 
 import { XmomObjectType } from '../api/xmom-types';

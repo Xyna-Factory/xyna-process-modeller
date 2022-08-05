@@ -21,7 +21,7 @@ import { coerceBoolean } from '@zeta/base';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService } from '@zeta/xc';
 
-import { Subscription } from 'rxjs/';
+import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { XoItem } from '../../../../xo/item.model';

@@ -19,7 +19,7 @@ import { Component, HostBinding, Injector } from '@angular/core';
 
 import { XcRichListItemComponent } from '@zeta/xc';
 
-import { Subject } from 'rxjs/';
+import { Subject } from 'rxjs';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoUsedRequest } from '../../../xo/change-used-request.model';

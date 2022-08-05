@@ -21,7 +21,7 @@ import { FullQualifiedName, XoStructureType } from '@zeta/api';
 import { isString } from '@zeta/base';
 import { XcAutocompleteDataWrapper, XcCheckboxComponent, XcDialogService, XcFormAutocompleteComponent, XcOptionItemString, XcOptionItemStringOrUndefined } from '@zeta/xc';
 
-import { merge, Observable } from 'rxjs/';
+import { merge, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { ModellingActionType } from '../../../api/xmom.service';

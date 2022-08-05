@@ -17,7 +17,7 @@
  */
 import { Injectable } from '@angular/core';
 import { WorkflowDetailSettingsService } from '@pmod/workflow-detail-settings.service';
-import { BehaviorSubject, Observable, Subject } from 'rxjs/';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 /**
  * Manages detail lever per Workflow. I. e.

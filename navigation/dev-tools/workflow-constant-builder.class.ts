@@ -17,7 +17,7 @@
  */
 import { ApiService, OrderTypeSignature, RuntimeContext } from '@zeta/api';
 
-import { concat, Observable, of, Subject } from 'rxjs/';
+import { concat, Observable, of, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { XmomObjectType } from '../../api/xmom-types';

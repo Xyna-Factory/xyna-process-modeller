@@ -41,48 +41,33 @@ export enum RelationTypeEnum {
 
 @XoObjectClass(XoXmomItemResponse, 'xmcp.processmodeller.datatypes.response', 'GetRelationsResponse')
 export class XoGetXmomRelationsResponse extends XoXmomItemResponse {
-    @XoProperty(XoFactoryItemArray)
-    'calledBy': XoFactoryItemArray;
+    @XoProperty(XoFactoryItemArray) 'calledBy': XoFactoryItemArray;
 
-    @XoProperty(XoFactoryItemArray)
-    'extends0': XoFactoryItemArray;
+    @XoProperty(XoFactoryItemArray) 'extends0': XoFactoryItemArray;
 
-    @XoProperty(XoFactoryItemArray)
-    'extendedBy0': XoFactoryItemArray;
+    @XoProperty(XoFactoryItemArray) 'extendedBy0': XoFactoryItemArray;
 
-    @XoProperty(XoFactoryItemArray)
-    'inputOf0': XoFactoryItemArray;
+    @XoProperty(XoFactoryItemArray) 'inputOf0': XoFactoryItemArray;
 
-    @XoProperty(XoFactoryItemArray)
-    'instanceServiceReferenceOf': XoFactoryItemArray;
+    @XoProperty(XoFactoryItemArray) 'instanceServiceReferenceOf': XoFactoryItemArray;
 
-    @XoProperty(XoFactoryItemArray)
-    'outputOf0': XoFactoryItemArray;
+    @XoProperty(XoFactoryItemArray) 'outputOf0': XoFactoryItemArray;
 
-    @XoProperty(XoFactoryItemArray)
-    'hasMemberOf': XoFactoryItemArray;
+    @XoProperty(XoFactoryItemArray) 'hasMemberOf': XoFactoryItemArray;
 
-    @XoProperty(XoFactoryItemArray)
-    'isMemberOf': XoFactoryItemArray;
+    @XoProperty(XoFactoryItemArray) 'isMemberOf': XoFactoryItemArray;
 
-    @XoProperty(XoFactoryItemArray)
-    'thrownBy0': XoFactoryItemArray;
+    @XoProperty(XoFactoryItemArray) 'thrownBy0': XoFactoryItemArray;
 
-    @XoProperty(XoFactoryItemArray)
-    'usedIn0': XoFactoryItemArray;
+    @XoProperty(XoFactoryItemArray) 'usedIn0': XoFactoryItemArray;
 
-    @XoProperty(XoFactoryItemArray)
-    'inputOf': XoFactoryItemArray;
+    @XoProperty(XoFactoryItemArray) 'inputOf': XoFactoryItemArray;
 
-    @XoProperty(XoFactoryItemArray)
-    'calls': XoFactoryItemArray;
+    @XoProperty(XoFactoryItemArray) 'calls': XoFactoryItemArray;
 
-    @XoProperty(XoFactoryItemArray)
-    'exceptions': XoFactoryItemArray;
+    @XoProperty(XoFactoryItemArray) 'exceptions': XoFactoryItemArray;
 
-    @XoProperty(XoFactoryItemArray)
-    'needs': XoFactoryItemArray;
+    @XoProperty(XoFactoryItemArray) 'needs': XoFactoryItemArray;
 
-    @XoProperty(XoFactoryItemArray)
-    'produces': XoFactoryItemArray;
+    @XoProperty(XoFactoryItemArray) 'produces': XoFactoryItemArray;
 }

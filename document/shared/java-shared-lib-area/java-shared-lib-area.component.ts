@@ -20,7 +20,7 @@ import { WorkflowDetailLevelService } from '../../../document/workflow-detail-le
 
 import { XcRichListItem } from '@zeta/xc';
 
-import { Subject, Subscription } from 'rxjs/';
+import { Subject, Subscription } from 'rxjs';
 
 import { XoJavaSharedLibrariesArea } from '../../../xo/java-shared-libraries-area.model';
 import { ComponentMappingService } from '../../component-mapping.service';

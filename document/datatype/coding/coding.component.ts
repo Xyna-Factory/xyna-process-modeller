@@ -59,8 +59,8 @@ export class CodingComponent {
     @Output()
     readonly implementationChange = new EventEmitter<string>();
 
-    // eslint-disable-next-line @angular-eslint/no-output-native
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-native
     readonly blur = new EventEmitter<FocusEvent>();
 
     codingBlur(event: FocusEvent) {

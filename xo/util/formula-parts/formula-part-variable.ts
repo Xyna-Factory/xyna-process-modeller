@@ -17,7 +17,7 @@
  */
 import { ApiService, RuntimeContext, XoStructureObject } from '@zeta/api';
 
-import { Observable } from 'rxjs/';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { XoData } from '../../data.model';
