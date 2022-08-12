@@ -27,6 +27,7 @@ import { XmomService } from '../api/xmom.service';
 import { DocumentService } from '../document/document.service';
 import { ClipboardComponent } from './clipboard/clipboard.component';
 import { CommonNavigationComponent } from './common-navigation-class/common-navigation-component';
+import { CompareComponent } from './compare/compare.component';
 import { DetailsComponent } from './details/details.component';
 import { WorkflowConstantBuilderModalComponent } from './dev-tools/workflow-constant-builder-modal/workflow-constant-builder-modal.component';
 import { ErrorsComponent } from './errors/errors.component';
@@ -43,6 +44,7 @@ enum NavigationbarArea {
     Clipboard,
     Errors,
     WorklowLauncher,
+    Compare,
     Help
 }
 
@@ -96,6 +98,7 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild(ClipboardComponent, { static: true }) clipboardComponent: ClipboardComponent;
     @ViewChild(ErrorsComponent, { static: true }) errorsComponent: ErrorsComponent;
     @ViewChild(WorkflowLauncherComponent, { static: true }) workflowLauncherComponent: WorkflowLauncherComponent;
+    @ViewChild(CompareComponent, { static: true }) compareComponent: CompareComponent;
     @ViewChild(HelpComponent, { static: true }) helpComponent: HelpComponent;
 
     private lastOpened: NavigationbarArea = null;
@@ -110,6 +113,7 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
     private readonly clipboardButton: NavigationItem = { label: 'icon-clipboard', iconName: 'copy', iconStyle: 'xds', areaType: NavigationbarArea.Clipboard };
     private readonly errorsButton: NavigationItem = { label: 'icon-issues', iconName: 'msgwarning', iconStyle: 'xds', areaType: NavigationbarArea.Errors };
     private readonly launcherButton: NavigationItem = { label: 'icon-workflow-launcher', iconName: 'sp-launcher', iconStyle: 'modeller', areaType: NavigationbarArea.WorklowLauncher };
+    private readonly compareButton: NavigationItem = { label: 'icon-compare', iconName: 'sp-compare', iconStyle: 'modeller', areaType: NavigationbarArea.Compare };
     private readonly helpButton: NavigationItem = { label: 'icon-help', iconName: 'sp-helper', iconStyle: 'modeller', areaType: NavigationbarArea.Help };
 
     readonly buttons: NavigationItem[] = [
@@ -119,6 +123,7 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
         this.clipboardButton,
         this.errorsButton,
         this.launcherButton,
+        this.compareButton,
         this.helpButton
     ];
 
@@ -143,6 +148,7 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
             .set(NavigationbarArea.Clipboard, this.clipboardComponent)
             .set(NavigationbarArea.Errors, this.errorsComponent)
             .set(NavigationbarArea.WorklowLauncher, this.workflowLauncherComponent)
+            .set(NavigationbarArea.Compare, this.compareComponent)
             .set(NavigationbarArea.Help, this.helpComponent);
 
         this.switchArea(NavigationbarArea.Factory);
