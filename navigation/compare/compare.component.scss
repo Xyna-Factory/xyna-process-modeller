@@ -18,12 +18,21 @@
 @import "const";
 
 :host {
-    & > .area-content {
-        color: $color-normal;
+    width: 100%;
 
-        h2 {
-            font-size: $font-size-h2;
-            margin: 12px 0 4px 0;
+    & > header {
+        display: flex;
+
+        & > h2 {
+            margin-right: auto;
+        }
+    }
+
+    & > .area-content {
+        .workflow-container {
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 auto;
         }
     }
 }

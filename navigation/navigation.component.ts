@@ -75,7 +75,7 @@ export enum AreaValue {
                 width: '300px'
             })),
             state('opened_fitted', style({
-                width: 'fit-content'
+                width: '50vw'
             })),
             transition('closed <=> opened', animate('.3s ease-in')),
             transition('closed <=> opened_fitted', animate('.3s ease-in')),
@@ -189,8 +189,8 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
         // change activeNavigationComponent
         this.area = area;
 
-        // use the opened fitted animation for the workflow launcher
-        if (this.area === NavigationbarArea.WorklowLauncher) {
+        // use the opened fitted animation for the compare area
+        if (this.area === NavigationbarArea.Compare) {
             this.areaValue = AreaValue.OpenedFitted;
         } else {
             this.areaValue = AreaValue.Opened;
