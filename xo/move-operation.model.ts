@@ -15,35 +15,28 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-@import "const";
+import { XoArray, XoArrayClass, XoObjectClass, XoProperty } from '@zeta/api';
+import { XoDiffOperation } from './diff-operation.model';
 
 
-:host {
-    overflow: hidden;
-    display: flex;
-    flex: 1 1 auto;
-    background-color: $workflow-area-background-color;
-    position: relative;
+@XoObjectClass(XoDiffOperation, 'xmcp.processmodeller.datatypes', 'MoveOperation')
+export class XoMoveOperation extends XoDiffOperation {
 
-    > .drop-area {
-        overflow: auto;
-        display: flex;
-        flex: 1 1 auto;
-        flex-direction: column;
-        transition: background-color 150ms linear;
-        padding: ($service-step-vertical-gap / 4) ($service-step-vertical-gap / 2);
+    @XoProperty()
+    toContainerId: string;
 
-        &.mod-drop-area-hover {
-            background-color: #ffd988;  // shade of #fabb00
-        }
+    @XoProperty()
+    toIndex: number;
+
+
+    constructor(_ident?: string) {
+        super(_ident);
+
+        this.kind = 'MOVE_OPERATION';
     }
+}
 
-    > .hint {
-        position: absolute;
-        width: 100%;
-        text-align: center;
-        color: $color-gray-3;
-        font-style: italic;
-        padding: 20px;
-    }
+
+@XoArrayClass(XoMoveOperation)
+export class XoMoveOperationArray extends XoArray<XoMoveOperation> {
 }

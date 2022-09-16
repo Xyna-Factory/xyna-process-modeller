@@ -16,6 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { XoIssueArray } from '@pmod/xo/issue.model';
+import { XoItem } from '@pmod/xo/item.model';
 import { XoWarningArray } from '@pmod/xo/warning.model';
 import { RuntimeContext } from '@zeta/api';
 import { XcTabBarItem } from '@zeta/xc';
@@ -63,6 +64,9 @@ export abstract class DocumentModel<T extends DocumentItem = DocumentItem> {
 
     /** Determines whether this document's tab is active */
     tabActive = false;
+
+    // ID > item
+    itemsCache = new Map<string, XoItem>();
 
 
     constructor(

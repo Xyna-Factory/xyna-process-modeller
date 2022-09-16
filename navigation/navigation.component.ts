@@ -59,7 +59,7 @@ export interface NavigationItem {
 export enum AreaValue {
     Closed = 'closed',
     Opened = 'opened',
-    OpenedFitted = 'opened_fitted'
+    OpenedHalf = 'opened_half'
 }
 
 @Component({
@@ -74,13 +74,13 @@ export enum AreaValue {
             state('opened', style({
                 width: '300px'
             })),
-            state('opened_fitted', style({
+            state('opened_half', style({
                 width: '50vw'
             })),
             transition('closed <=> opened', animate('.3s ease-in')),
-            transition('closed <=> opened_fitted', animate('.3s ease-in')),
-            transition('opened_fitted => opened', animate('0s ease-in')),
-            transition('opened => opened_fitted', animate('.3s ease-in'))
+            transition('closed <=> opened_half', animate('.3s ease-in')),
+            transition('opened_half => opened', animate('0s ease-in')),
+            transition('opened => opened_half', animate('.3s ease-in'))
         ])
     ]/*,
     changeDetection: ChangeDetectionStrategy.OnPush*/
@@ -113,7 +113,7 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
     private readonly clipboardButton: NavigationItem = { label: 'icon-clipboard', iconName: 'copy', iconStyle: 'xds', areaType: NavigationbarArea.Clipboard };
     private readonly errorsButton: NavigationItem = { label: 'icon-issues', iconName: 'msgwarning', iconStyle: 'xds', areaType: NavigationbarArea.Errors };
     private readonly launcherButton: NavigationItem = { label: 'icon-workflow-launcher', iconName: 'sp-launcher', iconStyle: 'modeller', areaType: NavigationbarArea.WorklowLauncher };
-    private readonly compareButton: NavigationItem = { label: 'icon-compare', iconName: 'sp-compare', iconStyle: 'modeller', areaType: NavigationbarArea.Compare };
+    private readonly compareButton: NavigationItem = { label: 'icon-compare', iconName: 'misc-splitview', iconStyle: 'modeller', areaType: NavigationbarArea.Compare };
     private readonly helpButton: NavigationItem = { label: 'icon-help', iconName: 'sp-helper', iconStyle: 'modeller', areaType: NavigationbarArea.Help };
 
     readonly buttons: NavigationItem[] = [
@@ -191,7 +191,7 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
 
         // use the opened fitted animation for the compare area
         if (this.area === NavigationbarArea.Compare) {
-            this.areaValue = AreaValue.OpenedFitted;
+            this.areaValue = AreaValue.OpenedHalf;
         } else {
             this.areaValue = AreaValue.Opened;
         }

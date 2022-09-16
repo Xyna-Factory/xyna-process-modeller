@@ -29,10 +29,30 @@
     }
 
     & > .area-content {
+        flex-direction: row;
+        padding: 0;
+
         .workflow-container {
             display: flex;
             flex-direction: column;
             flex: 1 1 auto;
+
+            dataflow::ng-deep > .draw-area {
+                left: 36px;
+                top: 44px;
+
+                width: calc(100% - 36px);
+                height: calc(100% - 44px);
+            }
+        }
+
+        .conflict-list {
+            display: flex;
+            flex-direction: column;
+            flex: 0 0 auto;
+
+            min-width: 5vw;
+            max-width: 10vw;
         }
     }
 }

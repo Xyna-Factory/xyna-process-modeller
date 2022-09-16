@@ -227,7 +227,7 @@ export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowD
         this.untilDestroyed(
             this.documentService.xmomService.setDataflowConnection(this.workflow, request)
         ).subscribe(() =>
-            this.documentService.refreshXmomItem(this.workflow)
+            this.documentService.refreshDocument(this.document)
         );
     }
 }

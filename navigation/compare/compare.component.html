@@ -33,4 +33,8 @@
             [documentModel]="document"
         ></variable-area-document>
     </div>
+
+    <div class="conflict-list">
+        <xfm-mod-difference *ngFor="let diff of diffOperations" [difference]="diff"></xfm-mod-difference>
+    </div>
 </div>

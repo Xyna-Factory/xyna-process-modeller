@@ -21,7 +21,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { DeploymentState, Orderable, XmomObjectType } from '../api/xmom-types';
 import { XoContentArea } from './content-area.model';
-import { XoItem } from './item.model';
 import { XoModellingItem } from './modelling-item.model';
 import { XoService } from './service.model';
 import { XoVariable } from './variable.model';
@@ -82,14 +81,15 @@ export class XoWorkflow extends XoService implements Orderable {
     /**
      * @inheritdoc
      */
-    update(items: XoItem[]): boolean {
-        const result = super.update(items);
+    // 4989
+    // update(items: XoItem[]): boolean {
+    //     const result = super.update(items);
 
-        // rebuild variable map, because it could have changed after the update
-        this.updateVariableMap();
+    //     // rebuild variable map, because it could have changed after the update
+    //     this.updateVariableMap();
 
-        return result;
-    }
+    //     return result;
+    // }
 
 
     /**

@@ -130,6 +130,7 @@ import { ClipboardAreaComponent } from './navigation/clipboard/clipboard-area.co
 import { ClipboardItemComponent } from './navigation/clipboard/clipboard-item.component';
 import { ClipboardComponent } from './navigation/clipboard/clipboard.component';
 import { CompareComponent } from './navigation/compare/compare.component';
+import { DifferenceComponent } from './navigation/compare/difference/difference.component';
 import { DetailsComponent } from './navigation/details/details.component';
 import { RelationTableComponent } from './navigation/details/relation-table/relation-table.component';
 import { ShowXmlModalComponent } from './navigation/details/show-xml-modal/show-xml-modal.component';
@@ -181,6 +182,7 @@ import './xo/_import';
         DataflowComponent,
         DataTypeComponent,
         DetailsComponent,
+        DifferenceComponent,
         DocumentationAreaComponent,
         DropIndicatorComponent,
         ErrorDialogComponent,
