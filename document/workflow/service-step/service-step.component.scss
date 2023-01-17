@@ -33,7 +33,7 @@ $service-step-border-radius: unset !default;
     flex-direction: column;
     flex: 0 1 auto;
     align-items: center;
-    margin: ($service-step-vertical-gap / 2);
+    margin: calc(#{$service-step-vertical-gap} / 2);
     position: relative;
 
     &:focus {
@@ -45,9 +45,9 @@ $service-step-border-radius: unset !default;
     }
 
     &::ng-deep > drop-indicator {
-        padding: $service-step-vertical-gap / 2;
-        left: -$service-step-vertical-gap / 2;
-        top: -$service-step-vertical-gap / 2;
+        padding: calc(#{$service-step-vertical-gap} / 2);
+        left: calc(-#{$service-step-vertical-gap} / 2);
+        top: calc(-#{$service-step-vertical-gap} / 2);
     }
 }
 
@@ -74,8 +74,8 @@ $service-step-border-radius: unset !default;
 }
 ::ng-deep service-step[parent-direction="row"] {
     &::before {       // connection-lines in a row always connect to the content-area at the top
-        top: -($service-step-vertical-gap / 2 + $content-area-padding);
-        height: $service-step-vertical-gap / 2 + $content-area-padding;
+        top:    calc(-#{$service-step-vertical-gap} / 2 - #{$content-area-padding});
+        height: calc( #{$service-step-vertical-gap} / 2 + #{$content-area-padding});
     }
 }
 ::ng-deep branch > content-area {
