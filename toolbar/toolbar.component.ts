@@ -379,8 +379,8 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
             this.documentService.xmomService.runtimeContextChange,
             this.documentService.xmomService.itemSaved,
             this.documentService.xmomService.itemDeployed
-        ).subscribe(
-            () => this.cdr.detectChanges()
+        ).subscribe(() =>
+            this.cdr.markForCheck()
         );
     }
 
