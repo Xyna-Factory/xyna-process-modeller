@@ -114,8 +114,8 @@ $menu-width: 20px;
                     width: 0;
                     height: 0;
                     border-bottom: $exception-triangle-width solid $color-invert;
-                    border-left: $exception-triangle-width / 2 solid transparent;
-                    border-right: $exception-triangle-width / 2 solid transparent;
+                    border-left: calc(#{$exception-triangle-width} / 2) solid transparent;
+                    border-right: calc(#{$exception-triangle-width} / 2) solid transparent;
                 }
             }
 
@@ -205,8 +205,8 @@ $menu-width: 20px;
 
 
     &::ng-deep > drop-indicator {
-        padding: $variable-gap / 2;
-        left: -$variable-gap / 2;
-        top: -$variable-gap / 2;
+        padding: calc(#{$variable-gap} / 2);
+        left: calc(-#{$variable-gap} / 2);
+        top: calc(-#{$variable-gap} / 2);
     }
 }

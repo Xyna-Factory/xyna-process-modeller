@@ -36,16 +36,16 @@ $indicator-width: 4px;
 
     // compensate indicator-width
     &.left {
-        margin-left: -$indicator-width / 2;
+        margin-left: calc(#{-$indicator-width} / 2);
     }
     &.top {
-        margin-top: -$indicator-width / 2;
+        margin-top: calc(-#{$indicator-width} / 2);
     }
     &.right {
-        margin-right: -$indicator-width / 2;
+        margin-right: calc(-#{$indicator-width} / 2);
     }
     &.bottom {
-        margin-bottom: -$indicator-width / 2;
+        margin-bottom: calc(-#{$indicator-width} / 2);
     }
 
     // only show indicator at one side

@@ -57,7 +57,7 @@ $toggle-button-size: 16px;
         display: flex;
         position: absolute;
         right: 4px;
-        bottom: -$toggle-button-size / 2;
+        bottom: calc(-#{$toggle-button-size} / 2);
         z-index: 10;
 
         .button {
