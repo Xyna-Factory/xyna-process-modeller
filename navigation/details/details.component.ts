@@ -144,7 +144,7 @@ export class DetailsComponent extends CommonNavigationComponent {
             filter(result => result),
             switchMapTo(this.xmomService.unlockXmomObject(this.item))
         ).subscribe(() => {
-            this.documentService.refreshXmomItem(this.item);
+            this.documentService.refreshDocument(this.document);
             this.getDeploymentItem();
         });
     }

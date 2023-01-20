@@ -16,6 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { XoIssueArray } from '@pmod/xo/issue.model';
+import { XoItem } from '@pmod/xo/item.model';
 import { XoWarningArray } from '@pmod/xo/warning.model';
 import { RuntimeContext } from '@zeta/api';
 import { XcTabBarItem } from '@zeta/xc';
@@ -53,16 +54,19 @@ export abstract class DocumentModel<T extends DocumentItem = DocumentItem> {
     private _tabBarItem: XcTabBarItem<DocumentModel>;
 
     /** Set to true by document service while saving this document */
-    saving = false;
+    private readonly _saving = new BehaviorSubject<boolean>(false);
 
     /** Set to true by document service while saving this document as another document (additionally to saving-flag) */
-    savingAs = false;
+    private readonly _savingAs = new BehaviorSubject<boolean>(false);
 
     /** Set to true by document service while deploying this document */
-    deploying = false;
+    private readonly _deploying = new BehaviorSubject<boolean>(false);
 
     /** Determines whether this document's tab is active */
     tabActive = false;
+
+    // ID > item
+    itemsCache = new Map<string, XoItem>();
 
 
     constructor(
@@ -117,9 +121,57 @@ export abstract class DocumentModel<T extends DocumentItem = DocumentItem> {
 
 
     // =====================================================================================
-    // LOCK
+    // SAVE & DEPLOY STATES
     // =====================================================================================
 
+    get savingChange(): Observable<boolean> {
+        return this._saving.asObservable();
+    }
+
+
+    get saving(): boolean {
+        return this._saving.value;
+    }
+
+
+    set saving(value: boolean) {
+        this._saving.next(value);
+    }
+
+
+    get savingAsChange(): Observable<boolean> {
+        return this._savingAs.asObservable();
+    }
+
+
+    get savingAs(): boolean {
+        return this._savingAs.value;
+    }
+
+
+    set savingAs(value: boolean) {
+        this._savingAs.next(value);
+    }
+
+
+    get deployingChange(): Observable<boolean> {
+        return this._deploying.asObservable();
+    }
+
+
+    get deploying(): boolean {
+        return this._deploying.value;
+    }
+
+
+    set deploying(value: boolean) {
+        this._deploying.next(value);
+    }
+
+
+    // =====================================================================================
+    // LOCK
+    // =====================================================================================
 
     get isLocked(): boolean {
         return !!this.lockInfo.userLock || this.lockInfo.rtcLock || this.lockInfo.readonly;
@@ -145,7 +197,6 @@ export abstract class DocumentModel<T extends DocumentItem = DocumentItem> {
     // =====================================================================================
     // ISSUES & WARNINGS
     // =====================================================================================
-
 
     get issuesChange(): Observable<XoIssueArray> {
         return this.issuesSubject.asObservable();

@@ -16,6 +16,12 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Injectable, OnDestroy } from '@angular/core';
+import { XoInsertOperation } from '@pmod/xo/insert-operation.model';
+import { Containing } from '@pmod/xo/modelling-item.model';
+import { XoMoveOperation } from '@pmod/xo/move-operation.model';
+import { XoRemoveOperation } from '@pmod/xo/remove-operation.model';
+import { XoReplaceOperation } from '@pmod/xo/replace-operation.model';
+import { XoXmomItemUpdate } from '@pmod/xo/xmom-item-update.model';
 
 import { FQNRTC, MessageBusService, XMOMLocated, XoDocumentChange, XoDocumentLock, XoDocumentUnlock } from '@yggdrasil/events';
 import { FullQualifiedName, RuntimeContext } from '@zeta/api';
@@ -28,7 +34,7 @@ import { BehaviorSubject, merge, Observable, of, Subject, Subscription, throwErr
 import { catchError, filter, finalize, map, mapTo, share, switchMap, switchMapTo, tap } from 'rxjs/operators';
 
 import { DeploymentState, XmomObjectType } from '../api/xmom-types';
-import { ModellingAction, ModellingActionType, XmomService } from '../api/xmom.service';
+import { ModellingAction, ModellingActionType, XmomService, XMOMState } from '../api/xmom.service';
 import { PMOD_DE } from '../locale/pmod.DE';
 import { PMOD_EN } from '../locale/pmod.EN';
 import { LabelPathDialogComponent, LabelPathDialogData, LabelPathDialogResult } from '../misc/modal/label-path-dialog/label-path-dialog.component';
@@ -42,7 +48,6 @@ import { XoGetExceptionTypeResponse } from '../xo/get-exception-type-response.mo
 import { XoGetServiceGroupResponse } from '../xo/get-service-group-response.model';
 import { XoGetWorkflowResponse } from '../xo/get-workflow-response.model';
 import { XoGetXmomItemResponse } from '../xo/get-xmom-item-response.model';
-import { XoItem } from '../xo/item.model';
 import { XoRefactorRequest } from '../xo/refactor-request.model';
 import { XoRepairsRequiredError } from '../xo/repairs-required-error.model';
 import { XoServiceGroup } from '../xo/service-group.model';
@@ -154,7 +159,7 @@ export class DocumentService implements OnDestroy {
                 if (document) {
                     // refresh document, if isn't currently being saved as a new document (in that case, the change event was for the old document)
                     if (!document.savingAs) {
-                        this.refreshXmomItem(document.item);
+                        this.refreshDocument(document);
                     }
                 } else {
                     // otherwise cache event
@@ -295,7 +300,7 @@ export class DocumentService implements OnDestroy {
             this.cachedLocks.delete(documentKey);
             const documentChange = this.cachedChanges.get(documentKey);
             if (documentChange) {
-                this.refreshXmomItem(documentModel.item);
+                this.refreshDocument(documentModel);
             }
             this.cachedChanges.delete(documentKey);
 
@@ -395,15 +400,15 @@ export class DocumentService implements OnDestroy {
     }
 
 
-    refactorItem(xmomItem: XoXmomItem): Observable<void> {
-        const rtc = xmomItem.rtc ?? this.xmomService.runtimeContext;
+    refactorItem(document: DocumentModel<DocumentItem>): Observable<void> {
+        const rtc = document.item.rtc ?? this.xmomService.runtimeContext;
         const data: LabelPathDialogData = {
-            header: this.i18n.translate(LabelPathDialogComponent.HEADER_MOVE_RENAME, {key: '$0', value: FullQualifiedName.decode(xmomItem.$fqn).path + '.' + xmomItem.label}),
+            header: this.i18n.translate(LabelPathDialogComponent.HEADER_MOVE_RENAME, {key: '$0', value: FullQualifiedName.decode(document.item.$fqn).path + '.' + document.item.label}),
             confirm: this.i18n.translate(LabelPathDialogComponent.CONFIRM_MOVE_RENAME),
             force: this.i18n.translate(LabelPathDialogComponent.FORCE_MOVE_RENAME),
             forceTooltip: this.i18n.translate(LabelPathDialogComponent.FORCE_MOVE_RENAME_TOOLTIP),
-            presetLabel: xmomItem.label,
-            presetPath: FullQualifiedName.decode(xmomItem.$fqn).path,
+            presetLabel: document.item.label,
+            presetPath: FullQualifiedName.decode(document.item.$fqn).path,
             pathsObservable: this.getPaths()
         };
         // open dialog to select label and path first
@@ -413,9 +418,9 @@ export class DocumentService implements OnDestroy {
                 type: ModellingActionType.refactor,
                 request: XoRefactorRequest.refactorWith(result.path, result.label, result.force),
                 objectId: null,
-                xmomItem,
+                xmomItem: document.item,
                 rtc
-            }))
+            }, document))
         );
     }
 
@@ -423,21 +428,21 @@ export class DocumentService implements OnDestroy {
     /**
      * Performs a modelling action on the specified object
      * @param action Modelling action to perform
-     * @param item XMOM Item to update with response
+     * @param document Document with XMOM Item to update with response
      */
-    performModellingAction(action: ModellingAction, item?: DocumentItem): Observable<void> {
+    performModellingAction(action: ModellingAction, document: DocumentModel<DocumentItem>): Observable<void> {
         /** @todo Use configured RuntimeContext */
         this.pendingModellingActionSubject.next(true);
         return this.xmomService.performModellingAction(action).pipe(
             map(updateResponse => {
                 // update document with response
-                if (item && updateResponse.updates) {
-                    this.handleXmomItemUpdate(item, updateResponse, updateResponse.updates.data);
+                if (document.item && updateResponse.itemUpdates) {
+                    this.handleXmomItemUpdate(document, updateResponse, updateResponse.itemUpdates.data);
                 }
                 // perform subsequent action
                 if (action.subsequentAction) {
                     action.subsequentAction.request.revision = updateResponse.revision;
-                    this.performModellingAction(action.subsequentAction, item).subscribe();
+                    this.performModellingAction(action.subsequentAction, document).subscribe();
                 } else {
                     this.pendingModellingActionSubject.next(false);
                 }
@@ -451,8 +456,8 @@ export class DocumentService implements OnDestroy {
                     // show generic error dialog
                     this.showErrorDialog(err.error as XoError);
                     // refresh item with backend state
-                    if (item) {
-                        this.refreshXmomItem(item);
+                    if (document) {
+                        this.refreshDocument(document);
                     }
                 }
                 return throwError(err);
@@ -462,7 +467,7 @@ export class DocumentService implements OnDestroy {
 
 
     private handleDocumentUpdate(documentModel: DocumentModel, updateResponse: XoUpdateXmomItemResponse, action: 'saved' | 'deployed') {
-        this.handleXmomItemUpdate(documentModel.item, updateResponse, updateResponse.updates.data);
+        this.handleXmomItemUpdate(documentModel, updateResponse, updateResponse.itemUpdates.data);
         // clear any locks, since the document can't be locked after a save-as and can't be saved or deployed when locked
         documentModel.updateLock(DocumentModel.UNLOCKED);
         // show status bar message
@@ -473,12 +478,68 @@ export class DocumentService implements OnDestroy {
     }
 
 
-    private handleXmomItemUpdate(item: DocumentItem, response: XoXmomItemResponse, updates: XoItem[]) {
-        if (updates.length > 0) {
-            item.update(updates);
+    /**
+     * Central place to transfer local document into state the backend has
+     */
+    private handleXmomItemUpdate(document: DocumentModel<DocumentItem>, response: XoXmomItemResponse, updates: XoXmomItemUpdate[]) {
+
+        // replace: Combination of "remove" and "insert" (as below)
+        // insert: find parent container by id (map?) and insert into. Do it here, right now
+        // remove: find item by id (map), remove from parent. Do it here, right now
+        // move: find item by id (map), find new parent by id (map), insert at index
+
+        // TODO 1: update all callers: must set document AND must wrap items into replace-item-updates
+        // TODO 2: perform different updates - is item.update still necessary? What does the recursion do, what the instant look-up via cache can't?
+
+        // pre-step: Split replace-update into remove- and insert-updates
+        for (let i = 0; i < updates.length;) {
+            if (updates[i].diffOperation instanceof XoReplaceOperation) {
+                const replaceUpdate = updates[i];
+                const removeUpdates = (replaceUpdate.diffOperation as XoReplaceOperation).oldIds.map(id => {
+                    const removeUpdate = new XoXmomItemUpdate();
+                    removeUpdate.diffOperation = XoRemoveOperation.withId(id);
+                    return removeUpdate;
+                });
+
+                const firstItemToRemove = document.itemsCache.get(removeUpdates[0]?.id);
+                const insertContainerId = firstItemToRemove?.parent?.id;
+                const insertIndex = (<unknown>firstItemToRemove?.parent as Containing)?.items?.data.indexOf(firstItemToRemove);
+
+                const insertUpdate = new XoXmomItemUpdate();
+                insertUpdate.diffOperation = XoInsertOperation.withData(insertContainerId, isNaN(insertIndex) ? -1 : insertIndex);
+                insertUpdate.items = replaceUpdate.items;
+
+                updates.splice(i, 1, ...removeUpdates, insertUpdate);
+                i += removeUpdates.length + 1;
+            } else {
+                i++;
+            }
         }
-        this.handleXmomItemResponse(item, response);
-        this.documentUpdateSubject.next({ item, response: response as XoUpdateXmomItemResponse });
+
+        updates.forEach(update => {
+            if (update.diffOperation instanceof XoRemoveOperation) {
+                // remove item from cache and from hierarchy
+                const itemToRemove = document.itemsCache.get(update.diffOperation.id);
+                if (itemToRemove) {
+                    document.itemsCache.delete(update.diffOperation.id);
+                    const indexToRemove = (<unknown>itemToRemove.parent as Containing).items.data.indexOf(itemToRemove);
+                    if (indexToRemove >= 0) {
+                        (<unknown>itemToRemove.parent as Containing).items.data.splice(indexToRemove, 1);
+                    }
+                }
+            } else if (update.diffOperation instanceof XoInsertOperation) {
+                // insert into hierarchy and into cache
+                const parent = <unknown>document.itemsCache.get(update.diffOperation.toContainerId) as Containing;
+                parent?.items.data.splice(update.diffOperation.toIndex);
+            } else if (update.diffOperation instanceof XoMoveOperation) {
+                // move inside hierarchy
+            } else {
+                throw new Error('unknown xmom-update-operation: ' + update.diffOperation + ' ' + update.diffOperation.description);
+            }
+        });
+
+        this.handleXmomItemResponse(document.item, response);
+        this.documentUpdateSubject.next({ item: document.item, response: response as XoUpdateXmomItemResponse });
     }
 
 
@@ -491,16 +552,19 @@ export class DocumentService implements OnDestroy {
 
 
     /**
-     * Discards all local changes and overwrites item with the backend state
-     * @param item XMOM Instance to be refreshed with the backend state
+     * Discards all local changes and overwrites item with the backend's state
+     * @param item XMOM Instance to be refreshed with the backend's state
      */
-    refreshXmomItem(item: DocumentItem) {
-        this.xmomService.loadXmomObject(item.toRtc(), item.toFqn(), item.type).subscribe(
+    refreshDocument(document: DocumentModel<DocumentItem>) {
+        this.xmomService.loadXmomObject(document.item.toRtc(), document.item.toFqn(), document.item.type).subscribe(
             response => {
                 // handle item update
-                this.handleXmomItemUpdate(item, response, [response.xmomItem]);
+                const update = XoXmomItemUpdate.withParams(
+                    XoReplaceOperation.withOldIds([document.item.id]),
+                    [response.xmomItem]
+                );
+                this.handleXmomItemUpdate(document, response, [update]);
                 // update tab bar label due to changes of the document
-                const document = this.getOpenDocument(item.toRtc(), item.toFqn());
                 document?.updateTabBarLabel();
             },
             error => this.showError(this.i18n.translate('This XMOM Item could not be refreshed.'), error)
@@ -531,20 +595,20 @@ export class DocumentService implements OnDestroy {
     }
 
 
-    private loadXmomObject(rtc: RuntimeContext, fqn: FullQualifiedName, type: XmomObjectType, repair = false): Observable<XoGetXmomItemResponse> {
+    loadXmomObject(rtc: RuntimeContext, fqn: FullQualifiedName, type: XmomObjectType, repair = false, state: XMOMState = XMOMState.SAVED): Observable<XoGetXmomItemResponse> {
         // cancel, if document is marked as pending right now
         if (this.xmomService.isPendingXmomObject(rtc, fqn, type)) {
             return of(null);
         }
         // cancel, if document is already open
-        const document = this.getOpenDocument(rtc, fqn);
+        const document = state === XMOMState.SAVED && this.getOpenDocument(rtc, fqn);
         if (document) {
             // select document
             this.selectedDocument = document;
             return of(null);
         }
         // load xmom object
-        return this.xmomService.loadXmomObject(rtc, fqn, type, repair).pipe(
+        return this.xmomService.loadXmomObject(rtc, fqn, type, repair, state).pipe(
             catchError(err => {
                 // status 409 means, that the document has to be repaired first
                 if (err.error && err.status === 409) {
@@ -574,7 +638,11 @@ export class DocumentService implements OnDestroy {
             const item = this.selectedDocument.item;
             return this.xmomService.undo(item).pipe(
                 tap(response => {
-                    this.handleXmomItemUpdate(item, response, [response.xmomItem]);
+                    const update = XoXmomItemUpdate.withParams(
+                        XoReplaceOperation.withOldIds([item.id]),
+                        [response.xmomItem]
+                    );
+                    this.handleXmomItemUpdate(this.selectedDocument, response, [update]);
                     this.selectedDocument.updateTabBarLabel();
                 }, error => {
                     if (error && (error as { status: number }).status !== 404) {
@@ -593,7 +661,11 @@ export class DocumentService implements OnDestroy {
             const item = this.selectedDocument.item;
             return this.xmomService.redo(item).pipe(
                 tap(response => {
-                    this.handleXmomItemUpdate(item, response, [response.xmomItem]);
+                    const update = XoXmomItemUpdate.withParams(
+                        XoReplaceOperation.withOldIds([item.id]),
+                        [response.xmomItem]
+                    );
+                    this.handleXmomItemUpdate(this.selectedDocument, response, [update]);
                     this.selectedDocument.updateTabBarLabel();
                 }, error => {
                     if (error && (error as { status: number }).status !== 404) {

@@ -117,7 +117,7 @@ export class MethodImplementationComponent extends ModellingItemComponent {
                         rtc: document.originRuntimeContext,
                         xmomItem: document.item
                     };
-                    this.documentService.performModellingAction(action, document.item).subscribe();
+                    this.documentService.performModellingAction(action, document).subscribe();
                 }
             });
     }

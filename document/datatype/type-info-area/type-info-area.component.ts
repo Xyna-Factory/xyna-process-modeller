@@ -376,7 +376,7 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
 
     refactor() {
         if (!this.readonly) {
-            this.documentService.refactorItem(this.typeDocument.item).subscribe();
+            this.documentService.refactorItem(this.typeDocument).subscribe();
         }
     }
 

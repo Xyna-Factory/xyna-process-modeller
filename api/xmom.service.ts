@@ -104,6 +104,12 @@ enum HttpMethod {
 }
 
 
+export enum XMOMState {
+    SAVED = 'xmom',
+    DEPLOYED = 'deployed'
+}
+
+
 
 // TODO: remove this interface as soon as backend sends Xo-objects for the factory items
 interface FactoryItem {
@@ -176,14 +182,14 @@ export class XmomService {
     }
 
 
-    private getXmomObjectUrl(rtc: RuntimeContext, fqn: FullQualifiedName, type: XmomObjectType, objectId?: string, action?: string): string {
+    private getXmomObjectUrl(rtc: RuntimeContext, fqn: FullQualifiedName, type: XmomObjectType, objectId?: string, action?: string, state: XMOMState = XMOMState.SAVED): string {
         objectId ??= fqn.anchor;
         const rtcPath = (!rtc || rtc === RuntimeContext.undefined ? this.runtimeContext : rtc).uniqueKey;
         const fqnPath = (!fqn || fqn === FullQualifiedName.undefined ? '' : '/' + fqn.path + '/' + fqn.name);
         const objectPath = (objectId ? '/objects/' + objectId : '');
         const actionPath = (action ? '/' + action : '');
 
-        return 'runtimeContext/' + rtcPath + '/xmom/' + this.xmomTypeToPath(type) + fqnPath + objectPath + actionPath;
+        return 'runtimeContext/' + rtcPath + '/' + state.toString() + '/' + this.xmomTypeToPath(type) + fqnPath + objectPath + actionPath;
     }
 
 
@@ -508,8 +514,8 @@ export class XmomService {
     }
 
 
-    loadXmomObject(rtc: RuntimeContext, fqn: FullQualifiedName, type: XmomObjectType, repair = false): Observable<XoGetXmomItemResponse> {
-        const url = this.getXmomObjectUrl(rtc, fqn, type);
+    loadXmomObject(rtc: RuntimeContext, fqn: FullQualifiedName, type: XmomObjectType, repair = false, state: XMOMState = XMOMState.SAVED): Observable<XoGetXmomItemResponse> {
+        const url = this.getXmomObjectUrl(rtc, fqn, type, undefined, undefined, state);
         // remember, that url is now pending
         this.pendingXmomUrls.add(url);
         // fetch xmom object representation
@@ -591,8 +597,8 @@ export class XmomService {
     }
 
 
-    getDataflow(xmomItem: XoXmomItem): Observable<XoGetDataflowResponse> {
-        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, 'dataflow');
+    getDataflow(xmomItem: XoXmomItem, state: XMOMState = XMOMState.SAVED): Observable<XoGetDataflowResponse> {
+        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, 'dataflow', state);
         return this.http.get(url).pipe(
             map((data: any) => new XoGetDataflowResponse().decode(data)),
             finalize(() => this.afterReceivedDataflowSubject.next(xmomItem))
