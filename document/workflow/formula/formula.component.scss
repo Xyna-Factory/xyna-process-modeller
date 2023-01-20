@@ -47,7 +47,7 @@ $horizontal-gap: 4px;
         }
 
         & > *:not(.caret) {
-            padding: 0 ($horizontal-gap / 2);
+            padding: 0 calc(#{$horizontal-gap} / 2);
             margin-left: 0;
             margin-right: 0;
             flex: 0 0 auto;

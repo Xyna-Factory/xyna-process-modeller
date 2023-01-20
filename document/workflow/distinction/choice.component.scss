@@ -48,10 +48,10 @@ $choice_rhombus_background_color: unset !default;
     }
 
     &::before {
-        top: -$choice_rhombus_size / 2 - $choice_rhombus_border_width / 2;
+        top: calc(-#{$choice_rhombus_size} / 2 - #{$choice_rhombus_border_width} / 2);
     }
 
     &::after {
-        bottom: -$choice_rhombus_size / 2 - $choice_rhombus_border_width / 2;
+        bottom: calc(-#{$choice_rhombus_size} / 2 - #{$choice_rhombus_border_width} / 2);
     }
 }

@@ -262,8 +262,7 @@ export class XmomService {
     /** @todo Remove this workaround. Backend shall return XoObjects, such that it doesn't have to be parsed here separately */
     private decodeToItem(object: FactoryItem): XoXmomItem {
         let result: XoXmomItem;
-        const fqnParts = /^(?:.*\.)*(.*)$/.exec(object.fqn);
-        const name = fqnParts.length > 1 ? fqnParts[1] : '';
+        const name = object.fqn.substring(object.fqn.lastIndexOf('.') + 1);
         const rtc = RuntimeContext.decode((<any>object).rtc);
         let xoRTC: XoRuntimeContext;
         if (rtc.av) {
