@@ -51,7 +51,7 @@ interface ConcatParameter {
 
 
 @Component({
-    selector: 'template',
+    selector: 'template-box',
     templateUrl: './template.component.html',
     styleUrls: ['./template.component.scss']
 })
