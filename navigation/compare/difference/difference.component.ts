@@ -15,15 +15,27 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { XoObjectClass, XoProperty } from '@zeta/api';
 
-import { XoXmomItemResponse } from './xmom-item-response.model';
-import { XoXmomItemUpdateArray } from './xmom-item-update.model';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
+import { XoDiffOperation } from '@pmod/xo/diff-operation.model';
+import { I18nService } from '@zeta/i18n';
+
+@Component({
+    selector: 'xfm-mod-difference',
+    templateUrl: './difference.component.html',
+    styleUrls: ['./difference.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class DifferenceComponent {
+
+    @Input()
+    difference: XoDiffOperation;
+
+    constructor(protected cdr: ChangeDetectorRef, protected i18n: I18nService) {
+    }
 
 
-@XoObjectClass(XoXmomItemResponse, 'xmcp.processmodeller.datatypes.response', 'UpdateXMOMItemResponse')
-export class XoUpdateXmomItemResponse extends XoXmomItemResponse {
-
-    @XoProperty(XoXmomItemUpdateArray)
-    itemUpdates: XoXmomItemUpdateArray;
+    select() {
+        // TODO: handle selection of difference
+    }
 }

@@ -355,6 +355,9 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
 
     private cdrSubscription: Subscription;
     private lockedSubscription: Subscription;
+    private savingSubscription: Subscription;
+    private savingAsSubscription: Subscription;
+    private deployingSubscription: Subscription;
 
 
     constructor(
@@ -374,6 +377,13 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
             this.documentService.selectionChange.pipe(tap(document => {
                 this.lockedSubscription?.unsubscribe();
                 this.lockedSubscription = document?.lockedChange.subscribe(() => this.cdr.detectChanges());
+
+                this.savingSubscription?.unsubscribe();
+                this.savingSubscription = document?.savingChange.subscribe(() => this.cdr.detectChanges());
+                this.savingAsSubscription?.unsubscribe();
+                this.savingAsSubscription = document?.savingAsChange.subscribe(() => this.cdr.detectChanges());
+                this.deployingSubscription?.unsubscribe();
+                this.deployingSubscription = document?.deployingChange.subscribe(() => this.cdr.detectChanges());
             })),
             this.documentService.documentDownloaded,
             this.documentService.xmomService.runtimeContextChange,

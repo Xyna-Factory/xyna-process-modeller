@@ -17,33 +17,31 @@
  */
 @import "const";
 
-
 :host {
-    overflow: hidden;
     display: flex;
-    flex: 1 1 auto;
-    background-color: $workflow-area-background-color;
-    position: relative;
+    flex-direction: column;
 
-    > .drop-area {
-        overflow: auto;
-        display: flex;
-        flex: 1 1 auto;
-        flex-direction: column;
-        transition: background-color 150ms linear;
-        padding: ($service-step-vertical-gap / 4) ($service-step-vertical-gap / 2);
+    cursor: pointer;
 
-        &.mod-drop-area-hover {
-            background-color: #ffd988;  // shade of #fabb00
-        }
+    margin: 1px 4px;
+    padding: 4px;
+
+    color: $color-invert;
+    font-size: $pmod-small;
+    
+    background-color: $color-gray-5;
+
+    &:hover {
+        background-color: $color-normal;
     }
 
-    > .hint {
-        position: absolute;
-        width: 100%;
-        text-align: center;
-        color: $color-gray-3;
-        font-style: italic;
-        padding: 20px;
+    .kind {
+        font-size: $pmod-tiny;
+        letter-spacing: 2px;
+        font-weight: bold;
+    }
+    
+    .description {
+        color: $color-gray-2;
     }
 }

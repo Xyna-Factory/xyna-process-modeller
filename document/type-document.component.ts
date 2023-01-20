@@ -65,10 +65,11 @@ export class TypeDocumentComponent<D extends DocumentModel> extends DocumentComp
         );
 
         // restore selection after document item got replaced on the server
-        this.untilDestroyed(this.document.item.replaced()).subscribe(() => {
-            this.restoreSelectedItem();
-            this.cdr.detectChanges();
-        });
+        // 4989
+        // this.untilDestroyed(this.document.item.replaced()).subscribe(() => {
+        //     this.restoreSelectedItem();
+        //     this.cdr.detectChanges();
+        // });
     }
 
 
