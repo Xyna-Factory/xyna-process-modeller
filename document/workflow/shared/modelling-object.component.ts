@@ -374,14 +374,14 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
 @Component({
     template: ''
 })
-export class ModellingItemComponent extends ModellingObjectComponent /*implements OnDestroy*/ {
+export class ModellingItemComponent extends ModellingObjectComponent implements OnDestroy {
 
-    // private modelChangeSubscription: Subscription;
+    private modelChangeSubscription: Subscription;
 
 
-    // ngOnDestroy() {
-        // this.modelChangeSubscription?.unsubscribe();
-    // }
+    ngOnDestroy() {
+        this.modelChangeSubscription?.unsubscribe();
+    }
 
 
     get modellingItem(): XoItem {
@@ -390,10 +390,9 @@ export class ModellingItemComponent extends ModellingObjectComponent /*implement
 
 
     setModel(value: XoItem) {
-        // this.modelChangeSubscription?.unsubscribe();
+        this.modelChangeSubscription?.unsubscribe();
         super.setModel(value);
-        // 4989
-        // this.modelChangeSubscription = this.modellingItem.replaced().subscribe(() => this.modelChanged());
+        this.modelChangeSubscription = this.modellingItem.replaced().subscribe(() => this.modelChanged());
         this.modelChanged();
     }
 

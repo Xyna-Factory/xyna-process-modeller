@@ -17,13 +17,13 @@
  */
 import { XoObjectClass, XoProperty } from '@zeta/api';
 
+import { XoItemArray } from './item.model';
 import { XoXmomItemResponse } from './xmom-item-response.model';
-import { XoXmomItemUpdateArray } from './xmom-item-update.model';
 
 
 @XoObjectClass(XoXmomItemResponse, 'xmcp.processmodeller.datatypes.response', 'UpdateXMOMItemResponse')
 export class XoUpdateXmomItemResponse extends XoXmomItemResponse {
 
-    @XoProperty(XoXmomItemUpdateArray)
-    itemUpdates: XoXmomItemUpdateArray;
+    @XoProperty(XoItemArray)
+    updates: XoItemArray;
 }

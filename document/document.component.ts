@@ -139,7 +139,7 @@ export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponen
             this.untilDestroyed(
                 this.documentService.performModellingAction(
                     convertAction(action),
-                    this.document
+                    this.document.item
                 )
             ).subscribe(
                 () => {

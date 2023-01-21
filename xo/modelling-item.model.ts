@@ -23,15 +23,9 @@ import { XoItem, XoItemArray } from './item.model';
 import { XoReferableObject } from './referable-object.model';
 
 
-
-export interface ItemReplacement {
-    oldItemId: string;
-    newItem: XoItem;
-}
-
-export interface Containing {
+interface Containing {
     items: XoItemArray;
-    // update(replacements: ItemReplacement[]): boolean;
+    update(item: XoItem): boolean;
 }
 
 
@@ -62,28 +56,27 @@ export class XoModellingItem extends XoItem {
      * @param items Items to replace
      * @returns true, if at least one item has been replaced
      */
-    // TODO: 4989
-    // update(replacements: ItemReplacement[]): boolean {
-    //     let replaced = false;
-    //     for (const replacer of items) {
-    //         // if replacer is item itself, replace self
-    //         if (replacer.id === this.id) {
-    //             this.decode(replacer.encode());     // encode and decode to get a clean update-process including afterDecode and such
-    //             this.replacedSubject.next(this);
-    //             replaced = true;
-    //         }
-    //         // check container areas
-    //         else if (replacer instanceof XoModellingItem) {
-    //             for (const area of this.containerAreas) {
-    //                 if (area.update(replacer)) {
-    //                     replaced = true;
-    //                     break;
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     return replaced;
-    // }
+    update(items: XoItem[]): boolean {
+        let replaced = false;
+        for (const replacer of items) {
+            // if replacer is item itself, replace self
+            if (replacer.id === this.id) {
+                this.decode(replacer.encode());     // encode and decode to get a clean update-process including afterDecode and such
+                this.replacedSubject.next(this);
+                replaced = true;
+            }
+            // check container areas
+            else if (replacer instanceof XoModellingItem) {
+                for (const area of this.containerAreas) {
+                    if (area.update(replacer)) {
+                        replaced = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return replaced;
+    }
 
 
     protected afterDecode() {
@@ -149,20 +142,19 @@ export class XoContainerArea extends XoArea implements Containing {
      * @param item Item to replace with
      * @returns true if a matching item could be found to be replaced, false otherwise
      */
-    // 4989
-    // update(item: XoItem): boolean {
-    //     for (let i = 0; i < this.items.length; i++) {
-    //         const containedItem = this.items.data[i];
+    update(item: XoItem): boolean {
+        for (let i = 0; i < this.items.length; i++) {
+            const containedItem = this.items.data[i];
 
-    //         // update containedItem itself or items of its areas
-    //         if (containedItem instanceof XoModellingItem) {         /** @todo @fixme find a proper way to update container-areas and modelling-items (using base-class "item") */
-    //             if (containedItem.update([item])) {
-    //                 return true;
-    //             }
-    //         }
-    //     }
-    //     return false;
-    // }
+            // update containedItem itself or items of its areas
+            if (containedItem instanceof XoModellingItem) {         /** @todo @fixme find a proper way to update container-areas and modelling-items (using base-class "item") */
+                if (containedItem.update([item])) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
 
     getVariables(): XoReferableObject[] {

@@ -38,12 +38,11 @@
         }
     }
 
-    > .hint {
+    > span {
         position: absolute;
         width: 100%;
         text-align: center;
-        color: $color-gray-3;
-        font-style: italic;
+        color: $color-invert;
         padding: 20px;
     }
 }

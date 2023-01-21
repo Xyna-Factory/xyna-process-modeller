@@ -24,6 +24,7 @@ import { XcContentEditableDirective, XcMenuItem, XcStatusBarEntryType, XcStatusB
 import { Subscription, throwError } from 'rxjs';
 import { catchError, filter, map } from 'rxjs/operators';
 
+import { DeploymentState } from '../api/xmom-types';
 import { ModellingActionType } from '../api/xmom.service';
 import { XoConnectionArray } from '../xo/connection.model';
 import { XoError } from '../xo/error.model';
@@ -50,6 +51,7 @@ export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowD
     private readonly menuItemTestWorkflow: XcMenuItem = {
         name: 'pmod.workflow.test-workflow...',
         translate: true,
+        visible: () => this.workflow.deploymentState === DeploymentState.deployed || this.workflow.deploymentState === DeploymentState.changed,
         click: () => {
             const fqn = this.workflow.toFqn();
             const rtc = (this.workflow.$rtc ?? this.workflow.evaluatedRtc).runtimeContext();
@@ -227,7 +229,7 @@ export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowD
         this.untilDestroyed(
             this.documentService.xmomService.setDataflowConnection(this.workflow, request)
         ).subscribe(() =>
-            this.documentService.refreshDocument(this.document)
+            this.documentService.refreshXmomItem(this.workflow)
         );
     }
 }

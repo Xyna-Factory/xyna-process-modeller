@@ -16,6 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { XoArray, XoArrayClass, XoObjectClass, XoProperty, XoTransient } from '@zeta/api';
+import { Observable, Subject } from 'rxjs';
 
 import { XoReferableObject } from './referable-object.model';
 import { XoRuntimeInfo } from './runtime-info.model';
@@ -43,12 +44,12 @@ export class XoItem extends XoReferableObject {
     /**
      * Is called each time, this model is replaced by another one (instance doesn't change!)
      */
-    // protected readonly replacedSubject = new Subject<XoItem>();
+    protected readonly replacedSubject = new Subject<XoItem>();
 
 
-    // replaced(): Observable<XoItem> {
-    //     return this.replacedSubject.asObservable();
-    // }
+    replaced(): Observable<XoItem> {
+        return this.replacedSubject.asObservable();
+    }
 
 
     get runtimeInfo(): XoRuntimeInfo {

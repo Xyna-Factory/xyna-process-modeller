@@ -277,8 +277,7 @@ export class XMOMListItemComponent {
 
 
     refactorXmomItem() {
-        // TODO: reactivate: 4989
-        // this.documentService.refactorItem(this.getXmomItem()).subscribe();
+        this.documentService.refactorItem(this.getXmomItem()).subscribe();
     }
 
 
