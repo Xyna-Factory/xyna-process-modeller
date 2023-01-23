@@ -44,11 +44,11 @@
     (triggerAction)="performAction($event)"
     [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
 ></retry>
-<template *ngIf="isTemplate()" [template]="item"
+<template-block *ngIf="isTemplate()" [template]="item"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
     [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
-></template>
+></template-block>
 <throw *ngIf="isThrow()" [throw]="item"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
