@@ -1,6 +1,6 @@
 ## XYNA PROCESS MODELLER
 
-The Xyna Process Modeller contains all data of the [Xyna Process Modeller](https://github.com/GIP-SmartMercial/xyna-process-modeller/wiki) that are relevant from design time right to production. Graphical and intuitive usability have been at the heart of the program’s design while interfaces for the development in external tools are supplied for technical implementations.
+The Xyna Process Modeller is the graphical modeling tool used to edit all types of XMOM Objects like Workflows, Data Types and Exception Types. It also supports the integration of 3rd party programs for technical implementations by modeling Coded Services and Service Groups.
 
 ### Wiki and Build
 * [Xyna Process Modeller](https://github.com/GIP-SmartMercial/xyna-process-modeller/wiki)
