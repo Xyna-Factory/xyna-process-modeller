@@ -18,6 +18,7 @@
 import { Component, ElementRef, Injector, OnDestroy } from '@angular/core';
 
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
+import { FullQualifiedName } from '@zeta/api';
 import { copyToClipboard, KeyboardEventType, KeyDistributionService, pasteFromClipboard } from '@zeta/base';
 import { XcContentEditableDirective, XcMenuItem, XcStatusBarEntryType, XcStatusBarService } from '@zeta/xc';
 
@@ -25,7 +26,7 @@ import { Subscription, throwError } from 'rxjs';
 import { catchError, filter, map } from 'rxjs/operators';
 
 import { DeploymentState } from '../api/xmom-types';
-import { ModellingActionType } from '../api/xmom.service';
+import { ModellingActionType, XmomState } from '../api/xmom.service';
 import { XoConnectionArray } from '../xo/connection.model';
 import { XoError } from '../xo/error.model';
 import { XoInsertModellingObjectRequest } from '../xo/insert-modelling-object-request.model';
@@ -34,6 +35,7 @@ import { XoInvocation } from '../xo/invocation.model';
 import { XoSetDataflowConnectionRequest } from '../xo/set-dataflow-connection-request.model';
 import { XoWorkflow } from '../xo/workflow.model';
 import { DocumentComponent } from './document.component';
+import { DocumentItem } from './model/document.model';
 import { WorkflowDocumentModel } from './model/workflow-document.model';
 import { SelectionService } from './selection.service';
 import { WorkflowDetailLevelService } from './workflow-detail-level.service';
@@ -101,13 +103,27 @@ export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowD
         click: () => this.documentService.redo().subscribe()
     };
 
+    private readonly menuItemCompare: XcMenuItem = {
+        name: 'pmod.workflow.compare',
+        translate: true,
+        visible: () => this.workflow.deploymentState === DeploymentState.deployed || this.workflow.deploymentState === DeploymentState.changed,
+        click: () => this.documentService.loadXmomObject(
+            this.workflow.$rtc.runtimeContext(),
+            FullQualifiedName.decode(this.workflow.$fqn),
+            this.workflow.type, false, XmomState.DEPLOYED).subscribe(response => {
+                const item = <DocumentItem>response.xmomItem;
+                console.log('deployed state: ' + item.encode());
+            })
+    };
+
     readonly menuItems = [
         this.menuItemTestWorkflow,
         this.menuItemUndo,
         this.menuItemRedo,
         this.menuItemToggleDocumentation,
         this.menuItemTogglePaths,
-        this.menuItemToggleMappings
+        this.menuItemToggleMappings,
+        this.menuItemCompare
     ];
 
     private readonly elementRef: ElementRef<HTMLElement>;
