@@ -15,15 +15,24 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-@import "const";
+ @import "const";
 
-:host {
-    & > .area-content {
-        color: $color-normal;
-
-        h2 {
-            font-size: $font-size-h2;
-            margin: 12px 0 4px 0;
-        }
-    }
-}
+ :host {
+     width: 100%;
+ 
+     & > header {
+         display: flex;
+ 
+         & > h2 {
+             margin-right: auto;
+         }
+     }
+ 
+     & > .area-content {
+         .workflow-container {
+             display: flex;
+             flex-direction: column;
+             flex: 1 1 auto;
+         }
+     }
+ }

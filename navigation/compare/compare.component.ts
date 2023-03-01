@@ -16,6 +16,12 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { XmomState } from '@pmod/api/xmom.service';
+import { DocumentService } from '@pmod/document/document.service';
+import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model';
+import { WorkflowDocumentModel } from '@pmod/document/model/workflow-document.model';
+import { XoWorkflow } from '@pmod/xo/workflow.model';
+import { FullQualifiedName } from '@zeta/api';
 
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 
@@ -28,7 +34,33 @@ import { CommonNavigationComponent } from '../common-navigation-class/common-nav
 })
 export class CompareComponent extends CommonNavigationComponent {
 
-    constructor(cdr: ChangeDetectorRef) {
+    workflow: XoWorkflow;
+    document: DocumentModel<XoWorkflow>;
+
+    constructor(cdr: ChangeDetectorRef, protected documentService: DocumentService) {
         super(cdr);
+    }
+
+
+    loadDeployedWorkflow() {
+        const workflowDocument = this.documentService.selectedDocument as DocumentModel<XoWorkflow>;
+
+        if (workflowDocument) {
+            const savedWorkflow = workflowDocument.item;
+            this.documentService.loadXmomObject(
+                savedWorkflow.$rtc.runtimeContext(),
+                FullQualifiedName.decode(savedWorkflow.$fqn),
+                savedWorkflow.type, false, XmomState.DEPLOYED
+            ).subscribe(response => {
+                this.workflow = <DocumentItem>response.xmomItem as XoWorkflow;
+
+                this.document = new WorkflowDocumentModel(this.workflow, workflowDocument.originRuntimeContext);
+                const lockInfo = {...workflowDocument.lockInfo};
+                lockInfo.readonly = true;
+                this.document.updateLock(lockInfo);
+
+                this.updateView();
+            });
+        }
     }
 }
