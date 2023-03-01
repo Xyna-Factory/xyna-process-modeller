@@ -596,8 +596,8 @@ export class XmomService {
     }
 
 
-    getDataflow(xmomItem: XoXmomItem): Observable<XoGetDataflowResponse> {
-        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, 'dataflow');
+    getDataflow(xmomItem: XoXmomItem, state: XmomState = XmomState.SAVED): Observable<XoGetDataflowResponse> {
+        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, 'dataflow', state);
         return this.http.get(url).pipe(
             map((data: any) => new XoGetDataflowResponse().decode(data)),
             finalize(() => this.afterReceivedDataflowSubject.next(xmomItem))
