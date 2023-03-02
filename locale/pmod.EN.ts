@@ -46,6 +46,10 @@ export const PMOD_EN: I18nTranslation[] = [
         value: 'Workflow Launcher'
     },
     {
+        key: 'pmod.nav.icon-compare',
+        value: 'Compare'
+    },
+    {
         key: 'pmod.nav.icon-help',
         value: 'Help'
     },
@@ -137,7 +141,7 @@ export const PMOD_EN: I18nTranslation[] = [
     },
     {
         key: 'pmod.nav.details.steal-lock',
-        value: 'Steal Lock...'
+        value: 'Steal Lock'
     },
     {
         key: 'pmod.nav.details.steal-lock-confirm',
@@ -145,7 +149,7 @@ export const PMOD_EN: I18nTranslation[] = [
     },
     {
         key: 'pmod.nav.details.show-xml',
-        value: 'Show XML...'
+        value: 'Show XML'
     },
     {
         key: 'pmod.nav.details.tooltip-show-xml',
@@ -352,6 +356,20 @@ export const PMOD_EN: I18nTranslation[] = [
     {
         key: 'pmod.nav.workflowlauncher.message',
         value: 'Use the workflow tester located in the vertical ellipsis menu of a deployed workflow.'
+    },
+
+    // Compare
+    {
+        key: 'pmod.nav.compare.header',
+        value: 'Compare'
+    },
+    {
+        key: 'pmod.nav.compare.load',
+        value: 'Load Deployed Version'
+    },
+    {
+        key: 'pmod.nav.compare.load-error',
+        value: 'Not possible to load deployed version for $0.'
     },
 
     // Help

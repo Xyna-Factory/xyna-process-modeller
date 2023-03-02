@@ -17,33 +17,33 @@
  */
 @import "const";
 
-
 :host {
-    overflow: hidden;
-    display: flex;
-    flex: 1 1 auto;
-    background-color: $workflow-area-background-color;
-    position: relative;
+    width: 100%;
 
-    > .drop-area {
-        overflow: auto;
+    & > header {
         display: flex;
-        flex: 1 1 auto;
-        flex-direction: column;
-        transition: background-color 150ms linear;
-        padding: ($service-step-vertical-gap / 4) ($service-step-vertical-gap / 2);
 
-        &.mod-drop-area-hover {
-            background-color: #ffd988;  // shade of #fabb00
+        & > h2 {
+            margin-right: auto;
         }
     }
 
-    > .hint {
-        position: absolute;
-        width: 100%;
-        text-align: center;
-        color: $color-gray-3;
-        font-style: italic;
-        padding: 20px;
+    & > .area-content {
+        flex-direction: row;
+        padding: 0;
+
+        .workflow-container {
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 auto;
+
+            dataflow::ng-deep > .draw-area {
+                left: 36px;
+                top: 44px;
+
+                width: calc(100% - 36px);
+                height: calc(100% - 44px);
+            }
+        }
     }
 }

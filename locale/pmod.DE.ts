@@ -48,6 +48,10 @@ export const PMOD_DE: I18nTranslation[] = [
         pronunciationLanguage: 'en-US'
     },
     {
+        key: 'pmod.nav.icon-compare',
+        value: 'Vergleich'
+    },
+    {
         key: 'pmod.nav.icon-help',
         value: 'Hilfe'
     },
@@ -147,7 +151,7 @@ export const PMOD_DE: I18nTranslation[] = [
     },
     {
         key: 'pmod.nav.details.show-xml',
-        value: 'XML anzeigen...'
+        value: 'XML anzeigen'
     },
     {
         key: 'pmod.nav.details.tooltip-show-xml',
@@ -355,6 +359,20 @@ export const PMOD_DE: I18nTranslation[] = [
     {
         key: 'pmod.nav.workflowlauncher.message',
         value: 'Der Workflow-Tester befindet sich jetzt im vertikalen Menü eines deployten Workflows.'
+    },
+
+    // Compare
+    {
+        key: 'pmod.nav.compare.header',
+        value: 'Vergleichen'
+    },
+    {
+        key: 'pmod.nav.compare.load',
+        value: 'Deployte Version laden'
+    },
+    {
+        key: 'pmod.nav.compare.load-error',
+        value: 'Es ist nicht möglich, die deployte Version von $0 zu laden.'
     },
 
     // Help

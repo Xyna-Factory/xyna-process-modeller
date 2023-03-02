@@ -28,7 +28,7 @@ import { BehaviorSubject, merge, Observable, of, Subject, Subscription, throwErr
 import { catchError, filter, finalize, map, mapTo, share, switchMap, switchMapTo, tap } from 'rxjs/operators';
 
 import { DeploymentState, XmomObjectType } from '../api/xmom-types';
-import { ModellingAction, ModellingActionType, XmomService } from '../api/xmom.service';
+import { ModellingAction, ModellingActionType, XmomService, XmomState } from '../api/xmom.service';
 import { PMOD_DE } from '../locale/pmod.DE';
 import { PMOD_EN } from '../locale/pmod.EN';
 import { LabelPathDialogComponent, LabelPathDialogData, LabelPathDialogResult } from '../misc/modal/label-path-dialog/label-path-dialog.component';
@@ -531,20 +531,20 @@ export class DocumentService implements OnDestroy {
     }
 
 
-    private loadXmomObject(rtc: RuntimeContext, fqn: FullQualifiedName, type: XmomObjectType, repair = false): Observable<XoGetXmomItemResponse> {
+    loadXmomObject(rtc: RuntimeContext, fqn: FullQualifiedName, type: XmomObjectType, repair = false, state: XmomState = XmomState.SAVED): Observable<XoGetXmomItemResponse> {
         // cancel, if document is marked as pending right now
         if (this.xmomService.isPendingXmomObject(rtc, fqn, type)) {
             return of(null);
         }
         // cancel, if document is already open
-        const document = this.getOpenDocument(rtc, fqn);
+        const document = state === XmomState.SAVED && this.getOpenDocument(rtc, fqn);
         if (document) {
             // select document
             this.selectedDocument = document;
             return of(null);
         }
         // load xmom object
-        return this.xmomService.loadXmomObject(rtc, fqn, type, repair).pipe(
+        return this.xmomService.loadXmomObject(rtc, fqn, type, repair, state).pipe(
             catchError(err => {
                 // status 409 means, that the document has to be repaired first
                 if (err.error && err.status === 409) {
