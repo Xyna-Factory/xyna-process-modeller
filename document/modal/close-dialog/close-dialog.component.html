@@ -8,7 +8,7 @@
         <ng-container *ngIf="injectedData.saveButtonLabel; else noSave">
             <xc-button (click)="dismiss({useForce: true, save: false})">{{injectedData.dontSaveButtonLabel}}</xc-button>
             <!-- injectedData.saveButtonLabel is translated dynamically - no need for i18n -->
-            <xc-button (click)="dismiss({useForce: false, save: true})" xc-focus-initial>{{injectedData.saveButtonLabel}}</xc-button>
+            <xc-button (click)="dismiss({useForce: false, save: true})" color="primary">{{injectedData.saveButtonLabel}}</xc-button>
         </ng-container>
         <ng-template #noSave>
             <xc-button (click)="dismiss({useForce: true, save: false})" xc-i18n>button-yes</xc-button>
