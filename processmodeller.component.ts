@@ -15,12 +15,12 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, Injector, LOCALE_ID, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Injector, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 import { QueryParamService } from '@fman/misc/services/query-param.service';
 import { ApiService, FullQualifiedName, RuntimeContextSelectionSettings } from '@zeta/api';
 import { KeyboardEventType, KeyDistributionService, OutsideListenerService } from '@zeta/base';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, LocaleService } from '@zeta/i18n';
 import { RouteComponent, RuntimeContextSelectionComponent } from '@zeta/nav';
 import { XcDialogService, XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 
@@ -100,10 +100,9 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
     ) {
         super();
 
-        this.i18nService.language = injector.get(LOCALE_ID) ?? I18nService.EN_US;
-
-        this.i18nService.setTranslations(I18nService.DE_DE, PMOD_DE);
-        this.i18nService.setTranslations(I18nService.EN_US, PMOD_EN);
+        this.i18nService.contextDismantlingSearch = true;
+        this.i18nService.setTranslations(LocaleService.DE_DE, PMOD_DE);
+        this.i18nService.setTranslations(LocaleService.EN_US, PMOD_EN);
 
         this.documentService.documentListChange.subscribe(documents => {
             const updateDocuments = () => {

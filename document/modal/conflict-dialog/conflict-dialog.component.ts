@@ -17,7 +17,7 @@
  */
 import { Component, Injector } from '@angular/core';
 
-import { I18nService } from '@zeta/i18n';
+import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent } from '@zeta/xc';
 
 import { conflictDialog_translations_de_DE } from './locale/conflict-dialog-translations.de-DE';
@@ -50,8 +50,8 @@ export class ConflictDialogComponent extends XcDialogComponent<string, ConflictD
     constructor(injector: Injector, i18nService: I18nService) {
         super(injector);
 
-        i18nService.setTranslations(I18nService.DE_DE, conflictDialog_translations_de_DE);
-        i18nService.setTranslations(I18nService.EN_US, conflictDialog_translations_en_US);
+        i18nService.setTranslations(LocaleService.DE_DE, conflictDialog_translations_de_DE);
+        i18nService.setTranslations(LocaleService.EN_US, conflictDialog_translations_en_US);
     }
 
 

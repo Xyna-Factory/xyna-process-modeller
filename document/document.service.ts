@@ -21,7 +21,7 @@ import { FQNRTC, MessageBusService, XMOMLocated, XoDocumentChange, XoDocumentLoc
 import { FullQualifiedName, RuntimeContext } from '@zeta/api';
 import { AuthService } from '@zeta/auth';
 import { dispatchMouseClick, isString } from '@zeta/base';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogService, XcStatusBarEntryType, XcStatusBarService } from '@zeta/xc';
 
 import { BehaviorSubject, merge, Observable, of, Subject, Subscription, throwError } from 'rxjs';
@@ -106,8 +106,8 @@ export class DocumentService implements OnDestroy {
         readonly xmomService: XmomService,
         readonly messageBus: MessageBusService
     ) {
-        this.i18n.setTranslations(I18nService.DE_DE, PMOD_DE);
-        this.i18n.setTranslations(I18nService.EN_US, PMOD_EN);
+        this.i18n.setTranslations(LocaleService.DE_DE, PMOD_DE);
+        this.i18n.setTranslations(LocaleService.EN_US, PMOD_EN);
 
         // clear documents on login
         authService.didLogin.subscribe(() => this.documentListSubject.next([]));

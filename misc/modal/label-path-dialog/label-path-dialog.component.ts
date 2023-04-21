@@ -17,7 +17,7 @@
  */
 import { Component, HostListener, Injector, Optional, ViewChild } from '@angular/core';
 
-import { I18nService } from '@zeta/i18n';
+import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcDialogComponent, XcFormDirective, XcOptionItem, XcOptionItemString } from '@zeta/xc';
 
 import { Observable } from 'rxjs';
@@ -81,8 +81,8 @@ export class LabelPathDialogComponent extends XcDialogComponent<LabelPathDialogR
     constructor(@Optional() injector: Injector, private readonly i18n: I18nService) {
         super(injector);
 
-        this.i18n.setTranslations(I18nService.DE_DE, labelPathDialog_translations_de_DE);
-        this.i18n.setTranslations(I18nService.EN_US, labelPathDialog_translations_en_US);
+        this.i18n.setTranslations(LocaleService.DE_DE, labelPathDialog_translations_de_DE);
+        this.i18n.setTranslations(LocaleService.EN_US, labelPathDialog_translations_en_US);
 
         this.label = this.injectedData.presetLabel || '';
         this.path = this.injectedData.presetPath || '';
