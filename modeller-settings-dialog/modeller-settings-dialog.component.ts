@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2022 GIP SmartMercial GmbH, Germany
+ * Copyright 2023 GIP SmartMercial GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 import { Component, Injector, Optional } from '@angular/core';
 
 import { WorkflowDetailSettingsService } from '@pmod/workflow-detail-settings.service';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent, XDSIconName } from '@zeta/xc';
 
 import { modellerSettingsDialog_translations_de_DE } from './locale/modeller-settings-dialog-translations.de-DE';
@@ -34,8 +34,8 @@ export class ModellerSettingsDialogComponent extends XcDialogComponent<void, voi
     constructor(@Optional() injector: Injector, readonly workflowSettings: WorkflowDetailSettingsService, private readonly i18n: I18nService) {
         super(injector);
 
-        this.i18n.setTranslations(I18nService.DE_DE, modellerSettingsDialog_translations_de_DE);
-        this.i18n.setTranslations(I18nService.EN_US, modellerSettingsDialog_translations_en_US);
+        this.i18n.setTranslations(LocaleService.DE_DE, modellerSettingsDialog_translations_de_DE);
+        this.i18n.setTranslations(LocaleService.EN_US, modellerSettingsDialog_translations_en_US);
     }
 
 
