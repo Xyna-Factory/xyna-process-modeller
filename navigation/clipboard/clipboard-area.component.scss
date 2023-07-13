@@ -31,7 +31,7 @@
         flex: 1 1 auto;
         flex-direction: column;
         transition: background-color 150ms linear;
-        padding: ($service-step-vertical-gap / 4) ($service-step-vertical-gap / 2);
+        padding: calc(#{$service-step-vertical-gap} / 4) calc(#{$service-step-vertical-gap} / 2);
 
         &.mod-drop-area-hover {
             background-color: #ffd988;  // shade of #fabb00
