@@ -55,7 +55,7 @@ export class FormulaEditablePartComponent extends FormulaPartComponent {
     }
 
 
-    finishEditing(event: FocusEvent) {
+    finishEditing(event?: FocusEvent) {
         this.finishedEditing.emit(this.formulaPart);
     }
 

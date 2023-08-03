@@ -312,12 +312,13 @@ export class FormulaComponent extends ModellingItemComponent {
         });
 
         this._partInEditing = null;
-        this.formulaWrapper.nativeElement.focus();       // refocus formula-area
         this.setCaretToPart(nextPartForCaret);
     }
 
 
     finishedEditingSubPart(_: FormulaPart) {
+        this.formulaWrapper.nativeElement.focus();       // refocus formula-area
+
         // if it hasn't been accepted before, leave formula
         if (this._partInEditing) {
             this.unselect();
