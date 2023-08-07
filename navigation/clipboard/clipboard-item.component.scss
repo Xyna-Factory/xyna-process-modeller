@@ -27,7 +27,7 @@ $link-state-margin: 6px;
     flex-direction: column;
     position: relative;
     align-items: center;
-    margin: ($service-step-vertical-gap / 4) auto;
+    margin: calc(#{$service-step-vertical-gap} / 4) auto;
 
     &::ng-deep > drop-indicator {
         padding: 8px;
@@ -287,11 +287,11 @@ $link-state-margin: 6px;
         }
 
         &::before {
-            top: -$choice_rhombus_size / 2 - $choice_rhombus_border_width / 2;
+            top: calc(-#{$choice_rhombus_size} / 2 - #{$choice_rhombus_border_width} / 2);
         }
 
         &::after {
-            bottom: -$choice_rhombus_size / 2 - $choice_rhombus_border_width / 2;
+            bottom: calc(-#{$choice_rhombus_size} / 2 - #{$choice_rhombus_border_width} / 2);
         }
     }
 
