@@ -73,6 +73,7 @@ export enum ModellingActionType {
     libraryCall = 'templateCall',
     move = 'move',
     refactor = 'refactor',
+    replace = 'replace',
     setConstant = 'constant',
     sort = 'sort',
     split = 'split',
@@ -219,6 +220,7 @@ export class XmomService {
             case ModellingActionType.split:
             case ModellingActionType.toggle:
             case ModellingActionType.refactor:
+            case ModellingActionType.replace:
             case ModellingActionType.deleteConstant:
             case ModellingActionType.convert:
                 return { method: HttpMethod.POST, url };

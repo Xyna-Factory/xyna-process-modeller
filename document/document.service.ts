@@ -44,6 +44,7 @@ import { XoGetWorkflowResponse } from '../xo/get-workflow-response.model';
 import { XoGetXmomItemResponse } from '../xo/get-xmom-item-response.model';
 import { XoItem } from '../xo/item.model';
 import { XoRefactorRequest } from '../xo/refactor-request.model';
+import { XoReplaceDatatypeRequest } from '../xo/replace-request.model';
 import { XoRepairsRequiredError } from '../xo/repairs-required-error.model';
 import { XoServiceGroup } from '../xo/service-group.model';
 import { XoUpdateXmomItemResponse } from '../xo/update-xmom-item-response.model';
@@ -417,6 +418,29 @@ export class DocumentService implements OnDestroy {
                 rtc
             }))
         );
+    }
+
+
+    replace(xmomItem: XoXmomItem): Observable<void> {
+        const rtc = xmomItem.rtc ?? this.xmomService.runtimeContext;
+        const data: LabelPathDialogData = {
+            header: this.i18n.translate(LabelPathDialogComponent.HEADER_REPLACE, {key: '$0', value: FullQualifiedName.decode(xmomItem.$fqn).path + '.' + xmomItem.label}),
+            confirm: this.i18n.translate(LabelPathDialogComponent.CONFIRM_REPLACE),
+            presetLabel: xmomItem.label,
+            presetPath: FullQualifiedName.decode(xmomItem.$fqn).path,
+            pathsObservable: this.getPaths()
+        };
+
+        return this.dialogService.custom(LabelPathDialogComponent, data).afterDismissResult().pipe(
+            filter(result => !!result),
+            switchMap(result => this.performModellingAction({
+                type: ModellingActionType.replace,
+                request: XoReplaceDatatypeRequest.refactorWith(result.label, result.path),
+                objectId: null,
+                xmomItem,
+                rtc
+            }))
+        )
     }
 
 
