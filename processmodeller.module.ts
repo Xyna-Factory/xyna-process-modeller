@@ -19,7 +19,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { FactoryManagerModule } from '@fman/factory-manager.module';
-import { QueryParamService } from '@fman/misc/services/query-param.service';
 import { I18nService } from '@zeta/i18n';
 import { ZetaModule } from '@zeta/zeta.module';
 
@@ -150,6 +149,7 @@ import { XMOMListComponent } from './navigation/xmom/xmom-list.component';
 import { ProcessmodellerComponent } from './processmodeller.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { WorkflowDetailSettingsService } from './workflow-detail-settings.service';
+import { QueryParameterService } from '@zeta/nav/query-parameter.service';
 import './xo/_import';
 
 
@@ -293,7 +293,7 @@ import './xo/_import';
         FactoryService,
         I18nService,
         ModDragAndDropService,
-        QueryParamService,
+        QueryParameterService,
         WorkflowDetailSettingsService,
         WorkflowDetailLevelService,
         SelectionService,

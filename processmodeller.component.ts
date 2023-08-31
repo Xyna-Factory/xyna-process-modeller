@@ -17,7 +17,6 @@
  */
 import { ChangeDetectorRef, Component, Injector, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
-import { QueryParamService } from '@fman/misc/services/query-param.service';
 import { ApiService, FullQualifiedName, RuntimeContextSelectionSettings } from '@zeta/api';
 import { KeyboardEventType, KeyDistributionService, OutsideListenerService } from '@zeta/base';
 import { I18nService, LocaleService } from '@zeta/i18n';
@@ -45,6 +44,7 @@ import { ErrorService } from './navigation/shared/error.service';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { XoRuntimeContext } from './xo/runtime-context.model';
 import { XoWorkflow } from './xo/workflow.model';
+import { QueryParameterService } from '@zeta/nav/query-parameter.service';
 
 
 @Component({
@@ -93,7 +93,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
         private readonly dialogService: XcDialogService,
         readonly injector: Injector,
         private readonly i18nService: I18nService,
-        private readonly queryParamService: QueryParamService,
+        private readonly queryParamService: QueryParameterService,
         private readonly outsideListenerService: OutsideListenerService,
         private readonly keyService: KeyDistributionService,
         private readonly errorService: ErrorService
