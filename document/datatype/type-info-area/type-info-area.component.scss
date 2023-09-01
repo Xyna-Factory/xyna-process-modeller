@@ -29,7 +29,7 @@ $type-info-badge-color: unset !default;
 
     .row {
         display: flex;
-        align-items: center;
+        align-items: flex-end;
         min-height: 32px;
 
         .checkboxes {
@@ -88,9 +88,6 @@ $type-info-badge-color: unset !default;
     }
 
     .base-type {
-        display: flex;
-        align-items: baseline;
-
         & > .base-type-wrapper {
             flex: 1 1 auto;
         }
