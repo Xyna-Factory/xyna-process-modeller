@@ -440,7 +440,7 @@ export class DocumentService implements OnDestroy {
                 xmomItem,
                 rtc
             }))
-        )
+        );
     }
 
 
