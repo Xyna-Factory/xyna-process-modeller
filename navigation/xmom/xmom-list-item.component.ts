@@ -86,6 +86,13 @@ export class XMOMListItemComponent {
                 click: () => this.refactorXmomItem()
             },
             <XcMenuItem>{
+                name: 'Replace...',
+                icon: 'edit',
+                translate: true,
+                visible: () => this.isDatatype,
+                click: () => this.replace()
+            },
+            <XcMenuItem>{
                 name: 'Delete from XMOM...',
                 icon: 'delete',
                 translate: true,
@@ -280,6 +287,9 @@ export class XMOMListItemComponent {
         this.documentService.refactorItem(this.getXmomItem()).subscribe();
     }
 
+    replace() {
+        this.documentService.replace(this.getXmomItem()).subscribe();
+    }
 
     testWorkflow() {
         if (this.isWorkflow) {

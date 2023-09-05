@@ -55,11 +55,13 @@ export class LabelPathDialogComponent extends XcDialogComponent<LabelPathDialogR
     static readonly HEADER_CONVERT_TO_WORKFLOW = 'Convert Service into Workflow';
     static readonly HEADER_CONVERT_TO_DATA_TYPE = 'Convert Parameter into Data Type';
     static readonly HEADER_MOVE_RENAME = 'pmod.move-rename';
+    static readonly HEADER_REPLACE = 'pmod.replace';
 
     static readonly CONFIRM_SAVE = 'Save';
     static readonly CONFIRM_DEPLOY = 'Deploy';
     static readonly CONFIRM_CREATE = 'Create';
     static readonly CONFIRM_MOVE_RENAME = 'Move/Rename';
+    static readonly CONFIRM_REPLACE = 'Replace';
 
     static readonly FORCE_MOVE_RENAME = 'Ignore Incompatible Storables';
     static readonly FORCE_MOVE_RENAME_TOOLTIP = 'When enabled, new columns/tables are created and no migration is performed, if refactoring affects existing storable Data Types.';

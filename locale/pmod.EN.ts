@@ -1222,5 +1222,9 @@ export const PMOD_EN: I18nTranslation[] = [
     {
         key: 'pmod.move-rename',
         value: 'Move/Rename $0'
+    },
+    {
+        key: 'pmod.replace',
+        value: 'Replace $0'
     }
 ];
