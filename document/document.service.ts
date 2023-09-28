@@ -18,7 +18,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 
 import { FQNRTC, MessageBusService, XMOMLocated, XoDocumentChange, XoDocumentLock, XoDocumentUnlock } from '@yggdrasil/events';
-import { FullQualifiedName, RuntimeContext } from '@zeta/api';
+import { ApiService, FullQualifiedName, RuntimeContext } from '@zeta/api';
 import { AuthService } from '@zeta/auth';
 import { dispatchMouseClick, isString } from '@zeta/base';
 import { I18nService } from '@zeta/i18n';
@@ -100,6 +100,7 @@ export class DocumentService implements OnDestroy {
     constructor(
         authService: AuthService,
         private readonly i18n: I18nService,
+        private readonly apiService: ApiService,
         private readonly dialogService: XcDialogService,
         private readonly statusBarService: XcStatusBarService,
         private readonly factoryService: FactoryService,
@@ -301,7 +302,7 @@ export class DocumentService implements OnDestroy {
 
             documentModel.updateLock({
                 userLock: documentModel.lockInfo.userLock,
-                rtcLock: documentModel.lockInfo.rtcLock,
+                rtcLock: documentModel.lockInfo.rtcLock || !documentModel.originRuntimeContext.equals(this.apiService.runtimeContext),
                 readonly: documentModel.item.readonly
             });
 
@@ -656,7 +657,7 @@ export class DocumentService implements OnDestroy {
 
     openDefaultWorkflow() {
         if (this.documents.length === 0) {
-        this.newWorkflow(undefined, true);
+            this.newWorkflow(undefined, true);
         }
     }
 
