@@ -655,7 +655,9 @@ export class DocumentService implements OnDestroy {
 
 
     openDefaultWorkflow() {
+        if (this.documents.length === 0) {
         this.newWorkflow(undefined, true);
+        }
     }
 
 
