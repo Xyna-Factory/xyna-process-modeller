@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2022 GIP SmartMercial GmbH, Germany
+ * Copyright 2023 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1222,5 +1222,9 @@ export const PMOD_EN: I18nTranslation[] = [
     {
         key: 'pmod.move-rename',
         value: 'Move/Rename $0'
+    },
+    {
+        key: 'pmod.replace',
+        value: 'Replace $0'
     }
 ];

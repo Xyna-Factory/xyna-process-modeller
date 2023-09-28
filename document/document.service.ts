@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2022 GIP SmartMercial GmbH, Germany
+ * Copyright 2023 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import { FQNRTC, MessageBusService, XMOMLocated, XoDocumentChange, XoDocumentLoc
 import { ApiService, FullQualifiedName, RuntimeContext } from '@zeta/api';
 import { AuthService } from '@zeta/auth';
 import { dispatchMouseClick, isString } from '@zeta/base';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogService, XcStatusBarEntryType, XcStatusBarService } from '@zeta/xc';
 
 import { BehaviorSubject, merge, Observable, of, Subject, Subscription, throwError } from 'rxjs';
@@ -44,6 +44,7 @@ import { XoGetWorkflowResponse } from '../xo/get-workflow-response.model';
 import { XoGetXmomItemResponse } from '../xo/get-xmom-item-response.model';
 import { XoItem } from '../xo/item.model';
 import { XoRefactorRequest } from '../xo/refactor-request.model';
+import { XoReplaceDatatypeRequest } from '../xo/replace-request.model';
 import { XoRepairsRequiredError } from '../xo/repairs-required-error.model';
 import { XoServiceGroup } from '../xo/service-group.model';
 import { XoUpdateXmomItemResponse } from '../xo/update-xmom-item-response.model';
@@ -107,8 +108,8 @@ export class DocumentService implements OnDestroy {
         readonly xmomService: XmomService,
         readonly messageBus: MessageBusService
     ) {
-        this.i18n.setTranslations(I18nService.DE_DE, PMOD_DE);
-        this.i18n.setTranslations(I18nService.EN_US, PMOD_EN);
+        this.i18n.setTranslations(LocaleService.DE_DE, PMOD_DE);
+        this.i18n.setTranslations(LocaleService.EN_US, PMOD_EN);
 
         // clear documents on login
         authService.didLogin.subscribe(() => this.documentListSubject.next([]));
@@ -413,6 +414,29 @@ export class DocumentService implements OnDestroy {
             switchMap(result => this.performModellingAction({
                 type: ModellingActionType.refactor,
                 request: XoRefactorRequest.refactorWith(result.path, result.label, result.force),
+                objectId: null,
+                xmomItem,
+                rtc
+            }))
+        );
+    }
+
+
+    replace(xmomItem: XoXmomItem): Observable<void> {
+        const rtc = xmomItem.rtc ?? this.xmomService.runtimeContext;
+        const data: LabelPathDialogData = {
+            header: this.i18n.translate(LabelPathDialogComponent.HEADER_REPLACE, {key: '$0', value: FullQualifiedName.decode(xmomItem.$fqn).path + '.' + xmomItem.label}),
+            confirm: this.i18n.translate(LabelPathDialogComponent.CONFIRM_REPLACE),
+            presetLabel: xmomItem.label,
+            presetPath: FullQualifiedName.decode(xmomItem.$fqn).path,
+            pathsObservable: this.getPaths()
+        };
+
+        return this.dialogService.custom(LabelPathDialogComponent, data).afterDismissResult().pipe(
+            filter(result => !!result),
+            switchMap(result => this.performModellingAction({
+                type: ModellingActionType.replace,
+                request: XoReplaceDatatypeRequest.refactorWith(result.label, result.path),
                 objectId: null,
                 xmomItem,
                 rtc

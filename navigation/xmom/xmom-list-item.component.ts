@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2022 GIP SmartMercial GmbH, Germany
+ * Copyright 2023 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -84,6 +84,13 @@ export class XMOMListItemComponent {
                 icon: 'edit',
                 translate: true,
                 click: () => this.refactorXmomItem()
+            },
+            <XcMenuItem>{
+                name: 'Replace...',
+                icon: 'edit',
+                translate: true,
+                visible: () => this.isDatatype,
+                click: () => this.replace()
             },
             <XcMenuItem>{
                 name: 'Delete from XMOM...',
@@ -280,6 +287,9 @@ export class XMOMListItemComponent {
         this.documentService.refactorItem(this.getXmomItem()).subscribe();
     }
 
+    replace() {
+        this.documentService.replace(this.getXmomItem()).subscribe();
+    }
 
     testWorkflow() {
         if (this.isWorkflow) {

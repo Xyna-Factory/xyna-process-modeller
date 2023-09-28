@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2022 GIP SmartMercial GmbH, Germany
+ * Copyright 2023 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,11 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, Injector, LOCALE_ID, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Injector, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
-import { QueryParamService } from '@fman/misc/services/query-param.service';
 import { ApiService, FullQualifiedName, RuntimeContextSelectionSettings } from '@zeta/api';
 import { KeyboardEventType, KeyDistributionService, OutsideListenerService } from '@zeta/base';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, LocaleService } from '@zeta/i18n';
 import { RouteComponent, RuntimeContextSelectionComponent } from '@zeta/nav';
 import { XcDialogService, XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 
@@ -45,6 +44,7 @@ import { ErrorService } from './navigation/shared/error.service';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { XoRuntimeContext } from './xo/runtime-context.model';
 import { XoWorkflow } from './xo/workflow.model';
+import { QueryParameterService } from '@zeta/nav/query-parameter.service';
 
 
 @Component({
@@ -93,17 +93,16 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
         private readonly dialogService: XcDialogService,
         readonly injector: Injector,
         private readonly i18nService: I18nService,
-        private readonly queryParamService: QueryParamService,
+        private readonly queryParamService: QueryParameterService,
         private readonly outsideListenerService: OutsideListenerService,
         private readonly keyService: KeyDistributionService,
         private readonly errorService: ErrorService
     ) {
         super();
 
-        this.i18nService.language = injector.get(LOCALE_ID) ?? I18nService.EN_US;
-
-        this.i18nService.setTranslations(I18nService.DE_DE, PMOD_DE);
-        this.i18nService.setTranslations(I18nService.EN_US, PMOD_EN);
+        this.i18nService.contextDismantlingSearch = true;
+        this.i18nService.setTranslations(LocaleService.DE_DE, PMOD_DE);
+        this.i18nService.setTranslations(LocaleService.EN_US, PMOD_EN);
 
         this.documentService.documentListChange.subscribe(documents => {
             const updateDocuments = () => {

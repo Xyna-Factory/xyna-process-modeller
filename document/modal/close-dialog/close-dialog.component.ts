@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2022 GIP SmartMercial GmbH, Germany
+ * Copyright 2023 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
  */
 import { Component, Injector } from '@angular/core';
 
-import { I18nService } from '@zeta/i18n';
+import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent } from '@zeta/xc';
 
 import { closeDialog_translations_de_DE } from './locale/close-dialog-translations.de-DE';
@@ -46,7 +46,7 @@ export class CloseDialogComponent extends XcDialogComponent<CloseDialogResult, C
     constructor(injector: Injector, i18nService: I18nService) {
         super(injector);
 
-        i18nService.setTranslations(I18nService.DE_DE, closeDialog_translations_de_DE);
-        i18nService.setTranslations(I18nService.EN_US, closeDialog_translations_en_US);
+        i18nService.setTranslations(LocaleService.DE_DE, closeDialog_translations_de_DE);
+        i18nService.setTranslations(LocaleService.EN_US, closeDialog_translations_en_US);
     }
 }

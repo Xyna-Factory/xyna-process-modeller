@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2022 GIP SmartMercial GmbH, Germany
+ * Copyright 2023 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@
         flex: 1 1 auto;
         flex-direction: column;
         transition: background-color 150ms linear;
-        padding: ($service-step-vertical-gap / 4) ($service-step-vertical-gap / 2);
+        padding: calc(#{$service-step-vertical-gap} / 4) calc(#{$service-step-vertical-gap} / 2);
 
         &.mod-drop-area-hover {
             background-color: #ffd988;  // shade of #fabb00

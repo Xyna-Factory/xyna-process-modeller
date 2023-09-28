@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2022 GIP SmartMercial GmbH, Germany
+ * Copyright 2023 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -312,12 +312,13 @@ export class FormulaComponent extends ModellingItemComponent {
         });
 
         this._partInEditing = null;
-        this.formulaWrapper.nativeElement.focus();       // refocus formula-area
         this.setCaretToPart(nextPartForCaret);
     }
 
 
     finishedEditingSubPart(_: FormulaPart) {
+        this.formulaWrapper.nativeElement.focus();       // refocus formula-area
+
         // if it hasn't been accepted before, leave formula
         if (this._partInEditing) {
             this.unselect();

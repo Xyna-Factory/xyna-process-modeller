@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2022 GIP SmartMercial GmbH, Germany
+ * Copyright 2023 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,7 +55,7 @@ export class FormulaEditablePartComponent extends FormulaPartComponent {
     }
 
 
-    finishEditing(event: FocusEvent) {
+    finishEditing(event?: FocusEvent) {
         this.finishedEditing.emit(this.formulaPart);
     }
 

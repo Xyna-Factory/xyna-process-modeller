@@ -7,7 +7,7 @@
         <xc-button (click)="dismiss()" xc-i18n>button-cancel</xc-button>
         <div *ngIf="!dataSource.readonlyMode" class="right-area">
             <xc-button *ngIf="deletable" (click)="delete()"><xc-icon xc-icon-name="delete" xc-i18n>button-delete</xc-icon></xc-button>
-            <xc-button (click)="save()" xc-i18n>button-ok</xc-button>
+            <xc-button (click)="save()" color="primary" xc-i18n>button-ok</xc-button>
         </div>
     </ng-container>
 </xc-dialog-wrapper>

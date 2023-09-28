@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2022 GIP SmartMercial GmbH, Germany
+ * Copyright 2023 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import { Component, Injector, Optional } from '@angular/core';
 
 import { ApiService, RuntimeContext } from '@zeta/api';
 import { downloadFile } from '@zeta/base';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcDialogComponent } from '@zeta/xc';
 
 import { DocumentService } from '../../../document/document.service';
@@ -50,8 +50,8 @@ export class WorkflowConstantBuilderModalComponent extends XcDialogComponent<voi
     ) {
         super(injector);
 
-        this.i18n.setTranslations(I18nService.DE_DE, workflowConstantBuilderModal_translations_de_DE);
-        this.i18n.setTranslations(I18nService.EN_US, workflowConstantBuilderModal_translations_en_US);
+        this.i18n.setTranslations(LocaleService.DE_DE, workflowConstantBuilderModal_translations_de_DE);
+        this.i18n.setTranslations(LocaleService.EN_US, workflowConstantBuilderModal_translations_en_US);
 
         this.rtcDataWrapper = new XcAutocompleteDataWrapper(
             () => this.rtc,

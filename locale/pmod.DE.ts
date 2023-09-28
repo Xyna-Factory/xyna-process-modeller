@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2022 GIP SmartMercial GmbH, Germany
+ * Copyright 2023 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1155,6 +1155,10 @@ export const PMOD_DE: I18nTranslation[] = [
         value: 'Verschieben/Umbenennen'
     },
     {
+        key: 'Replace',
+        value: 'Ersetzen'
+    },
+    {
         key: 'Save',
         value: 'Speichern'
     },
@@ -1331,6 +1335,10 @@ export const PMOD_DE: I18nTranslation[] = [
         value: 'Verschieben/Umbenennen $0 '
     },
     {
+        key: 'pmod.replace',
+        value: 'Ersetzen von $0 '
+    },
+    {
         key: 'Ignore Incompatible Storables',
         value: 'Inkompatible Storables ignorieren'
     },
@@ -1377,6 +1385,10 @@ export const PMOD_DE: I18nTranslation[] = [
     {
         key: 'Move/Rename...',
         value: 'Objekt verschieben/umbenennen...'
+    },
+    {
+        key: 'Replace...',
+        value: 'Datentyp ersetzen...'
     },
     {
         key: 'Delete from XMOM...',

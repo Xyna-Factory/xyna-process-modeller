@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2022 GIP SmartMercial GmbH, Germany
+ * Copyright 2023 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 import { Component, Injector, Optional } from '@angular/core';
 
 import { ApiService, FullQualifiedName, RuntimeContext, Xo, XoDescriber, XoStructureArray } from '@zeta/api';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent, XcStructureTreeDataSource } from '@zeta/xc';
 
 import { XoVariable } from '../../../xo/variable.model';
@@ -50,8 +50,8 @@ export class ConstantDialogComponent extends XcDialogComponent<Xo | typeof CONST
     constructor(@Optional() injector: Injector, apiService: ApiService, private readonly i18n: I18nService) {
         super(injector);
 
-        this.i18n.setTranslations(I18nService.DE_DE, constantDialog_translations_de_DE);
-        this.i18n.setTranslations(I18nService.EN_US, constantDialog_translations_en_US);
+        this.i18n.setTranslations(LocaleService.DE_DE, constantDialog_translations_de_DE);
+        this.i18n.setTranslations(LocaleService.EN_US, constantDialog_translations_en_US);
 
 
         const variable = this.injectedData.variable;

@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2022 GIP SmartMercial GmbH, Germany
+ * Copyright 2023 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
  */
 import { Component, HostListener, Injector, Optional, ViewChild } from '@angular/core';
 
-import { I18nService } from '@zeta/i18n';
+import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcDialogComponent, XcFormDirective, XcOptionItem, XcOptionItemString } from '@zeta/xc';
 
 import { Observable } from 'rxjs';
@@ -55,11 +55,13 @@ export class LabelPathDialogComponent extends XcDialogComponent<LabelPathDialogR
     static readonly HEADER_CONVERT_TO_WORKFLOW = 'Convert Service into Workflow';
     static readonly HEADER_CONVERT_TO_DATA_TYPE = 'Convert Parameter into Data Type';
     static readonly HEADER_MOVE_RENAME = 'pmod.move-rename';
+    static readonly HEADER_REPLACE = 'pmod.replace';
 
     static readonly CONFIRM_SAVE = 'Save';
     static readonly CONFIRM_DEPLOY = 'Deploy';
     static readonly CONFIRM_CREATE = 'Create';
     static readonly CONFIRM_MOVE_RENAME = 'Move/Rename';
+    static readonly CONFIRM_REPLACE = 'Replace';
 
     static readonly FORCE_MOVE_RENAME = 'Ignore Incompatible Storables';
     static readonly FORCE_MOVE_RENAME_TOOLTIP = 'When enabled, new columns/tables are created and no migration is performed, if refactoring affects existing storable Data Types.';
@@ -81,8 +83,8 @@ export class LabelPathDialogComponent extends XcDialogComponent<LabelPathDialogR
     constructor(@Optional() injector: Injector, private readonly i18n: I18nService) {
         super(injector);
 
-        this.i18n.setTranslations(I18nService.DE_DE, labelPathDialog_translations_de_DE);
-        this.i18n.setTranslations(I18nService.EN_US, labelPathDialog_translations_en_US);
+        this.i18n.setTranslations(LocaleService.DE_DE, labelPathDialog_translations_de_DE);
+        this.i18n.setTranslations(LocaleService.EN_US, labelPathDialog_translations_en_US);
 
         this.label = this.injectedData.presetLabel || '';
         this.path = this.injectedData.presetPath || '';

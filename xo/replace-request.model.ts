@@ -15,26 +15,29 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { XoArray, XoArrayClass, XoObjectClass, XoProperty } from '@zeta/api';
+import { XoObjectClass, XoProperty } from '@zeta/api';
 
-import { XoReferableObject } from './referable-object.model';
-import { XoRuntimeContext } from './runtime-context.model';
+import { XoRequest } from './request.model';
 
 
-@XoObjectClass(XoReferableObject, 'xmcp.processmodeller.datatypes.datatypemodeller', 'XMOMItemReference')
-export class XoXMOMItemReference extends XoReferableObject {
-
+@XoObjectClass(XoRequest, 'xmcp.processmodeller.datatypes.request', 'ReplaceDatatypeRequest')
+export class XoReplaceDatatypeRequest extends XoRequest {
 
     @XoProperty()
-    $fqn: string;
+    label: string;
+
+    @XoProperty()
+    path: string;
+
+    @XoProperty()
+    force: boolean;
 
 
-    @XoProperty(XoRuntimeContext)
-    $rtc: XoRuntimeContext = new XoRuntimeContext();
-
-
-}
-
-@XoArrayClass(XoXMOMItemReference)
-export class XoXMOMItemReferenceArray extends XoArray<XoXMOMItemReference> {
+    static refactorWith(label: string, path: string): XoReplaceDatatypeRequest {
+        const request = new XoReplaceDatatypeRequest();
+        request.label = label;
+        request.path = path;
+        request.force = true;
+        return request;
+    }
 }

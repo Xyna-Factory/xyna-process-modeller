@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2022 GIP SmartMercial GmbH, Germany
+ * Copyright 2023 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,9 +40,9 @@ export class FormulaPartLiteralComponent extends FormulaEditablePartComponent {
     }
 
 
-    finishEditing(event: FocusEvent) {
+    finishEditing(event?: FocusEvent) {
         this._editing = false;
-        if (event.target) {
+        if (event?.target) {
             (this.formulaPart as FormulaPartLiteral).text = (event.target as Element).textContent;
 
             /** @todo fixme: Weird bug in angular causes formulaPart.text to occur twice in textContent.
@@ -66,6 +66,7 @@ export class FormulaPartLiteralComponent extends FormulaEditablePartComponent {
         if (event.key === 'Enter') {
             event.preventDefault();
             this.acceptEditing();
+            this.finishEditing();
         }
     }
 

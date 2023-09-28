@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2022 GIP SmartMercial GmbH, Germany
+ * Copyright 2023 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,6 +73,7 @@ export enum ModellingActionType {
     libraryCall = 'templateCall',
     move = 'move',
     refactor = 'refactor',
+    replace = 'replace',
     setConstant = 'constant',
     sort = 'sort',
     split = 'split',
@@ -219,6 +220,7 @@ export class XmomService {
             case ModellingActionType.split:
             case ModellingActionType.toggle:
             case ModellingActionType.refactor:
+            case ModellingActionType.replace:
             case ModellingActionType.deleteConstant:
             case ModellingActionType.convert:
                 return { method: HttpMethod.POST, url };

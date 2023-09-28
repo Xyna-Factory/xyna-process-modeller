@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2022 GIP SmartMercial GmbH, Germany
+ * Copyright 2023 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,17 +26,20 @@
         display: flex;
         background-color: $color-gray-2;
         padding: 0 4px;
-        height: 28px;
+        height: 24px;
         align-items: center;
+        border-radius: 4px;
+        opacity: 0.8;
 
         .caption {
             flex: 1 1 auto;
             align-self: center;
             color: $color-normal;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             font-weight: bold;
-            font-size: $font-size-small;
+            font-size: $font-size-tiny;
+            font-family: $font-family-bolder;
         }
     }
 }

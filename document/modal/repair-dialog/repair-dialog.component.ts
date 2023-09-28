@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2022 GIP SmartMercial GmbH, Germany
+ * Copyright 2023 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
  */
 import { Component, Injector } from '@angular/core';
 
-import { I18nService } from '@zeta/i18n';
+import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent } from '@zeta/xc';
 
 import { XoRepairEntry, XoRepairEntryArray } from '../../../xo/repair-entry.model';
@@ -45,7 +45,7 @@ export class RepairDialogComponent extends XcDialogComponent<boolean, RepairDial
     constructor(injector: Injector, private readonly i18n: I18nService) {
         super(injector);
 
-        this.i18n.setTranslations(I18nService.DE_DE, repairDialog_translations_de_DE);
-        this.i18n.setTranslations(I18nService.EN_US, repairDialog_translations_en_US);
+        this.i18n.setTranslations(LocaleService.DE_DE, repairDialog_translations_de_DE);
+        this.i18n.setTranslations(LocaleService.EN_US, repairDialog_translations_en_US);
     }
 }
