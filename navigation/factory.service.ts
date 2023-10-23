@@ -38,7 +38,7 @@ export class FactoryService {
      */
     private equalsGlobalRTC = true;
 
-    private _runtimeContextDataWrapper: XcAutocompleteDataWrapper;
+    private readonly _runtimeContextDataWrapper: XcAutocompleteDataWrapper;
 
 
     constructor(private readonly apiService: ApiService, private readonly xmomService: XmomService) {
