@@ -399,8 +399,7 @@ export class FormulaComponent extends ModellingItemComponent {
                 if (predecessor) {
                     this.removePart(predecessor);
                 }
-            }
-            else if (this.formula.lastVisiblePart) {
+            } else if (this.formula.lastVisiblePart) {
                 // remove last part
                 this.removePart(this.formula.lastVisiblePart);
             }

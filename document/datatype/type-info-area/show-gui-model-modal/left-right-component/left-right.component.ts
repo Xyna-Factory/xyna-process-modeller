@@ -18,6 +18,7 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 
 
+/** @deprecated */
 @Component({
     selector: 'left-right-component',
     templateUrl: './left-right.component.html',
@@ -191,8 +192,9 @@ export class LeftRightComponent implements OnInit {
         return classes;
     }
 
-    isItemFocused(item: any) { return (this._showFocusedLeft && item === this.focusedItemLeft)
-        || (this._showFocusedRight && item === this.focusedItemRight);
+    isItemFocused(item: any) {
+        return (this._showFocusedLeft && item === this.focusedItemLeft)
+            || (this._showFocusedRight && item === this.focusedItemRight);
     }
 
     // ---------------------------------------------------------------- DRAG EVENT LISTENER
@@ -398,10 +400,18 @@ export class LeftRightComponent implements OnInit {
         this.change.emit([this.leftItems, this.rightItems]);
     }
 
-    onfocusLeft() { this._showFocusedLeft = true; }
-    onblurLeft() { this._showFocusedLeft = false; }
-    onfocusRight() { this._showFocusedRight = true; }
-    onblurRight() { this._showFocusedRight = false; }
+    onfocusLeft() {
+        this._showFocusedLeft = true;
+    }
+    onblurLeft() {
+        this._showFocusedLeft = false;
+    }
+    onfocusRight() {
+        this._showFocusedRight = true;
+    }
+    onblurRight() {
+        this._showFocusedRight = false;
+    }
 
     private _scrollFocusedNodeIntoView(target: HTMLElement, container: HTMLElement) {
         const buffer = container.clientHeight * 0.2;

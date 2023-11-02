@@ -64,9 +64,8 @@ export class XoModellingItem extends XoItem {
                 this.decode(replacer.encode());     // encode and decode to get a clean update-process including afterDecode and such
                 this.replacedSubject.next(this);
                 replaced = true;
-            }
-            // check container areas
-            else if (replacer instanceof XoModellingItem) {
+            } else if (replacer instanceof XoModellingItem) {
+                // check container areas
                 for (const area of this.containerAreas) {
                     if (area.update(replacer)) {
                         replaced = true;

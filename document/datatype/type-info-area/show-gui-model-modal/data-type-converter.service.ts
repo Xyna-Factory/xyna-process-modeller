@@ -81,7 +81,9 @@ const PROPERTY_VARIABLE_NAME_ATTR = 'VariableName';
 const PROPERTY_LABEL_ATTR = 'Label';
 const PROPERTY_IS_LIST_ATTR = 'IsList';
 
-function getTemplateString(str: string): string { return '\'' + str + '\''; }
+function getTemplateString(str: string): string {
+    return '\'' + str + '\'';
+}
 
 function getPascalCaseString(str: string): string {
     str = str.trim();
@@ -243,7 +245,9 @@ export class ZetaDecorator implements StringifyClass {
         return '@' + this.type + '(' + args + ')';
     }
 
-    toString(): string { return this.type; }
+    toString(): string {
+        return this.type;
+    }
 }
 
 export class TypeScriptImports implements StringifyClass {
