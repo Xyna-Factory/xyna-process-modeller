@@ -61,7 +61,8 @@ export class VariableAreaComponent extends ModellingObjectComponent {
         if (event.sameArea && event.operation === DragType.move && event.index > event.sourceIndex) {
             event.index--;
         }
-        // insert
+
+        // --< INSERT >--
         if (event.operation === DragType.insert) {
             this.performAction({
                 type: ModellingActionType.insert,
@@ -72,9 +73,9 @@ export class VariableAreaComponent extends ModellingObjectComponent {
                     event.item.createInsertRequestContent()
                 )
             });
-        }
-        // copy
-        else if (event.operation === DragType.copy) {
+        } else if (event.operation === DragType.copy) {
+
+            // --< COPY >--
             this.performAction({
                 type: ModellingActionType.copy,
                 objectId: event.item.id,
@@ -86,9 +87,9 @@ export class VariableAreaComponent extends ModellingObjectComponent {
             });
             // preview copy operation by inserting the variable before the request is done
             this.variableArea.items.data.splice(event.index, 0, event.item);
-        }
-        // move
-        else if (event.operation === DragType.move) {
+        } else if (event.operation === DragType.move) {
+
+            // --< MOVE >--
             // target index must be different from source index, if inserting into the same area
             if (!event.sameArea || event.sourceIndex !== event.index) {
                 this.performAction({
