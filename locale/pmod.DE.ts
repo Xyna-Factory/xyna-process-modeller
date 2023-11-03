@@ -891,7 +891,7 @@ export const PMOD_DE: I18nTranslation[] = [
     },
     {
         key: 'pmod.workflow.compare',
-        value: 'Vergleiche'
+        value: 'Vergleichen'
     },
     {
         key: 'pmod.workflow.undo',
