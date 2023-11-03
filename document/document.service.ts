@@ -18,7 +18,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 
 import { FQNRTC, MessageBusService, XMOMLocated, XoDocumentChange, XoDocumentLock, XoDocumentUnlock } from '@yggdrasil/events';
-import { FullQualifiedName, RuntimeContext } from '@zeta/api';
+import { ApiService, FullQualifiedName, RuntimeContext } from '@zeta/api';
 import { AuthService } from '@zeta/auth';
 import { dispatchMouseClick, isString } from '@zeta/base';
 import { I18nService, LocaleService } from '@zeta/i18n';
@@ -44,8 +44,8 @@ import { XoGetWorkflowResponse } from '../xo/get-workflow-response.model';
 import { XoGetXmomItemResponse } from '../xo/get-xmom-item-response.model';
 import { XoItem } from '../xo/item.model';
 import { XoRefactorRequest } from '../xo/refactor-request.model';
-import { XoReplaceDatatypeRequest } from '../xo/replace-request.model';
 import { XoRepairsRequiredError } from '../xo/repairs-required-error.model';
+import { XoReplaceDatatypeRequest } from '../xo/replace-request.model';
 import { XoServiceGroup } from '../xo/service-group.model';
 import { XoUpdateXmomItemResponse } from '../xo/update-xmom-item-response.model';
 import { XoWorkflow } from '../xo/workflow.model';
@@ -101,6 +101,7 @@ export class DocumentService implements OnDestroy {
     constructor(
         authService: AuthService,
         private readonly i18n: I18nService,
+        private readonly apiService: ApiService,
         private readonly dialogService: XcDialogService,
         private readonly statusBarService: XcStatusBarService,
         private readonly factoryService: FactoryService,
@@ -302,7 +303,7 @@ export class DocumentService implements OnDestroy {
 
             documentModel.updateLock({
                 userLock: documentModel.lockInfo.userLock,
-                rtcLock: documentModel.lockInfo.rtcLock,
+                rtcLock: documentModel.lockInfo.rtcLock || !documentModel.originRuntimeContext.equals(this.apiService.runtimeContext),
                 readonly: documentModel.item.readonly
             });
 
@@ -679,7 +680,9 @@ export class DocumentService implements OnDestroy {
 
 
     openDefaultWorkflow() {
-        this.newWorkflow(undefined, true);
+        if (this.documents.length === 0) {
+            this.newWorkflow(undefined, true);
+        }
     }
 
 
