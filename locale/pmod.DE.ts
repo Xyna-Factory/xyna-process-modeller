@@ -890,6 +890,10 @@ export const PMOD_DE: I18nTranslation[] = [
         value: 'Alles ausblenden'
     },
     {
+        key: 'pmod.workflow.compare',
+        value: 'Vergleiche'
+    },
+    {
         key: 'pmod.workflow.undo',
         value: 'Rückgängig machen'
     },

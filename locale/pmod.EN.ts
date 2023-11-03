@@ -866,6 +866,10 @@ export const PMOD_EN: I18nTranslation[] = [
         value: 'Collapse all'
     },
     {
+        key: 'pmod.workflow.compare',
+        value: 'Compare'
+    },
+    {
         key: 'pmod.workflow.undo',
         value: 'Undo'
     },
