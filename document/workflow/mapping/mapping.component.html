@@ -18,12 +18,14 @@
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
 ></documentation-area>
-<formula-area *ngIf="mapping.formulaArea"
+<formula-area *ngIf="mapping.formulaArea && programmaticMode"
     [formulaArea]="mapping.formulaArea"
     [documentModel]="documentModel"
     [newFormulaExpression]="newFormulaExpression"
     (triggerAction)="performAction($event)"
 ></formula-area>
+<visual-mapping *ngIf="visualMode"
+></visual-mapping>
 <variable-area-service *ngIf="mapping.outputArea"
     [variableArea]="mapping.outputArea"
     [documentModel]="documentModel"
