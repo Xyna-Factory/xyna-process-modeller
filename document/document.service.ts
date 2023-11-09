@@ -59,6 +59,7 @@ import { ExceptionTypeDocumentModel } from './model/exception-type-document.mode
 import { ServiceGroupDocumentModel } from './model/service-group-document.model';
 import { TypeDocumentModel } from './model/type-document.model';
 import { WorkflowDocumentModel } from './model/workflow-document.model';
+import { XoModellingItem } from '@pmod/xo/modelling-item.model';
 
 
 export enum DocumentState {
@@ -655,12 +656,14 @@ export class DocumentService implements OnDestroy {
     // ================================================================================================================
 
 
-    newWorkflow(label?: string, defaultWorkflow = false) {
-        this.xmomService.newXmomObject(
+    newWorkflow(label = 'New Workflow', defaultWorkflow = false, input: XoModellingItem[] = [], output: XoModellingItem[] = []) {
+        this.xmomService.newXmomWorkflowWithSignature(
             this.xmomService.runtimeContext,
             XmomObjectType.Workflow,
             XoGetWorkflowResponse,
-            label || 'New Workflow'
+            label,
+            input.map((variable: XoModellingItem) => variable.createInsertRequestContent()),
+            output.map((variable: XoModellingItem) => variable.createInsertRequestContent())
         ).subscribe(
             (workflowResponse: XoGetWorkflowResponse) => {
                 const workflow = workflowResponse.workflow;

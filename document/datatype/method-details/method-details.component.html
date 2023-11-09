@@ -22,7 +22,7 @@
                 <label>{{method.name}}</label>
             </div>
         </div>
-        <div class="row">
+        <div class="row with-button">
             <xc-form-autocomplete
                 *ngIf="!isStaticMethod"
                 label="implementation-type"
@@ -34,18 +34,15 @@
                 xc-form-autocomplete-fulltextsearch
                 xc-i18n
             ></xc-form-autocomplete>
-            <xc-form-autocomplete
-                #referenceAutocomplete
+            <xc-icon-button
                 *ngIf="!isStaticMethod && isReferenceAsImplementationTypeSet"
-                label="reference"
-                [readonly]="readonly"
-                placeholder="select-tooltip"
-                [(xc-form-autocomplete-option)]="referenceDataWrapper.value"
-                [xc-form-autocomplete-options]="referenceDataWrapper.values"
-                xc-form-autocomplete-fulltextsearch
-                xc-form-field-suffix="clear"
+                class="add-button"
+                (click)="createWorkflow()"
+                xc-icon
+                xc-icon-name="add"
+                xc-tooltip="tooltip-new-workflow"
                 xc-i18n
-            ></xc-form-autocomplete>
+            ></xc-icon-button>
         </div>
     </div>
 
@@ -55,6 +52,22 @@
         [documentModel]="documentModel"
         [lines]="5"
     ></type-documentation-area>
+</div>
+
+<div *ngIf="!isStaticMethod && isReferenceAsImplementationTypeSet" class="row">
+    <xc-form-autocomplete
+    #referenceAutocomplete
+    label="reference"
+    [readonly]="readonly"
+    placeholder="select-tooltip"
+    [(xc-form-autocomplete-option)]="referenceDataWrapper.value"
+    [xc-form-autocomplete-options]="referenceDataWrapper.values"
+    xc-form-autocomplete-fulltextsearch
+    xc-form-field-suffix="clear"
+    xc-i18n
+    ></xc-form-autocomplete>
+
+    <xc-button class="button" (click)="openReferencedWorkflow()" xc-i18n>open-button</xc-button>
 </div>
 
 <method-implementation

@@ -37,6 +37,8 @@ import { DataTypeService } from '../../datatype.service';
 import { DocumentService } from '../../document.service';
 import { ModRelativeHoverSide } from '../../workflow/shared/drag-and-drop/mod-drag-and-drop.service';
 import { ModellingItemComponent } from '../../workflow/shared/modelling-object.component';
+import { XoModellingItem } from '@pmod/xo/modelling-item.model';
+import { FullQualifiedName } from '@zeta/api';
 
 
 @Component({
@@ -209,5 +211,18 @@ export class MethodDetailsComponent extends ModellingItemComponent {
                 ModRelativeHoverSide.inside
             )
         });
+    }
+
+    createWorkflow() {
+        const input = this.method.inputArea.items.data as XoModellingItem[];
+        const output = this.method.outputArea.items.data as XoModellingItem[];
+
+        this.documentService.newWorkflow('New Workflow', false, input, output);
+    }
+
+    openReferencedWorkflow() {
+        if (this.method instanceof XoDynamicMethod && this.method.reference) {
+            this.documentService.loadWorkflow(this.method.toRtc(), FullQualifiedName.decode(this.method.reference));
+        }
     }
 }
