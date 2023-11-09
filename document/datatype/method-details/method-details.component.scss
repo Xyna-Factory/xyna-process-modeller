@@ -27,13 +27,13 @@
     >.grid-12 {
         display: flex;
 
+        .with-button {
+            align-items: center;
+        }
+
         .row {
             display: flex;
             flex-direction: row;
-
-            .with-button {
-                align-items: center;
-            }
 
             >* {
                 flex: 1 1 100%;
