@@ -602,6 +602,14 @@ export const PMOD_DE: I18nTranslation[] = [
         key: 'pmod.datatype.type-info-area.open-button',
         value: 'Öffnen'
     },
+    {
+        key: 'pmod.datatype.method-details.tooltip-new-workflow',
+        value: 'Workflow mit passender Signatur öffnen.'
+    },
+    {
+        key: 'pmod.datatype.method-details.open-button',
+        value: 'Öffnen'
+    },
 
     // global-storable-properties-area
     {

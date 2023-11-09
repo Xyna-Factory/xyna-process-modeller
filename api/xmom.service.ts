@@ -58,6 +58,7 @@ import { XoVariableArea } from '../xo/variable-area.model';
 import { XoWorkflowInvocation } from '../xo/workflow-invocation.model';
 import { XoXmomItem } from '../xo/xmom-item.model';
 import { XmomObjectType } from './xmom-types';
+import { XoInsertRequestContent } from '@pmod/xo/insert-request-content.model';
 
 
 export enum ModellingActionType {
@@ -506,9 +507,35 @@ export class XmomService {
     }
 
 
+    newXmomWorkflowWithSignature(rtc: RuntimeContext, type: XmomObjectType, output: XoClassInterface<XoGetXmomItemResponse>, label: string, wfInput: XoInsertRequestContent[], wfOutput: XoInsertRequestContent[]) {
+
+        const payload = { label: label, input: wfInput.map(value => value.encode()), output: wfOutput.map(value => value.encode()) };
+        /**
+         * @todo remove this as soon as XoRequest is accepted by the backend
+         */
+        const removeMeta = (object: any) => {
+            if (object.$meta) {
+                delete object.$meta;
+            }
+            for (const child in object) {
+                if (object[child] && typeof object[child] === 'object') {
+                    removeMeta(object[child]);
+                }
+            }
+        };
+
+        removeMeta(payload);
+        return this.requestNewXmomObject(rtc, type, output, payload);
+    }
+
     newXmomObject(rtc: RuntimeContext, type: XmomObjectType, output: XoClassInterface<XoGetXmomItemResponse>, label: string): Observable<XoGetXmomItemResponse> {
+        const payload = { label: label };
+        return this.requestNewXmomObject(rtc, type, output, payload);
+    }
+
+
+    private requestNewXmomObject(rtc: RuntimeContext, type: XmomObjectType, output: XoClassInterface<XoGetXmomItemResponse>, payload): Observable<XoGetXmomItemResponse> {
         const url = 'runtimeContext/' + rtc.uniqueKey + '/xmom/' + this.xmomTypeToPath(type);
-        const payload = { label };
         return this.http.post(url, payload).pipe(
             map((data: any) => (new output().decode(data)))
         );
