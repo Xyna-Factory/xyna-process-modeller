@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { FormulaTreeDataSource } from './data-source/variable-tree-data-source';
+import { FormulaTreeDataSource } from './data-source/formula-tree-data-source';
 
 
 @Component({

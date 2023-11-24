@@ -19,7 +19,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
 import { XoVariable } from '@pmod/xo/variable.model';
 import { FormulaAreaComponent } from '../formula-area/formula-area.component';
 import { ApiService, FullQualifiedName, XoDescriber, XoDescriberCache, XoStructureObject } from '@zeta/api';
-import { FormulaTreeDataSource } from '../variable-tree/data-source/variable-tree-data-source';
+import { FormulaTreeDataSource } from '../variable-tree/data-source/formula-tree-data-source';
 
 
 @Component({
@@ -66,4 +66,31 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
         //     this.outputDataSources.forEach(ds => console.log(ds.structureTreeData.map(node => node.name).join('  ')));
         // }, 2000);
     }
+
+
+    here
+    /**
+     * TODO
+     * 
+     * Assignment {
+     *   formula: XoFormula;
+     *   destination: FormulaTreeNode;
+     *   sources: FormulaTreeNode[];
+     * 
+     *   * split the formula by the Equals-Part
+     *   * find destination variable in left half
+     *     * find correct FormulaTree by variable-index
+     *     * climb up the tree until the end of the formula-half has found a FormulaTreeNode
+     *   * find source variables in left (could be the index of an array element) AND right half
+     *   * LATER: Create new TreeNodes or change to a subtype, corresponding to formula
+     * }
+     * 
+     * AssignmentComponent {
+     *   assignments: Assignment[];
+     *   * for each assignment, find DOM element (ComponentMappingService) and draw a spline
+     *   * use dataflow-component and split up the elementary part
+     *   * test: double the control points for the spline to get a 90° angle
+     *   * draw all assignments
+     * }
+     */
 }
