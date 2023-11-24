@@ -15,8 +15,11 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ModellingObjectComponent } from '../shared/modelling-object.component';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { XoVariable } from '@pmod/xo/variable.model';
+import { FormulaAreaComponent } from '../formula-area/formula-area.component';
+import { ApiService, FullQualifiedName, XoDescriber, XoDescriberCache, XoStructureObject } from '@zeta/api';
+import { FormulaTreeDataSource } from '../variable-tree/data-source/variable-tree-data-source';
 
 
 @Component({
@@ -25,7 +28,42 @@ import { ModellingObjectComponent } from '../shared/modelling-object.component';
     styleUrls: ['./visual-mapping.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class VisualMappingComponent extends ModellingObjectComponent {
+export class VisualMappingComponent extends FormulaAreaComponent implements OnInit {
 
+    @Input()
+    inputVariables: XoVariable[];
 
+    @Input()
+    outputVariables: XoVariable[];
+
+    private readonly structureCache = new XoDescriberCache<XoStructureObject>();
+    inputDataSources: FormulaTreeDataSource[] = [];
+    outputDataSources: FormulaTreeDataSource[] = [];
+
+    ngOnInit(): void {
+        const apiService = this.injector.get(ApiService);
+
+        // create tree data sources
+        this.inputVariables?.forEach(variable => {
+            const desc = <XoDescriber>{ rtc: this.documentModel.originRuntimeContext, fqn: FullQualifiedName.decode(variable.$fqn) };
+            const ds = new FormulaTreeDataSource(desc, apiService, this.documentModel.originRuntimeContext);
+            this.inputDataSources.push(ds);
+        });
+        this.outputVariables?.forEach(variable => {
+            const desc = <XoDescriber>{ rtc: this.documentModel.originRuntimeContext, fqn: FullQualifiedName.decode(variable.$fqn) };
+            const ds = new FormulaTreeDataSource(desc, apiService, this.documentModel.originRuntimeContext);
+            this.outputDataSources.push(ds);
+        });
+
+        // initialize tree data sources
+        [...this.inputDataSources, ...this.outputDataSources].forEach(ds => {
+            // ds.structureCache = this.structureCache;
+            // ds.readonlyMode = true;
+            ds.refresh();
+        });
+
+        // setTimeout(() => {
+        //     this.outputDataSources.forEach(ds => console.log(ds.structureTreeData.map(node => node.name).join('  ')));
+        // }, 2000);
+    }
 }

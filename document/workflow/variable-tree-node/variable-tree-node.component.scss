@@ -15,28 +15,33 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+
 @import "const";
 
 :host {
     display: flex;
-    flex: 0 0 auto;
-    flex-direction: row;
+    flex-direction: column;
 
-    margin-top: -$service-step-border-radius;   // to compensate rounded corners of area above
-    padding: 12px;
-
-    background-color: $formula-background-color;
-
-    border: 1px solid $color-gray-3;
-    border-bottom-left-radius: $service-step-border-radius;
-    border-bottom-right-radius: $service-step-border-radius;
-
-    .outputs, .inputs {
+    .row {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+
+        padding: 2px 4px;
+
+        background-color: $color-white;
+        border-bottom: 1px solid $color-gray-3;
+        border-left: 1px solid $color-gray-3;
+
+        .label {
+            margin-right: 4px;
+
+            &::after {
+                content: ':'
+            }
+        }
     }
 
-    .assignments {
-        width: 100px;
+    .children {
+        margin-left: 8px;
     }
 }

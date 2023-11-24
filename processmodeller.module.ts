@@ -152,6 +152,8 @@ import { WorkflowDetailSettingsService } from './workflow-detail-settings.servic
 import { QueryParameterService } from '@zeta/nav/query-parameter.service';
 import './xo/_import';
 import { VisualMappingComponent } from './document/workflow/visual-mapping/visual-mapping.component';
+import { VariableTreeComponent } from './document/workflow/variable-tree/variable-tree.component';
+import { VariableTreeNodeComponent } from './document/workflow/variable-tree-node/variable-tree-node.component';
 
 
 @NgModule({
@@ -271,6 +273,8 @@ import { VisualMappingComponent } from './document/workflow/visual-mapping/visua
         VariableAreaDocumentComponent,
         VariableAreaServiceComponent,
         VariableComponent,
+        VariableTreeComponent,
+        VariableTreeNodeComponent,
         VisualMappingComponent,
         WorkflowComponent,
         WorkflowDocumentComponent,
