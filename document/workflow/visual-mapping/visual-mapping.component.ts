@@ -20,6 +20,9 @@ import { XoVariable } from '@pmod/xo/variable.model';
 import { FormulaAreaComponent } from '../formula-area/formula-area.component';
 import { ApiService, FullQualifiedName, XoDescriber, XoDescriberCache, XoStructureObject } from '@zeta/api';
 import { FormulaTreeDataSource } from '../variable-tree/data-source/formula-tree-data-source';
+import { XoFormula } from '@pmod/xo/formula.model';
+import { Assignment } from './assignment';
+import { filter, first } from 'rxjs';
 
 
 @Component({
@@ -36,9 +39,14 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
     @Input()
     outputVariables: XoVariable[];
 
+    @Input()
+    formulas: XoFormula[];
+
     private readonly structureCache = new XoDescriberCache<XoStructureObject>();
     inputDataSources: FormulaTreeDataSource[] = [];
     outputDataSources: FormulaTreeDataSource[] = [];
+
+    assignments: Assignment[] = [];
 
     ngOnInit(): void {
         const apiService = this.injector.get(ApiService);
@@ -56,41 +64,25 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
         });
 
         // initialize tree data sources
-        [...this.inputDataSources, ...this.outputDataSources].forEach(ds => {
-            // ds.structureCache = this.structureCache;
-            // ds.readonlyMode = true;
+        const dataSources = [...this.inputDataSources, ...this.outputDataSources];
+        dataSources.forEach(ds => {
             ds.refresh();
         });
 
-        // setTimeout(() => {
-        //     this.outputDataSources.forEach(ds => console.log(ds.structureTreeData.map(node => node.name).join('  ')));
-        // }, 2000);
+
+        this.assignments = this.formulas.map(formula => new Assignment(formula));
+        this.assignments.forEach(assignment => {
+            assignment.memberPaths.forEach(path => {
+                const ds = dataSources[path.formula.variableIndex];
+                ds.root$.pipe(
+                    filter(value => !!value),
+                    first()
+                ).subscribe(() => {
+                    const correspondingNode = ds?.processMemberPath(path.formula);
+                    path.node = correspondingNode;
+                });
+            });
+        });
     }
 
-
-    here
-    /**
-     * TODO
-     * 
-     * Assignment {
-     *   formula: XoFormula;
-     *   destination: FormulaTreeNode;
-     *   sources: FormulaTreeNode[];
-     * 
-     *   * split the formula by the Equals-Part
-     *   * find destination variable in left half
-     *     * find correct FormulaTree by variable-index
-     *     * climb up the tree until the end of the formula-half has found a FormulaTreeNode
-     *   * find source variables in left (could be the index of an array element) AND right half
-     *   * LATER: Create new TreeNodes or change to a subtype, corresponding to formula
-     * }
-     * 
-     * AssignmentComponent {
-     *   assignments: Assignment[];
-     *   * for each assignment, find DOM element (ComponentMappingService) and draw a spline
-     *   * use dataflow-component and split up the elementary part
-     *   * test: double the control points for the spline to get a 90° angle
-     *   * draw all assignments
-     * }
-     */
 }

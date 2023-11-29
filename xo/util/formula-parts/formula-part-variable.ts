@@ -28,6 +28,7 @@ import { FormulaPart, ParsePartResult, StructuredPart } from './formula-part';
 export class FormulaPartVariable extends FormulaPart implements StructuredPart {
 
     private readonly _variable: XoVariable;
+    private _index: number;
 
     constructor(part: string, variable: XoVariable, predecessor: FormulaPart, apiService: ApiService, documentRTC: RuntimeContext) {
         super(part, predecessor, apiService, documentRTC);
@@ -40,6 +41,10 @@ export class FormulaPartVariable extends FormulaPart implements StructuredPart {
 
     get variable(): XoVariable {
         return this._variable;
+    }
+
+    get index(): number {
+        return this._index;
     }
 
     hasMembers(): Observable<boolean> {
@@ -67,8 +72,10 @@ export class FormulaPartVariable extends FormulaPart implements StructuredPart {
         if (matches && matches.length > 1) {
             const index = parseInt(matches[1], 10);
             const variable = (variables.length > index ? variables[index] : XoData.abstractData(matches[0]));
+            const part = new FormulaPartVariable(matches[0], variable, predecessor, apiService, documentRTC);
+            part._index = index;
             return {
-                part: new FormulaPartVariable(matches[0], variable, predecessor, apiService, documentRTC),
+                part: part,
                 parsedExpression: expression.substr(matches[0].length)
             };
         }

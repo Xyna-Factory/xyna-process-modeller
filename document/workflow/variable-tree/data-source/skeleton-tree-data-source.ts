@@ -16,7 +16,32 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ApiService, RuntimeContext, XoDescriber, XoStructureArray, XoStructureComplexField, XoStructureField, XoStructureObject, XoStructurePrimitive, XoStructureType } from '@zeta/api';
+import { Comparable, IComparable } from '@zeta/base';
 import { BehaviorSubject, Observable, first } from 'rxjs';
+
+
+export interface ComparablePath extends IComparable {
+    get child(): ComparablePath;
+}
+
+
+export interface Traversable {
+    /**
+     * Traverses a structure and returns that element that equals to `item`
+     *
+     * @param item Item to traverse structure with and to compare to each `Traversable`
+     * @returns `Traversable` equal to `item`
+     */
+    traverse(item: IComparable): Traversable;
+
+    /**
+     * Traverses a structure and looks for a path that matches `path`
+     *
+     * @param path Path to traverse structure with and to compare to each `Traversable`
+     * @returns `Traversable` at the end of a path equal to `path`
+     */
+    match(path: ComparablePath): Traversable;
+}
 
 
 export interface TreeNodeFactory {
@@ -29,12 +54,13 @@ export interface TreeNodeFactory {
 
 
 
-export class SkeletonTreeNode {
+export class SkeletonTreeNode extends Comparable implements Traversable {
     private _structure: XoStructureField;
 
     protected _children: SkeletonTreeNode[] = [];
 
     constructor(structure: XoStructureField, protected nodeFactory: TreeNodeFactory) {
+        super();
         this.setStructure(structure);
     }
 
@@ -69,14 +95,29 @@ export class SkeletonTreeNode {
     }
 
 
-        // TODO: pt. 2 to update this node should be made in a subclass
-        // TODO: use existing cache from other mapping variables
-
-    /*
-    refreshStructure() {
-        this.api.getStructure(this.rtc, [this.describer]).get(this.describer).pipe(first()).subscribe(structure => this.setStructure(structure));
+    /**
+     * @inheritdoc
+     */
+    traverse(item: IComparable): Traversable {
+        return this.equals(item)
+            ? this
+            : this.children.find(node => node.equals(item));
     }
-    */
+
+
+    /**
+     * @inheritdoc
+     */
+    match(path: ComparablePath): Traversable {
+        if (this.equals(path)) {
+            return path.child
+                ? this.children.find(node => node.match(path.child))
+                : this;
+        }
+        return null;
+    }
+
+
 }
 
 
@@ -149,7 +190,7 @@ export class ArrayEntrySkeletonTreeNode extends ComplexSkeletonTreeNode {
  * only represents the data type's skeleton itself
  */
 export class SkeletonTreeDataSource implements TreeNodeFactory {
-    private readonly _node$ = new BehaviorSubject<SkeletonTreeNode>(null);
+    private readonly _root$ = new BehaviorSubject<SkeletonTreeNode>(null);
 
 
     constructor(protected describer: XoDescriber, protected api: ApiService, protected rtc: RuntimeContext) {
@@ -162,12 +203,17 @@ export class SkeletonTreeDataSource implements TreeNodeFactory {
 
 
     setStructure(structure: XoStructureField) {
-        this._node$.next(this.createNodeFromStructure(structure));
+        this._root$.next(this.createNodeFromStructure(structure));
     }
 
 
-    get node$(): Observable<SkeletonTreeNode> {
-        return this._node$.asObservable();
+    get root$(): Observable<SkeletonTreeNode> {
+        return this._root$.asObservable();
+    }
+
+
+    get root(): SkeletonTreeNode {
+        return this._root$.value;
     }
 
 

@@ -16,12 +16,27 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { XoStructureArray, XoStructureComplexField, XoStructurePrimitive } from '@zeta/api';
-import { ArrayEntrySkeletonTreeNode, ArraySkeletonTreeNode, ComplexSkeletonTreeNode, PrimitiveSkeletonTreeNode, SkeletonTreeDataSource } from './skeleton-tree-data-source';
+import { ArrayEntrySkeletonTreeNode, ArraySkeletonTreeNode, ComplexSkeletonTreeNode, PrimitiveSkeletonTreeNode, SkeletonTreeDataSource, SkeletonTreeNode } from './skeleton-tree-data-source';
+import { XoFormulaVariableNode } from '../../visual-mapping/assignment';
+import { IComparable } from '@zeta/base';
 
+
+
+function equalsFormulaNode(treeNode: SkeletonTreeNode, formulaNode: XoFormulaVariableNode): boolean {
+    const structure = treeNode.getStructure();
+    if (formulaNode && structure.typeFqn) {
+        const typeFqn = (structure.typeFqn.path ? structure.typeFqn.path + '.' : '') + structure.typeFqn.name;
+        return typeFqn === formulaNode.variable.$fqn &&
+            treeNode.label === formulaNode.variable.label;
+    }
+    return false;
+}
 
 
 export class PrimitiveFormulaTreeNode extends PrimitiveSkeletonTreeNode {
-    
+    equals(that: IComparable): boolean {
+        return equalsFormulaNode(this, that as XoFormulaVariableNode);
+    }
 }
 
 
@@ -36,6 +51,9 @@ export class ArrayEntryFormulaTreeNode extends ArrayEntrySkeletonTreeNode {
 
 
 export class ComplexFormulaTreeNode extends ComplexSkeletonTreeNode {
+    equals(that: IComparable): boolean {
+        return equalsFormulaNode(this, that as XoFormulaVariableNode);
+    }
 }
 
 // how to handle arrays? Use a name here which is the name to identify the node? For list entry, it's the index?
@@ -66,5 +84,16 @@ export class FormulaTreeDataSource extends SkeletonTreeDataSource {
 
     createArrayEntryNode(structure: XoStructureArray): ArrayEntryFormulaTreeNode {
         return new ArrayEntryFormulaTreeNode(structure, this);
+    }
+
+
+    /**
+     * Traverses the tree along with the member's path.
+     * Modifies the tree (changes selected subtype or adds array entries) if necessary/possible.
+     *
+     * @remark Only call synchronously after `root$` has its value
+     */
+    processMemberPath(path: XoFormulaVariableNode): SkeletonTreeNode {
+        return this.root.match(path) as SkeletonTreeNode;
     }
 }
