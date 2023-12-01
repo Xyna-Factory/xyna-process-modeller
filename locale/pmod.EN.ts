@@ -347,6 +347,14 @@ export const PMOD_EN: I18nTranslation[] = [
         key: 'pmod.nav.errors.NEW_CONNECTION_CANDIDATE.tooltip',
         value: 'There is a new connection candidate for this variable'
     },
+    {
+        key: 'pmod.nav.errors.REFERENCE_INVALD',
+        value: 'Workflow signature does not match service'
+    },
+    {
+        key: 'pmod.nav.errors.REFERENCE_INVALD.tooltip',
+        value: 'This workflow is used as implementation of a service and the signatures do not match.'
+    },
 
     // Workflow Launcher
     {
