@@ -26,9 +26,10 @@ function equalsFormulaNode(treeNode: SkeletonTreeNode, formulaNode: XoFormulaVar
     const structure = treeNode.getStructure();
     if (formulaNode && structure.typeFqn) {
         const typeFqn = structure.typeFqn?.encode() ?? '';
-        const typeLabel = (structure.typeFqn?.isPrimitive() ?? true) ? structure.label : structure.typeLabel;
+        const typeLabel = structure.typeLabel;
+        const label = structure.label;
         return typeFqn === formulaNode.variable.$fqn &&
-             typeLabel === formulaNode.variable.label;
+             (typeLabel === formulaNode.variable.label || label === formulaNode.variable.label);
     }
     return false;
 }

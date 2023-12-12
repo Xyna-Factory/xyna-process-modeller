@@ -145,13 +145,15 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
 
         // create tree data sources
         inputVariables?.forEach(variable => {
-            const desc = <VariableDescriber>{ rtc: this.documentModel.originRuntimeContext, fqn: FullQualifiedName.decode(variable.$fqn), isList: variable.isList };
-            const ds = new FormulaTreeDataSource<Element>(desc, apiService, this.documentModel.originRuntimeContext);
+            const rtc = variable.$rtc.runtimeContext() ?? this.documentModel.originRuntimeContext;
+            const desc = <VariableDescriber>{ rtc: rtc, fqn: FullQualifiedName.decode(variable.$fqn), isList: variable.isList };
+            const ds = new FormulaTreeDataSource<Element>(desc, apiService, rtc);
             this.inputDataSources.push(ds);
         });
         outputVariables?.forEach(variable => {
-            const desc = <VariableDescriber>{ rtc: this.documentModel.originRuntimeContext, fqn: FullQualifiedName.decode(variable.$fqn), isList: variable.isList };
-            const ds = new FormulaTreeDataSource<Element>(desc, apiService, this.documentModel.originRuntimeContext);
+            const rtc = variable.$rtc.runtimeContext() ?? this.documentModel.originRuntimeContext;
+            const desc = <VariableDescriber>{ rtc: rtc, fqn: FullQualifiedName.decode(variable.$fqn), isList: variable.isList };
+            const ds = new FormulaTreeDataSource<Element>(desc, apiService, rtc);
             this.outputDataSources.push(ds);
         });
 
