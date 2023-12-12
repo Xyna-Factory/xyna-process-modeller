@@ -23,6 +23,7 @@ import { FormulaPartVariable } from '@pmod/xo/util/formula-parts/formula-part-va
 import { FormulaPartOperation } from '@pmod/xo/util/formula-parts/formula-part-operation';
 import { FormulaPartMember } from '@pmod/xo/util/formula-parts/formula-part-member';
 import { Comparable } from '@zeta/base';
+import { FormulaPartSpecial } from '@pmod/xo/util/formula-parts/formula-part-special';
 
 
 export abstract class XoFormulaNode extends Comparable implements ComparablePath {
@@ -70,7 +71,16 @@ export class XoFormulaRootVariableNode extends XoFormulaVariableNode {
         this.variable = part.variable;
         this.variableIndex = part.index;
 
-        if (formula.parts[index + 1] instanceof FormulaPartMember) {
+        if (formula.parts[index + 1] instanceof FormulaPartSpecial && formula.parts[index + 1].part === '[') {
+            // special handling for array entries: skip array index
+            do {
+                index++;
+            } while (formula.parts.length > index + 2 && formula.parts[index]?.part !== ']');
+        }
+
+        const nextPart = formula.parts[index + 1];
+
+        if (nextPart instanceof FormulaPartMember) {
             this.member = new XoFormulaMemberNode();
             this.member.parse(formula, index + 1);
         }

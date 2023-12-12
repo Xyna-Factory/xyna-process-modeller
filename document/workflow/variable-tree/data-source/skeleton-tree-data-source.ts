@@ -58,6 +58,7 @@ export interface TreeNodeFactory<T = any> {
  */
 export class SkeletonTreeNode<T = any> extends Comparable implements Traversable, GraphicallyRepresented<T> {
     private _structure: XoStructureField;
+    private _isList: boolean;
     private readonly _graphicalRepresentation$ = new BehaviorSubject<T>(null);
 
     protected _children: SkeletonTreeNode[] = [];
@@ -75,6 +76,16 @@ export class SkeletonTreeNode<T = any> extends Comparable implements Traversable
 
     setStructure(structure: XoStructureField) {
         this._structure = structure;
+    }
+
+
+    get isList(): boolean {
+        return this._isList;
+    }
+
+
+    set isList(value: boolean) {
+        this._isList = value;
     }
 
 
@@ -202,6 +213,10 @@ export class ArrayEntrySkeletonTreeNode<T = any> extends ComplexSkeletonTreeNode
 }
 
 
+export interface VariableDescriber extends XoDescriber {
+    isList: boolean;
+}
+
 
 /**
  * Data Source for a tree made of a data type structure.
@@ -214,7 +229,7 @@ export class SkeletonTreeDataSource<T = any> implements TreeNodeFactory<T> {
     private readonly _root$ = new BehaviorSubject<SkeletonTreeNode<T>>(null);
 
 
-    constructor(protected describer: XoDescriber, protected api: ApiService, protected rtc: RuntimeContext) {
+    constructor(protected describer: VariableDescriber, protected api: ApiService, protected rtc: RuntimeContext) {
     }
 
 
@@ -225,7 +240,9 @@ export class SkeletonTreeDataSource<T = any> implements TreeNodeFactory<T> {
 
     setStructure(structure: XoStructureField) {
         console.log('setStructure');
-        this._root$.next(this.createNodeFromStructure(structure));
+        const node = this.createNodeFromStructure(structure);
+        node.isList = this.describer.isList;
+        this._root$.next(node);
         console.log('called root$ next');
     }
 

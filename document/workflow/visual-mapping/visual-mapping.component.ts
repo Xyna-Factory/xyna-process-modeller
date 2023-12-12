@@ -28,6 +28,7 @@ import { XoMapping } from '@pmod/xo/mapping.model';
 import { ComponentMappingService } from '@pmod/document/component-mapping.service';
 import { DocumentService } from '@pmod/document/document.service';
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
+import { VariableDescriber } from '../variable-tree/data-source/skeleton-tree-data-source';
 
 
 @Component({
@@ -144,12 +145,12 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
 
         // create tree data sources
         inputVariables?.forEach(variable => {
-            const desc = <XoDescriber>{ rtc: this.documentModel.originRuntimeContext, fqn: FullQualifiedName.decode(variable.$fqn) };
+            const desc = <VariableDescriber>{ rtc: this.documentModel.originRuntimeContext, fqn: FullQualifiedName.decode(variable.$fqn), isList: variable.isList };
             const ds = new FormulaTreeDataSource<Element>(desc, apiService, this.documentModel.originRuntimeContext);
             this.inputDataSources.push(ds);
         });
         outputVariables?.forEach(variable => {
-            const desc = <XoDescriber>{ rtc: this.documentModel.originRuntimeContext, fqn: FullQualifiedName.decode(variable.$fqn) };
+            const desc = <VariableDescriber>{ rtc: this.documentModel.originRuntimeContext, fqn: FullQualifiedName.decode(variable.$fqn), isList: variable.isList };
             const ds = new FormulaTreeDataSource<Element>(desc, apiService, this.documentModel.originRuntimeContext);
             this.outputDataSources.push(ds);
         });

@@ -51,6 +51,11 @@ export class VariableTreeNodeComponent implements AfterViewInit {
     }
 
 
+    get typeLabel(): string {
+        return this.node.typeLabel + (this.node.isList ? '[]' : '');
+    }
+
+
     // inletPosition(): Vector2 {
     //     const elementRect = this.elementRef.nativeElement.getBoundingClientRect();
     //     const position = new Vector2(elementRect.left, elementRect.top);
