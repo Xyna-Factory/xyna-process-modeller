@@ -79,15 +79,15 @@ export class XoFormulaRootVariableNode extends XoFormulaVariableNode {
 
 
 
-export interface MemberPath {
+export interface MemberPath<T = any> {
     formula: XoFormulaRootVariableNode;
-    node: SkeletonTreeNode;
+    node: SkeletonTreeNode<T>;
 }
 
 
-export class Assignment {
-    destination: MemberPath;
-    sources: MemberPath[] = [];
+export class Assignment<T = any> {
+    destination: MemberPath<T>;
+    sources: MemberPath<T>[] = [];
 
     constructor(protected formula: XoFormula) {
 
@@ -108,8 +108,8 @@ export class Assignment {
     }
 
 
-    get memberPaths(): MemberPath[] {
-        return this.sources.concat(this.destination);
+    get memberPaths(): MemberPath<T>[] {
+        return this.sources.concat(this.destination ?? []);
     }
 }
 

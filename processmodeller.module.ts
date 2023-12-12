@@ -154,6 +154,7 @@ import './xo/_import';
 import { VisualMappingComponent } from './document/workflow/visual-mapping/visual-mapping.component';
 import { VariableTreeComponent } from './document/workflow/variable-tree/variable-tree.component';
 import { VariableTreeNodeComponent } from './document/workflow/variable-tree-node/variable-tree-node.component';
+import { FlowCanvasComponent } from './document/workflow/visual-mapping/flow-canvas/flow-canvas.component';
 
 
 @NgModule({
@@ -196,6 +197,7 @@ import { VariableTreeNodeComponent } from './document/workflow/variable-tree-nod
         ExceptionTypeComponent,
         FactoryComponent,
         FilterCriterionAreaComponent,
+        FlowCanvasComponent,
         ForeachComponent,
         FormulaAreaComponent,
         FormulaComponent,

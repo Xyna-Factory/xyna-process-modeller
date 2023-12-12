@@ -25,32 +25,31 @@ import { IComparable } from '@zeta/base';
 function equalsFormulaNode(treeNode: SkeletonTreeNode, formulaNode: XoFormulaVariableNode): boolean {
     const structure = treeNode.getStructure();
     if (formulaNode && structure.typeFqn) {
-        const typeFqn = (structure.typeFqn.path ? structure.typeFqn.path + '.' : '') + structure.typeFqn.name;
+        const typeFqn = structure.typeFqn?.encode() ?? '';
+        const typeLabel = (structure.typeFqn?.isPrimitive() ?? true) ? structure.label : structure.typeLabel;
         return typeFqn === formulaNode.variable.$fqn &&
-            treeNode.label === formulaNode.variable.label;
+             typeLabel === formulaNode.variable.label;
     }
     return false;
 }
 
 
-export class PrimitiveFormulaTreeNode extends PrimitiveSkeletonTreeNode {
+export class PrimitiveFormulaTreeNode<T = any> extends PrimitiveSkeletonTreeNode<T> {
     equals(that: IComparable): boolean {
         return equalsFormulaNode(this, that as XoFormulaVariableNode);
     }
 }
 
 
-export class ArrayFormulaTreeNode extends ArraySkeletonTreeNode {
-    
+export class ArrayFormulaTreeNode<T = any> extends ArraySkeletonTreeNode<T> {
 }
 
 
-export class ArrayEntryFormulaTreeNode extends ArrayEntrySkeletonTreeNode {
-    
+export class ArrayEntryFormulaTreeNode<T = any> extends ArrayEntrySkeletonTreeNode<T> {
 }
 
 
-export class ComplexFormulaTreeNode extends ComplexSkeletonTreeNode {
+export class ComplexFormulaTreeNode<T = any> extends ComplexSkeletonTreeNode<T> {
     equals(that: IComparable): boolean {
         return equalsFormulaNode(this, that as XoFormulaVariableNode);
     }
@@ -64,26 +63,27 @@ export class ComplexFormulaTreeNode extends ComplexSkeletonTreeNode {
 
 /**
  * Data Source for a tree made of formulas
+ * @inheritdoc
  */
-export class FormulaTreeDataSource extends SkeletonTreeDataSource {
+export class FormulaTreeDataSource<T = any> extends SkeletonTreeDataSource<T> {
 
-    createPrimitiveNode(structure: XoStructurePrimitive): PrimitiveFormulaTreeNode {
-        return new PrimitiveFormulaTreeNode(structure, this);
+    createPrimitiveNode(structure: XoStructurePrimitive): PrimitiveFormulaTreeNode<T> {
+        return new PrimitiveFormulaTreeNode<T>(structure, this);
     }
 
 
-    createComplexNode(structure: XoStructureComplexField): ComplexFormulaTreeNode {
-        return new ComplexFormulaTreeNode(structure, this);
+    createComplexNode(structure: XoStructureComplexField): ComplexFormulaTreeNode<T> {
+        return new ComplexFormulaTreeNode<T>(structure, this);
     }
 
 
-    createArrayNode(structure: XoStructureArray): ArrayFormulaTreeNode {
-        return new ArrayFormulaTreeNode(structure, this);
+    createArrayNode(structure: XoStructureArray): ArrayFormulaTreeNode<T> {
+        return new ArrayFormulaTreeNode<T>(structure, this);
     }
 
 
-    createArrayEntryNode(structure: XoStructureArray): ArrayEntryFormulaTreeNode {
-        return new ArrayEntryFormulaTreeNode(structure, this);
+    createArrayEntryNode(structure: XoStructureArray): ArrayEntryFormulaTreeNode<T> {
+        return new ArrayEntryFormulaTreeNode<T>(structure, this);
     }
 
 
@@ -94,6 +94,7 @@ export class FormulaTreeDataSource extends SkeletonTreeDataSource {
      * @remark Only call synchronously after `root$` has its value
      */
     processMemberPath(path: XoFormulaVariableNode): SkeletonTreeNode {
+        console.log('match root?');
         return this.root.match(path) as SkeletonTreeNode;
     }
 }

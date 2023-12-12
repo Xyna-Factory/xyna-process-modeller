@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { SkeletonTreeNode } from '../variable-tree/data-source/skeleton-tree-data-source';
 
 
@@ -25,29 +25,44 @@ import { SkeletonTreeNode } from '../variable-tree/data-source/skeleton-tree-dat
     styleUrls: ['./variable-tree-node.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class VariableTreeNodeComponent {
-    private _node: SkeletonTreeNode;
+export class VariableTreeNodeComponent implements AfterViewInit {
+    private _node: SkeletonTreeNode<Element>;
 
     expanded = true;
 
+    @ViewChild('noderow') nodeElement: ElementRef<Element>;
+
     @Input()
-    set node(value: SkeletonTreeNode) {
-        // this.subscription?.unsubscribe();
+    set node(value: SkeletonTreeNode<Element>) {
         this._node = value;
-        // this.subscription = this.node?.children.subscribe(
-        //     () => this.cdr.markForCheck()
-        // );
-
-        // // set action callback to toggle node
-        // this.node.action = () => this.expandRecursively();
-
-        // // calculate indentation for this node, depending on its depth
-        // const depth = (node: XcStructureTreeNode): number => node.parent ? depth(node.parent) + 1 : 1;
-        // this.indentation = XcTreeItemComponent.INDENTATION * depth(this._node);
+        if (this._node && this.nodeElement) {
+            this._node.graphicalRepresentation = this.nodeElement.nativeElement;
+        }
     }
 
 
-    get node(): SkeletonTreeNode {
+    get node(): SkeletonTreeNode<Element> {
         return this._node;
     }
+
+
+    ngAfterViewInit(): void {
+        this.node.graphicalRepresentation = this.nodeElement.nativeElement;
+    }
+
+
+    // inletPosition(): Vector2 {
+    //     const elementRect = this.elementRef.nativeElement.getBoundingClientRect();
+    //     const position = new Vector2(elementRect.left, elementRect.top);
+    //     position.x += this.elementRef.nativeElement.clientWidth / 2;
+    //     return position;
+    // }
+
+
+    // outletPosition(): Vector2 {
+    //     if (this.isElementVisible()) {
+    //         return this.inletPosition().add(new Vector2(0, this.elementRef.nativeElement.clientHeight - 1));
+    //     }
+    //     return null;
+    // }
 }

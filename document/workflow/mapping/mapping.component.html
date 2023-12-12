@@ -25,10 +25,7 @@
     (triggerAction)="performAction($event)"
 ></formula-area>
 <visual-mapping *ngIf="mapping.formulaArea && visualMode"
-    [inputVariables]="mapping.inputArea.variables"
-    [outputVariables]="mapping.outputArea.variables"
-    [formulas]="mapping.formulaArea.formulas"
-    [formulaArea]="mapping.formulaArea"
+    [mapping]="mapping"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
 ></visual-mapping>

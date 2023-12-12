@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ApiService, RuntimeContext, XoDescriber, XoStructureArray, XoStructureComplexField, XoStructureField, XoStructureObject, XoStructurePrimitive, XoStructureType } from '@zeta/api';
-import { Comparable, IComparable } from '@zeta/base';
+import { Comparable, GraphicallyRepresented, IComparable } from '@zeta/base';
 import { BehaviorSubject, Observable, first } from 'rxjs';
 
 
@@ -44,18 +44,21 @@ export interface Traversable {
 }
 
 
-export interface TreeNodeFactory {
-    createNodeFromStructure(structure: XoStructureField): SkeletonTreeNode;
-    createPrimitiveNode(structure: XoStructurePrimitive): PrimitiveSkeletonTreeNode;
-    createComplexNode(structure: XoStructureComplexField): ComplexSkeletonTreeNode;
-    createArrayNode(structure: XoStructureArray): ArraySkeletonTreeNode;
-    createArrayEntryNode(structure: XoStructureArray): ArrayEntrySkeletonTreeNode;
+export interface TreeNodeFactory<T = any> {
+    createNodeFromStructure(structure: XoStructureField): SkeletonTreeNode<T>;
+    createPrimitiveNode(structure: XoStructurePrimitive): PrimitiveSkeletonTreeNode<T>;
+    createComplexNode(structure: XoStructureComplexField): ComplexSkeletonTreeNode<T>;
+    createArrayNode(structure: XoStructureArray): ArraySkeletonTreeNode<T>;
+    createArrayEntryNode(structure: XoStructureArray): ArrayEntrySkeletonTreeNode<T>;
 }
 
 
-
-export class SkeletonTreeNode extends Comparable implements Traversable {
+/**
+ * @param T Graphical representation. In a HTML context, this is usually a DOM element
+ */
+export class SkeletonTreeNode<T = any> extends Comparable implements Traversable, GraphicallyRepresented<T> {
     private _structure: XoStructureField;
+    private readonly _graphicalRepresentation$ = new BehaviorSubject<T>(null);
 
     protected _children: SkeletonTreeNode[] = [];
 
@@ -118,11 +121,27 @@ export class SkeletonTreeNode extends Comparable implements Traversable {
     }
 
 
+    /**
+     * @inheritdoc
+     */
+    get graphicalRepresentation(): T {
+        return this._graphicalRepresentation$.value;
+    }
+
+    set graphicalRepresentation(value: T) {
+        if (this.graphicalRepresentation !== value) {
+            this._graphicalRepresentation$.next(value);
+        }
+    }
+
+    graphicalRepresentationChange(): Observable<T> {
+        return this._graphicalRepresentation$.asObservable();
+    }
 }
 
 
 
-export class PrimitiveSkeletonTreeNode extends SkeletonTreeNode {
+export class PrimitiveSkeletonTreeNode<T = any> extends SkeletonTreeNode<T> {
 
     getStructure(): XoStructurePrimitive {
         return super.getStructure() as XoStructurePrimitive;
@@ -136,7 +155,7 @@ export class PrimitiveSkeletonTreeNode extends SkeletonTreeNode {
 
 
 
-export class ComplexSkeletonTreeNode extends SkeletonTreeNode {
+export class ComplexSkeletonTreeNode<T = any> extends SkeletonTreeNode<T> {
     private _subtypes: XoStructureType[] = [];
 
 
@@ -173,12 +192,12 @@ export class ComplexSkeletonTreeNode extends SkeletonTreeNode {
 }
 
 
-export class ArraySkeletonTreeNode extends ComplexSkeletonTreeNode {
+export class ArraySkeletonTreeNode<T = any> extends ComplexSkeletonTreeNode<T> {
 
 }
 
 
-export class ArrayEntrySkeletonTreeNode extends ComplexSkeletonTreeNode {
+export class ArrayEntrySkeletonTreeNode<T = any> extends ComplexSkeletonTreeNode<T> {
 
 }
 
@@ -188,9 +207,11 @@ export class ArrayEntrySkeletonTreeNode extends ComplexSkeletonTreeNode {
  * Data Source for a tree made of a data type structure.
  * In contrast to the StructureTreeDataSource, this data source does not hold instances of the structured data types but
  * only represents the data type's skeleton itself
+ *
+ * @param T Graphical representation. In an HTML context, this is usually a DOM element
  */
-export class SkeletonTreeDataSource implements TreeNodeFactory {
-    private readonly _root$ = new BehaviorSubject<SkeletonTreeNode>(null);
+export class SkeletonTreeDataSource<T = any> implements TreeNodeFactory<T> {
+    private readonly _root$ = new BehaviorSubject<SkeletonTreeNode<T>>(null);
 
 
     constructor(protected describer: XoDescriber, protected api: ApiService, protected rtc: RuntimeContext) {
@@ -203,7 +224,9 @@ export class SkeletonTreeDataSource implements TreeNodeFactory {
 
 
     setStructure(structure: XoStructureField) {
+        console.log('setStructure');
         this._root$.next(this.createNodeFromStructure(structure));
+        console.log('called root$ next');
     }
 
 
@@ -220,33 +243,35 @@ export class SkeletonTreeDataSource implements TreeNodeFactory {
 
     /* ***   Tree Node Factory   *** */
 
-    createNodeFromStructure(structure: XoStructureField): SkeletonTreeNode {
+    createNodeFromStructure(structure: XoStructureField): SkeletonTreeNode<T> {
         let node: SkeletonTreeNode = null;
         if (structure instanceof XoStructurePrimitive) {
             node = this.createPrimitiveNode(structure);
         } else if (structure instanceof XoStructureComplexField) {
             node = this.createComplexNode(structure);
+        } else if (structure instanceof XoStructureArray) {
+            // TODO
         }
         return node;
     }
 
 
-    createPrimitiveNode(structure: XoStructurePrimitive): PrimitiveSkeletonTreeNode {
-        return new PrimitiveSkeletonTreeNode(structure, this);
+    createPrimitiveNode(structure: XoStructurePrimitive): PrimitiveSkeletonTreeNode<T> {
+        return new PrimitiveSkeletonTreeNode<T>(structure, this);
     }
 
 
-    createComplexNode(structure: XoStructureComplexField): ComplexSkeletonTreeNode {
-        return new ComplexSkeletonTreeNode(structure, this);
+    createComplexNode(structure: XoStructureComplexField): ComplexSkeletonTreeNode<T> {
+        return new ComplexSkeletonTreeNode<T>(structure, this);
     }
 
 
-    createArrayNode(structure: XoStructureArray): ArraySkeletonTreeNode {
-        return new ArraySkeletonTreeNode(structure, this);
+    createArrayNode(structure: XoStructureArray): ArraySkeletonTreeNode<T> {
+        return new ArraySkeletonTreeNode<T>(structure, this);
     }
 
 
-    createArrayEntryNode(structure: XoStructureArray): ArrayEntrySkeletonTreeNode {
-        return new ArraySkeletonTreeNode(structure, this);
+    createArrayEntryNode(structure: XoStructureArray): ArrayEntrySkeletonTreeNode<T> {
+        return new ArraySkeletonTreeNode<T>(structure, this);
     }
 }

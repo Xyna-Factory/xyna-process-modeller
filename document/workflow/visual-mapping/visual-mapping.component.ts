@@ -15,14 +15,19 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { XoVariable } from '@pmod/xo/variable.model';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnDestroy, OnInit } from '@angular/core';
+import { XoVariable } from '../../../xo/variable.model';
 import { FormulaAreaComponent } from '../formula-area/formula-area.component';
-import { ApiService, FullQualifiedName, XoDescriber, XoDescriberCache, XoStructureObject } from '@zeta/api';
+import { ApiService, FullQualifiedName, XoDescriber } from '@zeta/api';
 import { FormulaTreeDataSource } from '../variable-tree/data-source/formula-tree-data-source';
-import { XoFormula } from '@pmod/xo/formula.model';
+import { XoFormula } from '../../../xo/formula.model';
 import { Assignment } from './assignment';
-import { filter, first } from 'rxjs';
+import { Subscription, filter, first, forkJoin } from 'rxjs';
+import { FlowDefinition } from './flow-canvas/flow-canvas.component';
+import { XoMapping } from '@pmod/xo/mapping.model';
+import { ComponentMappingService } from '@pmod/document/component-mapping.service';
+import { DocumentService } from '@pmod/document/document.service';
+import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 
 
 @Component({
@@ -31,35 +36,121 @@ import { filter, first } from 'rxjs';
     styleUrls: ['./visual-mapping.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class VisualMappingComponent extends FormulaAreaComponent implements OnInit {
+export class VisualMappingComponent extends FormulaAreaComponent implements OnInit, OnDestroy {
+
+    // private _inputVariables: XoVariable[];
+    // private _outputVariables: XoVariable[];
+    // private _formulas: XoFormula[];
+
+    // @Input()
+    // set inputVariables(values: XoVariable[]) {
+    //     this._inputVariables = values;
+    //     this.update();
+    // }
+    // get inputVariables(): XoVariable[] {
+    //     return this._inputVariables;
+    // }
+
+    // @Input()
+    // set outputVariables(values: XoVariable[]) {
+    //     this._outputVariables = values;
+    //     this.update();
+    // }
+    // get outputVariables(): XoVariable[] {
+    //     return this._outputVariables;
+    // }
+
+    // @Input()
+    // set formulas(values: XoFormula[]) {
+    //     this._formulas = values;
+    //     this.update();
+    // }
+    // get formulas(): XoFormula[] {
+    //     return this._formulas;
+    // }
+
+    private _mapping: XoMapping;
+    private _replacedSubscription: Subscription;
 
     @Input()
-    inputVariables: XoVariable[];
+    set mapping(value: XoMapping) {
+        this._replacedSubscription?.unsubscribe();
+        this._mapping = value;
+        this.update();
 
-    @Input()
-    outputVariables: XoVariable[];
+        this._replacedSubscription = this.mapping.replaced().subscribe(
+            () => {
+                console.log('replaced');
+                this.update();
+            },
+            error => console.warn('error on model replace: ' + error));
+    }
+    get mapping(): XoMapping {
+        return this._mapping;
+    }
 
-    @Input()
-    formulas: XoFormula[];
+    //private readonly structureCache = new XoDescriberCache<XoStructureObject>();  TODO use cache
+    inputDataSources: FormulaTreeDataSource<Element>[] = [];
+    outputDataSources: FormulaTreeDataSource<Element>[] = [];
 
-    private readonly structureCache = new XoDescriberCache<XoStructureObject>();
-    inputDataSources: FormulaTreeDataSource[] = [];
-    outputDataSources: FormulaTreeDataSource[] = [];
+    assignments: Assignment<Element>[] = [];
+    flows: FlowDefinition[] = [];
+    private _initialized = false;
 
-    assignments: Assignment[] = [];
+
+    constructor(
+        elementRef: ElementRef,
+        componentMappingService: ComponentMappingService,
+        documentService: DocumentService,
+        detailLevelService: WorkflowDetailLevelService,
+        injector: Injector,
+        protected readonly cdr: ChangeDetectorRef
+    ) {
+        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
+    }
+
 
     ngOnInit(): void {
+        this._initialized = true;
+        this.update();
+    }
+
+
+    ngOnDestroy(): void {
+        this._replacedSubscription?.unsubscribe();
+    }
+
+
+    update() {
+        if (!this.mapping || !this._initialized) {
+            return;
+        }
+        console.log('update');
         const apiService = this.injector.get(ApiService);
+        const inputVariables = this.mapping.inputArea.variables;
+        const outputVariables = this.mapping.outputArea.variables;
+        const formulas = this.mapping.formulaArea.formulas;
+
+        // initialize formulas if not initialized yet
+        formulas.filter(
+            formula => formula.parts.length === 0
+        ).forEach(
+            formula => formula.parseExpression(apiService, this.documentModel.originRuntimeContext)
+        );
+        console.log('parsed formula exp: ' + formulas.length);
+
+        this.inputDataSources = [];
+        this.outputDataSources = [];
 
         // create tree data sources
-        this.inputVariables?.forEach(variable => {
+        inputVariables?.forEach(variable => {
             const desc = <XoDescriber>{ rtc: this.documentModel.originRuntimeContext, fqn: FullQualifiedName.decode(variable.$fqn) };
-            const ds = new FormulaTreeDataSource(desc, apiService, this.documentModel.originRuntimeContext);
+            const ds = new FormulaTreeDataSource<Element>(desc, apiService, this.documentModel.originRuntimeContext);
             this.inputDataSources.push(ds);
         });
-        this.outputVariables?.forEach(variable => {
+        outputVariables?.forEach(variable => {
             const desc = <XoDescriber>{ rtc: this.documentModel.originRuntimeContext, fqn: FullQualifiedName.decode(variable.$fqn) };
-            const ds = new FormulaTreeDataSource(desc, apiService, this.documentModel.originRuntimeContext);
+            const ds = new FormulaTreeDataSource<Element>(desc, apiService, this.documentModel.originRuntimeContext);
             this.outputDataSources.push(ds);
         });
 
@@ -69,20 +160,33 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
             ds.refresh();
         });
 
-
-        this.assignments = this.formulas.map(formula => new Assignment(formula));
-        this.assignments.forEach(assignment => {
-            assignment.memberPaths.forEach(path => {
-                const ds = dataSources[path.formula.variableIndex];
-                ds.root$.pipe(
-                    filter(value => !!value),
-                    first()
-                ).subscribe(() => {
+        console.log('waiting for ds\'s to refresh');
+        // wait for all data sources
+        forkJoin(
+            dataSources.map(ds => ds.root$.pipe(
+                filter(value => !!value),
+                first()
+            ))
+        ).subscribe(() => {
+            console.log('all ds\'s refreshed');
+            // construct assignments out of formulas and match with formula trees
+            this.assignments = formulas.map(formula => new Assignment<Element>(formula));
+            console.log('created assignments: ' + this.assignments.length);
+            this.assignments.forEach(assignment => {
+                assignment.memberPaths.forEach(path => {
+                    const ds = dataSources[path.formula.variableIndex];
                     const correspondingNode = ds?.processMemberPath(path.formula);
                     path.node = correspondingNode;
                 });
             });
+            console.log('retrieved assignment nodes');
+
+            // construct flows for graphical representation
+            this.flows = this.assignments.map(assignment =>
+                assignment.sources.map(path => (<FlowDefinition>{ source: path.node, destination: assignment.destination.node }))
+            ).flat();
+            console.log('constructed flows: ' + this.flows.length);
+            this.cdr.markForCheck();
         });
     }
-
 }

@@ -15,31 +15,26 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-@import "const";
+@import 'const';
 
 :host {
-    display: flex;
-    flex: 0 0 auto;
-    flex-direction: row;
-
-    position: relative;
-
-    margin-top: -$service-step-border-radius;   // to compensate rounded corners of area above
-    padding: 12px;
-
-    background-color: $formula-background-color;
-
-    border: 1px solid $color-gray-3;
-    border-bottom-left-radius: $service-step-border-radius;
-    border-bottom-right-radius: $service-step-border-radius;
-
-    .outputs, .inputs {
-        display: flex;
-        flex-direction: column;
+    .draw-area {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        pointer-events: none;
     }
 
-    .assignments {
-        min-width: 200px;
-        margin-left: auto;
+    ::ng-deep {
+        svg path {
+            fill: none;
+
+            &.path {
+                pointer-events: all;
+                stroke: $color-accent;
+                stroke-width: 4;
+            }
+        }
     }
 }
