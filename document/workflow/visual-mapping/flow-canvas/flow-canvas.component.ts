@@ -17,16 +17,20 @@
  */
 import { AfterViewInit, Component, ElementRef, HostListener, Input, NgZone, OnDestroy, ViewChild } from '@angular/core';
 import { GraphicallyRepresented } from '@zeta/base';
-import { createSVGGroup, createSVGHorizontalCubicBezierPath, createSVGVerticalCubicBezierPath } from '@zeta/base/draw';
-import { filter, forkJoin, of, take } from 'rxjs';
+import { createSVGCircle, createSVGGroup, createSVGHorizontalCubicBezierPath, createSVGText, createSVGVerticalCubicBezierPath } from '@zeta/base/draw';
+import { filter, forkJoin, take } from 'rxjs';
 import { Vector2 } from 'three';
 
 
 
+export interface Literal {
+    text: string;
+}
 
 export interface FlowDefinition {
-    get source(): GraphicallyRepresented<Element>;
-    get destination(): GraphicallyRepresented<Element>;
+    source: GraphicallyRepresented<Element>;
+    destination: GraphicallyRepresented<Element>;
+    description?: string;
 }
 
 
@@ -43,7 +47,9 @@ export class Flow {
     private readonly _flowDefinition: FlowDefinition;
     private outlet = new Vector2();
     private inlet = new Vector2();
-    private element: SVGElement;
+    private path: SVGElement;
+    private description: SVGElement;
+    private endCircle: SVGElement;
 
     private _offset: Vector2;
     private readonly _flowDirection: FlowDirection = FlowDirection.horizontally;
@@ -63,29 +69,36 @@ export class Flow {
 
         // wait with the update until each node's graphical representation is there
         console.log('find graphical reps');
+
         forkJoin([
-            this._flowDefinition?.source?.graphicalRepresentationChange() ?? of(),
-            this._flowDefinition?.destination?.graphicalRepresentationChange() ?? of()
-        ].map(graphic => {
-            console.log('after fork join');
-            return graphic.pipe(
-                filter(g => {
-                    if (!g) {
-                        console.warn('there is one g not set');
-                    }
-                    return !!g;
-                }), // each graphical representation has to be defined
-                take(1)
-            );
-        }
-        )).subscribe(() => { console.log('call update flow'); this.update(); },
+            this._flowDefinition?.source,
+            this._flowDefinition?.destination
+        ].filter(graphic => !!graphic)
+            .map(graphic => graphic.graphicalRepresentationChange())
+            .map(graphic => {
+                console.log('after fork join');
+                return graphic.pipe(
+                    filter(g => {
+                        if (!g) {
+                            console.warn('there is one g unset');
+                        }
+                        return !!g;
+                    }), // each graphical representation has to be defined
+                    take(1)
+                );
+            })
+        ).subscribe(() => { console.log('call update flow'); this.update(); },
         error => console.warn('error find graph reps, ' + error));
     }
 
 
     update() {
-        const fromRect = this._flowDefinition?.source?.graphicalRepresentation?.getBoundingClientRect();
         const toRect   = this._flowDefinition?.destination?.graphicalRepresentation?.getBoundingClientRect();
+        const fromRect = this._flowDefinition?.source?.graphicalRepresentation?.getBoundingClientRect()
+            ?? (toRect
+                // use an offsetted toRect if there's no source
+                ? new DOMRect(toRect.x + toRect.width + 20, toRect.y, toRect.width, toRect.height)
+                : null);
 
         if (!fromRect || !toRect) {
             return;
@@ -115,18 +128,28 @@ export class Flow {
         const outX = this.outlet.x;
         const outY = this.outlet.y;
         const inX = this.inlet.x;
-        const inY = this.inlet.y + 1;
+        const inY = this.inlet.y;
 
         // remark: Actually modifies existing DOM element instead of creating a new one
-        this.element = this._flowDirection === FlowDirection.horizontally
-            ? createSVGVerticalCubicBezierPath(this.parent, inX, inY, outX, outY, 36, 0, undefined, this.element)
-            : createSVGHorizontalCubicBezierPath(this.parent, inX, inY, outX, outY, 36, 0, undefined, this.element);
-        this.element.classList.add('path');
+        this.path = this._flowDirection === FlowDirection.horizontally
+            ? createSVGVerticalCubicBezierPath(this.parent, inX, inY, outX, outY, 4, 0, undefined, this.path)
+            : createSVGHorizontalCubicBezierPath(this.parent, inX, inY, outX, outY, 4, 0, undefined, this.path);
+        this.path.classList.add('path');
+
+
+        this.description?.remove();
+        this.endCircle?.remove();
+        if (this._flowDefinition.description) {
+            this.endCircle = createSVGCircle(this.parent, inX, inY, 4);
+            this.description = createSVGText(this.parent, inX + 4, inY, this._flowDefinition.description, 12, 'left');
+        }
     }
 
 
     destroy() {
-        this.element?.remove();
+        this.path?.remove();
+        this.description?.remove();
+        this.endCircle?.remove();
     }
 
 

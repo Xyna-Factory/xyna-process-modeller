@@ -16,11 +16,9 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnDestroy, OnInit } from '@angular/core';
-import { XoVariable } from '../../../xo/variable.model';
 import { FormulaAreaComponent } from '../formula-area/formula-area.component';
-import { ApiService, FullQualifiedName, XoDescriber } from '@zeta/api';
+import { ApiService, FullQualifiedName } from '@zeta/api';
 import { FormulaTreeDataSource } from '../variable-tree/data-source/formula-tree-data-source';
-import { XoFormula } from '../../../xo/formula.model';
 import { Assignment } from './assignment';
 import { Subscription, filter, first, forkJoin } from 'rxjs';
 import { FlowDefinition } from './flow-canvas/flow-canvas.component';
@@ -38,37 +36,6 @@ import { VariableDescriber } from '../variable-tree/data-source/skeleton-tree-da
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VisualMappingComponent extends FormulaAreaComponent implements OnInit, OnDestroy {
-
-    // private _inputVariables: XoVariable[];
-    // private _outputVariables: XoVariable[];
-    // private _formulas: XoFormula[];
-
-    // @Input()
-    // set inputVariables(values: XoVariable[]) {
-    //     this._inputVariables = values;
-    //     this.update();
-    // }
-    // get inputVariables(): XoVariable[] {
-    //     return this._inputVariables;
-    // }
-
-    // @Input()
-    // set outputVariables(values: XoVariable[]) {
-    //     this._outputVariables = values;
-    //     this.update();
-    // }
-    // get outputVariables(): XoVariable[] {
-    //     return this._outputVariables;
-    // }
-
-    // @Input()
-    // set formulas(values: XoFormula[]) {
-    //     this._formulas = values;
-    //     this.update();
-    // }
-    // get formulas(): XoFormula[] {
-    //     return this._formulas;
-    // }
 
     private _mapping: XoMapping;
     private _replacedSubscription: Subscription;
@@ -186,7 +153,10 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
 
             // construct flows for graphical representation
             this.flows = this.assignments.map(assignment =>
-                assignment.sources.map(path => (<FlowDefinition>{ source: path.node, destination: assignment.destination.node }))
+                assignment.sources.length > 0
+                    ? assignment.sources.map(path => (<FlowDefinition>{ source: path.node, destination: assignment.destination.node }))
+                    // if there are no source nodes from the tree, this is a literal assignment. Use literal as description
+                    : <FlowDefinition>{ source: null, description: assignment.rightExpressionPart, destination: assignment.destination.node }
             ).flat();
             console.log('constructed flows: ' + this.flows.length);
             this.cdr.markForCheck();

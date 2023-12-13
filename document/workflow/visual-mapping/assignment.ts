@@ -98,10 +98,14 @@ export interface MemberPath<T = any> {
 export class Assignment<T = any> {
     destination: MemberPath<T>;
     sources: MemberPath<T>[] = [];
+    leftExpressionPart: string;
+    rightExpressionPart: string;
 
     constructor(protected formula: XoFormula) {
 
         const assignmentOperatorIndex = formula.parts.findIndex(part => part.part === '=');
+        this.leftExpressionPart = formula.parts.slice(0, assignmentOperatorIndex).map(part => part.part).join();
+        this.rightExpressionPart = formula.parts.slice(assignmentOperatorIndex + 1).map(part => part.part).join();
 
         formula.parts.forEach((part, index) => {
             if (part instanceof FormulaPartVariable) {

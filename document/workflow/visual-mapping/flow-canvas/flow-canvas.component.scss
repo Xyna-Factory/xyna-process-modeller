@@ -36,5 +36,11 @@
                 stroke-width: 4;
             }
         }
+        svg circle {
+            fill: $color-accent;
+        }
+        svg text {
+            fill: $color-gray-2;
+        }
     }
 }
