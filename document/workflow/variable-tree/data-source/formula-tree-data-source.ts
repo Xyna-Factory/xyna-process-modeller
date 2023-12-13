@@ -95,7 +95,6 @@ export class FormulaTreeDataSource<T = any> extends SkeletonTreeDataSource<T> {
      * @remark Only call synchronously after `root$` has its value
      */
     processMemberPath(path: XoFormulaVariableNode): SkeletonTreeNode {
-        console.log('match root?');
         return this.root.match(path) as SkeletonTreeNode;
     }
 }

@@ -31,36 +31,7 @@ export class VariableTreeComponent {
 
     @Input('xc-tree-datasource')
     set dataSource(value: FormulaTreeDataSource) {
-        // this.unsubscribeDataSource();
         this._dataSource = value;
-        if (this.dataSource) {
-            // subscribe to mark for changes
-            // this._dataSourceSubscriptions.push(
-            //     this.dataSource.markForChange.subscribe(() => {
-            //         this.cdRef.markForCheck();
-            //     })
-            // );
-            // subscribe to data changes
-            // this._dataSourceSubscriptions.push(
-            //     this.dataSource.dataChange.pipe<XcTreeNode[]>(
-            //         filter(nodes => this.autoExpand && nodes.length > 0)
-            //     ).subscribe(nodes =>
-            //         nodes.forEach(node => {
-            //             if (this.autoExpand === 'first') {
-            //                 this.treeControl.expand(node);
-            //             } else if (this.autoExpand === 'all') {
-            //                 const expandChildren = (parentNode: XcTreeNode) => {
-            //                     this.treeControl.expand(parentNode);
-            //                     this._dataSourceSubscriptions.push(parentNode.children.pipe(filter(children => children.length > 0)).subscribe(children =>
-            //                         children.forEach(child => expandChildren(child))
-            //                     ));
-            //                 };
-            //                 expandChildren(node);
-            //             }
-            //         })
-            //     )
-            // );
-        }
     }
 
 

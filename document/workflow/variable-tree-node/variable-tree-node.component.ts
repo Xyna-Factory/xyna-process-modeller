@@ -54,20 +54,4 @@ export class VariableTreeNodeComponent implements AfterViewInit {
     get typeLabel(): string {
         return this.node.typeLabel + (this.node.isList ? '[]' : '');
     }
-
-
-    // inletPosition(): Vector2 {
-    //     const elementRect = this.elementRef.nativeElement.getBoundingClientRect();
-    //     const position = new Vector2(elementRect.left, elementRect.top);
-    //     position.x += this.elementRef.nativeElement.clientWidth / 2;
-    //     return position;
-    // }
-
-
-    // outletPosition(): Vector2 {
-    //     if (this.isElementVisible()) {
-    //         return this.inletPosition().add(new Vector2(0, this.elementRef.nativeElement.clientHeight - 1));
-    //     }
-    //     return null;
-    // }
 }

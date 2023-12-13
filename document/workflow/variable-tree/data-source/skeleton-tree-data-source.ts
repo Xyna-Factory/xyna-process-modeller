@@ -239,11 +239,9 @@ export class SkeletonTreeDataSource<T = any> implements TreeNodeFactory<T> {
 
 
     setStructure(structure: XoStructureField) {
-        console.log('setStructure');
         const node = this.createNodeFromStructure(structure);
         node.isList = this.describer.isList;
         this._root$.next(node);
-        console.log('called root$ next');
     }
 
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, Component, ElementRef, HostListener, Input, NgZone, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, NgZone, OnDestroy, ViewChild } from '@angular/core';
 import { GraphicallyRepresented } from '@zeta/base';
 import { createSVGCircle, createSVGGroup, createSVGHorizontalCubicBezierPath, createSVGText, createSVGVerticalCubicBezierPath } from '@zeta/base/draw';
 import { filter, forkJoin, take } from 'rxjs';
@@ -68,27 +68,23 @@ export class Flow {
         this._offset = offset;
 
         // wait with the update until each node's graphical representation is there
-        console.log('find graphical reps');
-
         forkJoin([
             this._flowDefinition?.source,
             this._flowDefinition?.destination
         ].filter(graphic => !!graphic)
             .map(graphic => graphic.graphicalRepresentationChange())
-            .map(graphic => {
-                console.log('after fork join');
-                return graphic.pipe(
+            .map(graphic =>
+                graphic.pipe(
                     filter(g => {
                         if (!g) {
-                            console.warn('there is one g unset');
+                            console.warn('there is one g unset');   // DEBUG
                         }
                         return !!g;
                     }), // each graphical representation has to be defined
                     take(1)
-                );
-            })
-        ).subscribe(() => { console.log('call update flow'); this.update(); },
-        error => console.warn('error find graph reps, ' + error));
+                )
+            )
+        ).subscribe(() => this.update());
     }
 
 
@@ -103,8 +99,6 @@ export class Flow {
         if (!fromRect || !toRect) {
             return;
         }
-
-        console.log(`from: (${Math.round(fromRect.x)}, ${Math.round(fromRect.y)})\tto: (${Math.round(toRect.x)}, ${Math.round(toRect.y)})`);
 
         // TODO implement an algorithm that automatically decides which edges to connect in which direction
         if (this._flowDirection === FlowDirection.horizontally) {
@@ -136,7 +130,7 @@ export class Flow {
             : createSVGHorizontalCubicBezierPath(this.parent, inX, inY, outX, outY, 4, 0, undefined, this.path);
         this.path.classList.add('path');
 
-
+        // render description
         this.description?.remove();
         this.endCircle?.remove();
         if (this._flowDefinition.description) {
@@ -223,7 +217,6 @@ export class FlowCanvasComponent implements AfterViewInit, OnDestroy {
         const parentOffset = (): Vector2 => {
             const parentOffsetRect = this.element.nativeElement.getBoundingClientRect();
             const offset = new Vector2(-parentOffsetRect.left, -parentOffsetRect.top);
-            console.log(`offset: (${Math.round(offset.x)}, ${Math.round(offset.y)})`);
             return offset;
         };
 
@@ -240,7 +233,6 @@ export class FlowCanvasComponent implements AfterViewInit, OnDestroy {
             };
 
             this.resizeObserver = new ResizeObserver(() => {
-                console.log('resize');
                 const o = parentOffset();
                 this._flows.forEach(flow => flow.offset = o);
             });
@@ -252,7 +244,6 @@ export class FlowCanvasComponent implements AfterViewInit, OnDestroy {
     protected loop() {
         this.ngZone.runOutsideAngular(
             () => {
-                console.log('loop');
                 this._flows.forEach(flow => {
                     if (flow.needsUpdate()) {
                         flow.update();
@@ -261,15 +252,5 @@ export class FlowCanvasComponent implements AfterViewInit, OnDestroy {
                 this.animationFrameHandle = requestAnimationFrame(this.frameRequestCallback);
             }
         );
-    }
-
-
-    @HostListener('click')
-    onClick() {
-        this._flows.forEach(flow => {
-            if (flow.needsUpdate()) {
-                flow.update();
-            }
-        });
     }
 }

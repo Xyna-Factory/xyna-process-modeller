@@ -46,12 +46,10 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
         this._mapping = value;
         this.update();
 
-        this._replacedSubscription = this.mapping.replaced().subscribe(
-            () => {
-                console.log('replaced');
-                this.update();
-            },
-            error => console.warn('error on model replace: ' + error));
+        this._replacedSubscription = this.mapping.replaced().subscribe({
+            next: () => this.update(),
+            error: error => console.warn('error on model replace: ' + error)
+        });
     }
     get mapping(): XoMapping {
         return this._mapping;
@@ -93,7 +91,6 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
         if (!this.mapping || !this._initialized) {
             return;
         }
-        console.log('update');
         const apiService = this.injector.get(ApiService);
         const inputVariables = this.mapping.inputArea.variables;
         const outputVariables = this.mapping.outputArea.variables;
@@ -105,7 +102,6 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
         ).forEach(
             formula => formula.parseExpression(apiService, this.documentModel.originRuntimeContext)
         );
-        console.log('parsed formula exp: ' + formulas.length);
 
         this.inputDataSources = [];
         this.outputDataSources = [];
@@ -126,11 +122,8 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
 
         // initialize tree data sources
         const dataSources = [...this.inputDataSources, ...this.outputDataSources];
-        dataSources.forEach(ds => {
-            ds.refresh();
-        });
+        dataSources.forEach(ds => ds.refresh());
 
-        console.log('waiting for ds\'s to refresh');
         // wait for all data sources
         forkJoin(
             dataSources.map(ds => ds.root$.pipe(
@@ -138,10 +131,8 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
                 first()
             ))
         ).subscribe(() => {
-            console.log('all ds\'s refreshed');
             // construct assignments out of formulas and match with formula trees
             this.assignments = formulas.map(formula => new Assignment<Element>(formula));
-            console.log('created assignments: ' + this.assignments.length);
             this.assignments.forEach(assignment => {
                 assignment.memberPaths.forEach(path => {
                     const ds = dataSources[path.formula.variableIndex];
@@ -149,7 +140,6 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
                     path.node = correspondingNode;
                 });
             });
-            console.log('retrieved assignment nodes');
 
             // construct flows for graphical representation
             this.flows = this.assignments.map(assignment =>
@@ -158,7 +148,6 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
                     // if there are no source nodes from the tree, this is a literal assignment. Use literal as description
                     : <FlowDefinition>{ source: null, description: assignment.rightExpressionPart, destination: assignment.destination.node }
             ).flat();
-            console.log('constructed flows: ' + this.flows.length);
             this.cdr.markForCheck();
         });
     }
