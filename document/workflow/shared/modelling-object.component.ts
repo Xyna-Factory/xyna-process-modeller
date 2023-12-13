@@ -81,7 +81,7 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
         protected readonly componentMappingService: ComponentMappingService,
         protected readonly documentService: DocumentService,
         protected readonly detailLevelService: WorkflowDetailLevelService,
-        @Optional() injector: Injector  // TODO: delete other injected services and get all via injector
+        @Optional() protected injector: Injector  // TODO: delete other injected services and get all via injector
     ) {
         this.detailSettings = injector.get(WorkflowDetailSettingsService);
         this.messageBus = injector.get(MessageBusService);

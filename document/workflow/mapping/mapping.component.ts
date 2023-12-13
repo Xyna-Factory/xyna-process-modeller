@@ -40,9 +40,23 @@ import { ModellingItemComponent } from '../shared/modelling-object.component';
 })
 export class MappingComponent extends ModellingItemComponent implements OnDestroy {
 
+    private readonly language = {
+        showHideDocumentation: 'pmod.workflow.show-hide-documentation',
+        sortAssignments: 'pmod.workflow.sort-assignments',
+        showHideFormulas: 'pmod.workflow.show-hide-formulas',
+        programmaticMode: 'pmod.workflow.switch-to-programmatic-mode',
+        visualMode: 'pmod.workflow.switch-to-visual-mode'
+    };
+
     private readonly _selectionChangeSubscription: Subscription;
 
     newFormulaExpression = '';
+
+    /* eslint-disable brace-style */
+    private _mode: 'programmatic' | 'visual' = 'programmatic';
+    get programmaticMode(): boolean { return this._mode === 'programmatic'; }
+    get visualMode(): boolean { return this._mode === 'visual'; }
+    /* eslint-enable brace-style */
 
 
     constructor(@Optional() elementRef: ElementRef,
@@ -55,19 +69,25 @@ export class MappingComponent extends ModellingItemComponent implements OnDestro
         super(elementRef, componentMappingService, documentService, detailLevelService, injector);
 
         this.menuItems.unshift(
-            <XcMenuItem>{ name: 'Show/Hide Documentation Area', translate: true,
+            <XcMenuItem>{ name: this.language.showHideDocumentation, translate: true,
                 visible: () => !!this.mapping.documentationArea,
                 click:   () => detailLevelService.toggleCollapsed(this.mapping.documentationArea.id)
             },
-            <XcMenuItem>{ name: 'Sort Assignments', translate: true,
+            <XcMenuItem>{ name: this.language.sortAssignments, translate: true,
                 click: () => this.performAction({
                     type: ModellingActionType.sort,
                     objectId: this.mapping.formulaArea.id,
                     request: new XoRequest()
                 })
             },
-            <XcMenuItem>{ name: 'Show/Hide Formulas', translate: true,
+            <XcMenuItem>{ name: this.language.showHideFormulas, translate: true,
                 click: () => this.toggleCollapsed()
+            },
+            <XcMenuItem>{ name: this.visualMode ? this.language.programmaticMode : this.language.visualMode, translate: true,
+                click: item => {
+                    this._mode = this.visualMode ? 'programmatic' : 'visual';
+                    item.name = this.visualMode ? this.language.programmaticMode : this.language.visualMode;
+                }
             }
         );
 

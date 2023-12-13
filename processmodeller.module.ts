@@ -151,6 +151,10 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { WorkflowDetailSettingsService } from './workflow-detail-settings.service';
 import { QueryParameterService } from '@zeta/nav/query-parameter.service';
 import './xo/_import';
+import { VisualMappingComponent } from './document/workflow/visual-mapping/visual-mapping.component';
+import { VariableTreeComponent } from './document/workflow/variable-tree/variable-tree.component';
+import { VariableTreeNodeComponent } from './document/workflow/variable-tree-node/variable-tree-node.component';
+import { FlowCanvasComponent } from './document/workflow/visual-mapping/flow-canvas/flow-canvas.component';
 
 
 @NgModule({
@@ -193,6 +197,7 @@ import './xo/_import';
         ExceptionTypeComponent,
         FactoryComponent,
         FilterCriterionAreaComponent,
+        FlowCanvasComponent,
         ForeachComponent,
         FormulaAreaComponent,
         FormulaComponent,
@@ -270,6 +275,9 @@ import './xo/_import';
         VariableAreaDocumentComponent,
         VariableAreaServiceComponent,
         VariableComponent,
+        VariableTreeComponent,
+        VariableTreeNodeComponent,
+        VisualMappingComponent,
         WorkflowComponent,
         WorkflowDocumentComponent,
         WorkflowLauncherComponent,

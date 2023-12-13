@@ -1,0 +1,10 @@
+<flow-canvas *ngIf="flows?.length > 0"
+    [flowDefinitions]="flows"
+></flow-canvas>
+<div class="outputs">
+    <variable-tree *ngFor="let outputDataSource of outputDataSources" [xc-tree-datasource]="outputDataSource"></variable-tree>
+</div>
+<div class="assignments"></div>
+<div class="inputs">
+    <variable-tree *ngFor="let inputDataSource of inputDataSources" [xc-tree-datasource]="inputDataSource"></variable-tree>
+</div>

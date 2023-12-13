@@ -62,7 +62,9 @@ export class XoModellingItem extends XoItem {
             // if replacer is item itself, replace self
             if (replacer.id === this.id) {
                 this.decode(replacer.encode());     // encode and decode to get a clean update-process including afterDecode and such
+                console.log('calling replace next');
                 this.replacedSubject.next(this);
+                console.log('called replace next');
                 replaced = true;
             } else if (replacer instanceof XoModellingItem) {
                 // check container areas

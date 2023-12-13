@@ -1,0 +1,9 @@
+<div #noderow class="row">
+    <label class="label">{{node.label}}</label>
+    <label>{{typeLabel}}</label>
+</div>
+<div *ngIf="expanded" class="children">
+    <variable-tree-node *ngFor="let childNode of node.children"
+        [node]="childNode"
+    ></variable-tree-node>
+</div>
