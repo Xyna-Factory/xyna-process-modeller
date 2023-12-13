@@ -862,6 +862,22 @@ export const PMOD_EN: I18nTranslation[] = [
         value: 'Show/Hide Paths inside Workflow'
     },
     {
+        key: 'pmod.workflow.show-hide-formulas',
+        value: 'Show/Hide Formulas'
+    },
+    {
+        key: 'pmod.workflow.sort-assignments',
+        value: 'Sort Assignments'
+    },
+    {
+        key: 'pmod.workflow.switch-to-programmatic-mode',
+        value: 'Switch to programmatic mode'
+    },
+    {
+        key: 'pmod.workflow.switch-to-visual-mode',
+        value: 'Switch to visual mode'
+    },
+    {
         key: 'pmod.workflow.collapse-all',
         value: 'Collapse all'
     },

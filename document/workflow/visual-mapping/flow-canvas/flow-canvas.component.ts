@@ -96,7 +96,7 @@ export class Flow {
         const toRect   = this._flowDefinition?.destination?.graphicalRepresentation?.getBoundingClientRect();
         const fromRect = this._flowDefinition?.source?.graphicalRepresentation?.getBoundingClientRect()
             ?? (toRect
-                // use an offsetted toRect if there's no source
+                // use an offsetted (ro the right) toRect if there's no source
                 ? new DOMRect(toRect.x + toRect.width + 20, toRect.y, toRect.width, toRect.height)
                 : null);
 

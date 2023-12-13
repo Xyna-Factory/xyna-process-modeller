@@ -886,6 +886,22 @@ export const PMOD_DE: I18nTranslation[] = [
         value: 'Pfade im Workflow ein-/ausblenden'
     },
     {
+        key: 'pmod.workflow.show-hide-formulas',
+        value: 'Formeln ein-/ausblenden'
+    },
+    {
+        key: 'pmod.workflow.sort-assignments',
+        value: 'Zuweisungen sortieren'
+    },
+    {
+        key: 'pmod.workflow.switch-to-programmatic-mode',
+        value: 'Programmatischen Modus anzeigen'
+    },
+    {
+        key: 'pmod.workflow.switch-to-visual-mode',
+        value: 'Visuellen Modus anzeigen'
+    },
+    {
         key: 'pmod.workflow.collapse-all',
         value: 'Alles ausblenden'
     },

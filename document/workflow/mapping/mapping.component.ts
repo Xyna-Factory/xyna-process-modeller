@@ -41,11 +41,11 @@ import { ModellingItemComponent } from '../shared/modelling-object.component';
 export class MappingComponent extends ModellingItemComponent implements OnDestroy {
 
     private readonly language = {
-        showHideDocumentation: 'show-hide-documentation',
-        sortAssignments: 'sort-assignments',
-        showHideFormulas: 'show-hide-formulas',
-        programmaticMode: 'switch-to-programmatic-mode',
-        visualMode: 'switch-to-visual-mode'
+        showHideDocumentation: 'pmod.workflow.show-hide-documentation',
+        sortAssignments: 'pmod.workflow.sort-assignments',
+        showHideFormulas: 'pmod.workflow.show-hide-formulas',
+        programmaticMode: 'pmod.workflow.switch-to-programmatic-mode',
+        visualMode: 'pmod.workflow.switch-to-visual-mode'
     };
 
     private readonly _selectionChangeSubscription: Subscription;
