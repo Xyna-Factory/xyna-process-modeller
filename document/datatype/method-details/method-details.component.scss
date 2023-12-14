@@ -27,10 +27,6 @@
     >.grid-12 {
         display: flex;
 
-        .with-button {
-            align-items: center;
-        }
-
         .row {
             display: flex;
             flex-direction: row;
@@ -80,10 +76,9 @@
         }
     }
 
-    .row {
+    >.row {
         display: flex;
         flex-direction: row;
-        align-items: center;
 
         >* {
             flex: 1 1 100%;
@@ -97,5 +92,9 @@
         >.button {
             flex-basis: auto;
         }
+    }
+
+    .row.with-button {
+        align-items: center;
     }
 }

@@ -217,7 +217,7 @@ export class MethodDetailsComponent extends ModellingItemComponent {
         const input = this.method.inputArea.items.data as XoModellingItem[];
         const output = this.method.outputArea.items.data as XoModellingItem[];
 
-        this.documentService.newWorkflow('New Workflow', false, input, output);
+        this.documentService.newWorkflow(this.method.label, false, input, output);
     }
 
     openReferencedWorkflow() {
