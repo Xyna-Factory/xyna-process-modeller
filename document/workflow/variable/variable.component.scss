@@ -184,10 +184,9 @@ $menu-width: 20px;
         display: flex;
         flex-direction: column;
         position: absolute;
-        top: 0;
         right: $link-state-width + $link-state-margin;
 
-        justify-content: center;
+        align-self: flex-end;
 
         ::ng-deep .mat-icon-button {
             width: 18px;
