@@ -1,4 +1,4 @@
-<div #noderow class="row">
+<div #noderow class="row" [ngClass]="{'marked': node.marked}">
     <label class="label">{{node.label}}</label>
     <label>{{typeLabel}}</label>
 </div>

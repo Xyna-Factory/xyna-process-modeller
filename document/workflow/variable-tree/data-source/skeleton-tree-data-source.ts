@@ -54,14 +54,16 @@ export interface TreeNodeFactory<T = any> {
 
 
 /**
- * @param T Graphical representation. In a HTML context, this is usually a DOM element
+ * @param T Graphical representation. In an HTML context, this is usually a DOM element
  */
 export class SkeletonTreeNode<T = any> extends Comparable implements Traversable, GraphicallyRepresented<T> {
     private _structure: XoStructureField;
     private _isList: boolean;
+    private _marked: boolean;
     private readonly _graphicalRepresentation$ = new BehaviorSubject<T>(null);
 
     protected _children: SkeletonTreeNode[] = [];
+    protected _parent: SkeletonTreeNode;
 
     constructor(structure: XoStructureField, protected nodeFactory: TreeNodeFactory) {
         super();
@@ -89,6 +91,22 @@ export class SkeletonTreeNode<T = any> extends Comparable implements Traversable
     }
 
 
+    get marked(): boolean {
+        return this._marked;
+    }
+
+
+    set marked(value: boolean) {
+        this._marked = value;
+    }
+
+
+    markRecursively() {
+        this.marked = true;
+        this.children.forEach(child => child.markRecursively());
+    }
+
+
     get name(): string {
         return this.getStructure().name;
     }
@@ -106,6 +124,16 @@ export class SkeletonTreeNode<T = any> extends Comparable implements Traversable
 
     get children(): SkeletonTreeNode[] {
         return this._children;
+    }
+
+
+    get parent(): SkeletonTreeNode {
+        return this._parent;
+    }
+
+
+    set parent(value: SkeletonTreeNode) {
+        this._parent = value;
     }
 
 
@@ -186,6 +214,7 @@ export class ComplexSkeletonTreeNode<T = any> extends SkeletonTreeNode<T> {
             const node = this.nodeFactory.createNodeFromStructure(field);
             if (node) {
                 this._children.push(node);
+                node.parent = this;
             }
         });
     }

@@ -89,9 +89,24 @@ export class XoFormulaRootVariableNode extends XoFormulaVariableNode {
 
 
 
-export interface MemberPath<T = any> {
-    formula: XoFormulaRootVariableNode;
-    node: SkeletonTreeNode<T>;
+export class MemberPath<T = any> {
+    private _node: SkeletonTreeNode<T>;
+
+    constructor(public formula: XoFormulaRootVariableNode) {
+    }
+
+    get node(): SkeletonTreeNode<T> {
+        return this._node;
+    }
+
+    set node(value: SkeletonTreeNode<T>) {
+        this._node = value;
+
+        // mark node and its children for being assigned
+        if (this.node) {
+            this.node.markRecursively();
+        }
+    }
 }
 
 
@@ -113,9 +128,9 @@ export class Assignment<T = any> {
                 formulaVariableNode.parse(formula, index);
 
                 if (index < assignmentOperatorIndex && !this.destination) {
-                    this.destination = { formula: formulaVariableNode, node: null };
+                    this.destination = new MemberPath(formulaVariableNode);
                 } else {
-                    this.sources.push({ formula: formulaVariableNode, node: null });
+                    this.sources.push(new MemberPath(formulaVariableNode));
                 }
             }
         });
