@@ -214,6 +214,7 @@ export class ArrayEntrySkeletonTreeNode<T = any> extends ComplexSkeletonTreeNode
 
 
 export interface VariableDescriber extends XoDescriber {
+    label: string;
     isList: boolean;
 }
 
@@ -239,6 +240,7 @@ export class SkeletonTreeDataSource<T = any> implements TreeNodeFactory<T> {
 
 
     setStructure(structure: XoStructureField) {
+        structure.label = this.describer.label;
         const node = this.createNodeFromStructure(structure);
         node.isList = this.describer.isList;
         this._root$.next(node);
