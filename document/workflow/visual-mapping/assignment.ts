@@ -118,7 +118,10 @@ export class Assignment<T = any> {
 
     constructor(protected formula: XoFormula) {
 
-        const assignmentOperatorIndex = formula.parts.findIndex(part => part.part === '=');
+        let assignmentOperatorIndex = formula.parts.findIndex(part => part.part === '=');
+        if (assignmentOperatorIndex < 0) {
+            assignmentOperatorIndex = formula.parts.length;
+        }
         this.leftExpressionPart = formula.parts.slice(0, assignmentOperatorIndex).map(part => part.part).join();
         this.rightExpressionPart = formula.parts.slice(assignmentOperatorIndex + 1).map(part => part.part).join();
 

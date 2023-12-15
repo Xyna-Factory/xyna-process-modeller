@@ -59,7 +59,7 @@ export interface TreeNodeFactory<T = any> {
 export class SkeletonTreeNode<T = any> extends Comparable implements Traversable, GraphicallyRepresented<T> {
     private _structure: XoStructureField;
     private _isList: boolean;
-    private _marked: boolean;
+    private readonly _marked$ = new BehaviorSubject<boolean>(false);
     private readonly _graphicalRepresentation$ = new BehaviorSubject<T>(null);
 
     protected _children: SkeletonTreeNode[] = [];
@@ -91,13 +91,18 @@ export class SkeletonTreeNode<T = any> extends Comparable implements Traversable
     }
 
 
+    get markedChange(): Observable<boolean> {
+        return this._marked$.asObservable();
+    }
+
+
     get marked(): boolean {
-        return this._marked;
+        return this._marked$.value;
     }
 
 
     set marked(value: boolean) {
-        this._marked = value;
+        this._marked$.next(value);
     }
 
 
