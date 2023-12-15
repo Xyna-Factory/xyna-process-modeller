@@ -32,6 +32,10 @@
         border-bottom: 1px solid $color-gray-3;
         border-left: 1px solid $color-gray-3;
 
+        &:not(.marked) {
+            background-color: #ffffbb;
+        }
+        
         .label {
             margin-right: 4px;
 
