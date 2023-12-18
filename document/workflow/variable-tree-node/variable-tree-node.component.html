@@ -1,4 +1,5 @@
-<div #noderow class="row" [ngClass]="{'marked': (node.markedChange | async)}">
+<!-- marked means that the node is white, unmarked nodes are yellow -->
+<div #noderow class="row" [ngClass]="{'marked': (node.markedChange | async) || node.allChildrenMarked}">
     <label class="label">{{node.label}}</label>
     <label>{{typeLabel}}</label>
 </div>
