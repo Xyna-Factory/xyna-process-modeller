@@ -2,9 +2,14 @@
     [flowDefinitions]="flows"
 ></flow-canvas>
 <div class="outputs">
-    <variable-tree *ngFor="let outputDataSource of outputDataSources" [xc-tree-datasource]="outputDataSource"></variable-tree>
+    <variable-tree *ngFor="let outputDataSource of outputDataSources"
+        [tree-datasource]="outputDataSource"
+    ></variable-tree>
 </div>
 <div class="assignments"></div>
 <div class="inputs">
-    <variable-tree *ngFor="let inputDataSource of inputDataSources" [xc-tree-datasource]="inputDataSource"></variable-tree>
+    <variable-tree *ngFor="let inputDataSource of inputDataSources"
+        [tree-datasource]="inputDataSource"
+        highlightMarkedNodes="false"
+    ></variable-tree>
 </div>

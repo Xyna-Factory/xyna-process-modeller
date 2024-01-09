@@ -59,7 +59,10 @@ export interface TreeNodeFactory<T = any> {
 export class SkeletonTreeNode<T = any> extends Comparable implements Traversable, GraphicallyRepresented<T> {
     private _structure: XoStructureField;
     private _isList: boolean;
+
+    /** Node is marked for some reason and can be rendered differently than an unmarked node */
     private readonly _marked$ = new BehaviorSubject<boolean>(false);
+
     private readonly _graphicalRepresentation$ = new BehaviorSubject<T>(null);
 
     protected _children: SkeletonTreeNode[] = [];
