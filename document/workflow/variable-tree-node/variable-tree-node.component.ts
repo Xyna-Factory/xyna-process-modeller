@@ -17,6 +17,7 @@
  */
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { SkeletonTreeNode } from '../variable-tree/data-source/skeleton-tree-data-source';
+import { coerceBoolean } from '@zeta/base';
 
 
 @Component({
@@ -27,6 +28,7 @@ import { SkeletonTreeNode } from '../variable-tree/data-source/skeleton-tree-dat
 })
 export class VariableTreeNodeComponent implements AfterViewInit {
     private _node: SkeletonTreeNode<Element>;
+    private _highlightMarks = true;
 
     expanded = true;
 
@@ -40,9 +42,18 @@ export class VariableTreeNodeComponent implements AfterViewInit {
         }
     }
 
-
     get node(): SkeletonTreeNode<Element> {
         return this._node;
+    }
+
+
+    @Input()
+    set highlightMarks(value: boolean) {
+        this._highlightMarks = coerceBoolean(value);
+    }
+
+    get highlightMarks(): boolean {
+        return this._highlightMarks;
     }
 
 

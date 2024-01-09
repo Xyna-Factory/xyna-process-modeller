@@ -17,6 +17,7 @@
  */
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormulaTreeDataSource } from './data-source/formula-tree-data-source';
+import { coerceBoolean } from '@zeta/base';
 
 
 @Component({
@@ -27,15 +28,24 @@ import { FormulaTreeDataSource } from './data-source/formula-tree-data-source';
 })
 export class VariableTreeComponent {
     private _dataSource: FormulaTreeDataSource;
+    private _highlightMarkedNodes = true;
 
-
-    @Input('xc-tree-datasource')
+    @Input('tree-datasource')
     set dataSource(value: FormulaTreeDataSource) {
         this._dataSource = value;
     }
 
-
     get dataSource(): FormulaTreeDataSource {
         return this._dataSource;
+    }
+
+
+    @Input()
+    set highlightMarkedNodes(value: boolean) {
+        this._highlightMarkedNodes = coerceBoolean(value);
+    }
+
+    get highlightMarkedNodes(): boolean {
+        return this._highlightMarkedNodes;
     }
 }

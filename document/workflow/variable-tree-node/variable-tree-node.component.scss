@@ -32,7 +32,9 @@
         border-bottom: 1px solid $color-gray-3;
         border-left: 1px solid $color-gray-3;
 
-        &:not(.marked) {
+        // misleading naming: A marked node is shown white here
+        // If no marks shall be shown, everything is white
+        &:not(.marked).show-mark {
             background-color: #ffffbb;
         }
         
