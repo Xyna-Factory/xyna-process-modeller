@@ -17,8 +17,7 @@
  */
 import { Directive, ElementRef, HostListener, Input, OnInit } from '@angular/core';
 
-import { XoModellingItem } from '../../../../xo/modelling-item.model';
-import { DRAG_CSS_CLASSES, DragType, ModDnDEventConvert, ModDragAndDropService, ModDragDataInfo, ModDragDataTransferKey } from './mod-drag-and-drop.service';
+import { DRAG_CSS_CLASSES, DragType, Draggable, ModDnDEventConvert, ModDragAndDropService, ModDragDataInfo, ModDragDataTransferKey } from './mod-drag-and-drop.service';
 
 
 @Directive({
@@ -27,7 +26,7 @@ import { DRAG_CSS_CLASSES, DragType, ModDnDEventConvert, ModDragAndDropService, 
 export class ModDraggableDirective implements OnInit {
 
     @Input('mod-draggable')
-    data: XoModellingItem;
+    data: Draggable;
 
     @Input('mod-draggable-allowed-drag-type')
     allowedDragType = DragType.move;

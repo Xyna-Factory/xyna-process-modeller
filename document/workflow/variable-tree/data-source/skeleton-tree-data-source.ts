@@ -15,9 +15,10 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ApiService, RuntimeContext, XoDescriber, XoStructureArray, XoStructureComplexField, XoStructureField, XoStructureObject, XoStructurePrimitive, XoStructureType } from '@zeta/api';
+import { ApiService, FullQualifiedName, RuntimeContext, Xo, XoDescriber, XoJson, XoStructureArray, XoStructureComplexField, XoStructureField, XoStructureObject, XoStructurePrimitive, XoStructureType } from '@zeta/api';
 import { Comparable, GraphicallyRepresented, IComparable } from '@zeta/base';
 import { BehaviorSubject, Observable, first } from 'rxjs';
+import { Draggable } from '../../shared/drag-and-drop/mod-drag-and-drop.service';
 
 
 export interface ComparablePath extends IComparable {
@@ -56,7 +57,7 @@ export interface TreeNodeFactory<T = any> {
 /**
  * @param T Graphical representation. In an HTML context, this is usually a DOM element
  */
-export class SkeletonTreeNode<T = any> extends Comparable implements Traversable, GraphicallyRepresented<T> {
+export class SkeletonTreeNode<T = any> extends Comparable implements Traversable, GraphicallyRepresented<T>, Draggable {
     private _structure: XoStructureField;
     private _isList: boolean;
 
@@ -188,6 +189,20 @@ export class SkeletonTreeNode<T = any> extends Comparable implements Traversable
 
     graphicalRepresentationChange(): Observable<T> {
         return this._graphicalRepresentation$.asObservable();
+    }
+
+
+
+    get id(): string {
+        return this.label;
+    }
+
+    get fqn(): FullQualifiedName {
+        return this.getStructure().typeFqn ?? FullQualifiedName.fromPrimitive('String');
+    }
+
+    encode(into?: XoJson, parent?: Xo): XoJson {
+        return { $meta: { fqn: this.fqn.encode(), rtc: this.getStructure().typeRtc?.encode() ?? undefined } };
     }
 }
 

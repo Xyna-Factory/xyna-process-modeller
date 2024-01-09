@@ -17,9 +17,9 @@
  */
 import { Injectable } from '@angular/core';
 
-import { XoCase } from '@pmod/xo/case.model';
-import { XoDataMemberVariable } from '@pmod/xo/data-member-variable.model';
-import { XoJson } from '@zeta/api';
+import { XoCase } from '../../../../xo/case.model';
+import { XoDataMemberVariable } from '../../../../xo/data-member-variable.model';
+import { FullQualifiedName, Xo, XoJson } from '@zeta/api';
 import { AuthService } from '@zeta/auth';
 import { randomUUID } from '@zeta/base';
 
@@ -36,7 +36,6 @@ import { XoException } from '../../../../xo/exception.model';
 import { XoForeach } from '../../../../xo/foreach.model';
 import { XoInvocation } from '../../../../xo/invocation.model';
 import { XoMapping } from '../../../../xo/mapping.model';
-import { XoModellingItem } from '../../../../xo/modelling-item.model';
 import { XoParallelism } from '../../../../xo/parallelism.model';
 import { XoQuery } from '../../../../xo/query.model';
 import { XoRetry } from '../../../../xo/retry.model';
@@ -46,6 +45,7 @@ import { XoTemplate } from '../../../../xo/template.model';
 import { XoThrow } from '../../../../xo/throw.model';
 import { XoTypeChoice } from '../../../../xo/type-choice.model';
 import { XoWorkflowInvocation } from '../../../../xo/workflow-invocation.model';
+import { XoModellingItem } from '@pmod/xo/modelling-item.model';
 
 
 export const DRAG_CSS_CLASSES = {
@@ -150,6 +150,13 @@ export interface ModDnDEvent {
 }
 
 
+export interface Draggable {
+    fqn: FullQualifiedName;
+    id: string;
+    encode(into?: XoJson, parent?: Xo): XoJson;
+}
+
+
 export function ModDnDEventConvert(event: Event | any): Event & ModDnDEvent {
     return event;
 }
@@ -185,7 +192,7 @@ export class ModDragAndDropService {
      * If an item is dragged from another app, this item will be null. This way one can distinguish between
      * moving and copying the item.
      */
-    private _draggedItem: XoModellingItem;
+    private _draggedItem: Draggable;
 
     private _canvas: HTMLCanvasElement;
 
@@ -318,7 +325,7 @@ export class ModDragAndDropService {
     }
 
 
-    getDraggedItem(event: Event & ModDnDEvent): XoModellingItem {
+    getDraggedItem(event: Event & ModDnDEvent): Draggable {
         // check if event contains xo (only for drop-event)
         const data = this.getTransferredData(event, ModDragDataTransferKey.xo);
 
@@ -330,7 +337,7 @@ export class ModDragAndDropService {
     }
 
 
-    setDraggedItem(event: Event & ModDnDEvent, value: XoModellingItem) {
+    setDraggedItem(event: Event & ModDnDEvent, value: Draggable) {
         // store in transferred data of event but also inside this service, because the event only returns its values during drop
         if (value) {
             const jsonData: XoEncoding = {
@@ -403,6 +410,7 @@ export class ModDragAndDropService {
 
     createXo(fqn: string, jsonData: XoJson): XoModellingItem {
         // use lowercase because case isn't necessarily persisted in drag-dataTransfer
+        // TODO: solve via reflection
         switch (fqn.toLowerCase()) {
             case XoBranch.fqn.encode().toLowerCase():
                 return new XoBranch().decode(jsonData);

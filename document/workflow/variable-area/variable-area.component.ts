@@ -56,7 +56,7 @@ export class VariableAreaComponent extends ModellingObjectComponent {
     };
 
 
-    dropped(event: ModDropEvent) {
+    dropped(event: ModDropEvent<XoModellingItem>) {
         // decrease target index when moving the source forward
         if (event.sameArea && event.operation === DragType.move && event.index > event.sourceIndex) {
             event.index--;

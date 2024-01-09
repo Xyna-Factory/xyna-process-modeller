@@ -21,6 +21,7 @@ import { XoArea, XoAreaArray } from './area.model';
 import { XoInsertRequestContent } from './insert-request-content.model';
 import { XoItem, XoItemArray } from './item.model';
 import { XoReferableObject } from './referable-object.model';
+import { Draggable } from '@pmod/document/workflow/shared/drag-and-drop/mod-drag-and-drop.service';
 
 
 interface Containing {
@@ -30,7 +31,7 @@ interface Containing {
 
 
 @XoObjectClass(XoItem, 'xmcp.processmodeller.datatypes', 'ModellingItem')
-export class XoModellingItem extends XoItem {
+export class XoModellingItem extends XoItem implements Draggable {
 
     static readonly INPUT_AREA_NAME = 'input';
     static readonly OUTPUT_AREA_NAME = 'output';

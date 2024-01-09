@@ -29,6 +29,7 @@ import { DocumentService } from '../../document.service';
 import { DragType } from '../../workflow/shared/drag-and-drop/mod-drag-and-drop.service';
 import { ModDropEvent } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
+import { XoModellingItem } from '@pmod/xo/modelling-item.model';
 
 
 @Component({
@@ -70,7 +71,7 @@ export class MemberVariableAreaComponent extends ModellingObjectComponent {
     }
 
 
-    dropped(event: ModDropEvent) {
+    dropped(event: ModDropEvent<XoModellingItem>) {
         // decrease target index when moving the source forward
         if (event.sameArea && event.index > event.sourceIndex) {
             event.index--;
