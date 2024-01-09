@@ -112,6 +112,11 @@ export class SkeletonTreeNode<T = any> extends Comparable implements Traversable
     }
 
 
+    get allChildrenMarked(): boolean {
+        return !this.children.some(child => !child.marked);
+    }
+
+
     get name(): string {
         return this.getStructure().name;
     }
