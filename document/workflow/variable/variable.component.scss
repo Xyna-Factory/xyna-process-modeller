@@ -23,7 +23,7 @@ $variable-gap: 12px;
 $exception-triangle-width: 8px;
 
 $link-state-width: 8px;
-$link-state-margin: 6px;
+$link-state-margin: 8px;
 
 $menu-width: 20px;
 
@@ -186,11 +186,11 @@ $menu-width: 20px;
         position: absolute;
         right: $link-state-width + $link-state-margin;
 
-        align-self: flex-end;
+        top: 0;
 
         ::ng-deep .mat-icon-button {
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 15px;
         }
     }
 
