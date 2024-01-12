@@ -16,6 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 $member-variable-area-background-color: unset !default;
+$dnd-hover-background-color: unset !default;
 
 @import "const";
 
@@ -28,7 +29,7 @@ $member-variable-area-background-color: unset !default;
         transition: padding $transition-time-fast cubic-bezier(0.445, 0.05, 0.55, 0.95);
 
         &.mod-drop-area-hover {
-            background-color: #ffd988;  // shade of #fabb00
+            background-color: $dnd-hover-background-color;
         }
 
         > div {

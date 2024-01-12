@@ -15,9 +15,10 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormulaTreeDataSource } from './data-source/formula-tree-data-source';
 import { coerceBoolean } from '@zeta/base';
+import { CreateAssignmentEvent } from '../variable-tree-node/variable-tree-node.component';
 
 
 @Component({
@@ -29,6 +30,9 @@ import { coerceBoolean } from '@zeta/base';
 export class VariableTreeComponent {
     private _dataSource: FormulaTreeDataSource;
     private _highlightMarkedNodes = true;
+
+    @Output()
+    readonly createdAssignment = new EventEmitter<CreateAssignmentEvent>();
 
     @Input('tree-datasource')
     set dataSource(value: FormulaTreeDataSource) {

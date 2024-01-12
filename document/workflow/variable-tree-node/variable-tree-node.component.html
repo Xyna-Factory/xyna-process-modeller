@@ -4,11 +4,20 @@
     [ngClass]="{'marked': (node.markedChange | async) || node.allChildrenMarked, 'show-mark': highlightMarks}"
     [mod-draggable]="node"
 >
-    <label class="label">{{node.label}}</label>
-    <label>{{typeLabel}}</label>
+    <div class="drop-zone"
+        mod-drop-area
+        [mod-drop-area-allow-item]="allowItem"
+        [mod-drop-area-can-drop]="canDrop"
+        mod-drop-area-hide-indicator
+        (mod-drop-area-dropped)="dropped($event)"
+    >
+        <label class="label">{{node.label}}</label>
+        <label class="type">{{typeLabel}}</label>
+    </div>
 </div>
 <div *ngIf="expanded" class="children">
     <variable-tree-node *ngFor="let childNode of node.children"
         [node]="childNode"
+        (assignedVariable)="assignedVariable.emit($event)"
     ></variable-tree-node>
 </div>

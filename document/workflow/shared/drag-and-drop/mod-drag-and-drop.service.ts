@@ -328,12 +328,14 @@ export class ModDragAndDropService {
     getDraggedItem(event: Event & ModDnDEvent): Draggable {
         // check if event contains xo (only for drop-event)
         const data = this.getTransferredData(event, ModDragDataTransferKey.xo);
+        let draggable = this._draggedItem;
 
-        if (data) {
+        if (!draggable && data) {
+            // don't use draggedItem from dnd-service here, because for multi-tab-drag, it won't be set
             const jsonData: XoEncoding = JSON.parse(data);
-            return this.createXo(jsonData.fqn, jsonData.data);     // don't use draggedItem from dnd-service here, because for multi-tab-drag, it won't be set
+            draggable = this.createXo(jsonData.fqn, jsonData.data);
         }
-        return this._draggedItem;
+        return draggable;
     }
 
 

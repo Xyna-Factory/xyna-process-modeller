@@ -15,9 +15,17 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { SkeletonTreeNode } from '../variable-tree/data-source/skeleton-tree-data-source';
 import { coerceBoolean } from '@zeta/base';
+import { ModDragEvent, ModDropEvent } from '../shared/drag-and-drop/mod-drop-area.directive';
+import { Draggable, ModDnDEvent } from '../shared/drag-and-drop/mod-drag-and-drop.service';
+
+
+export interface CreateAssignmentEvent {
+    destination: SkeletonTreeNode<Element>;
+    source: SkeletonTreeNode<Element>;
+}
 
 
 @Component({
@@ -33,6 +41,9 @@ export class VariableTreeNodeComponent implements AfterViewInit {
     expanded = true;
 
     @ViewChild('noderow') nodeElement: ElementRef<Element>;
+
+    @Output()
+    readonly assignedVariable = new EventEmitter<CreateAssignmentEvent>();
 
     @Input()
     set node(value: SkeletonTreeNode<Element>) {
@@ -64,5 +75,14 @@ export class VariableTreeNodeComponent implements AfterViewInit {
 
     get typeLabel(): string {
         return this.node.typeLabel + (this.node.isList ? '[]' : '');
+    }
+
+
+    allowItem = (xoFqn: string): boolean => true;
+
+    canDrop = (draggable: Draggable, hoverEvent?: ModDragEvent, dragEvent?: ModDnDEvent): boolean => draggable instanceof SkeletonTreeNode;
+
+    dropped(event: ModDropEvent<Draggable>) {
+        this.assignedVariable.emit(<CreateAssignmentEvent>{ destination: this.node, source: event.item as SkeletonTreeNode });
     }
 }

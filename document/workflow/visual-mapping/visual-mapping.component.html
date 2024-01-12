@@ -4,6 +4,7 @@
 <div class="outputs">
     <variable-tree *ngFor="let outputDataSource of outputDataSources"
         [tree-datasource]="outputDataSource"
+        (createdAssignment)="addAssignment($event)"
     ></variable-tree>
 </div>
 <div class="assignments"></div>
@@ -11,5 +12,6 @@
     <variable-tree *ngFor="let inputDataSource of inputDataSources"
         [tree-datasource]="inputDataSource"
         highlightMarkedNodes="false"
+        (createdAssignment)="addAssignment($event)"
     ></variable-tree>
 </div>

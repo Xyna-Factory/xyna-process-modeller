@@ -77,6 +77,8 @@ $service-step-input-z: 0;
 $service-step-label-z: 2;       // higher than input and output because of focus shadow
 $service-step-output-z: 1;      // higher than 0 because of connection lines
 
+$dnd-hover-background-color: #ffd988;  // shade of #fabb00
+
 
 // link states
 $color-link-state-none: #ff2200;

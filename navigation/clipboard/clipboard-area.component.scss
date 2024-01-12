@@ -15,8 +15,9 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-@import "const";
+$dnd-hover-background-color: unset !default;
 
+@import "const";
 
 :host {
     overflow: hidden;
@@ -34,7 +35,7 @@
         padding: calc(#{$service-step-vertical-gap} / 4) calc(#{$service-step-vertical-gap} / 2);
 
         &.mod-drop-area-hover {
-            background-color: #ffd988;  // shade of #fabb00
+            background-color: $dnd-hover-background-color;
         }
     }
 
