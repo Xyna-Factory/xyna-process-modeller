@@ -63,7 +63,7 @@ export class ContentAreaComponent extends ModellingObjectComponent {
     };
 
 
-    dropped(event: ModDropEvent) {
+    dropped(event: ModDropEvent<XoModellingItem>) {
         const newContainerSize = event.sameArea && event.operation === DragType.move ? this.contentArea.items.length : this.contentArea.items.length + 1;
 
         let hoveredStepId: string;

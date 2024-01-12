@@ -15,6 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+$dnd-hover-background-color: unset !default;
 
 @import "const";
 
@@ -24,9 +25,7 @@
 
     .row {
         display: flex;
-        flex-direction: row;
-
-        padding: 2px 4px;
+        cursor: pointer;
 
         background-color: $color-white;
         border-bottom: 1px solid $color-gray-3;
@@ -37,12 +36,29 @@
         &:not(.marked).show-mark {
             background-color: #ffffbb;
         }
-        
-        .label {
-            margin-right: 4px;
 
-            &::after {
-                content: ':'
+        .drop-zone {
+            display: flex;
+            flex: 1 1 auto;
+            padding: 2px 4px;
+
+            &.mod-drop-area-hover {
+                background-color: $dnd-hover-background-color;
+            }
+
+            .label, .type {
+                font-size: $font-size-small;
+            }
+            .label {
+                margin-right: 4px;
+                font-weight: bold;
+    
+                &::after {
+                    content: ':'
+                }
+            }
+            .type {
+                color: $color-gray-2;
             }
         }
     }

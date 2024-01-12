@@ -17,6 +17,7 @@
  */
 $workflow-area-background-color: unset !default;
 $content-area-padding: unset !default;
+$dnd-hover-background-color: unset !default;
 
 @import "const";
 
@@ -35,7 +36,7 @@ $content-area-padding: unset !default;
         padding: $content-area-padding;
 
         &.mod-drop-area-hover {
-            background-color: #ffd988;  // shade of #fabb00
+            background-color: $dnd-hover-background-color;
             border-radius: $service-step-border-radius;
         }
     }

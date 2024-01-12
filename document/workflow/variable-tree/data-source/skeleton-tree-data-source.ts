@@ -15,9 +15,10 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ApiService, RuntimeContext, XoDescriber, XoStructureArray, XoStructureComplexField, XoStructureField, XoStructureObject, XoStructurePrimitive, XoStructureType } from '@zeta/api';
+import { ApiService, FullQualifiedName, RuntimeContext, Xo, XoDescriber, XoJson, XoStructureArray, XoStructureComplexField, XoStructureField, XoStructureObject, XoStructurePrimitive, XoStructureType } from '@zeta/api';
 import { Comparable, GraphicallyRepresented, IComparable } from '@zeta/base';
 import { BehaviorSubject, Observable, first } from 'rxjs';
+import { Draggable } from '../../shared/drag-and-drop/mod-drag-and-drop.service';
 
 
 export interface ComparablePath extends IComparable {
@@ -56,7 +57,7 @@ export interface TreeNodeFactory<T = any> {
 /**
  * @param T Graphical representation. In an HTML context, this is usually a DOM element
  */
-export class SkeletonTreeNode<T = any> extends Comparable implements Traversable, GraphicallyRepresented<T> {
+export class SkeletonTreeNode<T = any> extends Comparable implements Traversable, GraphicallyRepresented<T>, Draggable {
     private _structure: XoStructureField;
     private _isList: boolean;
 
@@ -174,6 +175,24 @@ export class SkeletonTreeNode<T = any> extends Comparable implements Traversable
 
 
     /**
+     * Returns XFL expression of this node up to its root
+     */
+    toXFL(): string {
+        const prefix = this.parent?.toXFL() ?? '';
+        return (prefix.length > 0 ? prefix + '.' : '') + this.getXFLExpression();
+    }
+
+
+    /**
+     * Returns XFL expression of this node
+     * @remark To be overridden by each node
+     */
+    protected getXFLExpression(): string {
+        return '';
+    }
+
+
+    /**
      * @inheritdoc
      */
     get graphicalRepresentation(): T {
@@ -189,6 +208,22 @@ export class SkeletonTreeNode<T = any> extends Comparable implements Traversable
     graphicalRepresentationChange(): Observable<T> {
         return this._graphicalRepresentation$.asObservable();
     }
+
+
+    /* ***   Draggable   *** */
+
+
+    get id(): string {
+        return this.label;
+    }
+
+    get fqn(): FullQualifiedName {
+        return this.getStructure().typeFqn ?? FullQualifiedName.fromPrimitive('String');
+    }
+
+    encode(into?: XoJson, parent?: Xo): XoJson {
+        return { $meta: { fqn: this.fqn.encode(), rtc: this.getStructure().typeRtc?.encode() ?? undefined } };
+    }
 }
 
 
@@ -203,12 +238,21 @@ export class PrimitiveSkeletonTreeNode<T = any> extends SkeletonTreeNode<T> {
     getName(): string {
         return this.getStructure()?.label ?? this.getStructure()?.name ?? 'undefined';
     }
+
+
+    /**
+     * @inheritdoc
+     */
+    protected getXFLExpression(): string {
+        return this.getStructure()?.name ?? '';
+    }
 }
 
 
 
 export class ComplexSkeletonTreeNode<T = any> extends SkeletonTreeNode<T> {
     private _subtypes: XoStructureType[] = [];
+    private _sourceIndex: number;
 
 
     getStructure(): XoStructureObject {
@@ -242,6 +286,23 @@ export class ComplexSkeletonTreeNode<T = any> extends SkeletonTreeNode<T> {
     setSubtypes(subtypes: XoStructureType[]) {
         this._subtypes = subtypes;
     }
+
+
+    get sourceIndex(): number {
+        return this._sourceIndex;
+    }
+
+
+    set sourceIndex(value: number) {
+        this._sourceIndex = value;
+    }
+
+
+    protected getXFLExpression(): string {
+        return this.sourceIndex
+            ? `%${this.sourceIndex}%`
+            : this.getStructure()?.name ?? '';
+    }
 }
 
 
@@ -272,7 +333,10 @@ export class SkeletonTreeDataSource<T = any> implements TreeNodeFactory<T> {
     private readonly _root$ = new BehaviorSubject<SkeletonTreeNode<T>>(null);
 
 
-    constructor(protected describer: VariableDescriber, protected api: ApiService, protected rtc: RuntimeContext) {
+    /**
+     * @param rootIndex Index of root variable in outer context
+     */
+    constructor(protected describer: VariableDescriber, protected api: ApiService, protected rtc: RuntimeContext, protected rootIndex: number = undefined) {
     }
 
 
@@ -285,6 +349,9 @@ export class SkeletonTreeDataSource<T = any> implements TreeNodeFactory<T> {
         structure.label = this.describer.label;
         const node = this.createNodeFromStructure(structure);
         node.isList = this.describer.isList;
+        if (node instanceof ComplexSkeletonTreeNode) {
+            node.sourceIndex = this.rootIndex;
+        }
         this._root$.next(node);
     }
 

@@ -27,6 +27,8 @@ import { ComponentMappingService } from '@pmod/document/component-mapping.servic
 import { DocumentService } from '@pmod/document/document.service';
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { VariableDescriber } from '../variable-tree/data-source/skeleton-tree-data-source';
+import { ModellingActionType } from '@pmod/api/xmom.service';
+import { CreateAssignmentEvent } from '../variable-tree-node/variable-tree-node.component';
 
 
 @Component({
@@ -107,16 +109,16 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
         this.outputDataSources = [];
 
         // create tree data sources
-        inputVariables?.forEach(variable => {
+        inputVariables?.forEach((variable, index) => {
             const rtc = variable.$rtc.runtimeContext() ?? this.documentModel.originRuntimeContext;
             const desc = <VariableDescriber>{ rtc: rtc, fqn: FullQualifiedName.decode(variable.$fqn), isList: variable.isList, label: variable.label };
-            const ds = new FormulaTreeDataSource<Element>(desc, apiService, rtc);
+            const ds = new FormulaTreeDataSource<Element>(desc, apiService, rtc, index);
             this.inputDataSources.push(ds);
         });
-        outputVariables?.forEach(variable => {
+        outputVariables?.forEach((variable, index) => {
             const rtc = variable.$rtc.runtimeContext() ?? this.documentModel.originRuntimeContext;
             const desc = <VariableDescriber>{ rtc: rtc, fqn: FullQualifiedName.decode(variable.$fqn), isList: variable.isList, label: variable.label };
-            const ds = new FormulaTreeDataSource<Element>(desc, apiService, rtc);
+            const ds = new FormulaTreeDataSource<Element>(desc, apiService, rtc, inputVariables.length + index);
             this.outputDataSources.push(ds);
         });
 
@@ -142,13 +144,21 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
             });
 
             // construct flows for graphical representation
-            this.flows = this.assignments.map(assignment =>
-                assignment.sources.length > 0
-                    ? assignment.sources.map(path => (<FlowDefinition>{ source: path.node, destination: assignment.destination.node }))
-                    // if there are no source nodes from the tree, this is a literal assignment. Use literal as description
-                    : <FlowDefinition>{ source: null, description: assignment.rightExpressionPart, destination: assignment.destination.node }
-            ).flat();
+            this.flows = this.assignments
+                .filter(assignment => !!assignment.destination)
+                .map(assignment =>
+                    assignment.sources.length > 0
+                        ? assignment.sources.map(path => (<FlowDefinition>{ source: path.node, destination: assignment.destination.node }))
+                        // if there are no source nodes from the tree, this is a literal assignment. Use literal as description
+                        : <FlowDefinition>{ source: null, description: assignment.rightExpressionPart, destination: assignment.destination.node }
+                ).flat();
             this.cdr.markForCheck();
         });
+    }
+
+
+    addAssignment(assignment: CreateAssignmentEvent) {
+        const expression = assignment.destination.toXFL() + '=' + assignment.source.toXFL();
+        this.performAction({ type: ModellingActionType.insert, objectId: this.mapping.formulaArea.id, request: this.getInsertRequest(expression ?? this.newFormulaExpression) });
     }
 }

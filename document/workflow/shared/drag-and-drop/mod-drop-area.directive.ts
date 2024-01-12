@@ -24,9 +24,9 @@ import { XcDialogService } from '@zeta/xc';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { XoItem } from '../../../../xo/item.model';
-import { XoModellingItem } from '../../../../xo/modelling-item.model';
-import { DRAG_CSS_CLASSES, DragType, ModDnDEvent, ModDnDEventConvert, ModDragAndDropService, ModDragDataInfo, ModDragDataTransferKey, ModRelativeHoverSide, ModRelativeHoverSideCalculate, ModRelativeHoverSideFlip, Distance } from './mod-drag-and-drop.service';
+import { DRAG_CSS_CLASSES, DragType, ModDnDEvent, ModDnDEventConvert, ModDragAndDropService, ModDragDataInfo, ModDragDataTransferKey, ModRelativeHoverSide, ModRelativeHoverSideCalculate, ModRelativeHoverSideFlip, Distance, Draggable } from './mod-drag-and-drop.service';
+
+
 
 
 export interface ModDragEvent {
@@ -43,8 +43,8 @@ export interface ModDragEvent {
 }
 
 
-export interface ModDropEvent extends ModDragEvent {
-    item: XoModellingItem;
+export interface ModDropEvent<T = Draggable> extends ModDragEvent {
+    item: T;
     sourceIndex: number;
     operation: DragType;
     sameArea: boolean;
@@ -57,7 +57,7 @@ export interface ModDropEvent extends ModDragEvent {
 export class ModDropAreaDirective implements OnInit, OnDestroy {
 
     @Input('mod-drop-area')
-    items: XoItem[];
+    items: { id: string }[];
 
     private areaElement: Element;
 
@@ -71,7 +71,7 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
      * Is called on dragover to decide, if an item can be dropped at a specific position. So don't do expensive operations here
      */
     @Input('mod-drop-area-can-drop')
-    canDrop?: (xo: XoModellingItem, hoverEvent?: ModDragEvent, dragEvent?: ModDnDEvent) => boolean;
+    canDrop?: (draggable: Draggable, hoverEvent?: ModDragEvent, dragEvent?: ModDnDEvent) => boolean;
 
     /**
      * Is called every time before the drop indicator is rendered
@@ -239,14 +239,14 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
                 const hoverInfo = this.evaluateHoverInfo(dragEvent);
                 const infoJSON = this.dndService.getTransferredData(dragEvent, ModDragDataTransferKey.info);
                 const info: ModDragDataInfo = JSON.parse(infoJSON);
-                const xo = this.dndService.getDraggedItem(dragEvent);
-                if (info && xo && (!this.canDrop || this.canDrop && this.canDrop(xo, hoverInfo, dragEvent))) {
+                const draggable = this.dndService.getDraggedItem(dragEvent);
+                if (info && draggable && (!this.canDrop || this.canDrop && this.canDrop(draggable, hoverInfo, dragEvent))) {
                     let operation = info.allowedDragType;
                     if (operation === DragType.move && (!this.dndService.thisStartedDragging || dragEvent.ctrlKey || dragEvent.altKey)) {
                         operation = DragType.copy;
                     }
                     this.dropped.emit({
-                        item: xo,
+                        item: draggable,
                         sourceIndex: info.fromIndex,
                         operation: operation,
                         sameArea: info.fromAreaId === this.areaElement.id,
