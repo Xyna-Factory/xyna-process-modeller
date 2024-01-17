@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { XoStructureArray, XoStructureComplexField, XoStructurePrimitive } from '@zeta/api';
-import { ArrayEntrySkeletonTreeNode, ArraySkeletonTreeNode, ComplexSkeletonTreeNode, PrimitiveSkeletonTreeNode, SkeletonTreeDataSource, SkeletonTreeNode } from './skeleton-tree-data-source';
+import { ArrayEntrySkeletonTreeNode, ArraySkeletonTreeNode, ComplexSkeletonTreeNode, PrimitiveSkeletonTreeNode, SkeletonTreeDataSource, SkeletonTreeNode, TreeNodeObserver } from './skeleton-tree-data-source';
 import { XoFormulaVariableNode } from '../../visual-mapping/assignment';
 import { IComparable } from '@zeta/base';
 
@@ -35,22 +35,22 @@ function equalsFormulaNode(treeNode: SkeletonTreeNode, formulaNode: XoFormulaVar
 }
 
 
-export class PrimitiveFormulaTreeNode<T = any> extends PrimitiveSkeletonTreeNode<T> {
+export class PrimitiveFormulaTreeNode extends PrimitiveSkeletonTreeNode {
     equals(that: IComparable): boolean {
         return equalsFormulaNode(this, that as XoFormulaVariableNode);
     }
 }
 
 
-export class ArrayFormulaTreeNode<T = any> extends ArraySkeletonTreeNode<T> {
+export class ArrayFormulaTreeNode extends ArraySkeletonTreeNode {
 }
 
 
-export class ArrayEntryFormulaTreeNode<T = any> extends ArrayEntrySkeletonTreeNode<T> {
+export class ArrayEntryFormulaTreeNode extends ArrayEntrySkeletonTreeNode {
 }
 
 
-export class ComplexFormulaTreeNode<T = any> extends ComplexSkeletonTreeNode<T> {
+export class ComplexFormulaTreeNode extends ComplexSkeletonTreeNode {
     equals(that: IComparable): boolean {
         return equalsFormulaNode(this, that as XoFormulaVariableNode);
     }
@@ -66,25 +66,25 @@ export class ComplexFormulaTreeNode<T = any> extends ComplexSkeletonTreeNode<T> 
  * Data Source for a tree made of formulas
  * @inheritdoc
  */
-export class FormulaTreeDataSource<T = any> extends SkeletonTreeDataSource<T> {
+export class FormulaTreeDataSource extends SkeletonTreeDataSource {
 
-    createPrimitiveNode(structure: XoStructurePrimitive): PrimitiveFormulaTreeNode<T> {
-        return new PrimitiveFormulaTreeNode<T>(structure, this);
+    createPrimitiveNode(structure: XoStructurePrimitive): PrimitiveFormulaTreeNode {
+        return new PrimitiveFormulaTreeNode(structure, this, new Set<TreeNodeObserver>([this]));
     }
 
 
-    createComplexNode(structure: XoStructureComplexField): ComplexFormulaTreeNode<T> {
-        return new ComplexFormulaTreeNode<T>(structure, this);
+    createComplexNode(structure: XoStructureComplexField): ComplexFormulaTreeNode {
+        return new ComplexFormulaTreeNode(structure, this, new Set<TreeNodeObserver>([this]));
     }
 
 
-    createArrayNode(structure: XoStructureArray): ArrayFormulaTreeNode<T> {
-        return new ArrayFormulaTreeNode<T>(structure, this);
+    createArrayNode(structure: XoStructureArray): ArrayFormulaTreeNode {
+        return new ArrayFormulaTreeNode(structure, this, new Set<TreeNodeObserver>([this]));
     }
 
 
-    createArrayEntryNode(structure: XoStructureArray): ArrayEntryFormulaTreeNode<T> {
-        return new ArrayEntryFormulaTreeNode<T>(structure, this);
+    createArrayEntryNode(structure: XoStructureArray): ArrayEntryFormulaTreeNode {
+        return new ArrayEntryFormulaTreeNode(structure, this, new Set<TreeNodeObserver>([this]));
     }
 
 
@@ -95,6 +95,6 @@ export class FormulaTreeDataSource<T = any> extends SkeletonTreeDataSource<T> {
      * @remark Only call synchronously after `root$` has its value
      */
     processMemberPath(path: XoFormulaVariableNode): SkeletonTreeNode {
-        return this.root.match(path) as SkeletonTreeNode;
+        return this.root?.match(path) as SkeletonTreeNode;
     }
 }

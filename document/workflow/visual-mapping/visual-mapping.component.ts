@@ -26,7 +26,7 @@ import { XoMapping } from '@pmod/xo/mapping.model';
 import { ComponentMappingService } from '@pmod/document/component-mapping.service';
 import { DocumentService } from '@pmod/document/document.service';
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
-import { VariableDescriber } from '../variable-tree/data-source/skeleton-tree-data-source';
+import { SkeletonTreeDataSource, SkeletonTreeDataSourceObserver, SkeletonTreeNode, VariableDescriber } from '../variable-tree/data-source/skeleton-tree-data-source';
 import { ModellingActionType } from '@pmod/api/xmom.service';
 import { CreateAssignmentEvent } from '../variable-tree-node/variable-tree-node.component';
 
@@ -37,10 +37,19 @@ import { CreateAssignmentEvent } from '../variable-tree-node/variable-tree-node.
     styleUrls: ['./visual-mapping.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class VisualMappingComponent extends FormulaAreaComponent implements OnInit, OnDestroy {
+export class VisualMappingComponent extends FormulaAreaComponent implements OnInit, OnDestroy, SkeletonTreeDataSourceObserver {
 
     private _mapping: XoMapping;
     private _replacedSubscription: Subscription;
+    private initialized = false;
+    private structuresLoaded = false;
+
+    //private readonly structureCache = new XoDescriberCache<XoStructureObject>();  TODO use cache
+    inputDataSources: FormulaTreeDataSource[] = [];
+    outputDataSources: FormulaTreeDataSource[] = [];
+
+    assignments: Assignment[] = [];
+    flows: FlowDefinition[] = [];
 
     @Input()
     set mapping(value: XoMapping) {
@@ -57,14 +66,6 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
         return this._mapping;
     }
 
-    //private readonly structureCache = new XoDescriberCache<XoStructureObject>();  TODO use cache
-    inputDataSources: FormulaTreeDataSource<Element>[] = [];
-    outputDataSources: FormulaTreeDataSource<Element>[] = [];
-
-    assignments: Assignment<Element>[] = [];
-    flows: FlowDefinition[] = [];
-    private _initialized = false;
-
 
     constructor(
         elementRef: ElementRef,
@@ -79,7 +80,7 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
 
 
     ngOnInit(): void {
-        this._initialized = true;
+        this.initialized = true;
         this.update();
     }
 
@@ -90,7 +91,7 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
 
 
     update() {
-        if (!this.mapping || !this._initialized) {
+        if (!this.mapping || !this.initialized) {
             return;
         }
         const apiService = this.injector.get(ApiService);
@@ -104,6 +105,7 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
         ).forEach(
             formula => formula.parseExpression(apiService, this.documentModel.originRuntimeContext)
         );
+        this.assignments = formulas.map(formula => new Assignment(formula));
 
         this.inputDataSources = [];
         this.outputDataSources = [];
@@ -112,13 +114,13 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
         inputVariables?.forEach((variable, index) => {
             const rtc = variable.$rtc.runtimeContext() ?? this.documentModel.originRuntimeContext;
             const desc = <VariableDescriber>{ rtc: rtc, fqn: FullQualifiedName.decode(variable.$fqn), isList: variable.isList, label: variable.label };
-            const ds = new FormulaTreeDataSource<Element>(desc, apiService, rtc, index);
+            const ds = new FormulaTreeDataSource(desc, apiService, rtc, this, index);
             this.inputDataSources.push(ds);
         });
         outputVariables?.forEach((variable, index) => {
             const rtc = variable.$rtc.runtimeContext() ?? this.documentModel.originRuntimeContext;
             const desc = <VariableDescriber>{ rtc: rtc, fqn: FullQualifiedName.decode(variable.$fqn), isList: variable.isList, label: variable.label };
-            const ds = new FormulaTreeDataSource<Element>(desc, apiService, rtc, inputVariables.length + index);
+            const ds = new FormulaTreeDataSource(desc, apiService, rtc, this, inputVariables.length + index);
             this.outputDataSources.push(ds);
         });
 
@@ -133,32 +135,48 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
                 first()
             ))
         ).subscribe(() => {
-            // construct assignments out of formulas and match with formula trees
-            this.assignments = formulas.map(formula => new Assignment<Element>(formula));
-            this.assignments.forEach(assignment => {
-                assignment.memberPaths.forEach(path => {
-                    const ds = dataSources[path.formula.variableIndex];
-                    const correspondingNode = ds?.processMemberPath(path.formula);
-                    path.node = correspondingNode;
-                });
-            });
-
-            // construct flows for graphical representation
-            this.flows = this.assignments
-                .filter(assignment => !!assignment.destination)
-                .map(assignment =>
-                    assignment.sources.length > 0
-                        ? assignment.sources.map(path => (<FlowDefinition>{ source: path.node, destination: assignment.destination.node }))
-                        // if there are no source nodes from the tree, this is a literal assignment. Use literal as description
-                        : <FlowDefinition>{ source: null, description: assignment.rightExpressionPart, destination: assignment.destination.node }
-                ).flat();
-            this.cdr.markForCheck();
+            this.structuresLoaded = true;
+            this.refreshFlow();
         });
+    }
+
+
+    refreshFlow() {
+        if (!this.structuresLoaded) {
+            return;
+        }
+
+        const dataSources = [...this.inputDataSources, ...this.outputDataSources];
+
+        // for each assignment path, traverse formula trees and find matching node
+        this.assignments.forEach(assignment => {
+            assignment.memberPaths.forEach(path => {
+                const ds = dataSources[path.formula.variableIndex];
+                const correspondingNode = ds?.processMemberPath(path.formula);
+                path.node = correspondingNode;
+            });
+        });
+
+        // construct flows for graphical representation
+        this.flows = this.assignments
+            .filter(assignment => !!assignment.destination)
+            .map(assignment =>
+                assignment.sources.length > 0
+                    ? assignment.sources.map(path => (<FlowDefinition>{ source: path.node, destination: assignment.destination.node }))
+                    // if there are no source nodes from the tree, this is a literal assignment. Use literal as description
+                    : <FlowDefinition>{ source: null, description: assignment.rightExpressionPart, destination: assignment.destination.node }
+            ).flat();
+        this.cdr.markForCheck();
     }
 
 
     addAssignment(assignment: CreateAssignmentEvent) {
         const expression = assignment.destination.toXFL() + '=' + assignment.source.toXFL();
         this.performAction({ type: ModellingActionType.insert, objectId: this.mapping.formulaArea.id, request: this.getInsertRequest(expression ?? this.newFormulaExpression) });
+    }
+
+
+    nodeChange(dataSource: SkeletonTreeDataSource, node: SkeletonTreeNode): void {
+        this.refreshFlow();
     }
 }

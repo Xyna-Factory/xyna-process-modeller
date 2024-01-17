@@ -60,6 +60,25 @@ export class XoFormulaMemberNode extends XoFormulaVariableNode {
     parse(formula: XoFormula, index: number) {
         const part = formula.parts[index] as FormulaPartMember;
         this.variable = part.variable;
+
+
+        // **********************************
+        // FIXME: COPY & PASTE FROM BELOW
+        // **********************************
+
+        if (formula.parts[index + 1] instanceof FormulaPartSpecial && formula.parts[index + 1].part === '[') {
+            // special handling for array entries: skip array index
+            do {
+                index++;
+            } while (formula.parts.length > index + 2 && formula.parts[index]?.part !== ']');
+        }
+
+        const nextPart = formula.parts[index + 1];
+
+        if (nextPart instanceof FormulaPartMember) {
+            this.member = new XoFormulaMemberNode();
+            this.member.parse(formula, index + 1);
+        }
     }
 }
 
@@ -89,17 +108,17 @@ export class XoFormulaRootVariableNode extends XoFormulaVariableNode {
 
 
 
-export class MemberPath<T = any> {
-    private _node: SkeletonTreeNode<T>;
+export class MemberPath {
+    private _node: SkeletonTreeNode;
 
     constructor(public formula: XoFormulaRootVariableNode) {
     }
 
-    get node(): SkeletonTreeNode<T> {
+    get node(): SkeletonTreeNode {
         return this._node;
     }
 
-    set node(value: SkeletonTreeNode<T>) {
+    set node(value: SkeletonTreeNode) {
         this._node = value;
 
         // mark node and its children for being assigned
@@ -110,9 +129,9 @@ export class MemberPath<T = any> {
 }
 
 
-export class Assignment<T = any> {
-    destination: MemberPath<T>;
-    sources: MemberPath<T>[] = [];
+export class Assignment {
+    destination: MemberPath;
+    sources: MemberPath[] = [];
     leftExpressionPart: string;
     rightExpressionPart: string;
 
@@ -140,7 +159,7 @@ export class Assignment<T = any> {
     }
 
 
-    get memberPaths(): MemberPath<T>[] {
+    get memberPaths(): MemberPath[] {
         return this.sources.concat(this.destination ?? []);
     }
 }
