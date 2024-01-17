@@ -15,28 +15,8 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { XoObjectClass, XoArrayClass, XoProperty, XoObject, XoArray } from '@zeta/api';
-import { XoExpression } from './expression.model';
-import { ComparablePath } from './comparable-path';
+import { IComparable } from '@zeta/base';
 
-
-@XoObjectClass(null, 'xmcp.processmodeller.datatypes.expression', 'VariableAccessPart')
-export class XoVariableAccessPart extends XoObject implements ComparablePath {
-
-
-    @XoProperty()
-    name: string;
-
-
-    @XoProperty(XoExpression)
-    indexDef: XoExpression = new XoExpression();
-
-
-    get child(): ComparablePath {
-        return null;
-    }
-}
-
-@XoArrayClass(XoVariableAccessPart)
-export class XoVariableAccessPartArray extends XoArray<XoVariableAccessPart> {
+export interface ComparablePath extends IComparable {
+    get child(): ComparablePath;
 }

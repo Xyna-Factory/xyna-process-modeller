@@ -19,11 +19,8 @@ import { ApiService, FullQualifiedName, RuntimeContext, Xo, XoDescriber, XoJson,
 import { Comparable, GraphicallyRepresented, IComparable } from '@zeta/base';
 import { BehaviorSubject, Observable, first, map } from 'rxjs';
 import { Draggable } from '../../shared/drag-and-drop/mod-drag-and-drop.service';
+import { ComparablePath } from '@pmod/xo/expressions/comparable-path';
 
-
-export interface ComparablePath extends IComparable {
-    get child(): ComparablePath;
-}
 
 
 export interface Traversable {

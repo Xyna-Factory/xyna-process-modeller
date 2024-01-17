@@ -15,17 +15,24 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { XoObjectClass, XoArrayClass, XoProperty, XoObject, XoArray } from '@zeta/api';
+import { XoObjectClass, XoArrayClass, XoProperty, XoObject, XoArray, XoTransient } from '@zeta/api';
 import { XoVariableAccessPartArray } from './variable-access-part.model';
 import { XoExpression } from './expression.model';
+import { ComparablePath } from './comparable-path';
+import { XoVariable } from '../variable.model';
 
 
 @XoObjectClass(null, 'xmcp.processmodeller.datatypes.expression', 'ExpressionVariable')
-export class XoExpressionVariable extends XoObject {
+export class XoExpressionVariable extends XoObject implements ComparablePath {
 
 
     @XoProperty()
     varNum: number;
+
+
+    @XoProperty()
+    @XoTransient()
+    variable: XoVariable;
 
 
     @XoProperty(XoVariableAccessPartArray)
@@ -36,6 +43,9 @@ export class XoExpressionVariable extends XoObject {
     indexDef: XoExpression = new XoExpression();
 
 
+    get child(): ComparablePath {
+        return this.parts[0];
+    }
 }
 
 @XoArrayClass(XoExpressionVariable)

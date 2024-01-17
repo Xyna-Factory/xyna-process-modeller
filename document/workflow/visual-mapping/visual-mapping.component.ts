@@ -19,16 +19,59 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Inje
 import { FormulaAreaComponent } from '../formula-area/formula-area.component';
 import { ApiService, FullQualifiedName } from '@zeta/api';
 import { FormulaTreeDataSource } from '../variable-tree/data-source/formula-tree-data-source';
-import { Assignment } from './assignment';
-import { Subscription, filter, first, forkJoin } from 'rxjs';
+import { Subscription, filter, first, forkJoin, tap } from 'rxjs';
 import { FlowDefinition } from './flow-canvas/flow-canvas.component';
 import { XoMapping } from '@pmod/xo/mapping.model';
 import { ComponentMappingService } from '@pmod/document/component-mapping.service';
 import { DocumentService } from '@pmod/document/document.service';
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { SkeletonTreeDataSource, SkeletonTreeDataSourceObserver, SkeletonTreeNode, VariableDescriber } from '../variable-tree/data-source/skeleton-tree-data-source';
-import { ModellingActionType } from '@pmod/api/xmom.service';
+import { ModellingActionType, XmomService } from '@pmod/api/xmom.service';
 import { CreateAssignmentEvent } from '../variable-tree-node/variable-tree-node.component';
+import { XoModelledExpression } from '@pmod/xo/expressions/modelled-expression.model';
+import { XoExpressionVariable } from '@pmod/xo/expressions/expression-variable.model';
+import { XoSingleVarExpression } from '@pmod/xo/expressions/single-var-expression.model';
+
+
+
+/**
+ * Two for each expression (one for source, one for target).
+ * Used to store a Skeleton node that matches the expression.
+ */
+class ExpressionPart {
+    private _node: SkeletonTreeNode;
+
+    constructor(public expression: XoSingleVarExpression) {
+    }
+
+    get node(): SkeletonTreeNode {
+        return this._node;
+    }
+
+    set node(value: SkeletonTreeNode) {
+        this._node = value;
+
+        // mark node and its children for being assigned
+        if (this.node) {
+            this.node.markRecursively();
+        }
+    }
+}
+
+class ExpressionWrapper {
+    sourcePart: ExpressionPart;
+    targetPart: ExpressionPart;
+
+    constructor(protected expression: XoModelledExpression) {
+        this.sourcePart = new ExpressionPart(expression.sourceExpression as XoSingleVarExpression);
+        this.targetPart = new ExpressionPart(expression.targetExpression as XoSingleVarExpression);
+    }
+
+    get parts(): ExpressionPart[] {
+        return [this.sourcePart, this.targetPart];
+    }
+}
+
 
 
 @Component({
@@ -44,11 +87,13 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
     private initialized = false;
     private structuresLoaded = false;
 
+    expressions: ExpressionWrapper[];
+
     //private readonly structureCache = new XoDescriberCache<XoStructureObject>();  TODO use cache
     inputDataSources: FormulaTreeDataSource[] = [];
     outputDataSources: FormulaTreeDataSource[] = [];
 
-    assignments: Assignment[] = [];
+    // assignments: Assignment[] = [];
     flows: FlowDefinition[] = [];
 
     @Input()
@@ -76,6 +121,10 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
         protected readonly cdr: ChangeDetectorRef
     ) {
         super(elementRef, componentMappingService, documentService, detailLevelService, injector);
+
+        // anti-prune
+        const p0 = new XoSingleVarExpression();
+
     }
 
 
@@ -95,17 +144,10 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
             return;
         }
         const apiService = this.injector.get(ApiService);
+        const xmomService = this.injector.get(XmomService);
         const inputVariables = this.mapping.inputArea.variables;
         const outputVariables = this.mapping.outputArea.variables;
-        const formulas = this.mapping.formulaArea.formulas;
 
-        // initialize formulas if not initialized yet
-        formulas.filter(
-            formula => formula.parts.length === 0
-        ).forEach(
-            formula => formula.parseExpression(apiService, this.documentModel.originRuntimeContext)
-        );
-        this.assignments = formulas.map(formula => new Assignment(formula));
 
         this.inputDataSources = [];
         this.outputDataSources = [];
@@ -130,10 +172,25 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
 
         // wait for all data sources
         forkJoin(
-            dataSources.map(ds => ds.root$.pipe(
-                filter(value => !!value),
-                first()
-            ))
+            [
+                dataSources.map(ds => ds.root$.pipe(
+                    filter(value => !!value),
+                    first()
+                )),
+                xmomService.getModelledExpressions(this.documentModel.item, this.mapping).pipe(
+                    tap(expressions => {
+                        const mappingVariables = this.mapping.inputArea.variables.concat(this.mapping.outputArea.variables);
+                        this.expressions = expressions.data.map(modelledExpression => new ExpressionWrapper(modelledExpression));
+                        // assign XoVariables to ExpressionVariables
+                        this.expressions.forEach(expression => {
+                            const sourceVariable = expression.sourcePart.expression.variable;
+                            sourceVariable.variable = mappingVariables[sourceVariable.varNum];
+                            const targetVariable = expression.targetPart.expression.variable;
+                            targetVariable.variable = mappingVariables[targetVariable.varNum];
+                        });
+                    })
+                )
+            ]
         ).subscribe(() => {
             this.structuresLoaded = true;
             this.refreshFlow();
@@ -149,23 +206,39 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
         const dataSources = [...this.inputDataSources, ...this.outputDataSources];
 
         // for each assignment path, traverse formula trees and find matching node
-        this.assignments.forEach(assignment => {
-            assignment.memberPaths.forEach(path => {
-                const ds = dataSources[path.formula.variableIndex];
-                const correspondingNode = ds?.processMemberPath(path.formula);
-                path.node = correspondingNode;
+        // this.assignments.forEach(assignment => {
+        //     assignment.memberPaths.forEach(path => {
+        //         const ds = dataSources[path.formula.variableIndex];
+        //         const correspondingNode = ds?.processMemberPath(path.formula);
+        //         path.node = correspondingNode;
+        //     });
+        // });
+        this.expressions.forEach(expression => {
+            expression.parts.forEach(part => {
+                const ds = dataSources[part.expression?.variable?.varNum ?? 0];
+                const correspondingNode = ds?.processVariable(part.expression?.variable);
+                part.node = correspondingNode;
             });
         });
 
         // construct flows for graphical representation
-        this.flows = this.assignments
-            .filter(assignment => !!assignment.destination)
-            .map(assignment =>
-                assignment.sources.length > 0
-                    ? assignment.sources.map(path => (<FlowDefinition>{ source: path.node, destination: assignment.destination.node }))
+        // this.flows = this.assignments
+        //     .filter(assignment => !!assignment.destination)
+        //     .map(assignment =>
+        //         assignment.sources.length > 0
+        //             ? assignment.sources.map(path => (<FlowDefinition>{ source: path.node, destination: assignment.destination.node }))
+        //             // if there are no source nodes from the tree, this is a literal assignment. Use literal as description
+        //             : <FlowDefinition>{ source: null, description: assignment.rightExpressionPart, destination: assignment.destination.node }
+        //     ).flat();
+        // construct flows for graphical representation
+        this.flows = this.expressions
+            .filter(expression => !!expression.targetPart)
+            .map(expression =>
+                expression.sourcePart
+                    ? <FlowDefinition>{ source: expression.sourcePart.node, destination: expression.targetPart.node }
                     // if there are no source nodes from the tree, this is a literal assignment. Use literal as description
-                    : <FlowDefinition>{ source: null, description: assignment.rightExpressionPart, destination: assignment.destination.node }
-            ).flat();
+                    : <FlowDefinition>{ source: null, description: '<literal>', destination: expression.targetPart.node }
+            );
         this.cdr.markForCheck();
     }
 
