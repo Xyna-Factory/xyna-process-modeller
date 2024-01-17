@@ -18,7 +18,7 @@
 import { AfterViewInit, Component, ElementRef, Input, NgZone, OnDestroy, ViewChild } from '@angular/core';
 import { GraphicallyRepresented } from '@zeta/base';
 import { createSVGCircle, createSVGGroup, createSVGHorizontalCubicBezierPath, createSVGText, createSVGVerticalCubicBezierPath } from '@zeta/base/draw';
-import { filter, forkJoin, take } from 'rxjs';
+import { filter, forkJoin, take, tap } from 'rxjs';
 import { Vector2 } from 'three';
 
 
@@ -54,6 +54,8 @@ export class Flow {
     private _offset: Vector2;
     private readonly _flowDirection: FlowDirection = FlowDirection.horizontally;
 
+    private readonly resizeObserver: ResizeObserver;
+
     /**
      *
      * @param parent SVG element to draw onto
@@ -66,6 +68,10 @@ export class Flow {
         this._flowDefinition = flowDefinition;
         this._flowDirection = flowDirection;
         this._offset = offset;
+
+        this.resizeObserver = new ResizeObserver(() => {
+            this.update();
+        });
 
         // wait with the update until each node's graphical representation is there
         forkJoin([
@@ -84,13 +90,25 @@ export class Flow {
                     take(1)
                 )
             )
+        ).pipe(
+            tap(elements => {
+                elements.forEach(element => this.resizeObserver.observe(element));
+            })
         ).subscribe(() => this.update());
     }
 
 
     update() {
-        const toRect   = this._flowDefinition?.destination?.graphicalRepresentation?.getBoundingClientRect();
-        const fromRect = this._flowDefinition?.source?.graphicalRepresentation?.getBoundingClientRect()
+        const toElement = this._flowDefinition?.destination?.graphicalRepresentation;
+        const fromElement = this._flowDefinition?.source?.graphicalRepresentation;
+
+        if (!document.body.contains(toElement) || !document.body.contains(fromElement)) {
+            this.removePath();
+            return;
+        }
+
+        const toRect   = toElement.getBoundingClientRect();
+        const fromRect = fromElement.getBoundingClientRect()
             ?? (toRect
                 // use an offsetted (ro the right) toRect if there's no source
                 ? new DOMRect(toRect.x + toRect.width + 20, toRect.y, toRect.width, toRect.height)
@@ -140,10 +158,16 @@ export class Flow {
     }
 
 
-    destroy() {
+    removePath() {
         this.path?.remove();
         this.description?.remove();
         this.endCircle?.remove();
+    }
+
+
+    destroy() {
+        this.removePath();
+        this.resizeObserver.disconnect();
     }
 
 
@@ -198,16 +222,16 @@ export class FlowCanvasComponent implements AfterViewInit, OnDestroy {
         if (this.animationFrameHandle) {
             cancelAnimationFrame(this.animationFrameHandle);
         }
-        this.resizeObserver?.unobserve(this.element.nativeElement);
+        this.resizeObserver?.disconnect();
         this._flows.forEach(flow => flow.destroy());
     }
 
 
     @Input()
     set flowDefinitions(definitions: FlowDefinition[]) {
-        // TODO build flows here
+        this._flows.forEach(flow => flow.destroy());
         this._flowDefinitions = definitions;
-        if (definitions) {
+        if (this._flowDefinitions) {
             this.initFlow();
         }
     }
@@ -221,8 +245,10 @@ export class FlowCanvasComponent implements AfterViewInit, OnDestroy {
         };
 
         if (this._flowDefinitions && this.view) {
+            while (this.view.lastChild) {
+                this.view.removeChild(this.view.lastChild);
+            }
             const offset = parentOffset();
-            this._flows.forEach(flow => flow.destroy());
             this._flows = this._flowDefinitions.map(definition => new Flow(this.view, definition, FlowDirection.horizontally, offset));
 
             if (this.animationFrameHandle) {

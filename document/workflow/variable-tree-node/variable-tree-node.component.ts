@@ -15,16 +15,16 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { SkeletonTreeNode } from '../variable-tree/data-source/skeleton-tree-data-source';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { SkeletonTreeNode, TreeNodeObserver } from '../variable-tree/data-source/skeleton-tree-data-source';
 import { coerceBoolean } from '@zeta/base';
 import { ModDragEvent, ModDropEvent } from '../shared/drag-and-drop/mod-drop-area.directive';
 import { Draggable, ModDnDEvent } from '../shared/drag-and-drop/mod-drag-and-drop.service';
 
 
 export interface CreateAssignmentEvent {
-    destination: SkeletonTreeNode<Element>;
-    source: SkeletonTreeNode<Element>;
+    destination: SkeletonTreeNode;
+    source: SkeletonTreeNode;
 }
 
 
@@ -34,8 +34,8 @@ export interface CreateAssignmentEvent {
     styleUrls: ['./variable-tree-node.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class VariableTreeNodeComponent implements AfterViewInit {
-    private _node: SkeletonTreeNode<Element>;
+export class VariableTreeNodeComponent implements AfterViewInit, TreeNodeObserver {
+    private _node: SkeletonTreeNode;
     private _highlightMarks = true;
 
     expanded = true;
@@ -46,14 +46,16 @@ export class VariableTreeNodeComponent implements AfterViewInit {
     readonly assignedVariable = new EventEmitter<CreateAssignmentEvent>();
 
     @Input()
-    set node(value: SkeletonTreeNode<Element>) {
+    set node(value: SkeletonTreeNode) {
+        this.node?.removeObserver(this);
         this._node = value;
         if (this._node && this.nodeElement) {
             this._node.graphicalRepresentation = this.nodeElement.nativeElement;
         }
+        this.node?.addObserver(this);
     }
 
-    get node(): SkeletonTreeNode<Element> {
+    get node(): SkeletonTreeNode {
         return this._node;
     }
 
@@ -68,6 +70,9 @@ export class VariableTreeNodeComponent implements AfterViewInit {
     }
 
 
+    constructor(protected readonly cdr: ChangeDetectorRef) {}
+
+
     ngAfterViewInit(): void {
         this.node.graphicalRepresentation = this.nodeElement.nativeElement;
     }
@@ -75,6 +80,20 @@ export class VariableTreeNodeComponent implements AfterViewInit {
 
     get typeLabel(): string {
         return this.node.typeLabel + (this.node.isList ? '[]' : '');
+    }
+
+
+    toggle(event: MouseEvent) {
+        if (this.node.collapsed) {
+            this.node.uncollapse();
+        } else {
+            this.node.collapse();
+        }
+    }
+
+
+    nodeChange(node: SkeletonTreeNode): void {
+        this.cdr.markForCheck();
     }
 
 

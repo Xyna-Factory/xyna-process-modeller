@@ -61,6 +61,19 @@ $dnd-hover-background-color: unset !default;
                 color: $color-gray-2;
             }
         }
+
+        xc-icon-button {
+            transition: transform .15s ease-out;
+
+            &.rotated {
+                transform: rotate(90deg);
+            }
+
+            &[size="small"]::ng-deep button.mat-icon-button {
+                width: 15px;
+                height: 15px;
+            }
+        }
     }
 
     .children {
