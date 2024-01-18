@@ -18,6 +18,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormulaTreeDataSource } from './data-source/formula-tree-data-source';
 import { coerceBoolean } from '@zeta/base';
+import { SkeletonTreeNode } from './data-source/skeleton-tree-data-source';
 import { CreateAssignmentEvent } from '../variable-tree-node/variable-tree-node.component';
 
 
@@ -39,6 +40,7 @@ export class VariableTreeComponent {
         this._dataSource = value;
     }
 
+
     get dataSource(): FormulaTreeDataSource {
         return this._dataSource;
     }
@@ -51,5 +53,14 @@ export class VariableTreeComponent {
 
     get highlightMarkedNodes(): boolean {
         return this._highlightMarkedNodes;
+    }
+
+
+    @Output()
+    readonly selectionChange = new EventEmitter<SkeletonTreeNode>();
+
+
+    select(node: SkeletonTreeNode) {
+        this.selectionChange.emit(node);
     }
 }

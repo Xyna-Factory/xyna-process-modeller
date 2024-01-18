@@ -41,6 +41,7 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
 
     private _mapping: XoMapping;
     private _replacedSubscription: Subscription;
+    private _selectionSubscription: Subscription;
     private initialized = false;
     private structuresLoaded = false;
 
@@ -50,6 +51,8 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
 
     assignments: Assignment[] = [];
     flows: FlowDefinition[] = [];
+
+    selectedNode: SkeletonTreeNode;
 
     @Input()
     set mapping(value: XoMapping) {
@@ -87,6 +90,7 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
 
     ngOnDestroy(): void {
         this._replacedSubscription?.unsubscribe();
+        this._selectionSubscription?.unsubscribe();
     }
 
 
@@ -173,6 +177,22 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
     addAssignment(assignment: CreateAssignmentEvent) {
         const expression = assignment.destination.toXFL() + '=' + assignment.source.toXFL();
         this.performAction({ type: ModellingActionType.insert, objectId: this.mapping.formulaArea.id, request: this.getInsertRequest(expression ?? this.newFormulaExpression) });
+    }
+
+
+    select(node: SkeletonTreeNode) {
+        this._selectionSubscription?.unsubscribe();
+        if (this.selectedNode) {
+            this.selectedNode.selected = false;
+        }
+        this.selectedNode = node;
+        if (node) {
+            node.selected = true;
+            this._selectionSubscription = node.selectedChange.pipe(filter(value => !value)).subscribe(() => {
+                this.selectedNode = undefined;
+                this._selectionSubscription?.unsubscribe();
+            });
+        }
     }
 
 

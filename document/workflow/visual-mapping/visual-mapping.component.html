@@ -5,6 +5,7 @@
     <variable-tree *ngFor="let outputDataSource of outputDataSources"
         [tree-datasource]="outputDataSource"
         (createdAssignment)="addAssignment($event)"
+        (selectionChange)="select($event)"
     ></variable-tree>
 </div>
 <div class="assignments"></div>
@@ -13,5 +14,13 @@
         [tree-datasource]="inputDataSource"
         highlightMarkedNodes="false"
         (createdAssignment)="addAssignment($event)"
+        (selectionChange)="select($event)"
     ></variable-tree>
 </div>
+<formula-area class="formula" *ngIf="mapping.formulaArea && selectedNode"
+    [formulaArea]="mapping.formulaArea"
+    [documentModel]="documentModel"
+    [newFormulaExpression]="selectedNode.toXFL()"
+    [expressionFilter]="selectedNode.toXFL()"
+    (triggerAction)="performAction($event)"
+></formula-area>
