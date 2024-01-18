@@ -80,13 +80,13 @@ export class FormulaAreaComponent extends ModellingObjectComponent {
     }
 
 
-    getInsertRequest(expression?: string, index?: number): XoInsertRequest {
+    static getInsertRequest(expression?: string, index?: number): XoInsertRequest {
         return new XoInsertFormulaRequest('', index !== undefined ? index : -1, expression ?? '');
     }
 
 
     addFormula(expression?: string, index?: number) {
-        this.performAction({ type: ModellingActionType.insert, objectId: this.formulaArea.id, request: this.getInsertRequest(expression ?? this.newFormulaExpression, index) });
+        this.performAction({ type: ModellingActionType.insert, objectId: this.formulaArea.id, request: FormulaAreaComponent.getInsertRequest(expression ?? this.newFormulaExpression, index) });
     }
 
 

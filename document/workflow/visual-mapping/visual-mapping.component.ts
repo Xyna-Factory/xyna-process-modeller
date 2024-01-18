@@ -16,7 +16,6 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormulaAreaComponent } from '../formula-area/formula-area.component';
 import { ApiService, FullQualifiedName } from '@zeta/api';
 import { FormulaTreeDataSource } from '../variable-tree/data-source/formula-tree-data-source';
 import { Assignment } from './assignment';
@@ -29,6 +28,8 @@ import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level
 import { SkeletonTreeDataSource, SkeletonTreeDataSourceObserver, SkeletonTreeNode, VariableDescriber } from '../variable-tree/data-source/skeleton-tree-data-source';
 import { ModellingActionType } from '@pmod/api/xmom.service';
 import { CreateAssignmentEvent } from '../variable-tree-node/variable-tree-node.component';
+import { ModellingObjectComponent } from '../shared/modelling-object.component';
+import { FormulaAreaComponent } from '../formula-area/formula-area.component';
 
 
 @Component({
@@ -37,7 +38,7 @@ import { CreateAssignmentEvent } from '../variable-tree-node/variable-tree-node.
     styleUrls: ['./visual-mapping.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class VisualMappingComponent extends FormulaAreaComponent implements OnInit, OnDestroy, SkeletonTreeDataSourceObserver {
+export class VisualMappingComponent extends ModellingObjectComponent implements OnInit, OnDestroy, SkeletonTreeDataSourceObserver {
 
     private _mapping: XoMapping;
     private _replacedSubscription: Subscription;
@@ -176,7 +177,7 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
 
     addAssignment(assignment: CreateAssignmentEvent) {
         const expression = assignment.destination.toXFL() + '=' + assignment.source.toXFL();
-        this.performAction({ type: ModellingActionType.insert, objectId: this.mapping.formulaArea.id, request: this.getInsertRequest(expression ?? this.newFormulaExpression) });
+        this.performAction({ type: ModellingActionType.insert, objectId: this.mapping.formulaArea.id, request: FormulaAreaComponent.getInsertRequest(expression) });
     }
 
 
