@@ -52,7 +52,7 @@ $dnd-hover-background-color: unset !default;
             .label {
                 margin-right: 4px;
                 font-weight: bold;
-    
+
                 &::after {
                     content: ':'
                 }
@@ -73,6 +73,10 @@ $dnd-hover-background-color: unset !default;
                 width: 15px;
                 height: 15px;
             }
+        }
+
+        &.selected {
+            background-color: $color-primary;
         }
     }
 

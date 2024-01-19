@@ -60,9 +60,6 @@ export interface TreeNodeObserver {
 }
 
 
-/**
- * @param T Graphical representation. In an HTML context, this is usually a DOM element
- */
 export class SkeletonTreeNode extends Comparable implements Traversable, GraphicallyRepresented<Element>, Draggable {
     private _structure: XoStructureField;
     private _isList: boolean;
@@ -71,6 +68,7 @@ export class SkeletonTreeNode extends Comparable implements Traversable, Graphic
 
     /** Node is marked for some reason and can be rendered differently than an unmarked node */
     private readonly _marked$ = new BehaviorSubject<boolean>(false);
+    private readonly _selected$ = new BehaviorSubject<boolean>(false);
 
     private readonly _graphicalRepresentation$ = new BehaviorSubject<Element>(null);
 
@@ -143,6 +141,28 @@ export class SkeletonTreeNode extends Comparable implements Traversable, Graphic
 
     get allChildrenMarked(): boolean {
         return !this.children.some(child => !child.marked);
+    }
+
+
+    get selectedChange(): Observable<boolean> {
+        return this._selected$.asObservable();
+    }
+
+
+    get selected(): boolean {
+        return this._selected$.value;
+    }
+
+
+    set selected(value: boolean) {
+        if (value !== this.selected) {
+            this._selected$.next(value);
+        }
+    }
+
+
+    destroy() {
+        this.selected = false;
     }
 
 
@@ -302,6 +322,7 @@ export class ComplexSkeletonTreeNode extends SkeletonTreeNode {
     private _subtypes: XoStructureType[] = [];
     private _sourceIndex: number;
     private neverUncollapsed = true;
+
 
     getStructure(): XoStructureObject {
         return super.getStructure() as XoStructureObject;

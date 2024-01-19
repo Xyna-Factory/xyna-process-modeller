@@ -33,6 +33,10 @@ import { ModellingObjectComponent } from '../shared/modelling-object.component';
 })
 export class FormulaAreaComponent extends ModellingObjectComponent {
 
+    private _expressionFilter = '';
+    private _visibleFormulas: XoFormula[] = [];
+
+
     @Input()
     areaLabel: string = null;
 
@@ -42,21 +46,47 @@ export class FormulaAreaComponent extends ModellingObjectComponent {
     @Input()
     set formulaArea(value: XoFormulaArea) {
         this.setModel(value);
+        this.filterFormulas();
     }
-
 
     get formulaArea(): XoFormulaArea {
         return this.getModel() as XoFormulaArea;
     }
 
 
-    getInsertRequest(expression?: string, index?: number): XoInsertRequest {
+    @Input()
+    set expressionFilter(filter: string) {
+        this._expressionFilter = filter;
+        this.filterFormulas();
+    }
+
+    get expressionFilter(): string {
+        return this._expressionFilter;
+    }
+
+
+    get formulas(): XoFormula[] {
+        return this._visibleFormulas;
+    }
+
+
+    private filterFormulas() {
+        const formulas: XoFormula[] = this.formulaArea ? this.formulaArea.formulas : [];
+        if (this.expressionFilter) {
+            this._visibleFormulas = formulas.filter(value => value.expression.includes(this.expressionFilter));
+        } else {
+            this._visibleFormulas = formulas;
+        }
+    }
+
+
+    static getInsertRequest(expression?: string, index?: number): XoInsertRequest {
         return new XoInsertFormulaRequest('', index !== undefined ? index : -1, expression ?? '');
     }
 
 
     addFormula(expression?: string, index?: number) {
-        this.performAction({ type: ModellingActionType.insert, objectId: this.formulaArea.id, request: this.getInsertRequest(expression ?? this.newFormulaExpression, index) });
+        this.performAction({ type: ModellingActionType.insert, objectId: this.formulaArea.id, request: FormulaAreaComponent.getInsertRequest(expression ?? this.newFormulaExpression, index) });
     }
 
 

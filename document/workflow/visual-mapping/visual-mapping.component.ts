@@ -16,7 +16,6 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormulaAreaComponent } from '../formula-area/formula-area.component';
 import { ApiService, FullQualifiedName } from '@zeta/api';
 import { FormulaTreeDataSource } from '../variable-tree/data-source/formula-tree-data-source';
 import { Subscription, filter, first, forkJoin, tap } from 'rxjs';
@@ -31,6 +30,8 @@ import { CreateAssignmentEvent } from '../variable-tree-node/variable-tree-node.
 import { XoModelledExpression } from '@pmod/xo/expressions/modelled-expression.model';
 import { XoExpressionVariable } from '@pmod/xo/expressions/expression-variable.model';
 import { XoSingleVarExpression } from '@pmod/xo/expressions/single-var-expression.model';
+import { ModellingObjectComponent } from '../shared/modelling-object.component';
+import { FormulaAreaComponent } from '../formula-area/formula-area.component';
 
 
 
@@ -80,10 +81,11 @@ class ExpressionWrapper {
     styleUrls: ['./visual-mapping.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class VisualMappingComponent extends FormulaAreaComponent implements OnInit, OnDestroy, SkeletonTreeDataSourceObserver {
+export class VisualMappingComponent extends ModellingObjectComponent implements OnInit, OnDestroy, SkeletonTreeDataSourceObserver {
 
     private _mapping: XoMapping;
     private _replacedSubscription: Subscription;
+    private _selectionSubscription: Subscription;
     private initialized = false;
     private structuresLoaded = false;
 
@@ -95,6 +97,8 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
 
     // assignments: Assignment[] = [];
     flows: FlowDefinition[] = [];
+
+    selectedNode: SkeletonTreeNode;
 
     @Input()
     set mapping(value: XoMapping) {
@@ -136,6 +140,7 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
 
     ngOnDestroy(): void {
         this._replacedSubscription?.unsubscribe();
+        this._selectionSubscription?.unsubscribe();
     }
 
 
@@ -245,7 +250,23 @@ export class VisualMappingComponent extends FormulaAreaComponent implements OnIn
 
     addAssignment(assignment: CreateAssignmentEvent) {
         const expression = assignment.destination.toXFL() + '=' + assignment.source.toXFL();
-        this.performAction({ type: ModellingActionType.insert, objectId: this.mapping.formulaArea.id, request: this.getInsertRequest(expression ?? this.newFormulaExpression) });
+        this.performAction({ type: ModellingActionType.insert, objectId: this.mapping.formulaArea.id, request: FormulaAreaComponent.getInsertRequest(expression) });
+    }
+
+
+    select(node: SkeletonTreeNode) {
+        this._selectionSubscription?.unsubscribe();
+        if (this.selectedNode) {
+            this.selectedNode.selected = false;
+        }
+        this.selectedNode = node;
+        if (node) {
+            node.selected = true;
+            this._selectionSubscription = node.selectedChange.pipe(filter(value => !value)).subscribe(() => {
+                this.selectedNode = undefined;
+                this._selectionSubscription?.unsubscribe();
+            });
+        }
     }
 
 
