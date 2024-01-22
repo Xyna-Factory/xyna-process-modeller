@@ -187,9 +187,9 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
             this.selectedNode.selected = false;
         }
         this.selectedNode = node;
-        if (node) {
-            node.selected = true;
-            this._selectionSubscription = node.selectedChange.pipe(filter(value => !value)).subscribe(() => {
+        if (this.selectedNode) {
+            this.selectedNode.selected = true;
+            this._selectionSubscription = this.selectedNode.selectedChange.pipe(filter(value => !value)).subscribe(() => {
                 this.selectedNode = undefined;
                 this._selectionSubscription?.unsubscribe();
             });
