@@ -16,14 +16,11 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ApiService, FullQualifiedName, RuntimeContext, Xo, XoDescriber, XoJson, XoStructureArray, XoStructureComplexField, XoStructureField, XoStructureObject, XoStructurePrimitive, XoStructureType } from '@zeta/api';
-import { Comparable, GraphicallyRepresented, IComparable } from '@zeta/base';
+import { GraphicallyRepresented, IComparable } from '@zeta/base';
 import { BehaviorSubject, Observable, first, map } from 'rxjs';
 import { Draggable } from '../../shared/drag-and-drop/mod-drag-and-drop.service';
+import { ComparablePath } from '@pmod/xo/expressions/comparable-path';
 
-
-export interface ComparablePath extends IComparable {
-    get child(): ComparablePath;
-}
 
 
 export interface Traversable {
@@ -50,7 +47,6 @@ export interface TreeNodeFactory {
     createPrimitiveNode(structure: XoStructurePrimitive): PrimitiveSkeletonTreeNode;
     createComplexNode(structure: XoStructureComplexField): ComplexSkeletonTreeNode;
     createArrayNode(structure: XoStructureArray): ArraySkeletonTreeNode;
-    createArrayEntryNode(structure: XoStructureArray): ArrayEntrySkeletonTreeNode;
     /**
      * Enrich given structure with children
      */
@@ -63,8 +59,9 @@ export interface TreeNodeObserver {
 }
 
 
-export class SkeletonTreeNode extends Comparable implements Traversable, GraphicallyRepresented<Element>, Draggable {
+export class SkeletonTreeNode implements GraphicallyRepresented<Element>, Draggable {
     private _structure: XoStructureField;
+    private _xfl: string;
     private _isList: boolean;
     collapsible = true;
     private _collapsed = true;
@@ -79,7 +76,6 @@ export class SkeletonTreeNode extends Comparable implements Traversable, Graphic
     protected _parent: SkeletonTreeNode;
 
     constructor(structure: XoStructureField, protected nodeFactory: TreeNodeFactory, protected nodeObservers: Set<TreeNodeObserver> = new Set<TreeNodeObserver>()) {
-        super();
         this.setStructure(structure);
     }
 
@@ -100,14 +96,24 @@ export class SkeletonTreeNode extends Comparable implements Traversable, Graphic
 
 
     collapse() {
-        this._collapsed = true;
-        this.notifyObservers();
+        if (!this.collapsed) {
+            this._collapsed = true;
+            this.notifyObservers();
+        }
     }
 
 
     uncollapse() {
-        this._collapsed = false;
-        this.notifyObservers();
+        if (this.collapsible && this.collapsed) {
+            this._collapsed = false;
+            this.notifyObservers();
+        }
+    }
+
+
+    uncollapseRecursivelyUpwards() {
+        this.parent?.uncollapseRecursivelyUpwards();
+        this.parent?.uncollapse();
     }
 
 
@@ -175,7 +181,7 @@ export class SkeletonTreeNode extends Comparable implements Traversable, Graphic
 
 
     get label(): string {
-        return this.getStructure().label?.length === 0 ? this.getStructure().name : this.getStructure().label;
+        return this.xfl ?? this.getStructure().label ?? this.getStructure().name;
     }
 
 
@@ -199,6 +205,16 @@ export class SkeletonTreeNode extends Comparable implements Traversable, Graphic
     }
 
 
+    get xfl(): string {
+        return this._xfl;
+    }
+
+
+    set xfl(xfl: string) {
+        this._xfl = xfl;
+    }
+
+
     addObserver(observer: TreeNodeObserver) {
         this.nodeObservers.add(observer);
     }
@@ -215,24 +231,11 @@ export class SkeletonTreeNode extends Comparable implements Traversable, Graphic
     /**
      * @inheritdoc
      */
-    traverse(item: IComparable): Traversable {
-        return this.equals(item)
-            ? this
-            : this.children.find(node => node.equals(item));
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    match(path: ComparablePath): Traversable {
-        if (this.equals(path)) {
-            let matchingNode: Traversable;
+    match(path: ComparablePath): SkeletonTreeNode {
+        if (this.getXFLExpression() === path.path) {
+            let matchingNode: SkeletonTreeNode;
             if (path.child) {
-                let i = 0;
-                while (i < this.children.length && !(matchingNode = this.children[i].match(path.child))) {
-                    i++;
-                }
+                this.children.find(node => !!(matchingNode = node.match(path.child)));
             }
             return matchingNode ?? this;
         }
@@ -245,7 +248,8 @@ export class SkeletonTreeNode extends Comparable implements Traversable, Graphic
      */
     toXFL(): string {
         const prefix = this.parent?.toXFL() ?? '';
-        return (prefix.length > 0 ? prefix + '.' : '') + this.getXFLExpression();
+        const separator: string = this.parent?.isList ? '' : '.';
+        return (prefix.length > 0 ? prefix + separator : '') + this.getXFLExpression();
     }
 
 
@@ -254,7 +258,7 @@ export class SkeletonTreeNode extends Comparable implements Traversable, Graphic
      * @remark To be overridden by each node
      */
     protected getXFLExpression(): string {
-        return '';
+        return this.xfl ?? '';
     }
 
 
@@ -306,16 +310,11 @@ export class PrimitiveSkeletonTreeNode extends SkeletonTreeNode {
     }
 
 
-    getName(): string {
-        return this.getStructure()?.label ?? this.getStructure()?.name ?? 'undefined';
-    }
-
-
     /**
      * @inheritdoc
      */
     protected getXFLExpression(): string {
-        return this.getStructure()?.name ?? '';
+        return this.xfl ?? this.getStructure()?.name ?? '';
     }
 }
 
@@ -324,7 +323,7 @@ export class PrimitiveSkeletonTreeNode extends SkeletonTreeNode {
 export class ComplexSkeletonTreeNode extends SkeletonTreeNode {
     private _subtypes: XoStructureType[] = [];
     private _sourceIndex: number;
-    private neverUncollapsed = true;
+    private childrenInitialized = false;
 
 
     getStructure(): XoStructureObject {
@@ -352,11 +351,15 @@ export class ComplexSkeletonTreeNode extends SkeletonTreeNode {
 
     uncollapse() {
         super.uncollapse();
+        this.initializeChildren();
+    }
 
+
+    initializeChildren() {
         // retrieve full object structure
-        if (this.neverUncollapsed) {
+        if (!this.childrenInitialized) {
             this.nodeFactory.enrichStructure(this.getStructure()).subscribe(structure => this.setStructure(structure));
-            this.neverUncollapsed = false;
+            this.childrenInitialized = true;
         }
     }
 
@@ -382,21 +385,78 @@ export class ComplexSkeletonTreeNode extends SkeletonTreeNode {
     }
 
 
+    match(path: ComparablePath): SkeletonTreeNode {
+        this.initializeChildren();
+        return super.match(path);
+    }
+
+
     protected getXFLExpression(): string {
         return this.sourceIndex !== undefined
             ? `%${this.sourceIndex}%`
-            : this.getStructure()?.name ?? '';
+            : this.xfl ?? this.getStructure()?.name ?? '';
     }
 }
 
 
-export class ArraySkeletonTreeNode extends ComplexSkeletonTreeNode {
+export class ArraySkeletonTreeNode extends SkeletonTreeNode {
 
-}
+    private _sourceIndex: number;
+
+    constructor(structure: XoStructureField, nodeFactory: TreeNodeFactory, nodeObservers: Set<TreeNodeObserver>) {
+        super(structure, nodeFactory, nodeObservers);
+        this.isList = true;
+    }
+
+    getStructure(): XoStructureArray {
+        return super.getStructure() as XoStructureArray;
+    }
 
 
-export class ArrayEntrySkeletonTreeNode extends ComplexSkeletonTreeNode {
+    get sourceIndex(): number {
+        return this._sourceIndex;
+    }
 
+
+    set sourceIndex(value: number) {
+        this._sourceIndex = value;
+    }
+
+
+    match(path: ComparablePath): SkeletonTreeNode {
+
+
+        if (this.getXFLExpression() !== path.path) {
+            return null;
+        }
+        if (!path.child) {
+            return this;
+        }
+
+        let matchingNode: SkeletonTreeNode;
+        this.children.find(node => !!(matchingNode = node.match(path.child)));
+
+        if (matchingNode) {
+            return matchingNode;
+        }
+
+        matchingNode = this.nodeFactory.createNodeFromStructure(this.getStructure().add());
+        if (matchingNode) {
+            matchingNode.xfl = path.child.path;
+            this._children.push(matchingNode);
+            matchingNode.parent = this;
+            this.notifyObservers();
+            matchingNode = matchingNode.match(path.child);
+        }
+        return matchingNode ?? this;
+    }
+
+
+    protected getXFLExpression(): string {
+        return this.sourceIndex !== undefined
+            ? `%${this.sourceIndex}%`
+            : this.xfl ?? this.getStructure()?.name ?? '';
+    }
 }
 
 
@@ -415,8 +475,6 @@ export interface SkeletonTreeDataSourceObserver {
  * Data Source for a tree made of a data type structure.
  * In contrast to the StructureTreeDataSource, this data source does not hold instances of the structured data types but
  * only represents the data type's skeleton itself
- *
- * @param T Graphical representation. In an HTML context, this is usually a DOM element
  */
 export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver {
     private readonly _root$ = new BehaviorSubject<SkeletonTreeNode>(null);
@@ -434,11 +492,14 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
     }
 
 
-    setStructure(structure: XoStructureField) {
+    setStructure(structure: XoStructureObject) {
         structure.label = this.describer.label;
-        const node = this.createNodeFromStructure(structure);
-        node.isList = this.describer.isList;
-        if (node instanceof ComplexSkeletonTreeNode) {
+        let node;
+        if (this.describer.isList) {
+            node = this.createArrayNode(XoStructureArray.fromObject(structure));
+            node.sourceIndex = this.rootIndex;
+        } else {
+            node = this.createComplexNode(structure);
             node.sourceIndex = this.rootIndex;
         }
         this._root$.next(node);
@@ -462,10 +523,10 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
         let node: SkeletonTreeNode = null;
         if (structure instanceof XoStructurePrimitive) {
             node = this.createPrimitiveNode(structure);
-        } else if (structure instanceof XoStructureComplexField) {
+        } else if (structure instanceof XoStructureObject) {
             node = this.createComplexNode(structure);
         } else if (structure instanceof XoStructureArray) {
-            // TODO
+            node = this.createArrayNode(structure);
         }
         return node;
     }
@@ -482,11 +543,6 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
 
 
     createArrayNode(structure: XoStructureArray): ArraySkeletonTreeNode {
-        return new ArraySkeletonTreeNode(structure, this, new Set<TreeNodeObserver>([this]));
-    }
-
-
-    createArrayEntryNode(structure: XoStructureArray): ArrayEntrySkeletonTreeNode {
         return new ArraySkeletonTreeNode(structure, this, new Set<TreeNodeObserver>([this]));
     }
 

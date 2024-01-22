@@ -59,6 +59,9 @@ import { XoWorkflowInvocation } from '../xo/workflow-invocation.model';
 import { XoXmomItem } from '../xo/xmom-item.model';
 import { XmomObjectType } from './xmom-types';
 import { XoInsertRequestContent } from '@pmod/xo/insert-request-content.model';
+import { XoModelledExpressionArray } from '@pmod/xo/expressions/modelled-expression.model';
+import { XoItem } from '@pmod/xo/item.model';
+import { XoGetModelledExpressionsResponse } from '@pmod/xo/expressions/get-modelled-expressions-response.model';
 
 
 export enum ModellingActionType {
@@ -656,6 +659,14 @@ export class XmomService {
         const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, 'orderinputsources');
         return this.http.get(url).pipe(
             map((data: any) => new XoGetOrderInputSourcesResponse().decode(data).orderInputSources)
+        );
+    }
+
+
+    getModelledExpressions(xmomItem: XoXmomItem, step: XoItem): Observable<XoModelledExpressionArray> {
+        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, step.id, 'modelledExpressions');
+        return this.http.get(url).pipe(
+            map((data: any) => new XoGetModelledExpressionsResponse().decode(data).modelledExpressions)
         );
     }
 
