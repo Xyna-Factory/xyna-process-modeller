@@ -69,6 +69,14 @@ export class VariableTreeNodeComponent implements AfterViewInit, TreeNodeObserve
         return this._highlightMarks;
     }
 
+    @Output()
+    readonly selectionChange = new EventEmitter<SkeletonTreeNode>();
+
+
+    select(node: SkeletonTreeNode) {
+        this.selectionChange.emit(node);
+    }
+
 
     constructor(protected readonly cdr: ChangeDetectorRef) {}
 

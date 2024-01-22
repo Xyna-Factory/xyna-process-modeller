@@ -1,6 +1,6 @@
 <xc-form-label *ngIf="!!areaLabel" xc-i18n>{{areaLabel}}</xc-form-label>
 <div class="formula-list" xc-i18n-context="formula-area">
-    <div *ngFor="let formula of formulaArea.formulas; let i = index" class="formula-row">
+    <div *ngFor="let formula of formulas; let i = index" class="formula-row">
         <formula
             [formula]="formula"
             [documentModel]="documentModel"

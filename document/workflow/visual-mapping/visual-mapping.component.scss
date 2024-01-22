@@ -21,6 +21,7 @@
     display: flex;
     flex: 0 0 auto;
     flex-direction: row;
+    flex-wrap: wrap;
 
     position: relative;
 
@@ -41,5 +42,13 @@
     .assignments {
         min-width: 200px;
         margin-left: auto;
+    }
+
+    .formula {
+        flex-basis: 100%;
+        margin-top: 5px;
+        border: unset;
+        padding: unset;
+        border-top: groove;
     }
 }
