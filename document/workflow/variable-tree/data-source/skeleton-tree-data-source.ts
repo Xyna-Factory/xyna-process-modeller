@@ -111,8 +111,8 @@ export class SkeletonTreeNode implements GraphicallyRepresented<Element>, Dragga
     }
 
 
-    uncollapseRecusivelyUpwards() {
-        this.parent?.uncollapseRecusivelyUpwards();
+    uncollapseRecursivelyUpwards() {
+        this.parent?.uncollapseRecursivelyUpwards();
         this.parent?.uncollapse();
     }
 
@@ -245,7 +245,7 @@ export class SkeletonTreeNode implements GraphicallyRepresented<Element>, Dragga
         if (this.getXFLExpression() === path.path) {
             let matchingNode: SkeletonTreeNode;
             if (path.child) {
-                this.children.find(node => matchingNode = node.match(path.child));
+                this.children.find(node => !!(matchingNode = node.match(path.child)));
             }
             return matchingNode ?? this;
         }
@@ -258,8 +258,8 @@ export class SkeletonTreeNode implements GraphicallyRepresented<Element>, Dragga
      */
     toXFL(): string {
         const prefix = this.parent?.toXFL() ?? '';
-        const seperator: string = this.parent?.isList ? '' : '.';
-        return (prefix.length > 0 ? prefix + seperator : '') + this.getXFLExpression();
+        const separator: string = this.parent?.isList ? '' : '.';
+        return (prefix.length > 0 ? prefix + separator : '') + this.getXFLExpression();
     }
 
 
@@ -333,7 +333,7 @@ export class PrimitiveSkeletonTreeNode extends SkeletonTreeNode {
 export class ComplexSkeletonTreeNode extends SkeletonTreeNode {
     private _subtypes: XoStructureType[] = [];
     private _sourceIndex: number;
-    private cildrenInitialized = false;
+    private childrenInitialized = false;
 
 
     getStructure(): XoStructureObject {
@@ -368,9 +368,9 @@ export class ComplexSkeletonTreeNode extends SkeletonTreeNode {
 
     initializeChildren() {
         // retrieve full object structure
-        if (!this.cildrenInitialized) {
+        if (!this.childrenInitialized) {
             this.nodeFactory.enrichStructure(this.getStructure()).subscribe(structure => this.setStructure(structure));
-            this.cildrenInitialized = true;
+            this.childrenInitialized = true;
         }
     }
 
@@ -445,7 +445,7 @@ export class ArraySkeletonTreeNode extends SkeletonTreeNode {
         }
 
         let matchingNode: SkeletonTreeNode;
-        this.children.find(node => matchingNode = node.match(path.child));
+        this.children.find(node => !!(matchingNode = node.match(path.child)));
 
         if (matchingNode) {
             return matchingNode;

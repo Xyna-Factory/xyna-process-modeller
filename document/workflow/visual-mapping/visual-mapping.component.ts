@@ -60,7 +60,7 @@ class ExpressionPart {
         // mark node and its children for being assigned and uncollapse
         if (this.node) {
             this.node.markRecursively();
-            this.node.uncollapseRecusivelyUpwards();
+            this.node.uncollapseRecursivelyUpwards();
         }
     }
 }
