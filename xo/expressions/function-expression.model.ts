@@ -34,7 +34,7 @@ export class XoFunctionExpression extends XoExpression {
 
 
     @XoProperty(XoExpression)
-    indexDef: XoExpression = new XoExpression();
+    indexDef: XoExpression;
 
 
     @XoProperty(XoVariableAccessPartArray)
@@ -42,7 +42,7 @@ export class XoFunctionExpression extends XoExpression {
 
 
     extractInvolvedVariable(): XoExpressionVariable[] {
-        return [...this.subExpressions.data.flatMap(exp => exp.extractInvolvedVariable()), ...this.indexDef.extractInvolvedVariable()];
+        return [...this.subExpressions.data.flatMap(exp => exp.extractInvolvedVariable()),  ...this.indexDef?.extractInvolvedVariable() ?? []];
     }
 
     toString(): string {

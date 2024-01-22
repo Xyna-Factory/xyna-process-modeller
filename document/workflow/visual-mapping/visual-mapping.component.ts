@@ -36,6 +36,7 @@ import { XoLiteralExpression } from '@pmod/xo/expressions/literal-expression.mod
 import { XoExpression2Args } from '@pmod/xo/expressions/expression2-args.model';
 import { XoNotExpression } from '@pmod/xo/expressions/not-expression.model';
 import { XoVariableInstanceFunctionIncovation } from '@pmod/xo/expressions/variable-instance-function-incovation.model';
+import { XoFunctionExpression } from '@pmod/xo/expressions/function-expression.model';
 
 
 
@@ -140,6 +141,7 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
         const p2 = new XoExpression2Args();
         const p3 = new XoNotExpression();
         const p4 = new XoVariableInstanceFunctionIncovation();
+        const p5 = new XoFunctionExpression();
 
     }
 

@@ -113,7 +113,7 @@ export class SkeletonTreeNode implements GraphicallyRepresented<Element>, Dragga
 
     uncollapseRecusivelyUpwards() {
         this.parent?.uncollapseRecusivelyUpwards();
-        this.uncollapse();
+        this.parent?.uncollapse();
     }
 
 
@@ -181,7 +181,7 @@ export class SkeletonTreeNode implements GraphicallyRepresented<Element>, Dragga
 
 
     get label(): string {
-        return this.getStructure().label?.length === 0 ? this.getStructure().name : this.getStructure().label;
+        return this.xfl ?? this.getStructure().label ?? this.getStructure().name;
     }
 
 
@@ -503,13 +503,14 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
     }
 
 
-    setStructure(structure: XoStructureField) {
+    setStructure(structure: XoStructureObject) {
         structure.label = this.describer.label;
-        const node = this.createNodeFromStructure(structure);
-        node.isList = this.describer.isList;
-        if (node instanceof ComplexSkeletonTreeNode) {
+        let node;
+        if (this.describer.isList) {
+            node = this.createArrayNode(XoStructureArray.fromObject(structure));
             node.sourceIndex = this.rootIndex;
-        } else if (node instanceof ArraySkeletonTreeNode) {
+        } else {
+            node = this.createComplexNode(structure);
             node.sourceIndex = this.rootIndex;
         }
         this._root$.next(node);
