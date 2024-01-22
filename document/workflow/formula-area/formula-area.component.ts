@@ -54,6 +54,7 @@ export class FormulaAreaComponent extends ModellingObjectComponent {
     }
 
 
+    // filters formulas including expression filter as xfl
     @Input()
     set expressionFilter(filter: string) {
         this._expressionFilter = filter;

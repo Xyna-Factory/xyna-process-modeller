@@ -104,7 +104,6 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
     inputDataSources: FormulaTreeDataSource[] = [];
     outputDataSources: FormulaTreeDataSource[] = [];
 
-    // assignments: Assignment[] = [];
     flows: FlowDefinition[] = [];
 
     selectedNode: SkeletonTreeNode;
@@ -243,15 +242,6 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
             });
         });
 
-        // construct flows for graphical representation
-        // this.flows = this.assignments
-        //     .filter(assignment => !!assignment.destination)
-        //     .map(assignment =>
-        //         assignment.sources.length > 0
-        //             ? assignment.sources.map(path => (<FlowDefinition>{ source: path.node, destination: assignment.destination.node }))
-        //             // if there are no source nodes from the tree, this is a literal assignment. Use literal as description
-        //             : <FlowDefinition>{ source: null, description: assignment.rightExpressionPart, destination: assignment.destination.node }
-        //     ).flat();
         // construct flows for graphical representation
         this.flows = this.expressions
             .filter(expression => !!expression.targetPart)

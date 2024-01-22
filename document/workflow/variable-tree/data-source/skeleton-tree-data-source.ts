@@ -227,16 +227,6 @@ export class SkeletonTreeNode implements GraphicallyRepresented<Element>, Dragga
         this.nodeObservers?.forEach(observer => observer.nodeChange(this));
     }
 
-    /*
-    /**
-    * @inheritdoc
-    *\/
-    traverse(item: IComparable): Traversable {
-        return this.equals(item)
-            ? this
-            : this.children.find(node => node.equals(item));
-    }
-
 
     /**
      * @inheritdoc
@@ -361,7 +351,6 @@ export class ComplexSkeletonTreeNode extends SkeletonTreeNode {
 
     uncollapse() {
         super.uncollapse();
-
         this.initializeChildren();
     }
 
