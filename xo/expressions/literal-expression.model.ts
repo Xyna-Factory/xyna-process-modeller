@@ -26,7 +26,9 @@ export class XoLiteralExpression extends XoExpression1Arg {
     @XoProperty()
     value: string;
 
-
+    toString(): string {
+        return '"' + this.value + '"';
+    }
 }
 
 @XoArrayClass(XoLiteralExpression)

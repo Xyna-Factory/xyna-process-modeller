@@ -32,6 +32,10 @@ import { XoExpressionVariable } from '@pmod/xo/expressions/expression-variable.m
 import { XoSingleVarExpression } from '@pmod/xo/expressions/single-var-expression.model';
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
 import { FormulaAreaComponent } from '../formula-area/formula-area.component';
+import { XoLiteralExpression } from '@pmod/xo/expressions/literal-expression.model';
+import { XoExpression2Args } from '@pmod/xo/expressions/expression2-args.model';
+import { XoNotExpression } from '@pmod/xo/expressions/not-expression.model';
+import { XoVariableInstanceFunctionIncovation } from '@pmod/xo/expressions/variable-instance-function-incovation.model';
 
 
 
@@ -42,7 +46,7 @@ import { FormulaAreaComponent } from '../formula-area/formula-area.component';
 class ExpressionPart {
     private _node: SkeletonTreeNode;
 
-    constructor(public expression: XoSingleVarExpression) {
+    constructor(public expression: XoExpressionVariable) {
     }
 
     get node(): SkeletonTreeNode {
@@ -52,24 +56,27 @@ class ExpressionPart {
     set node(value: SkeletonTreeNode) {
         this._node = value;
 
-        // mark node and its children for being assigned
+        // mark node and its children for being assigned and uncollapse
         if (this.node) {
             this.node.markRecursively();
+            this.node.uncollapseRecusivelyUpwards();
         }
     }
 }
 
 class ExpressionWrapper {
-    sourcePart: ExpressionPart;
+    sourcePart: ExpressionPart[];
     targetPart: ExpressionPart;
 
     constructor(protected expression: XoModelledExpression) {
-        this.sourcePart = new ExpressionPart(expression.sourceExpression as XoSingleVarExpression);
-        this.targetPart = new ExpressionPart(expression.targetExpression as XoSingleVarExpression);
+        const rightExpression = expression.sourceExpression.extractInvolvedVariable();
+        const leftExpression = expression.targetExpression.extractInvolvedVariable();
+        this.sourcePart = [...leftExpression.slice(1), ...rightExpression].map(exp => new ExpressionPart(exp));
+        this.targetPart = leftExpression.length > 0 ? new ExpressionPart(leftExpression[0]) : undefined;
     }
 
     get parts(): ExpressionPart[] {
-        return [this.sourcePart, this.targetPart];
+        return this.targetPart ?  [...this.sourcePart, this.targetPart] : this.sourcePart;
     }
 }
 
@@ -88,6 +95,7 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
     private _selectionSubscription: Subscription;
     private initialized = false;
     private structuresLoaded = false;
+    private isRefreshing = false;
 
     expressions: ExpressionWrapper[];
 
@@ -128,6 +136,10 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
 
         // anti-prune
         const p0 = new XoSingleVarExpression();
+        const p1 = new XoLiteralExpression();
+        const p2 = new XoExpression2Args();
+        const p3 = new XoNotExpression();
+        const p4 = new XoVariableInstanceFunctionIncovation();
 
     }
 
@@ -188,10 +200,12 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
                         this.expressions = expressions.data.map(modelledExpression => new ExpressionWrapper(modelledExpression));
                         // assign XoVariables to ExpressionVariables
                         this.expressions.forEach(expression => {
-                            const sourceVariable = expression.sourcePart.expression.variable;
-                            sourceVariable.variable = mappingVariables[sourceVariable.varNum];
-                            const targetVariable = expression.targetPart.expression.variable;
-                            targetVariable.variable = mappingVariables[targetVariable.varNum];
+                            const sourceVariable = expression.sourcePart.map(part => part.expression);
+                            sourceVariable.forEach(variable => variable.variable = mappingVariables[variable.varNum]);
+                            const targetVariable = expression.targetPart?.expression;
+                            if (targetVariable) {
+                                targetVariable.variable = mappingVariables[targetVariable.varNum];
+                            }
                         });
                     })
                 )
@@ -204,9 +218,10 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
 
 
     refreshFlow() {
-        if (!this.structuresLoaded) {
+        if (!this.structuresLoaded || this.isRefreshing) {
             return;
         }
+        this.isRefreshing = true;
 
         const dataSources = [...this.inputDataSources, ...this.outputDataSources];
 
@@ -220,8 +235,8 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
         // });
         this.expressions.forEach(expression => {
             expression.parts.forEach(part => {
-                const ds = dataSources[part.expression?.variable?.varNum ?? 0];
-                const correspondingNode = ds?.processVariable(part.expression?.variable);
+                const ds = dataSources[part.expression?.varNum ?? 0];
+                const correspondingNode = ds?.processVariable(part.expression);
                 part.node = correspondingNode;
             });
         });
@@ -238,13 +253,14 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
         // construct flows for graphical representation
         this.flows = this.expressions
             .filter(expression => !!expression.targetPart)
-            .map(expression =>
-                expression.sourcePart
-                    ? <FlowDefinition>{ source: expression.sourcePart.node, destination: expression.targetPart.node }
+            .flatMap(expression =>
+                expression.sourcePart.length > 0
+                    ? expression.sourcePart.map(part => <FlowDefinition>{ source: part.node, destination: expression.targetPart.node })
                     // if there are no source nodes from the tree, this is a literal assignment. Use literal as description
                     : <FlowDefinition>{ source: null, description: '<literal>', destination: expression.targetPart.node }
             );
         this.cdr.markForCheck();
+        this.isRefreshing = false;
     }
 
 

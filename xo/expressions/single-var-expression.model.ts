@@ -27,6 +27,13 @@ export class XoSingleVarExpression extends XoExpression1Arg {
     @XoProperty(XoExpressionVariable)
     variable: XoExpressionVariable = new XoExpressionVariable();
 
+    extractInvolvedVariable(): XoExpressionVariable[] {
+        return this.variable.extractInvolvedVariable();
+    }
+
+    toString(): string {
+        return this.variable.toString();
+    }
 
 }
 

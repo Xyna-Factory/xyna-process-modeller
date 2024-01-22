@@ -17,6 +17,7 @@
  */
 import { XoObjectClass, XoArrayClass, XoProperty, XoArray } from '@zeta/api';
 import { XoExpression } from './expression.model';
+import { XoExpressionVariable } from './expression-variable.model';
 
 
 @XoObjectClass(XoExpression, 'xmcp.processmodeller.datatypes.expression', 'Expression2Args')
@@ -34,6 +35,14 @@ export class XoExpression2Args extends XoExpression {
     @XoProperty()
     operator: string;
 
+
+    extractInvolvedVariable(): XoExpressionVariable[] {
+        return [...this.var1.extractInvolvedVariable(), ...this.var2.extractInvolvedVariable()];
+    }
+
+    toString(): string {
+        return this.var1.toString() + this.operator + this.var2.toString();
+    }
 
 }
 

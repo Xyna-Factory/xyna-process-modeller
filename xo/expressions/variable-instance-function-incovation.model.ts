@@ -18,6 +18,7 @@
 import { XoObjectClass, XoArrayClass, XoProperty, XoArray } from '@zeta/api';
 import { XoVariableAccessPart } from './variable-access-part.model';
 import { XoExpressionArray } from './expression.model';
+import { XoExpressionVariable } from './expression-variable.model';
 
 
 @XoObjectClass(XoVariableAccessPart, 'xmcp.processmodeller.datatypes.expression', 'VariableInstanceFunctionIncovation')
@@ -27,7 +28,15 @@ export class XoVariableInstanceFunctionIncovation extends XoVariableAccessPart {
     @XoProperty(XoExpressionArray)
     functionParameter: XoExpressionArray = new XoExpressionArray();
 
+    extractInvolvedVariable(): XoExpressionVariable[] {
+        return [...super.extractInvolvedVariable(), ...this.functionParameter.data.flatMap(exp => exp.extractInvolvedVariable())];
+    }
 
+    toString(): string {
+        return this.name +
+            '(' + this.functionParameter.data.map(exp => exp.toString()).join(',') + ')' +
+            (this.indexDef ? '[' + this.indexDef.toString() + ']' : '');
+    }
 }
 
 @XoArrayClass(XoVariableInstanceFunctionIncovation)

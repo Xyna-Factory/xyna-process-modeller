@@ -17,11 +17,11 @@
  */
 import { XoObjectClass, XoArrayClass, XoProperty, XoObject, XoArray } from '@zeta/api';
 import { XoExpression } from './expression.model';
-import { ComparablePath } from './comparable-path';
+import { XoExpressionVariable } from './expression-variable.model';
 
 
 @XoObjectClass(null, 'xmcp.processmodeller.datatypes.expression', 'VariableAccessPart')
-export class XoVariableAccessPart extends XoObject implements ComparablePath {
+export class XoVariableAccessPart extends XoObject {
 
 
     @XoProperty()
@@ -29,12 +29,17 @@ export class XoVariableAccessPart extends XoObject implements ComparablePath {
 
 
     @XoProperty(XoExpression)
-    indexDef: XoExpression = new XoExpression();
+    indexDef: XoExpression;
 
 
-    get child(): ComparablePath {
-        return null;
+    extractInvolvedVariable(): XoExpressionVariable[] {
+        return this.indexDef?.extractInvolvedVariable() ?? [];
     }
+
+    toString(): string {
+        return this.name + (this.indexDef ? '[' + this.indexDef + ']' : '');
+    }
+
 }
 
 @XoArrayClass(XoVariableAccessPart)

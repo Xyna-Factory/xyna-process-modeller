@@ -15,8 +15,19 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { IComparable } from '@zeta/base';
 
-export interface ComparablePath extends IComparable {
-    get child(): ComparablePath;
+export class ComparablePath {
+
+    private _child: ComparablePath;
+
+    constructor(public path: string) {
+    }
+
+    get child(): ComparablePath {
+        return this._child;
+    }
+
+    set child(child: ComparablePath) {
+        this._child = child;
+    }
 }

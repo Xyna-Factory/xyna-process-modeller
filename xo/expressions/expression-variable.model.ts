@@ -23,7 +23,7 @@ import { XoVariable } from '../variable.model';
 
 
 @XoObjectClass(null, 'xmcp.processmodeller.datatypes.expression', 'ExpressionVariable')
-export class XoExpressionVariable extends XoObject implements ComparablePath {
+export class XoExpressionVariable extends XoObject {
 
 
     @XoProperty()
@@ -40,11 +40,37 @@ export class XoExpressionVariable extends XoObject implements ComparablePath {
 
 
     @XoProperty(XoExpression)
-    indexDef: XoExpression = new XoExpression();
+    indexDef: XoExpression;
 
 
-    get child(): ComparablePath {
-        return this.parts[0];
+    extractInvolvedVariable(): XoExpressionVariable[] {
+        return [this, ...this.parts.data.flatMap(part => part.extractInvolvedVariable()), ...this.indexDef?.extractInvolvedVariable() ?? []];
+    }
+
+
+    getRecursiveStructure(): ComparablePath {
+        const root = new ComparablePath('%' + this.varNum.toString() + '%');
+        let next = root;
+        if (this.indexDef) {
+            root.child = new ComparablePath('[' + this.indexDef.toString() + ']');
+            next = root.child;
+        }
+        this.parts.data.forEach(part => {
+            next.child = new ComparablePath(part.name);
+            next = next.child;
+            if (part.indexDef) {
+                next.child = new ComparablePath('[' + part.indexDef.toString() + ']');
+                next = next.child;
+            }
+        });
+
+        return root;
+    }
+
+    toString(): string {
+        return '%' + this.varNum + '%' +
+            (this.indexDef ? '[' + this.indexDef.toString() + ']' : '') +
+            (this.parts && this.parts.length > 0 ? '.' + this.parts.data.map(part => part.toString()).join('.') : '');
     }
 }
 

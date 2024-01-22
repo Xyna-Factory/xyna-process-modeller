@@ -31,6 +31,10 @@ export class XoModelledExpression extends XoObject {
     targetExpression: XoExpression = new XoExpression();
 
 
+    toString(): string {
+        return this.targetExpression.toString() + '=' + this.sourceExpression.toString();
+    }
+
 }
 
 @XoArrayClass(XoModelledExpression)

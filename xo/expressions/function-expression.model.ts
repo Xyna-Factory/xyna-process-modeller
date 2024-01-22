@@ -18,6 +18,7 @@
 import { XoObjectClass, XoArrayClass, XoProperty, XoArray } from '@zeta/api';
 import { XoExpression, XoExpressionArray } from './expression.model';
 import { XoVariableAccessPartArray } from './variable-access-part.model';
+import { XoExpressionVariable } from './expression-variable.model';
 
 
 @XoObjectClass(XoExpression, 'xmcp.processmodeller.datatypes.expression', 'FunctionExpression')
@@ -39,6 +40,17 @@ export class XoFunctionExpression extends XoExpression {
     @XoProperty(XoVariableAccessPartArray)
     parts: XoVariableAccessPartArray = new XoVariableAccessPartArray();
 
+
+    extractInvolvedVariable(): XoExpressionVariable[] {
+        return [...this.subExpressions.data.flatMap(exp => exp.extractInvolvedVariable()), ...this.indexDef.extractInvolvedVariable()];
+    }
+
+    toString(): string {
+        return this.function +
+            '(' + this.subExpressions.data.map(exp => exp.toString()).join(',') + ')' +
+            (this.indexDef ? '[' + this.indexDef.toString() + ']' : '') +
+            (this.parts && this.parts.length > 0 ? '.' + this.parts.data.map(part => part.toString()).join('.') : '');
+    }
 
 }
 

@@ -16,8 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { XoStructureArray, XoStructureComplexField, XoStructurePrimitive } from '@zeta/api';
-import { ArrayEntrySkeletonTreeNode, ArraySkeletonTreeNode, ComplexSkeletonTreeNode, PrimitiveSkeletonTreeNode, SkeletonTreeDataSource, SkeletonTreeNode, TreeNodeObserver } from './skeleton-tree-data-source';
-import { IComparable } from '@zeta/base';
+import { ArraySkeletonTreeNode, ComplexSkeletonTreeNode, PrimitiveSkeletonTreeNode, SkeletonTreeDataSource, SkeletonTreeNode, TreeNodeObserver } from './skeleton-tree-data-source';
 import { XoExpressionVariable } from '@pmod/xo/expressions/expression-variable.model';
 
 
@@ -36,9 +35,6 @@ function equalsVariable(treeNode: SkeletonTreeNode, expressionVariable: XoExpres
 
 
 export class PrimitiveFormulaTreeNode extends PrimitiveSkeletonTreeNode {
-    equals(that: IComparable): boolean {
-        return equalsVariable(this, that as XoExpressionVariable);
-    }
 }
 
 
@@ -46,14 +42,7 @@ export class ArrayFormulaTreeNode extends ArraySkeletonTreeNode {
 }
 
 
-export class ArrayEntryFormulaTreeNode extends ArrayEntrySkeletonTreeNode {
-}
-
-
 export class ComplexFormulaTreeNode extends ComplexSkeletonTreeNode {
-    equals(that: IComparable): boolean {
-        return equalsVariable(this, that as XoExpressionVariable);
-    }
 }
 
 // how to handle arrays? Use a name here which is the name to identify the node? For list entry, it's the index?
@@ -83,11 +72,6 @@ export class FormulaTreeDataSource extends SkeletonTreeDataSource {
     }
 
 
-    createArrayEntryNode(structure: XoStructureArray): ArrayEntryFormulaTreeNode {
-        return new ArrayEntryFormulaTreeNode(structure, this, new Set<TreeNodeObserver>([this]));
-    }
-
-
     /**
      * Traverses the tree along with the variable.
      * Modifies the tree (changes selected subtype or adds array entries) if necessary/possible.
@@ -95,6 +79,11 @@ export class FormulaTreeDataSource extends SkeletonTreeDataSource {
      * @remark Only call synchronously after `root$` has its value
      */
     processVariable(variable: XoExpressionVariable): SkeletonTreeNode {
-        return this.root?.match(variable) as SkeletonTreeNode;
+
+        if (!this.root || !equalsVariable(this.root, variable)) {
+            return undefined;
+        }
+
+        return this.root?.match(variable.getRecursiveStructure());
     }
 }

@@ -16,14 +16,19 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { XoObjectClass, XoArrayClass, XoObject, XoArray } from '@zeta/api';
+import { XoExpressionVariable } from './expression-variable.model';
 
 
 @XoObjectClass(null, 'xmcp.processmodeller.datatypes.expression', 'Expression')
 export class XoExpression extends XoObject {
 
+    extractInvolvedVariable(): XoExpressionVariable[] {
+        return [];
+    }
 
-
-
+    toString(): string {
+        return '';
+    }
 
 }
 
