@@ -17,7 +17,7 @@
  */
 import { Component, ElementRef, Injector, Input, OnDestroy, Optional } from '@angular/core';
 
-import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
+import { MappingMode, WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { XcMenuItem } from '@zeta/xc';
 
 import { Subscription } from 'rxjs';
@@ -52,11 +52,12 @@ export class MappingComponent extends ModellingItemComponent implements OnDestro
 
     newFormulaExpression = '';
 
-    /* eslint-disable brace-style */
-    private _mode: 'programmatic' | 'visual' = 'programmatic';
-    get programmaticMode(): boolean { return this._mode === 'programmatic'; }
-    get visualMode(): boolean { return this._mode === 'visual'; }
-    /* eslint-enable brace-style */
+    get programmaticMode(): boolean {
+        return this.detailLevelService.getMappingMode(this.mapping?.id) === MappingMode.PROGRAMMATIC;
+    }
+    get visualMode(): boolean {
+        return this.detailLevelService.getMappingMode(this.mapping?.id) === MappingMode.VISUAL;
+    }
 
 
     constructor(@Optional() elementRef: ElementRef,
@@ -85,7 +86,8 @@ export class MappingComponent extends ModellingItemComponent implements OnDestro
             },
             <XcMenuItem>{ name: this.visualMode ? this.language.programmaticMode : this.language.visualMode, translate: true,
                 click: item => {
-                    this._mode = this.visualMode ? 'programmatic' : 'visual';
+                    this.detailLevelService.setMappingMode(
+                        this.mapping.id, this.visualMode ? MappingMode.PROGRAMMATIC : MappingMode.VISUAL);
                     item.name = this.visualMode ? this.language.programmaticMode : this.language.visualMode;
                 }
             }

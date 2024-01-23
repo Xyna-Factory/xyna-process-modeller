@@ -91,7 +91,6 @@ class ExpressionWrapper {
 })
 export class VisualMappingComponent extends ModellingObjectComponent implements OnInit, OnDestroy, SkeletonTreeDataSourceObserver {
 
-    private _mapping: XoMapping;
     private _replacedSubscription: Subscription;
     private _selectionSubscription: Subscription;
     private initialized = false;
@@ -111,7 +110,7 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
     @Input()
     set mapping(value: XoMapping) {
         this._replacedSubscription?.unsubscribe();
-        this._mapping = value;
+        this.setModel(value);
         this.update();
 
         this._replacedSubscription = this.mapping.replaced().subscribe({
@@ -120,7 +119,7 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
         });
     }
     get mapping(): XoMapping {
-        return this._mapping;
+        return this.getModel() as XoMapping;
     }
 
 
@@ -146,6 +145,7 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
 
 
     ngOnInit(): void {
+        super.ngOnInit();
         this.initialized = true;
         this.update();
     }
@@ -280,5 +280,15 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
 
     nodeChange(dataSource: SkeletonTreeDataSource, node: SkeletonTreeNode): void {
         this.refreshFlow();
+    }
+
+
+    getCollapseId(): string {
+        return this.mapping.formulaArea.id;
+    }
+
+
+    isDefaultCollapsed(): boolean {
+        return !this.detailSettings.showMappings;
     }
 }

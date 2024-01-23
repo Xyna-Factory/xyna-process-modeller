@@ -34,6 +34,10 @@
     border-bottom-left-radius: $service-step-border-radius;
     border-bottom-right-radius: $service-step-border-radius;
 
+    &.collapsed {
+        display: none;
+    }
+
     .outputs, .inputs {
         display: flex;
         flex-direction: column;
