@@ -20,6 +20,7 @@ import { GraphicallyRepresented, IComparable } from '@zeta/base';
 import { BehaviorSubject, Observable, first, map } from 'rxjs';
 import { Draggable } from '../../shared/drag-and-drop/mod-drag-and-drop.service';
 import { ComparablePath } from '@pmod/xo/expressions/comparable-path';
+import { XoVariable } from '@pmod/xo/variable.model';
 
 
 
@@ -460,9 +461,28 @@ export class ArraySkeletonTreeNode extends SkeletonTreeNode {
 }
 
 
-export interface VariableDescriber extends XoDescriber {
-    label: string;
-    isList: boolean;
+export class VariableDescriber implements XoDescriber {
+
+    constructor(public rtc: RuntimeContext, public fqn: FullQualifiedName, public isList: boolean, public label: string) {
+    }
+    ident?: string;
+
+    compare(variable: XoVariable): boolean {
+        if (!this.fqn?.equals(FullQualifiedName.decode(variable.$fqn))) {
+            return false;
+        }
+        const varRTC = variable.$rtc.runtimeContext();
+        if (!this.rtc?.equals(varRTC)) {
+            return false;
+        }
+        if (this.isList !== variable.isList) {
+            return false;
+        }
+        if (this.label !== variable.label) {
+            return false;
+        }
+        return true;
+    }
 }
 
 
@@ -515,6 +535,10 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
         return this._root$.value;
     }
 
+
+    get variableDescriber(): VariableDescriber {
+        return this.describer;
+    }
 
 
     /* ***   Tree Node Factory   *** */
