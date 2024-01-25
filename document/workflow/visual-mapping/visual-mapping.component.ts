@@ -166,27 +166,28 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
         const inputVariables = this.mapping.inputArea.variables;
         const outputVariables = this.mapping.outputArea.variables;
 
+        if (this.needToRebuildTrees()) {
+            this.inputDataSources = [];
+            this.outputDataSources = [];
 
-        this.inputDataSources = [];
-        this.outputDataSources = [];
+            // create and initialize tree data sources
+            inputVariables?.forEach((variable, index) => {
+                const rtc = variable.$rtc.runtimeContext() ?? this.documentModel.originRuntimeContext;
+                const desc = new VariableDescriber(rtc, FullQualifiedName.decode(variable.$fqn), variable.isList, variable.label);
+                const ds = new FormulaTreeDataSource(desc, apiService, rtc, this, index);
+                ds.refresh();
+                this.inputDataSources.push(ds);
+            });
+            outputVariables?.forEach((variable, index) => {
+                const rtc = variable.$rtc.runtimeContext() ?? this.documentModel.originRuntimeContext;
+                const desc = new VariableDescriber(rtc, FullQualifiedName.decode(variable.$fqn), variable.isList, variable.label);
+                const ds = new FormulaTreeDataSource(desc, apiService, rtc, this, inputVariables.length + index);
+                ds.refresh();
+                this.outputDataSources.push(ds);
+            });
+        }
 
-        // create tree data sources
-        inputVariables?.forEach((variable, index) => {
-            const rtc = variable.$rtc.runtimeContext() ?? this.documentModel.originRuntimeContext;
-            const desc = <VariableDescriber>{ rtc: rtc, fqn: FullQualifiedName.decode(variable.$fqn), isList: variable.isList, label: variable.label };
-            const ds = new FormulaTreeDataSource(desc, apiService, rtc, this, index);
-            this.inputDataSources.push(ds);
-        });
-        outputVariables?.forEach((variable, index) => {
-            const rtc = variable.$rtc.runtimeContext() ?? this.documentModel.originRuntimeContext;
-            const desc = <VariableDescriber>{ rtc: rtc, fqn: FullQualifiedName.decode(variable.$fqn), isList: variable.isList, label: variable.label };
-            const ds = new FormulaTreeDataSource(desc, apiService, rtc, this, inputVariables.length + index);
-            this.outputDataSources.push(ds);
-        });
-
-        // initialize tree data sources
         const dataSources = [...this.inputDataSources, ...this.outputDataSources];
-        dataSources.forEach(ds => ds.refresh());
 
         // wait for all data sources
         forkJoin(
@@ -253,6 +254,31 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
             );
         this.cdr.markForCheck();
         this.isRefreshing = false;
+    }
+
+
+    private needToRebuildTrees(): boolean {
+        if (this.inputDataSources.length !== this.mapping.inputArea.variables.length) {
+            return true;
+        }
+        if (this.outputDataSources.length !== this.mapping.outputArea.variables.length) {
+            return true;
+        }
+        for (let i = 0; i < this.inputDataSources.length; i++) {
+            const ds = this.inputDataSources[i];
+            const variable = this.mapping.inputArea.variables[i];
+            if (!ds.variableDescriber.compare(variable)) {
+                return true;
+            }
+        }
+        for (let i = 0; i < this.outputDataSources.length; i++) {
+            const ds = this.outputDataSources[i];
+            const variable = this.mapping.outputArea.variables[i];
+            if (!ds.variableDescriber.compare(variable)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
