@@ -227,14 +227,8 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
 
         const dataSources = [...this.inputDataSources, ...this.outputDataSources];
 
-        // for each assignment path, traverse formula trees and find matching node
-        // this.assignments.forEach(assignment => {
-        //     assignment.memberPaths.forEach(path => {
-        //         const ds = dataSources[path.formula.variableIndex];
-        //         const correspondingNode = ds?.processMemberPath(path.formula);
-        //         path.node = correspondingNode;
-        //     });
-        // });
+        dataSources.forEach(ds => ds.clearMarks());
+
         this.expressions.forEach(expression => {
             expression.parts.forEach(part => {
                 const ds = dataSources[part.expression?.varNum ?? 0];

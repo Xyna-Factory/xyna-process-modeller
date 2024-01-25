@@ -4,6 +4,7 @@
 <div class="outputs">
     <variable-tree *ngFor="let outputDataSource of outputDataSources"
         [tree-datasource]="outputDataSource"
+        highlightMarkedNodes
         (createdAssignment)="addAssignment($event)"
         (selectionChange)="select($event)"
     ></variable-tree>
@@ -12,7 +13,6 @@
 <div class="inputs">
     <variable-tree *ngFor="let inputDataSource of inputDataSources"
         [tree-datasource]="inputDataSource"
-        highlightMarkedNodes="false"
         (createdAssignment)="addAssignment($event)"
         (selectionChange)="select($event)"
     ></variable-tree>

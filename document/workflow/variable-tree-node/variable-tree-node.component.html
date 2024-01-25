@@ -28,6 +28,7 @@
 <div *ngIf="!node.collapsed" class="children">
     <variable-tree-node *ngFor="let childNode of node.children"
         [node]="childNode"
+        [highlightMarks]="highlightMarks"
         (assignedVariable)="assignedVariable.emit($event)"
         (selectionChange)="select($event)"
     ></variable-tree-node>

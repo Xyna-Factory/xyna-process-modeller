@@ -143,14 +143,19 @@ export class SkeletonTreeNode implements GraphicallyRepresented<Element>, Dragga
     }
 
 
-    markRecursively() {
-        this.marked = true;
-        this.children.forEach(child => child.markRecursively());
+    markRecursively(mark = true) {
+        this.marked = mark;
+        this.children.forEach(child => child.markRecursively(mark));
+    }
+
+
+    unmarkRecursively() {
+        this.markRecursively(false);
     }
 
 
     get allChildrenMarked(): boolean {
-        return !this.children.some(child => !child.marked);
+        return this.children.length > 0 && !this.children.some(child => !child.marked);
     }
 
 
@@ -538,6 +543,14 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
 
     get variableDescriber(): VariableDescriber {
         return this.describer;
+    }
+
+
+    /**
+     * Clears all `marked` states of all nodes
+     */
+    clearMarks() {
+        this.root$.pipe(first()).subscribe(root => root.unmarkRecursively());
     }
 
 
