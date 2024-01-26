@@ -17,7 +17,7 @@
  */
 import { ApiService, FullQualifiedName, RuntimeContext, Xo, XoDescriber, XoJson, XoStructureArray, XoStructureComplexField, XoStructureField, XoStructureObject, XoStructurePrimitive, XoStructureType } from '@zeta/api';
 import { GraphicallyRepresented, IComparable } from '@zeta/base';
-import { BehaviorSubject, Observable, first, map } from 'rxjs';
+import { BehaviorSubject, Observable, filter, first, map } from 'rxjs';
 import { Draggable } from '../../shared/drag-and-drop/mod-drag-and-drop.service';
 import { ComparablePath } from '@pmod/xo/expressions/comparable-path';
 import { XoVariable } from '@pmod/xo/variable.model';
@@ -146,6 +146,11 @@ export class SkeletonTreeNode implements GraphicallyRepresented<Element>, Dragga
     markRecursively(mark = true) {
         this.marked = mark;
         this.children.forEach(child => child.markRecursively(mark));
+
+        // mark parent if all children are marked
+        if (!this.parent?.marked) {
+            this.parent?.markIfChildrenMarked();
+        }
     }
 
 
@@ -154,8 +159,14 @@ export class SkeletonTreeNode implements GraphicallyRepresented<Element>, Dragga
     }
 
 
-    get allChildrenMarked(): boolean {
-        return this.children.length > 0 && !this.children.some(child => !child.marked);
+    markIfChildrenMarked() {
+        // all children marked
+        if (this.children.length > 0 && !this.children.some(child => !child.marked)) {
+            this.marked = true;
+        }
+        if (!this.parent?.marked) {
+            this.parent?.markIfChildrenMarked();
+        }
     }
 
 
@@ -550,7 +561,10 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
      * Clears all `marked` states of all nodes
      */
     clearMarks() {
-        this.root$.pipe(first()).subscribe(root => root.unmarkRecursively());
+        this.root$.pipe(
+            filter(root => !!root),
+            first()
+        ).subscribe(root => root.unmarkRecursively());
     }
 
 

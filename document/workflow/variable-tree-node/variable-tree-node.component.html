@@ -1,7 +1,7 @@
 <!-- marked means that the node is white, unmarked nodes are yellow -->
 <div #noderow
     class="row"
-    [ngClass]="{'marked': (node.markedChange | async) || node.allChildrenMarked, 'show-mark': highlightMarks, 'selected': (node.selectedChange| async)}"
+    [ngClass]="{'marked': (node.markedChange | async), 'show-mark': highlightMarks, 'selected': (node.selectedChange| async)}"
     (click)="select(node)"
     [mod-draggable]="node"
 >
