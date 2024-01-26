@@ -30,7 +30,7 @@ import { CreateAssignmentEvent } from '../variable-tree-node/variable-tree-node.
 })
 export class VariableTreeComponent {
     private _dataSource: FormulaTreeDataSource;
-    private _highlightMarkedNodes = true;
+    private _highlightMarkedNodes = false;
 
     @Output()
     readonly createdAssignment = new EventEmitter<CreateAssignmentEvent>();

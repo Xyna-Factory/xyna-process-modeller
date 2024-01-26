@@ -17,7 +17,7 @@
  */
 import { ApiService, FullQualifiedName, RuntimeContext, Xo, XoDescriber, XoJson, XoStructureArray, XoStructureComplexField, XoStructureField, XoStructureObject, XoStructurePrimitive, XoStructureType } from '@zeta/api';
 import { GraphicallyRepresented, IComparable } from '@zeta/base';
-import { BehaviorSubject, Observable, first, map } from 'rxjs';
+import { BehaviorSubject, Observable, filter, first, map } from 'rxjs';
 import { Draggable } from '../../shared/drag-and-drop/mod-drag-and-drop.service';
 import { ComparablePath } from '@pmod/xo/expressions/comparable-path';
 import { XoVariable } from '@pmod/xo/variable.model';
@@ -140,17 +140,30 @@ export class SkeletonTreeNode implements GraphicallyRepresented<Element>, Dragga
 
     set marked(value: boolean) {
         this._marked$.next(value);
+
+        // mark parent if all children are marked
+        if (this.marked && !this.parent?.marked) {
+            this.parent?.markIfChildrenMarked();
+        }
     }
 
 
-    markRecursively() {
-        this.marked = true;
-        this.children.forEach(child => child.markRecursively());
+    markRecursively(mark = true) {
+        this.marked = mark;
+        this.children.forEach(child => child.markRecursively(mark));
     }
 
 
-    get allChildrenMarked(): boolean {
-        return !this.children.some(child => !child.marked);
+    unmarkRecursively() {
+        this.markRecursively(false);
+    }
+
+
+    markIfChildrenMarked() {
+        // all children marked
+        if (this.children.length > 0 && !this.children.some(child => !child.marked)) {
+            this.marked = true;
+        }
     }
 
 
@@ -538,6 +551,17 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
 
     get variableDescriber(): VariableDescriber {
         return this.describer;
+    }
+
+
+    /**
+     * Clears all `marked` states of all nodes
+     */
+    clearMarks() {
+        this.root$.pipe(
+            filter(root => !!root),
+            first()
+        ).subscribe(root => root.unmarkRecursively());
     }
 
 

@@ -134,12 +134,14 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
         super(elementRef, componentMappingService, documentService, detailLevelService, injector);
 
         // anti-prune
+        /* eslint-disable @typescript-eslint/no-unused-vars */
         const p0 = new XoSingleVarExpression();
         const p1 = new XoLiteralExpression();
         const p2 = new XoExpression2Args();
         const p3 = new XoNotExpression();
         const p4 = new XoVariableInstanceFunctionIncovation();
         const p5 = new XoFunctionExpression();
+        /* eslint-enable @typescript-eslint/no-unused-vars */
 
     }
 
@@ -227,14 +229,8 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
 
         const dataSources = [...this.inputDataSources, ...this.outputDataSources];
 
-        // for each assignment path, traverse formula trees and find matching node
-        // this.assignments.forEach(assignment => {
-        //     assignment.memberPaths.forEach(path => {
-        //         const ds = dataSources[path.formula.variableIndex];
-        //         const correspondingNode = ds?.processMemberPath(path.formula);
-        //         path.node = correspondingNode;
-        //     });
-        // });
+        dataSources.forEach(ds => ds.clearMarks());
+
         this.expressions.forEach(expression => {
             expression.parts.forEach(part => {
                 const ds = dataSources[part.expression?.varNum ?? 0];

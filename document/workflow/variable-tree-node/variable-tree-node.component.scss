@@ -33,8 +33,12 @@ $dnd-hover-background-color: unset !default;
 
         // misleading naming: A marked node is shown white here
         // If no marks shall be shown, everything is white
-        &:not(.marked).show-mark {
+        &:not(.selected):not(.marked).show-mark {
             background-color: #ffffbb;
+        }
+
+        &.selected {
+            background-color: $color-primary;
         }
 
         .drop-zone {
@@ -73,10 +77,6 @@ $dnd-hover-background-color: unset !default;
                 width: 15px;
                 height: 15px;
             }
-        }
-
-        &.selected {
-            background-color: $color-primary;
         }
     }
 
