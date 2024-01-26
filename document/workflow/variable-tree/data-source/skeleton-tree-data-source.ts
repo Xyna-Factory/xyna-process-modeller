@@ -140,17 +140,17 @@ export class SkeletonTreeNode implements GraphicallyRepresented<Element>, Dragga
 
     set marked(value: boolean) {
         this._marked$.next(value);
+
+        // mark parent if all children are marked
+        if (this.marked && !this.parent?.marked) {
+            this.parent?.markIfChildrenMarked();
+        }
     }
 
 
     markRecursively(mark = true) {
         this.marked = mark;
         this.children.forEach(child => child.markRecursively(mark));
-
-        // mark parent if all children are marked
-        if (!this.parent?.marked) {
-            this.parent?.markIfChildrenMarked();
-        }
     }
 
 
@@ -163,9 +163,6 @@ export class SkeletonTreeNode implements GraphicallyRepresented<Element>, Dragga
         // all children marked
         if (this.children.length > 0 && !this.children.some(child => !child.marked)) {
             this.marked = true;
-        }
-        if (!this.parent?.marked) {
-            this.parent?.markIfChildrenMarked();
         }
     }
 
