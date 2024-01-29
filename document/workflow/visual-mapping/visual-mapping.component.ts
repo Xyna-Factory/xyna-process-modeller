@@ -37,6 +37,7 @@ import { XoExpression2Args } from '@pmod/xo/expressions/expression2-args.model';
 import { XoNotExpression } from '@pmod/xo/expressions/not-expression.model';
 import { XoVariableInstanceFunctionIncovation } from '@pmod/xo/expressions/variable-instance-function-incovation.model';
 import { XoFunctionExpression } from '@pmod/xo/expressions/function-expression.model';
+import { RecursiveStruckture } from '@pmod/xo/expressions/comparable-path';
 
 
 
@@ -47,7 +48,7 @@ import { XoFunctionExpression } from '@pmod/xo/expressions/function-expression.m
 class ExpressionPart {
     private _node: SkeletonTreeNode;
 
-    constructor(public expression: XoExpressionVariable) {
+    constructor(public expression: RecursiveStruckture) {
     }
 
     get node(): SkeletonTreeNode {
@@ -202,10 +203,10 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
                         // assign XoVariables to ExpressionVariables
                         this.expressions.forEach(expression => {
                             const sourceVariable = expression.sourcePart.map(part => part.expression);
-                            sourceVariable.forEach(variable => variable.variable = mappingVariables[variable.varNum]);
+                            sourceVariable.forEach(variable => variable.getVariable().variable = mappingVariables[variable.getVariable().varNum]);
                             const targetVariable = expression.targetPart?.expression;
                             if (targetVariable) {
-                                targetVariable.variable = mappingVariables[targetVariable.varNum];
+                                targetVariable.getVariable().variable = mappingVariables[targetVariable.getVariable().varNum];
                             }
                         });
                     })
@@ -236,7 +237,7 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
         // });
         this.expressions.forEach(expression => {
             expression.parts.forEach(part => {
-                const ds = dataSources[part.expression?.varNum ?? 0];
+                const ds = dataSources[part.expression?.getVariable().varNum ?? 0];
                 const correspondingNode = ds?.processVariable(part.expression);
                 part.node = correspondingNode;
             });

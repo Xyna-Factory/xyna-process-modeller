@@ -19,17 +19,17 @@ import { ApiService, FullQualifiedName, RuntimeContext, Xo, XoDescriber, XoJson,
 import { GraphicallyRepresented, IComparable } from '@zeta/base';
 import { BehaviorSubject, Observable, first, map } from 'rxjs';
 import { Draggable } from '../../shared/drag-and-drop/mod-drag-and-drop.service';
-import { ComparablePath } from '@pmod/xo/expressions/comparable-path';
+import { RekursiveStruckturePart } from '@pmod/xo/expressions/comparable-path';
 
 
-
+/*
 export interface Traversable {
     /**
      * Traverses a structure and returns that element that equals to `item`
      *
      * @param item Item to traverse structure with and to compare to each `Traversable`
      * @returns `Traversable` equal to `item`
-     */
+     *\/
     traverse(item: IComparable): Traversable;
 
     /**
@@ -37,10 +37,10 @@ export interface Traversable {
      *
      * @param path Path to traverse structure with and to compare to each `Traversable`
      * @returns `Traversable` at the end of a path equal to `path`
-     */
-    match(path: ComparablePath): Traversable;
+     *\/
+    match(path: RekursiveStruckturePart): Traversable;
 }
-
+*/
 
 export interface TreeNodeFactory {
     createNodeFromStructure(structure: XoStructureField): SkeletonTreeNode;
@@ -51,6 +51,7 @@ export interface TreeNodeFactory {
      * Enrich given structure with children
      */
     enrichStructure(structure: XoStructureObject): Observable<XoStructureObject>;
+    getSubtypes(structure: XoStructureObject): Observable<XoStructureType[]>;
 }
 
 
@@ -231,7 +232,7 @@ export class SkeletonTreeNode implements GraphicallyRepresented<Element>, Dragga
     /**
      * @inheritdoc
      */
-    match(path: ComparablePath): SkeletonTreeNode {
+    match(path: RekursiveStruckturePart): SkeletonTreeNode {
         if (this.getXFLExpression() === path.path) {
             let matchingNode: SkeletonTreeNode;
             if (path.child) {
@@ -321,7 +322,7 @@ export class PrimitiveSkeletonTreeNode extends SkeletonTreeNode {
 
 
 export class ComplexSkeletonTreeNode extends SkeletonTreeNode {
-    private _subtypes: XoStructureType[] = [];
+    private _subtypes: XoStructureObject[] = [];
     private _sourceIndex: number;
     private childrenInitialized = false;
 
@@ -364,13 +365,13 @@ export class ComplexSkeletonTreeNode extends SkeletonTreeNode {
     }
 
 
-    // refreshSubtypes() {
-    //     // TODO: only if complex (fqn has a dot in it - is there already an "isComplex" or "isPrimitive" function inside fqn?)
-    //     this.api.getSubtypes(this.rtc, [this.describer]).get(this.describer).pipe(first()).subscribe(subtypes => this.setSubtypes(subtypes));
-    // }
+    refreshSubtypes() {
+        this.nodeFactory.getSubtypes(this.getStructure()).subscribe(
+            subtypes => this.setSubtypes(subtypes.filter(type => type instanceof XoStructureObject).map(type => type as XoStructureObject)));
+    }
 
 
-    setSubtypes(subtypes: XoStructureType[]) {
+    setSubtypes(subtypes: XoStructureObject[]) {
         this._subtypes = subtypes;
     }
 
@@ -385,7 +386,14 @@ export class ComplexSkeletonTreeNode extends SkeletonTreeNode {
     }
 
 
-    match(path: ComparablePath): SkeletonTreeNode {
+    match(path: RekursiveStruckturePart): SkeletonTreeNode {
+        if (path.fqn === this.getStructure().typeFqn.encode(false)) {
+            this.refreshSubtypes();
+            const structure = this._subtypes.find(subType => path.fqn === subType.typeFqn.encode(false));
+            if (structure) {
+                this.setStructure(structure);
+            }
+        }
         this.initializeChildren();
         return super.match(path);
     }
@@ -423,7 +431,7 @@ export class ArraySkeletonTreeNode extends SkeletonTreeNode {
     }
 
 
-    match(path: ComparablePath): SkeletonTreeNode {
+    match(path: RekursiveStruckturePart): SkeletonTreeNode {
 
 
         if (this.getXFLExpression() !== path.path) {
@@ -558,6 +566,12 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
                 return structure;
             })
         );
+    }
+
+
+    getSubtypes(structure: XoStructureObject): Observable<XoStructureType[]> {
+        const describer = <XoDescriber>{ rtc: structure.typeRtc, fqn: structure.typeFqn };
+        return this.api.getSubtypes(structure.typeRtc, [describer]).get(describer).pipe(first());
     }
 
 

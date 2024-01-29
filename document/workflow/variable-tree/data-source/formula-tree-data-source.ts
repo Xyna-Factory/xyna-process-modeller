@@ -18,6 +18,7 @@
 import { XoStructureArray, XoStructureComplexField, XoStructurePrimitive } from '@zeta/api';
 import { ArraySkeletonTreeNode, ComplexSkeletonTreeNode, PrimitiveSkeletonTreeNode, SkeletonTreeDataSource, SkeletonTreeNode, TreeNodeObserver } from './skeleton-tree-data-source';
 import { XoExpressionVariable } from '@pmod/xo/expressions/expression-variable.model';
+import { RecursiveStruckture } from '@pmod/xo/expressions/comparable-path';
 
 
 
@@ -78,12 +79,12 @@ export class FormulaTreeDataSource extends SkeletonTreeDataSource {
      *
      * @remark Only call synchronously after `root$` has its value
      */
-    processVariable(variable: XoExpressionVariable): SkeletonTreeNode {
+    processVariable(structure: RecursiveStruckture): SkeletonTreeNode {
 
-        if (!this.root || !equalsVariable(this.root, variable)) {
+        if (!this.root || !equalsVariable(this.root, structure.getVariable())) {
             return undefined;
         }
 
-        return this.root?.match(variable.getRecursiveStructure());
+        return this.root?.match(structure.getRecursiveStructure());
     }
 }

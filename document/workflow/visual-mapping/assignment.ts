@@ -24,10 +24,10 @@ import { FormulaPartOperation } from '@pmod/xo/util/formula-parts/formula-part-o
 import { FormulaPartMember } from '@pmod/xo/util/formula-parts/formula-part-member';
 import { Comparable } from '@zeta/base';
 import { FormulaPartSpecial } from '@pmod/xo/util/formula-parts/formula-part-special';
-import { ComparablePath } from '@pmod/xo/expressions/comparable-path';
+import { RekursiveStruckturePart } from '@pmod/xo/expressions/comparable-path';
 
 
-// export abstract class XoFormulaNode extends Comparable implements ComparablePath {
+// export abstract class XoFormulaNode extends Comparable implements RekursiveStruckturePart {
 //     value: string;
 
 //     abstract parse(formula: XoFormula, index: number): void;

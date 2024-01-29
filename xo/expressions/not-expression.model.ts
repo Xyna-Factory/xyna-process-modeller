@@ -18,7 +18,7 @@
 import { XoObjectClass, XoArrayClass, XoProperty, XoArray } from '@zeta/api';
 import { XoExpression1Arg } from './expression1-arg.model';
 import { XoExpression } from './expression.model';
-import { XoExpressionVariable } from './expression-variable.model';
+import { RecursiveStruckture } from './comparable-path';
 
 
 @XoObjectClass(XoExpression1Arg, 'xmcp.processmodeller.datatypes.expression', 'NotExpression')
@@ -28,7 +28,7 @@ export class XoNotExpression extends XoExpression1Arg {
     @XoProperty(XoExpression)
     expression: XoExpression = new XoExpression();
 
-    extractInvolvedVariable(): XoExpressionVariable[] {
+    extractInvolvedVariable(): RecursiveStruckture[] {
         return this.expression.extractInvolvedVariable();
     }
 
