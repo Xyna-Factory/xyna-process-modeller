@@ -36,7 +36,7 @@ export interface CreateAssignmentEvent {
 })
 export class VariableTreeNodeComponent implements AfterViewInit, TreeNodeObserver {
     private _node: SkeletonTreeNode;
-    private _highlightMarks = true;
+    private _highlightMarks = false;
 
     expanded = true;
 

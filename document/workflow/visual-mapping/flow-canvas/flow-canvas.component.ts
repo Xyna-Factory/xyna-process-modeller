@@ -81,12 +81,7 @@ export class Flow {
             .map(graphic => graphic.graphicalRepresentationChange())
             .map(graphic =>
                 graphic.pipe(
-                    filter(g => {
-                        if (!g) {
-                            console.warn('there is one g unset');   // DEBUG
-                        }
-                        return !!g;
-                    }), // each graphical representation has to be defined
+                    filter(g => !!g), // each graphical representation has to be defined
                     take(1)
                 )
             )
