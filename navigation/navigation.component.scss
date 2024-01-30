@@ -117,6 +117,10 @@
                 color           : #2a2a2b;
                 padding         : 1px;
                 border-radius   : 50%;
+
+                &::before {
+                    vertical-align: text-top;
+                }
             }
         }
     }
