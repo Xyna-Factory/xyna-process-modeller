@@ -20,7 +20,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { FQNRTC, MessageBusService, XMOMLocated, XoDocumentChange, XoDocumentLock, XoDocumentUnlock } from '@yggdrasil/events';
 import { ApiService, FullQualifiedName, RuntimeContext } from '@zeta/api';
 import { AuthService } from '@zeta/auth';
-import { dispatchMouseClick, isString } from '@zeta/base';
+import { dispatchMouseClick, getSubdirectory, isString } from '@zeta/base';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogService, XcStatusBarEntryType, XcStatusBarService } from '@zeta/xc';
 
@@ -60,6 +60,7 @@ import { ServiceGroupDocumentModel } from './model/service-group-document.model'
 import { TypeDocumentModel } from './model/type-document.model';
 import { WorkflowDocumentModel } from './model/workflow-document.model';
 import { XoModellingItem } from '@pmod/xo/modelling-item.model';
+import { environment } from '@environments/environment';
 
 
 export enum DocumentState {
@@ -993,7 +994,8 @@ export class DocumentService implements OnDestroy {
         const downloadTemplate = (fqn: string, rtcKey: string) => {
 
             const fqnObj = FullQualifiedName.decode(fqn);
-            const endpoint = `/XynaBlackEditionWebServices/io/buildServiceImplTemplate?datatype=${fqnObj.encode()}&workspace=${rtcKey}`;
+            const subdirectory = getSubdirectory(environment.zeta.url);
+            const endpoint = `/${subdirectory}buildServiceImplTemplate?datatype=${fqnObj.encode()}&workspace=${rtcKey}`;
 
             const xmlHttpRequest = new XMLHttpRequest();
             xmlHttpRequest.onreadystatechange = () => {
