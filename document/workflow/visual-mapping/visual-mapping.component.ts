@@ -23,7 +23,7 @@ import { XoMapping } from '@pmod/xo/mapping.model';
 import { ComponentMappingService } from '@pmod/document/component-mapping.service';
 import { DocumentService } from '@pmod/document/document.service';
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
-import { SkeletonTreeDataSource, SkeletonTreeDataSourceObserver, SkeletonTreeNode, VariableDescriber } from '../variable-tree/data-source/skeleton-tree-data-source';
+import { SkeletonTreeDataSource, SkeletonTreeDataSourceObserver, VariableDescriber } from '../variable-tree/data-source/skeleton-tree-data-source';
 import { ModellingActionType, XmomService } from '@pmod/api/xmom.service';
 import { CreateAssignmentEvent } from '../variable-tree-node/variable-tree-node.component';
 import { XoModelledExpression } from '@pmod/xo/expressions/modelled-expression.model';
@@ -37,6 +37,7 @@ import { XoVariableInstanceFunctionIncovation } from '@pmod/xo/expressions/varia
 import { XoFunctionExpression } from '@pmod/xo/expressions/function-expression.model';
 import { RecursiveStructure } from '@pmod/xo/expressions/comparable-path';
 import { XoCastExpression } from '@pmod/xo/expressions/cast-expression.model';
+import { SkeletonTreeNode } from '../variable-tree/data-source/skeleton-tree-node';
 
 
 

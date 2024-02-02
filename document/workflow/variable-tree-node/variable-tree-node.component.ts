@@ -16,10 +16,11 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { SkeletonTreeNode, TreeNodeObserver } from '../variable-tree/data-source/skeleton-tree-data-source';
+import { TreeNodeObserver } from '../variable-tree/data-source/skeleton-tree-data-source';
 import { coerceBoolean } from '@zeta/base';
 import { ModDragEvent, ModDropEvent } from '../shared/drag-and-drop/mod-drop-area.directive';
 import { Draggable, ModDnDEvent } from '../shared/drag-and-drop/mod-drag-and-drop.service';
+import { SkeletonTreeNode } from '../variable-tree/data-source/skeleton-tree-node';
 
 
 export interface CreateAssignmentEvent {
