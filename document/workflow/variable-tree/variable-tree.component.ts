@@ -16,9 +16,8 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormulaTreeDataSource } from './data-source/formula-tree-data-source';
 import { coerceBoolean } from '@zeta/base';
-import { SkeletonTreeNode } from './data-source/skeleton-tree-data-source';
+import { SkeletonTreeDataSource, SkeletonTreeNode } from './data-source/skeleton-tree-data-source';
 import { CreateAssignmentEvent } from '../variable-tree-node/variable-tree-node.component';
 
 
@@ -29,19 +28,19 @@ import { CreateAssignmentEvent } from '../variable-tree-node/variable-tree-node.
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VariableTreeComponent {
-    private _dataSource: FormulaTreeDataSource;
+    private _dataSource: SkeletonTreeDataSource;
     private _highlightMarkedNodes = false;
 
     @Output()
     readonly createdAssignment = new EventEmitter<CreateAssignmentEvent>();
 
     @Input('tree-datasource')
-    set dataSource(value: FormulaTreeDataSource) {
+    set dataSource(value: SkeletonTreeDataSource) {
         this._dataSource = value;
     }
 
 
-    get dataSource(): FormulaTreeDataSource {
+    get dataSource(): SkeletonTreeDataSource {
         return this._dataSource;
     }
 

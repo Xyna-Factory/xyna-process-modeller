@@ -18,12 +18,12 @@
 import { XoObjectClass, XoArrayClass, XoProperty, XoObject, XoArray, XoTransient } from '@zeta/api';
 import { XoVariableAccessPartArray } from './variable-access-part.model';
 import { XoExpression } from './expression.model';
-import { RecursiveStruckture, RekursiveStruckturePart } from './comparable-path';
+import { RecursiveStructure, RecursiveStructurePart } from './comparable-path';
 import { XoVariable } from '../variable.model';
 
 
 @XoObjectClass(null, 'xmcp.processmodeller.datatypes.expression', 'ExpressionVariable')
-export class XoExpressionVariable extends XoObject implements RecursiveStruckture {
+export class XoExpressionVariable extends XoObject implements RecursiveStructure {
 
 
     @XoProperty()
@@ -43,28 +43,23 @@ export class XoExpressionVariable extends XoObject implements RecursiveStrucktur
     indexDef: XoExpression;
 
 
-    extractInvolvedVariable(): RecursiveStruckture[] {
-        return [this, ...this.getContainingVariable()];
-    }
-
-
-    getContainingVariable(): RecursiveStruckture[] {
+    extractInvolvedVariable(): RecursiveStructure[] {
         return [...this.parts.data.flatMap(part => part.extractInvolvedVariable()), ...this.indexDef?.extractInvolvedVariable() ?? []];
     }
 
 
-    getRecursiveStructure(): RekursiveStruckturePart {
-        const root = new RekursiveStruckturePart('%' + this.varNum.toString() + '%');
+    getRecursiveStructure(): RecursiveStructurePart {
+        const root = new RecursiveStructurePart('%' + this.varNum.toString() + '%');
         let next = root;
         if (this.indexDef) {
-            root.child = new RekursiveStruckturePart('[' + this.indexDef.toString() + ']');
+            root.child = new RecursiveStructurePart('[' + this.indexDef.toString() + ']');
             next = root.child;
         }
         this.parts.data.forEach(part => {
-            next.child = new RekursiveStruckturePart(part.name);
+            next.child = new RecursiveStructurePart(part.name);
             next = next.child;
             if (part.indexDef) {
-                next.child = new RekursiveStruckturePart('[' + part.indexDef.toString() + ']');
+                next.child = new RecursiveStructurePart('[' + part.indexDef.toString() + ']');
                 next = next.child;
             }
         });

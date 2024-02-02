@@ -16,32 +16,12 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ApiService, FullQualifiedName, RuntimeContext, Xo, XoDescriber, XoJson, XoStructureArray, XoStructureComplexField, XoStructureField, XoStructureObject, XoStructurePrimitive, XoStructureType } from '@zeta/api';
-import { GraphicallyRepresented, IComparable } from '@zeta/base';
-import { BehaviorSubject, Observable, filter, first, map } from 'rxjs';
+import { GraphicallyRepresented } from '@zeta/base';
+import { BehaviorSubject, Observable, filter, first, forkJoin, map, of, switchMap, tap } from 'rxjs';
 import { Draggable } from '../../shared/drag-and-drop/mod-drag-and-drop.service';
-import { RekursiveStruckturePart } from '@pmod/xo/expressions/comparable-path';
+import { RecursiveStructure, RecursiveStructurePart } from '@pmod/xo/expressions/comparable-path';
 import { XoVariable } from '@pmod/xo/variable.model';
 
-
-/*
-export interface Traversable {
-    /**
-     * Traverses a structure and returns that element that equals to `item`
-     *
-     * @param item Item to traverse structure with and to compare to each `Traversable`
-     * @returns `Traversable` equal to `item`
-     *\/
-    traverse(item: IComparable): Traversable;
-
-    /**
-     * Traverses a structure and looks for a path that matches `path`
-     *
-     * @param path Path to traverse structure with and to compare to each `Traversable`
-     * @returns `Traversable` at the end of a path equal to `path`
-     *\/
-    match(path: RekursiveStruckturePart): Traversable;
-}
-*/
 
 export interface TreeNodeFactory {
     createNodeFromStructure(structure: XoStructureField): SkeletonTreeNode;
@@ -51,8 +31,9 @@ export interface TreeNodeFactory {
     /**
      * Enrich given structure with children
      */
-    enrichStructure(structure: XoStructureObject): Observable<XoStructureObject>;
+    getNewChildren(structure: XoStructureObject): Observable<XoStructureField[]>;
     getSubtypes(structure: XoStructureObject): Observable<XoStructureType[]>;
+    getSubtypeStructure(type: XoStructureType): Observable<XoStructureObject>;
 }
 
 
@@ -61,7 +42,7 @@ export interface TreeNodeObserver {
 }
 
 
-export class SkeletonTreeNode implements GraphicallyRepresented<Element>, Draggable {
+export abstract class SkeletonTreeNode implements GraphicallyRepresented<Element>, Draggable {
     private _structure: XoStructureField;
     private _xfl: string;
     private _isList: boolean;
@@ -87,8 +68,15 @@ export class SkeletonTreeNode implements GraphicallyRepresented<Element>, Dragga
     }
 
 
-    setStructure(structure: XoStructureField) {
+    protected setStructure(structure: XoStructureField) {
         this._structure = structure;
+    }
+
+
+    protected changeStructureType(typeFqn: FullQualifiedName, typeRtc: RuntimeContext, typeLabel: string) {
+        this._structure.typeFqn = typeFqn;
+        this._structure.typeRtc = typeRtc;
+        this._structure.typeLabel = typeLabel;
     }
 
 
@@ -244,18 +232,12 @@ export class SkeletonTreeNode implements GraphicallyRepresented<Element>, Dragga
 
 
     /**
-     * @inheritdoc
+     * Traverses a structure and looks for a node that matches `path`
+     *
+     * @param path Path to traverse structure.
+     * @returns Observable will complete after firt value. Return matching `Node` or undefined.
      */
-    match(path: RekursiveStruckturePart): SkeletonTreeNode {
-        if (this.getXFLExpression() === path.path) {
-            let matchingNode: SkeletonTreeNode;
-            if (path.child) {
-                this.children.find(node => !!(matchingNode = node.match(path.child)));
-            }
-            return matchingNode ?? this;
-        }
-        return null;
-    }
+    abstract match(path: RecursiveStructurePart): Observable<SkeletonTreeNode>;
 
 
     /**
@@ -315,7 +297,7 @@ export class SkeletonTreeNode implements GraphicallyRepresented<Element>, Dragga
 
 export class PrimitiveSkeletonTreeNode extends SkeletonTreeNode {
 
-    constructor(structure: XoStructureField, nodeFactory: TreeNodeFactory, nodeObservers: Set<TreeNodeObserver>) {
+    constructor(structure: XoStructurePrimitive, nodeFactory: TreeNodeFactory, nodeObservers: Set<TreeNodeObserver>) {
         super(structure, nodeFactory, nodeObservers);
         this.collapsible = false;
     }
@@ -324,6 +306,12 @@ export class PrimitiveSkeletonTreeNode extends SkeletonTreeNode {
         return super.getStructure() as XoStructurePrimitive;
     }
 
+    match(path: RecursiveStructurePart): Observable<SkeletonTreeNode> {
+        if (path.path === this.getXFLExpression()) {
+            return of(this);
+        }
+        return of(undefined);
+    }
 
     /**
      * @inheritdoc
@@ -336,57 +324,86 @@ export class PrimitiveSkeletonTreeNode extends SkeletonTreeNode {
 
 
 export class ComplexSkeletonTreeNode extends SkeletonTreeNode {
-    private _subtypes: XoStructureObject[] = [];
+    private readonly _subtypes = new BehaviorSubject<XoStructureType[]>(null);
     private _sourceIndex: number;
-    private childrenInitialized = false;
+    private readonly _markForCheckChildren = new BehaviorSubject<boolean>(true);
+    private runningUpdateChildren: Observable<boolean> = undefined;
 
+
+    constructor(structure: XoStructureObject, protected nodeFactory: TreeNodeFactory, protected nodeObservers: Set<TreeNodeObserver> = new Set<TreeNodeObserver>()) {
+        super(structure, nodeFactory, nodeObservers);
+        this.nodeFactory.getSubtypes(this.getStructure()).pipe(
+            first()
+        ).subscribe(subtypes => this._subtypes.next(subtypes));
+    }
 
     getStructure(): XoStructureObject {
         return super.getStructure() as XoStructureObject;
     }
 
 
-    setStructure(structure: XoStructureField): void {
+    protected setStructure(structure: XoStructureObject) {
+        structure.children = [];
         super.setStructure(structure);
-
-        // here comes the whole structure including children and their types
-        // build all node children here and give them their describer
-
-        this._children.splice(0);
-        this.getStructure().children.forEach(field => {
-            const node = this.nodeFactory.createNodeFromStructure(field);
-            if (node) {
-                this._children.push(node);
-                node.parent = this;
-            }
-        });
-        this.notifyObservers();
     }
 
 
     uncollapse() {
+        this.updateChildren().subscribe();
         super.uncollapse();
-        this.initializeChildren();
     }
 
 
-    initializeChildren() {
-        // retrieve full object structure
-        if (!this.childrenInitialized) {
-            this.nodeFactory.enrichStructure(this.getStructure()).subscribe(structure => this.setStructure(structure));
-            this.childrenInitialized = true;
-        }
+    updateChildren(): Observable<boolean> {
+
+        return this.markForCheckChildren.pipe(
+            first(),
+            switchMap(markForCheck => {
+                if (markForCheck) {
+                    this.runningUpdateChildren = this.runningUpdateChildren ??
+                        this.nodeFactory.getNewChildren(this.getStructure()).pipe(
+                            first(),
+                            map(newChildren => {
+                                this.getStructure().addChildren(...newChildren);
+
+                                // here comes the whole structure including children and their types
+                                // build all node children here and give them their describer
+                                newChildren.forEach(field => {
+                                    const node = this.nodeFactory.createNodeFromStructure(field);
+                                    if (node) {
+                                        this._children.push(node);
+                                        node.parent = this;
+                                    }
+                                });
+                                this.notifyObservers();
+                                this._markForCheckChildren.next(false);
+                                this.runningUpdateChildren = undefined;
+                                return true;
+                            })
+                        );
+                    return this.runningUpdateChildren;
+                }
+                return of(false);
+            })
+        );
     }
 
 
-    refreshSubtypes() {
-        this.nodeFactory.getSubtypes(this.getStructure()).subscribe(
-            subtypes => this.setSubtypes(subtypes.filter(type => type instanceof XoStructureObject).map(type => type as XoStructureObject)));
+    private setSubtypeStructure(type: XoStructureType): Observable<boolean> {
+        // ask for structure of subtype and cast own structure to subtype structure.
+        return this.nodeFactory.getSubtypeStructure(type).pipe(
+            first(),
+            tap(structure => {
+                this.changeStructureType(structure.typeFqn, structure.typeRtc, structure.typeLabel);
+                this._markForCheckChildren.next(true);
+            }),
+            // after setting new structure, children should be updated.
+            switchMap(() => this.updateChildren())
+        );
     }
 
-
-    setSubtypes(subtypes: XoStructureObject[]) {
-        this._subtypes = subtypes;
+    get markForCheckChildren(): Observable<boolean> {
+        return this._markForCheckChildren.asObservable();
     }
 
 
@@ -400,16 +417,33 @@ export class ComplexSkeletonTreeNode extends SkeletonTreeNode {
     }
 
 
-    match(path: RekursiveStruckturePart): SkeletonTreeNode {
-        if (path.fqn === this.getStructure().typeFqn.encode(false)) {
-            this.refreshSubtypes();
-            const structure = this._subtypes.find(subType => path.fqn === subType.typeFqn.encode(false));
-            if (structure) {
-                this.setStructure(structure);
-            }
+    match(path: RecursiveStructurePart): Observable<SkeletonTreeNode> {
+        if (this.getXFLExpression() !== path.path) {
+            return of(undefined);
         }
-        this.initializeChildren();
-        return super.match(path);
+
+        const askChildrenForMatch = () => forkJoin(this.children.map(child => child.match(path.child))).pipe(
+            map(matches => matches.find(node => !!node) ?? this)
+        );
+
+        const continueMatching = () => path.child ? askChildrenForMatch() : of(this);
+
+        if (path.fqn && path.fqn !== this.getStructure().typeFqn.encode(false)) {
+            // wait for subtypes, to be initialized
+            return this._subtypes.pipe(
+                filter(types => !!types),
+                first(),
+                map(types => types.find(subType => path.fqn === subType.typeFqn.encode(false))),
+                // if this node was never been uncollapsed, children need to be initialized.
+                switchMap(type => type ? this.setSubtypeStructure(type) : this.updateChildren()),
+                // All structures ready. It can continue to match.
+                switchMap(() => continueMatching())
+            );
+        }
+        return this.updateChildren().pipe(
+            // wait for updateChildren and ask recursivly children afterwards for matching node.
+            switchMap(() => continueMatching())
+        );
     }
 
 
@@ -425,7 +459,7 @@ export class ArraySkeletonTreeNode extends SkeletonTreeNode {
 
     private _sourceIndex: number;
 
-    constructor(structure: XoStructureField, nodeFactory: TreeNodeFactory, nodeObservers: Set<TreeNodeObserver>) {
+    constructor(structure: XoStructureArray, nodeFactory: TreeNodeFactory, nodeObservers: Set<TreeNodeObserver>) {
         super(structure, nodeFactory, nodeObservers);
         this.isList = true;
     }
@@ -445,32 +479,31 @@ export class ArraySkeletonTreeNode extends SkeletonTreeNode {
     }
 
 
-    match(path: RekursiveStruckturePart): SkeletonTreeNode {
-
-
+    match(path: RecursiveStructurePart): Observable<SkeletonTreeNode> {
         if (this.getXFLExpression() !== path.path) {
-            return null;
+            return of(undefined);
         }
+
         if (!path.child) {
-            return this;
+            return of(this);
         }
 
-        let matchingNode: SkeletonTreeNode;
-        this.children.find(node => !!(matchingNode = node.match(path.child)));
-
-        if (matchingNode) {
-            return matchingNode;
-        }
-
-        matchingNode = this.nodeFactory.createNodeFromStructure(this.getStructure().add());
-        if (matchingNode) {
-            matchingNode.xfl = path.child.path;
-            this._children.push(matchingNode);
-            matchingNode.parent = this;
+        const createMatchingChild = (childPath: RecursiveStructurePart): Observable<SkeletonTreeNode> => {
+            const matchingChild = this.nodeFactory.createNodeFromStructure(this.getStructure().add());
+            matchingChild.xfl = childPath.path;
+            this._children.push(matchingChild);
+            matchingChild.parent = this;
             this.notifyObservers();
-            matchingNode = matchingNode.match(path.child);
-        }
-        return matchingNode ?? this;
+            return matchingChild.match(childPath);
+        };
+
+        // forkJoin errors, if incoming list is empty. If we have no children, we want to create a new one.
+        const foundMatchingChildren = this.children.length > 0 ? this.children.map(child => child.match(path.child)) : [of(undefined)];
+        return forkJoin(foundMatchingChildren).pipe(
+            map(matches => matches.find(node => !!node)),
+            // If no child match, create a new child, that will match. Because the matching of a potential new child is asynchronously, switchMap is needed.
+            switchMap(match => match ? of(match) : createMatchingChild(path.child))
+        );
     }
 
 
@@ -561,6 +594,19 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
         return this.describer;
     }
 
+    /**
+     * Traverses the tree along with the variable. Wait on setting root.
+     * Modifies the tree (changes selected subtype or adds array entries) if necessary/possible.
+     */
+    processVariable(structure: RecursiveStructure): Observable<SkeletonTreeNode> {
+
+        return this.root$.pipe(
+            filter(root => !!root),
+            first(),
+            switchMap(root => root.match(structure.getRecursiveStructure()))
+        );
+    }
+
 
     /**
      * Clears all `marked` states of all nodes
@@ -593,7 +639,7 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
     }
 
 
-    createComplexNode(structure: XoStructureComplexField): ComplexSkeletonTreeNode {
+    createComplexNode(structure: XoStructureObject): ComplexSkeletonTreeNode {
         return new ComplexSkeletonTreeNode(structure, this, new Set<TreeNodeObserver>([this]));
     }
 
@@ -603,15 +649,18 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
     }
 
 
-    enrichStructure(structure: XoStructureObject): Observable<XoStructureObject> {
+    getNewChildren(structure: XoStructureObject): Observable<XoStructureField[]> {
         const describer = <XoDescriber>{ rtc: structure.typeRtc, fqn: structure.typeFqn };
         return this.api.getStructure(structure.typeRtc, [describer]).get(describer).pipe(
             first(),
             map(enrichedStructure => {
-                // only take children of response and leave the rest of the structure alone
-                // (the origin structure might have context specific data like a 'parent' or a parent-specific 'label')
-                structure.children = enrichedStructure.children;
-                return structure;
+                const newChildren = enrichedStructure.children.filter(child => !structure.children.find(oldChild => {
+                    const oldChildWithoutParent = oldChild.clone(true);
+                    oldChildWithoutParent.parent = null;
+                    child.parent = null;
+                    return child.equals(oldChildWithoutParent);
+                }));
+                return newChildren;
             })
         );
     }
@@ -622,6 +671,10 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
         return this.api.getSubtypes(structure.typeRtc, [describer]).get(describer).pipe(first());
     }
 
+    getSubtypeStructure(type: XoStructureType): Observable<XoStructureObject> {
+        const describer = <XoDescriber>{ rtc: type.typeRtc, fqn: type.typeFqn };
+        return this.api.getStructure(type.typeRtc, [describer]).get(describer).pipe(first());
+    }
 
     nodeChange(node: SkeletonTreeNode): void {
         this.observer?.nodeChange(this, node);

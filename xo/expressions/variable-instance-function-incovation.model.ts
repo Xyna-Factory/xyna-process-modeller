@@ -18,7 +18,7 @@
 import { XoObjectClass, XoArrayClass, XoProperty, XoArray } from '@zeta/api';
 import { XoVariableAccessPart } from './variable-access-part.model';
 import { XoExpressionArray } from './expression.model';
-import { RecursiveStruckture } from './comparable-path';
+import { RecursiveStructure } from './comparable-path';
 
 
 @XoObjectClass(XoVariableAccessPart, 'xmcp.processmodeller.datatypes.expression', 'VariableInstanceFunctionIncovation')
@@ -28,7 +28,7 @@ export class XoVariableInstanceFunctionIncovation extends XoVariableAccessPart {
     @XoProperty(XoExpressionArray)
     functionParameter: XoExpressionArray = new XoExpressionArray();
 
-    extractInvolvedVariable(): RecursiveStruckture[] {
+    extractInvolvedVariable(): RecursiveStructure[] {
         return [...super.extractInvolvedVariable(), ...this.functionParameter.data.flatMap(exp => exp.extractInvolvedVariable())];
     }
 

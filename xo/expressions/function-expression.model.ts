@@ -18,15 +18,12 @@
 import { XoObjectClass, XoArrayClass, XoProperty, XoArray } from '@zeta/api';
 import { XoExpression, XoExpressionArray } from './expression.model';
 import { XoVariableAccessPartArray } from './variable-access-part.model';
+import { RecursiveStructure } from './comparable-path';
 import { XoExpressionVariable } from './expression-variable.model';
-import { RecursiveStruckture, RekursiveStruckturePart } from './comparable-path';
-import { XoVariable } from '../variable.model';
-import { XoSingleVarExpression } from './single-var-expression.model';
-import { XoLiteralExpression } from './literal-expression.model';
 
 
 @XoObjectClass(XoExpression, 'xmcp.processmodeller.datatypes.expression', 'FunctionExpression')
-export class XoFunctionExpression extends XoExpression implements RecursiveStruckture {
+export class XoFunctionExpression extends XoExpression {
 
 
     @XoProperty(XoExpressionArray)
@@ -45,73 +42,35 @@ export class XoFunctionExpression extends XoExpression implements RecursiveStruc
     parts: XoVariableAccessPartArray = new XoVariableAccessPartArray();
 
 
-    extractInvolvedVariable(): RecursiveStruckture[] {
-        if (this.function === 'cast') {
-            return [this, ...this.getExpressionVariable().getContainingVariable(), ...this.subExpressions.data.flatMap(exp => exp.extractInvolvedVariable())];
-        }
-        return [...this.subExpressions.data.flatMap(exp => exp.extractInvolvedVariable()),  ...this.indexDef?.extractInvolvedVariable() ?? []];
+    extractInvolvedVariable(): RecursiveStructure[] {
+        return [...this.subExpressions.data.flatMap(exp => exp.extractInvolvedVariable()), ...this.indexDef?.extractInvolvedVariable() ?? []];
     }
 
-
-    private getExpressionVariable(): XoExpressionVariable {
-        // is it allways a SingleVarExpression?
-        return (this.subExpressions.data[1] as XoSingleVarExpression).variable;
-    }
-
-
-    getRecursiveStructure(): RekursiveStruckturePart {
-        if (this.function === 'cast') {
-            const root: RekursiveStruckturePart = this.getExpressionVariable().getRecursiveStructure();
-            let next: RekursiveStruckturePart = root;
-            while (next.child) {
-                next = next.child;
+    extractFirstStructure(): RecursiveStructure {
+        for (const exp of this.subExpressions) {
+            const structure = exp.extractFirstStructure();
+            if (structure) {
+                return structure;
             }
-            next.fqn = (this.subExpressions.data[0] as XoLiteralExpression).value;
-            this.parts.data.forEach(part => {
-                next.child = new RekursiveStruckturePart(part.name);
-                next = next.child;
-                if (part.indexDef) {
-                    next.child = new RekursiveStruckturePart('[' + part.indexDef.toString() + ']');
-                    next = next.child;
-                }
-            });
-            return root;
         }
-        throw new Error('Wrong function');
+        return undefined;
     }
 
-
-    getVariable(): XoExpressionVariable {
-        if (this.function === 'cast') {
-            this.getExpressionVariable();
+    getFirstVariable(): XoExpressionVariable {
+        for (const exp of this.subExpressions) {
+            const variable = exp.getFirstVariable();
+            if (variable) {
+                return variable;
+            }
         }
-        throw new Error('Wrong function');
+        return undefined;
     }
-
 
     toString(): string {
-        if (this.function === 'cast') {
-            return this.castXFL();
-        }
-        return this.defaultXFL();
-    }
-
-
-    private defaultXFL(): string {
         return this.function +
         '(' + this.subExpressions.data.map(exp => exp.toString()).join(',') + ')' +
         (this.indexDef ? '[' + this.indexDef.toString() + ']' : '') +
         (this.parts && this.parts.length > 0 ? '.' + this.parts.data.map(part => part.toString()).join('.') : '');
-    }
-
-
-    // function = 'cast'. First argument is a stringLiteral containing the fqn to cast to. Second argument is Object wich has to cast.
-    private castXFL(): string {
-        return this.subExpressions.data[1] +
-            '#cast(' +
-            this.subExpressions.data[0] + ')' +
-            (this.indexDef ? '[' + this.indexDef.toString() + ']' : '') +
-            (this.parts && this.parts.length > 0 ? '.' + this.parts.data.map(part => part.toString()).join('.') : '');
     }
 }
 

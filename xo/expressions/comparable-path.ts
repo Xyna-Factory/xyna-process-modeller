@@ -18,19 +18,19 @@
 
 import { XoExpressionVariable } from './expression-variable.model';
 
-export class RekursiveStruckturePart {
+export class RecursiveStructurePart {
 
-    private _child: RekursiveStruckturePart;
+    private _child: RecursiveStructurePart;
     private _fqn: string;
 
     constructor(public path: string) {
     }
 
-    get child(): RekursiveStruckturePart {
+    get child(): RecursiveStructurePart {
         return this._child;
     }
 
-    set child(child: RekursiveStruckturePart) {
+    set child(child: RecursiveStructurePart) {
         this._child = child;
     }
 
@@ -43,9 +43,9 @@ export class RekursiveStruckturePart {
     }
 }
 
-export interface RecursiveStruckture {
+export interface RecursiveStructure {
 
     getVariable(): XoExpressionVariable;
 
-    getRecursiveStructure(): RekursiveStruckturePart;
+    getRecursiveStructure(): RecursiveStructurePart;
 }
