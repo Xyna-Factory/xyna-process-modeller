@@ -53,10 +53,10 @@ export abstract class SkeletonTreeNode implements GraphicallyRepresented<Element
     }
 
 
-    protected changeStructureType(typeFqn: FullQualifiedName, typeRtc: RuntimeContext, typeLabel: string) {
-        this._structure.typeFqn = typeFqn;
-        this._structure.typeRtc = typeRtc;
-        this._structure.typeLabel = typeLabel;
+    protected changeStructureType(type: XoStructureType) {
+        this._structure.typeFqn = type.typeFqn;
+        this._structure.typeRtc = type.typeRtc;
+        this._structure.typeLabel = type.typeLabel;
     }
 
 
@@ -274,7 +274,6 @@ export abstract class SkeletonTreeNode implements GraphicallyRepresented<Element
 }
 
 
-
 export class PrimitiveSkeletonTreeNode extends SkeletonTreeNode {
 
     constructor(structure: XoStructurePrimitive, nodeFactory: TreeNodeFactory, nodeObservers: Set<TreeNodeObserver>) {
@@ -300,7 +299,6 @@ export class PrimitiveSkeletonTreeNode extends SkeletonTreeNode {
         return this.xfl ?? this.getStructure()?.name ?? '';
     }
 }
-
 
 
 export class ComplexSkeletonTreeNode extends SkeletonTreeNode {
@@ -370,16 +368,10 @@ export class ComplexSkeletonTreeNode extends SkeletonTreeNode {
 
 
     private setSubtypeStructure(type: XoStructureType): Observable<boolean> {
-        // ask for structure of subtype and cast own structure to subtype structure.
-        return this.nodeFactory.getSubtypeStructure(type).pipe(
-            first(),
-            tap(structure => {
-                this.changeStructureType(structure.typeFqn, structure.typeRtc, structure.typeLabel);
-                this._markForCheckChildren.next(true);
-            }),
-            // after setting new structure, children should be updated.
-            switchMap(() => this.updateChildren())
-        );
+
+        this.changeStructureType(type);
+        this._markForCheckChildren.next(true);
+        return this.updateChildren();
     }
 
     get markForCheckChildren(): Observable<boolean> {

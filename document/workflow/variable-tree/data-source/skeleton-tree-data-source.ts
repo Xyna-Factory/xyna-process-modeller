@@ -27,12 +27,8 @@ export interface TreeNodeFactory {
     createPrimitiveNode(structure: XoStructurePrimitive): PrimitiveSkeletonTreeNode;
     createComplexNode(structure: XoStructureComplexField): ComplexSkeletonTreeNode;
     createArrayNode(structure: XoStructureArray): ArraySkeletonTreeNode;
-    /**
-     * Enrich given structure with children
-     */
     getNewChildren(structure: XoStructureObject): Observable<XoStructureField[]>;
     getSubtypes(structure: XoStructureObject): Observable<XoStructureType[]>;
-    getSubtypeStructure(type: XoStructureType): Observable<XoStructureObject>;
 }
 
 
@@ -200,10 +196,6 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
         return this.api.getSubtypes(structure.typeRtc, [describer]).get(describer).pipe(first());
     }
 
-    getSubtypeStructure(type: XoStructureType): Observable<XoStructureObject> {
-        const describer = <XoDescriber>{ rtc: type.typeRtc, fqn: type.typeFqn };
-        return this.api.getStructure(type.typeRtc, [describer]).get(describer).pipe(first());
-    }
 
     nodeChange(node: SkeletonTreeNode): void {
         this.observer?.nodeChange(this, node);
