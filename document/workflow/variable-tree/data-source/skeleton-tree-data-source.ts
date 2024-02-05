@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ApiService, FullQualifiedName, RuntimeContext, XoDescriber, XoStructureArray, XoStructureComplexField, XoStructureField, XoStructureObject, XoStructurePrimitive, XoStructureType } from '@zeta/api';
+import { ApiService, FullQualifiedName, RuntimeContext, XoDescriber, XoDescriberCache, XoStructureArray, XoStructureComplexField, XoStructureField, XoStructureObject, XoStructurePrimitive, XoStructureType } from '@zeta/api';
 import { BehaviorSubject, Observable, filter, first, map, switchMap } from 'rxjs';
 import { RecursiveStructure } from '@pmod/xo/expressions/comparable-path';
 import { XoVariable } from '@pmod/xo/variable.model';
@@ -82,12 +82,12 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
     /**
      * @param rootIndex Index of root variable in outer context
      */
-    constructor(protected describer: VariableDescriber, protected api: ApiService, protected rtc: RuntimeContext, protected observer: SkeletonTreeDataSourceObserver, protected rootIndex: number = undefined) {
+    constructor(protected describer: VariableDescriber, protected api: ApiService, protected rtc: RuntimeContext, protected observer: SkeletonTreeDataSourceObserver, protected rootIndex: number = undefined, private readonly structureCache?: XoDescriberCache<XoStructureObject>) {
     }
 
 
     refresh() {
-        this.api.getStructure(this.rtc, [this.describer]).get(this.describer).pipe(first()).subscribe(structure => this.setStructure(structure));
+        this.api.getStructure(this.rtc, [this.describer], this.structureCache).get(this.describer).pipe(first()).subscribe(structure => this.setStructure(structure));
     }
 
 
@@ -176,7 +176,7 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
 
     getNewChildren(structure: XoStructureObject): Observable<XoStructureField[]> {
         const describer = <XoDescriber>{ rtc: structure.typeRtc, fqn: structure.typeFqn };
-        return this.api.getStructure(structure.typeRtc, [describer]).get(describer).pipe(
+        return this.api.getStructure(structure.typeRtc, [describer], this.structureCache).get(describer).pipe(
             first(),
             map(enrichedStructure => {
                 const newChildren = enrichedStructure.children.filter(child => !structure.children.find(oldChild => {

@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnDestroy, OnInit } from '@angular/core';
-import { ApiService, FullQualifiedName } from '@zeta/api';
+import { ApiService, FullQualifiedName, XoDescriberCache, XoStructureObject } from '@zeta/api';
 import { Observable, Subscription, concat, filter, first, forkJoin, of, tap } from 'rxjs';
 import { FlowDefinition } from './flow-canvas/flow-canvas.component';
 import { XoMapping } from '@pmod/xo/mapping.model';
@@ -100,7 +100,7 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
 
     expressions: ExpressionWrapper[];
 
-    //private readonly structureCache = new XoDescriberCache<XoStructureObject>();  TODO use cache
+    private readonly structureCache = new XoDescriberCache<XoStructureObject>(1000);
     inputDataSources: SkeletonTreeDataSource[] = [];
     outputDataSources: SkeletonTreeDataSource[] = [];
 
@@ -178,14 +178,14 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
             inputVariables?.forEach((variable, index) => {
                 const rtc = variable.$rtc.runtimeContext() ?? this.documentModel.originRuntimeContext;
                 const desc = new VariableDescriber(rtc, FullQualifiedName.decode(variable.$fqn), variable.isList, variable.label);
-                const ds = new SkeletonTreeDataSource(desc, apiService, rtc, this, index);
+                const ds = new SkeletonTreeDataSource(desc, apiService, rtc, this, index, this.structureCache);
                 ds.refresh();
                 this.inputDataSources.push(ds);
             });
             outputVariables?.forEach((variable, index) => {
                 const rtc = variable.$rtc.runtimeContext() ?? this.documentModel.originRuntimeContext;
                 const desc = new VariableDescriber(rtc, FullQualifiedName.decode(variable.$fqn), variable.isList, variable.label);
-                const ds = new SkeletonTreeDataSource(desc, apiService, rtc, this, inputVariables.length + index);
+                const ds = new SkeletonTreeDataSource(desc, apiService, rtc, this, inputVariables.length + index, this.structureCache);
                 ds.refresh();
                 this.outputDataSources.push(ds);
             });
