@@ -107,14 +107,6 @@ export abstract class SkeletonTreeNode implements GraphicallyRepresented<Element
     }
 
 
-    markIfChildrenMarked() {
-        // all children marked
-        if (this.children.length > 0 && !this.children.some(child => !child.marked)) {
-            this.marked = true;
-        }
-    }
-
-
     get selectedChange(): Observable<boolean> {
         return this._selected$.asObservable();
     }
@@ -255,7 +247,7 @@ export class PrimitiveSkeletonTreeNode extends SkeletonTreeNode {
     }
 
     get collapsible(): boolean {
-        return true;
+        return false;
     }
 
     get collapsed(): boolean {
@@ -337,6 +329,14 @@ export abstract class ComplexSkeletonTreeNode extends SkeletonTreeNode {
 
     getXFLSeparator(): string {
         return '.';
+    }
+
+
+    markIfChildrenMarked() {
+        // all children marked
+        if (this.children.length > 0 && !this.children.some(child => !child.marked)) {
+            this.marked = true;
+        }
     }
 
 
