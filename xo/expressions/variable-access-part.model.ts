@@ -17,7 +17,7 @@
  */
 import { XoObjectClass, XoArrayClass, XoProperty, XoObject, XoArray } from '@zeta/api';
 import { XoExpression } from './expression.model';
-import { XoExpressionVariable } from './expression-variable.model';
+import { RecursiveStructure } from './RecursiveStructurePart';
 
 
 @XoObjectClass(null, 'xmcp.processmodeller.datatypes.expression', 'VariableAccessPart')
@@ -32,7 +32,7 @@ export class XoVariableAccessPart extends XoObject {
     indexDef: XoExpression;
 
 
-    extractInvolvedVariable(): XoExpressionVariable[] {
+    extractInvolvedVariable(): RecursiveStructure[] {
         return this.indexDef?.extractInvolvedVariable() ?? [];
     }
 

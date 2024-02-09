@@ -17,6 +17,7 @@
  */
 import { XoObjectClass, XoArrayClass, XoProperty, XoArray } from '@zeta/api';
 import { XoExpression } from './expression.model';
+import { RecursiveStructure } from './RecursiveStructurePart';
 import { XoExpressionVariable } from './expression-variable.model';
 
 
@@ -36,8 +37,24 @@ export class XoExpression2Args extends XoExpression {
     operator: string;
 
 
-    extractInvolvedVariable(): XoExpressionVariable[] {
+    extractInvolvedVariable(): RecursiveStructure[] {
         return [...this.var1.extractInvolvedVariable(), ...this.var2.extractInvolvedVariable()];
+    }
+
+    extractFirstStructure(): RecursiveStructure {
+        const structure = this.var1.extractFirstStructure();
+        if (structure) {
+            return structure;
+        }
+        return this.var2.extractFirstStructure();
+    }
+
+    getFirstVariable(): XoExpressionVariable {
+        const variable = this.var1.getFirstVariable();
+        if (variable) {
+            return variable;
+        }
+        return this.var2.getFirstVariable();
     }
 
     toString(): string {

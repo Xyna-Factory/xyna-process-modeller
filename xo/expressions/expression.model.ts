@@ -16,14 +16,23 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { XoObjectClass, XoArrayClass, XoObject, XoArray } from '@zeta/api';
+import { RecursiveStructure } from './RecursiveStructurePart';
 import { XoExpressionVariable } from './expression-variable.model';
 
 
 @XoObjectClass(null, 'xmcp.processmodeller.datatypes.expression', 'Expression')
 export class XoExpression extends XoObject {
 
-    extractInvolvedVariable(): XoExpressionVariable[] {
+    extractInvolvedVariable(): RecursiveStructure[] {
         return [];
+    }
+
+    extractFirstStructure(): RecursiveStructure {
+        return undefined;
+    }
+
+    getFirstVariable(): XoExpressionVariable {
+        return undefined;
     }
 
     toString(): string {

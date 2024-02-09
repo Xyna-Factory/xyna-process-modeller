@@ -16,18 +16,36 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 
-export class ComparablePath {
+import { XoExpressionVariable } from './expression-variable.model';
 
-    private _child: ComparablePath;
+export class RecursiveStructurePart {
+
+    private _child: RecursiveStructurePart;
+    private _fqn: string;
 
     constructor(public path: string) {
     }
 
-    get child(): ComparablePath {
+    get child(): RecursiveStructurePart {
         return this._child;
     }
 
-    set child(child: ComparablePath) {
+    set child(child: RecursiveStructurePart) {
         this._child = child;
     }
+
+    get fqn(): string {
+        return this._fqn;
+    }
+
+    set fqn(fqn: string) {
+        this._fqn = fqn;
+    }
+}
+
+export interface RecursiveStructure {
+
+    getVariable(): XoExpressionVariable;
+
+    getRecursiveStructure(): RecursiveStructurePart;
 }

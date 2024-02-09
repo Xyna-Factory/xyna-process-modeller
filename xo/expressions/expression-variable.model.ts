@@ -18,12 +18,12 @@
 import { XoObjectClass, XoArrayClass, XoProperty, XoObject, XoArray, XoTransient } from '@zeta/api';
 import { XoVariableAccessPartArray } from './variable-access-part.model';
 import { XoExpression } from './expression.model';
-import { ComparablePath } from './comparable-path';
+import { RecursiveStructure, RecursiveStructurePart } from './RecursiveStructurePart';
 import { XoVariable } from '../variable.model';
 
 
 @XoObjectClass(null, 'xmcp.processmodeller.datatypes.expression', 'ExpressionVariable')
-export class XoExpressionVariable extends XoObject {
+export class XoExpressionVariable extends XoObject implements RecursiveStructure {
 
 
     @XoProperty()
@@ -43,29 +43,36 @@ export class XoExpressionVariable extends XoObject {
     indexDef: XoExpression;
 
 
-    extractInvolvedVariable(): XoExpressionVariable[] {
-        return [this, ...this.parts.data.flatMap(part => part.extractInvolvedVariable()), ...this.indexDef?.extractInvolvedVariable() ?? []];
+    extractInvolvedVariable(): RecursiveStructure[] {
+        return [...this.parts.data.flatMap(part => part.extractInvolvedVariable()), ...this.indexDef?.extractInvolvedVariable() ?? []];
     }
 
 
-    getRecursiveStructure(): ComparablePath {
-        const root = new ComparablePath('%' + this.varNum.toString() + '%');
+    getRecursiveStructure(): RecursiveStructurePart {
+        const root = new RecursiveStructurePart('%' + this.varNum.toString() + '%');
         let next = root;
         if (this.indexDef) {
-            root.child = new ComparablePath('[' + this.indexDef.toString() + ']');
+            root.child = new RecursiveStructurePart('[' + this.indexDef.toString() + ']');
             next = root.child;
         }
         this.parts.data.forEach(part => {
-            next.child = new ComparablePath(part.name);
+            next.child = new RecursiveStructurePart(part.name);
             next = next.child;
             if (part.indexDef) {
-                next.child = new ComparablePath('[' + part.indexDef.toString() + ']');
+                next.child = new RecursiveStructurePart('[' + part.indexDef.toString() + ']');
                 next = next.child;
             }
         });
 
         return root;
     }
+
+
+
+    getVariable(): XoExpressionVariable {
+        return this;
+    }
+
 
     toString(): string {
         return '%' + this.varNum + '%' +

@@ -16,19 +16,17 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnDestroy, OnInit } from '@angular/core';
-import { ApiService, FullQualifiedName } from '@zeta/api';
-import { FormulaTreeDataSource } from '../variable-tree/data-source/formula-tree-data-source';
-import { Subscription, filter, first, forkJoin, tap } from 'rxjs';
+import { ApiService, FullQualifiedName, XoDescriberCache, XoStructureObject } from '@zeta/api';
+import { Observable, Subscription, concat, filter, first, forkJoin, of, tap } from 'rxjs';
 import { FlowDefinition } from './flow-canvas/flow-canvas.component';
 import { XoMapping } from '@pmod/xo/mapping.model';
 import { ComponentMappingService } from '@pmod/document/component-mapping.service';
 import { DocumentService } from '@pmod/document/document.service';
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
-import { SkeletonTreeDataSource, SkeletonTreeDataSourceObserver, SkeletonTreeNode, VariableDescriber } from '../variable-tree/data-source/skeleton-tree-data-source';
+import { SkeletonTreeDataSource, SkeletonTreeDataSourceObserver, VariableDescriber } from '../variable-tree/data-source/skeleton-tree-data-source';
 import { ModellingActionType, XmomService } from '@pmod/api/xmom.service';
 import { CreateAssignmentEvent } from '../variable-tree-node/variable-tree-node.component';
 import { XoModelledExpression } from '@pmod/xo/expressions/modelled-expression.model';
-import { XoExpressionVariable } from '@pmod/xo/expressions/expression-variable.model';
 import { XoSingleVarExpression } from '@pmod/xo/expressions/single-var-expression.model';
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
 import { FormulaAreaComponent } from '../formula-area/formula-area.component';
@@ -37,6 +35,9 @@ import { XoExpression2Args } from '@pmod/xo/expressions/expression2-args.model';
 import { XoNotExpression } from '@pmod/xo/expressions/not-expression.model';
 import { XoVariableInstanceFunctionIncovation } from '@pmod/xo/expressions/variable-instance-function-incovation.model';
 import { XoFunctionExpression } from '@pmod/xo/expressions/function-expression.model';
+import { RecursiveStructure } from '@pmod/xo/expressions/RecursiveStructurePart';
+import { XoCastExpression } from '@pmod/xo/expressions/cast-expression.model';
+import { SkeletonTreeNode } from '../variable-tree/data-source/skeleton-tree-node';
 
 
 
@@ -47,7 +48,7 @@ import { XoFunctionExpression } from '@pmod/xo/expressions/function-expression.m
 class ExpressionPart {
     private _node: SkeletonTreeNode;
 
-    constructor(public expression: XoExpressionVariable) {
+    constructor(public expression: RecursiveStructure) {
     }
 
     get node(): SkeletonTreeNode {
@@ -77,7 +78,7 @@ class ExpressionWrapper {
     }
 
     get parts(): ExpressionPart[] {
-        return this.targetPart ?  [...this.sourcePart, this.targetPart] : this.sourcePart;
+        return this.targetPart ? [...this.sourcePart, this.targetPart] : this.sourcePart;
     }
 }
 
@@ -99,9 +100,9 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
 
     expressions: ExpressionWrapper[];
 
-    //private readonly structureCache = new XoDescriberCache<XoStructureObject>();  TODO use cache
-    inputDataSources: FormulaTreeDataSource[] = [];
-    outputDataSources: FormulaTreeDataSource[] = [];
+    private readonly structureCache = new XoDescriberCache<XoStructureObject>(1000);
+    inputDataSources: SkeletonTreeDataSource[] = [];
+    outputDataSources: SkeletonTreeDataSource[] = [];
 
     flows: FlowDefinition[] = [];
 
@@ -141,6 +142,7 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
         const p3 = new XoNotExpression();
         const p4 = new XoVariableInstanceFunctionIncovation();
         const p5 = new XoFunctionExpression();
+        const p6 = new XoCastExpression();
         /* eslint-enable @typescript-eslint/no-unused-vars */
 
     }
@@ -176,14 +178,14 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
             inputVariables?.forEach((variable, index) => {
                 const rtc = variable.$rtc.runtimeContext() ?? this.documentModel.originRuntimeContext;
                 const desc = new VariableDescriber(rtc, FullQualifiedName.decode(variable.$fqn), variable.isList, variable.label);
-                const ds = new FormulaTreeDataSource(desc, apiService, rtc, this, index);
+                const ds = new SkeletonTreeDataSource(desc, apiService, rtc, this, index, this.structureCache);
                 ds.refresh();
                 this.inputDataSources.push(ds);
             });
             outputVariables?.forEach((variable, index) => {
                 const rtc = variable.$rtc.runtimeContext() ?? this.documentModel.originRuntimeContext;
                 const desc = new VariableDescriber(rtc, FullQualifiedName.decode(variable.$fqn), variable.isList, variable.label);
-                const ds = new FormulaTreeDataSource(desc, apiService, rtc, this, inputVariables.length + index);
+                const ds = new SkeletonTreeDataSource(desc, apiService, rtc, this, inputVariables.length + index, this.structureCache);
                 ds.refresh();
                 this.outputDataSources.push(ds);
             });
@@ -205,10 +207,10 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
                         // assign XoVariables to ExpressionVariables
                         this.expressions.forEach(expression => {
                             const sourceVariable = expression.sourcePart.map(part => part.expression);
-                            sourceVariable.forEach(variable => variable.variable = mappingVariables[variable.varNum]);
+                            sourceVariable.forEach(variable => variable.getVariable().variable = mappingVariables[variable.getVariable().varNum]);
                             const targetVariable = expression.targetPart?.expression;
                             if (targetVariable) {
-                                targetVariable.variable = mappingVariables[targetVariable.varNum];
+                                targetVariable.getVariable().variable = mappingVariables[targetVariable.getVariable().varNum];
                             }
                         });
                     })
@@ -231,25 +233,41 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
 
         dataSources.forEach(ds => ds.clearMarks());
 
+        const matchingObservableByDatasource: Observable<SkeletonTreeNode>[][] = dataSources.map(() => []);
+
         this.expressions.forEach(expression => {
             expression.parts.forEach(part => {
-                const ds = dataSources[part.expression?.varNum ?? 0];
-                const correspondingNode = ds?.processVariable(part.expression);
-                part.node = correspondingNode;
+                const index = part.expression?.getVariable().varNum ?? 0;
+                const ds = dataSources[index];
+                const matchingObservable = ds?.processVariable(part.expression).pipe(
+                    first(),
+                    tap(node => part.node = node)
+                );
+                matchingObservableByDatasource[index].push(matchingObservable);
             });
         });
 
-        // construct flows for graphical representation
-        this.flows = this.expressions
-            .filter(expression => !!expression.targetPart)
-            .flatMap(expression =>
-                expression.sourcePart.length > 0
-                    ? expression.sourcePart.map(part => <FlowDefinition>{ source: part.node, destination: expression.targetPart.node })
-                    // if there are no source nodes from the tree, this is a literal assignment. Use literal as description
-                    : <FlowDefinition>{ source: null, description: '<literal>', destination: expression.targetPart.node }
-            );
-        this.cdr.markForCheck();
-        this.isRefreshing = false;
+        // different datasources can match simultaneously
+        forkJoin(matchingObservableByDatasource.map(
+            // matching in same datasource should be synchronously, because matching can change the structure of the datasource.
+            obs => concat(...obs)) //concat(obs) returns observables of observables.
+        ).subscribe({
+            next: () => {
+                // construct flows for graphical representation
+                this.flows = this.expressions
+                    .filter(expression => !!expression.targetPart)
+                    .flatMap(expression =>
+                        expression.sourcePart.length > 0
+                            ? expression.sourcePart.map(part => <FlowDefinition>{ source: part.node, destination: expression.targetPart.node })
+                            // if there are no source nodes from the tree, this is a literal assignment. Use literal as description
+                            : <FlowDefinition>{ source: null, description: '<literal>', destination: expression.targetPart.node }
+                    );
+            },
+            complete: () => {
+                this.cdr.markForCheck();
+                this.isRefreshing = false;
+            }
+        });
     }
 
 

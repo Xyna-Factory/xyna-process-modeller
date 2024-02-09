@@ -18,6 +18,7 @@
 import { XoObjectClass, XoArrayClass, XoProperty, XoArray } from '@zeta/api';
 import { XoExpression1Arg } from './expression1-arg.model';
 import { XoExpression } from './expression.model';
+import { RecursiveStructure } from './RecursiveStructurePart';
 import { XoExpressionVariable } from './expression-variable.model';
 
 
@@ -28,8 +29,16 @@ export class XoNotExpression extends XoExpression1Arg {
     @XoProperty(XoExpression)
     expression: XoExpression = new XoExpression();
 
-    extractInvolvedVariable(): XoExpressionVariable[] {
+    extractInvolvedVariable(): RecursiveStructure[] {
         return this.expression.extractInvolvedVariable();
+    }
+
+    extractFirstStructure(): RecursiveStructure {
+        return this.expression.extractFirstStructure();
+    }
+
+    getFirstVariable(): XoExpressionVariable {
+        return this.expression.getFirstVariable();
     }
 
     toString(): string {
