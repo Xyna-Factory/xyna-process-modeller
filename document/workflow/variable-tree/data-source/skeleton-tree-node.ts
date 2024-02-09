@@ -15,11 +15,11 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { FullQualifiedName, RuntimeContext, Xo, XoJson, XoStructureArray, XoStructureField, XoStructureObject, XoStructurePrimitive, XoStructureType } from '@zeta/api';
+import { FullQualifiedName, Xo, XoJson, XoStructureArray, XoStructureField, XoStructureObject, XoStructurePrimitive, XoStructureType } from '@zeta/api';
 import { GraphicallyRepresented } from '@zeta/base';
-import { BehaviorSubject, Observable, filter, first, forkJoin, map, of, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, filter, first, forkJoin, map, of, switchMap } from 'rxjs';
 import { Draggable } from '../../shared/drag-and-drop/mod-drag-and-drop.service';
-import { RecursiveStructurePart } from '@pmod/xo/expressions/comparable-path';
+import { RecursiveStructurePart } from '@pmod/xo/expressions/RecursiveStructurePart';
 import { TreeNodeFactory, TreeNodeObserver } from './skeleton-tree-data-source';
 
 export abstract class SkeletonTreeNode implements GraphicallyRepresented<Element>, Draggable {
@@ -164,7 +164,7 @@ export abstract class SkeletonTreeNode implements GraphicallyRepresented<Element
 
 
     get label(): string {
-        return this.xfl ?? this.getStructure().label ?? this.getStructure().name;
+        return this.getStructure().label ?? this.getStructure().name;
     }
 
 
@@ -261,7 +261,7 @@ export abstract class SkeletonTreeNode implements GraphicallyRepresented<Element
 
 
     get id(): string {
-        return this.label;
+        return this.toXFL();
     }
 
     get fqn(): FullQualifiedName {
@@ -463,6 +463,7 @@ export class ArraySkeletonTreeNode extends SkeletonTreeNode {
         const createMatchingChild = (childPath: RecursiveStructurePart): Observable<SkeletonTreeNode> => {
             const matchingChild = this.nodeFactory.createNodeFromStructure(this.getStructure().add());
             matchingChild.xfl = childPath.path;
+            matchingChild.getStructure().label = childPath.path;
             this._children.push(matchingChild);
             matchingChild.parent = this;
             this.notifyObservers();

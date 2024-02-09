@@ -17,7 +17,7 @@
  */
 import { XoObjectClass, XoArrayClass, XoProperty, XoObject, XoArray } from '@zeta/api';
 import { XoExpression } from './expression.model';
-import { RecursiveStructure } from './comparable-path';
+import { RecursiveStructure } from './RecursiveStructurePart';
 
 
 @XoObjectClass(null, 'xmcp.processmodeller.datatypes.expression', 'VariableAccessPart')

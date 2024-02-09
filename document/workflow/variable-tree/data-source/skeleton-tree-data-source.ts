@@ -17,7 +17,7 @@
  */
 import { ApiService, FullQualifiedName, RuntimeContext, XoDescriber, XoDescriberCache, XoStructureArray, XoStructureComplexField, XoStructureField, XoStructureObject, XoStructurePrimitive, XoStructureType } from '@zeta/api';
 import { BehaviorSubject, Observable, filter, first, map, switchMap } from 'rxjs';
-import { RecursiveStructure } from '@pmod/xo/expressions/comparable-path';
+import { RecursiveStructure } from '@pmod/xo/expressions/RecursiveStructurePart';
 import { XoVariable } from '@pmod/xo/variable.model';
 import { ArraySkeletonTreeNode, ComplexSkeletonTreeNode, PrimitiveSkeletonTreeNode, SkeletonTreeNode } from './skeleton-tree-node';
 

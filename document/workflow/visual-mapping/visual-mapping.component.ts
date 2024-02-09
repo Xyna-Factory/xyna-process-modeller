@@ -35,7 +35,7 @@ import { XoExpression2Args } from '@pmod/xo/expressions/expression2-args.model';
 import { XoNotExpression } from '@pmod/xo/expressions/not-expression.model';
 import { XoVariableInstanceFunctionIncovation } from '@pmod/xo/expressions/variable-instance-function-incovation.model';
 import { XoFunctionExpression } from '@pmod/xo/expressions/function-expression.model';
-import { RecursiveStructure } from '@pmod/xo/expressions/comparable-path';
+import { RecursiveStructure } from '@pmod/xo/expressions/RecursiveStructurePart';
 import { XoCastExpression } from '@pmod/xo/expressions/cast-expression.model';
 import { SkeletonTreeNode } from '../variable-tree/data-source/skeleton-tree-node';
 

@@ -18,7 +18,7 @@
 import { XoObjectClass, XoArrayClass, XoProperty, XoArray } from '@zeta/api';
 import { XoExpression1Arg } from './expression1-arg.model';
 import { XoExpressionVariable } from './expression-variable.model';
-import { RecursiveStructure } from './comparable-path';
+import { RecursiveStructure } from './RecursiveStructurePart';
 
 
 @XoObjectClass(XoExpression1Arg, 'xmcp.processmodeller.datatypes.expression', 'SingleVarExpression')

@@ -17,7 +17,7 @@
  */
 import { XoObjectClass, XoArrayClass, XoProperty, XoArray } from '@zeta/api';
 import { XoExpression } from './expression.model';
-import { RecursiveStructure } from './comparable-path';
+import { RecursiveStructure } from './RecursiveStructurePart';
 import { XoExpressionVariable } from './expression-variable.model';
 
 
