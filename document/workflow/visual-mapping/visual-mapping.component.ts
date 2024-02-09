@@ -248,6 +248,8 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
             });
         });
 
+        this.flows = [];
+
         // different datasources can match simultaneously
         forkJoin(matchingObservableByDatasource.map(
             // matching in same datasource should be synchronously, because matching can change the structure of the datasource.
