@@ -25,9 +25,6 @@ import { TreeNodeFactory, TreeNodeObserver } from './skeleton-tree-data-source';
 export abstract class SkeletonTreeNode implements GraphicallyRepresented<Element>, Draggable {
     private _structure: XoStructureField;
     private _xfl: string;
-    private _isList: boolean;
-    collapsible = true;
-    private _collapsed = true;
 
     /** Node is marked for some reason and can be rendered differently than an unmarked node */
     private readonly _marked$ = new BehaviorSubject<boolean>(false);
@@ -35,8 +32,7 @@ export abstract class SkeletonTreeNode implements GraphicallyRepresented<Element
 
     private readonly _graphicalRepresentation$ = new BehaviorSubject<Element>(null);
 
-    protected _children: SkeletonTreeNode[] = [];
-    protected _parent: SkeletonTreeNode;
+    protected _parent: ComplexSkeletonTreeNode;
 
     constructor(structure: XoStructureField, protected nodeFactory: TreeNodeFactory, protected nodeObservers: Set<TreeNodeObserver> = new Set<TreeNodeObserver>()) {
         this.setStructure(structure);
@@ -47,7 +43,11 @@ export abstract class SkeletonTreeNode implements GraphicallyRepresented<Element
         return this._structure;
     }
 
-
+    /**
+     * call it only outside the constuctor if you know what you doing. Maybe you want use setSubtypeStructure instead.
+     * It will not destroy parent and children references.
+     * @param structure to be set.
+     */
     protected setStructure(structure: XoStructureField) {
         this._structure = structure;
     }
@@ -60,40 +60,19 @@ export abstract class SkeletonTreeNode implements GraphicallyRepresented<Element
     }
 
 
-    get collapsed(): boolean {
-        return this._collapsed;
-    }
+    abstract get collapsed(): boolean;
 
+    abstract get collapsible(): boolean;
 
-    collapse() {
-        if (!this.collapsed) {
-            this._collapsed = true;
-            this.notifyObservers();
-        }
-    }
+    abstract collapse(): void;
 
+    abstract uncollapse(): void;
 
-    uncollapse() {
-        if (this.collapsible && this.collapsed) {
-            this._collapsed = false;
-            this.notifyObservers();
-        }
-    }
-
+    abstract get children(): SkeletonTreeNode[];
 
     uncollapseRecursivelyUpwards() {
         this.parent?.uncollapseRecursivelyUpwards();
         this.parent?.uncollapse();
-    }
-
-
-    get isList(): boolean {
-        return this._isList;
-    }
-
-
-    set isList(value: boolean) {
-        this._isList = value;
     }
 
 
@@ -173,17 +152,12 @@ export abstract class SkeletonTreeNode implements GraphicallyRepresented<Element
     }
 
 
-    get children(): SkeletonTreeNode[] {
-        return this._children;
-    }
-
-
-    get parent(): SkeletonTreeNode {
+    get parent(): ComplexSkeletonTreeNode {
         return this._parent;
     }
 
 
-    set parent(value: SkeletonTreeNode) {
+    set parent(value: ComplexSkeletonTreeNode) {
         this._parent = value;
     }
 
@@ -225,7 +199,7 @@ export abstract class SkeletonTreeNode implements GraphicallyRepresented<Element
      */
     toXFL(): string {
         const prefix = this.parent?.toXFL() ?? '';
-        const separator: string = this.parent?.isList ? '' : '.';
+        const separator: string = this.parent?.getXFLSeparator();
         return (prefix.length > 0 ? prefix + separator : '') + this.getXFLExpression();
     }
 
@@ -278,12 +252,29 @@ export class PrimitiveSkeletonTreeNode extends SkeletonTreeNode {
 
     constructor(structure: XoStructurePrimitive, nodeFactory: TreeNodeFactory, nodeObservers: Set<TreeNodeObserver>) {
         super(structure, nodeFactory, nodeObservers);
-        this.collapsible = false;
     }
+
+    get collapsible(): boolean {
+        return true;
+    }
+
+    get collapsed(): boolean {
+        return true;
+    }
+
+    collapse() { }
+
+    uncollapse() { }
 
     getStructure(): XoStructurePrimitive {
         return super.getStructure() as XoStructurePrimitive;
     }
+
+
+    get children(): SkeletonTreeNode[] {
+        return [];
+    }
+
 
     match(path: RecursiveStructurePart): Observable<SkeletonTreeNode> {
         if (path.path === this.getXFLExpression()) {
@@ -300,10 +291,64 @@ export class PrimitiveSkeletonTreeNode extends SkeletonTreeNode {
     }
 }
 
-
-export class ComplexSkeletonTreeNode extends SkeletonTreeNode {
-    private readonly _subtypes = new BehaviorSubject<XoStructureType[]>(null);
+export abstract class ComplexSkeletonTreeNode extends SkeletonTreeNode {
+    protected _children: SkeletonTreeNode[] = [];
     private _sourceIndex: number;
+    private _collapsed = true;
+
+    get collapsible(): boolean {
+        return true;
+    }
+
+    get collapsed(): boolean {
+        return this._collapsed;
+    }
+
+    collapse() {
+        if (!this.collapsed) {
+            this._collapsed = true;
+            this.notifyObservers();
+        }
+    }
+
+
+    uncollapse() {
+        if (this.collapsed) {
+            this._collapsed = false;
+            this.notifyObservers();
+        }
+    }
+
+
+    get children(): SkeletonTreeNode[] {
+        return this._children;
+    }
+
+
+    get sourceIndex(): number {
+        return this._sourceIndex;
+    }
+
+
+    set sourceIndex(value: number) {
+        this._sourceIndex = value;
+    }
+
+
+    getXFLSeparator(): string {
+        return '.';
+    }
+
+
+    protected getXFLExpression(): string {
+        return this.sourceIndex !== undefined
+            ? `%${this.sourceIndex}%`
+            : this.xfl ?? this.getStructure()?.name ?? '';
+    }
+}
+
+export class ObjectSkeletonTreeNode extends ComplexSkeletonTreeNode {
+    private readonly _subtypes = new BehaviorSubject<XoStructureType[]>(null);
     private readonly _markForCheckChildren = new BehaviorSubject<boolean>(true);
     private runningUpdateChildren: Observable<boolean> = undefined;
 
@@ -379,16 +424,6 @@ export class ComplexSkeletonTreeNode extends SkeletonTreeNode {
     }
 
 
-    get sourceIndex(): number {
-        return this._sourceIndex;
-    }
-
-
-    set sourceIndex(value: number) {
-        this._sourceIndex = value;
-    }
-
-
     match(path: RecursiveStructurePart): Observable<SkeletonTreeNode> {
         if (this.getXFLExpression() !== path.path) {
             return of(undefined);
@@ -417,37 +452,18 @@ export class ComplexSkeletonTreeNode extends SkeletonTreeNode {
             switchMap(() => continueMatching())
         );
     }
-
-
-    protected getXFLExpression(): string {
-        return this.sourceIndex !== undefined
-            ? `%${this.sourceIndex}%`
-            : this.xfl ?? this.getStructure()?.name ?? '';
-    }
 }
 
 
-export class ArraySkeletonTreeNode extends SkeletonTreeNode {
+export class ArraySkeletonTreeNode extends ComplexSkeletonTreeNode {
 
-    private _sourceIndex: number;
-
-    constructor(structure: XoStructureArray, nodeFactory: TreeNodeFactory, nodeObservers: Set<TreeNodeObserver>) {
-        super(structure, nodeFactory, nodeObservers);
-        this.isList = true;
+    get typeLabel(): string {
+        return super.typeLabel + '[]';
     }
+
 
     getStructure(): XoStructureArray {
         return super.getStructure() as XoStructureArray;
-    }
-
-
-    get sourceIndex(): number {
-        return this._sourceIndex;
-    }
-
-
-    set sourceIndex(value: number) {
-        this._sourceIndex = value;
     }
 
 
@@ -463,7 +479,7 @@ export class ArraySkeletonTreeNode extends SkeletonTreeNode {
         const createMatchingChild = (childPath: RecursiveStructurePart): Observable<SkeletonTreeNode> => {
             const matchingChild = this.nodeFactory.createNodeFromStructure(this.getStructure().add());
             matchingChild.xfl = childPath.path;
-            matchingChild.getStructure().label = childPath.path;
+            matchingChild.getStructure().label = childPath.path.replace(/"/g, '');
             this._children.push(matchingChild);
             matchingChild.parent = this;
             this.notifyObservers();
@@ -479,10 +495,7 @@ export class ArraySkeletonTreeNode extends SkeletonTreeNode {
         );
     }
 
-
-    protected getXFLExpression(): string {
-        return this.sourceIndex !== undefined
-            ? `%${this.sourceIndex}%`
-            : this.xfl ?? this.getStructure()?.name ?? '';
+    getXFLSeparator(): string {
+        return '';
     }
 }

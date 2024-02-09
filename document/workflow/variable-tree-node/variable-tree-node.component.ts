@@ -88,7 +88,7 @@ export class VariableTreeNodeComponent implements AfterViewInit, TreeNodeObserve
 
 
     get typeLabel(): string {
-        return this.node.typeLabel + (this.node.isList ? '[]' : '');
+        return this.node.typeLabel;
     }
 
 

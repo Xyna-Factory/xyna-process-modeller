@@ -19,13 +19,13 @@ import { ApiService, FullQualifiedName, RuntimeContext, XoDescriber, XoDescriber
 import { BehaviorSubject, Observable, filter, first, map, switchMap } from 'rxjs';
 import { RecursiveStructure } from '@pmod/xo/expressions/RecursiveStructurePart';
 import { XoVariable } from '@pmod/xo/variable.model';
-import { ArraySkeletonTreeNode, ComplexSkeletonTreeNode, PrimitiveSkeletonTreeNode, SkeletonTreeNode } from './skeleton-tree-node';
+import { ArraySkeletonTreeNode, ObjectSkeletonTreeNode, PrimitiveSkeletonTreeNode, SkeletonTreeNode } from './skeleton-tree-node';
 
 
 export interface TreeNodeFactory {
     createNodeFromStructure(structure: XoStructureField): SkeletonTreeNode;
     createPrimitiveNode(structure: XoStructurePrimitive): PrimitiveSkeletonTreeNode;
-    createComplexNode(structure: XoStructureComplexField): ComplexSkeletonTreeNode;
+    createComplexNode(structure: XoStructureComplexField): ObjectSkeletonTreeNode;
     createArrayNode(structure: XoStructureArray): ArraySkeletonTreeNode;
     getNewChildren(structure: XoStructureObject): Observable<XoStructureField[]>;
     getSubtypes(structure: XoStructureObject): Observable<XoStructureType[]>;
@@ -35,9 +35,6 @@ export interface TreeNodeFactory {
 export interface TreeNodeObserver {
     nodeChange(node: SkeletonTreeNode): void;
 }
-
-
-
 
 
 export class VariableDescriber implements XoDescriber {
@@ -164,8 +161,8 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
     }
 
 
-    createComplexNode(structure: XoStructureObject): ComplexSkeletonTreeNode {
-        return new ComplexSkeletonTreeNode(structure, this, new Set<TreeNodeObserver>([this]));
+    createComplexNode(structure: XoStructureObject): ObjectSkeletonTreeNode {
+        return new ObjectSkeletonTreeNode(structure, this, new Set<TreeNodeObserver>([this]));
     }
 
 
