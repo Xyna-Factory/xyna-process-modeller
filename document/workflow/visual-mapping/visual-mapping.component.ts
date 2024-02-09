@@ -17,7 +17,7 @@
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnDestroy, OnInit } from '@angular/core';
 import { ApiService, FullQualifiedName, XoDescriberCache, XoStructureObject } from '@zeta/api';
-import { Observable, Subscription, concat, filter, first, forkJoin, of, tap } from 'rxjs';
+import { Observable, Subscription, concat, filter, first, forkJoin, tap } from 'rxjs';
 import { FlowDefinition } from './flow-canvas/flow-canvas.component';
 import { XoMapping } from '@pmod/xo/mapping.model';
 import { ComponentMappingService } from '@pmod/document/component-mapping.service';
