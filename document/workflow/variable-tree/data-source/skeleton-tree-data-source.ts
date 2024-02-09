@@ -74,7 +74,7 @@ export interface SkeletonTreeDataSourceObserver {
  */
 export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver {
     private readonly _root$ = new BehaviorSubject<SkeletonTreeNode>(null);
-
+    private _uncollapseWhileMatching = false;
 
     /**
      * @param rootIndex Index of root variable in outer context
@@ -116,6 +116,14 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
         return this.describer;
     }
 
+    set uncollapseWhileMatching(value: boolean) {
+        this._uncollapseWhileMatching = value;
+    }
+
+    get uncollapseWhileMatching(): boolean {
+        return this._uncollapseWhileMatching;
+    }
+
     /**
      * Traverses the tree along with the variable. Wait on setting root.
      * Modifies the tree (changes selected subtype or adds array entries) if necessary/possible.
@@ -125,7 +133,7 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
         return this.root$.pipe(
             filter(root => !!root),
             first(),
-            switchMap(root => root.match(structure.getRecursiveStructure()))
+            switchMap(root => root.match(structure.getRecursiveStructure(), this._uncollapseWhileMatching))
         );
     }
 

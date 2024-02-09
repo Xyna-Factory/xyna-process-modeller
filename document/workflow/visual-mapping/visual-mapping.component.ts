@@ -61,7 +61,6 @@ class ExpressionPart {
         // mark node and its children for being assigned and uncollapse
         if (this.node) {
             this.node.markRecursively();
-            this.node.uncollapseRecursivelyUpwards();
         }
     }
 }
@@ -179,6 +178,7 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
                 const rtc = variable.$rtc.runtimeContext() ?? this.documentModel.originRuntimeContext;
                 const desc = new VariableDescriber(rtc, FullQualifiedName.decode(variable.$fqn), variable.isList, variable.label);
                 const ds = new SkeletonTreeDataSource(desc, apiService, rtc, this, index, this.structureCache);
+                ds.uncollapseWhileMatching = true;
                 ds.refresh();
                 this.inputDataSources.push(ds);
             });
@@ -186,6 +186,7 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
                 const rtc = variable.$rtc.runtimeContext() ?? this.documentModel.originRuntimeContext;
                 const desc = new VariableDescriber(rtc, FullQualifiedName.decode(variable.$fqn), variable.isList, variable.label);
                 const ds = new SkeletonTreeDataSource(desc, apiService, rtc, this, inputVariables.length + index, this.structureCache);
+                ds.uncollapseWhileMatching = true;
                 ds.refresh();
                 this.outputDataSources.push(ds);
             });
@@ -264,6 +265,7 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
                     );
             },
             complete: () => {
+                dataSources.forEach(ds => ds.uncollapseWhileMatching = false);
                 this.cdr.markForCheck();
                 this.isRefreshing = false;
             }
