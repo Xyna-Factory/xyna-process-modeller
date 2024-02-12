@@ -18,7 +18,7 @@
 import { RouterModule } from '@angular/router';
 
 import { XynaRoutes } from '@zeta/nav';
-import { RightGuardCanActivate } from '@zeta/nav/right.guard';
+import { rightGuardCanActivate } from '@zeta/nav/right.guard';
 
 import { RIGHT_PROCESS_MODELLER } from './const';
 import { ProcessmodellerComponent } from './processmodeller.component';
@@ -36,7 +36,7 @@ export const ProcessmodellerRoutes: XynaRoutes = [
     {
         path: root,
         component: ProcessmodellerComponent,
-        canActivate: [RightGuardCanActivate],
+        canActivate: [rightGuardCanActivate],
         data: {
             right: RIGHT_PROCESS_MODELLER,
             reuse: root,
