@@ -1,6 +1,6 @@
 <header>
     <xc-icon-button
-        *ngIf="hasContent"
+        [disabled]="!hasContent"
         (click)="collapsed = !collapsed"
         [xc-icon-name]="collapsed ? 'arrowright' : 'arrowdown'"
         xc-icon-size="small"
