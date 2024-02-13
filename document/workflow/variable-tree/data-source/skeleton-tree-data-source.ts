@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ApiService, FullQualifiedName, RuntimeContext, XoDescriber, XoDescriberCache, XoStructureArray, XoStructureComplexField, XoStructureField, XoStructureObject, XoStructurePrimitive, XoStructureType } from '@zeta/api';
-import { BehaviorSubject, Observable, filter, first, map, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, concat, filter, finalize, first, map, switchMap } from 'rxjs';
 import { RecursiveStructure } from '@pmod/xo/expressions/RecursiveStructurePart';
 import { XoVariable } from '@pmod/xo/variable.model';
 import { ArraySkeletonTreeNode, ObjectSkeletonTreeNode, PrimitiveSkeletonTreeNode, SkeletonTreeNode } from './skeleton-tree-node';
@@ -62,6 +62,12 @@ export class VariableDescriber implements XoDescriber {
 }
 
 
+export interface StructureProcessPair {
+    structure: RecursiveStructure;
+    postProcess: (node: SkeletonTreeNode) => Observable<SkeletonTreeNode>;
+}
+
+
 export interface SkeletonTreeDataSourceObserver {
     nodeChange(dataSource: SkeletonTreeDataSource, node: SkeletonTreeNode): void;
 }
@@ -74,7 +80,7 @@ export interface SkeletonTreeDataSourceObserver {
  */
 export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver {
     private readonly _root$ = new BehaviorSubject<SkeletonTreeNode>(null);
-    private _uncollapseWhileMatching = false;
+    private initialize = true;
 
     /**
      * @param rootIndex Index of root variable in outer context
@@ -116,25 +122,21 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
         return this.describer;
     }
 
-    set uncollapseWhileMatching(value: boolean) {
-        this._uncollapseWhileMatching = value;
-    }
-
-    get uncollapseWhileMatching(): boolean {
-        return this._uncollapseWhileMatching;
-    }
-
     /**
      * Traverses the tree along with the variable. Wait on setting root.
      * Modifies the tree (changes selected subtype or adds array entries) if necessary/possible.
      */
-    processVariable(structure: RecursiveStructure): Observable<SkeletonTreeNode> {
+    processStructure(pairs: StructureProcessPair[]): Observable<SkeletonTreeNode> {
 
-        return this.root$.pipe(
-            filter(root => !!root),
-            first(),
-            switchMap(root => root.match(structure.getRecursiveStructure(), this._uncollapseWhileMatching))
-        );
+        return concat(...pairs.map(
+            pair => this.root$.pipe(
+                filter(root => !!root),
+                first(),
+                switchMap(root => root.match(pair.structure.getRecursiveStructure(), this.initialize)),
+                switchMap(pair.postProcess)
+            ))).pipe(
+                finalize(() => this.initialize = false)
+            );
     }
 
 
