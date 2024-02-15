@@ -29,7 +29,7 @@
             background-color: $variable-area-background-color;
             box-shadow: 0 0 4px $variable-area-background-color;
 
-            &.mat-icon-button:not([disabled]):hover {
+            &.mat-mdc-icon-button:not([disabled]):hover {
                 background-color: $color-gray-4;
             }
         }

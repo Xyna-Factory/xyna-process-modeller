@@ -36,6 +36,7 @@ $type-info-badge-color: unset !default;
             display: flex;
             flex-direction: row;
             align-items: flex-start;
+
             *:not(:first-child) {
                 margin-left: 8px;
             }
@@ -53,7 +54,7 @@ $type-info-badge-color: unset !default;
     .identification {
         display: flex;
         align-items: baseline;
-        margin-bottom: 4px;
+        // margin-bottom: 4px;
 
         .id-left {
             flex-grow: 1;
@@ -82,21 +83,27 @@ $type-info-badge-color: unset !default;
         //     padding-left: 5px;
         // }
 
+        .id-left-new-type {
+            div {
+                margin-bottom: 4px;
+            }
+        }
+
         .id-right {
             flex-grow: 0;
         }
     }
 
     .base-type {
-        & > .base-type-wrapper {
+        &>.base-type-wrapper {
             flex: 1 1 auto;
         }
 
-        & > xc-button {
+        &>xc-button {
             flex: 0 0 auto;
         }
 
-        & > *:not(:first-child) {
+        &>*:not(:first-child) {
             margin-left: 4px;
         }
     }
