@@ -70,11 +70,6 @@ export abstract class SkeletonTreeNode implements GraphicallyRepresented<Element
 
     abstract get children(): SkeletonTreeNode[];
 
-    uncollapseRecursivelyUpwards() {
-        this.parent?.uncollapseRecursivelyUpwards();
-        this.parent?.uncollapse();
-    }
-
 
     get markedChange(): Observable<boolean> {
         return this._marked$.asObservable();
@@ -183,7 +178,7 @@ export abstract class SkeletonTreeNode implements GraphicallyRepresented<Element
      * @param path Path to traverse structure.
      * @returns Observable will complete after firt value. Return matching `Node` or undefined.
      */
-    abstract match(path: RecursiveStructurePart): Observable<SkeletonTreeNode>;
+    abstract match(path: RecursiveStructurePart, uncollapseWhileMatching?: boolean): Observable<SkeletonTreeNode>;
 
 
     /**
@@ -423,17 +418,22 @@ export class ObjectSkeletonTreeNode extends ComplexSkeletonTreeNode {
         return this._markForCheckChildren.asObservable();
     }
 
-
-    match(path: RecursiveStructurePart): Observable<SkeletonTreeNode> {
+    match(path: RecursiveStructurePart, uncollapseWhileMatching = false): Observable<SkeletonTreeNode> {
         if (this.getXFLExpression() !== path.path) {
             return of(undefined);
         }
 
-        const askChildrenForMatch = () => forkJoin(this.children.map(child => child.match(path.child))).pipe(
+        const askChildrenForMatch = () => forkJoin(this.children.map(child => child.match(path.child, uncollapseWhileMatching))).pipe(
             map(matches => matches.find(node => !!node) ?? this)
         );
 
-        const continueMatching = () => path.child ? askChildrenForMatch() : of(this);
+        const continueMatching = () => {
+            if (!path.child || (this.collapsed && !uncollapseWhileMatching)) {
+                return of(this);
+            }
+            this.uncollapse();
+            return askChildrenForMatch();
+        };
 
         if (path.fqn && path.fqn !== this.getStructure().typeFqn.encode(false)) {
             // wait for subtypes, to be initialized
@@ -467,14 +467,15 @@ export class ArraySkeletonTreeNode extends ComplexSkeletonTreeNode {
     }
 
 
-    match(path: RecursiveStructurePart): Observable<SkeletonTreeNode> {
+    match(path: RecursiveStructurePart, uncollapseWhileMatching = false): Observable<SkeletonTreeNode> {
         if (this.getXFLExpression() !== path.path) {
             return of(undefined);
         }
 
-        if (!path.child) {
+        if (!path.child || (this.collapsed && !uncollapseWhileMatching)) {
             return of(this);
         }
+        this.uncollapse();
 
         const createMatchingChild = (childPath: RecursiveStructurePart): Observable<SkeletonTreeNode> => {
             const matchingChild = this.nodeFactory.createNodeFromStructure(this.getStructure().add());
@@ -483,11 +484,11 @@ export class ArraySkeletonTreeNode extends ComplexSkeletonTreeNode {
             this._children.push(matchingChild);
             matchingChild.parent = this;
             this.notifyObservers();
-            return matchingChild.match(childPath);
+            return matchingChild.match(childPath, uncollapseWhileMatching);
         };
 
         // forkJoin errors, if incoming list is empty. If we have no children, we want to create a new one.
-        const foundMatchingChildren = this.children.length > 0 ? this.children.map(child => child.match(path.child)) : [of(undefined)];
+        const foundMatchingChildren = this.children.length > 0 ? this.children.map(child => child.match(path.child, uncollapseWhileMatching)) : [of(undefined)];
         return forkJoin(foundMatchingChildren).pipe(
             map(matches => matches.find(node => !!node)),
             // If no child match, create a new child, that will match. Because the matching of a potential new child is asynchronously, switchMap is needed.

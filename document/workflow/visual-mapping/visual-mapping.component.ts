@@ -17,13 +17,13 @@
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnDestroy, OnInit } from '@angular/core';
 import { ApiService, FullQualifiedName, XoDescriberCache, XoStructureObject } from '@zeta/api';
-import { Observable, Subscription, concat, filter, first, forkJoin, of, tap } from 'rxjs';
+import { Subscription, filter, first, forkJoin, of, tap } from 'rxjs';
 import { FlowDefinition } from './flow-canvas/flow-canvas.component';
 import { XoMapping } from '@pmod/xo/mapping.model';
 import { ComponentMappingService } from '@pmod/document/component-mapping.service';
 import { DocumentService } from '@pmod/document/document.service';
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
-import { SkeletonTreeDataSource, SkeletonTreeDataSourceObserver, VariableDescriber } from '../variable-tree/data-source/skeleton-tree-data-source';
+import { SkeletonTreeDataSource, SkeletonTreeDataSourceObserver, StructureProcessWrapper, VariableDescriber } from '../variable-tree/data-source/skeleton-tree-data-source';
 import { ModellingActionType, XmomService } from '@pmod/api/xmom.service';
 import { CreateAssignmentEvent } from '../variable-tree-node/variable-tree-node.component';
 import { XoModelledExpression } from '@pmod/xo/expressions/modelled-expression.model';
@@ -61,7 +61,6 @@ class ExpressionPart {
         // mark node and its children for being assigned and uncollapse
         if (this.node) {
             this.node.markRecursively();
-            this.node.uncollapseRecursivelyUpwards();
         }
     }
 }
@@ -233,26 +232,18 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
 
         dataSources.forEach(ds => ds.clearMarks());
 
-        const matchingObservableByDatasource: Observable<SkeletonTreeNode>[][] = dataSources.map(() => []);
+        const pairs: StructureProcessWrapper[][] = dataSources.map(() => <StructureProcessWrapper[]>[]);
 
         this.expressions.forEach(expression => {
             expression.parts.forEach(part => {
                 const index = part.expression?.getVariable().varNum ?? 0;
-                const ds = dataSources[index];
-                const matchingObservable = ds?.processVariable(part.expression).pipe(
-                    first(),
-                    tap(node => part.node = node)
-                );
-                matchingObservableByDatasource[index].push(matchingObservable);
+                const pair: StructureProcessWrapper = {structure: part.expression, postProcess: node => of(part.node = node)};
+                pairs[index].push(pair);
             });
         });
 
-        // different datasources can match simultaneously
-        forkJoin(matchingObservableByDatasource.map(
-            // matching in same datasource should be synchronously, because matching can change the structure of the datasource.
-            obs => concat(...obs)) //concat(obs) returns observables of observables.
-        ).subscribe({
-            next: () => {
+        forkJoin(pairs.map((pair, index) => dataSources[index].processStructure(pair))).subscribe({
+            complete: () => {
                 // construct flows for graphical representation
                 this.flows = this.expressions
                     .filter(expression => !!expression.targetPart)
@@ -262,8 +253,6 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
                             // if there are no source nodes from the tree, this is a literal assignment. Use literal as description
                             : <FlowDefinition>{ source: null, description: '<literal>', destination: expression.targetPart.node }
                     );
-            },
-            complete: () => {
                 this.cdr.markForCheck();
                 this.isRefreshing = false;
             }
