@@ -23,7 +23,7 @@ import { XoMapping } from '@pmod/xo/mapping.model';
 import { ComponentMappingService } from '@pmod/document/component-mapping.service';
 import { DocumentService } from '@pmod/document/document.service';
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
-import { SkeletonTreeDataSource, SkeletonTreeDataSourceObserver, StructureProcessPair, VariableDescriber } from '../variable-tree/data-source/skeleton-tree-data-source';
+import { SkeletonTreeDataSource, SkeletonTreeDataSourceObserver, StructureProcessWrapper, VariableDescriber } from '../variable-tree/data-source/skeleton-tree-data-source';
 import { ModellingActionType, XmomService } from '@pmod/api/xmom.service';
 import { CreateAssignmentEvent } from '../variable-tree-node/variable-tree-node.component';
 import { XoModelledExpression } from '@pmod/xo/expressions/modelled-expression.model';
@@ -232,12 +232,12 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
 
         dataSources.forEach(ds => ds.clearMarks());
 
-        const pairs: StructureProcessPair[][] = dataSources.map(() => <StructureProcessPair[]>[]);
+        const pairs: StructureProcessWrapper[][] = dataSources.map(() => <StructureProcessWrapper[]>[]);
 
         this.expressions.forEach(expression => {
             expression.parts.forEach(part => {
                 const index = part.expression?.getVariable().varNum ?? 0;
-                const pair: StructureProcessPair = {structure: part.expression, postProcess: node => of(part.node = node)};
+                const pair: StructureProcessWrapper = {structure: part.expression, postProcess: node => of(part.node = node)};
                 pairs[index].push(pair);
             });
         });

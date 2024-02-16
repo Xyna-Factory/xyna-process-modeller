@@ -62,7 +62,7 @@ export class VariableDescriber implements XoDescriber {
 }
 
 
-export interface StructureProcessPair {
+export interface StructureProcessWrapper {
     structure: RecursiveStructure;
     postProcess: (node: SkeletonTreeNode) => Observable<SkeletonTreeNode>;
 }
@@ -80,7 +80,7 @@ export interface SkeletonTreeDataSourceObserver {
  */
 export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver {
     private readonly _root$ = new BehaviorSubject<SkeletonTreeNode>(null);
-    private initialize = true;
+    private initializing = true;
 
     /**
      * @param rootIndex Index of root variable in outer context
@@ -126,16 +126,16 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
      * Traverses the tree along with the variable. Wait on setting root.
      * Modifies the tree (changes selected subtype or adds array entries) if necessary/possible.
      */
-    processStructure(pairs: StructureProcessPair[]): Observable<SkeletonTreeNode> {
+    processStructure(wrapper: StructureProcessWrapper[]): Observable<SkeletonTreeNode> {
 
-        return concat(...pairs.map(
+        return concat(...wrapper.map(
             pair => this.root$.pipe(
                 filter(root => !!root),
                 first(),
-                switchMap(root => root.match(pair.structure.getRecursiveStructure(), this.initialize)),
+                switchMap(root => root.match(pair.structure.getRecursiveStructure(), this.initializing)),
                 switchMap(pair.postProcess)
             ))).pipe(
-                finalize(() => this.initialize = false)
+                finalize(() => this.initializing = false)
             );
     }
 
