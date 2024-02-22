@@ -73,7 +73,7 @@ $menu-width: 20px;
         border-top-left-radius: $variable-border-radius;
         border-bottom-left-radius: $variable-border-radius;
         font-size: $variable-left-rim-font-size;
-        padding: 1px;
+        // padding: 1px;
     }
 
     .content-area {
@@ -91,7 +91,7 @@ $menu-width: 20px;
         .name-area {
             background-color: $variable-background-color;
             color: $variable-label-color;
-            padding: 0 ($link-state-width + $link-state-margin * 2 + $menu-width) 1px 8px;
+            padding: 0 ($link-state-width + $link-state-margin * 2 + $menu-width) 0px 8px;
             font-size: $pmod-medium;
             white-space: pre;
         }
@@ -184,13 +184,13 @@ $menu-width: 20px;
         display: flex;
         flex-direction: column;
         position: absolute;
-        right: $link-state-width + $link-state-margin;
+        right: $link-state-width + $link-state-margin + 4px;
 
         top: 0;
 
         ::ng-deep .mat-mdc-icon-button {
             width: 16px;
-            height: 15px;
+            height: 16px;
         }
     }
 
