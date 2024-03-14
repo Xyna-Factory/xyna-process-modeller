@@ -73,7 +73,7 @@ $dnd-hover-background-color: unset !default;
                 transform: rotate(90deg);
             }
 
-            &[size="small"]::ng-deep button.mat-icon-button {
+            &[size="small"]::ng-deep button.mat-mdc-icon-button {
                 width: 15px;
                 height: 15px;
             }

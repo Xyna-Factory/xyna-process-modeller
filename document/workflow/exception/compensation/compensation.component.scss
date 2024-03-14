@@ -39,7 +39,7 @@
     }
 
     .narrow-button {
-        ::ng-deep.mat-button-wrapper {
+        ::ng-deep.mat-mdc-button {
             font-size: $pmod-small;
             line-height: $pmod-small * 2;
         }
