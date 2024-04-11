@@ -17,8 +17,7 @@
  */
 import { Injectable } from '@angular/core';
 
-import { XoCase } from '../../../../xo/case.model';
-import { XoDataMemberVariable } from '../../../../xo/data-member-variable.model';
+import { XoModellingItem } from '@pmod/xo/modelling-item.model';
 import { FullQualifiedName, Xo, XoJson } from '@zeta/api';
 import { AuthService } from '@zeta/auth';
 import { randomUUID } from '@zeta/base';
@@ -27,8 +26,10 @@ import { Observable, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { XoBranch } from '../../../../xo/branch.model';
+import { XoCase } from '../../../../xo/case.model';
 import { XoConditionalBranching } from '../../../../xo/conditional-branching.model';
 import { XoConditionalChoice } from '../../../../xo/conditional-choice.model';
+import { XoDataMemberVariable } from '../../../../xo/data-member-variable.model';
 import { XoData } from '../../../../xo/data.model';
 import { XoDynamicMethodInvocation } from '../../../../xo/dynamic-method-invocation.model';
 import { XoDynamicMethod } from '../../../../xo/dynamic-method.model';
@@ -45,7 +46,6 @@ import { XoTemplate } from '../../../../xo/template.model';
 import { XoThrow } from '../../../../xo/throw.model';
 import { XoTypeChoice } from '../../../../xo/type-choice.model';
 import { XoWorkflowInvocation } from '../../../../xo/workflow-invocation.model';
-import { XoModellingItem } from '@pmod/xo/modelling-item.model';
 
 
 export const DRAG_CSS_CLASSES = {
@@ -328,14 +328,12 @@ export class ModDragAndDropService {
     getDraggedItem(event: Event & ModDnDEvent): Draggable {
         // check if event contains xo (only for drop-event)
         const data = this.getTransferredData(event, ModDragDataTransferKey.xo);
-        let draggable = this._draggedItem;
 
-        if (!draggable && data) {
-            // don't use draggedItem from dnd-service here, because for multi-tab-drag, it won't be set
+        if (data) {
             const jsonData: XoEncoding = JSON.parse(data);
-            draggable = this.createXo(jsonData.fqn, jsonData.data);
+            return this.createXo(jsonData.fqn, jsonData.data);     // don't use draggedItem from dnd-service here, because for multi-tab-drag, it won't be set
         }
-        return draggable;
+        return this._draggedItem;
     }
 
 
