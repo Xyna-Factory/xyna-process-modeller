@@ -84,7 +84,6 @@ export class FormulaComponent extends ModellingItemComponent {
     protected initFormula() {
         if (this.formula && this.documentModel) {
             this.formula.parseExpression(this.apiService, this.documentModel.originRuntimeContext);
-            this._cachedExpression = this.formula.expression;
         }
     }
 
@@ -247,6 +246,7 @@ export class FormulaComponent extends ModellingItemComponent {
 
     select() {
         this._selected = true;
+        this._cachedExpression = this.formula.expression;
     }
 
 
@@ -256,8 +256,16 @@ export class FormulaComponent extends ModellingItemComponent {
             this.setCaretToPart(null);
             this._partInEditing = null;
             this._partWaitingForFocus = null;
+
+            // trigger a change for the expression, if changed
+            if (this._cachedExpression !== this.formula.expression) {
+                this.performAction({
+                    type: ModellingActionType.change,
+                    objectId: this.formula.id,
+                    request: new XoChangeFormulaRequest(undefined, this.formula.expression)
+                });
+            }
         }
-        this.triggerChangeIfNecessary();
     }
 
 
@@ -275,19 +283,6 @@ export class FormulaComponent extends ModellingItemComponent {
         } else {
             // set caret to last part
             this.setCaretToPart(this.formula.lastVisiblePart);
-        }
-    }
-
-
-    protected triggerChangeIfNecessary() {
-        // trigger a change for the expression, if changed
-        if (this._cachedExpression !== this.formula.expression) {
-            this._cachedExpression = this.formula.expression;
-            this.performAction({
-                type: ModellingActionType.change,
-                objectId: this.formula.id,
-                request: new XoChangeFormulaRequest(undefined, this.formula.expression)
-            });
         }
     }
 
@@ -327,8 +322,6 @@ export class FormulaComponent extends ModellingItemComponent {
         // if it hasn't been accepted before, leave formula
         if (this._partInEditing) {
             this.unselect();
-        } else if (!this.selected) {
-            this.triggerChangeIfNecessary();
         }
     }
 

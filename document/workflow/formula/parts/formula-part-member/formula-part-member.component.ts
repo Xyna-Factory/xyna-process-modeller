@@ -61,6 +61,9 @@ export class FormulaPartMemberComponent extends FormulaEditablePartComponent imp
                 }
             }
         );
+        if (this.editing) {
+            this.startEditing();
+        }
     }
 
 
