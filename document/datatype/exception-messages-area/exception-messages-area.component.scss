@@ -24,6 +24,32 @@
     flex: 1;
     padding: 10px;
 
+    .header {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+
+            ::ng-deep {
+                xc-form-label {
+                    flex: 1 1 auto;
+                }
+
+                xc-definition-proxy {
+                    flex-grow: 0;
+                }
+            }
+        }
+
+    &:not(.compact) {
+        .header {
+            min-height: 32px;
+
+            ::ng-deep xc-form-label {
+                font-size: 14px;
+            }
+        }
+    }
+
     .row {
         display: flex;
         align-items: center;

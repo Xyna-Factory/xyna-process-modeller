@@ -1,4 +1,11 @@
-<xc-form-label xc-i18n>exception-messages-label</xc-form-label>
+<div class="header">
+    <xc-form-label xc-i18n>exception-messages-label</xc-form-label>
+    <xc-definition-proxy *ngFor="let bundle of pluginBundles"
+        [xc-base-definition]="bundle.definition"
+        [xc-base-definition-data]="bundle.data"
+        [xc-definition-observer]="pluginService"
+    ></xc-definition-proxy>
+</div>
 <div class="row">
     <xc-form-autocomplete
         [readonly]="readonly"

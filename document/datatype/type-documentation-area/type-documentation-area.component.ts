@@ -24,6 +24,9 @@ import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { WorkflowDetailLevelService } from '../../workflow-detail-level.service';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
+import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
+import { PluginService } from '../../plugin.service';
+import { combineLatest } from 'rxjs';
 
 
 @Component({
@@ -33,6 +36,8 @@ import { ModellingObjectComponent } from '../../workflow/shared/modelling-object
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TypeDocumentationAreaComponent extends ModellingObjectComponent {
+
+    pluginBundles: XoDefinitionBundle[];
 
     documentation: string;
 
@@ -45,6 +50,7 @@ export class TypeDocumentationAreaComponent extends ModellingObjectComponent {
         componentMappingService: ComponentMappingService,
         documentService: DocumentService,
         detailLevelService: WorkflowDetailLevelService,
+        readonly pluginService: PluginService,
         private readonly cdr: ChangeDetectorRef,
         @Optional() injector: Injector
     ) {
@@ -61,6 +67,7 @@ export class TypeDocumentationAreaComponent extends ModellingObjectComponent {
     set documentationArea(value: XoTextArea) {
         this.setModel(value);
         this.documentation = value.text;
+        this.updateBundles();
     }
 
 
@@ -77,6 +84,21 @@ export class TypeDocumentationAreaComponent extends ModellingObjectComponent {
                 type: ModellingActionType.change,
                 objectId: this.documentationArea.id,
                 request: new XoChangeTextRequest(undefined, text)
+            });
+        }
+    }
+
+    private updateBundles() {
+        this.pluginBundles = [];
+        if (this.documentationArea.plugin?.guiDefiningWorkflow) {
+            combineLatest(
+                this.documentationArea.plugin.guiDefiningWorkflow.data.map(
+                    value => this.pluginService.getFromCacheOrCallWorkflow(value)
+                )
+            ).subscribe(bundles => {
+                bundles.forEach(bundle => bundle.data.push(this.documentationArea.plugin.context));
+                this.pluginBundles = bundles;
+                this.cdr.markForCheck();
             });
         }
     }

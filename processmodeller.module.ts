@@ -155,6 +155,7 @@ import { VisualMappingComponent } from './document/workflow/visual-mapping/visua
 import { VariableTreeComponent } from './document/workflow/variable-tree/variable-tree.component';
 import { VariableTreeNodeComponent } from './document/workflow/variable-tree-node/variable-tree-node.component';
 import { FlowCanvasComponent } from './document/workflow/visual-mapping/flow-canvas/flow-canvas.component';
+import { PluginService } from './document/plugin.service';
 
 
 @NgModule({
@@ -301,6 +302,7 @@ import { FlowCanvasComponent } from './document/workflow/visual-mapping/flow-can
         FactoryService,
         I18nService,
         ModDragAndDropService,
+        PluginService,
         QueryParameterService,
         WorkflowDetailSettingsService,
         WorkflowDetailLevelService,

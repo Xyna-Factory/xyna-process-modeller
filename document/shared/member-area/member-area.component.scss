@@ -26,10 +26,11 @@
         display: flex;
         background-color: $color-gray-2;
         padding: 0 4px;
-        height: 24px;
+        height: 30px;
         align-items: center;
         border-radius: 4px;
         opacity: 0.8;
+        gap: 4px;
 
         .caption {
             flex: 1 1 auto;
@@ -40,6 +41,10 @@
             font-weight: bold;
             font-size: $font-size-tiny;
             font-family: $font-family-bolder;
+        }
+
+        xc-definition-proxy {
+            flex-grow: 0;
         }
     }
 }
