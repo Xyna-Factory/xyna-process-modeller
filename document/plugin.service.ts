@@ -68,7 +68,7 @@ export class PluginService implements XoDefinitionObserver {
                     definition: result.output[0],
                     data: result.output.slice(1)
                 };
-                //this.definedUICache.set(definingWorkflow.uniqueKey, bundle);
+                this.definedUICache.set(definingWorkflow.uniqueKey, bundle);
                 return bundle;
             })
         );
