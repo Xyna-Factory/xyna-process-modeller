@@ -78,9 +78,7 @@ export class MemberAreaComponent extends ModellingObjectComponent {
     private updateBundles() {
         this.pluginBundles = [];
         let plugin: XoPlugin;
-        if (this.area instanceof XoMemberVariableArea) {
-            plugin = this.area.plugin;
-        } else if (this.area instanceof XoMemberMethodArea) {
+        if (this.area instanceof XoMemberVariableArea || this.area instanceof XoMemberMethodArea) {
             plugin = this.area.plugin;
         }
 
