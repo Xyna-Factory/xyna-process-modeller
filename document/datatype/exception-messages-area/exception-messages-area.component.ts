@@ -28,6 +28,9 @@ import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { ExceptionMessageRichListItemComponent, ExceptionMessageRichListItemData } from '../exception-message-rich-list-item/exception-message-rich-list-item.component';
+import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
+import { combineLatest } from 'rxjs';
+import { PluginService } from '../../plugin.service';
 
 
 export enum ExceptionMessageLanguage {
@@ -46,6 +49,8 @@ export class ExceptionMessagesAreaComponent extends ModellingObjectComponent {
     private readonly onclick: (item: XoExceptionMessage) => void;
     private readonly ondelete: (item: XoExceptionMessage) => void;
 
+    pluginBundles: XoDefinitionBundle[];
+
     currentMessage: string;
     language = ExceptionMessageLanguage.GERMAN;
     readonly languageDataWrapper: XcAutocompleteDataWrapper;
@@ -58,6 +63,7 @@ export class ExceptionMessagesAreaComponent extends ModellingObjectComponent {
         componentMappingService: ComponentMappingService,
         documentService: DocumentService,
         detailLevelService: WorkflowDetailLevelService,
+        readonly pluginService: PluginService,
         @Optional() injector: Injector
     ) {
         super(elementRef, componentMappingService, documentService, detailLevelService, injector);
@@ -101,6 +107,7 @@ export class ExceptionMessagesAreaComponent extends ModellingObjectComponent {
     @Input()
     set exceptionMessagesArea(value: XoExceptionMessagesArea) {
         this.setModel(value);
+        this.updateBundles();
         this.updateRichListItems();
     }
 
@@ -116,5 +123,19 @@ export class ExceptionMessagesAreaComponent extends ModellingObjectComponent {
             objectId: this.exceptionMessagesArea.id,
             request: new XoChangeExceptionMessageRequest(undefined, this.language, this.currentMessage)
         });
+    }
+
+    private updateBundles() {
+        this.pluginBundles = [];
+        if (this.exceptionMessagesArea.plugin?.guiDefiningWorkflow) {
+            combineLatest(
+                this.exceptionMessagesArea.plugin.guiDefiningWorkflow.data.map(
+                    value => this.pluginService.getFromCacheOrCallWorkflow(value)
+                )
+            ).subscribe(bundles => {
+                bundles.forEach(bundle => bundle.data.push(this.exceptionMessagesArea.plugin.context));
+                this.pluginBundles = bundles;
+            });
+        }
     }
 }

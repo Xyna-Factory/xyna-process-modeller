@@ -15,13 +15,20 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { XoArray, XoArrayClass, XoObjectClass } from '@zeta/api';
+import { XoArray, XoArrayClass, XoObjectClass, XoProperty } from '@zeta/api';
 
 import { XoContainerArea } from './modelling-item.model';
+import { XoPlugin } from '@yggdrasil/plugin/plugin.model';
 
 
 @XoObjectClass(XoContainerArea, 'xmcp.processmodeller.datatypes.datatypemodeller', 'MemberVariableArea')
 export class XoMemberVariableArea extends XoContainerArea {
+
+
+    @XoProperty(XoPlugin)
+    plugin: XoPlugin = new XoPlugin();
+
+
 }
 
 @XoArrayClass(XoMemberVariableArea)

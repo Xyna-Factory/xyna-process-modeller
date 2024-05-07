@@ -18,6 +18,7 @@
 import { XoObjectClass, XoProperty } from '@zeta/api';
 
 import { XoArea } from './area.model';
+import { XoPlugin } from '@yggdrasil/plugin/plugin.model';
 
 
 @XoObjectClass(XoArea, 'xmcp.processmodeller.datatypes', 'TextArea')
@@ -25,6 +26,10 @@ export class XoTextArea extends XoArea {
 
     @XoProperty()
     text: string;
+
+
+    @XoProperty(XoPlugin)
+    plugin: XoPlugin = new XoPlugin();
 
 
     hasText(): boolean {

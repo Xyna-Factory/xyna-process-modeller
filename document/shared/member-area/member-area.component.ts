@@ -15,11 +15,19 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Injector, Input, Optional, Output } from '@angular/core';
 
 import { XoArea } from '../../../xo/area.model';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
-
+import { ComponentMappingService } from '../../component-mapping.service';
+import { DocumentService } from '../../document.service';
+import { WorkflowDetailLevelService } from '../../workflow-detail-level.service';
+import { PluginService } from '../../plugin.service';
+import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
+import { XoMemberVariableArea } from '../../../xo/member-variable-area.model';
+import { XoMemberMethodArea } from '../../../xo/member-method-area.model';
+import { XoPlugin } from '@yggdrasil/plugin/plugin.model';
+import { combineLatest } from 'rxjs';
 
 @Component({
     selector: 'member-area',
@@ -27,6 +35,9 @@ import { ModellingObjectComponent } from '../../workflow/shared/modelling-object
     styleUrls: ['./member-area.component.scss']
 })
 export class MemberAreaComponent extends ModellingObjectComponent {
+
+    pluginBundles: XoDefinitionBundle[];
+
     @Input()
     caption: string;
 
@@ -46,9 +57,40 @@ export class MemberAreaComponent extends ModellingObjectComponent {
     @Input()
     set area(area: XoArea) {
         this.setModel(area);
+        this.updateBundles();
     }
 
     get area(): XoArea {
         return this.getModel() as XoArea;
+    }
+
+    constructor(
+        elementRef: ElementRef,
+        componentMappingService: ComponentMappingService,
+        documentService: DocumentService,
+        detailLevelService: WorkflowDetailLevelService,
+        readonly pluginService: PluginService,
+        @Optional() injector: Injector
+    ) {
+        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
+    }
+
+    private updateBundles() {
+        this.pluginBundles = [];
+        let plugin: XoPlugin;
+        if (this.area instanceof XoMemberVariableArea || this.area instanceof XoMemberMethodArea) {
+            plugin = this.area.plugin;
+        }
+
+        if (plugin?.guiDefiningWorkflow) {
+            combineLatest(
+                plugin.guiDefiningWorkflow.data.map(
+                    value => this.pluginService.getFromCacheOrCallWorkflow(value)
+                )
+            ).subscribe(bundles => {
+                bundles.forEach(bundle => bundle.data.push(plugin.context));
+                this.pluginBundles = bundles;
+            });
+        }
     }
 }

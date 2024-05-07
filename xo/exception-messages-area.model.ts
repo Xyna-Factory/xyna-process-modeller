@@ -15,13 +15,19 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { XoArray, XoArrayClass, XoObjectClass } from '@zeta/api';
+import { XoArray, XoArrayClass, XoObjectClass, XoProperty } from '@zeta/api';
 
 import { XoContentArea } from './content-area.model';
+import { XoPlugin } from '@yggdrasil/plugin/plugin.model';
 
 
 @XoObjectClass(XoContentArea, 'xmcp.processmodeller.datatypes.datatypemodeller', 'ExceptionMessagesArea')
 export class XoExceptionMessagesArea extends XoContentArea {
+
+
+    @XoProperty(XoPlugin)
+    plugin: XoPlugin = new XoPlugin();
+
 
 }
 

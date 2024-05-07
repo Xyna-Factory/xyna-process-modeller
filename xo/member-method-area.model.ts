@@ -18,6 +18,7 @@
 import { XoArray, XoArrayClass, XoObjectClass, XoProperty, XoTransient } from '@zeta/api';
 
 import { XoContainerArea } from './modelling-item.model';
+import { XoPlugin } from '@yggdrasil/plugin/plugin.model';
 
 
 @XoObjectClass(XoContainerArea, 'xmcp.processmodeller.datatypes.datatypemodeller', 'MemberMethodArea')
@@ -26,6 +27,11 @@ export class XoMemberMethodArea extends XoContainerArea {
     @XoProperty()
     @XoTransient()
     isInheritedMethodArea = false;
+
+
+    @XoProperty(XoPlugin)
+    plugin: XoPlugin = new XoPlugin();
+
 
 }
 

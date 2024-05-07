@@ -6,6 +6,11 @@
         xc-icon-size="small"
     ></xc-icon-button>
     <h2 class="caption">{{caption | xcI18n}}</h2>
+    <xc-definition-proxy *ngFor="let bundle of pluginBundles"
+        [xc-base-definition]="bundle.definition"
+        [xc-base-definition-data]="bundle.data"
+        [xc-definition-observer]="pluginService"
+    ></xc-definition-proxy>
     <xc-icon-button
         *ngIf="allowAdd"
         [disabled]="readonly"
