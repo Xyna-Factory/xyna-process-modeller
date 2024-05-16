@@ -45,7 +45,7 @@ export class PluginService implements XoDefinitionObserver {
         let bundle: XoDefinitionBundle = this.definedUICache.get(definingWorkflow.uniqueKey);
 
         if (bundle) {
-            return of(bundle);
+            return of(this.cloneBundle(bundle));
         }
 
         return this.apiService.startOrder(
@@ -69,9 +69,16 @@ export class PluginService implements XoDefinitionObserver {
                     data: result.output.slice(1)
                 };
                 this.definedUICache.set(definingWorkflow.uniqueKey, bundle);
-                return bundle;
+                return this.cloneBundle(bundle);
             })
         );
+    }
+
+    private cloneBundle(bundle: XoDefinitionBundle): XoDefinitionBundle {
+        return <XoDefinitionBundle>{
+            definition: bundle.definition.clone(),
+            data: bundle.data.map(value => value.clone())
+        };
     }
 
     // ========================================================================================================================
