@@ -1,0 +1,27 @@
+<div class="row">
+    <xc-form-input
+        label="label"
+        [value]="method.label"
+        [readonly]="readonly || method.isLabelReadonly"
+        (blur)="labelBlur($event)"
+        (keydown.enter)="labelBlur($event)"
+        xc-form-validator-required
+        xc-i18n
+    ></xc-form-input>
+    <xc-button
+        *ngIf="method.isInheritedInstanceMethod"
+        (click)="overrideInstanceMethod()"
+        xc-i18n
+    >override</xc-button>
+    <div class="name">
+        <xc-form-label xc-i18n>name</xc-form-label>
+        <label>{{method.name}}</label>
+    </div>
+</div>
+
+<type-documentation-area
+    (triggerAction)="performAction($event)"
+    [documentationArea]="method.documentationArea"
+    [documentModel]="documentModel"
+    [lines]="10"
+></type-documentation-area>

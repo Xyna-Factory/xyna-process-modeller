@@ -32,7 +32,7 @@ export class XoDynamicMethod extends XoMethod {
     createInsertRequestContent(): XoInsertRequestContent {
         const content = new XoInsertMemberServiceRequestContent();
         content.label = this.label || 'Service';
-        content.implementation = this.implementationType !== XoMethod.IMPL_TYPE_CODED_SERVICE ? null : this.implementation;
+        content.implementation = this.implementationType !== XoMethod.IMPL_TYPE_CODED_SERVICE ? null : this.implementationArea.text;
         content.implementationType = this.implementationType;
         content.reference = this.implementationType !== XoMethod.IMPL_TYPE_REFERENCE ? null : this.reference;
 

@@ -15,5 +15,31 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-export const ProcessModellerName = 'Process Modeller';
-export const ProcessModellerVersion = '2.6.0';
+
+@import 'const';
+
+:host {
+    display: flex;
+
+    .item {
+        display: flex;
+        width: 100%;
+        background-color: $color-gray-1;
+        border-radius: 3px;
+        margin-bottom: 4px;
+        line-break: anywhere;
+
+        .tag {
+            margin-left: 8px;
+            align-self: center;
+            color: $color-normal;
+            white-space: normal;
+            flex-grow: 1;
+        }
+
+        .delete {
+            align-items: center;
+            background-color: $color-gray-2;
+        }
+    }
+}

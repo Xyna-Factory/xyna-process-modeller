@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, Injector, Input, Optional } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Injector, Input, Optional } from '@angular/core';
 
 import { XoLibraryCallRequest } from '@pmod/xo/library-call-request.model';
 import { I18nService } from '@zeta/i18n';
@@ -29,6 +29,9 @@ import { XoMethod } from '../../../xo/method.model';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { ModellingItemComponent, TriggeredAction } from '../../workflow/shared/modelling-object.component';
+import { combineLatest } from 'rxjs';
+import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
+import { PluginService } from '@pmod/document/plugin.service';
 
 
 @Component({
@@ -38,13 +41,17 @@ import { ModellingItemComponent, TriggeredAction } from '../../workflow/shared/m
 })
 export class MethodImplementationComponent extends ModellingItemComponent {
 
+    pluginBundles: XoDefinitionBundle[];
+
     constructor(
         elementRef: ElementRef,
         componentMappingService: ComponentMappingService,
         documentService: DocumentService,
         private readonly dialogService: XcDialogService,
         private readonly i18nService: I18nService,
+        readonly pluginService: PluginService,
         detailLevelService: WorkflowDetailLevelService,
+        private readonly cdr: ChangeDetectorRef,
         @Optional() injector: Injector
     ) {
         super(elementRef, componentMappingService, documentService, detailLevelService, injector);
@@ -79,6 +86,7 @@ export class MethodImplementationComponent extends ModellingItemComponent {
     @Input()
     set method(value: XoMethod) {
         this.setModel(value);
+        this.updateBundles();
     }
 
 
@@ -92,7 +100,7 @@ export class MethodImplementationComponent extends ModellingItemComponent {
 
             const text = (event.target as HTMLInputElement).value;
 
-            if (this.method.implementation !== text) {
+            if (this.method.implementationArea.text !== text) {
                 const triggeredAction: TriggeredAction = {
                     type: ModellingActionType.change,
                     objectId: this.method.id,
@@ -120,5 +128,20 @@ export class MethodImplementationComponent extends ModellingItemComponent {
                     this.documentService.performModellingAction(action, document.item).subscribe();
                 }
             });
+    }
+
+    private updateBundles() {
+        this.pluginBundles = [];
+        if (this.method.implementationArea.plugin?.guiDefiningWorkflow) {
+            combineLatest(
+                this.method.implementationArea.plugin.guiDefiningWorkflow.data.map(
+                    value => this.pluginService.getFromCacheOrCallWorkflow(value)
+                )
+            ).subscribe(bundles => {
+                bundles.forEach(bundle => bundle.data.push(this.method.implementationArea.plugin.context));
+                this.pluginBundles = bundles;
+                this.cdr.markForCheck();
+            });
+        }
     }
 }

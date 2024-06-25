@@ -18,83 +18,18 @@
 @import 'const';
 
 
+
 :host {
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
-    padding: 10px;
 
-    >.grid-12 {
-        display: flex;
-
-        .row {
-            display: flex;
-            flex-direction: row;
-
-            >* {
-                flex: 1 1 100%;
-                margin-right: 10px;
-
-                &:last-child {
-                    margin-right: 0;
-                }
-            }
-
-            >.label {
-                display: flex;
-                align-items: baseline;
-
-                xc-button {
-                    margin-left: 4px;
-                }
-            }
-
-            >.name {
-                display: flex;
-                flex-direction: column;
-
-                >label {
-                    color: $color-normal;
-                    line-height: 32px;
-                    border: 1px solid $color-gray-0;
-                    border-radius: 4px;
-                    padding: 0 8px;
-                }
-            }
-
-            >.add-button {
-                flex-basis: auto;
+    ::ng-deep {
+        .mat-mdc-tab-group .mat-mdc-tab-body-wrapper .mat-mdc-tab-body {
+            scrollbar-width: thin;
+            .mat-mdc-tab-body-content {
+                background: unset;
             }
         }
-
-        >* {
-            margin-left: 10px;
-
-            &:first-child {
-                margin-left: 0;
-            }
-        }
-    }
-
-    >.row {
-        display: flex;
-        flex-direction: row;
-
-        >* {
-            flex: 1 1 100%;
-            margin-right: 10px;
-
-            &:last-child {
-                margin-right: 0;
-            }
-        }
-
-        >.button {
-            flex-basis: auto;
-        }
-    }
-
-    .row.with-button {
-        align-items: center;
     }
 }

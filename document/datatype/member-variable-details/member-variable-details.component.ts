@@ -15,29 +15,21 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, Optional, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnDestroy, Optional } from '@angular/core';
 
-import { FullQualifiedName } from '@zeta/api';
-import { I18nService } from '@zeta/i18n';
-import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItemString, XcOptionItemStringOrUndefined, XcOptionItemTranslate } from '@zeta/xc';
+import { XcTabBarItem } from '@zeta/xc';
 
-import { filter } from 'rxjs/operators';
-
-import { ModellingActionType } from '../../../api/xmom.service';
 import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
-import { XoChangeLabelRequest } from '../../../xo/change-label-request.model';
-import { XoChangeMemberVariableFqnRequest } from '../../../xo/change-member-variable-fqn-request.model';
-import { XoChangeMemberVariableIsListRequest } from '../../../xo/change-member-variable-is-list-request.model';
-import { XoChangeMemberVariablePrimitiveTypeRequest } from '../../../xo/change-member-variable-primitive-type-request.model';
-import { XoChangeMemberVariableStorableRoleRequest } from '../../../xo/change-member-variable-storable-role-request.model';
-import { XoChangeTextRequest } from '../../../xo/change-text-request.model';
 import { XoMemberVariable } from '../../../xo/member-variable.model';
-import { XoRequest } from '../../../xo/request.model';
 import { XoRuntimeContext } from '../../../xo/runtime-context.model';
 import { ComponentMappingService } from '../../component-mapping.service';
-import { DataTypeService } from '../../datatype.service';
 import { DocumentService } from '../../document.service';
 import { ModellingItemComponent } from '../../workflow/shared/modelling-object.component';
+import { MemberVariableStorableTabComponent } from '../tabs/member-variable/member-variable-storable-tab.component';
+import { DatatypeTabData, VariableTabData } from '../tabs/datatype-tab.component';
+import { MemberVariableBaseTabComponent } from '../tabs/member-variable/member-variable-base-tab.component';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { MemberVariableMetaTabComponent } from '../tabs/member-variable/member-variable-meta-tab.component';
 
 
 @Component({
@@ -46,99 +38,75 @@ import { ModellingItemComponent } from '../../workflow/shared/modelling-object.c
     styleUrls: ['./member-variable-details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MemberVariableDetailsComponent extends ModellingItemComponent {
-
-    private static readonly ROLE_UID = 'uniqueIdentifier';
-    private static readonly ROLE_HISTO_TS = 'historizationTimeStamp';
-    private static readonly ROLE_CUR_VER_FLAG = 'currentVersionFlag';
-
-    private static readonly PRIMITIVE_TYPES = [
-        FullQualifiedName.String.name,
-        FullQualifiedName.int.name,
-        FullQualifiedName.Integer.name,
-        FullQualifiedName.long.name,
-        FullQualifiedName.Long.name,
-        FullQualifiedName.double.name,
-        FullQualifiedName.Double.name,
-        FullQualifiedName.boolean.name,
-        FullQualifiedName.Boolean.name
-    ];
-
-    readonly storableRoleDataWrapper: XcAutocompleteDataWrapper<string>;
-    readonly dataTypeDataWrapper: XcAutocompleteDataWrapper<string>;
+export class MemberVariableDetailsComponent extends ModellingItemComponent implements OnDestroy {
 
     @Input()
-    dataTypeRTC: XoRuntimeContext;
+    dataTypeRTC: XoRuntimeContext = null;
 
     @Input()
-    isStorable = false;
+    set isStorable(value: boolean) {
+        if (value !== this._isStorable) {
+            this._isStorable = value;
+            this.updateTabBarItemList();
+        }
+    }
 
+    private _isStorable = false;
+
+    tabUpdate: Subject<VariableTabData> = new BehaviorSubject(this.buildDatatypeTabData());
+
+    readonly baseTabItem: XcTabBarItem<DatatypeTabData<VariableTabData>> = {
+        closable: false,
+        component: MemberVariableBaseTabComponent,
+        name: 'Base',
+        data: <DatatypeTabData<VariableTabData>>{
+            documentModel: this.documentModel,
+            performAction: this.performAction.bind(this),
+            update: this.tabUpdate.asObservable()
+        }
+    };
+
+    readonly metaTabItem: XcTabBarItem<DatatypeTabData<VariableTabData>> = {
+        closable: false,
+        component: MemberVariableMetaTabComponent,
+        name: 'Meta',
+        data: <DatatypeTabData<VariableTabData>>{
+            documentModel: this.documentModel,
+            performAction: this.performAction.bind(this),
+            update: this.tabUpdate.asObservable()
+        }
+    };
+
+    readonly storableTabItem: XcTabBarItem<DatatypeTabData<VariableTabData>> = {
+        closable: false,
+        component: MemberVariableStorableTabComponent,
+        name: 'Storable',
+        data: <DatatypeTabData<VariableTabData>>{
+            documentModel: this.documentModel,
+            performAction: this.performAction.bind(this),
+            update: this.tabUpdate.asObservable()
+        }
+    };
+
+    tabBarSelection: XcTabBarItem<DatatypeTabData<VariableTabData>>;
+    tabBarItems: XcTabBarItem<DatatypeTabData<VariableTabData>>[];
 
     constructor(
         elementRef: ElementRef,
         componentMappingService: ComponentMappingService,
         documentService: DocumentService,
         detailLevelService: WorkflowDetailLevelService,
-        private readonly dataTypeService: DataTypeService,
-        private readonly i18n: I18nService,
         private readonly cdr: ChangeDetectorRef,
         @Optional() injector: Injector
     ) {
         super(elementRef, componentMappingService, documentService, detailLevelService, injector);
-
-        this.storableRoleDataWrapper = new XcAutocompleteDataWrapper(
-            ()    => this.memberVariable.storableRole ?? '',
-            value => {
-                if (this.memberVariable.storableRole !== value) {
-                    this.memberVariable.storableRole = value;
-                    this.performMemberVariableChange(new XoChangeMemberVariableStorableRoleRequest(undefined, value));
-                }
-            }
-        );
-
-        this.dataTypeDataWrapper = new XcAutocompleteDataWrapper(
-            ()    => this.memberVariable.primitiveType || this.memberVariable.$fqn,
-            value => {
-                const primitive = MemberVariableDetailsComponent.PRIMITIVE_TYPES.includes(value);
-                if (primitive && value !== this.memberVariable.primitiveType) {
-                    this.memberVariable.$fqn = undefined;
-                    this.memberVariable.primitiveType = value;
-                    this.performMemberVariableChange(new XoChangeMemberVariablePrimitiveTypeRequest(undefined, value));
-                }
-                if (!primitive && value !== this.memberVariable.$fqn) {
-                    this.memberVariable.$fqn = value;
-                    this.memberVariable.primitiveType = undefined;
-                    if (value) {
-                        this.performMemberVariableChange(new XoChangeMemberVariableFqnRequest(undefined, value));
-                    }
-                }
-            }
-        );
-
-        this.untilDestroyed(this.dataTypeDataWrapper.valuesChange).subscribe(
-            () => this.cdr.detectChanges()
-        );
+        this.tabBarSelection = this.baseTabItem;
+        this.updateTabBarItemList();
     }
 
-
-    private refreshStorableRoleAutocomplete() {
-        this.storableRoleDataWrapper.values = [
-            XcOptionItemString(),
-            XcOptionItemTranslate(this.i18n, MemberVariableDetailsComponent.ROLE_UID),
-            XcOptionItemTranslate(this.i18n, MemberVariableDetailsComponent.ROLE_HISTO_TS),
-            XcOptionItemTranslate(this.i18n, MemberVariableDetailsComponent.ROLE_CUR_VER_FLAG)
-        ];
-    }
-
-
-    private refreshDataTypeAutocomplete() {
-        const rtc = this.documentService.selectedDocument.item.$rtc;
-        this.dataTypeService.getDataTypes(rtc.runtimeContext(), [DataTypeService.ANYTYPE]).subscribe(types => {
-            this.dataTypeDataWrapper.values = [
-                ...MemberVariableDetailsComponent.PRIMITIVE_TYPES.map(primitive => XcOptionItemTranslate(this.i18n, primitive)),
-                ...types.map(type => XcOptionItemString(type.typeFqn.uniqueKey))
-            ];
-        });
+    ngOnDestroy() {
+        this.tabUpdate.complete();
+        super.ngOnDestroy();
     }
 
 
@@ -147,9 +115,12 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent {
     }
 
 
-    @ViewChild('dataTypeAutocomplete', {static: false, read: XcFormAutocompleteComponent})
-    set dataTypeAutocomplete(value: XcFormAutocompleteComponent) {
-        this.untilDestroyed(value?.focus)?.pipe(filter(() => !value.disabled)).subscribe(() => this.refreshDataTypeAutocomplete());
+    private buildDatatypeTabData(): VariableTabData {
+        return <VariableTabData> {
+            variable: this.memberVariable,
+            dataTypeRTC: this.dataTypeRTC,
+            readonly: this.readonly
+        };
     }
 
 
@@ -162,69 +133,17 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent {
     set memberVariable(value: XoMemberVariable) {
         this.setModel(value);
         if (value) {
-            this.dataTypeDataWrapper.preset(v => XcOptionItemStringOrUndefined(v));
-            this.refreshStorableRoleAutocomplete();
+            this.baseTabItem.name = this.memberVariable?.label ?? 'Base';
+            this.tabUpdate.next(this.buildDatatypeTabData());
         }
+        this.cdr.markForCheck();
     }
 
-
-    get isList(): boolean {
-        return this.memberVariable.isList;
-    }
-
-
-    set isList(value: boolean) {
-        if (this.memberVariable.isList !== value) {
-            this.memberVariable.isList = value;
-            this.performMemberVariableChange(new XoChangeMemberVariableIsListRequest(undefined, value));
+    private updateTabBarItemList() {
+        this.tabBarItems = [this.baseTabItem/*, this.metaTabItem*/];
+        if (this._isStorable) {
+            this.tabBarItems.push(this.storableTabItem);
         }
-    }
-
-
-    get primitive(): boolean {
-        return !!this.memberVariable.primitiveType;
-    }
-
-
-    get multiplicity(): string {
-        return this.isList ? 'n' : '1';
-    }
-
-
-    labelBlur(event: FocusEvent) {
-        if (!this.readonly) {
-            const value = (event.target as HTMLInputElement).value;
-            if (this.memberVariable.label !== value) {
-                this.memberVariable.label = value;
-                this.performMemberVariableChange(new XoChangeLabelRequest(undefined, value), this.memberVariable.id);
-            }
-        }
-    }
-
-
-    documentationBlur(event: FocusEvent) {
-        if (!this.readonly) {
-            const value = (event.target as HTMLTextAreaElement).value;
-            if (this.memberVariable.documentation !== value) {
-                this.memberVariable.documentation = value;
-                this.performMemberVariableChange(new XoChangeTextRequest(undefined, value), this.memberVariable.documentationArea.id);
-            }
-        }
-    }
-
-
-    performMemberVariableChange(request: XoRequest, id = this.memberVariable.id) {
-        this.performAction({
-            type: ModellingActionType.change,
-            objectId: id,
-            request
-        });
-    }
-
-
-    openComplexDataType() {
-        const rtc = (this.memberVariable.$rtc ?? this.dataTypeRTC).runtimeContext();
-        const fqn = this.memberVariable.toFqn();
-        this.documentService.loadDataType(rtc, fqn);
+        this.cdr.markForCheck();
     }
 }

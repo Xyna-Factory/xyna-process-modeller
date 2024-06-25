@@ -40,13 +40,13 @@ export class CodingComponent {
 
     set implementation(value: string) {
         if (this.method && this.implementation === value) {
-            this.method.implementation = value;
+            this.method.implementationArea.text = value;
             this.implementationChange.emit(value);
         }
     }
 
     get implementation(): string {
-        return this.method ? this.method.implementation : '';
+        return this.method ? this.method.implementationArea.text : '';
     }
 
     @Input()

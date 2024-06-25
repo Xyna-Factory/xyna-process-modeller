@@ -15,6 +15,11 @@
             [disabled]="readonly || isAbstractMethod"
             xc-tooltip="use-generated-template-library-tooltip"
         >template-call-button</xc-button>
+        <xc-definition-proxy *ngFor="let bundle of pluginBundles"
+            [xc-base-definition]="bundle.definition"
+            [xc-base-definition-data]="bundle.data"
+            [xc-definition-observer]="pluginService"
+        ></xc-definition-proxy>
     </div>
 </div>
 <coding
