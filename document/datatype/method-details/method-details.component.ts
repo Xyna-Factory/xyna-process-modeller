@@ -30,6 +30,7 @@ import { MethodBaseTabComponent } from '../tabs/method/method-base-tab.component
 import { MethodMetaTabComponent } from '../tabs/method/method-meta-tab.component';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { MethodImplementationTabComponent } from '../tabs/method/method-implementation-tab.component';
+import { I18nService } from '@zeta/i18n';
 
 
 @Component({
@@ -67,7 +68,7 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
     readonly implementationTabItem: XcTabBarItem<DatatypeTabData<MethodTabData>> = {
         closable: false,
         component: MethodImplementationTabComponent,
-        name: 'Implementation',
+        name: this.i18nService.translate('pmod.datatype.method-details.implementation'),
         data: <DatatypeTabData<MethodTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
@@ -85,6 +86,7 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
         componentMappingService: ComponentMappingService,
         documentService: DocumentService,
         detailLevelService: WorkflowDetailLevelService,
+        private readonly i18nService: I18nService,
         private readonly cdr: ChangeDetectorRef,
         @Optional() injector: Injector
     ) {
