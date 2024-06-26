@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2023 Xyna GmbH, Germany
+ * Copyright 2024 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,5 +15,33 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-export const ProcessModellerName = 'Process Modeller';
-export const ProcessModellerVersion = '2.6.0';
+@import 'const';
+
+:host {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 100%;
+    padding: 10px;
+
+    .row {
+        display: flex;
+        flex-direction: row;
+
+        &.with-button {
+            align-items: center;
+        }
+
+        >.button {
+            flex: 0 0 auto;
+        }
+
+        >* {
+            flex: 1 1 100%;
+            margin-right: 10px;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+}

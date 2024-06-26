@@ -156,6 +156,13 @@ import { VariableTreeComponent } from './document/workflow/variable-tree/variabl
 import { VariableTreeNodeComponent } from './document/workflow/variable-tree-node/variable-tree-node.component';
 import { FlowCanvasComponent } from './document/workflow/visual-mapping/flow-canvas/flow-canvas.component';
 import { PluginService } from './document/plugin.service';
+import { MemberVariableBaseTabComponent } from './document/datatype/tabs/member-variable/member-variable-base-tab.component';
+import { MemberVariableMetaTabComponent } from './document/datatype/tabs/member-variable/member-variable-meta-tab.component';
+import { MemberVariableStorableTabComponent } from './document/datatype/tabs/member-variable/member-variable-storable-tab.component';
+import { MetaTagComponent } from './document/datatype/tabs/member-variable/meta-tag-rich-list/meta-tag-rich-list.component';
+import { MethodMetaTabComponent } from './document/datatype/tabs/method/method-meta-tab.component';
+import { MethodBaseTabComponent } from './document/datatype/tabs/method/method-base-tab.component';
+import { MethodImplementationTabComponent } from './document/datatype/tabs/method/method-implementation-tab.component';
 
 
 @NgModule({
@@ -226,9 +233,16 @@ import { PluginService } from './document/plugin.service';
         MemberServiceComponent,
         MemberVariableAreaComponent,
         MemberVariableComponent,
+        MemberVariableBaseTabComponent,
         MemberVariableDetailsComponent,
+        MemberVariableMetaTabComponent,
+        MemberVariableStorableTabComponent,
+        MetaTagComponent,
+        MethodBaseTabComponent,
         MethodDetailsComponent,
+        MethodMetaTabComponent,
         MethodImplementationComponent,
+        MethodImplementationTabComponent,
         ModContentEditableDirective,
         ModDraggableDirective,
         ModDropAreaDirective,

@@ -381,6 +381,7 @@ export class ModellingItemComponent extends ModellingObjectComponent implements 
 
     ngOnDestroy() {
         this.modelChangeSubscription?.unsubscribe();
+        super.ngOnDestroy();
     }
 
 

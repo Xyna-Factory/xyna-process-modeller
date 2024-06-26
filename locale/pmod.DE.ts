@@ -768,6 +768,10 @@ export const PMOD_DE: I18nTranslation[] = [
         key: 'pmod.datatype.method-details.reference',
         value: 'Referenz'
     },
+    {
+        key: 'pmod.datatype.method-details.implementation',
+        value: 'Implementierung'
+    },
 
     // method-implementation
     {

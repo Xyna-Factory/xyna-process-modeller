@@ -39,9 +39,6 @@ export class XoMethod extends XoXmomItem {
     implementationType: string;
 
     @XoProperty()
-    implementation: string;
-
-    @XoProperty()
     @XoTransient()
     readonlyImplementation: boolean;
 
@@ -54,6 +51,10 @@ export class XoMethod extends XoXmomItem {
     @XoProperty()
     @XoTransient()
     documentationArea: XoTextArea;
+
+    @XoProperty()
+    @XoTransient()
+    implementationArea: XoTextArea;
 
     // set true in the DataType Model
     @XoProperty()
@@ -79,6 +80,7 @@ export class XoMethod extends XoXmomItem {
         for (const area of this.areas) {
             switch (area.name) {
                 case XoModellingItem.DOCUMENTATION_AREA_NAME: this.documentationArea = area as XoTextArea; break;
+                case XoModellingItem.IMPLEMENTATION_AREA_NAME: this.implementationArea = area as XoTextArea; break;
                 case XoMethod.INPUT_AREA_NAME: this.inputArea = area as XoVariableArea; break;
                 case XoMethod.OUTPUT_AREA_NAME: this.outputArea = area as XoVariableArea; break;
                 case XoMethod.THROWS_AREA: this.throwsArea = area as XoVariableArea; break;

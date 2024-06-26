@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2023 Xyna GmbH, Germany
+ * Copyright 2024 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,5 +15,25 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-export const ProcessModellerName = 'Process Modeller';
-export const ProcessModellerVersion = '2.6.0';
+import { Component, Injector } from '@angular/core';
+
+import { XcRichListItemComponent } from '@zeta/xc';
+
+export interface metaTag {
+    metaTag: string;
+}
+
+@Component({
+    templateUrl: './meta-tag-rich-list.component.html',
+    styleUrls: [ './meta-tag-rich-list.component.scss']
+})
+export class MetaTagComponent extends XcRichListItemComponent<void, metaTag> {
+
+    constructor(injector: Injector) {
+        super(injector);
+    }
+
+    get tag(): string {
+        return this.injectedData.metaTag;
+    }
+}

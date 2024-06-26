@@ -596,6 +596,10 @@ export const PMOD_EN: I18nTranslation[] = [
         key: 'pmod.datatype.method-details.open-button',
         value: 'Open'
     },
+    {
+        key: 'pmod.datatype.method-details.implementation',
+        value: 'Implementation'
+    },
 
     // global-storable-properties-area
     {
