@@ -30,7 +30,7 @@ export class XoStaticMethod extends XoMethod {
         // changing the type makes it much easier for the backend to differ between dynamic and static methods
         content.type = 'memberService';
         content.label = this.label || 'Service';
-        content.implementation = this.implementationArea.text;
+        content.implementation = this.implementationArea?.text;
         content.implementationType = this.implementationType;
         content.reference = null;
 
