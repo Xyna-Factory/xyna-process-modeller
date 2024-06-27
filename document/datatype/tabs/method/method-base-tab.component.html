@@ -8,15 +8,15 @@
         xc-form-validator-required
         xc-i18n
     ></xc-form-input>
-    <xc-button
-        *ngIf="method.isInheritedInstanceMethod"
-        (click)="overrideInstanceMethod()"
-        xc-i18n
-    >override</xc-button>
     <div class="name">
         <xc-form-label xc-i18n>name</xc-form-label>
         <label>{{method.name}}</label>
     </div>
+    <xc-button class="button"
+        *ngIf="method.isInheritedInstanceMethod"
+        (click)="overrideInstanceMethod()"
+        xc-i18n
+    >override</xc-button>
 </div>
 
 <type-documentation-area
