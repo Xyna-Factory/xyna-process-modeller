@@ -36,6 +36,11 @@
             }
         }
 
+        >.button {
+            flex: 0 0 auto;
+            align-content: center;
+        }
+
         > .name {
             display: flex;
             flex-direction: column;
