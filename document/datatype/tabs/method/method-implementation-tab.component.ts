@@ -92,6 +92,7 @@ export class MethodImplementationTabComponent extends DatatypeMethodTabComponent
         this.implementationTypeDataWrapper.values = [
             XcOptionItemTranslate(this.i18n, XoMethod.IMPL_TYPE_ABSTRACT),
             XcOptionItemTranslate(this.i18n, XoMethod.IMPL_TYPE_CODED_SERVICE),
+            XcOptionItemTranslate(this.i18n, XoMethod.IMPL_TYPE_CODED_SERVICE_PYTHON),
             XcOptionItemTranslate(this.i18n, XoMethod.IMPL_TYPE_REFERENCE, !this.isReferenceAsImplementationTypePossible)
         ];
     }
