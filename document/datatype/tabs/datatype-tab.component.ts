@@ -191,7 +191,9 @@ export abstract class DatatypeMethodTabComponent extends DatatypeTabComponent<Me
 
 
     get isMethodImplementationTypeSet(): boolean {
-        return this.method.implementationType === XoMethod.IMPL_TYPE_CODED_SERVICE || this.method.implementationType === XoMethod.IMPL_TYPE_ABSTRACT;
+        return this.method.implementationType === XoMethod.IMPL_TYPE_CODED_SERVICE ||
+        this.method.implementationType === XoMethod.IMPL_TYPE_CODED_SERVICE_PYTHON ||
+        this.method.implementationType === XoMethod.IMPL_TYPE_ABSTRACT;
     }
 
 
