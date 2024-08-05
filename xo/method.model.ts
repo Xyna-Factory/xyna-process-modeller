@@ -88,7 +88,7 @@ export class XoMethod extends XoXmomItem {
             }
         }
 
-        if (!this.readonlyImplementation && this.implementationType !== XoMethod.IMPL_TYPE_CODED_SERVICE) {
+        if (!this.readonlyImplementation && this.implementationType !== XoMethod.IMPL_TYPE_CODED_SERVICE && this.implementationType !== XoMethod.IMPL_TYPE_CODED_SERVICE_PYTHON) {
             this.readonlyImplementation = true;
         }
 
