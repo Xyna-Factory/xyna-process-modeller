@@ -1043,7 +1043,11 @@ export const PMOD_DE: I18nTranslation[] = [
     },
     {
         key: 'codedService',
-        value: 'Coded Service'
+        value: 'Coded Service Java'
+    },
+    {
+        key: 'codedServicePython',
+        value: 'Coded Service Python'
     },
     {
         key: 'reference',

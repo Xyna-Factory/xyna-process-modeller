@@ -21,7 +21,7 @@ import { DocumentService } from '@pmod/document/document.service';
 import { I18nService } from '@zeta/i18n';
 import { DatatypeMethodTabComponent } from '../datatype-tab.component';
 import { XoMethod } from '@pmod/xo/method.model';
-import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItemStringOrUndefined, XcOptionItemTranslate } from '@zeta/xc';
+import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItem, XcOptionItemStringOrUndefined, XcOptionItemTranslate } from '@zeta/xc';
 import { XoChangeMemberMethodImplementationTypeRequest } from '@pmod/xo/change-member-method-implementation-type-request.model';
 import { XoDynamicMethod } from '@pmod/xo/dynamic-method.model';
 import { XoChangeMemberMethodReferenceRequest } from '@pmod/xo/change-member-method-reference-request.model';
@@ -89,11 +89,15 @@ export class MethodImplementationTabComponent extends DatatypeMethodTabComponent
     }
 
     private refreshImplementationTypeAutocomplete() {
-        this.implementationTypeDataWrapper.values = [
-            XcOptionItemTranslate(this.i18n, XoMethod.IMPL_TYPE_ABSTRACT),
+        const values: XcOptionItem<string>[] = [
             XcOptionItemTranslate(this.i18n, XoMethod.IMPL_TYPE_CODED_SERVICE),
-            XcOptionItemTranslate(this.i18n, XoMethod.IMPL_TYPE_REFERENCE, !this.isReferenceAsImplementationTypePossible)
+            XcOptionItemTranslate(this.i18n, XoMethod.IMPL_TYPE_CODED_SERVICE_PYTHON)
         ];
+        if (!this.isStaticMethod) {
+            values.unshift(XcOptionItemTranslate(this.i18n, XoMethod.IMPL_TYPE_ABSTRACT, this.isStaticMethod));
+            values.push(XcOptionItemTranslate(this.i18n, XoMethod.IMPL_TYPE_REFERENCE, this.isStaticMethod || !this.isReferenceAsImplementationTypePossible));
+        }
+        this.implementationTypeDataWrapper.values = values;
     }
 
 

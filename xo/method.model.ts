@@ -28,6 +28,7 @@ export class XoMethod extends XoXmomItem {
 
     static readonly IMPL_TYPE_ABSTRACT = 'abstract';
     static readonly IMPL_TYPE_CODED_SERVICE = 'codedService';
+    static readonly IMPL_TYPE_CODED_SERVICE_PYTHON = 'codedServicePython';
     static readonly IMPL_TYPE_REFERENCE = 'reference';
 
     static readonly THROWS_AREA = 'throws';
@@ -87,7 +88,7 @@ export class XoMethod extends XoXmomItem {
             }
         }
 
-        if (!this.readonlyImplementation && this.implementationType !== XoMethod.IMPL_TYPE_CODED_SERVICE) {
+        if (!this.readonlyImplementation && this.implementationType !== XoMethod.IMPL_TYPE_CODED_SERVICE && this.implementationType !== XoMethod.IMPL_TYPE_CODED_SERVICE_PYTHON) {
             this.readonlyImplementation = true;
         }
 
