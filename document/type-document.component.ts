@@ -60,9 +60,10 @@ export class TypeDocumentComponent<D extends DocumentModel> extends DocumentComp
         });
 
         // restore selection from name and label after server request
-        this.untilDestroyed(this.documentService.xmomService.afterActionTriggered).pipe(filter(() => this.document.tabActive)).subscribe(() =>
-            this.restoreSelectedItem()
-        );
+        this.untilDestroyed(this.documentService.xmomService.afterActionTriggered).pipe(filter(() => this.document.tabActive)).subscribe(() => {
+            this.restoreSelectedItem();
+            this.cdr.markForCheck();
+        });
 
         // restore selection after document item got replaced on the server
         this.untilDestroyed(this.document.item.replaced()).subscribe(() => {

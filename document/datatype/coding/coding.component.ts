@@ -15,7 +15,8 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import * as monaco from 'monaco-editor';
 
 import { XoMethod } from '../../../xo/method.model';
 
@@ -27,11 +28,48 @@ import { XoMethod } from '../../../xo/method.model';
 })
 export class CodingComponent {
 
+    constructor(private readonly cdr: ChangeDetectorRef, private readonly elementRef: ElementRef) {  }
+
     private _method: XoMethod;
+    private javaEditor: monaco.editor.IStandaloneCodeEditor;
+    private pythonEditor: monaco.editor.IStandaloneCodeEditor;
+
+    javaCode: string;
+    pythonCode: string;
+
+    private oldHeight: number;
+    private oldWidth: number;
+
+    private readonly _javaEditorOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
+        theme: 'vs-dark',
+        language: 'java',
+        scrollBeyondLastLine: false,
+        readOnly: false,
+        automaticLayout: false,
+        lineNumbers: 'off'
+    };
+
+    private readonly _pythonEditorOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
+        theme: 'vs-dark',
+        language: 'python',
+        scrollBeyondLastLine: false,
+        readOnly: false,
+        automaticLayout: false,
+        lineNumbers: 'off'
+    };
+
+    get javaEditorOptions(): monaco.editor.IStandaloneEditorConstructionOptions {
+        return this._javaEditorOptions;
+    }
+
+    get pythonEditorOptions(): monaco.editor.IStandaloneEditorConstructionOptions {
+        return this._pythonEditorOptions;
+    }
 
     @Input()
     set method(value: XoMethod) {
         this._method = value;
+        this.updateEditor();
     }
 
     get method(): XoMethod {
@@ -39,8 +77,7 @@ export class CodingComponent {
     }
 
     set implementation(value: string) {
-        if (this.method && this.implementation === value) {
-            this.method.implementationArea.text = value;
+        if (this.method && this.implementation !== value) {
             this.implementationChange.emit(value);
         }
     }
@@ -56,15 +93,60 @@ export class CodingComponent {
         return this.method ? this.method.implementationType === XoMethod.IMPL_TYPE_ABSTRACT : true;
     }
 
+    get isPython(): boolean {
+        return this.method?.implementationType === XoMethod.IMPL_TYPE_CODED_SERVICE_PYTHON;
+    }
+
     @Output()
     readonly implementationChange = new EventEmitter<string>();
 
-    @Output()
-    // eslint-disable-next-line @angular-eslint/no-output-native
-    readonly blur = new EventEmitter<FocusEvent>();
+    private updateEditor() {
+        if (this.method) {
+            if (this.isPython) {
+                this.pythonCode = this.implementation;
+                this.javaCode = '';
+                this._pythonEditorOptions.readOnly = this.readonly;
+                this.pythonEditor?.updateOptions(this._pythonEditorOptions);
+            } else {
+                this.javaCode = this.isAbstract ? '/* Abstract Method */' : this.implementation;
+                this.pythonCode = '';
+                this._javaEditorOptions.readOnly = this.readonly;
+                this.javaEditor?.updateOptions(this._javaEditorOptions);
+            }
+        } else {
+            this.javaCode = '';
+            this._javaEditorOptions.readOnly = this.readonly;
+            this.javaEditor?.updateOptions(this._javaEditorOptions);
+        }
 
-    codingBlur(event: FocusEvent) {
-        this.blur.emit(event);
+        const editor = this.isPython ? this.pythonEditor : this.javaEditor;
+        const width = this.elementRef.nativeElement.offsetWidth ? this.elementRef.nativeElement.offsetWidth : this.oldWidth;
+        const height = this.elementRef.nativeElement.offsetHeight ? this.elementRef.nativeElement.offsetHeight : this.oldHeight;
+        this.oldWidth = width;
+        this.oldHeight = height;
+        editor?.layout({width: width, height: height});
+        this.cdr.markForCheck();
     }
 
+    codingBlur(implementation: string) {
+        this.implementation = implementation;
+    }
+
+    monacoInitJava(editor: monaco.editor.IStandaloneCodeEditor) {
+        this.javaEditor = editor;
+        editor.onDidBlurEditorWidget(() => {
+            if (!this.javaEditorOptions.readOnly && this.javaCode !== this.implementation) {
+                this.codingBlur(this.javaCode);
+            }
+        });
+    }
+
+    monacoInitPython(editor: monaco.editor.IStandaloneCodeEditor) {
+        this.pythonEditor = editor;
+        editor.onDidBlurEditorWidget(() => {
+            if (!this.pythonEditorOptions.readOnly && this.pythonCode !== this.implementation) {
+                this.codingBlur(this.pythonCode);
+            }
+        });
+    }
 }
