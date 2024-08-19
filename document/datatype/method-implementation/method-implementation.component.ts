@@ -95,10 +95,10 @@ export class MethodImplementationComponent extends ModellingItemComponent {
     }
 
 
-    codingBlur(event: FocusEvent) {
+    implementationChange(value: string) {
         if (!this.method.readonlyImplementation && !this.readonly) {
 
-            const text = (event.target as HTMLInputElement).value;
+            const text = value;
 
             if (this.method.implementationArea.text !== text) {
                 const triggeredAction: TriggeredAction = {

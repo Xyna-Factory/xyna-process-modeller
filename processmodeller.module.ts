@@ -150,7 +150,6 @@ import { ProcessmodellerComponent } from './processmodeller.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { WorkflowDetailSettingsService } from './workflow-detail-settings.service';
 import { QueryParameterService } from '@zeta/nav/query-parameter.service';
-import './xo/_import';
 import { VisualMappingComponent } from './document/workflow/visual-mapping/visual-mapping.component';
 import { VariableTreeComponent } from './document/workflow/variable-tree/variable-tree.component';
 import { VariableTreeNodeComponent } from './document/workflow/variable-tree-node/variable-tree-node.component';
@@ -163,15 +162,19 @@ import { MetaTagComponent } from './document/datatype/tabs/member-variable/meta-
 import { MethodMetaTabComponent } from './document/datatype/tabs/method/method-meta-tab.component';
 import { MethodBaseTabComponent } from './document/datatype/tabs/method/method-base-tab.component';
 import { MethodImplementationTabComponent } from './document/datatype/tabs/method/method-implementation-tab.component';
+import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
     imports: [
         CommonModule,
+        FormsModule,
         ZetaModule,
         FactoryManagerModule,
         ShowGUIModelModalModule,
-        DevToolsModule
+        DevToolsModule,
+        MonacoEditorModule.forRoot()
     ],
     declarations: [
         BranchComponent,

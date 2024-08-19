@@ -25,7 +25,7 @@
 <coding
     [method]="method"
     [readonly]="readonly || isAbstractMethod"
-    (blur)="codingBlur($event)"
+    (implementationChange)="implementationChange($event)"
 ></coding>
 <variable-area-document
     [variableArea]="method.throwsArea"
