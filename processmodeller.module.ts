@@ -51,8 +51,7 @@ import { RepairDialogComponent } from './document/modal/repair-dialog/repair-dia
 import { RepairEntryComponent } from './document/modal/repair-dialog/repair-entry/repair-entry.component';
 import { SelectionService } from './document/selection.service';
 import { ServiceGroupComponent } from './document/servicegroup.component';
-import { JavaLibAreaComponent } from './document/shared/java-lib-area/java-lib-area.component';
-import { JavaLibItemComponent } from './document/shared/java-lib-area/java-lib-item.component';
+import { LibAreaComponent } from './document/shared/lib-area/lib-area.component';
 import { JavaSharedLibAreaComponent } from './document/shared/java-shared-lib-area/java-shared-lib-area.component';
 import { JavaSharedLibItemComponent } from './document/shared/java-shared-lib-area/java-shared-lib-item.component';
 import { MemberAreaComponent } from './document/shared/member-area/member-area.component';
@@ -162,6 +161,7 @@ import { MetaTagComponent } from './document/datatype/tabs/member-variable/meta-
 import { MethodMetaTabComponent } from './document/datatype/tabs/method/method-meta-tab.component';
 import { MethodBaseTabComponent } from './document/datatype/tabs/method/method-base-tab.component';
 import { MethodImplementationTabComponent } from './document/datatype/tabs/method/method-implementation-tab.component';
+import { LibItemComponent } from './document/shared/lib-area/lib-item.component';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { FormsModule } from '@angular/forms';
 
@@ -225,12 +225,12 @@ import { FormsModule } from '@angular/forms';
         HelpComponent,
         InvocationComponent,
         ItemBarAreaComponent,
-        JavaLibAreaComponent,
-        JavaLibItemComponent,
         JavaSharedLibAreaComponent,
         JavaSharedLibItemComponent,
         LabelAreaComponent,
         LabelPathDialogComponent,
+        LibAreaComponent,
+        LibItemComponent,
         MappingComponent,
         MemberAreaComponent,
         MemberServiceComponent,

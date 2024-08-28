@@ -7,12 +7,12 @@
             [documentModel]="document"
         ></type-info-area>
         <div class="lib-area">
-            <java-lib-area
-                xc-i18n-context="java-lib-area"
-                [javaLibArea]="serviceGroup.javaLibrariesArea"
+            <lib-area
+                xc-i18n-context="lib-area"
+                [libArea]="serviceGroup.librariesArea"
                 (triggerAction)="performModellingAction($event)"
                 [documentModel]="document"
-            ></java-lib-area>
+            ></lib-area>
             <java-shared-lib-area
                 xc-i18n-context="java-shared-lib-area"
                 [javaSharedLibArea]="serviceGroup.javaSharedLibrariesArea"

@@ -1,4 +1,5 @@
 <div class="row">
-    <xc-form-label xc-i18n>java-shared-libraries-label</xc-form-label>
+    <xc-icon-button class="toggle" [class.rotated]="expand" (click)="toggleexpand()" xc-icon-name="accordion" xc-icon-size="small"></xc-icon-button>
+    <xc-form-label class="label" xc-i18n>java-shared-libraries-label</xc-form-label>
 </div>
-<xc-rich-list [xc-rich-list-items]="javaSharedLibraryRichListItems"></xc-rich-list>
+<xc-rich-list *ngIf="expand" [xc-rich-list-items]="javaSharedLibraryRichListItems"></xc-rich-list>

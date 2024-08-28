@@ -51,6 +51,8 @@ export class JavaSharedLibAreaComponent extends ModellingObjectComponent impleme
     usedChangeSubject = new Subject<TriggeredAction>();
     usedChangeSubjectSubscription: Subscription;
 
+    expand = true;
+
     constructor(
         elementRef: ElementRef,
         componentMappingService: ComponentMappingService,
@@ -92,4 +94,7 @@ export class JavaSharedLibAreaComponent extends ModellingObjectComponent impleme
         }
     }
 
+    toggleexpand() {
+        this.expand = !this.expand;
+    }
 }

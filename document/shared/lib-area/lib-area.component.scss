@@ -15,24 +15,47 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { XoArray, XoArrayClass, XoObjectClass, XoProperty } from '@zeta/api';
-import { XoItem } from './item.model';
+@import 'const';
 
 
-@XoObjectClass(XoItem, 'xmcp.processmodeller.datatypes.servicegroupmodeller', 'JavaSharedLibrary')
-export class XoJavaSharedLibrary extends XoItem {
+:host {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
 
+    .row {
+        display: flex;
+        align-items: center;
+        min-height: 32px;
 
-    @XoProperty()
-    name: string;
+        & > .label {
+            flex: 1;
+        }
+    }
 
+    ::ng-deep xc-icon-button.toggle {
+        xc-icon {
+            transition: transform $transition-time-fast ease-in-out;
+        }
 
-    @XoProperty()
-    used: boolean;
+        &.rotated xc-icon {
+            transform: rotate(90deg);
+        }
+    }
 
+    xc-rich-list::ng-deep {
+        .lib-item {
 
-}
+            color: $color-gray-5;
 
-@XoArrayClass(XoJavaSharedLibrary)
-export class XoJavaSharedLibraryArray extends XoArray<XoJavaSharedLibrary> {
+            &:nth-child(even) {
+                background-color: $color-gray-0;
+            }
+
+            &:nth-child(odd) {
+                background-color: $color-gray-1;
+            }
+        }
+    }
+
 }

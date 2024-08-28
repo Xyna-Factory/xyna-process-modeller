@@ -617,10 +617,14 @@ export const PMOD_EN: I18nTranslation[] = [
         value: 'Documentation'
     },
 
-    // java-lib-area
+    // lib-area
     {
-        key: 'pmod.datatype.java-lib-area.java-libraries-label',
+        key: 'pmod.datatype.lib-area.java-libraries-label',
         value: 'Java Libraries'
+    },
+    {
+        key: 'pmod.datatype.lib-area.python-libraries-label',
+        value: 'Python Libraries'
     },
 
     // java-shared-lib-area
@@ -1125,14 +1129,14 @@ export const PMOD_EN: I18nTranslation[] = [
         value: 'Copy and paste of objects across different servers is not yet supported.'
     },
     // service group
-    // {
-    //     key: 'Confirm',
-    //     value: 'Confirm'
-    // },
-    // {
-    //     key: 'Would you like to delete this Java Library?',
-    //     value: 'Would you like to delete this Java Library?'
-    // },
+    {
+        key: 'Confirm',
+        value: 'Confirm'
+    },
+    {
+        key: 'Would you like to delete the %name% Library?',
+        value: 'Would you like to delete the %name% Library?'
+    },
     // Document
     {
         key: 'Save Workflow as ...',
