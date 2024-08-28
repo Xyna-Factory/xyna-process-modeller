@@ -635,10 +635,15 @@ export const PMOD_DE: I18nTranslation[] = [
         value: 'Dokumentation'
     },
 
-    // java-lib-area
+    // lib-area
     {
-        key: 'pmod.datatype.java-lib-area.java-libraries-label',
+        key: 'pmod.datatype.lib-area.java-libraries-label',
         value: 'Java Libraries',
+        pronunciationLanguage: 'en-US'
+    },
+    {
+        key: 'pmod.datatype.lib-area.python-libraries-label',
+        value: 'Python Libraries',
         pronunciationLanguage: 'en-US'
     },
 
@@ -1154,8 +1159,8 @@ export const PMOD_DE: I18nTranslation[] = [
         value: 'Bestätigen'
     },
     {
-        key: 'Would you like to delete this Java Library?',
-        value: 'Diese Java-Bibliothek löschen?'
+        key: 'Would you like to delete the %name% Library',
+        value: 'Die Bibliothek %name% löschen?'
     },
     // Document
     {

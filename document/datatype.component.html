@@ -24,12 +24,12 @@
             [lines]="8"
         ></type-documentation-area>
         <div class="lib-area">
-            <java-lib-area
-                xc-i18n-context="java-lib-area"
-                [javaLibArea]="dataType.javaLibrariesArea"
+            <lib-area
+                xc-i18n-context="lib-area"
+                [libArea]="dataType.librariesArea"
                 (triggerAction)="performModellingAction($event)"
                 [documentModel]="document"
-            ></java-lib-area>
+            ></lib-area>
             <java-shared-lib-area
                 xc-i18n-context="java-shared-lib-area"
                 [javaSharedLibArea]="dataType.javaSharedLibrariesArea"

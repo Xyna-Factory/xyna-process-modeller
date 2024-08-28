@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2023 Xyna GmbH, Germany
+ * Copyright 2024 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,19 +15,25 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { XoArray, XoArrayClass, XoObjectClass, XoProperty } from '@zeta/api';
+import { XoObjectClass, XoArrayClass, XoProperty, XoArray } from '@zeta/api';
+import { XoLibraryArray } from './library.model';
+import { XoContainerArea } from './modelling-item.model';
 
-import { XoItem } from './item.model';
+
+@XoObjectClass(XoContainerArea, 'xmcp.processmodeller.datatypes.servicegroupmodeller', 'LibrariesArea')
+export class XoLibrariesArea extends XoContainerArea {
 
 
-@XoObjectClass(XoItem, 'xmcp.processmodeller.datatypes.servicegroupmodeller', 'JavaLibrary')
-export class XoJavaLibrary extends XoItem {
+    @XoProperty(XoLibraryArray)
+    javaLibraries: XoLibraryArray = new XoLibraryArray();
 
-    @XoProperty()
-    name: string;
+
+    @XoProperty(XoLibraryArray)
+    pythonLibraries: XoLibraryArray = new XoLibraryArray();
+
+
 }
 
-
-@XoArrayClass(XoJavaLibrary)
-export class XoJavaLibraryArray extends XoArray<XoJavaLibrary> {
+@XoArrayClass(XoLibrariesArea)
+export class XoLibrariesAreaArray extends XoArray<XoLibrariesArea> {
 }

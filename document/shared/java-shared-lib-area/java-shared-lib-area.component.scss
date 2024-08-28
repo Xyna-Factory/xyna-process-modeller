@@ -28,8 +28,18 @@
         align-items: center;
         min-height: 32px;
 
-        & > *:first-child {
+        & > .label {
             flex: 1;
+        }
+    }
+
+    ::ng-deep xc-icon-button.toggle {
+        xc-icon {
+            transition: transform $transition-time-fast ease-in-out;
+        }
+
+        &.rotated xc-icon {
+            transform: rotate(90deg);
         }
     }
 

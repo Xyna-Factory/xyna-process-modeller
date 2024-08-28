@@ -72,6 +72,8 @@ export enum ModellingActionType {
     copyToClipboard = 'copyToClipboard',
     decouple = 'complete',
     delete = 'delete',
+    javaLibrary = 'javalib',
+    pythonLibrary = 'pythonlib',
     deleteConstant = 'constant/delete',
     insert = 'insert',
     libraryCall = 'templateCall',
@@ -101,7 +103,7 @@ export interface XmomPath {
 }
 
 
-enum HttpMethod {
+export enum HttpMethod {
     GET = 'GET',
     POST = 'POST',
     PUT = 'PUT',
@@ -197,7 +199,7 @@ export class XmomService {
     }
 
 
-    private urlFromAction(action: ModellingAction): { method: HttpMethod; url: string } {
+    private urlFromAction(action: ModellingAction): { method: HttpMethod; url: string; options: { params: HttpParams }} {
         const url = this.getXmomObjectUrl(
             action.rtc,
             action.xmomItem.toFqn(),
@@ -205,6 +207,11 @@ export class XmomService {
             action.objectId,
             action.type
         );
+        const options = this.getHttpParamsOption(action.paramSet);
+
+        if (action.method) {
+            return { method: action.method, url, options};
+        }
 
         switch (action.type) {
             case ModellingActionType.change:
@@ -213,7 +220,7 @@ export class XmomService {
             case ModellingActionType.libraryCall:
             case ModellingActionType.setConstant:
             case ModellingActionType.sort:
-                return { method: HttpMethod.PUT, url };
+                return { method: HttpMethod.PUT, url, options };
             case ModellingActionType.move:
             case ModellingActionType.copy:
             case ModellingActionType.copyToClipboard:
@@ -227,7 +234,7 @@ export class XmomService {
             case ModellingActionType.replace:
             case ModellingActionType.deleteConstant:
             case ModellingActionType.convert:
-                return { method: HttpMethod.POST, url };
+                return { method: HttpMethod.POST, url, options };
         }
     }
 
@@ -474,16 +481,16 @@ export class XmomService {
         let result: Observable<any>;
         switch (urlData?.method) {
             case HttpMethod.GET:
-                result = this.http.get(urlData.url);
+                result = this.http.get(urlData.url, urlData.options);
                 break;
             case HttpMethod.POST:
-                result = this.http.post(urlData.url, payload);
+                result = this.http.post(urlData.url, payload, urlData.options);
                 break;
             case HttpMethod.PUT:
-                result = this.http.put(urlData.url, payload);
+                result = this.http.put(urlData.url, payload, urlData.options);
                 break;
             case HttpMethod.DELETE:
-                result = this.http.delete(urlData.url);
+                result = this.http.delete(urlData.url, urlData.options);
                 break;
             default:
                 console.warn('XMOM Service: Did not start a request because no HTTP method was defined!');

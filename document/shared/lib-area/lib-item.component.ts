@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2023 Xyna GmbH, Germany
+ * Copyright 2024 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,27 +22,22 @@ import { XcDialogService, XcRichListItemComponent } from '@zeta/xc';
 
 import { Subject } from 'rxjs';
 
-import { ModellingActionType } from '../../../api/xmom.service';
-import { XoDeleteRequest } from '../../../xo/delete-request.model';
-import { XoJavaLibrary } from '../../../xo/java-library.model';
-import { TriggeredAction } from '../../workflow/shared/modelling-object.component';
-
-
-export interface JavaLibItemData {
-    item: XoJavaLibrary;
-    deleteItemSubject: Subject<TriggeredAction>;
+export interface LibItemData {
+    libraryName: string;
+    index: number;
+    deleteItemSubject: Subject<number>;
     i18nService: I18nService;
     getComponentEditableState: () => boolean;
 }
 
 @Component({
-    templateUrl: './java-lib-item.component.html',
-    styleUrls: [ './java-lib-item.component.scss']
+    templateUrl: './lib-item.component.html',
+    styleUrls: [ './lib-item.component.scss']
 })
-export class JavaLibItemComponent extends XcRichListItemComponent<void, JavaLibItemData> {
+export class LibItemComponent extends XcRichListItemComponent<void, LibItemData> {
 
     get name(): string {
-        return this.injectedData.item.name;
+        return this.injectedData.libraryName;
     }
 
     constructor(injector: Injector, private readonly dialogService: XcDialogService) {
@@ -51,14 +46,10 @@ export class JavaLibItemComponent extends XcRichListItemComponent<void, JavaLibI
 
     delete() {
         const title = this.injectedData.i18nService.translate('Confirm');
-        const message = this.injectedData.i18nService.translate('Would you like to delete this Java Library?');
+        const message = this.injectedData.i18nService.translate('Would you like to delete the %name% Library?', { key: '%name%', value: this.name });
         this.dialogService.confirm(title, message).afterDismiss().subscribe(res => {
             if (res) {
-                this.injectedData.deleteItemSubject.next({
-                    type: ModellingActionType.delete,
-                    objectId: this.injectedData.item.id,
-                    request: new XoDeleteRequest(undefined, true)
-                });
+                this.injectedData.deleteItemSubject.next(this.injectedData.index);
                 this.dismiss();
             }
         });
@@ -66,5 +57,5 @@ export class JavaLibItemComponent extends XcRichListItemComponent<void, JavaLibI
 
     // class as css selector
     @HostBinding('class')
-    readonly clazz = 'java-lib-item';
+    readonly clazz = 'lib-item';
 }

@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2023 Xyna GmbH, Germany
+ * Copyright 2024 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,24 +15,20 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { XoArray, XoArrayClass, XoObjectClass, XoProperty } from '@zeta/api';
+import { XoObjectClass, XoArrayClass, XoProperty, XoArray } from '@zeta/api';
 import { XoItem } from './item.model';
 
 
-@XoObjectClass(XoItem, 'xmcp.processmodeller.datatypes.servicegroupmodeller', 'JavaSharedLibrary')
-export class XoJavaSharedLibrary extends XoItem {
+@XoObjectClass(XoItem, 'xmcp.processmodeller.datatypes.servicegroupmodeller', 'Library')
+export class XoLibrary extends XoItem {
 
 
     @XoProperty()
     name: string;
 
 
-    @XoProperty()
-    used: boolean;
-
-
 }
 
-@XoArrayClass(XoJavaSharedLibrary)
-export class XoJavaSharedLibraryArray extends XoArray<XoJavaSharedLibrary> {
+@XoArrayClass(XoLibrary)
+export class XoLibraryArray extends XoArray<XoLibrary> {
 }

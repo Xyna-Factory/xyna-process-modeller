@@ -20,7 +20,7 @@ import { XoObjectClass, XoProperty, XoTransient } from '@zeta/api';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { DeploymentState, XmomObjectType } from '../api/xmom-types';
-import { XoJavaLibrariesArea } from './java-libraries-area.model';
+import { XoLibrariesArea } from './libraries-area.model';
 import { XoJavaSharedLibrariesArea } from './java-shared-libraries-area.model';
 import { XoMemberMethodArea } from './member-method-area.model';
 import { XoModellingItem } from './modelling-item.model';
@@ -38,9 +38,9 @@ export class XoServiceGroup extends XoXmomItem {
     @XoTransient()
     typeInfoArea: XoServiceGroupTypeLabelArea;
 
-    @XoProperty(XoJavaLibrariesArea)
+    @XoProperty(XoLibrariesArea)
     @XoTransient()
-    javaLibrariesArea: XoJavaLibrariesArea;
+    librariesArea: XoLibrariesArea;
 
     @XoProperty(XoJavaSharedLibrariesArea)
     @XoTransient()
@@ -69,7 +69,7 @@ export class XoServiceGroup extends XoXmomItem {
         for (const area of this.areas) {
             switch (area.name) {
                 case XoModellingItem.TYPE_INFO_AREA: this.typeInfoArea            = area as XoServiceGroupTypeLabelArea; break;
-                case XoXmomItem.LIBS_AREA:           this.javaLibrariesArea       = area as XoJavaLibrariesArea; break;
+                case XoXmomItem.LIBS_AREA:           this.librariesArea           = area as XoLibrariesArea; break;
                 case XoXmomItem.SHARED_LIBS_AREA:    this.javaSharedLibrariesArea = area as XoJavaSharedLibrariesArea; break;
                 // TODO: remove backwards compatibility
                 case 'methodsArea':

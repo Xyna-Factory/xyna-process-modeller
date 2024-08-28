@@ -22,7 +22,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { DeploymentState, XmomObjectType } from '../api/xmom-types';
 import { XoDataTypeTypeLabelArea } from './data-type-type-label-area.model';
 import { XoGlobalStorablePropertyArea } from './global-storable-property-area.model';
-import { XoJavaLibrariesArea } from './java-libraries-area.model';
+import { XoLibrariesArea } from './libraries-area.model';
 import { XoJavaSharedLibrariesArea } from './java-shared-libraries-area.model';
 import { XoMemberMethodArea } from './member-method-area.model';
 import { XoMemberVariableArea } from './member-variable-area.model';
@@ -50,9 +50,9 @@ export class XoDataType extends XoXmomItem {
     @XoTransient()
     globalStorablePropertyArea: XoGlobalStorablePropertyArea;
 
-    @XoProperty(XoJavaLibrariesArea)
+    @XoProperty(XoLibrariesArea)
     @XoTransient()
-    javaLibrariesArea: XoJavaLibrariesArea;
+    librariesArea: XoLibrariesArea;
 
     @XoProperty(XoJavaSharedLibrariesArea)
     @XoTransient()
@@ -102,7 +102,7 @@ export class XoDataType extends XoXmomItem {
             switch (area.name) {
                 case XoModellingItem.TYPE_INFO_AREA:             this.typeInfoArea               = area as XoDataTypeTypeLabelArea; break;
                 case XoModellingItem.DOCUMENTATION_AREA_NAME:    this.documentationArea          = area as XoTextArea; break;
-                case XoXmomItem.LIBS_AREA:                       this.javaLibrariesArea          = area as XoJavaLibrariesArea; break;
+                case XoXmomItem.LIBS_AREA:                       this.librariesArea              = area as XoLibrariesArea; break;
                 case XoXmomItem.SHARED_LIBS_AREA:                this.javaSharedLibrariesArea    = area as XoJavaSharedLibrariesArea; break;
                 case XoXmomItem.INHERITED_VARS_AREA:             this.inheritedVarsArea          = area as XoMemberVariableArea; break;
                 case XoXmomItem.MEMBER_VARS_AREA:                this.memberVarsArea             = area as XoMemberVariableArea; break;

@@ -25,7 +25,7 @@ import { Observable, Subject, Subscription } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Vector2 } from 'three';
 
-import { ModellingActionType } from '../../../api/xmom.service';
+import { HttpMethod, ModellingActionType } from '../../../api/xmom.service';
 import { WorkflowDetailSettingsService } from '../../../workflow-detail-settings.service';
 import { XoDeleteRequest } from '../../../xo/delete-request.model';
 import { XoItem } from '../../../xo/item.model';
@@ -40,10 +40,11 @@ export interface TriggeredAction {
     type: ModellingActionType;
     objectId: string;
     request: XoRequest;
+    method?: HttpMethod;
+    paramSet?: { [param: string]: string | string[] };
     subsequentAction?: this;
     errorHandler?: (err: any) => void;
 }
-
 
 
 /**
