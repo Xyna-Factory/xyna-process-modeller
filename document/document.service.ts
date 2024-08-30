@@ -20,11 +20,11 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { FQNRTC, MessageBusService, XMOMLocated, XoDocumentChange, XoDocumentLock, XoDocumentUnlock } from '@yggdrasil/events';
 import { ApiService, FullQualifiedName, RuntimeContext } from '@zeta/api';
 import { AuthService } from '@zeta/auth';
-import { dispatchMouseClick, getSubdirectory, isString } from '@zeta/base';
+import { isString } from '@zeta/base';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogService, XcStatusBarEntryType, XcStatusBarService } from '@zeta/xc';
 
-import { BehaviorSubject, merge, Observable, of, Subject, Subscription, throwError } from 'rxjs';
+import { BehaviorSubject, EMPTY, merge, Observable, of, Subject, Subscription, throwError } from 'rxjs';
 import { catchError, filter, finalize, map, mapTo, share, switchMap, switchMapTo, tap } from 'rxjs/operators';
 
 import { DeploymentState, XmomObjectType } from '../api/xmom-types';
@@ -60,7 +60,6 @@ import { ServiceGroupDocumentModel } from './model/service-group-document.model'
 import { TypeDocumentModel } from './model/type-document.model';
 import { WorkflowDocumentModel } from './model/workflow-document.model';
 import { XoModellingItem } from '@pmod/xo/modelling-item.model';
-import { environment } from '@environments/environment';
 
 
 export enum DocumentState {
@@ -988,72 +987,23 @@ export class DocumentService implements OnDestroy {
     // ================================================================================================================
 
 
-    downloadTemplate(documentModel: TypeDocumentModel) {
+    downloadTemplate(documentModel: TypeDocumentModel, isPython?: boolean) {
 
-        // TODO: - downloading the old way - not compatible with apache
         const downloadTemplate = (fqn: string, rtcKey: string) => {
-
-            const fqnObj = FullQualifiedName.decode(fqn);
-            const subdirectory = getSubdirectory(environment.zeta.url);
-            const endpoint = `/${subdirectory}buildServiceImplTemplate?datatype=${fqnObj.encode()}&workspace=${rtcKey}`;
-
-            const xmlHttpRequest = new XMLHttpRequest();
-            xmlHttpRequest.onreadystatechange = () => {
-                if (xmlHttpRequest.readyState === XMLHttpRequest.DONE) {
-
-                    if (xmlHttpRequest.status === 200) {
-
-                        const arrBuffer = xmlHttpRequest.response as ArrayBuffer;
-                        const blob = new Blob([arrBuffer], { type: 'application/octet-stream' });
-                        const url = URL.createObjectURL(blob);
-                        const a = window.document.createElement('a');
-
-                        window.document.body.appendChild(a);
-                        a.href = url;
-                        a.download = fqnObj.name + '_template.zip';
-
-                        dispatchMouseClick(a);
-                        window.URL.revokeObjectURL(url);
-                        window.document.body.removeChild(a);
-                    } else {
-                        this.dialogService.info(`Error: ${xmlHttpRequest.status}`, `Failed to load resources: the server responded with '${xmlHttpRequest.statusText}'`);
-                    }
-
-                    documentModel.downloading = false;
-                    this.documentDownloadedSubject.next();
-                }
-            };
-
-            xmlHttpRequest.onerror = () => {
-                documentModel.downloading = false;
-                this.documentDownloadedSubject.next();
-                this.dialogService.error(this.i18n.translate('Error while downloading template for ') + fqnObj.encode());
-            };
-
-            xmlHttpRequest.open('GET', endpoint, true);
-            xmlHttpRequest.responseType = 'arraybuffer';
-            xmlHttpRequest.setRequestHeader('X-Requested-With', 'ShockwaveFlash/32.0.0.321');
-            xmlHttpRequest.send();
             documentModel.downloading = true;
+            (isPython ?
+                this.xmomService.downloadPythonTemplate(fqn, rtcKey) :
+                this.xmomService.downloadJavaTemplate(fqn, rtcKey)).pipe(
+                    catchError(err => {
+                        this.dialogService.error('Error while downloading template for ' + fqn);
+                        return EMPTY;
+                    }),
+                    finalize(() => {
+                        this.documentDownloadedSubject.next();
+                        documentModel.downloading = false;
+                    })
+                ).subscribe();
         };
-
-        // TODO - downloading the new way - should be compatible w. apache and it's in the angular/zeta way
-        // const downloadTemplate = (fqn: string, rtcKey: string) => {
-        //     const fqnObj = FullQualifiedName.decode(fqn);
-        //     const endpoint = `buildServiceImplTemplate?datatype=${fqnObj.encode()}&workspace=${rtcKey}`;
-        //     this.http.get(endpoint, {responseType: 'arraybuffer'}).subscribe(<Observer<ArrayBuffer>>{
-        //         next: response => {
-        //             const blob = new Blob([response], {type: MimeTypes.bin});
-        //             downloadFile(blob, fqnObj.name + '_template', MimeTypes.zip);
-        //         },
-        //         error: _ => {
-        //             this.dialogService.error('Error while downloading template for ' + fqnObj.encode());
-        //             setButtonBusyState(false);
-        //         },
-        //         complete: () => setButtonBusyState(false)
-        //     });
-        //     setButtonBusyState(true);
-        // };
 
         (documentModel.item.modified
             ? this.dialogService.confirm(
