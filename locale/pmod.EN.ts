@@ -504,6 +504,10 @@ export const PMOD_EN: I18nTranslation[] = [
         value: 'Download Template'
     },
     {
+        key: 'pmod.toolbar.download-python-template',
+        value: 'Download Python Template'
+    },
+    {
         key: 'pmod.toolbar.member-variable',
         value: 'Member Variable'
     },

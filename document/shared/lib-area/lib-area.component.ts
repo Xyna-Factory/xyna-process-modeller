@@ -22,7 +22,7 @@ import { ApiService, XoManagedFileID } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
 import { XcRichListItem } from '@zeta/xc';
 
-import { catchError, Observable, Subject, switchMap } from 'rxjs';
+import { catchError, EMPTY, Observable, Subject, switchMap } from 'rxjs';
 
 import { HttpMethod, ModellingActionType } from '../../../api/xmom.service';
 import { XoLibrariesArea } from '../../../xo/libraries-area.model';
@@ -155,9 +155,9 @@ export class LibAreaComponent extends ModellingObjectComponent {
     private fileBrowserObservable(): Observable<XoManagedFileID> {
         const timeout = 1000 * 60 * 5;
         return this.apiService.browse(timeout).pipe(
-            catchError((err, caught) => {
+            catchError(() => {
                 console.warn('File Dialog Timeout reached. Please reopen File Dialog if you wish to upload a file.');
-                return caught;
+                return EMPTY;
             }),
             switchMap(f => this.apiService.upload(f))
         );

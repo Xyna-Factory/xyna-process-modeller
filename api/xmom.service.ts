@@ -27,7 +27,7 @@ import { XoUnlockResponse } from '@pmod/xo/unlock-response.model';
 import { FullQualifiedName, RuntimeContext, XoClassInterface, XoJson } from '@zeta/api';
 
 import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
-import { catchError, finalize, map } from 'rxjs/operators';
+import { catchError, finalize, map, tap } from 'rxjs/operators';
 
 import { XoCloseResponse } from '../xo/close-response.model';
 import { XoData } from '../xo/data.model';
@@ -62,6 +62,7 @@ import { XoInsertRequestContent } from '@pmod/xo/insert-request-content.model';
 import { XoModelledExpressionArray } from '@pmod/xo/expressions/modelled-expression.model';
 import { XoItem } from '@pmod/xo/item.model';
 import { XoGetModelledExpressionsResponse } from '@pmod/xo/expressions/get-modelled-expressions-response.model';
+import { downloadFile, MimeTypes } from '@zeta/base';
 
 
 export enum ModellingActionType {
@@ -793,6 +794,30 @@ export class XmomService {
                 const response = new XoGetRemoteDestinationResponse().decode(data);
                 this._remoteDestinationsSubject.next(response.remoteDestinations);
                 return response.remoteDestinations;
+            })
+        );
+    }
+
+
+    // ===================================================================================================================
+    // Templates
+    // ===================================================================================================================
+
+
+    downloadJavaTemplate(fqn: string, rtcKey: string): Observable<ArrayBuffer> {
+        return this.downloadTemplate('java', fqn, rtcKey);
+    }
+
+    downloadPythonTemplate(fqn: string, rtcKey: string): Observable<ArrayBuffer> {
+        return this.downloadTemplate('python', fqn, rtcKey);
+    }
+
+    private downloadTemplate(language: string, fqn: string, rtcKey: string): Observable<ArrayBuffer> {
+        const fqnObj = FullQualifiedName.decode(fqn);
+        return this.http.get('buildServiceImplTemplate', {responseType: 'arraybuffer', params: {datatype: fqnObj.encode(), workspace: rtcKey, language: language}}).pipe(
+            tap(response => {
+                const blob = new Blob([response], {type: MimeTypes.bin});
+                downloadFile(blob, fqnObj.name + '_template', MimeTypes.zip);
             })
         );
     }

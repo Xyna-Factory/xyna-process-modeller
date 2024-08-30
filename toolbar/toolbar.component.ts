@@ -105,6 +105,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     // private static readonly BUTTON_NAME_TYPE_NOTE = 'Type Note';
 
     private static readonly BUTTON_NAME_DOWNLOAD_TEMPLATE = 'Download Template';
+    private static readonly BUTTON_NAME_DOWNLOAD_PYTHON_TEMPLATE = 'Download Python Template';
 
     private static readonly WorkflowMenuItem: XcMenuItem = { name: 'Workflow', icon: 'mini-workflow', iconStyle: 'modeller' };
     private static readonly DataTypeMenuItem: XcMenuItem = { name: 'Data Type', icon: 'mini-datatype', iconStyle: 'modeller' };
@@ -180,6 +181,14 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
         {
             name: ToolbarComponent.BUTTON_NAME_DOWNLOAD_TEMPLATE,
             tooltip: 'download-template',
+            iconName: 'tb-template',
+            isDisabled: ds => (ds.selectedDocument && !ds.selectedDocument.item.saved) || ds.isSelectedDocumentDownloading,
+            isVisible: ds => (ds.selectedDocument && (ds.selectedDocument.item.type === XmomObjectType.ServiceGroup || ds.selectedDocument.item.type === XmomObjectType.DataType)),
+            isBusy: ds => ds.isSelectedDocumentDownloading
+        },
+        {
+            name: ToolbarComponent.BUTTON_NAME_DOWNLOAD_PYTHON_TEMPLATE,
+            tooltip: 'download-python-template',
             iconName: 'tb-template',
             isDisabled: ds => (ds.selectedDocument && !ds.selectedDocument.item.saved) || ds.isSelectedDocumentDownloading,
             isVisible: ds => (ds.selectedDocument && (ds.selectedDocument.item.type === XmomObjectType.ServiceGroup || ds.selectedDocument.item.type === XmomObjectType.DataType)),
@@ -483,6 +492,11 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
             case ToolbarComponent.BUTTON_NAME_DOWNLOAD_TEMPLATE:
                 if (document instanceof TypeDocumentModel) {
                     this.documentService.downloadTemplate(document);
+                }
+                break;
+            case ToolbarComponent.BUTTON_NAME_DOWNLOAD_PYTHON_TEMPLATE:
+                if (document instanceof TypeDocumentModel) {
+                    this.documentService.downloadTemplate(document, true);
                 }
                 break;
         }
