@@ -584,7 +584,7 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
     private changeConnection(type: DataConnectionType) {
         if (!this.readonly) {
             const branchId = this.selectedFlow.branchId;
-            const request = new XoSetDataflowConnectionRequest(undefined, this.selectedFlow.from.getModel().id, this.selectedFlow.to.getModel().id, type, this.workflow.revision, branchId);
+            const request = new XoSetDataflowConnectionRequest(undefined, this.selectedFlow.from.getModel().id, this.selectedFlow.to.getModel().id, type, branchId);
             this.dataflowChange.emit(request);
         }
     }

@@ -132,7 +132,7 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
 
 
     private updateTabBarItemList() {
-        this.tabBarItems = [this.baseTabItem/*, this.metaTabItem*/, this.implementationTabItem];
+        this.tabBarItems = [this.baseTabItem, this.metaTabItem, this.implementationTabItem];
         this.cdr.markForCheck();
     }
 }

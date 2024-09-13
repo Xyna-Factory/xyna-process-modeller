@@ -15,17 +15,13 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { XoObject, XoObjectClass, XoProperty } from '@zeta/api';
+import { XoObject, XoObjectClass } from '@zeta/api';
 
 import { ModellingActionType } from '../api/xmom.service';
 
 
 @XoObjectClass(null, 'xmcp.processmodeller.datatypes.request', 'Request')
 export class XoRequest extends XoObject {
-
-    @XoProperty()
-    revision: number;
-
 
     /**
      * Decides whether executing this request results in an invalid clipboard

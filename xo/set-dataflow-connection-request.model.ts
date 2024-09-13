@@ -38,13 +38,12 @@ export class XoSetDataflowConnectionRequest extends XoRequest {
     type: DataConnectionType;
 
 
-    constructor(_ident?: string, sourceId?: string, targetId?: string, type?: DataConnectionType, revision?: number, branchId?: string) {
+    constructor(_ident?: string, sourceId?: string, targetId?: string, type?: DataConnectionType, branchId?: string) {
         super(_ident);
 
         this.sourceId = sourceId;
         this.targetId = targetId;
         this.type = type;
-        this.revision = revision;
         this.branchId = branchId;
     }
 }

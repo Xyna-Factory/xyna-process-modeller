@@ -117,7 +117,6 @@ export class MethodImplementationComponent extends ModellingItemComponent {
             .afterDismissResult().subscribe(result => {
                 if (result) {
                     const request = new XoLibraryCallRequest();
-                    request.revision = document.revision;
                     const action: ModellingAction = {
                         type: ModellingActionType.libraryCall,
                         request,

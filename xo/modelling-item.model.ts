@@ -41,6 +41,7 @@ export class XoModellingItem extends XoItem implements Draggable {
     static readonly IMPLEMENTATION_AREA_NAME = 'implementation';
     static readonly TYPE_INFO_AREA = 'typeInfo';
     static readonly CONDITION_AREA_NAME = 'condition';
+    static readonly META_TAG_AREA_NAME = 'metaTags';
 
     @XoProperty()
     label: string;

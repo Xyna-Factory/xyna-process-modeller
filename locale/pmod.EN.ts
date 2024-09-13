@@ -592,18 +592,6 @@ export const PMOD_EN: I18nTranslation[] = [
         key: 'pmod.datatype.type-info-area.open-button',
         value: 'Open'
     },
-    {
-        key: 'pmod.datatype.method-details.tooltip-new-workflow',
-        value: 'Open new workflow with matching signature.'
-    },
-    {
-        key: 'pmod.datatype.method-details.open-button',
-        value: 'Open'
-    },
-    {
-        key: 'pmod.datatype.method-details.implementation',
-        value: 'Implementation'
-    },
 
     // global-storable-properties-area
     {
@@ -708,6 +696,14 @@ export const PMOD_EN: I18nTranslation[] = [
         key: 'pmod.datatype.member-variable-details.storable-properties',
         value: 'Storable Properties'
     },
+    {
+        key: 'pmod.datatype.member-variable-details.tooltip-add-meta-tag',
+        value: 'add meta tag'
+    },
+    {
+        key: 'pmod.datatype.member-variable-details.meta-tag.tooltip-delete',
+        value: 'remove meta tag'
+    },
 
     // storable-properties-area
     {
@@ -755,6 +751,26 @@ export const PMOD_EN: I18nTranslation[] = [
     {
         key: 'pmod.datatype.method-details.reference',
         value: 'Reference'
+    },
+    {
+        key: 'pmod.datatype.method-details.tooltip-new-workflow',
+        value: 'Open new workflow with matching signature.'
+    },
+    {
+        key: 'pmod.datatype.method-details.open-button',
+        value: 'Open'
+    },
+    {
+        key: 'pmod.datatype.method-details.implementation',
+        value: 'Implementation'
+    },
+    {
+        key: 'pmod.datatype.method-details.tooltip-add-meta-tag',
+        value: 'add meta tag'
+    },
+    {
+        key: 'pmod.datatype.method-details.meta-tag.tooltip-delete',
+        value: 'remove meta tag'
     },
 
     // method-implementation

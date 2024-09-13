@@ -23,6 +23,7 @@ import { XoModellingItem } from './modelling-item.model';
 import { HasStorablePropertyArea, XoStorablePropertyArea } from './storable-property-area.model';
 import { XoTextArea } from './text-area.model';
 import { XoXmomItem } from './xmom-item.model';
+import { XoMetaTagArea } from './meta-tag-area.model';
 
 
 @XoObjectClass(XoXmomItem, 'xmcp.processmodeller.datatypes.datatypemodeller', 'MemberVariable')
@@ -53,6 +54,10 @@ export class XoMemberVariable extends XoXmomItem implements HasStorablePropertyA
     @XoTransient()
     storablePropertyArea: XoStorablePropertyArea;
 
+    @XoProperty()
+    @XoTransient()
+    metaTagArea: XoMetaTagArea;
+
 
     createInsertRequestContent(): XoInsertRequestContent {
         const content = new XoInsertMemberVariableRequestContent();
@@ -73,6 +78,9 @@ export class XoMemberVariable extends XoXmomItem implements HasStorablePropertyA
                 case XoMemberVariable.STORABLE_PROPERTY_AREA_NAME:
                     this.storablePropertyArea = area as XoStorablePropertyArea;
                     this.storablePropertyArea.label = this.label;
+                    break;
+                case XoMemberVariable.META_TAG_AREA_NAME:
+                    this.metaTagArea = area as XoMetaTagArea;
                     break;
             }
         }

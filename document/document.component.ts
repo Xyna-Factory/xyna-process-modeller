@@ -131,10 +131,6 @@ export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponen
         if (this.actionQueue.length > 0) {
             // dequeue next action from queue
             const action = this.actionQueue.shift();
-            // add revision of document
-            if (action.request) {
-                action.request.revision = this.document.item.revision;
-            }
             // peform action
             this.untilDestroyed(
                 this.documentService.performModellingAction(

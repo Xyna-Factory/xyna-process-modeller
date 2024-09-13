@@ -462,7 +462,6 @@ export class DocumentService implements OnDestroy {
                 }
                 // perform subsequent action
                 if (action.subsequentAction) {
-                    action.subsequentAction.request.revision = updateResponse.revision;
                     this.performModellingAction(action.subsequentAction, item).subscribe();
                 } else {
                     this.pendingModellingActionSubject.next(false);

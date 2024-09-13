@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2023 Xyna GmbH, Germany
+ * Copyright 2024 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,5 +15,20 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-export const ProcessModellerName = 'Process Modeller';
-export const ProcessModellerVersion = '2.6.5';
+import { XoObjectClass, XoArrayClass, XoProperty, XoArray } from '@zeta/api';
+import { XoItem } from './item.model';
+
+
+@XoObjectClass(XoItem, 'xmcp.processmodeller.datatypes', 'MetaTag')
+export class XoMetaTag extends XoItem {
+
+
+    @XoProperty()
+    tag: string;
+
+
+}
+
+@XoArrayClass(XoMetaTag)
+export class XoMetaTagArray extends XoArray<XoMetaTag> {
+}
