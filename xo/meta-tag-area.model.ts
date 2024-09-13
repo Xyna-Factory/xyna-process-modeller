@@ -15,32 +15,22 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector } from '@angular/core';
-import { XoMetaTag } from '@pmod/xo/meta-tag.model';
+import { XoObjectClass, XoArrayClass, XoArray } from '@zeta/api';
+import { XoContainerArea } from './modelling-item.model';
+import { XoMetaTag } from './meta-tag.model';
 
-import { XcRichListItemComponent } from '@zeta/xc';
-import { Subject } from 'rxjs';
 
-export interface MetaTagRichListData {
-    metaTag: XoMetaTag;
-    removeSubject: Subject<XoMetaTag>;
+@XoObjectClass(XoContainerArea, 'xmcp.processmodeller.datatypes', 'MetaTagArea')
+export class XoMetaTagArea extends XoContainerArea {
+
+
+    get metaTags(): XoMetaTag[] {
+        return this.items.data as XoMetaTag[];
+    }
+
+
 }
 
-@Component({
-    templateUrl: './meta-tag-rich-list.component.html',
-    styleUrls: [ './meta-tag-rich-list.component.scss']
-})
-export class MetaTagComponent extends XcRichListItemComponent<void, MetaTagRichListData> {
-
-    constructor(injector: Injector) {
-        super(injector);
-    }
-
-    get tag(): string {
-        return this.injectedData.metaTag.tag;
-    }
-
-    removeMetaTag() {
-        this.injectedData.removeSubject.next(this.injectedData.metaTag);
-    }
+@XoArrayClass(XoMetaTagArea)
+export class XoMetaTagAreaArray extends XoArray<XoMetaTagArea> {
 }

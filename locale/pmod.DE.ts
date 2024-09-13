@@ -614,14 +614,6 @@ export const PMOD_DE: I18nTranslation[] = [
         key: 'pmod.datatype.type-info-area.open-button',
         value: 'Öffnen'
     },
-    {
-        key: 'pmod.datatype.method-details.tooltip-new-workflow',
-        value: 'Workflow mit passender Signatur öffnen.'
-    },
-    {
-        key: 'pmod.datatype.method-details.open-button',
-        value: 'Öffnen'
-    },
 
     // global-storable-properties-area
     {
@@ -729,6 +721,14 @@ export const PMOD_DE: I18nTranslation[] = [
         key: 'pmod.datatype.member-variable-details.storable-properties',
         value: 'Storable Property'
     },
+    {
+        key: 'pmod.datatype.member-variable-details.tooltip-add-meta-tag',
+        value: 'Meta Tag hinzufügen'
+    },
+    {
+        key: 'pmod.datatype.member-variable-details.meta-tag.tooltip-delete',
+        value: 'Meta Tag entfernen'
+    },
 
     // storable-properties-area
     {
@@ -780,6 +780,22 @@ export const PMOD_DE: I18nTranslation[] = [
     {
         key: 'pmod.datatype.method-details.implementation',
         value: 'Implementierung'
+    },
+    {
+        key: 'pmod.datatype.method-details.tooltip-new-workflow',
+        value: 'Workflow mit passender Signatur öffnen.'
+    },
+    {
+        key: 'pmod.datatype.method-details.open-button',
+        value: 'Öffnen'
+    },
+    {
+        key: 'pmod.datatype.method-details.tooltip-add-meta-tag',
+        value: 'Meta Tag hinzufügen'
+    },
+    {
+        key: 'pmod.datatype.method-details.meta-tag.tooltip-delete',
+        value: 'Meta Tag entfernen'
     },
 
     // method-implementation

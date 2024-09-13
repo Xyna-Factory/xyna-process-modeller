@@ -38,8 +38,9 @@ import { WorkflowDetailLevelService } from '../../workflow-detail-level.service'
 
 export interface TriggeredAction {
     type: ModellingActionType;
+    objectIdKey?: string;
     objectId: string;
-    request: XoRequest;
+    request?: XoRequest;
     method?: HttpMethod;
     paramSet?: { [param: string]: string | string[] };
     subsequentAction?: this;

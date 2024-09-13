@@ -140,7 +140,7 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
     }
 
     private updateTabBarItemList() {
-        this.tabBarItems = [this.baseTabItem/*, this.metaTabItem*/];
+        this.tabBarItems = [this.baseTabItem, this.metaTabItem];
         if (this._isStorable) {
             this.tabBarItems.push(this.storableTabItem);
         }

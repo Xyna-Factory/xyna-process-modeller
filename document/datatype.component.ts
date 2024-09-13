@@ -28,6 +28,7 @@ import { XoMemberVariable } from '../xo/member-variable.model';
 import { DataTypeDocumentModel } from './model/data-type-document.model';
 import { SelectionService } from './selection.service';
 import { TypeDocumentComponent } from './type-document.component';
+import { XoMetaTagArea } from '@pmod/xo/meta-tag-area.model';
 
 
 @Component({
@@ -53,6 +54,7 @@ export class DataTypeComponent extends TypeDocumentComponent<DataTypeDocumentMod
         const exceptionType = new XoExceptionType();
         const dataTypeTypeLabelArea = new XoDataTypeTypeLabelArea();
         const memberVariableArea = new XoMemberVariableArea();
+        const metaTagArea = new XoMetaTagArea();
         /* eslint-enable @typescript-eslint/no-unused-vars */
     }
 

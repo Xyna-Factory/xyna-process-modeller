@@ -21,7 +21,11 @@ import { DocumentService } from '@pmod/document/document.service';
 import { I18nService } from '@zeta/i18n';
 import { DatatypeMethodTabComponent } from '../datatype-tab.component';
 import { XcRichListItem } from '@zeta/xc';
-import { metaTag, MetaTagComponent } from '../member-variable/meta-tag-rich-list/meta-tag-rich-list.component';
+import { MetaTagComponent, MetaTagRichListData } from '../member-variable/meta-tag-rich-list/meta-tag-rich-list.component';
+import { XoMetaTag } from '@pmod/xo/meta-tag.model';
+import { HttpMethod, ModellingActionType } from '@pmod/api/xmom.service';
+import { XoMetaTagRequest } from '@pmod/xo/meta-tag-request.model';
+import { Subject } from 'rxjs';
 
 @Component({
     templateUrl: './method-meta-tab.component.html',
@@ -30,8 +34,9 @@ import { metaTag, MetaTagComponent } from '../member-variable/meta-tag-rich-list
 })
 export class MethodMetaTabComponent extends DatatypeMethodTabComponent {
 
-    metaTagsItems: XcRichListItem<metaTag>[] = [];
+    metaTagsItems: XcRichListItem<MetaTagRichListData>[] = [];
     newTag: string;
+    removeSubject: Subject<XoMetaTag> = new Subject();
 
     constructor(
         documentService: DocumentService,
@@ -41,14 +46,49 @@ export class MethodMetaTabComponent extends DatatypeMethodTabComponent {
         @Optional() injector: Injector
     ) {
         super(documentService, cdr, injector);
+
+        this.untilDestroyed(this.injectedData.update).subscribe(() => {
+            this.refreshRichList();
+        });
+
+        this.untilDestroyed(this.removeSubject.asObservable()).subscribe(metaTag => {
+            this.removeMetaTag(metaTag);
+        });
+    }
+
+    private refreshRichList() {
+        this.metaTagsItems = this.method.metaTagArea.metaTags.map(tag =>
+            <XcRichListItem<MetaTagRichListData>>{
+                component: MetaTagComponent,
+                data: {
+                    metaTag: tag,
+                    removeSubject: this.removeSubject
+                }
+            }
+        );
     }
 
     addMetaTag() {
-        this.metaTagsItems.push({
-            component: MetaTagComponent,
-            data: {
-                metaTag: this.newTag
-            }
+        const metaTag: XoMetaTag = new XoMetaTag();
+        metaTag.tag = this.newTag;
+        const request: XoMetaTagRequest = new XoMetaTagRequest();
+        request.metaTag = metaTag;
+        this.performAction({
+            type: ModellingActionType.meta,
+            objectIdKey: 'services',
+            objectId: this.method.name,
+            request: request,
+            method: HttpMethod.PUT
+        });
+    }
+
+    removeMetaTag(metaTag: XoMetaTag) {
+        this.performAction({
+            type: ModellingActionType.meta,
+            objectIdKey: 'services',
+            objectId: this.method.name,
+            method: HttpMethod.DELETE,
+            paramSet: {metaTagId: metaTag.id}
         });
     }
 }

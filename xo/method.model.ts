@@ -21,6 +21,7 @@ import { XoModellingItem } from './modelling-item.model';
 import { XoTextArea } from './text-area.model';
 import { XoVariableArea } from './variable-area.model';
 import { XoXmomItem } from './xmom-item.model';
+import { XoMetaTagArea } from './meta-tag-area.model';
 
 
 @XoObjectClass(XoXmomItem, 'xmcp.processmodeller.datatypes.datatypemodeller', 'Method')
@@ -74,6 +75,10 @@ export class XoMethod extends XoXmomItem {
     @XoTransient()
     throwsArea: XoVariableArea;
 
+    @XoProperty()
+    @XoTransient()
+    metaTagArea: XoMetaTagArea;
+
 
     afterDecode() {
         super.afterDecode();
@@ -85,6 +90,7 @@ export class XoMethod extends XoXmomItem {
                 case XoMethod.INPUT_AREA_NAME: this.inputArea = area as XoVariableArea; break;
                 case XoMethod.OUTPUT_AREA_NAME: this.outputArea = area as XoVariableArea; break;
                 case XoMethod.THROWS_AREA: this.throwsArea = area as XoVariableArea; break;
+                case XoMethod.META_TAG_AREA_NAME: this.metaTagArea = area as XoMetaTagArea; break;
             }
         }
 

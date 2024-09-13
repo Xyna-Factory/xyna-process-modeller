@@ -78,6 +78,7 @@ export enum ModellingActionType {
     deleteConstant = 'constant/delete',
     insert = 'insert',
     libraryCall = 'templateCall',
+    meta = 'meta',
     move = 'move',
     refactor = 'refactor',
     replace = 'replace',
@@ -189,11 +190,11 @@ export class XmomService {
     }
 
 
-    private getXmomObjectUrl(rtc: RuntimeContext, fqn: FullQualifiedName, type: XmomObjectType, objectId?: string, action?: string, state: XmomState = XmomState.SAVED): string {
+    private getXmomObjectUrl(rtc: RuntimeContext, fqn: FullQualifiedName, type: XmomObjectType, objectIdKey = 'objects', objectId?: string, action?: string, state: XmomState = XmomState.SAVED): string {
         objectId ??= fqn.anchor;
         const rtcPath = (!rtc || rtc === RuntimeContext.undefined ? this.runtimeContext : rtc).uniqueKey;
         const fqnPath = (!fqn || fqn === FullQualifiedName.undefined ? '' : '/' + fqn.path + '/' + fqn.name);
-        const objectPath = (objectId ? '/objects/' + objectId : '');
+        const objectPath = (objectId ? '/' + objectIdKey + '/' + objectId : '');
         const actionPath = (action ? '/' + action : '');
 
         return 'runtimeContext/' + rtcPath + '/' + state.toString() + '/' + this.xmomTypeToPath(type) + fqnPath + objectPath + actionPath;
@@ -205,6 +206,7 @@ export class XmomService {
             action.rtc,
             action.xmomItem.toFqn(),
             action.xmomItem.type,
+            action.objectIdKey,
             action.objectId,
             action.type
         );
@@ -416,7 +418,7 @@ export class XmomService {
 
 
     getXmomRelations(xmomItem: XoXmomItem): Observable<XoGetXmomRelationsResponse> {
-        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, 'relations');
+        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, undefined, 'relations');
         return this.http.get(url, this.getHttpParamsOption()).pipe(
             map((data: any) => new XoGetXmomRelationsResponse().decode(data))
         );
@@ -424,7 +426,7 @@ export class XmomService {
 
 
     getXmomIssues(xmomItem: XoXmomItem): Observable<XoGetIssuesResponse> {
-        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, 'issues');
+        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, undefined, 'issues');
         return this.http.get(url, this.getHttpParamsOption()).pipe(
             map((data: any) => new XoGetIssuesResponse().decode(data))
         );
@@ -432,7 +434,7 @@ export class XmomService {
 
 
     getXmomWarnings(xmomItem: XoXmomItem): Observable<XoGetWarningsResponse> {
-        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, 'warnings');
+        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, undefined, 'warnings');
         return this.http.get(url, this.getHttpParamsOption()).pipe(
             map((data: any) =>
                 new XoGetWarningsResponse().decode(data)
@@ -477,7 +479,9 @@ export class XmomService {
                 }
             }
         };
-        removeMeta(payload);
+        if (action.type !== ModellingActionType.meta) {
+            removeMeta(payload);
+        }
 
         let result: Observable<any>;
         switch (urlData?.method) {
@@ -554,7 +558,7 @@ export class XmomService {
 
 
     loadXmomObject(rtc: RuntimeContext, fqn: FullQualifiedName, type: XmomObjectType, repair = false, state: XmomState = XmomState.SAVED): Observable<XoGetXmomItemResponse> {
-        const url = this.getXmomObjectUrl(rtc, fqn, type, undefined, undefined, state);
+        const url = this.getXmomObjectUrl(rtc, fqn, type, undefined, undefined, undefined, state);
         // remember, that url is now pending
         this.pendingXmomUrls.add(url);
         // fetch xmom object representation
@@ -568,7 +572,7 @@ export class XmomService {
 
 
     unlockXmomObject(xmomItem: XoXmomItem): Observable<XoUnlockResponse> {
-        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, 'unlock');
+        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, undefined, 'unlock');
         const payload = {};
         // unlock xmom object
         return this.http.post(url, payload).pipe(
@@ -579,7 +583,7 @@ export class XmomService {
 
 
     closeXmomObject(xmomItem: XoXmomItem, revision: number, force = false): Observable<XoCloseResponse> {
-        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, 'close');
+        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, undefined, 'close');
         const payload = { force, revision };
         // remember, that url is now pending
         this.pendingXmomUrls.add(url);
@@ -595,7 +599,7 @@ export class XmomService {
 
     saveXmomObject(xmomItem: XoXmomItem, revision: number, label?: string, path?: string, force = false, forceEmptyLabelAndPath = false): Observable<XoUpdateXmomItemResponse> {
         // TODO: Will use 'PUT: ...' in the future
-        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, 'save');
+        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, undefined, 'save');
         const payload = forceEmptyLabelAndPath
             ? { force, revision }
             : {
@@ -617,7 +621,7 @@ export class XmomService {
 
 
     deployXmomObject(xmomItem: XoXmomItem, revision: number): Observable<XoUpdateXmomItemResponse> {
-        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, 'deploy');
+        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, undefined, 'deploy');
         const payload = { revision };
 
         let response: XoUpdateXmomItemResponse;
@@ -637,7 +641,7 @@ export class XmomService {
 
 
     getDataflow(xmomItem: XoXmomItem, state: XmomState = XmomState.SAVED): Observable<XoGetDataflowResponse> {
-        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, 'dataflow', state);
+        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, undefined, 'dataflow', state);
         return this.http.get(url).pipe(
             map((data: any) => new XoGetDataflowResponse().decode(data)),
             finalize(() => this.afterReceivedDataflowSubject.next(xmomItem))
@@ -646,7 +650,7 @@ export class XmomService {
 
 
     setDataflowConnection(xmomItem: XoXmomItem, request: XoSetDataflowConnectionRequest): Observable<XoGetDataflowResponse> {
-        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, 'dataflow');
+        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, undefined, 'dataflow');
         const payload = request.encode();
 
         /**
@@ -664,7 +668,7 @@ export class XmomService {
 
 
     getOrderInputSources(xmomItem: XoXmomItem): Observable<XoOrderInputSourceArray> {
-        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, 'orderinputsources');
+        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, undefined, 'orderinputsources');
         return this.http.get(url).pipe(
             map((data: any) => new XoGetOrderInputSourcesResponse().decode(data).orderInputSources)
         );
@@ -672,7 +676,7 @@ export class XmomService {
 
 
     getModelledExpressions(xmomItem: XoXmomItem, step: XoItem): Observable<XoModelledExpressionArray> {
-        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, step.id, 'modelledExpressions');
+        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, step.id, 'modelledExpressions');
         return this.http.get(url).pipe(
             map((data: any) => new XoGetModelledExpressionsResponse().decode(data).modelledExpressions)
         );
@@ -680,7 +684,7 @@ export class XmomService {
 
 
     undo(xmomItem: XoXmomItem): Observable<XoGetXmomItemResponse> {
-        const url = this.getXmomObjectUrl(undefined, xmomItem.toFqn(), xmomItem.type, undefined, 'undo');
+        const url = this.getXmomObjectUrl(undefined, xmomItem.toFqn(), xmomItem.type, undefined, undefined, 'undo');
         return this.http.get(url).pipe(
             map((data: any) => new XoGetXmomItemResponse().decode(data))
         );
@@ -688,7 +692,7 @@ export class XmomService {
 
 
     redo(xmomItem: XoXmomItem): Observable<XoGetXmomItemResponse> {
-        const url = this.getXmomObjectUrl(undefined, xmomItem.toFqn(), xmomItem.type, undefined, 'redo');
+        const url = this.getXmomObjectUrl(undefined, xmomItem.toFqn(), xmomItem.type, undefined, undefined, 'redo');
         return this.http.get(url).pipe(
             map((data: any) => new XoGetXmomItemResponse().decode(data))
         );
@@ -696,7 +700,7 @@ export class XmomService {
 
 
     getXML(xmomItem: XoXmomItem): Observable<XoGetXMLResponse> {
-        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, 'xml');
+        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, undefined, 'xml');
         return this.http.get(url).pipe(
             map((data: any) => new XoGetXMLResponse().decode(data))
         );
@@ -765,7 +769,7 @@ export class XmomService {
 
 
     getXmomObjectXML(xmomItem: XoXmomItem, objectId: string): Observable<XoGetObjectXMLResponse> {
-        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, objectId, 'xml');
+        const url = this.getXmomObjectUrl(xmomItem.toRtc(), xmomItem.toFqn(), xmomItem.type, undefined, objectId, 'xml');
         return this.http.get(url).pipe(
             catchError(err => {
                 if (err.error) {
