@@ -34,6 +34,7 @@ $menu-width: 20px;
     flex-direction: row;
     border-radius: $variable-border-radius;
     position: relative;
+    margin-right: $variable-gap;
 
     &.dynamic-typing {
         &::after {
@@ -48,10 +49,6 @@ $menu-width: 20px;
             border-radius: $variable-border-radius;
             z-index: -1;
         }
-    }
-
-    &:not(:first-child) {
-        margin-left: $variable-gap;
     }
 
     &.selected, &.referred {
