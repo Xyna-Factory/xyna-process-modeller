@@ -20,6 +20,12 @@
 :host {
     .variable-drop-area {
         position: relative;
+        padding: unset;
+        flex-wrap: wrap;
+        > variable {
+            margin-top: 4px;
+            margin-bottom: 4px;
+        }
         &:empty {
             &::after {
                 position: absolute;
