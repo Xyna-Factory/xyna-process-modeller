@@ -16,18 +16,23 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, Optional } from '@angular/core';
+
+import { HttpMethod, ModellingActionType } from '@pmod/api/xmom.service';
 import { DataTypeService } from '@pmod/document/datatype.service';
 import { DocumentService } from '@pmod/document/document.service';
+import { XoMetaTagRequest } from '@pmod/xo/meta-tag-request.model';
+import { XoMetaTag } from '@pmod/xo/meta-tag.model';
 import { I18nService } from '@zeta/i18n';
 import { XcRichListItem } from '@zeta/xc';
-import { MetaTagComponent, MetaTagRichListData } from './meta-tag-rich-list/meta-tag-rich-list.component';
-import { DatatypeVariableTabComponent } from '../datatype-tab.component';
-import { XoMetaTag } from '@pmod/xo/meta-tag.model';
-import { HttpMethod, ModellingActionType } from '@pmod/api/xmom.service';
-import { XoMetaTagRequest } from '@pmod/xo/meta-tag-request.model';
+
 import { Subject } from 'rxjs';
 
+import { DatatypeVariableTabComponent } from '../datatype-tab.component';
+import { MetaTagComponent, MetaTagRichListData } from './meta-tag-rich-list/meta-tag-rich-list.component';
+
+
 @Component({
+    selector: 'member-variable-meta-tab',
     templateUrl: './member-variable-meta-tab.component.html',
     styleUrls: ['./member-variable-meta-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -88,7 +93,7 @@ export class MemberVariableMetaTabComponent extends DatatypeVariableTabComponent
             objectIdKey: 'members',
             objectId: this.memberVariable.name,
             method: HttpMethod.DELETE,
-            paramSet: {metaTagId: metaTag.id}
+            paramSet: { metaTagId: metaTag.id }
         });
     }
 }
