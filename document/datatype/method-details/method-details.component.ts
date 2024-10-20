@@ -17,8 +17,10 @@
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnDestroy, Optional } from '@angular/core';
 
+import { I18nService } from '@zeta/i18n';
 import { XcTabBarItem } from '@zeta/xc';
 
+import { BehaviorSubject, Subject } from 'rxjs';
 
 import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
 import { XoMethod } from '../../../xo/method.model';
@@ -27,10 +29,8 @@ import { DocumentService } from '../../document.service';
 import { ModellingItemComponent } from '../../workflow/shared/modelling-object.component';
 import { DatatypeTabData, MethodTabData } from '../tabs/datatype-tab.component';
 import { MethodBaseTabComponent } from '../tabs/method/method-base-tab.component';
-import { MethodMetaTabComponent } from '../tabs/method/method-meta-tab.component';
-import { BehaviorSubject, Subject } from 'rxjs';
 import { MethodImplementationTabComponent } from '../tabs/method/method-implementation-tab.component';
-import { I18nService } from '@zeta/i18n';
+import { MethodMetaTabComponent } from '../tabs/method/method-meta-tab.component';
 
 
 @Component({
@@ -43,38 +43,11 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
 
     tabUpdate: Subject<MethodTabData> = new BehaviorSubject(this.buildDatatypeTabData());
 
-    readonly baseTabItem: XcTabBarItem<DatatypeTabData<MethodTabData>> = {
-        closable: false,
-        component: MethodBaseTabComponent,
-        name: 'Base',
-        data: <DatatypeTabData<MethodTabData>>{
-            documentModel: this.documentModel,
-            performAction: this.performAction.bind(this),
-            update: this.tabUpdate.asObservable()
-        }
-    };
+    readonly baseTabItem: XcTabBarItem<DatatypeTabData<MethodTabData>>;
 
-    readonly metaTabItem: XcTabBarItem<DatatypeTabData<MethodTabData>> = {
-        closable: false,
-        component: MethodMetaTabComponent,
-        name: 'Meta',
-        data: <DatatypeTabData<MethodTabData>>{
-            documentModel: this.documentModel,
-            performAction: this.performAction.bind(this),
-            update: this.tabUpdate.asObservable()
-        }
-    };
+    readonly metaTabItem: XcTabBarItem<DatatypeTabData<MethodTabData>>;
 
-    readonly implementationTabItem: XcTabBarItem<DatatypeTabData<MethodTabData>> = {
-        closable: false,
-        component: MethodImplementationTabComponent,
-        name: this.i18nService.translate('pmod.datatype.method-details.implementation'),
-        data: <DatatypeTabData<MethodTabData>>{
-            documentModel: this.documentModel,
-            performAction: this.performAction.bind(this),
-            update: this.tabUpdate.asObservable()
-        }
-    };
+    readonly implementationTabItem: XcTabBarItem<DatatypeTabData<MethodTabData>>;
 
 
     tabBarSelection: XcTabBarItem<DatatypeTabData<MethodTabData>>;
@@ -91,6 +64,40 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
         @Optional() injector: Injector
     ) {
         super(elementRef, componentMappingService, documentService, detailLevelService, injector);
+
+        this.baseTabItem = {
+            closable: false,
+            component: MethodBaseTabComponent,
+            name: 'Base',
+            data: <DatatypeTabData<MethodTabData>>{
+                documentModel: this.documentModel,
+                performAction: this.performAction.bind(this),
+                update: this.tabUpdate.asObservable()
+            }
+        };
+
+        this.metaTabItem = {
+            closable: false,
+            component: MethodMetaTabComponent,
+            name: 'Meta',
+            data: <DatatypeTabData<MethodTabData>>{
+                documentModel: this.documentModel,
+                performAction: this.performAction.bind(this),
+                update: this.tabUpdate.asObservable()
+            }
+        };
+
+        this.implementationTabItem = {
+            closable: false,
+            component: MethodImplementationTabComponent,
+            name: this.i18nService.translate('pmod.datatype.method-details.implementation'),
+            data: <DatatypeTabData<MethodTabData>>{
+                documentModel: this.documentModel,
+                performAction: this.performAction.bind(this),
+                update: this.tabUpdate.asObservable()
+            }
+        };
+
         this.tabBarSelection = this.baseTabItem;
         this.updateTabBarItemList();
     }
@@ -124,7 +131,7 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
 
 
     private buildDatatypeTabData(): MethodTabData {
-        return <MethodTabData> {
+        return <MethodTabData>{
             method: this.method,
             readonly: this.readonly
         };

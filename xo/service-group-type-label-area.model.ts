@@ -23,8 +23,6 @@ import { XoTypeLabelArea } from './type-label-area.model';
 @XoObjectClass(XoTypeLabelArea, 'xmcp.processmodeller.datatypes.servicegroupmodeller', 'ServiceGroupTypeLabelArea')
 export class XoServiceGroupTypeLabelArea extends XoTypeLabelArea {
 
-    @XoProperty()
-    $fqn: string;
 }
 
 

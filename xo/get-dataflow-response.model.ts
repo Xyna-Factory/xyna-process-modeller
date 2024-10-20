@@ -24,8 +24,6 @@ import { XoResponse } from './response.model';
 @XoObjectClass(XoResponse, 'xmcp.processmodeller.datatypes.response', 'GetDataflowResponse')
 export class XoGetDataflowResponse extends XoResponse {
 
-    @XoProperty()
-    revision: number;
 
     @XoProperty(XoConnectionArray)
     connections: XoConnectionArray = new XoConnectionArray();
