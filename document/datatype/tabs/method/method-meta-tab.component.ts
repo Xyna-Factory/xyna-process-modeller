@@ -16,18 +16,23 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, Optional } from '@angular/core';
+
+import { HttpMethod, ModellingActionType } from '@pmod/api/xmom.service';
 import { DataTypeService } from '@pmod/document/datatype.service';
 import { DocumentService } from '@pmod/document/document.service';
-import { I18nService } from '@zeta/i18n';
-import { DatatypeMethodTabComponent } from '../datatype-tab.component';
-import { XcRichListItem } from '@zeta/xc';
-import { MetaTagComponent, MetaTagRichListData } from '../member-variable/meta-tag-rich-list/meta-tag-rich-list.component';
-import { XoMetaTag } from '@pmod/xo/meta-tag.model';
-import { HttpMethod, ModellingActionType } from '@pmod/api/xmom.service';
 import { XoMetaTagRequest } from '@pmod/xo/meta-tag-request.model';
+import { XoMetaTag } from '@pmod/xo/meta-tag.model';
+import { I18nService } from '@zeta/i18n';
+import { XcRichListItem } from '@zeta/xc';
+
 import { Subject } from 'rxjs';
 
+import { DatatypeMethodTabComponent } from '../datatype-tab.component';
+import { MetaTagComponent, MetaTagRichListData } from '../member-variable/meta-tag-rich-list/meta-tag-rich-list.component';
+
+
 @Component({
+    selector: 'method-meta-tab',
     templateUrl: './method-meta-tab.component.html',
     styleUrls: ['./method-meta-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush

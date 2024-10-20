@@ -2,13 +2,15 @@
     class = "editor"
     [ngClass] = "{'editor-hide' : isPython}"
     [options]="javaEditorOptions"
-    [(ngModel)]="javaCode"
+    [ngModel]="javaCode"
+    (ngModelChange)="javaCode = $event"
     (onInit)="monacoInitJava($event)"
 ></ngx-monaco-editor>
 <ngx-monaco-editor
     class = "editor"
     [ngClass] = "{'editor-hide' : !isPython}"
     [options]="pythonEditorOptions"
-    [(ngModel)]="pythonCode"
+    [ngModel]="pythonCode"
+    (ngModelChange)="pythonCode = $event"
     (onInit)="monacoInitPython($event)"
 ></ngx-monaco-editor>
