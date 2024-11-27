@@ -21,11 +21,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { DeploymentState, XmomObjectType } from '../api/xmom-types';
 import { XoDataTypeTypeLabelArea } from './data-type-type-label-area.model';
+import { XoDetailsArea } from './details-area.model';
 import { XoGlobalStorablePropertyArea } from './global-storable-property-area.model';
-import { XoLibrariesArea } from './libraries-area.model';
 import { XoJavaSharedLibrariesArea } from './java-shared-libraries-area.model';
+import { XoLibrariesArea } from './libraries-area.model';
 import { XoMemberMethodArea } from './member-method-area.model';
 import { XoMemberVariableArea } from './member-variable-area.model';
+import { XoMetaTagArea } from './meta-tag-area.model';
 import { XoMethod } from './method.model';
 import { XoModellingItem } from './modelling-item.model';
 import { XoTextArea } from './text-area.model';
@@ -61,6 +63,14 @@ export class XoDataType extends XoXmomItem {
     @XoProperty(XoTextArea)
     @XoTransient()
     documentationArea: XoTextArea;
+
+    @XoProperty(XoMemberVariableArea)
+    @XoTransient()
+    detailsArea: XoDetailsArea;
+
+    @XoProperty(XoMemberVariableArea)
+    @XoTransient()
+    metaTagArea: XoMetaTagArea;
 
     @XoProperty(XoMemberVariableArea)
     @XoTransient()
@@ -106,6 +116,7 @@ export class XoDataType extends XoXmomItem {
                 case XoXmomItem.SHARED_LIBS_AREA:                this.javaSharedLibrariesArea    = area as XoJavaSharedLibrariesArea; break;
                 case XoXmomItem.INHERITED_VARS_AREA:             this.inheritedVarsArea          = area as XoMemberVariableArea; break;
                 case XoXmomItem.MEMBER_VARS_AREA:                this.memberVarsArea             = area as XoMemberVariableArea; break;
+                case XoDataType.META_TAG_AREA_NAME:              this.metaTagArea                = area as XoMetaTagArea; break;
                 case XoDataType.GLOBAL_STORABLE_PROPERTIES_AREA: this.globalStorablePropertyArea = area as XoGlobalStorablePropertyArea; break;
                 case XoDataType.OVERRIDDEN_METHODS_AREA:         this.overriddenMethodsArea      = area as XoMemberMethodArea; break;
                 case XoDataType.MEMBER_METHODS_AREA:             this.memberMethodsArea          = area as XoMemberMethodArea; break;

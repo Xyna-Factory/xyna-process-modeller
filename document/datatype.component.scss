@@ -35,8 +35,11 @@
             flex: 0 1 auto;
             height: 216px;
 
-            type-documentation-area {
-                padding-top: 12px;
+            .type-info-area {
+                display: flex;
+                flex-direction: column;
+                flex: 3 1 auto;
+                overflow: auto;
             }
 
             & > *:not(:first-child) {
@@ -51,7 +54,7 @@
             .lib-area {
                 display: flex;
                 flex-direction: column;
-                flex: 0 0 200px;
+                flex: 1 1 auto;
                 overflow: auto;
 
                 & > *:not(:last-child) {

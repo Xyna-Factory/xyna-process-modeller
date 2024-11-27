@@ -1,28 +1,16 @@
 <div class="area-wrapper" xc-i18n-context="datatype">
     <div class="datatype-header">
-        <type-info-area
-            xc-i18n-context="type-info-area"
-            [typeInfoArea]="dataType.typeInfoArea"
-            (triggerAction)="performModellingAction($event)"
-            [documentModel]="document"
-            [showConverterButton]="true"
-            [showBaseTypeAutocomplete]="true"
-            [showAbstractCheckbox]="true"
-        ></type-info-area>
-        <global-storable-properties-area
-            *ngIf="isStorable"
-            xc-i18n-context="global-storable-properties-area"
-            [propertiesArea]="dataType.globalStorablePropertyArea"
-            (triggerAction)="performModellingAction($event)"
-            [documentModel]="document"
-        ></global-storable-properties-area>
-        <type-documentation-area
-            xc-i18n-context="type-documentation-area"
-            [documentationArea]="dataType.documentationArea"
-            (triggerAction)="performModellingAction($event)"
-            [documentModel]="document"
-            [lines]="8"
-        ></type-documentation-area>
+        <div class="type-info-area">
+            <type-info-area
+                xc-i18n-context="type-info-area"
+                [typeInfoArea]="dataType.typeInfoArea"
+                (triggerAction)="performModellingAction($event)"
+                [documentModel]="document"
+                [showConverterButton]="true"
+                [showBaseTypeAutocomplete]="true"
+                [showAbstractCheckbox]="true"
+            ></type-info-area>
+        </div>
         <div class="lib-area">
             <lib-area
                 xc-i18n-context="lib-area"
@@ -41,6 +29,20 @@
 
     <div class="datatype-body">
         <section class="members">
+            <!-- Datatype Details -->
+            <member-area
+                xc-i18n-context="member-area"
+                caption="Data Type"
+                [area]="dataType.detailsArea"
+                (triggerAction)="performModellingAction($event)"
+                [documentModel]="document"
+                [allowAdd]="false"
+            >
+                <xc-button
+                xc-tooltip="{{'show details' | xcI18n}}"
+                (click)="selectedButton = !selectedButton"
+                >Details</xc-button>
+            </member-area>
             <!-- Inherited Variables -->
             <member-area
                 *ngIf="dataType.hasBaseType()"
@@ -122,6 +124,14 @@
         </section>
 
         <section class="details">
+            <datatype-details
+                *ngIf="selectedButton"
+                xc-i18n-context="member-variable-details"
+                [dataType]="dataType"
+                (triggerAction)="performModellingAction($event)"
+                [documentModel]="document"
+                [isStorable]="isStorable"
+            ></datatype-details>
             <member-variable-details
                 *ngIf="selectedVariable"
                 xc-i18n-context="member-variable-details"

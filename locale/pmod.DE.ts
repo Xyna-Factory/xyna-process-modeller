@@ -652,6 +652,10 @@ export const PMOD_DE: I18nTranslation[] = [
 
     // member-area
     {
+        key: 'pmod.datatype.member-area.Data Type',
+        value: 'Datentyp'
+    },
+    {
         key: 'pmod.datatype.member-area.Inherited Variables',
         value: 'Geerbte Variablen'
     },

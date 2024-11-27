@@ -1,21 +1,22 @@
 /*
- * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2024 Xyna GmbH, Germany
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- */
+* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+* Copyright 2024 Xyna GmbH, Germany
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*  http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+*/
 import { ChangeDetectorRef, Component, Injector, OnDestroy, Optional } from '@angular/core';
+
 import { ModellingActionType } from '@pmod/api/xmom.service';
 import { DocumentService } from '@pmod/document/document.service';
 import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model';
@@ -34,12 +35,20 @@ import { XoRuntimeContext } from '@pmod/xo/runtime-context.model';
 import { XoStaticMethod } from '@pmod/xo/static-method.model';
 import { FullQualifiedName } from '@zeta/api';
 import { XcTabComponent } from '@zeta/xc';
+
 import { Observable, Subject, takeUntil } from 'rxjs';
+
 
 export interface DatatypeTabData<D> {
     documentModel: DocumentModel<DocumentItem>;
     performAction: (action: TriggeredAction) => void;
     update: Observable<D>;
+}
+
+export interface DetailsTabData {
+    dataType: XoDataType;
+    dataTypeRTC: XoRuntimeContext;
+    readonly: boolean;
 }
 
 export interface VariableTabData {
@@ -96,6 +105,23 @@ export abstract class DatatypeTabComponent<D> extends XcTabComponent<void, Datat
     performAction(action: TriggeredAction): void {
         this.injectedData.performAction(action);
     }
+}
+
+@Component({
+    template: ''
+})
+export abstract class DatatypeDetailsTabComponent extends DatatypeTabComponent<DetailsTabData> {
+
+
+    get dataType(): XoDataType {
+        return this.tabData?.dataType;
+    }
+
+
+    get readonly(): boolean {
+        return this.tabData?.readonly;
+    }
+
 }
 
 @Component({
