@@ -617,11 +617,11 @@ export const PMOD_DE: I18nTranslation[] = [
 
     // global-storable-properties-area
     {
-        key: 'pmod.datatype.global-storable-properties-area.ods-name',
+        key: 'pmod.datatype.datatype-details.global-storable-properties-area.ods-name',
         value: 'ODS Name'
     },
     {
-        key: 'pmod.datatype.global-storable-properties-area.use-historization',
+        key: 'pmod.datatype.datatype-details.global-storable-properties-area.use-historization',
         value: 'Verlauf nutzen'
     },
 
@@ -650,11 +650,17 @@ export const PMOD_DE: I18nTranslation[] = [
         pronunciationLanguage: 'en-US'
     },
 
-    // member-area
+    // datatype-details
     {
-        key: 'pmod.datatype.member-area.Data Type',
-        value: 'Datentyp'
+        key: 'pmod.datatype.datatype-details.type-documentation-area.documentation-label',
+        value: 'Dokumentation'
     },
+    {
+        key: 'Data Type Details',
+        value: 'Datentyp Details'
+    },
+
+    // member-area
     {
         key: 'pmod.datatype.member-area.Inherited Variables',
         value: 'Geerbte Variablen'

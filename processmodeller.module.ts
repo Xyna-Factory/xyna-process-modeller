@@ -67,6 +67,7 @@ import { RepairEntryComponent } from './document/modal/repair-dialog/repair-entr
 import { PluginService } from './document/plugin.service';
 import { SelectionService } from './document/selection.service';
 import { ServiceGroupComponent } from './document/servicegroup.component';
+import { DetailsItemComponent } from './document/shared/details-item/details-item.component';
 import { JavaSharedLibAreaComponent } from './document/shared/java-shared-lib-area/java-shared-lib-area.component';
 import { JavaSharedLibItemComponent } from './document/shared/java-shared-lib-area/java-shared-lib-item.component';
 import { LibAreaComponent } from './document/shared/lib-area/lib-area.component';
@@ -204,6 +205,7 @@ import { WorkflowDetailSettingsService } from './workflow-detail-settings.servic
         DataTypeDetailsComponent,
         DataTypeMetaTabComponent,
         DataTypeStorableTabComponent,
+        DetailsItemComponent,
         DetailsComponent,
         DocumentationAreaComponent,
         DropIndicatorComponent,

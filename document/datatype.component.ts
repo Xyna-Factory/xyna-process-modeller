@@ -17,7 +17,6 @@
  */
 import { Component, Injector } from '@angular/core';
 
-import { XoDetailsArea } from '@pmod/xo/details-area.model';
 import { XoMetaTagArea } from '@pmod/xo/meta-tag-area.model';
 
 import { ModellingActionType } from '../api/xmom.service';
@@ -45,7 +44,6 @@ export class DataTypeComponent extends TypeDocumentComponent<DataTypeDocumentMod
     inheritedServicesCollapsed = false;
     overriddenServicesCollapsed = false;
     memberServicesCollapsed = false;
-    _selectedButton = false;
 
     constructor(injector: Injector) {
         super(injector);
@@ -57,8 +55,6 @@ export class DataTypeComponent extends TypeDocumentComponent<DataTypeDocumentMod
         const dataTypeTypeLabelArea = new XoDataTypeTypeLabelArea();
         const memberVariableArea = new XoMemberVariableArea();
         const metaTagArea = new XoMetaTagArea();
-        const detailsArea = new XoDetailsArea();
-        this.dataType.detailsArea = new XoDetailsArea();
         /* eslint-enable @typescript-eslint/no-unused-vars */
     }
 
@@ -70,15 +66,6 @@ export class DataTypeComponent extends TypeDocumentComponent<DataTypeDocumentMod
 
     get isStorable(): boolean {
         return !!this.dataType.globalStorablePropertyArea.isStorable;
-    }
-
-    get selectedButton(): boolean {
-        return this._selectedButton;
-    }
-
-
-    set selectedButton(value: boolean) {
-        this._selectedButton = value;
     }
 
     addMemberVariable() {

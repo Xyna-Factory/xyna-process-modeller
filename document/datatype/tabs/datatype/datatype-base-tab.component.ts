@@ -15,10 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, Optional } from '@angular/core';
-import { DataTypeService } from '@pmod/document/datatype.service';
-import { DocumentService } from '@pmod/document/document.service';
-import { I18nService } from '@zeta/i18n';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { DatatypeDetailsTabComponent } from '../datatype-tab.component';
 
@@ -29,17 +26,5 @@ import { DatatypeDetailsTabComponent } from '../datatype-tab.component';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTypeBaseTabComponent extends DatatypeDetailsTabComponent {
-
-    constructor(
-        documentService: DocumentService,
-        private readonly dataTypeService: DataTypeService,
-        private readonly i18n: I18nService,
-        cdr: ChangeDetectorRef,
-        @Optional() injector: Injector
-    ) {
-        super(documentService, cdr, injector);
-
-
-    }
 
 }

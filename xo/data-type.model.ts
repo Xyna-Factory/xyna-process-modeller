@@ -21,7 +21,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { DeploymentState, XmomObjectType } from '../api/xmom-types';
 import { XoDataTypeTypeLabelArea } from './data-type-type-label-area.model';
-import { XoDetailsArea } from './details-area.model';
 import { XoGlobalStorablePropertyArea } from './global-storable-property-area.model';
 import { XoJavaSharedLibrariesArea } from './java-shared-libraries-area.model';
 import { XoLibrariesArea } from './libraries-area.model';
@@ -63,10 +62,6 @@ export class XoDataType extends XoXmomItem {
     @XoProperty(XoTextArea)
     @XoTransient()
     documentationArea: XoTextArea;
-
-    @XoProperty(XoMemberVariableArea)
-    @XoTransient()
-    detailsArea: XoDetailsArea;
 
     @XoProperty(XoMemberVariableArea)
     @XoTransient()

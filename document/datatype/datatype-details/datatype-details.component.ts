@@ -15,11 +15,13 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { BehaviorSubject, Subject } from 'rxjs';
-
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnDestroy, Optional } from '@angular/core';
+
 import { XoDataType } from '@pmod/xo/data-type.model';
+import { I18nService } from '@zeta/i18n';
 import { XcTabBarItem } from '@zeta/xc';
+
+import { BehaviorSubject, Subject } from 'rxjs';
 
 import { XoRuntimeContext } from '../../../xo/runtime-context.model';
 import { ComponentMappingService } from '../../component-mapping.service';
@@ -58,7 +60,7 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
     readonly documentationTabItem: XcTabBarItem<DatatypeTabData<DetailsTabData>> = {
         closable: false,
         component: DataTypeBaseTabComponent,
-        name: 'Documentation',
+        name: this.i18nService.translate('pmod.datatype.type-documentation-area.documentation-label'),
         data: <DatatypeTabData<DetailsTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
@@ -69,7 +71,7 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
     readonly metaTagsTabItem: XcTabBarItem<DatatypeTabData<DetailsTabData>> = {
         closable: false,
         component: DataTypeMetaTabComponent,
-        name: 'Meta Tags',
+        name: 'Meta',
         data: <DatatypeTabData<DetailsTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
@@ -80,7 +82,7 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
     readonly storableTabItem: XcTabBarItem<DatatypeTabData<DetailsTabData>> = {
         closable: false,
         component: DataTypeStorableTabComponent,
-        name: 'Storable',
+        name: 'ODS Information',
         data: <DatatypeTabData<DetailsTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
@@ -96,6 +98,7 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
         componentMappingService: ComponentMappingService,
         documentService: DocumentService,
         detailLevelService: WorkflowDetailLevelService,
+        private readonly i18nService: I18nService,
         private readonly cdr: ChangeDetectorRef,
         @Optional() injector: Injector
     ) {

@@ -1,4 +1,3 @@
-import { XoPlugin } from '@yggdrasil/plugin/plugin.model';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2024 Xyna GmbH, Germany
@@ -18,19 +17,17 @@ import { XoPlugin } from '@yggdrasil/plugin/plugin.model';
  */
 import { XoArray, XoArrayClass, XoObjectClass, XoProperty } from '@zeta/api';
 
-import { XoContainerArea } from './modelling-item.model';
+import { XoXmomItem } from './xmom-item.model';
 
 
-@XoObjectClass(XoContainerArea, 'xmcp.processmodeller.datatypes.datatypemodeller', 'DetailsArea')
-export class XoDetailsArea extends XoContainerArea {
+@XoObjectClass(XoXmomItem, 'xmcp.processmodeller.datatypes.datatypemodeller', 'DetailsItem')
+export class XoDetailsItem extends XoXmomItem {
 
-
-    @XoProperty(XoPlugin)
-    plugin: XoPlugin = new XoPlugin();
-
-
+    @XoProperty()
+    name: string;
 }
 
-@XoArrayClass(XoDetailsArea)
-export class XoDetailsAreaArray extends XoArray<XoDetailsArea> {
+@XoArrayClass(XoDetailsItem)
+export class XoDetailsItemArray extends XoArray<XoDetailsItem> {
+
 }
