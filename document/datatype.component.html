@@ -31,7 +31,7 @@
         <section class="members">
             <!-- Datatype Details -->
             <div class="detail-items">
-                <details-item label="Data Type Details"></details-item>
+                <details-item [detailsItem]="detailsItem"></details-item>
             </div>
             <!-- Inherited Variables -->
             <member-area
@@ -118,6 +118,7 @@
                 *ngIf="selectedDetailsItem"
                 xc-i18n-context="datatype-details"
                 [dataType]="dataType"
+                [detailsItem]="selectedDetailsItem"
                 (triggerAction)="performModellingAction($event)"
                 [documentModel]="document"
                 [isStorable]="isStorable"

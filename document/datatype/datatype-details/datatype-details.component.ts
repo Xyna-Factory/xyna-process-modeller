@@ -18,6 +18,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnDestroy, Optional } from '@angular/core';
 
 import { XoDataType } from '@pmod/xo/data-type.model';
+import { XoDetailsItem } from '@pmod/xo/details-item.model';
 import { I18nService } from '@zeta/i18n';
 import { XcTabBarItem } from '@zeta/xc';
 
@@ -60,6 +61,14 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
     @Input()
     set dataType(value: XoDataType) {
         this.setModel(value);
+        if (value) {
+            this.tabUpdate.next(this.buildDatatypeTabData());
+        }
+        this.cdr.markForCheck();
+    }
+
+    @Input()
+    set detailsItem(value: XoDetailsItem) {
         if (value) {
             this.tabUpdate.next(this.buildDatatypeTabData());
         }

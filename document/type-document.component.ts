@@ -87,8 +87,10 @@ export class TypeDocumentComponent<D extends DocumentModel> extends DocumentComp
 
     restoreSelectedItem() {
         if (this.selectedDetailsItem) {
+            this.selectedDetailsItem = new XoDetailsItem(); // only to trigger refresh of datatype-details.component
             return;
         }
+
         this.selectedVariable = undefined;
         this.selectedMethod = undefined;
         this.selectedDetailsItem = undefined;

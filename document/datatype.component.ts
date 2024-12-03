@@ -17,6 +17,8 @@
  */
 import { Component, Injector } from '@angular/core';
 
+import { XoDetailsItem } from '@pmod/xo/details-item.model';
+
 import { ModellingActionType } from '../api/xmom.service';
 import { XoDataTypeTypeLabelArea } from '../xo/data-type-type-label-area.model';
 import { XoDataType } from '../xo/data-type.model';
@@ -42,6 +44,7 @@ export class DataTypeComponent extends TypeDocumentComponent<DataTypeDocumentMod
     inheritedServicesCollapsed = false;
     overriddenServicesCollapsed = false;
     memberServicesCollapsed = false;
+    detailsItem: XoDetailsItem;
 
     constructor(injector: Injector) {
         super(injector);
@@ -53,6 +56,9 @@ export class DataTypeComponent extends TypeDocumentComponent<DataTypeDocumentMod
         const dataTypeTypeLabelArea = new XoDataTypeTypeLabelArea();
         const memberVariableArea = new XoMemberVariableArea();
         /* eslint-enable @typescript-eslint/no-unused-vars */
+
+        this.detailsItem = new XoDetailsItem();
+        this.detailsItem.name = 'Data Type Details';
     }
 
 

@@ -16,14 +16,10 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 
-import { Component, ElementRef, Injector, Input, Optional } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
-import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 
-import { ComponentMappingService } from '../../component-mapping.service';
-import { DocumentService } from '../../document.service';
-import { SelectionService } from '../../selection.service';
 import { SelectableModellingObjectComponent } from '../../workflow/shared/selectable-modelling-object.component';
 
 
@@ -34,20 +30,13 @@ import { SelectableModellingObjectComponent } from '../../workflow/shared/select
 })
 export class DetailsItemComponent extends SelectableModellingObjectComponent {
 
-    @Input() label: string;
-
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        readonly detailLevelService: WorkflowDetailLevelService,
-        protected readonly selectionService: SelectionService,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, selectionService, injector);
-
-        const detailsItem = new XoDetailsItem();
-        detailsItem.name = this.label;
-        this.setModel(new XoDetailsItem());
+    @Input()
+    set detailsItem(value: XoDetailsItem) {
+        this.setModel(value);
     }
+
+    get detailsItem(): XoDetailsItem {
+        return this.getModel() as XoDetailsItem;
+    }
+
 }
