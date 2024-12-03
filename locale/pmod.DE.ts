@@ -659,6 +659,14 @@ export const PMOD_DE: I18nTranslation[] = [
         key: 'Data Type Details',
         value: 'Datentyp Details'
     },
+    {
+        key: 'pmod.datatype.datatype-details.meta-tag-area.tooltip-add-meta-tag',
+        value: 'Meta Tag hinzufügen'
+    },
+    {
+        key: 'pmod.datatype.datatype-details.meta-tag-area.meta-tag.tooltip-delete',
+        value: 'Meta Tag entfernen'
+    },
 
     // member-area
     {
@@ -732,11 +740,11 @@ export const PMOD_DE: I18nTranslation[] = [
         value: 'Storable Property'
     },
     {
-        key: 'pmod.datatype.member-variable-details.tooltip-add-meta-tag',
+        key: 'pmod.datatype.member-variable-details.meta-tag-area.tooltip-add-meta-tag',
         value: 'Meta Tag hinzufügen'
     },
     {
-        key: 'pmod.datatype.member-variable-details.meta-tag.tooltip-delete',
+        key: 'pmod.datatype.member-variable-details.meta-tag-area.meta-tag.tooltip-delete',
         value: 'Meta Tag entfernen'
     },
 
@@ -800,11 +808,11 @@ export const PMOD_DE: I18nTranslation[] = [
         value: 'Öffnen'
     },
     {
-        key: 'pmod.datatype.method-details.tooltip-add-meta-tag',
+        key: 'pmod.datatype.method-details.meta-tag-area.tooltip-add-meta-tag',
         value: 'Meta Tag hinzufügen'
     },
     {
-        key: 'pmod.datatype.method-details.meta-tag.tooltip-delete',
+        key: 'pmod.datatype.method-details.meta-tag-area.meta-tag.tooltip-delete',
         value: 'Meta Tag entfernen'
     },
 

@@ -53,6 +53,19 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
         }
     }
 
+    get dataType(): XoDataType {
+        return this.getModel() as XoDataType;
+    }
+
+    @Input()
+    set dataType(value: XoDataType) {
+        this.setModel(value);
+        if (value) {
+            this.tabUpdate.next(this.buildDatatypeTabData());
+        }
+        this.cdr.markForCheck();
+    }
+
     private _isStorable = false;
 
     tabUpdate: Subject<DetailsTabData> = new BehaviorSubject(this.buildDatatypeTabData());
@@ -112,7 +125,6 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
         super.ngOnDestroy();
     }
 
-
     protected lockedChanged() {
         this.cdr.markForCheck();
     }
@@ -124,21 +136,6 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
             dataTypeRTC: this.dataTypeRTC,
             readonly: this.readonly
         };
-    }
-
-
-    get dataType(): XoDataType {
-        return this.getModel() as XoDataType;
-    }
-
-
-    @Input()
-    set dataType(value: XoDataType) {
-        this.setModel(value);
-        if (value) {
-            this.tabUpdate.next(this.buildDatatypeTabData());
-        }
-        this.cdr.markForCheck();
     }
 
     private updateTabBarItemList() {

@@ -634,6 +634,14 @@ export const PMOD_EN: I18nTranslation[] = [
         key: 'Data Type Details',
         value: 'Data Type Details'
     },
+    {
+        key: 'pmod.datatype.datatype-details.meta-tag-area.tooltip-add-meta-tag',
+        value: 'add meta tag'
+    },
+    {
+        key: 'pmod.datatype.datatype-details.meta-tag-area.meta-tag.tooltip-delete',
+        value: 'remove meta tag'
+    },
 
     // member-area
     {
@@ -707,11 +715,11 @@ export const PMOD_EN: I18nTranslation[] = [
         value: 'Storable Properties'
     },
     {
-        key: 'pmod.datatype.member-variable-details.tooltip-add-meta-tag',
+        key: 'pmod.datatype.member-variable-details.meta-tag-area.tooltip-add-meta-tag',
         value: 'add meta tag'
     },
     {
-        key: 'pmod.datatype.member-variable-details.meta-tag.tooltip-delete',
+        key: 'pmod.datatype.member-variable-details.meta-tag-area.meta-tag.tooltip-delete',
         value: 'remove meta tag'
     },
 
@@ -775,11 +783,11 @@ export const PMOD_EN: I18nTranslation[] = [
         value: 'Implementation'
     },
     {
-        key: 'pmod.datatype.method-details.tooltip-add-meta-tag',
+        key: 'pmod.datatype.method-details.meta-tag-area.tooltip-add-meta-tag',
         value: 'add meta tag'
     },
     {
-        key: 'pmod.datatype.method-details.meta-tag.tooltip-delete',
+        key: 'pmod.datatype.method-details.meta-tag-area.meta-tag.tooltip-delete',
         value: 'remove meta tag'
     },
 

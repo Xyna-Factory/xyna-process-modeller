@@ -73,6 +73,7 @@ import { JavaSharedLibItemComponent } from './document/shared/java-shared-lib-ar
 import { LibAreaComponent } from './document/shared/lib-area/lib-area.component';
 import { LibItemComponent } from './document/shared/lib-area/lib-item.component';
 import { MemberAreaComponent } from './document/shared/member-area/member-area.component';
+import { MetaTagAreaComponent } from './document/shared/meta-tag-area/meta-tag-area.component';
 import { TypeDocumentComponent } from './document/type-document.component';
 import { WorkflowDetailLevelService } from './document/workflow-detail-level.service';
 import { WorkflowDocumentComponent } from './document/workflow-document.component';
@@ -251,6 +252,7 @@ import { WorkflowDetailSettingsService } from './workflow-detail-settings.servic
         MemberVariableDetailsComponent,
         MemberVariableMetaTabComponent,
         MemberVariableStorableTabComponent,
+        MetaTagAreaComponent,
         MetaTagComponent,
         MethodBaseTabComponent,
         MethodDetailsComponent,

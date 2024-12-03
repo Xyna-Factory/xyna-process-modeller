@@ -15,17 +15,10 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, Optional } from '@angular/core';
-import { DataTypeService } from '@pmod/document/datatype.service';
-import { DocumentService } from '@pmod/document/document.service';
-import { I18nService } from '@zeta/i18n';
-import { XcRichListItem } from '@zeta/xc';
-import { MetaTagComponent, MetaTagRichListData } from './meta-tag-rich-list/meta-tag-rich-list.component';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+
 import { DatatypeVariableTabComponent } from '../datatype-tab.component';
-import { XoMetaTag } from '@pmod/xo/meta-tag.model';
-import { HttpMethod, ModellingActionType } from '@pmod/api/xmom.service';
-import { XoMetaTagRequest } from '@pmod/xo/meta-tag-request.model';
-import { Subject } from 'rxjs';
+
 
 @Component({
     templateUrl: './member-variable-meta-tab.component.html',
@@ -34,61 +27,4 @@ import { Subject } from 'rxjs';
 })
 export class MemberVariableMetaTabComponent extends DatatypeVariableTabComponent {
 
-    metaTagsItems: XcRichListItem<MetaTagRichListData>[];
-    newTag: string;
-    removeSubject: Subject<XoMetaTag> = new Subject();
-
-    constructor(
-        documentService: DocumentService,
-        private readonly dataTypeService: DataTypeService,
-        private readonly i18n: I18nService,
-        cdr: ChangeDetectorRef,
-        @Optional() injector: Injector
-    ) {
-        super(documentService, cdr, injector);
-
-        this.untilDestroyed(this.injectedData.update).subscribe(() => {
-            this.refreshRichList();
-        });
-
-        this.untilDestroyed(this.removeSubject.asObservable()).subscribe(metaTag => {
-            this.removeMetaTag(metaTag);
-        });
-    }
-
-    private refreshRichList() {
-        this.metaTagsItems = this.memberVariable.metaTagArea.metaTags.map(tag =>
-            <XcRichListItem<MetaTagRichListData>>{
-                component: MetaTagComponent,
-                data: {
-                    metaTag: tag,
-                    removeSubject: this.removeSubject
-                }
-            }
-        );
-    }
-
-    addMetaTag() {
-        const metaTag: XoMetaTag = new XoMetaTag();
-        metaTag.tag = this.newTag;
-        const request: XoMetaTagRequest = new XoMetaTagRequest();
-        request.metaTag = metaTag;
-        this.performAction({
-            type: ModellingActionType.meta,
-            objectIdKey: 'members',
-            objectId: this.memberVariable.name,
-            request: request,
-            method: HttpMethod.PUT
-        });
-    }
-
-    removeMetaTag(metaTag: XoMetaTag) {
-        this.performAction({
-            type: ModellingActionType.meta,
-            objectIdKey: 'members',
-            objectId: this.memberVariable.name,
-            method: HttpMethod.DELETE,
-            paramSet: {metaTagId: metaTag.id}
-        });
-    }
 }

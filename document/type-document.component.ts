@@ -56,7 +56,7 @@ export class TypeDocumentComponent<D extends DocumentModel> extends DocumentComp
 
         // remember name and label before sending any request to the server
         this.untilDestroyed(this.documentService.xmomService.beforeActionTriggered).pipe(filter(() => this.document.tabActive)).subscribe(() => {
-            const selected = this.selectedVariable ?? this.selectedMethod;
+            const selected = this.selectedVariable ?? this.selectedMethod ?? this.selectedDetailsItem;
             this.selectedItemName = selected?.name;
             this.selectedItemLabel = selected?.label;
         });

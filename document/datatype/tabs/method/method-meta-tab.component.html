@@ -1,21 +1,8 @@
-<div class="items-row">
-
-    <xc-form-textarea
-        xc-i18n
-        class="input"
-        [(value)]="newTag"
-        [readonly]="readonly"
-        [xc-form-textarea-lines]="5"
-    ></xc-form-textarea>
-
-    <xc-icon-button
-        (click)="addMetaTag()"
-        xc-tooltip="tooltip-add-meta-tag"
-        xc-i18n
-        class="add"
-        xc-icon-name="add"
-    ></xc-icon-button>
-
-</div>
-
-<xc-rich-list class="rich-list" [xc-rich-list-items]="metaTagsItems" xc-i18n-context="meta-tag"></xc-rich-list>
+<meta-tag-area
+    xc-i18n-context="meta-tag-area"
+    objectIdKey="services"
+    [objectId]="method.name"
+    [metaTagArea]="method.metaTagArea"
+    (triggerAction)="performAction($event)"
+    [documentModel]="documentModel"
+></meta-tag-area>

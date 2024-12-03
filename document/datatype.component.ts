@@ -17,8 +17,6 @@
  */
 import { Component, Injector } from '@angular/core';
 
-import { XoMetaTagArea } from '@pmod/xo/meta-tag-area.model';
-
 import { ModellingActionType } from '../api/xmom.service';
 import { XoDataTypeTypeLabelArea } from '../xo/data-type-type-label-area.model';
 import { XoDataType } from '../xo/data-type.model';
@@ -54,7 +52,6 @@ export class DataTypeComponent extends TypeDocumentComponent<DataTypeDocumentMod
         const exceptionType = new XoExceptionType();
         const dataTypeTypeLabelArea = new XoDataTypeTypeLabelArea();
         const memberVariableArea = new XoMemberVariableArea();
-        const metaTagArea = new XoMetaTagArea();
         /* eslint-enable @typescript-eslint/no-unused-vars */
     }
 
