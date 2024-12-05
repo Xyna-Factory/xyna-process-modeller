@@ -19,8 +19,8 @@ import { Component, ElementRef, Injector, Input, Optional } from '@angular/core'
 
 import { HttpMethod, ModellingActionType } from '@pmod/api/xmom.service';
 import { ComponentMappingService } from '@pmod/document/component-mapping.service';
-import { MetaTagComponent, MetaTagRichListData } from '@pmod/document/datatype/tabs/member-variable/meta-tag-rich-list/meta-tag-rich-list.component';
 import { DocumentService } from '@pmod/document/document.service';
+import { MetaTagComponent, MetaTagRichListData } from '@pmod/document/shared/meta-tag-rich-list/meta-tag-rich-list.component';
 import { ModellingObjectComponent } from '@pmod/document/workflow/shared/modelling-object.component';
 import { XoMetaTagArea } from '@pmod/xo/meta-tag-area.model';
 import { XoMetaTagRequest } from '@pmod/xo/meta-tag-request.model';

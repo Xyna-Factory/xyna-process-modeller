@@ -36,10 +36,7 @@
             height: 216px;
 
             .type-info-area {
-                display: flex;
-                flex-direction: column;
-                flex: 3 1 auto;
-                overflow: auto;
+                flex: 0.7;
             }
 
             & > *:not(:first-child) {
@@ -52,10 +49,7 @@
             }
 
             .lib-area {
-                display: flex;
-                flex-direction: column;
-                flex: 1 1 auto;
-                overflow: auto;
+                flex: 0.3;
 
                 & > *:not(:last-child) {
                     margin-bottom: 12px;

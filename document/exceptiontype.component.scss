@@ -40,10 +40,9 @@
             }
 
             type-info-area {
-                flex: 0.4;
+                flex: 0.7;
             }
 
-            type-documentation-area,
             exception-messages-area {
                 padding-top: 12px;
                 flex: 0.3;
@@ -70,11 +69,16 @@
                 padding: 0 2px;
                 overflow: auto;
             }
+
             .details {
                 display: flex;
                 flex: 1 1 auto;
                 margin: 2px 0 0 2px;
                 overflow: auto;
+            }
+
+            .detail-items {
+                padding: 8px;
             }
         }
     }

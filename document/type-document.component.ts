@@ -42,6 +42,7 @@ export class TypeDocumentComponent<D extends DocumentModel> extends DocumentComp
     selectedItemName: string;
     selectedItemLabel: string;
 
+    detailsItem: XoDetailsItem;
 
     constructor(injector: Injector) {
         super(injector);

@@ -1,5 +1,4 @@
 <div class="area-wrapper" xc-i18n-context="datatype">
-
     <div class="exceptiontype-header">
         <type-info-area
             xc-i18n-context="type-info-area"
@@ -10,13 +9,6 @@
             [showBaseTypeAutocomplete]="true"
             [showAbstractCheckbox]="true"
         ></type-info-area>
-        <type-documentation-area
-            xc-i18n-context="type-documentation-area"
-            [documentationArea]="exceptionType.documentationArea"
-            (triggerAction)="performModellingAction($event)"
-            [documentModel]="document"
-            [lines]="8"
-        ></type-documentation-area>
         <exception-messages-area
             xc-i18n-context="exception-messages-area"
             [exceptionMessagesArea]="exceptionType.exceptionMessageArea"
@@ -27,6 +19,10 @@
 
     <div class="exceptiontype-body">
         <section class="members">
+            <!-- Datatype Details -->
+            <div class="detail-items">
+                <details-item [detailsItem]="detailsItem"></details-item>
+            </div>
             <!-- Inherited Variables -->
             <member-area
                 *ngIf="exceptionType.hasBaseType()"
@@ -61,6 +57,14 @@
         </section>
 
         <section class="details">
+            <exceptiontype-details
+                *ngIf="selectedDetailsItem"
+                xc-i18n-context="exceptiontype-details"
+                [exceptionType]="exceptionType"
+                [detailsItem]="selectedDetailsItem"
+                (triggerAction)="performModellingAction($event)"
+                [documentModel]="document"
+            ></exceptiontype-details>
             <member-variable-details
                 *ngIf="selectedVariable"
                 xc-i18n-context="member-variable-details"

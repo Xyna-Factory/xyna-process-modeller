@@ -44,7 +44,6 @@ export class DataTypeComponent extends TypeDocumentComponent<DataTypeDocumentMod
     inheritedServicesCollapsed = false;
     overriddenServicesCollapsed = false;
     memberServicesCollapsed = false;
-    detailsItem: XoDetailsItem;
 
     constructor(injector: Injector) {
         super(injector);
@@ -59,6 +58,7 @@ export class DataTypeComponent extends TypeDocumentComponent<DataTypeDocumentMod
 
         this.detailsItem = new XoDetailsItem();
         this.detailsItem.name = 'Data Type Details';
+        this.selectedDetailsItem = this.detailsItem;
     }
 
 

@@ -17,14 +17,20 @@
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { DatatypeDetailsTabComponent } from '../datatype-tab.component';
+import { XoTextArea } from '@pmod/xo/text-area.model';
+
+import { DatatypeTabComponent, DocumentationTabData } from '../datatype-tab.component';
 
 
 @Component({
-    templateUrl: './datatype-meta-tab.component.html',
-    styleUrls: ['./datatype-meta-tab.component.scss'],
+    templateUrl: './documentation-tab.component.html',
+    styleUrls: ['./documentation-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DataTypeMetaTabComponent extends DatatypeDetailsTabComponent {
+export class DocumentationTabComponent extends DatatypeTabComponent<DocumentationTabData> {
+
+    get documentationArea(): XoTextArea {
+        return this.tabData?.documentationArea;
+    }
 
 }

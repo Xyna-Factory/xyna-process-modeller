@@ -17,14 +17,28 @@
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { DatatypeMethodTabComponent } from '../datatype-tab.component';
+import { XoMetaTagArea } from '@pmod/xo/meta-tag-area.model';
+
+import { DatatypeTabComponent, MetaTabData } from '../datatype-tab.component';
 
 
 @Component({
-    templateUrl: './method-meta-tab.component.html',
-    styleUrls: ['./method-meta-tab.component.scss'],
+    templateUrl: './meta-tab.component.html',
+    styleUrls: ['./meta-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MethodMetaTabComponent extends DatatypeMethodTabComponent {
+export class MetaTabComponent extends DatatypeTabComponent<MetaTabData> {
+
+    get metaTagArea(): XoMetaTagArea {
+        return this.tabData?.metaTagArea;
+    }
+
+    get objectIdKey(): string {
+        return this.tabData?.objectIdKey;
+    }
+
+    get objectId(): string {
+        return this.tabData?.objectId;
+    }
 
 }

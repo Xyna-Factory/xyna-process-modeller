@@ -15,7 +15,9 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component } from '@angular/core';
+import { Component, Injector } from '@angular/core';
+
+import { XoDetailsItem } from '@pmod/xo/details-item.model';
 
 import { ModellingActionType } from '../api/xmom.service';
 import { XoExceptionType } from '../xo/exception-type.model';
@@ -42,6 +44,13 @@ export class ExceptionTypeComponent extends TypeDocumentComponent<ExceptionTypeD
         return this.document.item;
     }
 
+    constructor(injector: Injector) {
+        super(injector);
+
+        this.detailsItem = new XoDetailsItem();
+        this.detailsItem.name = 'Exception Type Details';
+        this.selectedDetailsItem = this.detailsItem;
+    }
 
     addMemberVariable() {
         this.performModellingAction({

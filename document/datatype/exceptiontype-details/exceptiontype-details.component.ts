@@ -17,52 +17,38 @@
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnDestroy, Optional } from '@angular/core';
 
-import { XoDataType } from '@pmod/xo/data-type.model';
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
+import { XoExceptionType } from '@pmod/xo/exception-type.model';
 import { I18nService } from '@zeta/i18n';
 import { XcTabBarItem } from '@zeta/xc';
 
 import { BehaviorSubject, Subject } from 'rxjs';
 
-import { XoRuntimeContext } from '../../../xo/runtime-context.model';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { WorkflowDetailLevelService } from '../../workflow-detail-level.service';
 import { ModellingItemComponent } from '../../workflow/shared/modelling-object.component';
-import { BaseTabData, DataTypeTabData, DocumentationTabData, DocumentTabData, MetaTabData } from '../tabs/datatype-tab.component';
-import { DataTypeStorableTabComponent } from '../tabs/datatype/datatype-storable-tab.component';
+import { BaseTabData, DocumentationTabData, DocumentTabData } from '../tabs/datatype-tab.component';
 import { DocumentationTabComponent } from '../tabs/shared/documentation-tab.component';
-import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
 
 
 @Component({
-    selector: 'datatype-details',
-    templateUrl: './datatype-details.component.html',
-    styleUrls: ['./datatype-details.component.scss'],
+    selector: 'exceptiontype-details',
+    templateUrl: './exceptiontype-details.component.html',
+    styleUrls: ['./exceptiontype-details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DataTypeDetailsComponent extends ModellingItemComponent implements OnDestroy {
+export class ExceptionTypeDetailsComponent extends ModellingItemComponent implements OnDestroy {
 
-    @Input()
-    dataTypeRTC: XoRuntimeContext = null;
-
-    @Input()
-    set isStorable(value: boolean) {
-        if (value !== this._isStorable) {
-            this._isStorable = value;
-            this.updateTabBarItemList();
-        }
-    }
-
-    get dataType(): XoDataType {
-        return this.getModel() as XoDataType;
+    get exceptionType(): XoExceptionType {
+        return this.getModel() as XoExceptionType;
     }
 
     @Input()
-    set dataType(value: XoDataType) {
+    set exceptionType(value: XoExceptionType) {
         this.setModel(value);
         if (value) {
-            this.refreshTabs();
+            this.docTabUpdate.next(this.buildDocTabData());
         }
         this.cdr.markForCheck();
     }
@@ -70,16 +56,12 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
     @Input()
     set detailsItem(value: XoDetailsItem) {
         if (value) {
-            this.refreshTabs();
+            this.docTabUpdate.next(this.buildDocTabData());
         }
         this.cdr.markForCheck();
     }
 
-    private _isStorable = false;
-
     docTabUpdate: Subject<DocumentationTabData> = new BehaviorSubject(this.buildDocTabData());
-    metaTabUpdate: Subject<MetaTabData> = new BehaviorSubject(this.buildMetaTabData());
-    dataTypeTabUpdate: Subject<DataTypeTabData> = new BehaviorSubject(this.buildDataTypeTabData());
 
     readonly documentationTabItem: XcTabBarItem<DocumentTabData<DocumentationTabData>> = {
         closable: false,
@@ -89,28 +71,6 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
             update: this.docTabUpdate.asObservable()
-        }
-    };
-
-    readonly metaTagsTabItem: XcTabBarItem<DocumentTabData<MetaTabData>> = {
-        closable: false,
-        component: MetaTabComponent,
-        name: 'Meta',
-        data: <DocumentTabData<MetaTabData>>{
-            documentModel: this.documentModel,
-            performAction: this.performAction.bind(this),
-            update: this.metaTabUpdate.asObservable()
-        }
-    };
-
-    readonly storableTabItem: XcTabBarItem<DocumentTabData<DataTypeTabData>> = {
-        closable: false,
-        component: DataTypeStorableTabComponent,
-        name: 'ODS Information',
-        data: <DocumentTabData<DataTypeTabData>>{
-            documentModel: this.documentModel,
-            performAction: this.performAction.bind(this),
-            update: this.dataTypeTabUpdate.asObservable()
         }
     };
 
@@ -133,8 +93,6 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
 
     ngOnDestroy() {
         this.docTabUpdate.complete();
-        this.metaTabUpdate.complete();
-        this.dataTypeTabUpdate.complete();
         super.ngOnDestroy();
     }
 
@@ -145,38 +103,13 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
 
     private buildDocTabData(): DocumentationTabData {
         return <DocumentationTabData> {
-            documentationArea: this.dataType?.documentationArea,
-            readonly: this.readonly
-        };
-    }
-
-    private buildMetaTabData(): MetaTabData {
-        return <MetaTabData> {
-            metaTagArea: this.dataType?.metaTagArea,
-            objectIdKey: '',
-            objectId: '',
-            readonly: this.readonly
-        };
-    }
-
-    private buildDataTypeTabData(): DataTypeTabData {
-        return <DataTypeTabData> {
-            dataType: this.dataType,
+            documentationArea: this.exceptionType?.documentationArea,
             readonly: this.readonly
         };
     }
 
     private updateTabBarItemList() {
-        this.tabBarItems = [this.documentationTabItem, this.metaTagsTabItem];
-        if (this._isStorable) {
-            this.tabBarItems.push(this.storableTabItem);
-        }
+        this.tabBarItems = [this.documentationTabItem];
         this.cdr.markForCheck();
-    }
-
-    private refreshTabs() {
-        this.docTabUpdate.next(this.buildDocTabData());
-        this.metaTabUpdate.next(this.buildMetaTabData());
-        this.dataTypeTabUpdate.next(this.buildDataTypeTabData());
     }
 }

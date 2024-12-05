@@ -643,6 +643,16 @@ export const PMOD_EN: I18nTranslation[] = [
         value: 'remove meta tag'
     },
 
+    // exceptiontype-details
+    {
+        key: 'pmod.datatype.exceptiontype-details.type-documentation-area.documentation-label',
+        value: 'Documentation'
+    },
+    {
+        key: 'Exception Type Details',
+        value: 'Exception Type Details'
+    },
+
     // member-area
     {
         key: 'pmod.datatype.member-area.Inherited Variables',

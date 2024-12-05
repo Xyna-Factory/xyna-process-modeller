@@ -44,11 +44,12 @@
                 padding: 8px;
             }
 
+            .type-info-area {
+                flex: 0.7;
+            }
+
             .lib-area {
-                display: flex;
-                flex-direction: column;
-                flex: 0 0 200px;
-                overflow: auto;
+                flex: 0.3;
 
                 & > *:not(:last-child) {
                     margin-bottom: 12px;

@@ -34,6 +34,7 @@ import { CodingComponent } from './document/datatype/coding/coding.component';
 import { DataTypeDetailsComponent } from './document/datatype/datatype-details/datatype-details.component';
 import { ExceptionMessageRichListItemComponent } from './document/datatype/exception-message-rich-list-item/exception-message-rich-list-item.component';
 import { ExceptionMessagesAreaComponent } from './document/datatype/exception-messages-area/exception-messages-area.component';
+import { ExceptionTypeDetailsComponent } from './document/datatype/exceptiontype-details/exceptiontype-details.component';
 import { GlobalStorablePropertiesAreaComponent } from './document/datatype/global-storable-properties-area/global-storable-properties-area.component';
 import { MemberServiceComponent } from './document/datatype/member-service/member-service.component';
 import { MemberVariableAreaComponent } from './document/datatype/member-variable-area/member-variable-area.component';
@@ -43,16 +44,13 @@ import { MethodDetailsComponent } from './document/datatype/method-details/metho
 import { MethodImplementationComponent } from './document/datatype/method-implementation/method-implementation.component';
 import { ServiceAreaComponent } from './document/datatype/service-area/service-area.component';
 import { StorablePropertiesAreaComponent } from './document/datatype/storable-properties-area/storable-properties-area.component';
-import { DataTypeBaseTabComponent } from './document/datatype/tabs/datatype/datatype-base-tab.component';
-import { DataTypeMetaTabComponent } from './document/datatype/tabs/datatype/datatype-meta-tab.component';
 import { DataTypeStorableTabComponent } from './document/datatype/tabs/datatype/datatype-storable-tab.component';
 import { MemberVariableBaseTabComponent } from './document/datatype/tabs/member-variable/member-variable-base-tab.component';
-import { MemberVariableMetaTabComponent } from './document/datatype/tabs/member-variable/member-variable-meta-tab.component';
 import { MemberVariableStorableTabComponent } from './document/datatype/tabs/member-variable/member-variable-storable-tab.component';
-import { MetaTagComponent } from './document/datatype/tabs/member-variable/meta-tag-rich-list/meta-tag-rich-list.component';
 import { MethodBaseTabComponent } from './document/datatype/tabs/method/method-base-tab.component';
 import { MethodImplementationTabComponent } from './document/datatype/tabs/method/method-implementation-tab.component';
-import { MethodMetaTabComponent } from './document/datatype/tabs/method/method-meta-tab.component';
+import { DocumentationTabComponent } from './document/datatype/tabs/shared/documentation-tab.component';
+import { MetaTabComponent } from './document/datatype/tabs/shared/meta-tab.component';
 import { TypeDocumentationAreaComponent } from './document/datatype/type-documentation-area/type-documentation-area.component';
 import { ShowGUIModelModalModule } from './document/datatype/type-info-area/show-gui-model-modal/show-gui-model-modal.module';
 import { TypeInfoAreaComponent } from './document/datatype/type-info-area/type-info-area.component';
@@ -74,6 +72,7 @@ import { LibAreaComponent } from './document/shared/lib-area/lib-area.component'
 import { LibItemComponent } from './document/shared/lib-area/lib-item.component';
 import { MemberAreaComponent } from './document/shared/member-area/member-area.component';
 import { MetaTagAreaComponent } from './document/shared/meta-tag-area/meta-tag-area.component';
+import { MetaTagComponent } from './document/shared/meta-tag-rich-list/meta-tag-rich-list.component';
 import { TypeDocumentComponent } from './document/type-document.component';
 import { WorkflowDetailLevelService } from './document/workflow-detail-level.service';
 import { WorkflowDocumentComponent } from './document/workflow-document.component';
@@ -201,14 +200,13 @@ import { WorkflowDetailSettingsService } from './workflow-detail-settings.servic
         ConstantDialogComponent,
         ContentAreaComponent,
         DataflowComponent,
-        DataTypeBaseTabComponent,
         DataTypeComponent,
         DataTypeDetailsComponent,
-        DataTypeMetaTabComponent,
         DataTypeStorableTabComponent,
         DetailsItemComponent,
         DetailsComponent,
         DocumentationAreaComponent,
+        DocumentationTabComponent,
         DropIndicatorComponent,
         ErrorDialogComponent,
         ErrorItemComponent,
@@ -218,6 +216,7 @@ import { WorkflowDetailSettingsService } from './workflow-detail-settings.servic
         ExceptionMessagesAreaComponent,
         ExceptionMessageRichListItemComponent,
         ExceptionTypeComponent,
+        ExceptionTypeDetailsComponent,
         FactoryComponent,
         FilterCriterionAreaComponent,
         FlowCanvasComponent,
@@ -250,13 +249,12 @@ import { WorkflowDetailSettingsService } from './workflow-detail-settings.servic
         MemberVariableComponent,
         MemberVariableBaseTabComponent,
         MemberVariableDetailsComponent,
-        MemberVariableMetaTabComponent,
         MemberVariableStorableTabComponent,
+        MetaTabComponent,
         MetaTagAreaComponent,
         MetaTagComponent,
         MethodBaseTabComponent,
         MethodDetailsComponent,
-        MethodMetaTabComponent,
         MethodImplementationComponent,
         MethodImplementationTabComponent,
         ModContentEditableDirective,
