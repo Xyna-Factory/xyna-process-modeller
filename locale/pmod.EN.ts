@@ -595,11 +595,11 @@ export const PMOD_EN: I18nTranslation[] = [
 
     // global-storable-properties-area
     {
-        key: 'pmod.datatype.global-storable-properties-area.ods-name',
+        key: 'pmod.datatype.datatype-details.global-storable-properties-area.ods-name',
         value: 'ODS Name'
     },
     {
-        key: 'pmod.datatype.global-storable-properties-area.use-historization',
+        key: 'pmod.datatype.datatype-details.global-storable-properties-area.use-historization',
         value: 'Use Historization'
     },
 
@@ -623,6 +623,34 @@ export const PMOD_EN: I18nTranslation[] = [
     {
         key: 'pmod.datatype.java-shared-lib-area.java-shared-libraries-label',
         value: 'Java Shared Libraries'
+    },
+
+    // datatype-details
+    {
+        key: 'pmod.datatype.datatype-details.type-documentation-area.documentation-label',
+        value: 'Documentation'
+    },
+    {
+        key: 'Data Type Details',
+        value: 'Data Type Details'
+    },
+    {
+        key: 'pmod.datatype.datatype-details.meta-tag-area.tooltip-add-meta-tag',
+        value: 'add meta tag'
+    },
+    {
+        key: 'pmod.datatype.datatype-details.meta-tag-area.meta-tag.tooltip-delete',
+        value: 'remove meta tag'
+    },
+
+    // exceptiontype-details
+    {
+        key: 'pmod.datatype.exceptiontype-details.type-documentation-area.documentation-label',
+        value: 'Documentation'
+    },
+    {
+        key: 'Exception Type Details',
+        value: 'Exception Type Details'
     },
 
     // member-area
@@ -697,11 +725,11 @@ export const PMOD_EN: I18nTranslation[] = [
         value: 'Storable Properties'
     },
     {
-        key: 'pmod.datatype.member-variable-details.tooltip-add-meta-tag',
+        key: 'pmod.datatype.member-variable-details.meta-tag-area.tooltip-add-meta-tag',
         value: 'add meta tag'
     },
     {
-        key: 'pmod.datatype.member-variable-details.meta-tag.tooltip-delete',
+        key: 'pmod.datatype.member-variable-details.meta-tag-area.meta-tag.tooltip-delete',
         value: 'remove meta tag'
     },
 
@@ -765,11 +793,11 @@ export const PMOD_EN: I18nTranslation[] = [
         value: 'Implementation'
     },
     {
-        key: 'pmod.datatype.method-details.tooltip-add-meta-tag',
+        key: 'pmod.datatype.method-details.meta-tag-area.tooltip-add-meta-tag',
         value: 'add meta tag'
     },
     {
-        key: 'pmod.datatype.method-details.meta-tag.tooltip-delete',
+        key: 'pmod.datatype.method-details.meta-tag-area.meta-tag.tooltip-delete',
         value: 'remove meta tag'
     },
 

@@ -15,33 +15,30 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
- @import 'const';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-:host {
-    display: flex;
-    flex-direction: column;
-    flex: 1 1 auto;
+import { XoMetaTagArea } from '@pmod/xo/meta-tag-area.model';
 
-    .items-row {
-        display: flex;
-        flex-direction: row;
-        flex: 0 1 auto;
-        padding: 10px;
-        background-color: $color-gray-1;
+import { DatatypeTabComponent, MetaTabData } from '../datatype-tab.component';
 
-        .input {
-            margin: 5px 0px 7px 0px;
-            ::ng-deep .mat-mdc-form-field-subscript-wrapper {
-                display: none;
-            }
-        }
 
-        .add {
-            align-items: center;
-        }
+@Component({
+    templateUrl: './meta-tab.component.html',
+    styleUrls: ['./meta-tab.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class MetaTabComponent extends DatatypeTabComponent<MetaTabData> {
+
+    get metaTagArea(): XoMetaTagArea {
+        return this.tabData?.metaTagArea;
     }
 
-    .rich-list {
-        padding: 10px;
+    get objectIdKey(): string {
+        return this.tabData?.objectIdKey;
     }
+
+    get objectId(): string {
+        return this.tabData?.objectId;
+    }
+
 }

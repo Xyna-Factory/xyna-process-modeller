@@ -1,11 +1,13 @@
 <div class="area-wrapper" xc-i18n-context="datatype">
     <div class="servicegroup-header">
-        <type-info-area
-            xc-i18n-context="type-info-area"
-            [typeInfoArea]="serviceGroup.typeInfoArea"
-            (triggerAction)="performModellingAction($event)"
-            [documentModel]="document"
-        ></type-info-area>
+        <div class="type-info-area">
+            <type-info-area
+                xc-i18n-context="type-info-area"
+                [typeInfoArea]="serviceGroup.typeInfoArea"
+                (triggerAction)="performModellingAction($event)"
+                [documentModel]="document"
+            ></type-info-area>
+        </div>
         <div class="lib-area">
             <lib-area
                 xc-i18n-context="lib-area"

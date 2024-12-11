@@ -17,18 +17,24 @@
  */
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { FactoryManagerModule } from '@fman/factory-manager.module';
 import { I18nService } from '@zeta/i18n';
+import { QueryParameterService } from '@zeta/nav/query-parameter.service';
 import { ZetaModule } from '@zeta/zeta.module';
+
+import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 
 import { XmomService } from './api/xmom.service';
 import { ComponentMappingService } from './document/component-mapping.service';
 import { DataTypeComponent } from './document/datatype.component';
 import { DataTypeService } from './document/datatype.service';
 import { CodingComponent } from './document/datatype/coding/coding.component';
+import { DataTypeDetailsComponent } from './document/datatype/datatype-details/datatype-details.component';
 import { ExceptionMessageRichListItemComponent } from './document/datatype/exception-message-rich-list-item/exception-message-rich-list-item.component';
 import { ExceptionMessagesAreaComponent } from './document/datatype/exception-messages-area/exception-messages-area.component';
+import { ExceptionTypeDetailsComponent } from './document/datatype/exceptiontype-details/exceptiontype-details.component';
 import { GlobalStorablePropertiesAreaComponent } from './document/datatype/global-storable-properties-area/global-storable-properties-area.component';
 import { MemberServiceComponent } from './document/datatype/member-service/member-service.component';
 import { MemberVariableAreaComponent } from './document/datatype/member-variable-area/member-variable-area.component';
@@ -38,6 +44,13 @@ import { MethodDetailsComponent } from './document/datatype/method-details/metho
 import { MethodImplementationComponent } from './document/datatype/method-implementation/method-implementation.component';
 import { ServiceAreaComponent } from './document/datatype/service-area/service-area.component';
 import { StorablePropertiesAreaComponent } from './document/datatype/storable-properties-area/storable-properties-area.component';
+import { DataTypeStorableTabComponent } from './document/datatype/tabs/datatype/datatype-storable-tab.component';
+import { MemberVariableBaseTabComponent } from './document/datatype/tabs/member-variable/member-variable-base-tab.component';
+import { MemberVariableStorableTabComponent } from './document/datatype/tabs/member-variable/member-variable-storable-tab.component';
+import { MethodBaseTabComponent } from './document/datatype/tabs/method/method-base-tab.component';
+import { MethodImplementationTabComponent } from './document/datatype/tabs/method/method-implementation-tab.component';
+import { DocumentationTabComponent } from './document/datatype/tabs/shared/documentation-tab.component';
+import { MetaTabComponent } from './document/datatype/tabs/shared/meta-tab.component';
 import { TypeDocumentationAreaComponent } from './document/datatype/type-documentation-area/type-documentation-area.component';
 import { ShowGUIModelModalModule } from './document/datatype/type-info-area/show-gui-model-modal/show-gui-model-modal.module';
 import { TypeInfoAreaComponent } from './document/datatype/type-info-area/type-info-area.component';
@@ -49,12 +62,17 @@ import { ConstantDialogComponent } from './document/modal/constant-dialog/consta
 import { ErrorDialogComponent } from './document/modal/error-dialog/error-dialog.component';
 import { RepairDialogComponent } from './document/modal/repair-dialog/repair-dialog.component';
 import { RepairEntryComponent } from './document/modal/repair-dialog/repair-entry/repair-entry.component';
+import { PluginService } from './document/plugin.service';
 import { SelectionService } from './document/selection.service';
 import { ServiceGroupComponent } from './document/servicegroup.component';
-import { LibAreaComponent } from './document/shared/lib-area/lib-area.component';
+import { DetailsItemComponent } from './document/shared/details-item/details-item.component';
 import { JavaSharedLibAreaComponent } from './document/shared/java-shared-lib-area/java-shared-lib-area.component';
 import { JavaSharedLibItemComponent } from './document/shared/java-shared-lib-area/java-shared-lib-item.component';
+import { LibAreaComponent } from './document/shared/lib-area/lib-area.component';
+import { LibItemComponent } from './document/shared/lib-area/lib-item.component';
 import { MemberAreaComponent } from './document/shared/member-area/member-area.component';
+import { MetaTagAreaComponent } from './document/shared/meta-tag-area/meta-tag-area.component';
+import { MetaTagComponent } from './document/shared/meta-tag-rich-list/meta-tag-rich-list.component';
 import { TypeDocumentComponent } from './document/type-document.component';
 import { WorkflowDetailLevelService } from './document/workflow-detail-level.service';
 import { WorkflowDocumentComponent } from './document/workflow-document.component';
@@ -119,7 +137,11 @@ import { VariableAreaChoiceComponent } from './document/workflow/variable-area/v
 import { VariableAreaDocumentComponent } from './document/workflow/variable-area/variable-area-document.component';
 import { VariableAreaServiceComponent } from './document/workflow/variable-area/variable-area-service.component';
 import { VariableAreaComponent } from './document/workflow/variable-area/variable-area.component';
+import { VariableTreeNodeComponent } from './document/workflow/variable-tree-node/variable-tree-node.component';
+import { VariableTreeComponent } from './document/workflow/variable-tree/variable-tree.component';
 import { VariableComponent } from './document/workflow/variable/variable.component';
+import { FlowCanvasComponent } from './document/workflow/visual-mapping/flow-canvas/flow-canvas.component';
+import { VisualMappingComponent } from './document/workflow/visual-mapping/visual-mapping.component';
 import { WorkflowComponent } from './document/workflow/workflow/workflow.component';
 import { PmodOutsideListenerDirective } from './misc/directives/pmod-outside-listener.directives';
 import { LabelPathDialogComponent } from './misc/modal/label-path-dialog/label-path-dialog.component';
@@ -148,22 +170,6 @@ import { XMOMListComponent } from './navigation/xmom/xmom-list.component';
 import { ProcessmodellerComponent } from './processmodeller.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { WorkflowDetailSettingsService } from './workflow-detail-settings.service';
-import { QueryParameterService } from '@zeta/nav/query-parameter.service';
-import { VisualMappingComponent } from './document/workflow/visual-mapping/visual-mapping.component';
-import { VariableTreeComponent } from './document/workflow/variable-tree/variable-tree.component';
-import { VariableTreeNodeComponent } from './document/workflow/variable-tree-node/variable-tree-node.component';
-import { FlowCanvasComponent } from './document/workflow/visual-mapping/flow-canvas/flow-canvas.component';
-import { PluginService } from './document/plugin.service';
-import { MemberVariableBaseTabComponent } from './document/datatype/tabs/member-variable/member-variable-base-tab.component';
-import { MemberVariableMetaTabComponent } from './document/datatype/tabs/member-variable/member-variable-meta-tab.component';
-import { MemberVariableStorableTabComponent } from './document/datatype/tabs/member-variable/member-variable-storable-tab.component';
-import { MetaTagComponent } from './document/datatype/tabs/member-variable/meta-tag-rich-list/meta-tag-rich-list.component';
-import { MethodMetaTabComponent } from './document/datatype/tabs/method/method-meta-tab.component';
-import { MethodBaseTabComponent } from './document/datatype/tabs/method/method-base-tab.component';
-import { MethodImplementationTabComponent } from './document/datatype/tabs/method/method-implementation-tab.component';
-import { LibItemComponent } from './document/shared/lib-area/lib-item.component';
-import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
-import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -195,8 +201,12 @@ import { FormsModule } from '@angular/forms';
         ContentAreaComponent,
         DataflowComponent,
         DataTypeComponent,
+        DataTypeDetailsComponent,
+        DataTypeStorableTabComponent,
+        DetailsItemComponent,
         DetailsComponent,
         DocumentationAreaComponent,
+        DocumentationTabComponent,
         DropIndicatorComponent,
         ErrorDialogComponent,
         ErrorItemComponent,
@@ -206,6 +216,7 @@ import { FormsModule } from '@angular/forms';
         ExceptionMessagesAreaComponent,
         ExceptionMessageRichListItemComponent,
         ExceptionTypeComponent,
+        ExceptionTypeDetailsComponent,
         FactoryComponent,
         FilterCriterionAreaComponent,
         FlowCanvasComponent,
@@ -238,12 +249,12 @@ import { FormsModule } from '@angular/forms';
         MemberVariableComponent,
         MemberVariableBaseTabComponent,
         MemberVariableDetailsComponent,
-        MemberVariableMetaTabComponent,
         MemberVariableStorableTabComponent,
+        MetaTabComponent,
+        MetaTagAreaComponent,
         MetaTagComponent,
         MethodBaseTabComponent,
         MethodDetailsComponent,
-        MethodMetaTabComponent,
         MethodImplementationComponent,
         MethodImplementationTabComponent,
         ModContentEditableDirective,

@@ -17,20 +17,20 @@
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnDestroy, Optional } from '@angular/core';
 
+import { I18nService } from '@zeta/i18n';
 import { XcTabBarItem } from '@zeta/xc';
 
+import { BehaviorSubject, Subject } from 'rxjs';
 
 import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
 import { XoMethod } from '../../../xo/method.model';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { ModellingItemComponent } from '../../workflow/shared/modelling-object.component';
-import { DatatypeTabData, MethodTabData } from '../tabs/datatype-tab.component';
+import { BaseTabData, DocumentTabData, MetaTabData, MethodTabData } from '../tabs/datatype-tab.component';
 import { MethodBaseTabComponent } from '../tabs/method/method-base-tab.component';
-import { MethodMetaTabComponent } from '../tabs/method/method-meta-tab.component';
-import { BehaviorSubject, Subject } from 'rxjs';
 import { MethodImplementationTabComponent } from '../tabs/method/method-implementation-tab.component';
-import { I18nService } from '@zeta/i18n';
+import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
 
 
 @Component({
@@ -41,44 +41,59 @@ import { I18nService } from '@zeta/i18n';
 })
 export class MethodDetailsComponent extends ModellingItemComponent implements OnDestroy {
 
-    tabUpdate: Subject<MethodTabData> = new BehaviorSubject(this.buildDatatypeTabData());
+    get method(): XoMethod {
+        return this.getModel() as XoMethod;
+    }
 
-    readonly baseTabItem: XcTabBarItem<DatatypeTabData<MethodTabData>> = {
+    @Input()
+    set method(value: XoMethod) {
+        this.setModel(value);
+        if (value) {
+            this.baseTabItem.name = this.method?.label ?? 'Base';
+            this.methodTabUpdate.next(this.buildMethodTabData());
+            this.metaTabUpdate.next(this.buildMetaTabData());
+        }
+        this.cdr.markForCheck();
+    }
+
+    methodTabUpdate: Subject<MethodTabData> = new BehaviorSubject(this.buildMethodTabData());
+    metaTabUpdate: Subject<MetaTabData> = new BehaviorSubject(this.buildMetaTabData());
+
+    readonly baseTabItem: XcTabBarItem<DocumentTabData<MethodTabData>> = {
         closable: false,
         component: MethodBaseTabComponent,
         name: 'Base',
-        data: <DatatypeTabData<MethodTabData>>{
+        data: <DocumentTabData<MethodTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
-            update: this.tabUpdate.asObservable()
+            update: this.methodTabUpdate.asObservable()
         }
     };
 
-    readonly metaTabItem: XcTabBarItem<DatatypeTabData<MethodTabData>> = {
+    readonly metaTabItem: XcTabBarItem<DocumentTabData<MetaTabData>> = {
         closable: false,
-        component: MethodMetaTabComponent,
+        component: MetaTabComponent,
         name: 'Meta',
-        data: <DatatypeTabData<MethodTabData>>{
+        data: <DocumentTabData<MetaTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
-            update: this.tabUpdate.asObservable()
+            update: this.metaTabUpdate.asObservable()
         }
     };
 
-    readonly implementationTabItem: XcTabBarItem<DatatypeTabData<MethodTabData>> = {
+    readonly implementationTabItem: XcTabBarItem<DocumentTabData<MethodTabData>> = {
         closable: false,
         component: MethodImplementationTabComponent,
         name: this.i18nService.translate('pmod.datatype.method-details.implementation'),
-        data: <DatatypeTabData<MethodTabData>>{
+        data: <DocumentTabData<MethodTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
-            update: this.tabUpdate.asObservable()
+            update: this.methodTabUpdate.asObservable()
         }
     };
 
-
-    tabBarSelection: XcTabBarItem<DatatypeTabData<MethodTabData>>;
-    tabBarItems: XcTabBarItem<DatatypeTabData<MethodTabData>>[];
+    tabBarSelection: XcTabBarItem<DocumentTabData<BaseTabData>>;
+    tabBarItems: XcTabBarItem<DocumentTabData<BaseTabData>>[];
 
 
     constructor(
@@ -97,7 +112,8 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
 
 
     ngOnDestroy() {
-        this.tabUpdate.complete();
+        this.methodTabUpdate.complete();
+        this.metaTabUpdate.complete();
         super.ngOnDestroy();
     }
 
@@ -107,29 +123,21 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
     }
 
 
-    get method(): XoMethod {
-        return this.getModel() as XoMethod;
-    }
-
-
-    @Input()
-    set method(value: XoMethod) {
-        this.setModel(value);
-        if (value) {
-            this.baseTabItem.name = this.method?.label ?? 'Base';
-            this.tabUpdate.next(this.buildDatatypeTabData());
-        }
-        this.cdr.markForCheck();
-    }
-
-
-    private buildDatatypeTabData(): MethodTabData {
+    private buildMethodTabData(): MethodTabData {
         return <MethodTabData> {
             method: this.method,
             readonly: this.readonly
         };
     }
 
+    private buildMetaTabData(): MetaTabData {
+        return <MetaTabData> {
+            metaTagArea: this.method?.metaTagArea,
+            objectIdKey: 'services',
+            objectId: this.method?.name,
+            readonly: this.readonly
+        };
+    }
 
     private updateTabBarItemList() {
         this.tabBarItems = [this.baseTabItem, this.metaTabItem, this.implementationTabItem];

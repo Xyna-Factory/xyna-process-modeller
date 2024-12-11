@@ -35,8 +35,8 @@
             flex: 0 1 auto;
             height: 216px;
 
-            type-documentation-area {
-                padding-top: 12px;
+            .type-info-area {
+                flex: 0.7;
             }
 
             & > *:not(:first-child) {
@@ -49,10 +49,7 @@
             }
 
             .lib-area {
-                display: flex;
-                flex-direction: column;
-                flex: 0 0 200px;
-                overflow: auto;
+                flex: 0.3;
 
                 & > *:not(:last-child) {
                     margin-bottom: 12px;
@@ -81,6 +78,10 @@
                 flex: 1 1 auto;
                 margin: 2px 0 0 2px;
                 overflow: auto;
+            }
+
+            .detail-items {
+                padding: 8px;
             }
         }
     }

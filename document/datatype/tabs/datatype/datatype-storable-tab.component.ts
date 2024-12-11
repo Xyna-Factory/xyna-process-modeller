@@ -15,33 +15,16 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
- @import 'const';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-:host {
-    display: flex;
-    flex-direction: column;
-    flex: 1 1 auto;
+import { DatatypeDetailsTabComponent } from '../datatype-tab.component';
 
-    .items-row {
-        display: flex;
-        flex-direction: row;
-        flex: 0 1 auto;
-        padding: 10px;
-        background-color: $color-gray-1;
 
-        .input {
-            margin: 5px 0px 7px 0px;
-            ::ng-deep .mat-mdc-form-field-subscript-wrapper {
-                display: none;
-            }
-        }
+@Component({
+    templateUrl: './datatype-storable-tab.component.html',
+    styleUrls: ['./datatype-storable-tab.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class DataTypeStorableTabComponent extends DatatypeDetailsTabComponent {
 
-        .add {
-            align-items: center;
-        }
-    }
-
-    .rich-list {
-        padding: 10px;
-    }
 }

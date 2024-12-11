@@ -18,6 +18,7 @@
 import { Component, Injector } from '@angular/core';
 
 import { XoArea } from '@pmod/xo/area.model';
+import { XoDetailsItem } from '@pmod/xo/details-item.model';
 import { XoMethod } from '@pmod/xo/method.model';
 import { XoContainerArea } from '@pmod/xo/modelling-item.model';
 
@@ -35,11 +36,13 @@ export class TypeDocumentComponent<D extends DocumentModel> extends DocumentComp
 
     selectedVariable: XoMemberVariable;
     selectedMethod: XoMethod;
+    selectedDetailsItem: XoDetailsItem;
 
     selectionAreaName: string;
     selectedItemName: string;
     selectedItemLabel: string;
 
+    detailsItem: XoDetailsItem;
 
     constructor(injector: Injector) {
         super(injector);
@@ -47,14 +50,14 @@ export class TypeDocumentComponent<D extends DocumentModel> extends DocumentComp
         // watch for selection changes
         this.untilDestroyed(this.selectionService.selectionChange).subscribe(selectable => {
             const model = selectable?.getModel();
-            if (model instanceof XoMemberVariable || model instanceof XoMethod) {
+            if (model instanceof XoMemberVariable || model instanceof XoMethod || model instanceof XoDetailsItem) {
                 this.selectItem(model);
             }
         });
 
         // remember name and label before sending any request to the server
         this.untilDestroyed(this.documentService.xmomService.beforeActionTriggered).pipe(filter(() => this.document.tabActive)).subscribe(() => {
-            const selected = this.selectedVariable ?? this.selectedMethod;
+            const selected = this.selectedVariable ?? this.selectedMethod ?? this.selectedDetailsItem;
             this.selectedItemName = selected?.name;
             this.selectedItemLabel = selected?.label;
         });
@@ -73,19 +76,25 @@ export class TypeDocumentComponent<D extends DocumentModel> extends DocumentComp
     }
 
 
-    selectItem(item: XoMemberVariable | XoMethod) {
+    selectItem(item: XoMemberVariable | XoMethod | XoDetailsItem) {
         this.selectedVariable = item instanceof XoMemberVariable ? item : undefined;
-        this.selectedMethod   = item instanceof XoMethod  ? item : undefined;
+        this.selectedMethod = item instanceof XoMethod ? item : undefined;
+        this.selectedDetailsItem = item instanceof XoDetailsItem ? item : undefined;
 
-        this.selectionAreaName = (item.parent as XoArea).name;
+        this.selectionAreaName = (item.parent as XoArea)?.name;
         this.selectedItemName = item.name;
         this.selectedItemLabel = item.label;
     }
 
-
     restoreSelectedItem() {
+        if (this.selectedDetailsItem) {
+            this.selectedDetailsItem = new XoDetailsItem(); // only to trigger refresh of datatype-details.component
+            return;
+        }
+
         this.selectedVariable = undefined;
         this.selectedMethod = undefined;
+        this.selectedDetailsItem = undefined;
 
         // returns item with specified name
         const getItemByName = (items: (XoMemberVariable | XoMethod)[], name: string) =>

@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2023 Xyna GmbH, Germany
+ * Copyright 2024 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,29 +17,31 @@
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnDestroy, Optional } from '@angular/core';
 
+import { XoDataType } from '@pmod/xo/data-type.model';
+import { XoDetailsItem } from '@pmod/xo/details-item.model';
+import { I18nService } from '@zeta/i18n';
 import { XcTabBarItem } from '@zeta/xc';
 
 import { BehaviorSubject, Subject } from 'rxjs';
 
-import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
-import { XoMemberVariable } from '../../../xo/member-variable.model';
 import { XoRuntimeContext } from '../../../xo/runtime-context.model';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
+import { WorkflowDetailLevelService } from '../../workflow-detail-level.service';
 import { ModellingItemComponent } from '../../workflow/shared/modelling-object.component';
-import { BaseTabData, DocumentTabData, MetaTabData, VariableTabData } from '../tabs/datatype-tab.component';
-import { MemberVariableBaseTabComponent } from '../tabs/member-variable/member-variable-base-tab.component';
-import { MemberVariableStorableTabComponent } from '../tabs/member-variable/member-variable-storable-tab.component';
+import { BaseTabData, DataTypeTabData, DocumentationTabData, DocumentTabData, MetaTabData } from '../tabs/datatype-tab.component';
+import { DataTypeStorableTabComponent } from '../tabs/datatype/datatype-storable-tab.component';
+import { DocumentationTabComponent } from '../tabs/shared/documentation-tab.component';
 import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
 
 
 @Component({
-    selector: 'member-variable-details',
-    templateUrl: './member-variable-details.component.html',
-    styleUrls: ['./member-variable-details.component.scss'],
+    selector: 'datatype-details',
+    templateUrl: './datatype-details.component.html',
+    styleUrls: ['./datatype-details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MemberVariableDetailsComponent extends ModellingItemComponent implements OnDestroy {
+export class DataTypeDetailsComponent extends ModellingItemComponent implements OnDestroy {
 
     @Input()
     dataTypeRTC: XoRuntimeContext = null;
@@ -52,37 +54,45 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
         }
     }
 
-    private _isStorable = false;
-    get memberVariable(): XoMemberVariable {
-        return this.getModel() as XoMemberVariable;
+    get dataType(): XoDataType {
+        return this.getModel() as XoDataType;
     }
 
     @Input()
-    set memberVariable(value: XoMemberVariable) {
+    set dataType(value: XoDataType) {
         this.setModel(value);
         if (value) {
-            this.baseTabItem.name = this.memberVariable?.label ?? 'Base';
-            this.memberTabUpdate.next(this.buildMemberTabData());
-            this.metaTabUpdate.next(this.buildMetaTabData());
+            this.refreshTabs();
         }
         this.cdr.markForCheck();
     }
 
-    memberTabUpdate: Subject<VariableTabData> = new BehaviorSubject(this.buildMemberTabData());
-    metaTabUpdate: Subject<MetaTabData> = new BehaviorSubject(this.buildMetaTabData());
+    @Input()
+    set detailsItem(value: XoDetailsItem) {
+        if (value) {
+            this.refreshTabs();
+        }
+        this.cdr.markForCheck();
+    }
 
-    readonly baseTabItem: XcTabBarItem<DocumentTabData<VariableTabData>> = {
+    private _isStorable = false;
+
+    docTabUpdate: Subject<DocumentationTabData> = new BehaviorSubject(this.buildDocTabData());
+    metaTabUpdate: Subject<MetaTabData> = new BehaviorSubject(this.buildMetaTabData());
+    dataTypeTabUpdate: Subject<DataTypeTabData> = new BehaviorSubject(this.buildDataTypeTabData());
+
+    readonly documentationTabItem: XcTabBarItem<DocumentTabData<DocumentationTabData>> = {
         closable: false,
-        component: MemberVariableBaseTabComponent,
-        name: 'Base',
-        data: <DocumentTabData<VariableTabData>>{
+        component: DocumentationTabComponent,
+        name: this.i18nService.translate('pmod.datatype.type-documentation-area.documentation-label'),
+        data: <DocumentTabData<DocumentationTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
-            update: this.memberTabUpdate.asObservable()
+            update: this.docTabUpdate.asObservable()
         }
     };
 
-    readonly metaTabItem: XcTabBarItem<DocumentTabData<MetaTabData>> = {
+    readonly metaTagsTabItem: XcTabBarItem<DocumentTabData<MetaTabData>> = {
         closable: false,
         component: MetaTabComponent,
         name: 'Meta',
@@ -93,14 +103,14 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
         }
     };
 
-    readonly storableTabItem: XcTabBarItem<DocumentTabData<VariableTabData>> = {
+    readonly storableTabItem: XcTabBarItem<DocumentTabData<DataTypeTabData>> = {
         closable: false,
-        component: MemberVariableStorableTabComponent,
-        name: 'Storable',
-        data: <DocumentTabData<VariableTabData>>{
+        component: DataTypeStorableTabComponent,
+        name: 'ODS Information',
+        data: <DocumentTabData<DataTypeTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
-            update: this.memberTabUpdate.asObservable()
+            update: this.dataTypeTabUpdate.asObservable()
         }
     };
 
@@ -112,48 +122,61 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
         componentMappingService: ComponentMappingService,
         documentService: DocumentService,
         detailLevelService: WorkflowDetailLevelService,
+        private readonly i18nService: I18nService,
         private readonly cdr: ChangeDetectorRef,
         @Optional() injector: Injector
     ) {
         super(elementRef, componentMappingService, documentService, detailLevelService, injector);
-        this.tabBarSelection = this.baseTabItem;
+        this.tabBarSelection = this.documentationTabItem;
         this.updateTabBarItemList();
     }
 
     ngOnDestroy() {
-        this.memberTabUpdate.complete();
+        this.docTabUpdate.complete();
         this.metaTabUpdate.complete();
+        this.dataTypeTabUpdate.complete();
         super.ngOnDestroy();
     }
-
 
     protected lockedChanged() {
         this.cdr.markForCheck();
     }
 
 
-    private buildMemberTabData(): VariableTabData {
-        return <VariableTabData> {
-            variable: this.memberVariable,
-            dataTypeRTC: this.dataTypeRTC,
+    private buildDocTabData(): DocumentationTabData {
+        return <DocumentationTabData> {
+            documentationArea: this.dataType?.documentationArea,
             readonly: this.readonly
         };
     }
 
     private buildMetaTabData(): MetaTabData {
         return <MetaTabData> {
-            metaTagArea: this.memberVariable?.metaTagArea,
-            objectIdKey: 'members',
-            objectId: this.memberVariable?.name,
+            metaTagArea: this.dataType?.metaTagArea,
+            objectIdKey: '',
+            objectId: '',
+            readonly: this.readonly
+        };
+    }
+
+    private buildDataTypeTabData(): DataTypeTabData {
+        return <DataTypeTabData> {
+            dataType: this.dataType,
             readonly: this.readonly
         };
     }
 
     private updateTabBarItemList() {
-        this.tabBarItems = [this.baseTabItem, this.metaTabItem];
+        this.tabBarItems = [this.documentationTabItem, this.metaTagsTabItem];
         if (this._isStorable) {
             this.tabBarItems.push(this.storableTabItem);
         }
         this.cdr.markForCheck();
+    }
+
+    private refreshTabs() {
+        this.docTabUpdate.next(this.buildDocTabData());
+        this.metaTabUpdate.next(this.buildMetaTabData());
+        this.dataTypeTabUpdate.next(this.buildDataTypeTabData());
     }
 }

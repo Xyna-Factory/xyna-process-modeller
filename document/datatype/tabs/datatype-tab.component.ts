@@ -1,21 +1,22 @@
 /*
- * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2024 Xyna GmbH, Germany
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- */
+* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+* Copyright 2024 Xyna GmbH, Germany
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*  http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+*/
 import { ChangeDetectorRef, Component, Injector, OnDestroy, Optional } from '@angular/core';
+
 import { ModellingActionType } from '@pmod/api/xmom.service';
 import { DocumentService } from '@pmod/document/document.service';
 import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model';
@@ -26,31 +27,51 @@ import { XoChangeMemberVariableIsListRequest } from '@pmod/xo/change-member-vari
 import { XoDataType } from '@pmod/xo/data-type.model';
 import { XoDynamicMethod } from '@pmod/xo/dynamic-method.model';
 import { XoMemberVariable } from '@pmod/xo/member-variable.model';
+import { XoMetaTagArea } from '@pmod/xo/meta-tag-area.model';
 import { XoMethod } from '@pmod/xo/method.model';
 import { XoModellingItem } from '@pmod/xo/modelling-item.model';
 import { XoMoveModellingObjectRequest } from '@pmod/xo/move-modelling-object-request.model';
 import { XoRequest } from '@pmod/xo/request.model';
 import { XoRuntimeContext } from '@pmod/xo/runtime-context.model';
 import { XoStaticMethod } from '@pmod/xo/static-method.model';
+import { XoTextArea } from '@pmod/xo/text-area.model';
 import { FullQualifiedName } from '@zeta/api';
 import { XcTabComponent } from '@zeta/xc';
+
 import { Observable, Subject, takeUntil } from 'rxjs';
 
-export interface DatatypeTabData<D> {
+
+export interface DocumentTabData<D> {
     documentModel: DocumentModel<DocumentItem>;
     performAction: (action: TriggeredAction) => void;
     update: Observable<D>;
 }
 
-export interface VariableTabData {
-    variable: XoMemberVariable;
-    dataTypeRTC: XoRuntimeContext;
+export interface BaseTabData {
     readonly: boolean;
 }
 
-export interface MethodTabData {
+export interface DocumentationTabData extends BaseTabData {
+    documentationArea: XoTextArea;
+}
+
+export interface MetaTabData extends BaseTabData {
+    metaTagArea: XoMetaTagArea;
+    objectIdKey: string;
+    objectId: string;
+}
+
+export interface DataTypeTabData extends BaseTabData {
+    dataType: XoDataType;
+}
+
+export interface VariableTabData extends BaseTabData {
+    variable: XoMemberVariable;
+    dataTypeRTC: XoRuntimeContext;
+}
+
+export interface MethodTabData extends BaseTabData {
     method: XoMethod;
-    readonly: boolean;
 }
 
 
@@ -60,10 +81,18 @@ export interface MethodTabData {
 @Component({
     template: ''
 })
-export abstract class DatatypeTabComponent<D> extends XcTabComponent<void, DatatypeTabData<D>> implements OnDestroy {
+export abstract class DatatypeTabComponent<D extends BaseTabData> extends XcTabComponent<void, DocumentTabData<D>> implements OnDestroy {
 
     private readonly destroySubject = new Subject<void>();
     protected tabData: D;
+
+    get readonly(): boolean {
+        return this.tabData?.readonly;
+    }
+
+    get documentModel(): DocumentModel<DocumentItem> {
+        return this.injectedData.documentModel;
+    }
 
     constructor(
         protected readonly documentService: DocumentService,
@@ -88,14 +117,22 @@ export abstract class DatatypeTabComponent<D> extends XcTabComponent<void, Datat
         return observable?.pipe(takeUntil(this.destroySubject));
     }
 
-    get documentModel(): DocumentModel<DocumentItem> {
-        return this.injectedData.documentModel;
-    }
-
 
     performAction(action: TriggeredAction): void {
         this.injectedData.performAction(action);
     }
+}
+
+@Component({
+    template: ''
+})
+export abstract class DatatypeDetailsTabComponent extends DatatypeTabComponent<DataTypeTabData> {
+
+
+    get dataType(): XoDataType {
+        return this.tabData?.dataType;
+    }
+
 }
 
 @Component({
@@ -106,11 +143,6 @@ export abstract class DatatypeVariableTabComponent extends DatatypeTabComponent<
 
     get memberVariable(): XoMemberVariable {
         return this.tabData?.variable;
-    }
-
-
-    get readonly(): boolean {
-        return this.tabData?.readonly;
     }
 
 
@@ -164,11 +196,6 @@ export abstract class DatatypeMethodTabComponent extends DatatypeTabComponent<Me
     }
 
 
-    get readonly(): boolean {
-        return this.tabData?.readonly;
-    }
-
-
     get isStaticMethod() {
         return this.method ? this.method instanceof XoStaticMethod : false;
     }
@@ -192,8 +219,8 @@ export abstract class DatatypeMethodTabComponent extends DatatypeTabComponent<Me
 
     get isMethodImplementationTypeSet(): boolean {
         return this.method.implementationType === XoMethod.IMPL_TYPE_CODED_SERVICE ||
-        this.method.implementationType === XoMethod.IMPL_TYPE_CODED_SERVICE_PYTHON ||
-        this.method.implementationType === XoMethod.IMPL_TYPE_ABSTRACT;
+            this.method.implementationType === XoMethod.IMPL_TYPE_CODED_SERVICE_PYTHON ||
+            this.method.implementationType === XoMethod.IMPL_TYPE_ABSTRACT;
     }
 
 
