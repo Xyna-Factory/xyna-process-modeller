@@ -44,6 +44,7 @@ import { MethodDetailsComponent } from './document/datatype/method-details/metho
 import { MethodImplementationComponent } from './document/datatype/method-implementation/method-implementation.component';
 import { ServiceAreaComponent } from './document/datatype/service-area/service-area.component';
 import { StorablePropertiesAreaComponent } from './document/datatype/storable-properties-area/storable-properties-area.component';
+import { DataTypePluginTabComponent } from './document/datatype/tabs/datatype/datatype-plugin-tab.component';
 import { DataTypeStorableTabComponent } from './document/datatype/tabs/datatype/datatype-storable-tab.component';
 import { MemberVariableBaseTabComponent } from './document/datatype/tabs/member-variable/member-variable-base-tab.component';
 import { MemberVariableStorableTabComponent } from './document/datatype/tabs/member-variable/member-variable-storable-tab.component';
@@ -202,6 +203,7 @@ import { WorkflowDetailSettingsService } from './workflow-detail-settings.servic
         DataflowComponent,
         DataTypeComponent,
         DataTypeDetailsComponent,
+        DataTypePluginTabComponent,
         DataTypeStorableTabComponent,
         DetailsItemComponent,
         DetailsComponent,

@@ -28,7 +28,7 @@ import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { WorkflowDetailLevelService } from '../../workflow-detail-level.service';
 import { ModellingItemComponent } from '../../workflow/shared/modelling-object.component';
-import { BaseTabData, DocumentationTabData, DocumentTabData } from '../tabs/datatype-tab.component';
+import { DocumentationTabData, DocumentTabData } from '../tabs/datatype-tab.component';
 import { DocumentationTabComponent } from '../tabs/shared/documentation-tab.component';
 
 
@@ -70,12 +70,13 @@ export class ExceptionTypeDetailsComponent extends ModellingItemComponent implem
         data: <DocumentTabData<DocumentationTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
+            readonly: this.readonly,
             update: this.docTabUpdate.asObservable()
         }
     };
 
-    tabBarSelection: XcTabBarItem<DocumentTabData<BaseTabData>>;
-    tabBarItems: XcTabBarItem<DocumentTabData<BaseTabData>>[];
+    tabBarSelection: XcTabBarItem<DocumentTabData<any>>;
+    tabBarItems: XcTabBarItem<DocumentTabData<any>>[];
 
     constructor(
         elementRef: ElementRef,

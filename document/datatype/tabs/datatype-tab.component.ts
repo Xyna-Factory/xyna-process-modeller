@@ -37,6 +37,7 @@ import { XoStaticMethod } from '@pmod/xo/static-method.model';
 import { XoTextArea } from '@pmod/xo/text-area.model';
 import { FullQualifiedName } from '@zeta/api';
 import { XcTabComponent } from '@zeta/xc';
+import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 
 import { Observable, Subject, takeUntil } from 'rxjs';
 
@@ -44,33 +45,31 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 export interface DocumentTabData<D> {
     documentModel: DocumentModel<DocumentItem>;
     performAction: (action: TriggeredAction) => void;
+    readonly: boolean;
     update: Observable<D>;
 }
 
-export interface BaseTabData {
-    readonly: boolean;
-}
 
-export interface DocumentationTabData extends BaseTabData {
+export interface DocumentationTabData {
     documentationArea: XoTextArea;
 }
 
-export interface MetaTabData extends BaseTabData {
+export interface MetaTabData {
     metaTagArea: XoMetaTagArea;
     objectIdKey: string;
     objectId: string;
 }
 
-export interface DataTypeTabData extends BaseTabData {
-    dataType: XoDataType;
+export interface PluginTabData extends DocumentTabData<XoDataType> {
+    bundle: XoDefinitionBundle;
 }
 
-export interface VariableTabData extends BaseTabData {
+export interface VariableTabData {
     variable: XoMemberVariable;
     dataTypeRTC: XoRuntimeContext;
 }
 
-export interface MethodTabData extends BaseTabData {
+export interface MethodTabData {
     method: XoMethod;
 }
 
@@ -81,13 +80,13 @@ export interface MethodTabData extends BaseTabData {
 @Component({
     template: ''
 })
-export abstract class DatatypeTabComponent<D extends BaseTabData> extends XcTabComponent<void, DocumentTabData<D>> implements OnDestroy {
+export abstract class DatatypeTabComponent<D> extends XcTabComponent<void, DocumentTabData<D>> implements OnDestroy {
 
     private readonly destroySubject = new Subject<void>();
     protected tabData: D;
 
     get readonly(): boolean {
-        return this.tabData?.readonly;
+        return this.injectedData.readonly;
     }
 
     get documentModel(): DocumentModel<DocumentItem> {
@@ -126,11 +125,11 @@ export abstract class DatatypeTabComponent<D extends BaseTabData> extends XcTabC
 @Component({
     template: ''
 })
-export abstract class DatatypeDetailsTabComponent extends DatatypeTabComponent<DataTypeTabData> {
+export abstract class DatatypeDetailsTabComponent extends DatatypeTabComponent<XoDataType> {
 
 
     get dataType(): XoDataType {
-        return this.tabData?.dataType;
+        return this.tabData;
     }
 
 }

@@ -15,6 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+import { XoPlugin } from '@yggdrasil/plugin/plugin.model';
 import { XoObjectClass, XoProperty, XoTransient } from '@zeta/api';
 
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -86,6 +87,9 @@ export class XoDataType extends XoXmomItem {
     @XoProperty(XoMemberMethodArea)
     @XoTransient()
     memberMethodsArea: XoMemberMethodArea;
+
+    @XoProperty(XoPlugin)
+    plugin: XoPlugin;
 
     private readonly _revisionSubject  = new BehaviorSubject<number>(null);
 
