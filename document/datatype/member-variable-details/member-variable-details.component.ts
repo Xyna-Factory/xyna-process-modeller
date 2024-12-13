@@ -27,7 +27,7 @@ import { XoRuntimeContext } from '../../../xo/runtime-context.model';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { ModellingItemComponent } from '../../workflow/shared/modelling-object.component';
-import { BaseTabData, DocumentTabData, MetaTabData, VariableTabData } from '../tabs/datatype-tab.component';
+import { DocumentTabData, MetaTabData, VariableTabData } from '../tabs/datatype-tab.component';
 import { MemberVariableBaseTabComponent } from '../tabs/member-variable/member-variable-base-tab.component';
 import { MemberVariableStorableTabComponent } from '../tabs/member-variable/member-variable-storable-tab.component';
 import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
@@ -78,6 +78,7 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
         data: <DocumentTabData<VariableTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
+            readonly: this.readonly,
             update: this.memberTabUpdate.asObservable()
         }
     };
@@ -89,6 +90,7 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
         data: <DocumentTabData<MetaTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
+            readonly: this.readonly,
             update: this.metaTabUpdate.asObservable()
         }
     };
@@ -100,12 +102,13 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
         data: <DocumentTabData<VariableTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
+            readonly: this.readonly,
             update: this.memberTabUpdate.asObservable()
         }
     };
 
-    tabBarSelection: XcTabBarItem<DocumentTabData<BaseTabData>>;
-    tabBarItems: XcTabBarItem<DocumentTabData<BaseTabData>>[];
+    tabBarSelection: XcTabBarItem<DocumentTabData<any>>;
+    tabBarItems: XcTabBarItem<DocumentTabData<any>>[];
 
     constructor(
         elementRef: ElementRef,

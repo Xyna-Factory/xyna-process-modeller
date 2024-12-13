@@ -27,7 +27,7 @@ import { XoMethod } from '../../../xo/method.model';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { ModellingItemComponent } from '../../workflow/shared/modelling-object.component';
-import { BaseTabData, DocumentTabData, MetaTabData, MethodTabData } from '../tabs/datatype-tab.component';
+import { DocumentTabData, MetaTabData, MethodTabData } from '../tabs/datatype-tab.component';
 import { MethodBaseTabComponent } from '../tabs/method/method-base-tab.component';
 import { MethodImplementationTabComponent } from '../tabs/method/method-implementation-tab.component';
 import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
@@ -66,6 +66,7 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
         data: <DocumentTabData<MethodTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
+            readonly: this.readonly,
             update: this.methodTabUpdate.asObservable()
         }
     };
@@ -77,6 +78,7 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
         data: <DocumentTabData<MetaTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
+            readonly: this.readonly,
             update: this.metaTabUpdate.asObservable()
         }
     };
@@ -92,8 +94,8 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
         }
     };
 
-    tabBarSelection: XcTabBarItem<DocumentTabData<BaseTabData>>;
-    tabBarItems: XcTabBarItem<DocumentTabData<BaseTabData>>[];
+    tabBarSelection: XcTabBarItem<DocumentTabData<any>>;
+    tabBarItems: XcTabBarItem<DocumentTabData<any>>[];
 
 
     constructor(
