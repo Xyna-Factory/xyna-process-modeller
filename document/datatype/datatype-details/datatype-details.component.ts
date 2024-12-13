@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnDestroy, OnInit, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnDestroy, Optional } from '@angular/core';
 
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoDataType } from '@pmod/xo/data-type.model';
@@ -24,7 +24,7 @@ import { I18nService } from '@zeta/i18n';
 import { XcTabBarItem } from '@zeta/xc';
 import { XoBaseDefinition, XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 
-import { BehaviorSubject, combineLatest, map, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Observable, of, Subject } from 'rxjs';
 
 import { XoRuntimeContext } from '../../../xo/runtime-context.model';
 import { ComponentMappingService } from '../../component-mapping.service';
@@ -44,7 +44,7 @@ import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
     styleUrls: ['./datatype-details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DataTypeDetailsComponent extends ModellingItemComponent implements OnInit, OnDestroy {
+export class DataTypeDetailsComponent extends ModellingItemComponent implements OnDestroy {
 
     @Input()
     dataTypeRTC: XoRuntimeContext = null;
@@ -53,7 +53,6 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
     set isStorable(value: boolean) {
         if (value !== this._isStorable) {
             this._isStorable = value;
-            this.updateTabBarItemList();
         }
     }
 
@@ -65,9 +64,9 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
     set dataType(value: XoDataType) {
         this.setModel(value);
         if (value) {
+            this.updateTabBarItemList();
             this.refreshTabs();
         }
-        this.cdr.markForCheck();
     }
 
     @Input()
@@ -135,9 +134,6 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
         this.tabBarSelection = this.documentationTabItem;
     }
 
-    ngOnInit() {
-        this.updateTabBarItemList();
-    }
     ngOnDestroy() {
         this.tabUpdate.complete();
         super.ngOnDestroy();
@@ -194,7 +190,7 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
             data: <PluginTabData>{
                 documentModel: this.documentModel,
                 performAction: this.performAction.bind(this),
-                update: this.tabUpdate.asObservable(),
+                update: of() as Observable<XoDataType>,
                 bundle: bundle
             }
         };

@@ -80,7 +80,7 @@ export interface MethodTabData {
 @Component({
     template: ''
 })
-export abstract class DatatypeTabComponent<D> extends XcTabComponent<void, DocumentTabData<D>> implements OnDestroy {
+export abstract class DatatypeTabComponent<D, E extends DocumentTabData<D> = DocumentTabData<D>> extends XcTabComponent<void, E> implements OnDestroy {
 
     private readonly destroySubject = new Subject<void>();
     protected tabData: D;

@@ -15,14 +15,15 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, Injector, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, Optional } from '@angular/core';
 
+import { DocumentService } from '@pmod/document/document.service';
 import { PluginService } from '@pmod/document/plugin.service';
+import { XoDataType } from '@pmod/xo/data-type.model';
 import { Xo } from '@zeta/api';
-import { XcTabComponent } from '@zeta/xc';
 import { XoDefinition } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 
-import { PluginTabData } from '../datatype-tab.component';
+import { DatatypeTabComponent, PluginTabData } from '../datatype-tab.component';
 
 
 @Component({
@@ -30,13 +31,15 @@ import { PluginTabData } from '../datatype-tab.component';
     styleUrls: ['./datatype-plugin-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DataTypePluginTabComponent extends XcTabComponent<void, PluginTabData> {
+export class DataTypePluginTabComponent extends DatatypeTabComponent<XoDataType, PluginTabData> {
 
     constructor(
+        protected readonly documentService: DocumentService,
         readonly pluginService: PluginService,
+        protected readonly cdr: ChangeDetectorRef,
         @Optional() injector: Injector
     ) {
-        super(injector);
+        super(documentService, cdr, injector);
     }
 
     get definition(): XoDefinition {
