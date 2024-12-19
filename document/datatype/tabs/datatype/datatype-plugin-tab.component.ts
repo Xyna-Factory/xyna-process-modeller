@@ -20,8 +20,10 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, Option
 import { DocumentService } from '@pmod/document/document.service';
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoDataType } from '@pmod/xo/data-type.model';
-import { Xo } from '@zeta/api';
-import { XoDefinition } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
+import { DefinitionStackItemComponentData, XcDefinitionStackItemComponent } from '@zeta/xc/xc-form/definitions/xc-definition-stack/xc-definition-stack-item/xc-definition-stack-item.component';
+import { XcStackDataSource } from '@zeta/xc/xc-stack/xc-stack-data-source';
+import { XcStackItem } from '@zeta/xc/xc-stack/xc-stack-item/xc-stack-item';
+import { XcComponentTemplate } from '@zeta/xc/xc-template/xc-template';
 
 import { DatatypeTabComponent, PluginTabData } from '../datatype-tab.component';
 
@@ -33,6 +35,9 @@ import { DatatypeTabComponent, PluginTabData } from '../datatype-tab.component';
 })
 export class DataTypePluginTabComponent extends DatatypeTabComponent<XoDataType, PluginTabData> {
 
+    active = false;
+    readonly stackDataSource = new XcStackDataSource();
+
     constructor(
         protected readonly documentService: DocumentService,
         readonly pluginService: PluginService,
@@ -40,14 +45,26 @@ export class DataTypePluginTabComponent extends DatatypeTabComponent<XoDataType,
         @Optional() injector: Injector
     ) {
         super(documentService, cdr, injector);
+
+        const item = new XcStackItem();
+        item.setTemplate(new XcComponentTemplate(
+            XcDefinitionStackItemComponent,
+            <DefinitionStackItemComponentData>{ stackItem: item, definition: this.injectedData.bundle.definition, data: this.injectedData.bundle.data }
+        ));
+        this.stackDataSource.add(item);
     }
 
-    get definition(): XoDefinition {
-        return this.injectedData.bundle?.definition;
+    onShow() {
+        this.active = true;
+        this.cdr.markForCheck();
     }
 
-    get data(): Xo[] {
-        return this.injectedData.bundle?.data;
+
+    onHide() {
+        this.active = false;
+        // copied from factorymanager/plugin/plugin.component.ts
+        this.cdr.detectChanges();
     }
+
 }
 

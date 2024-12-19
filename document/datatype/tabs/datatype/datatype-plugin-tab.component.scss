@@ -15,11 +15,12 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
- @import 'const';
+@import 'const';
 
- :host {
-     display: flex;
-     flex-direction: column;
-     flex: 1 1 100%;
-     padding: 10px;
- }
+:host {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 100%;
+    overflow: auto;
+    padding: 10px;
+}
