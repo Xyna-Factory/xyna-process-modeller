@@ -35,7 +35,6 @@ import { DatatypeTabComponent, PluginTabData } from '../datatype-tab.component';
 })
 export class DataTypePluginTabComponent extends DatatypeTabComponent<XoDataType, PluginTabData> {
 
-    active = false;
     readonly stackDataSource = new XcStackDataSource();
 
     constructor(
@@ -52,18 +51,6 @@ export class DataTypePluginTabComponent extends DatatypeTabComponent<XoDataType,
             <DefinitionStackItemComponentData>{ stackItem: item, definition: this.injectedData.bundle.definition, data: this.injectedData.bundle.data }
         ));
         this.stackDataSource.add(item);
-    }
-
-    onShow() {
-        this.active = true;
-        this.cdr.markForCheck();
-    }
-
-
-    onHide() {
-        this.active = false;
-        // copied from factorymanager/plugin/plugin.component.ts
-        this.cdr.detectChanges();
     }
 
 }
