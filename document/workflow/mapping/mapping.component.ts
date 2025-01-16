@@ -18,7 +18,7 @@
 import { Component, ElementRef, Injector, Input, OnDestroy, Optional } from '@angular/core';
 
 import { MappingMode, WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
-import { ApiService, RuntimeContext, StartOrderOptionsBuilder, XoXPRCApplication, XoXPRCRuntimeContext, XoXPRCWorkspace } from '@zeta/api';
+import { ApiService, StartOrderOptionsBuilder } from '@zeta/api';
 import { XcDialogService, XcMenuItem } from '@zeta/xc';
 
 import { filter, Subscription } from 'rxjs';
@@ -50,6 +50,7 @@ export class MappingComponent extends ModellingItemComponent implements OnDestro
     };
 
     private readonly _selectionChangeSubscription: Subscription;
+    private readonly defaultMenuItems: XcMenuItem[];
 
     newFormulaExpression = '';
 
@@ -72,7 +73,7 @@ export class MappingComponent extends ModellingItemComponent implements OnDestro
     ) {
         super(elementRef, componentMappingService, documentService, detailLevelService, injector);
 
-        this.menuItems.unshift(
+        this.defaultMenuItems = [
             <XcMenuItem>{
                 name: this.language.showHideDocumentation, translate: true,
                 visible: () => !!this.mapping.documentationArea,
@@ -97,8 +98,9 @@ export class MappingComponent extends ModellingItemComponent implements OnDestro
                         this.mapping.id, this.visualMode ? MappingMode.PROGRAMMATIC : MappingMode.VISUAL);
                     item.name = this.visualMode ? this.language.programmaticMode : this.language.visualMode;
                 }
-            }
-        );
+            },
+            ...this.menuItems
+        ];
 
         this._selectionChangeSubscription = selectionService.selectionChange.subscribe(component => {
             // TODO: limit to mappings where component is descendant of to improve performance
@@ -134,7 +136,7 @@ export class MappingComponent extends ModellingItemComponent implements OnDestro
     set mapping(value: XoMapping) {
         this.setModel(value);
         if (this.mapping.plugin) {
-            this.createPluginMenuEntries();
+            this.updateMenuEntries();
         }
     }
 
@@ -174,13 +176,14 @@ export class MappingComponent extends ModellingItemComponent implements OnDestro
         return false;
     }
 
-    createPluginMenuEntries() {
+    updateMenuEntries() {
+        this.menuItems = this.defaultMenuItems;
         this.menuItems.push(
             ...this.mapping.plugin.menuEntry.data.map(entry =>
                 <XcMenuItem>{
                     name: entry.navigationEntryLabel,
                     click: () => this.apiService.startOrder(
-                        this.getMenuEntryRTC(entry.runtimeContext),
+                        entry.runtimeContext.toRuntimeContext(),
                         entry.fQN,
                         this.mapping.plugin.context,
                         null,
@@ -197,15 +200,5 @@ export class MappingComponent extends ModellingItemComponent implements OnDestro
                 }
             )
         );
-    }
-
-    getMenuEntryRTC(entryRTC: XoXPRCRuntimeContext): RuntimeContext {
-        if (entryRTC instanceof XoXPRCWorkspace) {
-            return RuntimeContext.fromWorkspace(entryRTC.name);
-        }
-        if (entryRTC instanceof XoXPRCApplication) {
-            return RuntimeContext.fromApplicationVersion(entryRTC.name, entryRTC.version);
-        }
-        return null;
     }
 }
