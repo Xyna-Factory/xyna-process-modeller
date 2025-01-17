@@ -18,9 +18,10 @@
 import { Component, ElementRef, Injector, Input, OnDestroy, Optional } from '@angular/core';
 
 import { MappingMode, WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
-import { XcMenuItem } from '@zeta/xc';
+import { ApiService, StartOrderOptionsBuilder } from '@zeta/api';
+import { XcDialogService, XcMenuItem } from '@zeta/xc';
 
-import { Subscription } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { ComponentMappingService } from '../../../document/component-mapping.service';
@@ -49,6 +50,7 @@ export class MappingComponent extends ModellingItemComponent implements OnDestro
     };
 
     private readonly _selectionChangeSubscription: Subscription;
+    private readonly defaultMenuItems: XcMenuItem[];
 
     newFormulaExpression = '';
 
@@ -65,39 +67,46 @@ export class MappingComponent extends ModellingItemComponent implements OnDestro
         @Optional() documentService: DocumentService,
         readonly selectionService: SelectionService,
         readonly detailLevelService: WorkflowDetailLevelService,
+        readonly apiService: ApiService,
+        readonly dialogs: XcDialogService,
         @Optional() injector: Injector
     ) {
         super(elementRef, componentMappingService, documentService, detailLevelService, injector);
 
-        this.menuItems.unshift(
-            <XcMenuItem>{ name: this.language.showHideDocumentation, translate: true,
+        this.defaultMenuItems = [
+            <XcMenuItem>{
+                name: this.language.showHideDocumentation, translate: true,
                 visible: () => !!this.mapping.documentationArea,
-                click:   () => detailLevelService.toggleCollapsed(this.mapping.documentationArea.id)
+                click: () => detailLevelService.toggleCollapsed(this.mapping.documentationArea.id)
             },
-            <XcMenuItem>{ name: this.language.sortAssignments, translate: true,
+            <XcMenuItem>{
+                name: this.language.sortAssignments, translate: true,
                 click: () => this.performAction({
                     type: ModellingActionType.sort,
                     objectId: this.mapping.formulaArea.id,
                     request: new XoRequest()
                 })
             },
-            <XcMenuItem>{ name: this.language.showHideFormulas, translate: true,
+            <XcMenuItem>{
+                name: this.language.showHideFormulas, translate: true,
                 click: () => this.toggleCollapsed()
             },
-            <XcMenuItem>{ name: this.visualMode ? this.language.programmaticMode : this.language.visualMode, translate: true,
+            <XcMenuItem>{
+                name: this.visualMode ? this.language.programmaticMode : this.language.visualMode, translate: true,
                 click: item => {
                     this.detailLevelService.setMappingMode(
                         this.mapping.id, this.visualMode ? MappingMode.PROGRAMMATIC : MappingMode.VISUAL);
                     item.name = this.visualMode ? this.language.programmaticMode : this.language.visualMode;
                 }
-            }
-        );
+            },
+            ...this.menuItems
+        ];
 
         this._selectionChangeSubscription = selectionService.selectionChange.subscribe(component => {
             // TODO: limit to mappings where component is descendant of to improve performance
             if (this.mapping) {
                 const variables: XoVariable[] = Array.prototype.concat(
-                    this.mapping.inputArea  ? this.mapping.inputArea.variables  : [],
+                    this.mapping.inputArea ? this.mapping.inputArea.variables : [],
                     this.mapping.outputArea ? this.mapping.outputArea.variables : []
                 );
                 // un-refer all variables first
@@ -126,6 +135,9 @@ export class MappingComponent extends ModellingItemComponent implements OnDestro
     @Input()
     set mapping(value: XoMapping) {
         this.setModel(value);
+        if (this.mapping.plugin) {
+            this.updateMenuEntries();
+        }
     }
 
 
@@ -162,5 +174,31 @@ export class MappingComponent extends ModellingItemComponent implements OnDestro
 
     isDefaultCollapsed(): boolean {
         return false;
+    }
+
+    updateMenuEntries() {
+        this.menuItems = this.defaultMenuItems;
+        this.menuItems.push(
+            ...this.mapping.plugin.menuEntry.data.map(entry =>
+                <XcMenuItem>{
+                    name: entry.navigationEntryLabel,
+                    click: () => this.apiService.startOrder(
+                        entry.runtimeContext.toRuntimeContext(),
+                        entry.fQN,
+                        this.mapping.plugin.context,
+                        null,
+                        new StartOrderOptionsBuilder().withErrorMessage(true).options
+                    ).pipe(
+                        filter(result => {
+                            if (result.errorMessage) {
+                                this.dialogs.error(result.errorMessage);
+                                return false;
+                            }
+                            return true;
+                        })
+                    ).subscribe()
+                }
+            )
+        );
     }
 }
