@@ -16,4 +16,4 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 export const ProcessModellerName = 'Process Modeller';
-export const ProcessModellerVersion = '2.6.9';
+export const ProcessModellerVersion = '2.6.10';
