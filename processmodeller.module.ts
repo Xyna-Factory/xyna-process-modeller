@@ -165,12 +165,12 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { SearchComponent } from './navigation/search/search.component';
 import { ErrorItemComponent } from './navigation/shared/error-item/error-item.component';
 import { ErrorService } from './navigation/shared/error.service';
-import { WorkflowLauncherComponent } from './navigation/workflowlauncher/workflowlauncher.component';
 import { XMOMListItemComponent } from './navigation/xmom/xmom-list-item.component';
 import { XMOMListComponent } from './navigation/xmom/xmom-list.component';
 import { ProcessmodellerComponent } from './processmodeller.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { WorkflowDetailSettingsService } from './workflow-detail-settings.service';
+import { NavPluginComponent } from './navigation/nav-plugin/nav-plugin.component';
 
 
 @NgModule({
@@ -267,6 +267,7 @@ import { WorkflowDetailSettingsService } from './workflow-detail-settings.servic
         ModellingItemComponent,
         ModellingObjectComponent,
         NavigationComponent,
+        NavPluginComponent,
         NonDraggableTextAreaComponent,
         OrderInputSourceAreaComponent,
         ParallelismComponent,
@@ -311,7 +312,6 @@ import { WorkflowDetailSettingsService } from './workflow-detail-settings.servic
         VisualMappingComponent,
         WorkflowComponent,
         WorkflowDocumentComponent,
-        WorkflowLauncherComponent,
         XMOMListComponent,
         XMOMListItemComponent,
         XMOMTreeComponent,

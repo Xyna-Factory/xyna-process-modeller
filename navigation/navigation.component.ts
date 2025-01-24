@@ -16,10 +16,10 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 
 import { XoArray } from '@zeta/api';
-import { XcDialogService, XcMenuItem } from '@zeta/xc';
+import { XcDialogService, XcMenuItem, XoPlugin, XoPluginArray } from '@zeta/xc';
 
 import { merge, of, Subscription } from 'rxjs';
 
@@ -34,8 +34,9 @@ import { ErrorsComponent } from './errors/errors.component';
 import { FactoryComponent } from './factory/factory.component';
 import { HelpComponent } from './help/help.component';
 import { SearchComponent } from './search/search.component';
-import { WorkflowLauncherComponent } from './workflowlauncher/workflowlauncher.component';
-
+import { TypeDocumentModel } from '@pmod/document/model/type-document.model';
+import { PluginService } from '@pmod/document/plugin.service';
+import { NavPluginComponent } from './nav-plugin/nav-plugin.component';
 
 enum NavigationbarArea {
     Factory = 1,
@@ -43,9 +44,9 @@ enum NavigationbarArea {
     Details,
     Clipboard,
     Errors,
-    WorklowLauncher,
     Compare,
-    Help
+    Help,
+    Plugin
 }
 
 export interface NavigationItem {
@@ -54,6 +55,7 @@ export interface NavigationItem {
     iconStyle: string;
     areaType: number;
     badge?: number;
+    pluginNumber?: number;
 }
 
 export enum AreaValue {
@@ -90,6 +92,7 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
     readonly NavigationbarArea = NavigationbarArea;
 
     area = NavigationbarArea.Factory;
+    activatedPluginNumber: number;
     areaValue = AreaValue.Opened;
 
     @ViewChild(FactoryComponent, { static: true }) factoryComponent: FactoryComponent;
@@ -97,9 +100,9 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild(DetailsComponent, { static: true }) detailsComponent: DetailsComponent;
     @ViewChild(ClipboardComponent, { static: true }) clipboardComponent: ClipboardComponent;
     @ViewChild(ErrorsComponent, { static: true }) errorsComponent: ErrorsComponent;
-    @ViewChild(WorkflowLauncherComponent, { static: true }) workflowLauncherComponent: WorkflowLauncherComponent;
     @ViewChild(CompareComponent, { static: true }) compareComponent: CompareComponent;
     @ViewChild(HelpComponent, { static: true }) helpComponent: HelpComponent;
+    @ViewChildren(NavPluginComponent) pluginComponents: QueryList<NavPluginComponent>;
 
     private lastOpened: NavigationbarArea = null;
     private readonly viewComponentMap = new Map<NavigationbarArea, CommonNavigationComponent>();
@@ -112,32 +115,50 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
     private readonly detailsButton: NavigationItem = { label: 'icon-details', iconName: 'sp-properties', iconStyle: 'modeller', areaType: NavigationbarArea.Details };
     private readonly clipboardButton: NavigationItem = { label: 'icon-clipboard', iconName: 'copy', iconStyle: 'xds', areaType: NavigationbarArea.Clipboard };
     private readonly errorsButton: NavigationItem = { label: 'icon-issues', iconName: 'msgwarning', iconStyle: 'xds', areaType: NavigationbarArea.Errors };
-    private readonly launcherButton: NavigationItem = { label: 'icon-workflow-launcher', iconName: 'sp-launcher', iconStyle: 'modeller', areaType: NavigationbarArea.WorklowLauncher };
     private readonly compareButton: NavigationItem = { label: 'icon-compare', iconName: 'misc-splitview', iconStyle: 'modeller', areaType: NavigationbarArea.Compare };
     private readonly helpButton: NavigationItem = { label: 'icon-help', iconName: 'sp-helper', iconStyle: 'modeller', areaType: NavigationbarArea.Help };
 
-    readonly buttons: NavigationItem[] = [
+    private readonly defaultButtons: NavigationItem[] = [
         this.factoryButton,
         this.searchButton,
         this.detailsButton,
         this.clipboardButton,
         this.errorsButton,
-        this.launcherButton,
         this.compareButton,
         this.helpButton
     ];
+    private datatypePluginButtons: NavigationItem[] = [];
+
+    buttons: NavigationItem[] = this.defaultButtons;
 
     readonly devMenuItems: XcMenuItem[] = [
         { name: 'Workflow Constant Builder...', click: () => this.dialogService.custom(WorkflowConstantBuilderModalComponent) },
         { name: 'Data Type Converter...', click: () => this.dialogService.info('info', 'not yet implemented') }
     ];
 
+    private _datatypePlugins: XoPlugin[] = [];
+
 
     constructor(
         private readonly documentService: DocumentService,
         private readonly dialogService: XcDialogService,
-        private readonly xmomService: XmomService
-    ) {}
+        private readonly xmomService: XmomService,
+        private readonly pluginService: PluginService
+    ) {
+        this.pluginService.requestPluginsByPath(['datatypes/rightnav']).subscribe({
+            next: (plugins: XoPluginArray) => {
+                this._datatypePlugins = plugins.data;
+                this.datatypePluginButtons = this._datatypePlugins.map((plugin: XoPlugin, index: number) => {
+                    const item: NavigationItem = this.createPluginItem(plugin);
+                    item.pluginNumber = index;
+                    return item;
+                });
+                if (this.documentService.selectedDocument instanceof TypeDocumentModel) {
+                    this.buttons = this.defaultButtons.concat(this.datatypePluginButtons);
+                }
+            }
+        });
+    }
 
 
     ngOnInit() {
@@ -147,7 +168,6 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
             .set(NavigationbarArea.Details, this.detailsComponent)
             .set(NavigationbarArea.Clipboard, this.clipboardComponent)
             .set(NavigationbarArea.Errors, this.errorsComponent)
-            .set(NavigationbarArea.WorklowLauncher, this.workflowLauncherComponent)
             .set(NavigationbarArea.Compare, this.compareComponent)
             .set(NavigationbarArea.Help, this.helpComponent);
 
@@ -170,6 +190,12 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
             this.errorsChangeSubscription = (document ? merge(document.issuesChange, document.warningsChange) : of(new XoArray())).subscribe(() => {
                 this.errorsButton.badge = document?.issues && document?.warnings ? document.issues.length + document.warnings.length : undefined;
             });
+
+            if (document instanceof TypeDocumentModel) {
+                this.buttons = this.defaultButtons.concat(this.datatypePluginButtons);
+            } else {
+                this.buttons = this.defaultButtons;
+            }
         }));
     }
 
@@ -180,7 +206,17 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
 
-    switchArea(area: NavigationbarArea) {
+    private createPluginItem(plugin: XoPlugin): NavigationItem {
+        return {
+            label: plugin.navigationEntryLabel,
+            iconName: plugin.navigationIconName,
+            iconStyle: 'modeller',
+            areaType: NavigationbarArea.Plugin
+        };
+    }
+
+
+    switchArea(area: NavigationbarArea, pluginNumber?: number) {
         // trigger onHide() of the switched off nav component
         if (this.activeNavigationComponent) {
             this.activeNavigationComponent.onHide();
@@ -188,6 +224,7 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
 
         // change activeNavigationComponent
         this.area = area;
+        this.activatedPluginNumber = pluginNumber;
 
         // use a special animation for the compare area
         if (this.area === NavigationbarArea.Compare) {
@@ -217,6 +254,13 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     get activeNavigationComponent(): CommonNavigationComponent {
+        if (this.area === NavigationbarArea.Plugin) {
+            return this.pluginComponents.find(comp => comp.pluginNumber === this.activatedPluginNumber);
+        }
         return this.viewComponentMap.get(this.area);
+    }
+
+    get datatypePlugins(): XoPlugin[] {
+        return this._datatypePlugins;
     }
 }

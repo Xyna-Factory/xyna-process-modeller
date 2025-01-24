@@ -4,9 +4,11 @@
     <xfm-mod-nav-details xc-i18n-context='details' [class.hidden]="area !== NavigationbarArea.Details"></xfm-mod-nav-details>
     <xfm-mod-nav-clipboard xc-i18n-context='clipboard' [class.hidden]="area !== NavigationbarArea.Clipboard"></xfm-mod-nav-clipboard>
     <xfm-mod-nav-errors xc-i18n-context='errors' [class.hidden]="area !== NavigationbarArea.Errors"></xfm-mod-nav-errors>
-    <xfm-mod-nav-workflowlauncher xc-i18n-context='workflowlauncher' [class.hidden]="area !== NavigationbarArea.WorklowLauncher"></xfm-mod-nav-workflowlauncher>
     <xfm-mod-nav-compare xc-i18n-context='compare' [class.hidden]="area !== NavigationbarArea.Compare"></xfm-mod-nav-compare>
     <xfm-mod-nav-help xc-i18n-context='help' [class.hidden]="area !== NavigationbarArea.Help"></xfm-mod-nav-help>
+    <xfm-mod-nav-plugin *ngFor="let plugin of datatypePlugins; let i = index"
+        [plugin-number]="i" [plugin]="plugin" [class.hidden]="area !== NavigationbarArea.plugin">
+    </xfm-mod-nav-plugin>
 </div>
 <div class="iconbar">
     <xc-icon-button xc-i18n class="toggle" xc-icon-name="misc-collapse" xc-icon-style="modeller" [ngClass]="{'rotated': area}" (click)="toogle()"></xc-icon-button>
@@ -18,7 +20,7 @@
             [xc-tooltip]="button.label"
             xc-tooltip-position="left"
             [class.active]="area === button.areaType"
-            (click)="switchArea(button.areaType)"
+            (click)="switchArea(button.areaType, button.pluginNumber)"
         ></xc-icon-button>
         <span class="badge" *ngIf=button.badge>{{button.badge}}</span>
     </div>
