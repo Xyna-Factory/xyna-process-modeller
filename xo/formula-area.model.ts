@@ -32,7 +32,7 @@ export class XoFormulaArea extends XoContainerArea {
     afterDecode() {
         super.afterDecode();
 
-        this.formulas = this.items ? this.items.data.filter(item => item instanceof XoFormula).map(item => item as XoFormula) : [];
+        this.formulas = this.items ? this.items.data.filter(item => item instanceof XoFormula).map(item => item) : [];
     }
 }
 
