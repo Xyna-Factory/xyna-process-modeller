@@ -49,7 +49,8 @@ export interface SwitchTemplateRowFocusEvent {
 @Component({
     selector: 'template-row',
     templateUrl: './template-row.component.html',
-    styleUrls: ['./template-row.component.scss']
+    styleUrls: ['./template-row.component.scss'],
+    standalone: false
 })
 export class TemplateRowComponent extends ModellingObjectComponent {
 

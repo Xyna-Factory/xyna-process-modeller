@@ -35,7 +35,9 @@ import { TypeDocumentComponent } from './type-document.component';
 @Component({
     templateUrl: './datatype.component.html',
     styleUrls: ['./datatype.component.scss'],
-    providers: [SelectionService]   // single service instances per document
+    providers: [SelectionService] // single service instances per document
+    ,
+    standalone: false
 })
 export class DataTypeComponent extends TypeDocumentComponent<DataTypeDocumentModel> {
 

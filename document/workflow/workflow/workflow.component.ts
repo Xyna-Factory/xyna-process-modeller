@@ -33,7 +33,8 @@ import { ModellingItemComponent } from '../shared/modelling-object.component';
     selector: 'workflow',
     templateUrl: './workflow.component.html',
     styleUrls: ['./workflow.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Default
+    changeDetection: ChangeDetectionStrategy.Default,
+    standalone: false
 })
 export class WorkflowComponent extends ModellingItemComponent implements AfterViewChecked, AfterViewInit, OnDestroy {
 

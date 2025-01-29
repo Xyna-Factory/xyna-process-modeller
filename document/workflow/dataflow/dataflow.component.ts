@@ -290,7 +290,8 @@ interface ConnectionObject {
 @Component({
     selector: 'dataflow',
     templateUrl: './dataflow.component.html',
-    styleUrls: ['./dataflow.component.scss']
+    styleUrls: ['./dataflow.component.scss'],
+    standalone: false
 })
 export class DataflowComponent implements AfterViewInit, OnDestroy {
 

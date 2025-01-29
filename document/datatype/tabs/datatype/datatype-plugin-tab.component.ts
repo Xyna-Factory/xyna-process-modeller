@@ -31,7 +31,8 @@ import { DatatypeTabComponent, PluginTabData } from '../datatype-tab.component';
 @Component({
     templateUrl: './datatype-plugin-tab.component.html',
     styleUrls: ['./datatype-plugin-tab.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class DataTypePluginTabComponent extends DatatypeTabComponent<XoDataType, PluginTabData> {
 

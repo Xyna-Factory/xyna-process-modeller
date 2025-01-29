@@ -38,7 +38,8 @@ import { ModellingObjectComponent } from '../../workflow/shared/modelling-object
 @Component({
     selector: 'service-area',
     templateUrl: './service-area.component.html',
-    styleUrls: ['./service-area.component.scss']
+    styleUrls: ['./service-area.component.scss'],
+    standalone: false
 })
 export class ServiceAreaComponent extends ModellingObjectComponent {
 

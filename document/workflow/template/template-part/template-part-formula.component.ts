@@ -24,7 +24,8 @@ import { TemplatePartComponent } from './template-part.component';
 @Component({
     selector: 'template-part-formula',
     templateUrl: './template-part-formula.component.html',
-    styleUrls: ['./template-part.component.scss', './template-part-formula.component.scss']
+    styleUrls: ['./template-part.component.scss', './template-part-formula.component.scss'],
+    standalone: false
 })
 export class TemplatePartFormulaComponent extends TemplatePartComponent {
 

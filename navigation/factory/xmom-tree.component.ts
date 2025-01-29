@@ -24,7 +24,8 @@ import { XMOMTreeItemState } from './xmom-tree-item.component';
 @Component({
     selector: 'xfm-mod-nav-xmomtree',
     templateUrl: './xmom-tree.component.html',
-    styleUrls: ['./xmom-tree.component.scss']
+    styleUrls: ['./xmom-tree.component.scss'],
+    standalone: false
 })
 export class XMOMTreeComponent {
 

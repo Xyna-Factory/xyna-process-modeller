@@ -30,8 +30,9 @@ import { ModellingObjectComponent } from '../shared/modelling-object.component';
 @Component({
     selector: 'variable-area',
     templateUrl: './variable-area.component.html',
-    styleUrls: ['./variable-area.component.scss']/*,
-    changeDetection: ChangeDetectionStrategy.OnPush*/
+    styleUrls: ['./variable-area.component.scss'] /*,
+    changeDetection: ChangeDetectionStrategy.OnPush*/,
+    standalone: false
 })
 export class VariableAreaComponent extends ModellingObjectComponent {
     private _kind: 'input-area' | 'output-area' | 'throws-area';

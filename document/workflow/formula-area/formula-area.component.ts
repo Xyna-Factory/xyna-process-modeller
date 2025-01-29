@@ -29,7 +29,8 @@ import { ModellingObjectComponent } from '../shared/modelling-object.component';
 @Component({
     selector: 'formula-area',
     templateUrl: './formula-area.component.html',
-    styleUrls: ['./formula-area.component.scss']
+    styleUrls: ['./formula-area.component.scss'],
+    standalone: false
 })
 export class FormulaAreaComponent extends ModellingObjectComponent {
 

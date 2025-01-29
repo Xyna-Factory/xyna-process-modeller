@@ -33,7 +33,8 @@ export interface ShowGuiModelModalComponentData {
 
 @Component({
     templateUrl: './show-gui-model-modal.component.html',
-    styleUrls: ['./show-gui-model-modal.component.scss']
+    styleUrls: ['./show-gui-model-modal.component.scss'],
+    standalone: false
 })
 export class ShowGuiModelModalComponent extends XcDialogComponent<void, ShowGuiModelModalComponentData> {
 

@@ -33,7 +33,8 @@ import { combineLatest } from 'rxjs';
     selector: 'type-documentation-area',
     templateUrl: './type-documentation-area.component.html',
     styleUrls: ['./type-documentation-area.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class TypeDocumentationAreaComponent extends ModellingObjectComponent {
 

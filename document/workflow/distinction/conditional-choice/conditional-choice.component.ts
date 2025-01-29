@@ -23,7 +23,8 @@ import { ChoiceComponent } from '../choice.component';
 @Component({
     selector: 'conditional-choice',
     templateUrl: './conditional-choice.component.html',
-    styleUrls: ['../choice.component.scss', './conditional-choice.component.scss']
+    styleUrls: ['../choice.component.scss', './conditional-choice.component.scss'],
+    standalone: false
 })
 export class ConditionalChoiceComponent extends ChoiceComponent {
 }

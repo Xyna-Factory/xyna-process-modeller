@@ -31,7 +31,8 @@ import { workflowConstantBuilderModal_translations_en_US } from './locale/workfl
 
 @Component({
     templateUrl: './workflow-constant-builder-modal.component.html',
-    styleUrls: ['./workflow-constant-builder-modal.component.scss']
+    styleUrls: ['./workflow-constant-builder-modal.component.scss'],
+    standalone: false
 })
 export class WorkflowConstantBuilderModalComponent extends XcDialogComponent<void, void> {
 

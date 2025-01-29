@@ -23,7 +23,8 @@ import { DatatypeDetailsTabComponent } from '../datatype-tab.component';
 @Component({
     templateUrl: './datatype-storable-tab.component.html',
     styleUrls: ['./datatype-storable-tab.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class DataTypeStorableTabComponent extends DatatypeDetailsTabComponent {
 

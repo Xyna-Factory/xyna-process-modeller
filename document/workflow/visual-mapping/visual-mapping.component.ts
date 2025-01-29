@@ -87,7 +87,8 @@ class ExpressionWrapper {
     selector: 'visual-mapping',
     templateUrl: './visual-mapping.component.html',
     styleUrls: ['./visual-mapping.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class VisualMappingComponent extends ModellingObjectComponent implements OnInit, OnDestroy, SkeletonTreeDataSourceObserver {
 

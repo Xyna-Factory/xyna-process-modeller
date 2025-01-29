@@ -36,7 +36,8 @@ export interface TemplatePartModifyEvent {
 @Component({
     selector: 'template-part-text',
     templateUrl: './template-part-text.component.html',
-    styleUrls: ['./template-part.component.scss', './template-part-text.component.scss']
+    styleUrls: ['./template-part.component.scss', './template-part-text.component.scss'],
+    standalone: false
 })
 export class TemplatePartTextComponent extends TemplatePartComponent {
 

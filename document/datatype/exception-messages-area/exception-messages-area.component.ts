@@ -42,7 +42,8 @@ export enum ExceptionMessageLanguage {
 @Component({
     selector: 'exception-messages-area',
     templateUrl: './exception-messages-area.component.html',
-    styleUrls: ['./exception-messages-area.component.scss']
+    styleUrls: ['./exception-messages-area.component.scss'],
+    standalone: false
 })
 export class ExceptionMessagesAreaComponent extends ModellingObjectComponent {
 

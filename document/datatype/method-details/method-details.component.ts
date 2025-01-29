@@ -37,7 +37,8 @@ import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
     selector: 'method-details',
     templateUrl: './method-details.component.html',
     styleUrls: ['./method-details.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class MethodDetailsComponent extends ModellingItemComponent implements OnDestroy {
 

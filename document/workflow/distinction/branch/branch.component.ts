@@ -32,7 +32,8 @@ import { BranchSelectionService } from './branch-selection.service';
 @Component({
     selector: 'branch',
     templateUrl: './branch.component.html',
-    styleUrls: ['./branch.component.scss']
+    styleUrls: ['./branch.component.scss'],
+    standalone: false
 })
 export class BranchComponent extends SelectableModellingObjectComponent implements OnDestroy {
 

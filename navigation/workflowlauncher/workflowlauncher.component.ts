@@ -24,7 +24,8 @@ import { CommonNavigationComponent } from '../common-navigation-class/common-nav
     selector: 'xfm-mod-nav-workflowlauncher',
     templateUrl: './workflowlauncher.component.html',
     styleUrls: ['./workflowlauncher.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class WorkflowLauncherComponent extends CommonNavigationComponent {
 

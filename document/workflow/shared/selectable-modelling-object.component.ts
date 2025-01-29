@@ -28,7 +28,8 @@ import { ModellingItemComponent } from './modelling-object.component';
  * Base class for all selectable modelling object components
  */
 @Component({
-    template: ''
+    template: '',
+    standalone: false
 })
 export class SelectableModellingObjectComponent extends ModellingItemComponent implements OnDestroy {
 

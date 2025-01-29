@@ -35,7 +35,8 @@ import { LibItemComponent, LibItemData } from './lib-item.component';
 @Component({
     selector: 'lib-area',
     templateUrl: './lib-area.component.html',
-    styleUrls: ['./lib-area.component.scss']
+    styleUrls: ['./lib-area.component.scss'],
+    standalone: false
 })
 export class LibAreaComponent extends ModellingObjectComponent {
 

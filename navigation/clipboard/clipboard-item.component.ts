@@ -37,7 +37,8 @@ import { XoXmomItem } from '../../xo/xmom-item.model';
     selector: 'clipboard-item',
     templateUrl: './clipboard-item.component.html',
     styleUrls: ['./clipboard-item.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class ClipboardItemComponent {
 

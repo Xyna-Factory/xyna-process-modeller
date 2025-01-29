@@ -40,7 +40,8 @@ export interface ConflictDialogData {
 
 @Component({
     templateUrl: './conflict-dialog.component.html',
-    styleUrls: ['./conflict-dialog.component.scss']
+    styleUrls: ['./conflict-dialog.component.scss'],
+    standalone: false
 })
 export class ConflictDialogComponent extends XcDialogComponent<string, ConflictDialogData> {
 

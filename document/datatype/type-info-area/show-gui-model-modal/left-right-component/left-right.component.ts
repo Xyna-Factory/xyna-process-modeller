@@ -22,7 +22,8 @@ import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Outpu
 @Component({
     selector: 'left-right-component',
     templateUrl: './left-right.component.html',
-    styleUrls: ['./left-right.component.scss']
+    styleUrls: ['./left-right.component.scss'],
+    standalone: false
 })
 export class LeftRightComponent implements OnInit {
 

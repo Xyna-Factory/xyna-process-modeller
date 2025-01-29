@@ -24,7 +24,8 @@ import { XoMethod } from '../../../xo/method.model';
 @Component({
     selector: 'coding',
     templateUrl: './coding.component.html',
-    styleUrls: ['./coding.component.scss']
+    styleUrls: ['./coding.component.scss'],
+    standalone: false
 })
 export class CodingComponent {
 

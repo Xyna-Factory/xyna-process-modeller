@@ -31,7 +31,8 @@ import { XoContainerArea, XoModellingItem } from '../../xo/modelling-item.model'
 @Component({
     selector: 'clipboard-area',
     templateUrl: './clipboard-area.component.html',
-    styleUrls: ['./clipboard-area.component.scss']
+    styleUrls: ['./clipboard-area.component.scss'],
+    standalone: false
 })
 export class ClipboardAreaComponent {
 

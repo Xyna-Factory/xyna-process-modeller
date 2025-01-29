@@ -22,7 +22,8 @@ import { FormulaPartComponent } from './formula-part.component';
 
 
 @Component({
-    template: ''
+    template: '',
+    standalone: false
 })
 export class FormulaEditablePartComponent extends FormulaPartComponent {
 

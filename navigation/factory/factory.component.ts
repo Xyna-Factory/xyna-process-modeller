@@ -34,7 +34,8 @@ import { XMOMTreeItemState } from './xmom-tree-item.component';
     selector: 'xfm-mod-nav-factory',
     templateUrl: './factory.component.html',
     styleUrls: ['./factory.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class FactoryComponent extends CommonNavigationComponent implements AfterViewInit {
 

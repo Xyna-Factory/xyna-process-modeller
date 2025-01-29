@@ -24,7 +24,8 @@ import { TextAreaModellingObjectComponent } from '../shared/text-area-modelling-
 @Component({
     selector: 'label-area',
     templateUrl: './label-area.component.html',
-    styleUrls: ['./label-area.component.scss']
+    styleUrls: ['./label-area.component.scss'],
+    standalone: false
 })
 export class LabelAreaComponent extends TextAreaModellingObjectComponent {
 

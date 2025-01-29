@@ -51,7 +51,8 @@ import { SelectableModellingObjectComponent } from '../shared/selectable-modelli
 @Component({
     selector: 'variable',
     templateUrl: './variable.component.html',
-    styleUrls: ['./variable.component.scss']
+    styleUrls: ['./variable.component.scss'],
+    standalone: false
 })
 export class VariableComponent extends SelectableModellingObjectComponent {
 

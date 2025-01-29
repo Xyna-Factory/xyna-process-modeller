@@ -52,7 +52,8 @@ export interface ModDropEvent<T = Draggable> extends ModDragEvent {
 
 
 @Directive({
-    selector: '[mod-drop-area]'
+    selector: '[mod-drop-area]',
+    standalone: false
 })
 export class ModDropAreaDirective implements OnInit, OnDestroy {
 

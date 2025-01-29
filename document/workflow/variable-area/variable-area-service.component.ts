@@ -23,8 +23,9 @@ import { VariableAreaComponent } from './variable-area.component';
 @Component({
     selector: 'variable-area-service',
     templateUrl: './variable-area.component.html',
-    styleUrls: ['./variable-area.component.scss', './variable-area-service.component.scss']/*,
-    changeDetection: ChangeDetectionStrategy.OnPush*/
+    styleUrls: ['./variable-area.component.scss', './variable-area-service.component.scss'] /*,
+    changeDetection: ChangeDetectionStrategy.OnPush*/,
+    standalone: false
 })
 export class VariableAreaServiceComponent extends VariableAreaComponent {
 }

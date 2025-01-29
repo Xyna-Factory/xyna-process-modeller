@@ -36,7 +36,8 @@ export interface TemplatePartSwitchFocusEvent {
 @Component({
     selector: 'template-part',
     template: '',
-    styleUrls: ['./template-part.component.scss']
+    styleUrls: ['./template-part.component.scss'],
+    standalone: false
 })
 export class TemplatePartComponent extends ModellingItemComponent {
 

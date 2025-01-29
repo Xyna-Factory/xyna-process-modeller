@@ -50,7 +50,8 @@ import { QueryParameterService } from '@zeta/nav/query-parameter.service';
 @Component({
     templateUrl: './processmodeller.component.html',
     styleUrls: ['./processmodeller.component.scss'],
-    providers: [I18nService]
+    providers: [I18nService],
+    standalone: false
 })
 export class ProcessmodellerComponent extends RouteComponent implements OnInit, OnDestroy {
 

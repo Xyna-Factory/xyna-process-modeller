@@ -32,7 +32,8 @@ import { JavaSharedLibItemComponent, JavaSharedLibItemData } from './java-shared
 @Component({
     selector: 'java-shared-lib-area',
     templateUrl: './java-shared-lib-area.component.html',
-    styleUrls: ['./java-shared-lib-area.component.scss']
+    styleUrls: ['./java-shared-lib-area.component.scss'],
+    standalone: false
 })
 export class JavaSharedLibAreaComponent extends ModellingObjectComponent implements OnDestroy {
 
