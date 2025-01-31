@@ -21,7 +21,7 @@ $choice_rhombus_border_color: unset !default;
 $choice_rhombus_background_color: unset !default;
 
 
-@import 'const';
+@use '../../../const' as *;
 
 
 :host {

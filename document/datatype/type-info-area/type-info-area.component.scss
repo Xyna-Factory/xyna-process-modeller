@@ -17,7 +17,7 @@
  */
 $type-info-badge-color: unset !default;
 
-@import 'const';
+@use '../../../const' as *;
 
 
 :host {

@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 
-@import 'const';
+@use '../../../const' as *;
 
 :host {
     display: flex;

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-@import 'const';
+@use '../../const' as *;
 
 $link-state-width: 8px;
 $link-state-margin: 6px;
