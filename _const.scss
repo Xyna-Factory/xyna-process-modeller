@@ -15,7 +15,10 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-@import '../../zeta/const';
+@forward "../../const";
+@use "../../const" as *;
+
+@forward "../../zeta/const";
 
 
 /****************************************************
@@ -74,10 +77,10 @@ $choice_rhombus_border_color: $color-gray-3;
 $choice_rhombus_background_color: $workflow-area-background-color;
 
 $service-step-input-z: 0;
-$service-step-label-z: 2;       // higher than input and output because of focus shadow
-$service-step-output-z: 1;      // higher than 0 because of connection lines
+$service-step-label-z: 2; // higher than input and output because of focus shadow
+$service-step-output-z: 1; // higher than 0 because of connection lines
 
-$dnd-hover-background-color: #ffd988;  // shade of #fabb00
+$dnd-hover-background-color: #ffd988; // shade of #fabb00
 
 
 // link states
