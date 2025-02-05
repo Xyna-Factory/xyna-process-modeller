@@ -49,11 +49,11 @@ $link-state-margin: 6px;
     }
 
     &.variable.prototype > div {
-        background: repeating-linear-gradient(-60deg, $prototype-variable-gradient-color, $prototype-variable-gradient-color 12px, $color-white 0px, $color-white 24px);
+        background: repeating-linear-gradient(-60deg, $prototype-variable-gradient-color, $prototype-variable-gradient-color 12px, $color-normal 0px, $color-normal 24px);
     }
 
     &.invocation.prototype > div > .label {
-        background: repeating-linear-gradient(-60deg, $prototype-step-gradient-color, $prototype-step-gradient-color 20px, $color-black 20px, $color-black 40px);
+        background: repeating-linear-gradient(-60deg, $prototype-step-gradient-color, $prototype-step-gradient-color 20px, $color-invert 20px, $color-invert 40px);
     }
 
     &.variable > div {

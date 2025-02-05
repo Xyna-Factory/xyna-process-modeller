@@ -71,7 +71,7 @@ $horizontal-gap: 4px;
 
         .caret {
             color: transparent;     // use character only for height of caret
-            background-color: $color-black;
+            background-color: $color-invert;
             width: 2px;
             margin: 0 -1px;
             font-weight: normal;
@@ -86,7 +86,7 @@ $horizontal-gap: 4px;
     }
 
     &.selected, &:focus {
-        background-color: $color-white;
+        background-color: $color-normal;
         border-color: $color-gray-3;
         outline: none;
     }
