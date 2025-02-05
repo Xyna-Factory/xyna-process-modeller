@@ -33,7 +33,7 @@ export class XoJavaSharedLibrariesArea extends XoContainerArea {
         super.afterDecode();
 
         this.javaSharedLibraries = this.items
-            ? this.items.data.filter(item => item instanceof XoJavaSharedLibrary).map(item => item as XoJavaSharedLibrary)
+            ? this.items.data.filter(item => item instanceof XoJavaSharedLibrary).map(item => item)
             : [];
     }
 
