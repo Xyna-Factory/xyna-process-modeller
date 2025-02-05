@@ -16,3 +16,9 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 @import "const";
+
+:host::ng-deep {
+    xc-form-generic-panel>xc-panel {
+        min-width: unset;
+    }
+}

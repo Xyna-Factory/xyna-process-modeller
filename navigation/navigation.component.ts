@@ -210,7 +210,7 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
         return {
             label: plugin.navigationEntryLabel,
             iconName: plugin.navigationIconName,
-            iconStyle: 'modeller',
+            iconStyle: 'material',
             areaType: NavigationbarArea.Plugin
         };
     }
@@ -238,6 +238,17 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
             this.activeNavigationComponent.onShow();
             this.activeNavigationComponent.updateView();
         }
+    }
+
+
+    isActive(area: NavigationbarArea, pluginNumber: number): boolean {
+        if (this.area !== area) {
+            return false;
+        }
+        if (this.area === NavigationbarArea.Plugin && this.activatedPluginNumber !== pluginNumber) {
+            return false;
+        }
+        return true;
     }
 
 
