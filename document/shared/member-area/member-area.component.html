@@ -1,22 +1,27 @@
 <header>
-    <xc-icon-button
-        [disabled]="!hasContent"
-        (click)="collapsed = !collapsed"
-        [xc-icon-name]="collapsed ? 'arrowright' : 'arrowdown'"
-        xc-icon-size="small"
-    ></xc-icon-button>
-    <h2 class="caption">{{caption | xcI18n}}</h2>
-    <xc-definition-proxy *ngFor="let bundle of pluginBundles"
-        [xc-base-definition]="bundle.definition"
-        [xc-base-definition-data]="bundle.data"
-        [xc-definition-observer]="pluginService"
+  <xc-icon-button
+    [disabled]="!hasContent"
+    (click)="collapsed = !collapsed"
+    [xc-icon-name]="collapsed ? 'arrowright' : 'arrowdown'"
+    xc-icon-size="small"
+  ></xc-icon-button>
+  <h2 class="caption">{{caption | xcI18n}}</h2>
+  @for (bundle of pluginBundles; track bundle) {
+    <xc-definition-proxy
+      [xc-base-definition]="bundle.definition"
+      [xc-base-definition-data]="bundle.data"
+      [xc-definition-observer]="pluginService"
     ></xc-definition-proxy>
+  }
+  @if (allowAdd) {
     <xc-icon-button
-        *ngIf="allowAdd"
-        [disabled]="readonly"
-        (click)="addEmitter.emit()"
-        xc-icon-name="add"
-        xc-icon-size="small"
+      [disabled]="readonly"
+      (click)="addEmitter.emit()"
+      xc-icon-name="add"
+      xc-icon-size="small"
     ></xc-icon-button>
+  }
 </header>
-<ng-content *ngIf="!collapsed"></ng-content>
+@if (!collapsed) {
+  <ng-content></ng-content>
+}

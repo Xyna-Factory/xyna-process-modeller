@@ -1,30 +1,32 @@
 <div class="header">
-    <xc-form-label xc-i18n>exception-messages-label</xc-form-label>
-    <xc-definition-proxy *ngFor="let bundle of pluginBundles"
-        [xc-base-definition]="bundle.definition"
-        [xc-base-definition-data]="bundle.data"
-        [xc-definition-observer]="pluginService"
+  <xc-form-label xc-i18n>exception-messages-label</xc-form-label>
+  @for (bundle of pluginBundles; track bundle) {
+    <xc-definition-proxy
+      [xc-base-definition]="bundle.definition"
+      [xc-base-definition-data]="bundle.data"
+      [xc-definition-observer]="pluginService"
     ></xc-definition-proxy>
+  }
 </div>
 <div class="row">
-    <xc-form-autocomplete
-        [readonly]="readonly"
-        placeholder="select-tooltip"
-        [(xc-form-autocomplete-option)]="languageDataWrapper.value"
-        [xc-form-autocomplete-options]="languageDataWrapper.values"
-        xc-form-autocomplete-fulltextsearch
-        xc-form-field-suffix="clear"
-        xc-form-autocomplete-asdropdown
-        xc-form-field-compact
-        xc-i18n
-    ></xc-form-autocomplete>
+  <xc-form-autocomplete
+    [readonly]="readonly"
+    placeholder="select-tooltip"
+    [(xc-form-autocomplete-option)]="languageDataWrapper.value"
+    [xc-form-autocomplete-options]="languageDataWrapper.values"
+    xc-form-autocomplete-fulltextsearch
+    xc-form-field-suffix="clear"
+    xc-form-autocomplete-asdropdown
+    xc-form-field-compact
+    xc-i18n
+  ></xc-form-autocomplete>
 
-    <xc-form-input
-        [(value)]="currentMessage"
-        xc-form-field-compact
-    ></xc-form-input>
+  <xc-form-input
+    [(value)]="currentMessage"
+    xc-form-field-compact
+  ></xc-form-input>
 
-    <xc-button (click)="set()" [disabled]="readonly" xc-i18n>set-button</xc-button>
+  <xc-button (click)="set()" [disabled]="readonly" xc-i18n>set-button</xc-button>
 </div>
 
 <xc-rich-list [xc-rich-list-items]="exceptionMessageRichListItems"></xc-rich-list>

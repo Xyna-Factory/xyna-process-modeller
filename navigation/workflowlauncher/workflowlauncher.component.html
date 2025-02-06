@@ -1,4 +1,6 @@
 <h2 xc-i18n class="navigationbar-title">header</h2>
-<div *ngIf="active">
+@if (active) {
+  <div>
     <span xc-i18n>message</span>
-</div>
+  </div>
+}

@@ -1,77 +1,87 @@
 <h2 xc-i18n class="navigationbar-title">header</h2>
 <div class="area-content">
 
-    <span *ngIf="!document">No Document selected</span>
+  @if (!document) {
+    <span>No Document selected</span>
+  }
 
-    <xc-panel *ngIf="document">
+  @if (document) {
+    <xc-panel>
+      <div class="info">
+        <div class="description" xc-i18n>name</div>
+        <div class="value">{{name}}</div>
+      </div>
+      <div class="info">
+        <div class="description" xc-i18n>path</div>
+        <div class="value">{{path || ' '}}</div>
+      </div>
+      <div class="info">
+        <div class="description" xc-i18n>fqn</div>
+        <div class="value">{{(path ? path + '.' : '') + name}}</div>
+      </div>
+      @if (applicationName) {
         <div class="info">
-            <div class="description" xc-i18n>name</div>
-            <div class="value">{{name}}</div>
+          <div class="description" xc-i18n>application</div>
+          <div class="value">{{applicationName}}</div>
         </div>
+      }
+      @if (applicationVersion) {
         <div class="info">
-            <div class="description" xc-i18n>path</div>
-            <div class="value">{{path || ' '}}</div>
+          <div class="description" xc-i18n>version</div>
+          <div class="value">{{applicationVersion}}</div>
         </div>
+      }
+      @if (workspace) {
         <div class="info">
-            <div class="description" xc-i18n>fqn</div>
-            <div class="value">{{(path ? path + '.' : '') + name}}</div>
+          <div class="description" xc-i18n>workspace</div>
+          <div class="value">{{workspace}}</div>
         </div>
-        <div class="info" *ngIf="applicationName">
-            <div class="description" xc-i18n>application</div>
-            <div class="value">{{applicationName}}</div>
-        </div>
-        <div class="info" *ngIf="applicationVersion">
-            <div class="description" xc-i18n>version</div>
-            <div class="value">{{applicationVersion}}</div>
-        </div>
-        <div class="info" *ngIf="workspace">
-            <div class="description" xc-i18n>workspace</div>
-            <div class="value">{{workspace}}</div>
-        </div>
-        <div class="info">
-            <div class="description" xc-i18n>saved</div>
-            <div class="value">{{item.saved}}</div>
-        </div>
-
-        <section *ngIf="deploymentItem"
-            class="deployment-state"
-        >
-            <deployment-state-detail
-                xc-i18n-context="deployment-state-detail"
-                [deploymentItem]="deploymentItem"
-            ></deployment-state-detail>
-            <xc-icon-button
-                xc-icon-name="reload"
-                class="deployment-state-refresh"
-                [disabled]="pendingDeploymentItem"
-                [busy]="pendingDeploymentItem"
-                (click)="getDeploymentItem()"
-                xc-tooltip="tooltip-refresh"
-                xc-i18n
-            ></xc-icon-button>
+      }
+      <div class="info">
+        <div class="description" xc-i18n>saved</div>
+        <div class="value">{{item.saved}}</div>
+      </div>
+      @if (deploymentItem) {
+        <section
+          class="deployment-state"
+          >
+          <deployment-state-detail
+            xc-i18n-context="deployment-state-detail"
+            [deploymentItem]="deploymentItem"
+          ></deployment-state-detail>
+          <xc-icon-button
+            xc-icon-name="reload"
+            class="deployment-state-refresh"
+            [disabled]="pendingDeploymentItem"
+            [busy]="pendingDeploymentItem"
+            (click)="getDeploymentItem()"
+            xc-tooltip="tooltip-refresh"
+            xc-i18n
+          ></xc-icon-button>
         </section>
-
-        <ng-container *xc-has-right="'xmcp.xfm.processmodeller.stealLock'">
-            <xc-button
-                xc-i18n
-                *ngIf="deploymentItem && deploymentItem.lockedBy !== username"
-                (click)="stealLock()"
-            >steal-lock</xc-button>
-        </ng-container>
-
+      }
+      <ng-container *xc-has-right="'xmcp.xfm.processmodeller.stealLock'">
+        @if (deploymentItem && deploymentItem.lockedBy !== username) {
+          <xc-button
+            xc-i18n
+            (click)="stealLock()"
+          >steal-lock</xc-button>
+        }
+      </ng-container>
+      @if (hasRelations && relations) {
         <relation-table
-            *ngIf="hasRelations && relations"
-            xc-i18n-context="relation-table"
-            [relations]="relations"
-            (refresh)="getRelations()"
+          xc-i18n-context="relation-table"
+          [relations]="relations"
+          (refresh)="getRelations()"
         ></relation-table>
-
-        <ng-container *xc-has-right="'xmcp.xfm.processmodeller.debug.showxml'">
-            <xc-button
-                xc-i18n
-                (click)="showXML()"
-                xc-tooltip="tooltip-show-xml"
-            >show-xml</xc-button>
-        </ng-container>
+      }
+      <ng-container *xc-has-right="'xmcp.xfm.processmodeller.debug.showxml'">
+        <xc-button
+          xc-i18n
+          (click)="showXML()"
+          xc-tooltip="tooltip-show-xml"
+        >show-xml</xc-button>
+      </ng-container>
     </xc-panel>
+  }
 </div>

@@ -1,17 +1,21 @@
 <div
-    [mod-drop-area]="clipboardArea.items?.data"
-    [mod-drop-area-allow-item]="allowItem"
-    [mod-drop-area-can-drop]="canDrop"
-    (mod-drop-area-dropped)="dropped($event)"
-    class="drop-area zeta-scrollbar"
->
-    <clipboard-item *ngFor="let item of clipboardArea.items"
-        (triggerAction)="performAction($event)"
-        [mod-draggable]="item"
-        [item]="item"
-        [xc-tooltip]="getTooltip(item)"
-        xc-tooltip-position="left"
-    >
+  [mod-drop-area]="clipboardArea.items?.data"
+  [mod-drop-area-allow-item]="allowItem"
+  [mod-drop-area-can-drop]="canDrop"
+  (mod-drop-area-dropped)="dropped($event)"
+  class="drop-area zeta-scrollbar"
+  >
+  @for (item of clipboardArea.items; track item) {
+    <clipboard-item
+      (triggerAction)="performAction($event)"
+      [mod-draggable]="item"
+      [item]="item"
+      [xc-tooltip]="getTooltip(item)"
+      xc-tooltip-position="left"
+      >
     </clipboard-item>
+  }
 </div>
-<span xc-i18n *ngIf="clipboardArea.items.length === 0" class="hint">hint</span>
+@if (clipboardArea.items.length === 0) {
+  <span xc-i18n class="hint">hint</span>
+}

@@ -1,17 +1,23 @@
-<variable-area-service *ngIf="throw.exceptionArea"
+@if (throw.exceptionArea) {
+  <variable-area-service
     [variableArea]="throw.exceptionArea"
     [documentModel]="documentModel"
     xc-variable-area-kind="input-area"
     (triggerAction)="performAction($event)"
-></variable-area-service>
-<label-area *ngIf="throw.labelArea"
+  ></variable-area-service>
+}
+@if (throw.labelArea) {
+  <label-area
     [labelArea]="throw.labelArea"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)">
     <xc-icon icon xc-icon-name="tb-exception" xc-icon-style="modeller" xc-icon-size="large"></xc-icon>
-</label-area>
-<documentation-area *ngIf="documentationArea"
+  </label-area>
+}
+@if (documentationArea) {
+  <documentation-area
     [documentationArea]="documentationArea"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
-></documentation-area>
+  ></documentation-area>
+}

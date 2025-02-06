@@ -1,59 +1,75 @@
 <ng-template #menuTemplateRef>
-    <xc-icon-button
-        *xc-menu-service="showMenu; let menuService"
-        [xc-menu-trigger]="menuService.component"
-        (xc-menu-trigger)="menuService.set(menuItems, {withArrow: true, xNexttoTrigger: true, xOffset: 8})"
-        xc-icon-style="modeller"
-        xc-icon-name="misc-contextmenu"
-        xc-icon-size="small"
-        class="menu-button"
-    ></xc-icon-button>
+  <xc-icon-button
+    *xc-menu-service="showMenu; let menuService"
+    [xc-menu-trigger]="menuService.component"
+    (xc-menu-trigger)="menuService.set(menuItems, {withArrow: true, xNexttoTrigger: true, xOffset: 8})"
+    xc-icon-style="modeller"
+    xc-icon-name="misc-contextmenu"
+    xc-icon-size="small"
+    class="menu-button"
+  ></xc-icon-button>
 </ng-template>
 
-<order-input-source-area *ngIf="invocation.allowsOrderInputSource"
+@if (invocation.allowsOrderInputSource) {
+  <order-input-source-area
     [orderInputSourceArea]="invocation.orderInputSourceArea"
     [documentModel]="documentModel"
     [invocation]="invocation"
     (triggerAction)="performAction($event)"
-></order-input-source-area>
-<remote-destination-area *ngIf="remoteDestinationArea"
+  ></order-input-source-area>
+}
+@if (remoteDestinationArea) {
+  <remote-destination-area
     [remoteDestinationArea]="remoteDestinationArea"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
-></remote-destination-area>
-<variable-area-service *ngIf="invocation.inputArea" (dblclick)="doubleClickProxy.emit()"
+  ></remote-destination-area>
+}
+@if (invocation.inputArea) {
+  <variable-area-service (dblclick)="doubleClickProxy.emit()"
     [variableArea]="invocation.inputArea"
     [documentModel]="documentModel"
     xc-variable-area-kind="input-area"
     (triggerAction)="performAction($event)"
-></variable-area-service>
+  ></variable-area-service>
+}
 <div class="type-label-area-service-wrapper" (dblclick)="doubleClickProxy.emit()">
-    <type-label-area-service *ngIf="invocation.typeLabelArea"
-        [typeLabelArea]="invocation.typeLabelArea"
-        [documentModel]="documentModel"
-        [class.prototype]="invocation.isAbstract"
-        [menuItems]="menuItems"
-        [menuTemplateRef]="menuTemplateRef"
-        (triggerAction)="performAction($event)"
+  @if (invocation.typeLabelArea) {
+    <type-label-area-service
+      [typeLabelArea]="invocation.typeLabelArea"
+      [documentModel]="documentModel"
+      [class.prototype]="invocation.isAbstract"
+      [menuItems]="menuItems"
+      [menuTemplateRef]="menuTemplateRef"
+      (triggerAction)="performAction($event)"
     ></type-label-area-service>
-    <div class="suffix-symbol" *ngIf="suffixSymbol" [xc-tooltip]="suffixTooltip">
-        <div>{{suffixSymbol}}</div>
+  }
+  @if (suffixSymbol) {
+    <div class="suffix-symbol" [xc-tooltip]="suffixTooltip">
+      <div>{{suffixSymbol}}</div>
     </div>
+  }
 </div>
-<documentation-area *ngIf="documentationArea"
+@if (documentationArea) {
+  <documentation-area
     [documentationArea]="documentationArea"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
-></documentation-area>
-<exception-handling-area *ngIf="exceptionHandlingArea"
+  ></documentation-area>
+}
+@if (exceptionHandlingArea) {
+  <exception-handling-area
     [exceptionHandlingArea]="exceptionHandlingArea"
     [documentModel]="documentModel"
     [inline]="true"
     (triggerAction)="performAction($event)"
-></exception-handling-area>
-<variable-area-service *ngIf="invocation.outputArea" (dblclick)="doubleClickProxy.emit()"
+  ></exception-handling-area>
+}
+@if (invocation.outputArea) {
+  <variable-area-service (dblclick)="doubleClickProxy.emit()"
     [variableArea]="invocation.outputArea"
     [documentModel]="documentModel"
     xc-variable-area-kind="output-area"
     (triggerAction)="performAction($event)"
-></variable-area-service>
+  ></variable-area-service>
+}

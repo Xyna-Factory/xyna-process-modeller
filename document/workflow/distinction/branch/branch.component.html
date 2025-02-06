@@ -1,17 +1,23 @@
-<xc-icon-button *ngIf="darkMode"
+@if (darkMode) {
+  <xc-icon-button
     class="collapse-button"
     xc-icon-name="accordion"
     xc-icon-size="small"
     color="invert"
     (click)="setCollapsed(!isCollapsed())">
-</xc-icon-button>
-<case-area *ngIf="branch.caseArea"
+  </xc-icon-button>
+}
+@if (branch.caseArea) {
+  <case-area
     [caseArea]="branch.caseArea"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
-></case-area>
-<content-area *ngIf="!isCollapsed()"
+  ></case-area>
+}
+@if (!isCollapsed()) {
+  <content-area
     [contentArea]="branch.contentArea"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)">
-</content-area>
+  </content-area>
+}

@@ -1,20 +1,24 @@
 <div class="header" (click)="select($event.ctrlKey)">
+  @if (children.length) {
     <xc-icon-button
-        *ngIf="children.length"
-        xc-icon-name="accordion"
-        xc-icon-size="small"
-        [class.expanded]="expanded"
-        [color]="root ? 'normal' : 'invert'"
-        (click)="toggle()"
+      xc-icon-name="accordion"
+      xc-icon-size="small"
+      [class.expanded]="expanded"
+      [color]="root ? 'normal' : 'invert'"
+      (click)="toggle()"
     ></xc-icon-button>
-    <label>{{name}}</label>
+  }
+  <label>{{name}}</label>
 </div>
-<div class="content" *ngIf="expanded">
-    <xfm-mod-nav-xmomtreeitem
-        *ngFor="let child of children"
+@if (expanded) {
+  <div class="content">
+    @for (child of children; track child) {
+      <xfm-mod-nav-xmomtreeitem
         [xmomPath]="child"
         [selectedXmomPaths]="selectedXmomPaths"
         [expandedXmomPaths]="expandedXmomPaths"
         (stateChange)="change($event)"
-    ></xfm-mod-nav-xmomtreeitem>
-</div>
+      ></xfm-mod-nav-xmomtreeitem>
+    }
+  </div>
+}

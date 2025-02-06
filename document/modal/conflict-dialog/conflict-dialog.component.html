@@ -1,19 +1,19 @@
 <xc-dialog-wrapper xc-i18n-context="pmod.conflict-dialog">
-    <ng-container header>{{injectedData.title}}</ng-container>
-    <section content class="content">
-        <div class="message">{{injectedData.message}}</div>
-        <ng-container *ngFor="let handling of injectedData.handlings">
-            <xc-checkbox
-                class="value"
-                [label]="handling.value"
-                [checked]="isChecked(handling.key)"
-                (checkedChange)="check(handling.key, $event)"
-            ></xc-checkbox>
-            <div class="description">{{handling.description}}</div>
-        </ng-container>
-    </section>
-    <ng-container footer>
-        <xc-button (click)="dismiss()" xc-i18n>button-cancel</xc-button>
-        <xc-button (click)="dismiss(key)" [disabled]="!key" xc-i18n>button-ok</xc-button>
-    </ng-container>
+  <ng-container header>{{injectedData.title}}</ng-container>
+  <section content class="content">
+    <div class="message">{{injectedData.message}}</div>
+    @for (handling of injectedData.handlings; track handling) {
+      <xc-checkbox
+        class="value"
+        [label]="handling.value"
+        [checked]="isChecked(handling.key)"
+        (checkedChange)="check(handling.key, $event)"
+      ></xc-checkbox>
+      <div class="description">{{handling.description}}</div>
+    }
+  </section>
+  <ng-container footer>
+    <xc-button (click)="dismiss()" xc-i18n>button-cancel</xc-button>
+    <xc-button (click)="dismiss(key)" [disabled]="!key" xc-i18n>button-ok</xc-button>
+  </ng-container>
 </xc-dialog-wrapper>

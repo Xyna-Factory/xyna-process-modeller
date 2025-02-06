@@ -1,18 +1,22 @@
-<xc-form-label *ngIf="!!areaLabel" xc-i18n>{{areaLabel}}</xc-form-label>
+@if (!!areaLabel) {
+  <xc-form-label xc-i18n>{{areaLabel}}</xc-form-label>
+}
 <div class="formula-list">
-    <div *ngFor="let sortingCriterion of sortingCriteria" class="formula-row">
-        <xc-icon-button xc-icon-name="accordion" color="invert" (click)="toggleSorting(sortingCriterion)" class="sort-button" [ngClass]="{'ascending': sortingCriterion.ascending}"></xc-icon-button>
-        <formula
-            [formula]="sortingCriterion"
-            [documentModel]="documentModel"
-            variable-menu-disabled
-            drop-disabled
-            (triggerAction)="performAction($event)"
-            tabindex="0"
-        ></formula>
-        <xc-icon-button xc-icon-name="delete" color="invert" (click)="removeFormula(sortingCriterion)"></xc-icon-button>
+  @for (sortingCriterion of sortingCriteria; track sortingCriterion) {
+    <div class="formula-row">
+      <xc-icon-button xc-icon-name="accordion" color="invert" (click)="toggleSorting(sortingCriterion)" class="sort-button" [ngClass]="{'ascending': sortingCriterion.ascending}"></xc-icon-button>
+      <formula
+        [formula]="sortingCriterion"
+        [documentModel]="documentModel"
+        variable-menu-disabled
+        drop-disabled
+        (triggerAction)="performAction($event)"
+        tabindex="0"
+      ></formula>
+      <xc-icon-button xc-icon-name="delete" color="invert" (click)="removeFormula(sortingCriterion)"></xc-icon-button>
     </div>
+  }
 </div>
 <xc-icon-button xc-icon-name="add" color="invert"
-    (click)="addFormula()">
+  (click)="addFormula()">
 </xc-icon-button>
