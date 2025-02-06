@@ -32,7 +32,7 @@ export class LeftRightComponent implements OnInit {
     rightId: string;
 
     @Output()
-    // eslint-disable-next-line @angular-eslint/no-output-native
+     
     readonly change = new EventEmitter<any[]>();
 
     @ViewChild('leftDropzone', {static: false})

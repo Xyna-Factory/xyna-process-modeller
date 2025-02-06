@@ -21,10 +21,15 @@ import { Injectable } from '@angular/core';
 import { TriggeredAction } from '@pmod/document/workflow/shared/modelling-object.component';
 import { FilterConditionData } from '@pmod/navigation/search/search.component';
 import { XoDeleteRequest } from '@pmod/xo/delete-request.model';
+import { XoGetModelledExpressionsResponse } from '@pmod/xo/expressions/get-modelled-expressions-response.model';
+import { XoModelledExpressionArray } from '@pmod/xo/expressions/modelled-expression.model';
 import { XoGetIssuesResponse } from '@pmod/xo/get-issues-response.model';
 import { XoGetWarningsResponse } from '@pmod/xo/get-warnings-response.model';
+import { XoInsertRequestContent } from '@pmod/xo/insert-request-content.model';
+import { XoItem } from '@pmod/xo/item.model';
 import { XoUnlockResponse } from '@pmod/xo/unlock-response.model';
 import { FullQualifiedName, RuntimeContext, XoClassInterface, XoJson } from '@zeta/api';
+import { downloadFile, MimeTypes } from '@zeta/base';
 
 import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, finalize, map, tap } from 'rxjs/operators';
@@ -58,11 +63,6 @@ import { XoVariableArea } from '../xo/variable-area.model';
 import { XoWorkflowInvocation } from '../xo/workflow-invocation.model';
 import { XoXmomItem } from '../xo/xmom-item.model';
 import { XmomObjectType } from './xmom-types';
-import { XoInsertRequestContent } from '@pmod/xo/insert-request-content.model';
-import { XoModelledExpressionArray } from '@pmod/xo/expressions/modelled-expression.model';
-import { XoItem } from '@pmod/xo/item.model';
-import { XoGetModelledExpressionsResponse } from '@pmod/xo/expressions/get-modelled-expressions-response.model';
-import { downloadFile, MimeTypes } from '@zeta/base';
 
 
 export enum ModellingActionType {
@@ -71,7 +71,7 @@ export enum ModellingActionType {
     convert = 'convert',
     copy = 'copy',
     copyToClipboard = 'copyToClipboard',
-    decouple = 'complete',
+    decouple = 'decouple',
     delete = 'delete',
     javaLibrary = 'javalib',
     pythonLibrary = 'pythonlib',
@@ -201,7 +201,7 @@ export class XmomService {
     }
 
 
-    private urlFromAction(action: ModellingAction): { method: HttpMethod; url: string; options: { params: HttpParams }} {
+    private urlFromAction(action: ModellingAction): { method: HttpMethod; url: string; options: { params: HttpParams } } {
         const url = this.getXmomObjectUrl(
             action.rtc,
             action.xmomItem.toFqn(),
@@ -213,7 +213,7 @@ export class XmomService {
         const options = this.getHttpParamsOption(action.paramSet);
 
         if (action.method) {
-            return { method: action.method, url, options};
+            return { method: action.method, url, options };
         }
 
         switch (action.type) {
@@ -818,9 +818,9 @@ export class XmomService {
 
     private downloadTemplate(language: string, fqn: string, rtcKey: string): Observable<ArrayBuffer> {
         const fqnObj = FullQualifiedName.decode(fqn);
-        return this.http.get('buildServiceImplTemplate', {responseType: 'arraybuffer', params: {datatype: fqnObj.encode(), workspace: rtcKey, language: language}}).pipe(
+        return this.http.get('buildServiceImplTemplate', { responseType: 'arraybuffer', params: { datatype: fqnObj.encode(), workspace: rtcKey, language: language } }).pipe(
             tap(response => {
-                const blob = new Blob([response], {type: MimeTypes.bin});
+                const blob = new Blob([response], { type: MimeTypes.bin });
                 downloadFile(blob, fqnObj.name + '_template', MimeTypes.zip);
             })
         );

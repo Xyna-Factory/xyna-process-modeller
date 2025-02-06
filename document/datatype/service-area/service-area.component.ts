@@ -55,10 +55,10 @@ export class ServiceAreaComponent extends ModellingObjectComponent {
         super(elementRef, componentMappingService, documentService, detailLevelService, injector);
 
         // instantiate specific member models such that they aren't pruned for the release build
-        /* eslint-disable @typescript-eslint/no-unused-vars */
+         
         const dynamicMethod = new XoDynamicMethod();
         const staticMethod = new XoStaticMethod();
-        /* eslint-enable @typescript-eslint/no-unused-vars */
+         
     }
 
 

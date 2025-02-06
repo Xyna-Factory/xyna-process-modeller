@@ -48,7 +48,7 @@ export class MemberVariableAreaComponent extends ModellingObjectComponent {
         @Optional() injector: Injector
     ) {
         super(elementRef, componentMappingService, documentService, detailLevelService, injector);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+         
         const antiTreeShakingInstance = new XoDataMemberVariable();
     }
 

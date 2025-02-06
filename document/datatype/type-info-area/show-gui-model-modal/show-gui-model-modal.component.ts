@@ -97,7 +97,7 @@ export class ShowGuiModelModalComponent extends XcDialogComponent<void, ShowGuiM
             res = document.execCommand('Copy');
             document.body.removeChild(input);
         } else {
-            // eslint-disable-next-line no-alert
+             
             alert('Your browser does not allow to copy text to your clipboard');
         }
         return res;

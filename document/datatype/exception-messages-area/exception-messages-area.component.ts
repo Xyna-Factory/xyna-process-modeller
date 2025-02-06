@@ -69,7 +69,7 @@ export class ExceptionMessagesAreaComponent extends ModellingObjectComponent {
     ) {
         super(elementRef, componentMappingService, documentService, detailLevelService, injector);
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+         
         const antiTreeShakingInstance = new XoExceptionMessage();
 
         this.languageDataWrapper = new XcAutocompleteDataWrapper(

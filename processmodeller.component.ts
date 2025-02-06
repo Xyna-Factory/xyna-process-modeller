@@ -21,6 +21,7 @@ import { ApiService, FullQualifiedName, RuntimeContextSelectionSettings } from '
 import { KeyboardEventType, KeyDistributionService, OutsideListenerService } from '@zeta/base';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { RouteComponent, RuntimeContextSelectionComponent } from '@zeta/nav';
+import { QueryParameterService } from '@zeta/nav/query-parameter.service';
 import { XcDialogService, XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 
 import { Subject, Subscription } from 'rxjs';
@@ -44,7 +45,6 @@ import { ErrorService } from './navigation/shared/error.service';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { XoRuntimeContext } from './xo/runtime-context.model';
 import { XoWorkflow } from './xo/workflow.model';
-import { QueryParameterService } from '@zeta/nav/query-parameter.service';
 
 
 @Component({
@@ -269,7 +269,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
         // open document(s) from URL
         this.urlProcessed = true;
         const describers = this.queryParamService.getParamsStartWith('tab')
-            .map(tab => JSON.parse(decodeURI(tab.value)) as {rtc: string; fqn: string; type: XmomObjectType})
+            .map(tab => JSON.parse(decodeURI(tab.value)) as { rtc: string; fqn: string; type: XmomObjectType })
             .map(tab => ({
                 rtc: XoRuntimeContext.fromQueryParam(tab.rtc).runtimeContext(),
                 fqn: FullQualifiedName.decode(tab.fqn),
