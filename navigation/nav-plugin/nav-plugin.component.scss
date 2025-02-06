@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2023 Xyna GmbH, Germany
+ * Copyright 2025 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,20 +15,10 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+@import "const";
 
-import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
-
-
-@Component({
-    selector: 'xfm-mod-nav-workflowlauncher',
-    templateUrl: './workflowlauncher.component.html',
-    styleUrls: ['./workflowlauncher.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
-})
-export class WorkflowLauncherComponent extends CommonNavigationComponent {
-
-    constructor(cdr: ChangeDetectorRef) {
-        super(cdr);
+:host::ng-deep {
+    xc-form-generic-panel>xc-panel {
+        min-width: unset;
     }
 }
