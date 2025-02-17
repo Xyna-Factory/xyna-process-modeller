@@ -19,10 +19,11 @@ import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { XoGuiDefiningWorkflow } from '@yggdrasil/plugin/gui-defining-workflow.model';
 import { ApiService, StartOrderOptionsBuilder, Xo, XoManagedFileID, XoXPRCRuntimeContext, XoXPRCRuntimeContextFromRuntimeContext } from '@zeta/api';
-import { XcDialogService } from '@zeta/xc';
+import { XcDialogService, XoPluginArray } from '@zeta/xc';
 import { XcDialogDefinitionComponent } from '@zeta/xc/xc-form/definitions/xc-dialog-definition/xc-dialog-definition.component';
 import { XoDefinition, XoDefinitionBundle, XoDefinitionObserver } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 import { XoStartOrderButtonDefinition } from '@zeta/xc/xc-form/definitions/xo/item-definition.model';
+import { XoPluginPath, XoPluginPathArray } from '@zeta/xc/xc-form/definitions/xo/plugin-path.model';
 import { Observable, filter, map, of, throwError } from 'rxjs';
 
 
@@ -71,6 +72,33 @@ export class PluginService implements XoDefinitionObserver {
                 this.definedUICache.set(definingWorkflow.uniqueKey, bundle);
                 return this.cloneBundle(bundle);
             })
+        );
+    }
+
+    requestPluginsByPath(paths: string[]): Observable<XoPluginArray> {
+
+        const pathsData  = paths.map(path => {
+            const xoPath: XoPluginPath = new XoPluginPath();
+            xoPath.path = path;
+            return xoPath;
+        });
+        const xoPaths: XoPluginPathArray = new XoPluginPathArray();
+        xoPaths.append(...pathsData);
+
+        return this.apiService.startOrder(
+            environment.zeta.xo.runtimeContext,
+            'xmcp.forms.plugin.FilterPluginsByPaths',
+            xoPaths, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage
+        ).pipe(
+            filter(result => {
+                if (result.errorMessage || result.output?.length === 0) {
+                    throwError(() => new Error(result.errorMessage));
+                    this.dialogs.error(result.errorMessage);
+                    return false;
+                }
+                return true;
+            }),
+            map(response => response.output[0] as XoPluginArray)
         );
     }
 
