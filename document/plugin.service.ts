@@ -140,20 +140,19 @@ export class PluginService implements XoDefinitionObserver {
 
 
     startOrder(definition: XoStartOrderButtonDefinition, input: Xo | Xo[]): Observable<Xo | Xo[]> {
+        const packedInput = pack(input);
         let preStartorder: Observable<string[]> = of();
         if (definition.encodeDataPath) {
             const encodeDefinition = new XoDefinition();
             encodeDefinition.dataPath = definition.encodeDataPath;
             encodeDefinition.setParent(definition);
-            const resolvedData = encodeDefinition.resolveData(pack(input));
-            preStartorder = this.apiService.encode(resolvedData).pipe(tap(
+            preStartorder = this.apiService.encode(encodeDefinition.resolveData(packedInput)).pipe(tap(
                 encodedValues => {
-                    for (let i = 0; i < encodedValues.length && i < encodeDefinition.getDataPaths.length; i++) {
-                        encodeDefinition.resolveAssign(encodeDefinition.getDataPaths[i], encodedValues[i]);
-                    }
+                    encodeDefinition.resolveAssignData(packedInput, encodedValues);
                 }
             ));
         }
+
         const rtc = (definition.serviceRTC ? definition.serviceRTC : this.getDefaultRTC()).toRuntimeContext();
         return preStartorder.pipe(switchMap(() => this.apiService.startOrder(
             rtc,
