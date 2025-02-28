@@ -19,12 +19,13 @@ import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { XoGuiDefiningWorkflow } from '@yggdrasil/plugin/gui-defining-workflow.model';
 import { ApiService, StartOrderOptionsBuilder, Xo, XoManagedFileID, XoXPRCRuntimeContext, XoXPRCRuntimeContextFromRuntimeContext } from '@zeta/api';
+import { pack } from '@zeta/base';
 import { XcDialogService, XoPluginArray } from '@zeta/xc';
 import { XcDialogDefinitionComponent } from '@zeta/xc/xc-form/definitions/xc-dialog-definition/xc-dialog-definition.component';
 import { XoDefinition, XoDefinitionBundle, XoDefinitionObserver } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 import { XoStartOrderButtonDefinition } from '@zeta/xc/xc-form/definitions/xo/item-definition.model';
 import { XoPluginPath, XoPluginPathArray } from '@zeta/xc/xc-form/definitions/xo/plugin-path.model';
-import { Observable, filter, map, of, throwError } from 'rxjs';
+import { Observable, filter, map, of, switchMap, tap, throwError } from 'rxjs';
 
 
 /**
@@ -139,13 +140,25 @@ export class PluginService implements XoDefinitionObserver {
 
 
     startOrder(definition: XoStartOrderButtonDefinition, input: Xo | Xo[]): Observable<Xo | Xo[]> {
+        const packedInput = pack(input);
+        let preStartorder: Observable<string[]> = of([]);
+        if (definition.encodeDataPath) {
+            const encodeDefinition = new XoDefinition();
+            encodeDefinition.dataPath = definition.encodeDataPath;
+            encodeDefinition.setParent(definition);
+            preStartorder = this.apiService.encode(encodeDefinition.resolveData(packedInput)).pipe(
+                filter(encodedValues => encodedValues.length > 0),
+                tap(encodedValues => encodeDefinition.resolveAssignData(packedInput, encodedValues))
+            );
+        }
+
         const rtc = (definition.serviceRTC ? definition.serviceRTC : this.getDefaultRTC()).toRuntimeContext();
-        return this.apiService.startOrder(
+        return preStartorder.pipe(switchMap(() => this.apiService.startOrder(
             rtc,
             definition.serviceFQN,
             input, null,
             new StartOrderOptionsBuilder().withErrorMessage(true).async(!definition.synchronously).options
-        ).pipe(map(result => result.output));
+        )), map(result => result.output));
     }
 
     uploadFile?(host?: string): Observable<XoManagedFileID> {
