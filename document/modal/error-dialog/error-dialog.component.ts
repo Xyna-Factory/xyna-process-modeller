@@ -34,7 +34,8 @@ export interface ErrorDialogData {
 @Component({
     selector: 'error-dialog',
     templateUrl: './error-dialog.component.html',
-    styleUrls: ['./error-dialog.component.scss']
+    styleUrls: ['./error-dialog.component.scss'],
+    standalone: false
 })
 export class ErrorDialogComponent extends XcDialogComponent<void, ErrorDialogData> {
 

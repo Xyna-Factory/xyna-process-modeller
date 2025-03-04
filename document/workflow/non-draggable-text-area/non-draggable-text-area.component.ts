@@ -23,7 +23,8 @@ import { ModellingObjectComponent } from '../shared/modelling-object.component';
 @Component({
     selector: 'non-draggable-text-area',
     templateUrl: './non-draggable-text-area.component.html',
-    styleUrls: ['./non-draggable-text-area.component.scss']
+    styleUrls: ['./non-draggable-text-area.component.scss'],
+    standalone: false
 })
 export class NonDraggableTextAreaComponent extends ModellingObjectComponent implements AfterViewInit {
 

@@ -32,7 +32,8 @@ import { FilterConditionData } from '../search/search.component';
     selector: 'xfm-mod-nav-xmomlist',
     templateUrl: './xmom-list.component.html',
     styleUrls: ['./xmom-list.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class XMOMListComponent {
 

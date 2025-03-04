@@ -33,7 +33,8 @@ export interface CreateAssignmentEvent {
     selector: 'variable-tree-node',
     templateUrl: './variable-tree-node.component.html',
     styleUrls: ['./variable-tree-node.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class VariableTreeNodeComponent implements AfterViewInit, TreeNodeObserver {
     private _node: SkeletonTreeNode;

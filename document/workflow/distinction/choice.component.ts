@@ -22,7 +22,8 @@ import { ModellingItemComponent } from '../shared/modelling-object.component';
 
 
 @Component({
-    template: ''
+    template: '',
+    standalone: false
 })
 export class ChoiceComponent extends ModellingItemComponent {
 

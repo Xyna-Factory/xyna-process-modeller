@@ -41,7 +41,8 @@ import { XoXmomItem } from '../../xo/xmom-item.model';
 @Component({
     selector: 'xfm-mod-nav-xmomlistitem',
     templateUrl: './xmom-list-item.component.html',
-    styleUrls: ['./xmom-list-item.component.scss']
+    styleUrls: ['./xmom-list-item.component.scss'],
+    standalone: false
 })
 export class XMOMListItemComponent {
 

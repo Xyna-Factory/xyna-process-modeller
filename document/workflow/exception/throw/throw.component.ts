@@ -25,7 +25,8 @@ import { ModellingItemComponent } from '../../shared/modelling-object.component'
 @Component({
     selector: 'throw',
     templateUrl: './throw.component.html',
-    styleUrls: ['./throw.component.scss']
+    styleUrls: ['./throw.component.scss'],
+    standalone: false
 })
 export class ThrowComponent extends ModellingItemComponent {
 

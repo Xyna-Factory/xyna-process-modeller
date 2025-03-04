@@ -46,7 +46,8 @@ import { BranchSelectionService } from './workflow/distinction/branch/branch-sel
     templateUrl: './workflow-document.component.html',
     styleUrls: ['./workflow-document.component.scss'],
     // single service instances per document
-    providers: [SelectionService, BranchSelectionService, WorkflowDetailLevelService]
+    providers: [SelectionService, BranchSelectionService, WorkflowDetailLevelService],
+    standalone: false
 })
 export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowDocumentModel> implements OnDestroy {
 

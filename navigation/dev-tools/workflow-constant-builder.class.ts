@@ -67,7 +67,7 @@ export class WorkflowConstantBuilder {
                         keyValuePairs.forEach(pair => {
                             object = object.replace(pair.key, pair.value);
                         });
-                        const CONST = 'export const ' + constName +  ' = ' + object + ';';
+                        const CONST = 'export const ' + constName + ' = ' + object + ';';
                         subj.next(CONST);
                         subj.complete();
                     },
@@ -78,15 +78,15 @@ export class WorkflowConstantBuilder {
                 );
 
             } else {
-                const CONST = 'export const ' + constName +  ' = ' + object + ';';
+                const CONST = 'export const ' + constName + ' = ' + object + ';';
                 subj.next(CONST);
                 subj.complete();
             }
         },
-        error => {
-            subj.error(error);
-            subj.complete();
-        });
+            error => {
+                subj.error(error);
+                subj.complete();
+            });
 
         return subj.asObservable();
     }
@@ -174,15 +174,15 @@ export class WorkflowConstantBuilder {
         return getBranch(tree, 0);
     }
 
-    private static makeSignatureRequests(apiService: ApiService, rtc: RuntimeContext, items: XoXmomItem[]): Observable<({key: string; value: string})[]> {
+    private static makeSignatureRequests(apiService: ApiService, rtc: RuntimeContext, items: XoXmomItem[]): Observable<({ key: string; value: string })[]> {
 
-        const subj = new Subject<({key: string; value: string})[]>();
+        const subj = new Subject<({ key: string; value: string })[]>();
 
-        const response: ({key: string; value: string})[] = [];
+        const response: ({ key: string; value: string })[] = [];
 
         const singleRequest = (innerRtc: RuntimeContext, innerOrderType: string): Observable<ReferingSignature> =>
             apiService.getSignature(innerRtc, innerOrderType).pipe<ReferingSignature>(
-                map((sig: OrderTypeSignature) => <ReferingSignature>{...sig, ordertype: innerOrderType})
+                map((sig: OrderTypeSignature) => <ReferingSignature>{ ...sig, ordertype: innerOrderType })
             );
 
         let num = 0;
@@ -192,7 +192,7 @@ export class WorkflowConstantBuilder {
                     const inputs = sig.inputs.map<string>(input => input.fqn.name);
                     const outputs = sig.outputs.map<string>(output => output.fqn.name);
                     const value = 'INPUTS [' + inputs.join(', ') + '] OUTPUTS [' + outputs.join(', ') + ']';
-                    response.push({key: this.createRegExStampByFQN(sig.ordertype), value});
+                    response.push({ key: this.createRegExStampByFQN(sig.ordertype), value });
                     num++;
                     if (num >= items.length) {
                         // subject next and complete

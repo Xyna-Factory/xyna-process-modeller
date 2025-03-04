@@ -34,7 +34,8 @@ import { InvocationComponent } from '../invocation/invocation.component';
 @Component({
     selector: 'query',
     templateUrl: './query.component.html',
-    styleUrls: ['./query.component.scss']
+    styleUrls: ['./query.component.scss'],
+    standalone: false
 })
 export class QueryComponent extends InvocationComponent {
 

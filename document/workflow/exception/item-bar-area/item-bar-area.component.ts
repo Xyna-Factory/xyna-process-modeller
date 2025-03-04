@@ -29,7 +29,8 @@ import { ModellingObjectComponent } from '../../shared/modelling-object.componen
 @Component({
     selector: 'item-bar-area',
     templateUrl: './item-bar-area.component.html',
-    styleUrls: ['./item-bar-area.component.scss']
+    styleUrls: ['./item-bar-area.component.scss'],
+    standalone: false
 })
 export class ItemBarAreaComponent extends ModellingObjectComponent {
 

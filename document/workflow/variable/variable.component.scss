@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-@import "const";
+@use '../../../const' as *;
 
 $border-color: $color-gray-1;
 $border: 1px solid $border-color;
@@ -169,7 +169,7 @@ $menu-width: 20px;
 
     // show gradient background for prototypes
     &.prototype .label-area {
-        background: repeating-linear-gradient(-60deg, $prototype-variable-gradient-color, $prototype-variable-gradient-color 12px, $color-white 0px, $color-white 24px);
+        background: repeating-linear-gradient(-60deg, $prototype-variable-gradient-color, $prototype-variable-gradient-color 12px, $color-normal 0px, $color-normal 24px);
     }
 
     .content-area .label-area.show-fqn {

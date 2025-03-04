@@ -27,7 +27,8 @@ import { ModellingObjectComponent } from '../../shared/modelling-object.componen
 @Component({
     selector: 'exception-handling-area',
     templateUrl: './exception-handling-area.component.html',
-    styleUrls: ['./exception-handling-area.component.scss']
+    styleUrls: ['./exception-handling-area.component.scss'],
+    standalone: false
 })
 export class ExceptionHandlingAreaComponent extends ModellingObjectComponent {
 

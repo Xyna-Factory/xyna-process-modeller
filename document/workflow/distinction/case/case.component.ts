@@ -28,7 +28,8 @@ import { ModellingItemComponent } from '../../shared/modelling-object.component'
 @Component({
     selector: 'case',
     templateUrl: './case.component.html',
-    styleUrls: ['./case.component.scss']
+    styleUrls: ['./case.component.scss'],
+    standalone: false
 })
 export class CaseComponent extends ModellingItemComponent {
 

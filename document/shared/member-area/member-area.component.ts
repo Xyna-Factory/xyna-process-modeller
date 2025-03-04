@@ -32,7 +32,8 @@ import { combineLatest } from 'rxjs';
 @Component({
     selector: 'member-area',
     templateUrl: './member-area.component.html',
-    styleUrls: ['./member-area.component.scss']
+    styleUrls: ['./member-area.component.scss'],
+    standalone: false
 })
 export class MemberAreaComponent extends ModellingObjectComponent {
 

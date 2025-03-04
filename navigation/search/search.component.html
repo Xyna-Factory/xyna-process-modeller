@@ -1,33 +1,37 @@
 <h2 xc-i18n class="navigationbar-title">header</h2>
 <div class="area-content">
-    <xc-form-autocomplete
-        xc-form-field-compact
-        xc-form-field-suffix="clear"
-        xc-form-autocomplete-fulltextsearch
-        [(xc-form-autocomplete-option)]="factoryService.runtimeContextDataWrapper.value"
-        [xc-form-autocomplete-options]="factoryService.runtimeContextDataWrapper.values"
-        (xc-form-autocomplete-optionsClosed)="!factoryService.runtimeContextDataWrapper.value && factoryService.resetToActiveWorkspace()"
-    ></xc-form-autocomplete>
-    <xc-form-input
+  <xc-form-autocomplete
+    xc-form-field-compact
+    xc-form-field-suffix="clear"
+    xc-form-autocomplete-fulltextsearch
+    [(xc-form-autocomplete-option)]="factoryService.runtimeContextDataWrapper.value"
+    [xc-form-autocomplete-options]="factoryService.runtimeContextDataWrapper.values"
+    (xc-form-autocomplete-optionsClosed)="!factoryService.runtimeContextDataWrapper.value && factoryService.resetToActiveWorkspace()"
+  ></xc-form-autocomplete>
+  <xc-form-input
+    xc-i18n
+    #input
+    placeholder="input-search"
+    xc-form-field-compact
+    xc-form-field-suffix="clear"
+    (valueChange)="search()"
+    (valueKeydown)="$event.key === 'Enter' && search()"
+  ></xc-form-input>
+  <div class="filter-options">
+    @for (filterItem of filterItems; track filterItem) {
+      <xc-checkbox
         xc-i18n
-        #input
-        placeholder="input-search"
-        xc-form-field-compact
-        xc-form-field-suffix="clear"
-        (valueChange)="search()"
-        (valueKeydown)="$event.key === 'Enter' && search()"
-    ></xc-form-input>
-    <div class="filter-options">
-        <xc-checkbox *ngFor="let filterItem of filterItems"
-            xc-i18n
-            class="filter"
-            [label]="filterItem.label"
-            [(checked)]="filterItem.checked"
-            (checkedChange)="search()"
-        ></xc-checkbox>
-    </div>
-    <div class="factory-objects zeta-scrollbar">
-        <label *ngIf="input.value && !debounce && !xmomList.pending && !xmomList.xmomItems.length">{{'no-entries' | xcI18n}}</label>
-        <xfm-mod-nav-xmomlist xc-i18n-context='xfm-mod-nav-xmomlist' show-fqn></xfm-mod-nav-xmomlist>
-    </div>
+        class="filter"
+        [label]="filterItem.label"
+        [(checked)]="filterItem.checked"
+        (checkedChange)="search()"
+      ></xc-checkbox>
+    }
+  </div>
+  <div class="factory-objects zeta-scrollbar">
+    @if (input.value && !debounce && !xmomList.pending && !xmomList.xmomItems.length) {
+      <label>{{'no-entries' | xcI18n}}</label>
+    }
+    <xfm-mod-nav-xmomlist xc-i18n-context='xfm-mod-nav-xmomlist' show-fqn></xfm-mod-nav-xmomlist>
+  </div>
 </div>

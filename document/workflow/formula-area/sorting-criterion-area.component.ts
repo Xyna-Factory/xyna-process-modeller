@@ -28,7 +28,8 @@ import { FormulaAreaComponent } from './formula-area.component';
 @Component({
     selector: 'sorting-criterion-area',
     templateUrl: './sorting-criterion-area.component.html',
-    styleUrls: ['./sorting-criterion-area.component.scss', './formula-area.component.scss']
+    styleUrls: ['./sorting-criterion-area.component.scss', './formula-area.component.scss'],
+    standalone: false
 })
 export class SortingCriterionAreaComponent extends FormulaAreaComponent {
 

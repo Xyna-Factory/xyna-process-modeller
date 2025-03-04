@@ -1,15 +1,19 @@
 <div id="xmom-list"
-    class="zeta-scrollbar">
-    <xfm-mod-nav-xmomlistitem *ngFor="let xmomItem of xmomItems"
-        [mod-draggable]="xmomItem" mod-draggable-allowed-drag-type="insert"
-        [xmom-item]="xmomItem"
-        [show-fqn]="showFQN"
-        class="item"
-        (menuOpened)="openMenusSubject.next(openMenusSubject.value + 1)"
-        (menuClosed)="openMenusSubject.next(openMenusSubject.value - 1)"
-    >
+  class="zeta-scrollbar">
+  @for (xmomItem of xmomItems; track xmomItem) {
+    <xfm-mod-nav-xmomlistitem
+      [mod-draggable]="xmomItem" mod-draggable-allowed-drag-type="insert"
+      [xmom-item]="xmomItem"
+      [show-fqn]="showFQN"
+      class="item"
+      (menuOpened)="openMenusSubject.next(openMenusSubject.value + 1)"
+      (menuClosed)="openMenusSubject.next(openMenusSubject.value - 1)"
+      >
     </xfm-mod-nav-xmomlistitem>
+  }
 </div>
-<div class="overlay" *ngIf="pending">
+@if (pending) {
+  <div class="overlay">
     <xc-spinner></xc-spinner>
-</div>
+  </div>
+}

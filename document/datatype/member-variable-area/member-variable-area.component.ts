@@ -35,7 +35,8 @@ import { XoModellingItem } from '@pmod/xo/modelling-item.model';
 @Component({
     selector: 'member-variable-area',
     templateUrl: './member-variable-area.component.html',
-    styleUrls: ['./member-variable-area.component.scss']
+    styleUrls: ['./member-variable-area.component.scss'],
+    standalone: false
 })
 export class MemberVariableAreaComponent extends ModellingObjectComponent {
 
@@ -47,7 +48,7 @@ export class MemberVariableAreaComponent extends ModellingObjectComponent {
         @Optional() injector: Injector
     ) {
         super(elementRef, componentMappingService, documentService, detailLevelService, injector);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+         
         const antiTreeShakingInstance = new XoDataMemberVariable();
     }
 

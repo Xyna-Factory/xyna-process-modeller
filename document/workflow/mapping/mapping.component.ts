@@ -37,7 +37,8 @@ import { ModellingItemComponent } from '../shared/modelling-object.component';
 @Component({
     selector: 'mapping',
     templateUrl: './mapping.component.html',
-    styleUrls: ['./mapping.component.scss']
+    styleUrls: ['./mapping.component.scss'],
+    standalone: false
 })
 export class MappingComponent extends ModellingItemComponent implements OnDestroy {
 

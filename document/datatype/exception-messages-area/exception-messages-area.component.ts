@@ -42,7 +42,8 @@ export enum ExceptionMessageLanguage {
 @Component({
     selector: 'exception-messages-area',
     templateUrl: './exception-messages-area.component.html',
-    styleUrls: ['./exception-messages-area.component.scss']
+    styleUrls: ['./exception-messages-area.component.scss'],
+    standalone: false
 })
 export class ExceptionMessagesAreaComponent extends ModellingObjectComponent {
 
@@ -68,7 +69,7 @@ export class ExceptionMessagesAreaComponent extends ModellingObjectComponent {
     ) {
         super(elementRef, componentMappingService, documentService, detailLevelService, injector);
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+         
         const antiTreeShakingInstance = new XoExceptionMessage();
 
         this.languageDataWrapper = new XcAutocompleteDataWrapper(

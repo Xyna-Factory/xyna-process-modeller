@@ -27,7 +27,8 @@ import { ErrorService } from '../error.service';
 @Component({
     selector: 'xfm-mod-nav-error',
     templateUrl: './error-item.component.html',
-    styleUrls: ['./error-item.component.scss']
+    styleUrls: ['./error-item.component.scss'],
+    standalone: false
 })
 export class ErrorItemComponent {
     @Input()

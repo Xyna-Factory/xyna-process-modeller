@@ -26,7 +26,8 @@ import { SkeletonTreeNode } from './data-source/skeleton-tree-node';
     selector: 'variable-tree',
     templateUrl: './variable-tree.component.html',
     styleUrls: ['./variable-tree.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class VariableTreeComponent {
     private _dataSource: SkeletonTreeDataSource;

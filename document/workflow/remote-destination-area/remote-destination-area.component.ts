@@ -31,7 +31,8 @@ import { ModellingObjectComponent } from '../shared/modelling-object.component';
 @Component({
     selector: 'remote-destination-area',
     templateUrl: './remote-destination-area.component.html',
-    styleUrls: ['./remote-destination-area.component.scss']
+    styleUrls: ['./remote-destination-area.component.scss'],
+    standalone: false
 })
 export class RemoteDestinationAreaComponent extends ModellingObjectComponent {
 

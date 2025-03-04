@@ -26,7 +26,8 @@ import { FormulaAreaComponent } from './formula-area.component';
 @Component({
     selector: 'selection-mask-criterion-area',
     templateUrl: './formula-area.component.html',
-    styleUrls: ['./formula-area.component.scss']
+    styleUrls: ['./formula-area.component.scss'],
+    standalone: false
 })
 export class SelectionMaskCriterionAreaComponent extends FormulaAreaComponent {
 

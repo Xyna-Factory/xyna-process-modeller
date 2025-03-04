@@ -15,9 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-$dnd-hover-background-color: unset !default;
-
-@import "const";
+@use '../../../../const' as *;
 
 :host {
     display: flex;

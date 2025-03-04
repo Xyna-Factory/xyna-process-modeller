@@ -31,7 +31,8 @@ import { FormulaChildComponent } from '../formula-part.component';
 @Component({
     selector: 'formula-part-member',
     templateUrl: './formula-part-member.component.html',
-    styleUrls: ['./formula-part-member.component.scss']
+    styleUrls: ['./formula-part-member.component.scss'],
+    standalone: false
 })
 export class FormulaPartMemberComponent extends FormulaEditablePartComponent implements AfterViewInit, AfterContentInit, FormulaChildComponent {
 

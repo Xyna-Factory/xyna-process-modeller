@@ -1,5 +1,5 @@
-<xc-form-autocomplete
-    *ngIf="!oisDataWrapper.values || oisDataWrapper.values.length > 0"
+@if (!oisDataWrapper.values || oisDataWrapper.values.length > 0) {
+  <xc-form-autocomplete
     xc-i18n
     label="label-order-input-source"
     [(xc-form-autocomplete-option)]="oisDataWrapper.value" [xc-form-autocomplete-options]="oisDataWrapper.values"
@@ -7,5 +7,8 @@
     xc-form-field-suffix="clear"
     xc-form-field-compact
     (xc-form-autocomplete-optionsOpened)="openedDropdown()"
-></xc-form-autocomplete>
-<label *ngIf="oisDataWrapper.values?.length === 0" xc-i18n>label-no-order-input-sources</label>
+  ></xc-form-autocomplete>
+}
+@if (oisDataWrapper.values?.length === 0) {
+  <label xc-i18n>label-no-order-input-sources</label>
+}

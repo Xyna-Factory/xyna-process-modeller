@@ -1,57 +1,59 @@
 <div class="area-wrapper" dataflow-container xc-i18n-context='workflow'>
-    <dataflow *ngIf="dataflow"
-        [dataflow]="dataflow"
-        [workflow]="workflow"
-        [insideForeignRtc]="insideForeignRtc"
-        (dataflowChange)="changeDataflow($event)"
+  @if (dataflow) {
+    <dataflow
+      [dataflow]="dataflow"
+      [workflow]="workflow"
+      [insideForeignRtc]="insideForeignRtc"
+      (dataflowChange)="changeDataflow($event)"
     ></dataflow>
-    <variable-area-document
-        [variableArea]="workflow.inputArea"
-        xc-variable-area-kind="input-area"
-        [documentModel]="document"
-        (triggerAction)="performModellingAction($event)"
-    ></variable-area-document>
-    <type-label-area
-        [typeLabelArea]="workflow.typeLabelArea"
-        [documentModel]="document"
-        [menuItems]="menuItems"
-        [menuTemplateRef]="menuTemplate"
-        (triggerAction)="performModellingAction($event)"
-    ></type-label-area>
-    <documentation-area
-        [documentationArea]="workflow.documentationArea"
-        [documentModel]="document"
-        (triggerAction)="performModellingAction($event)"
-    ></documentation-area>
-    <workflow
-        [workflow]="workflow"
-        [documentModel]="document"
-        (triggerAction)="performModellingAction($event)"
-        class="zeta-scrollbar"
-    ></workflow>
-    <exception-handling-area
-        [exceptionHandlingArea]="workflow.exceptionHandlingArea"
-        [documentModel]="document"
-        (triggerAction)="performModellingAction($event)"
-    ></exception-handling-area>
-    <variable-area-document
-        [variableArea]="workflow.outputArea"
-        xc-variable-area-kind="output-area"
-        [documentModel]="document"
-        (triggerAction)="performModellingAction($event)"
-    ></variable-area-document>
+  }
+  <variable-area-document
+    [variableArea]="workflow.inputArea"
+    xc-variable-area-kind="input-area"
+    [documentModel]="document"
+    (triggerAction)="performModellingAction($event)"
+  ></variable-area-document>
+  <type-label-area
+    [typeLabelArea]="workflow.typeLabelArea"
+    [documentModel]="document"
+    [menuItems]="menuItems"
+    [menuTemplateRef]="menuTemplate"
+    (triggerAction)="performModellingAction($event)"
+  ></type-label-area>
+  <documentation-area
+    [documentationArea]="workflow.documentationArea"
+    [documentModel]="document"
+    (triggerAction)="performModellingAction($event)"
+  ></documentation-area>
+  <workflow
+    [workflow]="workflow"
+    [documentModel]="document"
+    (triggerAction)="performModellingAction($event)"
+    class="zeta-scrollbar"
+  ></workflow>
+  <exception-handling-area
+    [exceptionHandlingArea]="workflow.exceptionHandlingArea"
+    [documentModel]="document"
+    (triggerAction)="performModellingAction($event)"
+  ></exception-handling-area>
+  <variable-area-document
+    [variableArea]="workflow.outputArea"
+    xc-variable-area-kind="output-area"
+    [documentModel]="document"
+    (triggerAction)="performModellingAction($event)"
+  ></variable-area-document>
 
-    <ng-template #menuTemplate>
-        <xc-icon-button
-            *xc-menu-service="showMenu; let menuService"
-            [xc-menu-trigger]="menuService.component"
-            (xc-menu-trigger)="menuService.set(menuItems, {xNexttoTrigger: true, withArrow: true, xOffset: 8})"
-            xc-icon-name="misc-contextmenu"
-            xc-icon-style="modeller"
-            xc-icon-size="small"
-            class="menu-button"
-        ></xc-icon-button>
-    </ng-template>
+  <ng-template #menuTemplate>
+    <xc-icon-button
+      *xc-menu-service="showMenu; let menuService"
+      [xc-menu-trigger]="menuService.component"
+      (xc-menu-trigger)="menuService.set(menuItems, {xNexttoTrigger: true, withArrow: true, xOffset: 8})"
+      xc-icon-name="misc-contextmenu"
+      xc-icon-style="modeller"
+      xc-icon-size="small"
+      class="menu-button"
+    ></xc-icon-button>
+  </ng-template>
 
-    <drop-indicator></drop-indicator>
+  <drop-indicator></drop-indicator>
 </div>

@@ -36,7 +36,8 @@ type XMLState = 'current' | 'saved' | 'deployed';
 
 @Component({
     templateUrl: './show-xml-modal.component.html',
-    styleUrls: ['./show-xml-modal.component.scss']
+    styleUrls: ['./show-xml-modal.component.scss'],
+    standalone: false
 })
 export class ShowXmlModalComponent extends XcDialogComponent<void, ShowXmlModalData> {
 

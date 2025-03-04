@@ -30,7 +30,8 @@ import { ModellingItemComponent } from '../shared/modelling-object.component';
 @Component({
     selector: 'foreach',
     templateUrl: './foreach.component.html',
-    styleUrls: ['./foreach.component.scss']
+    styleUrls: ['./foreach.component.scss'],
+    standalone: false
 })
 export class ForeachComponent extends ModellingItemComponent {
 

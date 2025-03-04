@@ -15,11 +15,8 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-$service-step-vertical-gap: unset !default;
-$service-step-border-radius: unset !default;
 
-
-@import "const";
+@use '../../../const' as *;
 
 
 // only set opacity for the first item without runtime info

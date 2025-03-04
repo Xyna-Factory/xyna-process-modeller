@@ -20,8 +20,8 @@ import { XoObjectClass, XoProperty, XoTransient } from '@zeta/api';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { DeploymentState, XmomObjectType } from '../api/xmom-types';
-import { XoLibrariesArea } from './libraries-area.model';
 import { XoJavaSharedLibrariesArea } from './java-shared-libraries-area.model';
+import { XoLibrariesArea } from './libraries-area.model';
 import { XoMemberMethodArea } from './member-method-area.model';
 import { XoModellingItem } from './modelling-item.model';
 import { XoServiceGroupTypeLabelArea } from './service-group-type-label-area.model';
@@ -74,7 +74,6 @@ export class XoServiceGroup extends XoXmomItem {
                 // TODO: remove backwards compatibility
                 case 'methodsArea':
                 // TODO: rename to memberMethodsArea (same as in data type)
-                // eslint-disable-next-line no-fallthrough
                 case XoServiceGroup.METHODS_AREA:    this.methodsArea             = area as XoMemberMethodArea; break;
             }
         }

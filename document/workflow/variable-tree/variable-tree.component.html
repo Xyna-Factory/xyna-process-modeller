@@ -1,6 +1,8 @@
-<variable-tree-node *ngIf="(dataSource.root$ | async)"
+@if ((dataSource.root$ | async)) {
+  <variable-tree-node
     [node]="(dataSource.root$ | async)"
     [highlightMarks]="highlightMarkedNodes"
     (assignedVariable)="createdAssignment.emit($event)"
     (selectionChange)="select($event)"
-></variable-tree-node>
+  ></variable-tree-node>
+}

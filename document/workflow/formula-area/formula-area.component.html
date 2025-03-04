@@ -1,29 +1,39 @@
-<xc-form-label *ngIf="!!areaLabel" xc-i18n>{{areaLabel}}</xc-form-label>
+@if (!!areaLabel) {
+  <xc-form-label xc-i18n>{{areaLabel}}</xc-form-label>
+}
 <div class="formula-list" xc-i18n-context="formula-area">
-    <div *ngFor="let formula of formulas; let i = index" class="formula-row">
-        <formula
-            [formula]="formula"
-            [documentModel]="documentModel"
-            variable-menu-disabled
-            (triggerAction)="performAction($event)"
-            tabindex="0"
-        ></formula>
-        <xc-icon-button *ngIf="!readonly"
-            xc-icon-name="copy"
-            xc-icon-size="small"
-            color="invert"
-            (click)="duplicateFormula(formula, i + 1)"
-            xc-tooltip="duplicate-formula"
-            xc-i18n
+  @for (formula of formulas; track formula; let i = $index) {
+    <div class="formula-row">
+      <formula
+        [formula]="formula"
+        [documentModel]="documentModel"
+        variable-menu-disabled
+        (triggerAction)="performAction($event)"
+        tabindex="0"
+      ></formula>
+      @if (!readonly) {
+        <xc-icon-button
+          xc-icon-name="copy"
+          xc-icon-size="small"
+          color="invert"
+          (click)="duplicateFormula(formula, i + 1)"
+          xc-tooltip="duplicate-formula"
+          xc-i18n
         ></xc-icon-button>
-        <xc-icon-button *ngIf="!readonly"
-            xc-icon-name="delete"
-            xc-icon-size="small"
-            color="invert"
-            (click)="removeFormula(formula)"
-            xc-tooltip="delete-formula"
-            xc-i18n
+      }
+      @if (!readonly) {
+        <xc-icon-button
+          xc-icon-name="delete"
+          xc-icon-size="small"
+          color="invert"
+          (click)="removeFormula(formula)"
+          xc-tooltip="delete-formula"
+          xc-i18n
         ></xc-icon-button>
+      }
     </div>
+  }
 </div>
-<xc-icon-button *ngIf="!readonly" xc-icon-name="add" xc-icon-size="small" color="invert" (click)="addFormula()"></xc-icon-button>
+@if (!readonly) {
+  <xc-icon-button xc-icon-name="add" xc-icon-size="small" color="invert" (click)="addFormula()"></xc-icon-button>
+}

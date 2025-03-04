@@ -31,7 +31,8 @@ import { DatatypeVariableTabComponent } from '../datatype-tab.component';
 @Component({
     templateUrl: './member-variable-base-tab.component.html',
     styleUrls: ['./member-variable-base-tab.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class MemberVariableBaseTabComponent extends DatatypeVariableTabComponent {
 

@@ -33,7 +33,8 @@ export interface XMOMTreeItemState {
 @Component({
     selector: 'xfm-mod-nav-xmomtreeitem',
     templateUrl: './xmom-tree-item.component.html',
-    styleUrls: ['./xmom-tree-item.component.scss']
+    styleUrls: ['./xmom-tree-item.component.scss'],
+    standalone: false
 })
 export class XMOMTreeItemComponent {
 

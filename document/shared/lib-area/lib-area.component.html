@@ -1,12 +1,16 @@
 <div class="row">
-    <xc-icon-button class="toggle" [class.rotated]="javaExpand" (click)="toggleJavaExpand()" xc-icon-name="accordion" xc-icon-size="small"></xc-icon-button>
-    <xc-form-label class="label" xc-i18n>java-libraries-label</xc-form-label>
-    <xc-icon-button (click)="addJavaLibrary()" xc-icon-name="add" [disabled]="readonly"></xc-icon-button>
+  <xc-icon-button class="toggle" [class.rotated]="javaExpand" (click)="toggleJavaExpand()" xc-icon-name="accordion" xc-icon-size="small"></xc-icon-button>
+  <xc-form-label class="label" xc-i18n>java-libraries-label</xc-form-label>
+  <xc-icon-button (click)="addJavaLibrary()" xc-icon-name="add" [disabled]="readonly"></xc-icon-button>
 </div>
-<xc-rich-list *ngIf="javaExpand" [xc-rich-list-items]="javaLibraryRichListItems"></xc-rich-list>
+@if (javaExpand) {
+  <xc-rich-list [xc-rich-list-items]="javaLibraryRichListItems"></xc-rich-list>
+}
 <div class="row">
-    <xc-icon-button class="toggle" [class.rotated]="pythonExpand" (click)="togglePythonExpand()" xc-icon-name="accordion" xc-icon-size="small"></xc-icon-button>
-    <xc-form-label class="label" xc-i18n>python-libraries-label</xc-form-label>
-    <xc-icon-button (click)="addPythonLibrary()" xc-icon-name="add" [disabled]="readonly"></xc-icon-button>
+  <xc-icon-button class="toggle" [class.rotated]="pythonExpand" (click)="togglePythonExpand()" xc-icon-name="accordion" xc-icon-size="small"></xc-icon-button>
+  <xc-form-label class="label" xc-i18n>python-libraries-label</xc-form-label>
+  <xc-icon-button (click)="addPythonLibrary()" xc-icon-name="add" [disabled]="readonly"></xc-icon-button>
 </div>
-<xc-rich-list *ngIf="pythonExpand" [xc-rich-list-items]="pythonLibraryRichListItems"></xc-rich-list>
+@if (pythonExpand) {
+  <xc-rich-list [xc-rich-list-items]="pythonLibraryRichListItems"></xc-rich-list>
+}

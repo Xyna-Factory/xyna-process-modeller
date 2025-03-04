@@ -63,11 +63,11 @@ export class XoQuery extends XoInvocation {
         super(_ident);
 
         // instantiate specific member models such that they aren't pruned for the release build
-        /* eslint-disable @typescript-eslint/no-unused-vars */
+         
         const f = new XoFilterCriterion();
         const s = new XoSortingCriterion();
         const m = new XoSelectionMaskCriterion();
-        /* eslint-enable @typescript-eslint/no-unused-vars */
+         
     }
 
 

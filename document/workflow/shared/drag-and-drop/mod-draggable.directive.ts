@@ -21,7 +21,8 @@ import { DRAG_CSS_CLASSES, DragType, Draggable, ModDnDEventConvert, ModDragAndDr
 
 
 @Directive({
-    selector: '[mod-draggable]'
+    selector: '[mod-draggable]',
+    standalone: false
 })
 export class ModDraggableDirective implements OnInit {
 

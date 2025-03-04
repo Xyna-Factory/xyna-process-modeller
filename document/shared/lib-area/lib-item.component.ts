@@ -32,7 +32,8 @@ export interface LibItemData {
 
 @Component({
     templateUrl: './lib-item.component.html',
-    styleUrls: [ './lib-item.component.scss']
+    styleUrls: ['./lib-item.component.scss'],
+    standalone: false
 })
 export class LibItemComponent extends XcRichListItemComponent<void, LibItemData> {
 

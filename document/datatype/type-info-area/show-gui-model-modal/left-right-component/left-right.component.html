@@ -1,57 +1,63 @@
 
 <div class="left half">
-    <div class="title" *ngIf="leftTitle">{{leftTitle}}</div>
-    <div class="dropzone"
-        #leftDropzone
-        (focus)="onfocusLeft()"
-        (blur)="onblurLeft()"
-        tabindex="0"
-        role="listbox"
-        [attr.aria-label]="leftTitle"
-        [attr.aria-activedescendant]="leftId + '_' + focusedIndexLeft"
-        (dragover)="dropzoneDragOver($event)"
-        (drop)="dropzoneDrop($event)"
-        data-side="left"
+  @if (leftTitle) {
+    <div class="title">{{leftTitle}}</div>
+  }
+  <div class="dropzone"
+    #leftDropzone
+    (focus)="onfocusLeft()"
+    (blur)="onblurLeft()"
+    tabindex="0"
+    role="listbox"
+    [attr.aria-label]="leftTitle"
+    [attr.aria-activedescendant]="leftId + '_' + focusedIndexLeft"
+    (dragover)="dropzoneDragOver($event)"
+    (drop)="dropzoneDrop($event)"
+    data-side="left"
     >
-        <div
-            role="option"
-            [ngClass]="getItemsClasses(item)"
-            [attr.aria-selected]="isItemFocused(item)"
-            [id]="leftId + '_' + i"
-            draggable="true"
-            (dragstart)="itemDragStart(item)"
-            (dragend)="itemDragEnd()"
-            (dragenter)="itemDragEnter(item)"
-            (mousedown)="itemMousedown($event, item)"
-            *ngFor="let item of leftItems; let i=index"
-        >{{item}}</div>
-    </div>
+    @for (item of leftItems; track item; let i = $index) {
+      <div
+        role="option"
+        [ngClass]="getItemsClasses(item)"
+        [attr.aria-selected]="isItemFocused(item)"
+        [id]="leftId + '_' + i"
+        draggable="true"
+        (dragstart)="itemDragStart(item)"
+        (dragend)="itemDragEnd()"
+        (dragenter)="itemDragEnter(item)"
+        (mousedown)="itemMousedown($event, item)"
+      >{{item}}</div>
+    }
+  </div>
 </div>
 <div class="right half">
-    <div class="title" *ngIf="rightTitle">{{rightTitle}}</div>
-    <div class="dropzone"
-        #rightDropzone
-        (focus)="onfocusRight()"
-        (blur)="onblurRight()"
-        tabindex="0"
-        role="listbox"
-        [attr.aria-label]="rightTitle"
-        [attr.aria-activedescendant]="rightId + '_' + focusedIndexRight"
-        (dragover)="dropzoneDragOver($event)"
-        (drop)="dropzoneDrop($event)"
-        data-side="right"
+  @if (rightTitle) {
+    <div class="title">{{rightTitle}}</div>
+  }
+  <div class="dropzone"
+    #rightDropzone
+    (focus)="onfocusRight()"
+    (blur)="onblurRight()"
+    tabindex="0"
+    role="listbox"
+    [attr.aria-label]="rightTitle"
+    [attr.aria-activedescendant]="rightId + '_' + focusedIndexRight"
+    (dragover)="dropzoneDragOver($event)"
+    (drop)="dropzoneDrop($event)"
+    data-side="right"
     >
-        <div
-            role="option"
-            [ngClass]="getItemsClasses(item)"
-            [attr.aria-selected]="isItemFocused(item)"
-            [id]="rightId + '_' + i"
-            draggable="true"
-            (dragstart)="itemDragStart(item)"
-            (dragend)="itemDragEnd()"
-            (dragenter)="itemDragEnter(item)"
-            (mousedown)="itemMousedown($event, item)"
-            *ngFor="let item of rightItems; let i=index"
-        >{{item}}</div>
-    </div>
+    @for (item of rightItems; track item; let i = $index) {
+      <div
+        role="option"
+        [ngClass]="getItemsClasses(item)"
+        [attr.aria-selected]="isItemFocused(item)"
+        [id]="rightId + '_' + i"
+        draggable="true"
+        (dragstart)="itemDragStart(item)"
+        (dragend)="itemDragEnd()"
+        (dragenter)="itemDragEnter(item)"
+        (mousedown)="itemMousedown($event, item)"
+      >{{item}}</div>
+    }
+  </div>
 </div>

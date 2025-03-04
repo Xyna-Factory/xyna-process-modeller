@@ -17,6 +17,7 @@
  */
 import { Injectable, OnDestroy } from '@angular/core';
 
+import { XoModellingItem } from '@pmod/xo/modelling-item.model';
 import { FQNRTC, MessageBusService, XMOMLocated, XoDocumentChange, XoDocumentLock, XoDocumentUnlock } from '@yggdrasil/events';
 import { ApiService, FullQualifiedName, RuntimeContext } from '@zeta/api';
 import { AuthService } from '@zeta/auth';
@@ -59,7 +60,6 @@ import { ExceptionTypeDocumentModel } from './model/exception-type-document.mode
 import { ServiceGroupDocumentModel } from './model/service-group-document.model';
 import { TypeDocumentModel } from './model/type-document.model';
 import { WorkflowDocumentModel } from './model/workflow-document.model';
-import { XoModellingItem } from '@pmod/xo/modelling-item.model';
 
 
 export enum DocumentState {
@@ -78,7 +78,7 @@ export interface CloseResult {
 export class DocumentService implements OnDestroy {
 
     private readonly documentListSubject = new BehaviorSubject<DocumentModel[]>([]);
-    private readonly documentUpdateSubject = new Subject<{item: DocumentItem; response: XoUpdateXmomItemResponse}>();
+    private readonly documentUpdateSubject = new Subject<{ item: DocumentItem; response: XoUpdateXmomItemResponse }>();
     private readonly selectedDocumentSubject = new BehaviorSubject<DocumentModel>(null);
     private readonly closeDocumentSubject = new Subject<DocumentModel>();
 
@@ -245,7 +245,7 @@ export class DocumentService implements OnDestroy {
     /**
      * Observable triggered when a document is updated
      */
-    get documentChange(): Observable<{item: DocumentItem; response: XoUpdateXmomItemResponse}> {
+    get documentChange(): Observable<{ item: DocumentItem; response: XoUpdateXmomItemResponse }> {
         return this.documentUpdateSubject.asObservable();
     }
 
@@ -401,7 +401,7 @@ export class DocumentService implements OnDestroy {
     refactorItem(xmomItem: XoXmomItem): Observable<void> {
         const rtc = xmomItem.rtc ?? this.xmomService.runtimeContext;
         const data: LabelPathDialogData = {
-            header: this.i18n.translate(LabelPathDialogComponent.HEADER_MOVE_RENAME, {key: '$0', value: FullQualifiedName.decode(xmomItem.$fqn).path + '.' + xmomItem.label}),
+            header: this.i18n.translate(LabelPathDialogComponent.HEADER_MOVE_RENAME, { key: '$0', value: FullQualifiedName.decode(xmomItem.$fqn).path + '.' + xmomItem.label }),
             confirm: this.i18n.translate(LabelPathDialogComponent.CONFIRM_MOVE_RENAME),
             force: this.i18n.translate(LabelPathDialogComponent.FORCE_MOVE_RENAME),
             forceTooltip: this.i18n.translate(LabelPathDialogComponent.FORCE_MOVE_RENAME_TOOLTIP),
@@ -426,7 +426,7 @@ export class DocumentService implements OnDestroy {
     replace(xmomItem: XoXmomItem): Observable<void> {
         const rtc = xmomItem.rtc ?? this.xmomService.runtimeContext;
         const data: LabelPathDialogData = {
-            header: this.i18n.translate(LabelPathDialogComponent.HEADER_REPLACE, {key: '$0', value: FullQualifiedName.decode(xmomItem.$fqn).path + '.' + xmomItem.label}),
+            header: this.i18n.translate(LabelPathDialogComponent.HEADER_REPLACE, { key: '$0', value: FullQualifiedName.decode(xmomItem.$fqn).path + '.' + xmomItem.label }),
             confirm: this.i18n.translate(LabelPathDialogComponent.CONFIRM_REPLACE),
             presetLabel: xmomItem.label,
             presetPath: FullQualifiedName.decode(xmomItem.$fqn).path,

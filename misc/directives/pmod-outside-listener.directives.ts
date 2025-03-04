@@ -21,7 +21,8 @@ import { OutsideListenerService } from '@zeta/base';
 
 
 @Directive({
-    selector: '[pmod-outside-listener]'
+    selector: '[pmod-outside-listener]',
+    standalone: false
 })
 export class PmodOutsideListenerDirective implements OnInit, OnDestroy {
 

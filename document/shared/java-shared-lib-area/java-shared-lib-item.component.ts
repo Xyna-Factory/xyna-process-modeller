@@ -36,7 +36,8 @@ export interface JavaSharedLibItemData {
 
 @Component({
     templateUrl: './java-shared-lib-item.component.html',
-    styleUrls: ['./java-shared-lib-item.component.scss']
+    styleUrls: ['./java-shared-lib-item.component.scss'],
+    standalone: false
 })
 export class JavaSharedLibItemComponent extends XcRichListItemComponent<void, JavaSharedLibItemData> {
 

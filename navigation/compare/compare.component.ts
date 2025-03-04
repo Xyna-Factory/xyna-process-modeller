@@ -35,7 +35,8 @@ import { CommonNavigationComponent } from '../common-navigation-class/common-nav
     selector: 'xfm-mod-nav-compare',
     templateUrl: './compare.component.html',
     styleUrls: ['./compare.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class CompareComponent extends CommonNavigationComponent {
 

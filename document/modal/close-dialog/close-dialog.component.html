@@ -1,17 +1,16 @@
 <xc-dialog-wrapper xc-i18n-context="pmod.close-dialog">
-    <ng-container header>{{injectedData.title}}</ng-container>
-    <section content class="content">
-        <div class="message">{{injectedData.message}}</div>
-    </section>
-    <ng-container footer>
-        <xc-button (click)="dismiss({useForce: false, save: false})" xc-i18n>button-cancel</xc-button>
-        <ng-container *ngIf="injectedData.saveButtonLabel; else noSave">
-            <xc-button (click)="dismiss({useForce: true, save: false})">{{injectedData.dontSaveButtonLabel}}</xc-button>
-            <!-- injectedData.saveButtonLabel is translated dynamically - no need for i18n -->
-            <xc-button (click)="dismiss({useForce: false, save: true})" color="primary">{{injectedData.saveButtonLabel}}</xc-button>
-        </ng-container>
-        <ng-template #noSave>
-            <xc-button (click)="dismiss({useForce: true, save: false})" xc-i18n>button-yes</xc-button>
-        </ng-template>
-    </ng-container>
+  <ng-container header>{{injectedData.title}}</ng-container>
+  <section content class="content">
+    <div class="message">{{injectedData.message}}</div>
+  </section>
+  <ng-container footer>
+    <xc-button (click)="dismiss({useForce: false, save: false})" xc-i18n>button-cancel</xc-button>
+    @if (injectedData.saveButtonLabel) {
+      <xc-button (click)="dismiss({useForce: true, save: false})">{{injectedData.dontSaveButtonLabel}}</xc-button>
+      <!-- injectedData.saveButtonLabel is translated dynamically - no need for i18n -->
+      <xc-button (click)="dismiss({useForce: false, save: true})" color="primary">{{injectedData.saveButtonLabel}}</xc-button>
+    } @else {
+      <xc-button (click)="dismiss({useForce: true, save: false})" xc-i18n>button-yes</xc-button>
+    }
+  </ng-container>
 </xc-dialog-wrapper>

@@ -35,9 +35,10 @@ import { WorkflowDetailLevelService } from '../../workflow-detail-level.service'
 
 
 @Component({
-  selector: 'meta-tag-area',
-  templateUrl: './meta-tag-area.component.html',
-  styleUrl: './meta-tag-area.component.scss'
+    selector: 'meta-tag-area',
+    templateUrl: './meta-tag-area.component.html',
+    styleUrl: './meta-tag-area.component.scss',
+    standalone: false
 })
 export class MetaTagAreaComponent extends ModellingObjectComponent {
 

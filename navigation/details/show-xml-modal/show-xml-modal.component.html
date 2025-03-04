@@ -1,35 +1,40 @@
 <xc-dialog-wrapper xc-i18n-context="pmod.show-xml-modal">
-    <ng-container header>
-        <span xc-i18n>header</span>&nbsp;<span>{{injectedData.label}}</span>
-    </ng-container>
-    <section content>
-        <div class="buttons-row" *ngIf="injectedData.deployed || injectedData.saved">
-            <xc-button
-                [color]="mode === 'current' ? 'primary' : 'normal'"
-                (click)="mode = 'current'"
-                *ngIf="injectedData.current"
-                xc-i18n
-            >button-current-state</xc-button>
-            <xc-button
-                [color]="mode === 'deployed' ? 'primary' : 'normal'"
-                (click)="mode = 'deployed'"
-                *ngIf="injectedData.deployed"
-                xc-i18n
-            >button-deployed-state</xc-button>
-            <xc-button
-                [color]="mode === 'saved' ? 'primary' : 'normal'"
-                (click)="mode = 'saved'"
-                *ngIf="injectedData.saved"
-                xc-i18n
-            >button-saved-state</xc-button>
-        </div>
-        <xc-form-textarea
-            [value]="xml"
-            xc-form-textarea-lines="30"
-            xc-form-field-compact
-        ></xc-form-textarea>
-    </section>
-    <ng-container footer>
-        <xc-button (click)="dismiss()" xc-i18n>button-cancel</xc-button>
-    </ng-container>
+  <ng-container header>
+    <span xc-i18n>header</span>&nbsp;<span>{{injectedData.label}}</span>
+  </ng-container>
+  <section content>
+    @if (injectedData.deployed || injectedData.saved) {
+      <div class="buttons-row">
+        @if (injectedData.current) {
+          <xc-button
+            [color]="mode === 'current' ? 'primary' : 'normal'"
+            (click)="mode = 'current'"
+            xc-i18n
+          >button-current-state</xc-button>
+        }
+        @if (injectedData.deployed) {
+          <xc-button
+            [color]="mode === 'deployed' ? 'primary' : 'normal'"
+            (click)="mode = 'deployed'"
+            xc-i18n
+          >button-deployed-state</xc-button>
+        }
+        @if (injectedData.saved) {
+          <xc-button
+            [color]="mode === 'saved' ? 'primary' : 'normal'"
+            (click)="mode = 'saved'"
+            xc-i18n
+          >button-saved-state</xc-button>
+        }
+      </div>
+    }
+    <xc-form-textarea
+      [value]="xml"
+      xc-form-textarea-lines="30"
+      xc-form-field-compact
+    ></xc-form-textarea>
+  </section>
+  <ng-container footer>
+    <xc-button (click)="dismiss()" xc-i18n>button-cancel</xc-button>
+  </ng-container>
 </xc-dialog-wrapper>

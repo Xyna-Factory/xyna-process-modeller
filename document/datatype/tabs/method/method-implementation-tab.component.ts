@@ -30,7 +30,8 @@ import { filter } from 'rxjs';
 @Component({
     templateUrl: './method-implementation-tab.component.html',
     styleUrls: ['./method-implementation-tab.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class MethodImplementationTabComponent extends DatatypeMethodTabComponent {
 

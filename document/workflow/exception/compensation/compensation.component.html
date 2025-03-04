@@ -1,21 +1,25 @@
 <div class="area-side-title">
-    <h2 class="area-side-label" xc-i18n>header-compensation</h2>
+  <h2 class="area-side-label" xc-i18n>header-compensation</h2>
 </div>
-<content-area *ngIf="compensation.contentArea"
+@if (compensation.contentArea) {
+  <content-area
     [contentArea]="compensation.contentArea"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
-></content-area>
-<xc-button
-    *ngIf="!compensation.overriddenDefaultCompensation"
+  ></content-area>
+}
+@if (!compensation.overriddenDefaultCompensation) {
+  <xc-button
     (click)="overrideCompensation(true)"
     class="narrow-button override"
     xc-i18n
->button-override-internal-compensation</xc-button>
-<xc-button
-    *ngIf="compensation.overriddenDefaultCompensation"
+  >button-override-internal-compensation</xc-button>
+}
+@if (compensation.overriddenDefaultCompensation) {
+  <xc-button
     (click)="overrideCompensation(false)"
     class="narrow-button remove-override"
     xc-tooltip="tooltip-delete-compensation"
     xc-i18n
->button-delete-overridden-compensation</xc-button>
+  >button-delete-overridden-compensation</xc-button>
+}

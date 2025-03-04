@@ -24,7 +24,8 @@ import { CommonNavigationComponent } from '../common-navigation-class/common-nav
     selector: 'xfm-mod-nav-help',
     templateUrl: './help.component.html',
     styleUrls: ['./help.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class HelpComponent extends CommonNavigationComponent {
 

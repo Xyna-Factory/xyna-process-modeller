@@ -24,7 +24,7 @@ import { XoRequest } from './request.model';
 export class XoInsertFileRequest extends XoRequest {
 
     @XoProperty()
-    content: {fileId: string; type: string};
+    content: { fileId: string; type: string };
 
     @XoProperty()
     index: number;
@@ -32,7 +32,7 @@ export class XoInsertFileRequest extends XoRequest {
 
     constructor(_ident?: string, fileId = '', type = '', index = -1) {
         super(_ident);
-        this.content = {fileId, type};
+        this.content = { fileId, type };
         this.index = index;
     }
 }

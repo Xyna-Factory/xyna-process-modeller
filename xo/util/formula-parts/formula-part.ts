@@ -185,6 +185,7 @@ export class FormulaPart {
 
         // build expression up to potential parent-variable-part
         let expression = '';
+         
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         let parent: FormulaPart = this;  // actually starting with this part itself
         while (parent && !((parent.isVariable() || parent.isMemberVariable() || parent.isMemberFunction() || parent.isFunctionReturningVariable()) && bracketsValid(expression))) {

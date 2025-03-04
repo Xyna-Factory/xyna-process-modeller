@@ -21,7 +21,8 @@ import { coerceBoolean } from '@zeta/base';
 
 
 @Directive({
-    selector: '[mod-content-editable]'
+    selector: '[mod-content-editable]',
+    standalone: false
 })
 export class ModContentEditableDirective {
 

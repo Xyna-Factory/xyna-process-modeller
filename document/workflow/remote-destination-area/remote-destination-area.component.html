@@ -1,17 +1,23 @@
 <div>
-    <xc-form-autocomplete *ngIf="dataWrapper.values?.length > 0"
-        label="label-remote-destination"
-        xc-i18n
-        [(xc-form-autocomplete-option)]="dataWrapper.value" [xc-form-autocomplete-options]="dataWrapper.values"
-        xc-form-field-compact
-        xc-form-autocomplete-fulltextsearch
-        xc-form-field-suffix="clear"
+  @if (dataWrapper.values?.length > 0) {
+    <xc-form-autocomplete
+      label="label-remote-destination"
+      xc-i18n
+      [(xc-form-autocomplete-option)]="dataWrapper.value" [xc-form-autocomplete-options]="dataWrapper.values"
+      xc-form-field-compact
+      xc-form-autocomplete-fulltextsearch
+      xc-form-field-suffix="clear"
     ></xc-form-autocomplete>
-    <variable-area *ngIf="remoteDestinationArea.usedDestination && remoteDestinationArea.usedDestination.variableArea"
-        [variableArea]="remoteDestinationArea.usedDestination.variableArea"
-        [documentModel]="documentModel"
-        xc-variable-area-kind="input-area"
-        (triggerAction)="performAction($event)"
+  }
+  @if (remoteDestinationArea.usedDestination && remoteDestinationArea.usedDestination.variableArea) {
+    <variable-area
+      [variableArea]="remoteDestinationArea.usedDestination.variableArea"
+      [documentModel]="documentModel"
+      xc-variable-area-kind="input-area"
+      (triggerAction)="performAction($event)"
     ></variable-area>
-    <label *ngIf="remoteDestinationArea.usedDestination">{{remoteDestinationArea.usedDestination.description}}</label>
+  }
+  @if (remoteDestinationArea.usedDestination) {
+    <label>{{remoteDestinationArea.usedDestination.description}}</label>
+  }
 </div>

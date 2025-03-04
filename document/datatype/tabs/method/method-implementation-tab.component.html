@@ -1,45 +1,48 @@
 <div class="row with-button">
-    <xc-form-autocomplete
-        label="implementation-type"
-        [readonly]="readonly"
-        placeholder="select-tooltip"
-        [(xc-form-autocomplete-option)]="implementationTypeDataWrapper.value"
-        [xc-form-autocomplete-options]="implementationTypeDataWrapper.values"
-        xc-form-autocomplete-asdropdown
-        xc-form-autocomplete-fulltextsearch
-        xc-i18n
-    ></xc-form-autocomplete>
+  <xc-form-autocomplete
+    label="implementation-type"
+    [readonly]="readonly"
+    placeholder="select-tooltip"
+    [(xc-form-autocomplete-option)]="implementationTypeDataWrapper.value"
+    [xc-form-autocomplete-options]="implementationTypeDataWrapper.values"
+    xc-form-autocomplete-asdropdown
+    xc-form-autocomplete-fulltextsearch
+    xc-i18n
+  ></xc-form-autocomplete>
+  @if (!isStaticMethod && isReferenceAsImplementationTypeSet) {
     <xc-icon-button
-        *ngIf="!isStaticMethod && isReferenceAsImplementationTypeSet"
-        class="button"
-        (click)="createWorkflow()"
-        xc-icon
-        xc-icon-name="add"
-        xc-tooltip="tooltip-new-workflow"
-        xc-i18n
+      class="button"
+      (click)="createWorkflow()"
+      xc-icon
+      xc-icon-name="add"
+      xc-tooltip="tooltip-new-workflow"
+      xc-i18n
     ></xc-icon-button>
+  }
 </div>
 
-<div *ngIf="!isStaticMethod && isReferenceAsImplementationTypeSet" class="row with-button">
+@if (!isStaticMethod && isReferenceAsImplementationTypeSet) {
+  <div class="row with-button">
     <xc-form-autocomplete
-        #referenceAutocomplete
-        label="reference"
-        [readonly]="readonly"
-        placeholder="select-tooltip"
-        [(xc-form-autocomplete-option)]="referenceDataWrapper.value"
-        [xc-form-autocomplete-options]="referenceDataWrapper.values"
-        xc-form-autocomplete-fulltextsearch
-        xc-form-field-suffix="clear"
-        xc-i18n
+      #referenceAutocomplete
+      label="reference"
+      [readonly]="readonly"
+      placeholder="select-tooltip"
+      [(xc-form-autocomplete-option)]="referenceDataWrapper.value"
+      [xc-form-autocomplete-options]="referenceDataWrapper.values"
+      xc-form-autocomplete-fulltextsearch
+      xc-form-field-suffix="clear"
+      xc-i18n
     ></xc-form-autocomplete>
-
     <xc-button class="button" (click)="openReferencedWorkflow()" xc-i18n>open-button</xc-button>
-</div>
+  </div>
+}
 
-<method-implementation
-    *ngIf="isMethodImplementationTypeSet"
+@if (isMethodImplementationTypeSet) {
+  <method-implementation
     (triggerAction)="performAction($event)"
     [documentModel]="documentModel"
     [method]="method"
     xc-i18n-context="method-implementation"
-></method-implementation>
+  ></method-implementation>
+}

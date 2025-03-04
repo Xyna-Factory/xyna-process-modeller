@@ -25,7 +25,8 @@ import { FormulaAreaComponent } from './formula-area.component';
 @Component({
     selector: 'filter-criterion-area',
     templateUrl: './formula-area.component.html',
-    styleUrls: ['./formula-area.component.scss']
+    styleUrls: ['./formula-area.component.scss'],
+    standalone: false
 })
 export class FilterCriterionAreaComponent extends FormulaAreaComponent {
 

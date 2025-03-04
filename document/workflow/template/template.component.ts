@@ -53,7 +53,8 @@ interface ConcatParameter {
 @Component({
     selector: 'template-block',
     templateUrl: './template.component.html',
-    styleUrls: ['./template.component.scss']
+    styleUrls: ['./template.component.scss'],
+    standalone: false
 })
 export class TemplateComponent extends ModellingItemComponent implements OnDestroy {
 

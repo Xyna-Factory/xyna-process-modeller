@@ -44,7 +44,8 @@ import { ModellingItemComponent, TriggeredAction } from '../shared/modelling-obj
 @Component({
     selector: 'invocation',
     templateUrl: './invocation.component.html',
-    styleUrls: ['./invocation.component.scss']
+    styleUrls: ['./invocation.component.scss'],
+    standalone: false
 })
 export class InvocationComponent extends ModellingItemComponent {
 

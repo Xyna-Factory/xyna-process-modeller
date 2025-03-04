@@ -39,7 +39,8 @@ export interface CloseDialogResult {
 
 @Component({
     templateUrl: './close-dialog.component.html',
-    styleUrls: ['./close-dialog.component.scss']
+    styleUrls: ['./close-dialog.component.scss'],
+    standalone: false
 })
 export class CloseDialogComponent extends XcDialogComponent<CloseDialogResult, CloseDialogData> {
 

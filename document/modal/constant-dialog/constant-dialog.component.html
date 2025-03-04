@@ -1,13 +1,17 @@
 <xc-dialog-wrapper xc-i18n-context="pmod.constant-dialog">
-    <ng-container header><span xc-i18n>header</span></ng-container>
-    <section content class="content">
-        <xc-tree [xc-tree-datasource]="dataSource" xc-tree-autoexpand="first"></xc-tree>
-    </section>
-    <ng-container footer>
-        <xc-button (click)="dismiss()" xc-i18n>button-cancel</xc-button>
-        <div *ngIf="!dataSource.readonlyMode" class="right-area">
-            <xc-button *ngIf="deletable" (click)="delete()"><xc-icon xc-icon-name="delete" xc-i18n>button-delete</xc-icon></xc-button>
-            <xc-button (click)="save()" color="primary" xc-i18n>button-ok</xc-button>
-        </div>
-    </ng-container>
+  <ng-container header><span xc-i18n>header</span></ng-container>
+  <section content class="content">
+    <xc-tree [xc-tree-datasource]="dataSource" xc-tree-autoexpand="first"></xc-tree>
+  </section>
+  <ng-container footer>
+    <xc-button (click)="dismiss()" xc-i18n>button-cancel</xc-button>
+    @if (!dataSource.readonlyMode) {
+      <div class="right-area">
+        @if (deletable) {
+          <xc-button (click)="delete()"><xc-icon xc-icon-name="delete" xc-i18n>button-delete</xc-icon></xc-button>
+        }
+        <xc-button (click)="save()" color="primary" xc-i18n>button-ok</xc-button>
+      </div>
+    }
+  </ng-container>
 </xc-dialog-wrapper>

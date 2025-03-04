@@ -1,25 +1,28 @@
 <div
-    id="{{ memberVariableArea ? memberVariableArea.id : '' }}"
-    [mod-drop-area]="memberVariableArea.items?.data"
-    [mod-drop-area-allow-item]="allowItem"
-    (mod-drop-area-dropped)="dropped($event)"
-    class="variable-drop-area"
->
-    <div *ngFor="let variable of memberVariableArea.items"
-        [mod-draggable]="variable"
-        [mod-draggable-allowed-drag-type]="readonly ? 'copy' : 'move'"
-    >
-        <member-variable
-            [memberVariable]="variable"
-            (triggerAction)="performAction($event)"
-            [documentModel]="documentModel"
-            tabindex="0"
-        ></member-variable>
+  id="{{ memberVariableArea ? memberVariableArea.id : '' }}"
+  [mod-drop-area]="memberVariableArea.items?.data"
+  [mod-drop-area-allow-item]="allowItem"
+  (mod-drop-area-dropped)="dropped($event)"
+  class="variable-drop-area"
+  >
+  @for (variable of memberVariableArea.items; track variable) {
+    <div
+      [mod-draggable]="variable"
+      [mod-draggable-allowed-drag-type]="readonly ? 'copy' : 'move'"
+      >
+      <member-variable
+        [memberVariable]="variable"
+        (triggerAction)="performAction($event)"
+        [documentModel]="documentModel"
+        tabindex="0"
+      ></member-variable>
+      @if (variable.deletable && !readonly) {
         <xc-icon-button
-            *ngIf="variable.deletable && !readonly"
-            (click)="deleteVarable(variable)"
-            xc-icon-name="delete"
-            color="invert"
+          (click)="deleteVarable(variable)"
+          xc-icon-name="delete"
+          color="invert"
         ></xc-icon-button>
+      }
     </div>
+  }
 </div>

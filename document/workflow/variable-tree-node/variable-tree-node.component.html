@@ -1,35 +1,40 @@
 <!-- marked means that the node is white, unmarked nodes are yellow -->
 <div #noderow
-    class="row"
-    [ngClass]="{'marked': (node.markedChange | async), 'show-mark': highlightMarks, 'selected': (node.selectedChange| async)}"
-    (click)="select(node)"
-    [mod-draggable]="node"
->
-    <div class="drop-zone"
-        mod-drop-area
-        [mod-drop-area-allow-item]="allowItem"
-        [mod-drop-area-can-drop]="canDrop"
-        mod-drop-area-hide-indicator
-        (mod-drop-area-dropped)="dropped($event)"
+  class="row"
+  [ngClass]="{'marked': (node.markedChange | async), 'show-mark': highlightMarks, 'selected': (node.selectedChange| async)}"
+  (click)="select(node)"
+  [mod-draggable]="node"
+  >
+  <div class="drop-zone"
+    mod-drop-area
+    [mod-drop-area-allow-item]="allowItem"
+    [mod-drop-area-can-drop]="canDrop"
+    mod-drop-area-hide-indicator
+    (mod-drop-area-dropped)="dropped($event)"
     >
-        <xc-icon-button
-            *ngIf="node.collapsible"
-            class="toggle"
-            color="color-black"
-            [class.rotated]="!node.collapsed"
-            xc-icon-name="accordion"
-            xc-icon-size="small"
-            (click)="toggle($event)"
-        ></xc-icon-button>
-        <label class="label">{{node.label}}</label>
-        <label class="type">{{typeLabel}}</label>
-    </div>
+    @if (node.collapsible) {
+      <xc-icon-button
+        class="toggle"
+        color="color-black"
+        [class.rotated]="!node.collapsed"
+        xc-icon-name="accordion"
+        xc-icon-size="small"
+        (click)="toggle($event)"
+      ></xc-icon-button>
+    }
+    <label class="label">{{node.label}}</label>
+    <label class="type">{{typeLabel}}</label>
+  </div>
 </div>
-<div *ngIf="!node.collapsed" class="children">
-    <variable-tree-node *ngFor="let childNode of node.children"
+@if (!node.collapsed) {
+  <div class="children">
+    @for (childNode of node.children; track childNode) {
+      <variable-tree-node
         [node]="childNode"
         [highlightMarks]="highlightMarks"
         (assignedVariable)="assignedVariable.emit($event)"
         (selectionChange)="select($event)"
-    ></variable-tree-node>
-</div>
+      ></variable-tree-node>
+    }
+  </div>
+}

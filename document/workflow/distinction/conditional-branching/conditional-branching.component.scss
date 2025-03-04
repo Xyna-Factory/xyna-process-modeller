@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-@import "const";
+@use '../../../../const' as *;
 
 
 :host {
@@ -45,7 +45,7 @@
         ::ng-deep {
             button {
                 border: 2px solid $color-gray-3;
-                background-color: $color-white;
+                background-color: $color-normal;
 
                 &:hover {
                     background-color: $color-gray-5;

@@ -23,7 +23,8 @@ import { XoRepairEntry } from '../../../../xo/repair-entry.model';
 @Component({
     selector: 'repair-entry',
     templateUrl: './repair-entry.component.html',
-    styleUrls: ['./repair-entry.component.scss']
+    styleUrls: ['./repair-entry.component.scss'],
+    standalone: false
 })
 export class RepairEntryComponent {
 

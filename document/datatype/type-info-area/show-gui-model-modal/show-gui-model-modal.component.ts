@@ -33,7 +33,8 @@ export interface ShowGuiModelModalComponentData {
 
 @Component({
     templateUrl: './show-gui-model-modal.component.html',
-    styleUrls: ['./show-gui-model-modal.component.scss']
+    styleUrls: ['./show-gui-model-modal.component.scss'],
+    standalone: false
 })
 export class ShowGuiModelModalComponent extends XcDialogComponent<void, ShowGuiModelModalComponentData> {
 
@@ -96,7 +97,7 @@ export class ShowGuiModelModalComponent extends XcDialogComponent<void, ShowGuiM
             res = document.execCommand('Copy');
             document.body.removeChild(input);
         } else {
-            // eslint-disable-next-line no-alert
+             
             alert('Your browser does not allow to copy text to your clipboard');
         }
         return res;

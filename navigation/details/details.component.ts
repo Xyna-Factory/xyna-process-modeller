@@ -43,7 +43,8 @@ import { ShowXmlModalComponent, ShowXmlModalData } from './show-xml-modal/show-x
     selector: 'xfm-mod-nav-details',
     templateUrl: './details.component.html',
     styleUrls: ['./details.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class DetailsComponent extends CommonNavigationComponent {
     private _deploymentItem: XoDeploymentItem;

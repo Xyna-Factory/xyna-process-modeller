@@ -31,7 +31,8 @@ export interface RelationGroup {
 @Component({
     selector: 'relation-table',
     templateUrl: './relation-table.component.html',
-    styleUrls: ['./relation-table.component.scss']
+    styleUrls: ['./relation-table.component.scss'],
+    standalone: false
 })
 export class RelationTableComponent {
     @ViewChild(XMOMListComponent, { static: true })

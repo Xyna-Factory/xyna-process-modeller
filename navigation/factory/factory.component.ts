@@ -34,7 +34,8 @@ import { XMOMTreeItemState } from './xmom-tree-item.component';
     selector: 'xfm-mod-nav-factory',
     templateUrl: './factory.component.html',
     styleUrls: ['./factory.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class FactoryComponent extends CommonNavigationComponent implements AfterViewInit {
 
@@ -187,10 +188,10 @@ export class FactoryComponent extends CommonNavigationComponent implements After
             this.selectedPaths.clear();
         }
 
-        /* eslint-disable @typescript-eslint/unbound-method */
+         
         (state.selected ? (Set.prototype.add) : Set.prototype.delete).call(this.selectedPaths, state.path);
         (state.expanded ? (Set.prototype.add) : Set.prototype.delete).call(this.expandedPaths, state.path);
-        /* eslint-enable @typescript-eslint/unbound-method */
+         
         this.restore();
     }
 

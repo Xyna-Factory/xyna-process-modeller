@@ -49,7 +49,8 @@ import { ShowGuiModelModalComponent } from './show-gui-model-modal/show-gui-mode
     selector: 'type-info-area',
     templateUrl: './type-info-area.component.html',
     styleUrls: ['./type-info-area.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class TypeInfoAreaComponent extends ModellingObjectComponent implements OnInit {
 

@@ -1,6 +1,8 @@
-<div *ngIf="!readonlyMode"
+@if (!readonlyMode) {
+  <div
     (focusout)="blur($event.relatedTarget)">
-    <template-row *ngFor="let row of rows; let i = index" #templateRow
+    @for (row of rows; track row; let i = $index) {
+      <template-row #templateRow
         [row]="row"
         [lineNumber]="i"
         [documentModel]="documentModel"
@@ -8,20 +10,24 @@
         (merge)="mergeRows($event)"
         (switchRow)="switchRowFocus($event)"
         (triggerAction)="performAction($event)"
-    ></template-row>
-</div>
+      ></template-row>
+    }
+  </div>
+}
 
-<non-draggable-text-area *ngIf="readonlyMode"
+@if (readonlyMode) {
+  <non-draggable-text-area
     [text]="readonlyContent"
-></non-draggable-text-area>
+  ></non-draggable-text-area>
+}
 
 <xc-icon-button
-    *xc-menu-service="showMenu; let menuService"
-    [xc-menu-trigger]="menuService.component"
-    (xc-menu-trigger)="menuService.set(menuItems, {withArrow: true, xNexttoTrigger: true, xOffset: 8})"
-    xc-icon-name="misc-contextmenu"
-    xc-icon-style="modeller"
-    xc-icon-size="small"
-    class="menu-button"
-    color="invert"
+  *xc-menu-service="showMenu; let menuService"
+  [xc-menu-trigger]="menuService.component"
+  (xc-menu-trigger)="menuService.set(menuItems, {withArrow: true, xNexttoTrigger: true, xOffset: 8})"
+  xc-icon-name="misc-contextmenu"
+  xc-icon-style="modeller"
+  xc-icon-size="small"
+  class="menu-button"
+  color="invert"
 ></xc-icon-button>

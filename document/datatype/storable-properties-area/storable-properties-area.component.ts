@@ -32,7 +32,8 @@ import { ModellingObjectComponent } from '../../workflow/shared/modelling-object
     selector: 'storable-properties-area',
     templateUrl: './storable-properties-area.component.html',
     styleUrls: ['./storable-properties-area.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class StorablePropertiesAreaComponent extends ModellingObjectComponent {
 

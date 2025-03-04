@@ -23,7 +23,8 @@ import { FormulaPartComponent } from '../formula-part.component';
 @Component({
     selector: 'formula-part-operation',
     templateUrl: './formula-part-operation.component.html',
-    styleUrls: ['./formula-part-operation.component.scss']
+    styleUrls: ['./formula-part-operation.component.scss'],
+    standalone: false
 })
 export class FormulaPartOperationComponent extends FormulaPartComponent {
     get text(): string {

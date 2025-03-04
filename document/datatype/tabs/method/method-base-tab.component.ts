@@ -23,7 +23,8 @@ import { DatatypeMethodTabComponent } from '../datatype-tab.component';
 @Component({
     templateUrl: './method-base-tab.component.html',
     styleUrls: ['./method-base-tab.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class MethodBaseTabComponent extends DatatypeMethodTabComponent {
 

@@ -17,18 +17,20 @@
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 
-import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 import { PluginService } from '@pmod/document/plugin.service';
-import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
-import { XoPlugin } from '@zeta/xc';
 import { XoGuiDefiningWorkflow } from '@yggdrasil/plugin/gui-defining-workflow.model';
+import { XoPlugin } from '@zeta/xc';
+import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
+
+import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 
 
 @Component({
     selector: 'xfm-mod-nav-plugin',
     templateUrl: './nav-plugin.component.html',
     styleUrls: ['./nav-plugin.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class NavPluginComponent extends CommonNavigationComponent {
 

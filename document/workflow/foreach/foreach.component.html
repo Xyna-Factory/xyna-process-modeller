@@ -1,35 +1,41 @@
 <div class="foreach-header-wrapper">
-    <div class="foreach-header">
-        <!-- <xc-button *ngIf="foreach.isNestedForeach" (click)="swapWithOuterForeach()" class="swap-button">&#x21D5;</xc-button>  use as soon as backend supports this -->
-        <span class="forall-char">∀</span>
-        <span *ngIf="foreach.parallelExecution" class="parallel-char">⦷</span>
-        <div class="variable-container">
-            <variable *ngFor="let variable of foreach.inputArea.items.data"
-                [variable]="variable"
-                [documentModel]="documentModel"
-                [hasMenu]="false"
-            ></variable>
-        </div>
-        <xc-icon-button
-            *xc-menu-service="showMenu; let menuService"
-            [xc-menu-trigger]="menuService.component"
-            (xc-menu-trigger)="menuService.set(menuItems, {withArrow: true, xNexttoTrigger: true, xOffset: 8})"
-            xc-icon-name="misc-contextmenu"
-            xc-icon-style="modeller"
-            xc-icon-size="small"
-            class="menu-button"
-            color="invert"
-        ></xc-icon-button>
+  <div class="foreach-header">
+    <!-- <xc-button *ngIf="foreach.isNestedForeach" (click)="swapWithOuterForeach()" class="swap-button">&#x21D5;</xc-button>  use as soon as backend supports this -->
+    <span class="forall-char">∀</span>
+    @if (foreach.parallelExecution) {
+      <span class="parallel-char">⦷</span>
+    }
+    <div class="variable-container">
+      @for (variable of foreach.inputArea.items.data; track variable) {
+        <variable
+          [variable]="variable"
+          [documentModel]="documentModel"
+          [hasMenu]="false"
+        ></variable>
+      }
     </div>
+    <xc-icon-button
+      *xc-menu-service="showMenu; let menuService"
+      [xc-menu-trigger]="menuService.component"
+      (xc-menu-trigger)="menuService.set(menuItems, {withArrow: true, xNexttoTrigger: true, xOffset: 8})"
+      xc-icon-name="misc-contextmenu"
+      xc-icon-style="modeller"
+      xc-icon-size="small"
+      class="menu-button"
+      color="invert"
+    ></xc-icon-button>
+  </div>
 </div>
 <content-area
-    [contentArea]="foreach.contentArea"
-    [documentModel]="documentModel"
-    (triggerAction)="performAction($event)"
+  [contentArea]="foreach.contentArea"
+  [documentModel]="documentModel"
+  (triggerAction)="performAction($event)"
 ></content-area>
-<variable-area-service *ngIf="foreach.outputArea"
+@if (foreach.outputArea) {
+  <variable-area-service
     [variableArea]="foreach.outputArea"
     [documentModel]="documentModel"
     xc-variable-area-kind="output-area"
     (triggerAction)="performAction($event)"
-></variable-area-service>
+  ></variable-area-service>
+}

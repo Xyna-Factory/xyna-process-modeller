@@ -33,7 +33,8 @@ import { ModellingObjectComponent } from '../shared/modelling-object.component';
 @Component({
     selector: 'formula-input-area',
     templateUrl: './formula-input-area.component.html',
-    styleUrls: ['./formula-input-area.component.scss']
+    styleUrls: ['./formula-input-area.component.scss'],
+    standalone: false
 })
 export class FormulaInputAreaComponent extends ModellingObjectComponent {
 

@@ -23,7 +23,8 @@ import { TextAreaModellingObjectComponent } from '../shared/text-area-modelling-
 @Component({
     selector: 'documentation-area',
     templateUrl: './documentation-area.component.html',
-    styleUrls: ['./documentation-area.component.scss']
+    styleUrls: ['./documentation-area.component.scss'],
+    standalone: false
 })
 export class DocumentationAreaComponent extends TextAreaModellingObjectComponent {
 

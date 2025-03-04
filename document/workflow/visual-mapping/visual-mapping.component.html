@@ -1,26 +1,34 @@
-<flow-canvas *ngIf="flows?.length > 0"
+@if (flows?.length > 0) {
+  <flow-canvas
     [flowDefinitions]="flows"
-></flow-canvas>
+  ></flow-canvas>
+}
 <div class="outputs">
-    <variable-tree *ngFor="let outputDataSource of outputDataSources"
-        [tree-datasource]="outputDataSource"
-        highlightMarkedNodes
-        (createdAssignment)="addAssignment($event)"
-        (selectionChange)="select($event)"
+  @for (outputDataSource of outputDataSources; track outputDataSource) {
+    <variable-tree
+      [tree-datasource]="outputDataSource"
+      highlightMarkedNodes
+      (createdAssignment)="addAssignment($event)"
+      (selectionChange)="select($event)"
     ></variable-tree>
+  }
 </div>
 <div class="assignments"></div>
 <div class="inputs">
-    <variable-tree *ngFor="let inputDataSource of inputDataSources"
-        [tree-datasource]="inputDataSource"
-        (createdAssignment)="addAssignment($event)"
-        (selectionChange)="select($event)"
+  @for (inputDataSource of inputDataSources; track inputDataSource) {
+    <variable-tree
+      [tree-datasource]="inputDataSource"
+      (createdAssignment)="addAssignment($event)"
+      (selectionChange)="select($event)"
     ></variable-tree>
+  }
 </div>
-<formula-area class="formula" *ngIf="mapping.formulaArea && selectedNode"
+@if (mapping.formulaArea && selectedNode) {
+  <formula-area class="formula"
     [formulaArea]="mapping.formulaArea"
     [documentModel]="documentModel"
     [newFormulaExpression]="selectedNode.toXFL()"
     [expressionFilter]="selectedNode.toXFL()"
     (triggerAction)="performAction($event)"
-></formula-area>
+  ></formula-area>
+}

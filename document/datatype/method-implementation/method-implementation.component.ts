@@ -37,7 +37,8 @@ import { PluginService } from '@pmod/document/plugin.service';
 @Component({
     selector: 'method-implementation',
     templateUrl: './method-implementation.component.html',
-    styleUrls: ['./method-implementation.component.scss']
+    styleUrls: ['./method-implementation.component.scss'],
+    standalone: false
 })
 export class MethodImplementationComponent extends ModellingItemComponent {
 

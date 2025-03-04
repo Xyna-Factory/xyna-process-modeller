@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-/* eslint-disable @typescript-eslint/no-use-before-define */
+ 
 import { Injectable } from '@angular/core';
 
 import { FullQualifiedName } from '@zeta/api';
@@ -732,7 +732,6 @@ class TemplateBuilder {
     }
 
     private _read() {
-        // eslint-disable-next-line @typescript-eslint/prefer-regexp-exec
         const rawTokens = this.tmpl.match(this.rawTokensRegEx);
         let str: string;
         let res: RegExpExecArray, type: string, args: string[], argStr: string;

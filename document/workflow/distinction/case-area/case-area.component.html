@@ -1,16 +1,18 @@
 <div
-    [mod-drop-area]="caseArea.items?.data"
-    [mod-drop-area-allow-item]="allowItem"
-    [mod-drop-area-can-drop]="canDrop"
-    (mod-drop-area-dropped)="dropped($event)"
-    mod-drop-area-hide-indicator
-    class="case-drop-area"
->
-    <case *ngFor="let case of caseArea.items"
-        [mod-draggable]="case"
-        [documentModel]="documentModel"
-        [case]="case"
-        [detachable]="caseArea.items.length > 1"
-        (triggerAction)="performAction($event)"
+  [mod-drop-area]="caseArea.items?.data"
+  [mod-drop-area-allow-item]="allowItem"
+  [mod-drop-area-can-drop]="canDrop"
+  (mod-drop-area-dropped)="dropped($event)"
+  mod-drop-area-hide-indicator
+  class="case-drop-area"
+  >
+  @for (case of caseArea.items; track case) {
+    <case
+      [mod-draggable]="case"
+      [documentModel]="documentModel"
+      [case]="case"
+      [detachable]="caseArea.items.length > 1"
+      (triggerAction)="performAction($event)"
     ></case>
+  }
 </div>

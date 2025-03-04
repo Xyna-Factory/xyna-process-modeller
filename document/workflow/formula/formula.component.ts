@@ -47,7 +47,8 @@ import { FormulaChildComponent } from './parts/formula-part.component';
 @Component({
     selector: 'formula',
     templateUrl: './formula.component.html',
-    styleUrls: ['./formula.component.scss']
+    styleUrls: ['./formula.component.scss'],
+    standalone: false
 })
 export class FormulaComponent extends ModellingItemComponent {
 

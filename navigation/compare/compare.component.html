@@ -1,36 +1,38 @@
 <header>
-    <h2 class="navigationbar-title" xc-i18n>header</h2>
-    <xc-button (click)="loadDeployedWorkflow()" xc-i18n>load</xc-button>
+  <h2 class="navigationbar-title" xc-i18n>header</h2>
+  <xc-button (click)="loadDeployedWorkflow()" xc-i18n>load</xc-button>
 </header>
 <div class="area-content">
 
-    <div *ngIf="workflow" class="workflow-container" dataflow-container>
-        <dataflow
-            [dataflow]="dataflow"
-            [workflow]="workflow"
-        ></dataflow>
-        <variable-area-document
-            [variableArea]="workflow.inputArea" xc-variable-area-kind="input-area"
-            [documentModel]="document"
-        ></variable-area-document>
-        <type-label-area
-            [typeLabelArea]="workflow.typeLabelArea"
-            [menuItems]="menuItems"
-            [menuTemplateRef]="menuTemplate"
-            [documentModel]="document"
-        ></type-label-area>
-        <workflow
-            [workflow]="workflow"
-            [documentModel]="document"
-            class="zeta-scrollbar"
-        ></workflow>
-        <exception-handling-area
-            [exceptionHandlingArea]="workflow.exceptionHandlingArea"
-            [documentModel]="document"
-        ></exception-handling-area>
-        <variable-area-document
-            [variableArea]="workflow.outputArea" xc-variable-area-kind="output-area"
-            [documentModel]="document"
-        ></variable-area-document>
+  @if (workflow) {
+    <div class="workflow-container" dataflow-container>
+      <dataflow
+        [dataflow]="dataflow"
+        [workflow]="workflow"
+      ></dataflow>
+      <variable-area-document
+        [variableArea]="workflow.inputArea" xc-variable-area-kind="input-area"
+        [documentModel]="document"
+      ></variable-area-document>
+      <type-label-area
+        [typeLabelArea]="workflow.typeLabelArea"
+        [menuItems]="menuItems"
+        [menuTemplateRef]="menuTemplate"
+        [documentModel]="document"
+      ></type-label-area>
+      <workflow
+        [workflow]="workflow"
+        [documentModel]="document"
+        class="zeta-scrollbar"
+      ></workflow>
+      <exception-handling-area
+        [exceptionHandlingArea]="workflow.exceptionHandlingArea"
+        [documentModel]="document"
+      ></exception-handling-area>
+      <variable-area-document
+        [variableArea]="workflow.outputArea" xc-variable-area-kind="output-area"
+        [documentModel]="document"
+      ></variable-area-document>
     </div>
+  }
 </div>

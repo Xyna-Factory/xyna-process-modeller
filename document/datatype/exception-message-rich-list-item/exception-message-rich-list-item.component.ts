@@ -33,7 +33,8 @@ export interface ExceptionMessageRichListItemData {
 
 @Component({
     templateUrl: './exception-message-rich-list-item.component.html',
-    styleUrls: [ './exception-message-rich-list-item.component.scss']
+    styleUrls: ['./exception-message-rich-list-item.component.scss'],
+    standalone: false
 })
 export class ExceptionMessageRichListItemComponent extends XcRichListItemComponent<void, ExceptionMessageRichListItemData> implements OnInit, OnDestroy {
 

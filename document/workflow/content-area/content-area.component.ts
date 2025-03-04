@@ -30,7 +30,8 @@ import { ModellingObjectComponent } from '../shared/modelling-object.component';
 @Component({
     selector: 'content-area',
     templateUrl: './content-area.component.html',
-    styleUrls: ['./content-area.component.scss']
+    styleUrls: ['./content-area.component.scss'],
+    standalone: false
 })
 export class ContentAreaComponent extends ModellingObjectComponent {
     private _direction: 'row' | 'column' = 'column';

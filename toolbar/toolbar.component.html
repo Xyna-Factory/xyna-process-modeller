@@ -1,90 +1,95 @@
 <div class="iconbar">
-    <ng-container *ngFor="let description of genericButtonDescriptions">
-        <xc-icon-button
-            xc-i18n
-            *ngIf          = "!description.isVisible || description.isVisible(documentService)"
-            [disabled]     = "(description.isDisabled ? description.isDisabled(documentService) : false)"
-            [busy]         = "(description.isBusy     ? description.isBusy(documentService)     : false)"
-            [xc-icon-name] = "description.iconName"
-            [xc-tooltip]   = "description.tooltip"
-            [xc-menu-trigger]="menu"
-            xc-tooltip-position="right"
-            [xc-icon-style]="description.iconStyle ? description.iconStyle : 'modeller'"
-            (click)="clickToolbarButton(description)"
-        ></xc-icon-button>
-        <xc-menu #menu
-            [xc-menu-items]="description.menuItems"
-            (xc-menu-item-select)="selectGenericMenuItem($event)"
-            [xc-menu-x-offset]="6"
-            xc-menu-x-nextto-trigger
-            xc-menu-with-arrow
-        ></xc-menu>
-    </ng-container>
+  @for (description of genericButtonDescriptions; track description) {
+    @if (!description.isVisible || description.isVisible(documentService)) {
+      <xc-icon-button
+        xc-i18n
+        [disabled]     = "(description.isDisabled ? description.isDisabled(documentService) : false)"
+        [busy]         = "(description.isBusy     ? description.isBusy(documentService)     : false)"
+        [xc-icon-name] = "description.iconName"
+        [xc-tooltip]   = "description.tooltip"
+        [xc-menu-trigger]="menu"
+        xc-tooltip-position="right"
+        [xc-icon-style]="description.iconStyle ? description.iconStyle : 'modeller'"
+        (click)="clickToolbarButton(description)"
+      ></xc-icon-button>
+    }
+    <xc-menu #menu
+      [xc-menu-items]="description.menuItems"
+      (xc-menu-item-select)="selectGenericMenuItem($event)"
+      [xc-menu-x-offset]="6"
+      xc-menu-x-nextto-trigger
+      xc-menu-with-arrow
+    ></xc-menu>
+  }
 </div>
-<div class="separator" *ngIf="specificToolbarItems.length"></div>
-<div *ngIf="!documentService.selectedDocument?.isLocked" id="toolbar" class="iconbar">
-    <ng-container *ngFor="let item of specificToolbarItems">
-        <ng-container *ngIf="isMenu(item); else simpleButton">
-            <ng-container *ngFor="let group of [castToDescriptionGroup(item)]">
-                <div class="menu-draggable-icons">
-                    <xc-icon
-                        xc-i18n
-                        [xc-icon-style]="group.activeButton ? (group.activeButton.iconStyle ? group.activeButton.iconStyle : 'modeller') : (group.buttons[0].iconStyle ? group.buttons[0].iconStyle : 'modeller')"
-                        [class.inactive]="!(group.activeButton ? group.activeButton.xmomItem : group.buttons[0].xmomItem)"
-                        [mod-draggable]="group.activeButton ? group.activeButton.xmomItem : group.buttons[0].xmomItem"
-                        [xc-icon-name]="group.activeButton ? group.activeButton.iconName : group.buttons[0].iconName"
-                        [xc-tooltip]="group.activeButton ? group.activeButton.tooltip : group.buttons[0].tooltip"
-                        mod-draggable-allowed-drag-type="insert"
-                        xc-tooltip-position="below"
-                        class="menu-point draggable-icon"
-                    ></xc-icon>
-                    <div class="menu">
-                        <xc-icon
-                            xc-i18n
-                            *ngFor="let description of group.buttons"
-                            [xc-icon-style]="description.iconStyle ? description.iconStyle : 'modeller'"
-                            [class.inactive]="!description.xmomItem"
-                            [mod-draggable]="description.xmomItem"
-                            [xc-icon-name]="description.iconName"
-                            [xc-tooltip]="description.tooltip"
-                            (dragstart)="group.activeButton = description"
-                            (click)="group.activeButton = description"
-                            mod-draggable-allowed-drag-type="insert"
-                            xc-tooltip-position="below"
-                            class="draggable-icon"
-                        ></xc-icon>
-                    </div>
-                </div>
-            </ng-container>
-        </ng-container>
-        <ng-template #simpleButton>
-            <ng-container *ngFor="let description of [castToDescription(item)]">
-                <ng-container *ngIf="isIconButtonForVersion1_0(description); else iconTemplate">
-                    <xc-icon-button
-                        xc-i18n
-                        *ngIf="!description.isVisible || description.isVisible(documentService)"
-                        [disabled]="(description.isDisabled ? description.isDisabled(documentService) : false)"
-                        [busy]="(description.isBusy ? description.isBusy(documentService) : false)"
-                        [xc-icon-style]="description.iconStyle ? description.iconStyle : 'modeller'"
-                        [xc-icon-name]="description.iconName"
-                        [xc-tooltip]="description.tooltip"
-                        (click)="clickToolbarButton(description)"
-                        xc-tooltip-position="right"
-                    ></xc-icon-button>
-                </ng-container>
-                <ng-template #iconTemplate>
-                    <xc-icon
-                        xc-i18n
-                        [mod-draggable]="description.xmomItem" mod-draggable-allowed-drag-type="insert"
-                        [xc-icon-style]="description.iconStyle ? description.iconStyle : 'modeller'"
-                        [class.inactive]="!description.xmomItem"
-                        [xc-icon-name]="description.iconName"
-                        [xc-tooltip]="description.tooltip"
-                        xc-tooltip-position="right"
-                        class="draggable-icon"
-                    ></xc-icon>
-                </ng-template>
-            </ng-container>
-        </ng-template>
-    </ng-container>
-</div>
+@if (specificToolbarItems.length) {
+  <div class="separator"></div>
+}
+@if (!documentService.selectedDocument?.isLocked) {
+  <div id="toolbar" class="iconbar">
+    @for (item of specificToolbarItems; track item) {
+      @if (isMenu(item)) {
+        @for (group of [castToDescriptionGroup(item)]; track group) {
+          <div class="menu-draggable-icons">
+            <xc-icon
+              xc-i18n
+              [xc-icon-style]="group.activeButton ? (group.activeButton.iconStyle ? group.activeButton.iconStyle : 'modeller') : (group.buttons[0].iconStyle ? group.buttons[0].iconStyle : 'modeller')"
+              [class.inactive]="!(group.activeButton ? group.activeButton.xmomItem : group.buttons[0].xmomItem)"
+              [mod-draggable]="group.activeButton ? group.activeButton.xmomItem : group.buttons[0].xmomItem"
+              [xc-icon-name]="group.activeButton ? group.activeButton.iconName : group.buttons[0].iconName"
+              [xc-tooltip]="group.activeButton ? group.activeButton.tooltip : group.buttons[0].tooltip"
+              mod-draggable-allowed-drag-type="insert"
+              xc-tooltip-position="below"
+              class="menu-point draggable-icon"
+            ></xc-icon>
+            <div class="menu">
+              @for (description of group.buttons; track description) {
+                <xc-icon
+                  xc-i18n
+                  [xc-icon-style]="description.iconStyle ? description.iconStyle : 'modeller'"
+                  [class.inactive]="!description.xmomItem"
+                  [mod-draggable]="description.xmomItem"
+                  [xc-icon-name]="description.iconName"
+                  [xc-tooltip]="description.tooltip"
+                  (dragstart)="group.activeButton = description"
+                  (click)="group.activeButton = description"
+                  mod-draggable-allowed-drag-type="insert"
+                  xc-tooltip-position="below"
+                  class="draggable-icon"
+                ></xc-icon>
+              }
+            </div>
+          </div>
+        }
+      } @else {
+        @for (description of [castToDescription(item)]; track description) {
+          @if (isIconButtonForVersion1_0(description)) {
+            @if (!description.isVisible || description.isVisible(documentService)) {
+              <xc-icon-button
+                xc-i18n
+                [disabled]="(description.isDisabled ? description.isDisabled(documentService) : false)"
+                [busy]="(description.isBusy ? description.isBusy(documentService) : false)"
+                [xc-icon-style]="description.iconStyle ? description.iconStyle : 'modeller'"
+                [xc-icon-name]="description.iconName"
+                [xc-tooltip]="description.tooltip"
+                (click)="clickToolbarButton(description)"
+                xc-tooltip-position="right"
+              ></xc-icon-button>
+            }
+          } @else {
+            <xc-icon
+              xc-i18n
+              [mod-draggable]="description.xmomItem" mod-draggable-allowed-drag-type="insert"
+              [xc-icon-style]="description.iconStyle ? description.iconStyle : 'modeller'"
+              [class.inactive]="!description.xmomItem"
+              [xc-icon-name]="description.iconName"
+              [xc-tooltip]="description.tooltip"
+              xc-tooltip-position="right"
+              class="draggable-icon"
+            ></xc-icon>
+          }
+        }
+      }
+    }
+  </div>
+}

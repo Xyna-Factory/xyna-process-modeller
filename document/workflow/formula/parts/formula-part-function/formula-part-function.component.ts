@@ -23,7 +23,8 @@ import { FormulaPartComponent } from '../formula-part.component';
 @Component({
     selector: 'formula-part-function',
     templateUrl: './formula-part-function.component.html',
-    styleUrls: ['./formula-part-function.component.scss']
+    styleUrls: ['./formula-part-function.component.scss'],
+    standalone: false
 })
 export class FormulaPartFunctionComponent extends FormulaPartComponent {
 

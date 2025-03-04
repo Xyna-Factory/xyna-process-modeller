@@ -24,7 +24,8 @@ import { ModellingItemComponent } from '../../shared/modelling-object.component'
 @Component({
     selector: 'exception-handling',
     templateUrl: './exception-handling.component.html',
-    styleUrls: ['./exception-handling.component.scss', '../../common.scss']
+    styleUrls: ['./exception-handling.component.scss', '../../common.scss'],
+    standalone: false
 })
 export class ExceptionHandlingComponent extends ModellingItemComponent {
 

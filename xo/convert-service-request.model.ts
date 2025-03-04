@@ -30,7 +30,7 @@ export class XoConvertServiceRequest extends XoConvertRequest {
     path: string;
 
 
-    static convertToWorkflow(result: {label: string; path: string}): XoConvertServiceRequest {
+    static convertToWorkflow(result: { label: string; path: string }): XoConvertServiceRequest {
         const req = new XoConvertServiceRequest();
         req.label = result.label;
         req.path = result.path;

@@ -27,7 +27,8 @@ import { FormulaChildComponent } from '../formula-part.component';
 @Component({
     selector: 'formula-proxy',
     templateUrl: './formula-proxy.component.html',
-    styleUrls: ['./formula-proxy.component.scss']
+    styleUrls: ['./formula-proxy.component.scss'],
+    standalone: false
 })
 export class FormulaProxyComponent implements AfterViewInit, FormulaChildComponent {
 
