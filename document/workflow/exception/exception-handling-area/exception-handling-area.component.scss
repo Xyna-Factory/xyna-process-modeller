@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-@import "const";
+@use '../../../../const' as *;
 
 $toggle-button-size: 16px;
 
@@ -64,7 +64,7 @@ $toggle-button-size: 16px;
             border: 1px solid $connection-line-color;
             margin-left: 2px;
 
-            background-color: $color-black;
+            background-color: $color-invert;
             &.empty {
                 background-color: $variable-area-background-color;
             }

@@ -35,7 +35,8 @@ import { TypeDocumentComponent } from './type-document.component';
 @Component({
     templateUrl: './datatype.component.html',
     styleUrls: ['./datatype.component.scss'],
-    providers: [SelectionService]   // single service instances per document
+    providers: [SelectionService], // single service instances per document
+    standalone: false
 })
 export class DataTypeComponent extends TypeDocumentComponent<DataTypeDocumentModel> {
 
@@ -49,12 +50,12 @@ export class DataTypeComponent extends TypeDocumentComponent<DataTypeDocumentMod
         super(injector);
 
         // workaround such that model types are not pruned by compiler
-        /* eslint-disable @typescript-eslint/no-unused-vars */
+         
         const dataType = new XoDataType();
         const exceptionType = new XoExceptionType();
         const dataTypeTypeLabelArea = new XoDataTypeTypeLabelArea();
         const memberVariableArea = new XoMemberVariableArea();
-        /* eslint-enable @typescript-eslint/no-unused-vars */
+         
 
         this.detailsItem = new XoDetailsItem();
         this.detailsItem.name = 'Data Type Details';

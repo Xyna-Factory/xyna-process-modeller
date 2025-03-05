@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-@import "const";
+@use '../../../const' as *;
 
 
 :host {
@@ -27,7 +27,7 @@
 
     &.prototype {
         label-area {
-            background: repeating-linear-gradient(-60deg, $prototype-step-gradient-color, $prototype-step-gradient-color 20px, $color-black 20px, $color-black 40px);
+            background: repeating-linear-gradient(-60deg, $prototype-step-gradient-color, $prototype-step-gradient-color 20px, $color-invert 20px, $color-invert 40px);
         }
 
         .fqn-area {

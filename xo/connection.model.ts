@@ -52,7 +52,6 @@ export class XoConnection extends XoObject {
     @XoProperty()
     branchId: string;
 
-    // eslint-disable-next-line zeta/xo
     @XoProperty()
     type: DataConnectionType;
 

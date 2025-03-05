@@ -30,7 +30,8 @@ import { DocumentModel } from './model/document.model';
 
 
 @Component({
-    template: ''
+    template: '',
+    standalone: false
 })
 export class TypeDocumentComponent<D extends DocumentModel> extends DocumentComponent<void, D> {
 

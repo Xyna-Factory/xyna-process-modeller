@@ -31,7 +31,8 @@ import { TypeDocumentComponent } from './type-document.component';
     templateUrl: './servicegroup.component.html',
     styleUrls: ['./servicegroup.component.scss'],
     // single service instances per document
-    providers: [SelectionService]
+    providers: [SelectionService],
+    standalone: false
 })
 export class ServiceGroupComponent extends TypeDocumentComponent<ServiceGroupDocumentModel> {
 

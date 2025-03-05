@@ -27,7 +27,8 @@ import { ModellingObjectComponent } from './modelling-object.component';
  * Base class for all components, text-actions can be done on
  */
 @Component({
-    template: ''
+    template: '',
+    standalone: false
 })
 export class TextAreaModellingObjectComponent extends ModellingObjectComponent {
 

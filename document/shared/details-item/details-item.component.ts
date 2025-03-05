@@ -26,7 +26,8 @@ import { SelectableModellingObjectComponent } from '../../workflow/shared/select
 @Component({
     selector: 'details-item',
     templateUrl: './details-item.component.html',
-    styleUrls: ['./details-item.component.scss']
+    styleUrls: ['./details-item.component.scss'],
+    standalone: false
 })
 export class DetailsItemComponent extends SelectableModellingObjectComponent {
 

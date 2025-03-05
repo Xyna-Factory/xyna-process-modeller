@@ -84,8 +84,8 @@ export enum AreaValue {
             transition('opened_half => opened', animate('0s ease-in')),
             transition('opened => opened_half', animate('.3s ease-in'))
         ])
-    ]/*,
-    changeDetection: ChangeDetectionStrategy.OnPush*/
+    ],
+    standalone: false
 })
 export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
 

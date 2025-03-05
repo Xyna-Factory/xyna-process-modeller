@@ -1,47 +1,67 @@
 <div
-    id="{{formula ? formula.id : ''}}"
-    #formulaWrapper
-    [mod-drop-area]="formula.variables?.data" [mod-drop-area-allow-item]="allowItem" mod-drop-area-direction="horizontal" (mod-drop-area-dropped)="dropped($event)"
-    class="formula-wrapper"
-    tabindex="0"
->
-    <ng-container *ngFor="let part of formula.visibleParts, let i = index">
-        <span *ngIf="showCaret && partWithCaret === part" class="caret">|</span>
-        <formula-proxy #externalChild *ngIf="proxyIndex === i"
-            [formula]="formula"
-            (selectionChange)="finishProxy($event)"
-        ></formula-proxy>
-        <variable *ngIf="part.isVariable()"
-            [variable]="part.variable"
-            [documentModel]="documentModel"
-            [mod-draggable]="part.variable" mod-draggable-allowed-drag-type="copy"
-            (click)="clickOnPart(part)"
-            [hasMenu]="!variableMenuDisabled"
-            (triggerAction)="performAction($event)"
-        ></variable>
-        <formula-part-member #editablePart #externalChild *ngIf="part.isMember()" [formula-part]="part"
-            (click)="clickOnPart(part)"
-            (startedEditing)="startedEditingSubPart($event)" (acceptedEditing)="acceptedEditingSubPart($event)" (finishedEditing)="finishedEditingSubPart($event)"
-            class="member"
-        ></formula-part-member>
-        <formula-part-function *ngIf="part.isFunction()" [formula-part]="part"
-            (click)="clickOnPart(part)"
-        ></formula-part-function>
-        <formula-part-operation *ngIf="part.isOperation()" [formula-part]="part"
-            (click)="clickOnPart(part)"
-        ></formula-part-operation>
-        <formula-part-special *ngIf="part.isSpecial()" [formula-part]="part"
-            (click)="clickOnPart(part)"
-        ></formula-part-special>
-        <formula-part-literal #editablePart *ngIf="part.isLiteral()" [formula-part]="part"
-            (click)="clickOnPart(part)"
-            (startedEditing)="startedEditingSubPart($event)" (acceptedEditing)="acceptedEditingSubPart($event)" (finishedEditing)="finishedEditingSubPart($event)"
-        ></formula-part-literal>
-    </ng-container>
-    <span *ngIf="showCaret && !partWithCaret" class="caret">|</span><!-- each part has a caret in front of it. This one is for the end of the formula -->
-    <!-- for a proxy if there is no visible formula part -->
-    <formula-proxy #externalChild *ngIf="proxyIndex === formula.visibleParts.length"
+  id="{{formula ? formula.id : ''}}"
+  #formulaWrapper
+  [mod-drop-area]="formula.variables?.data" [mod-drop-area-allow-item]="allowItem" mod-drop-area-direction="horizontal" (mod-drop-area-dropped)="dropped($event)"
+  class="formula-wrapper"
+  tabindex="0"
+  >
+  @for (part of formula.visibleParts; track part; let i = $index) {
+    @if (showCaret && partWithCaret === part) {
+      <span class="caret">|</span>
+    }
+    @if (proxyIndex === i) {
+      <formula-proxy #externalChild
         [formula]="formula"
         (selectionChange)="finishProxy($event)"
-    ></formula-proxy>
-</div>
+      ></formula-proxy>
+    }
+    @if (part.isVariable()) {
+      <variable
+        [variable]="part.variable"
+        [documentModel]="documentModel"
+        [mod-draggable]="part.variable" mod-draggable-allowed-drag-type="copy"
+        (click)="clickOnPart(part)"
+        [hasMenu]="!variableMenuDisabled"
+        (triggerAction)="performAction($event)"
+      ></variable>
+    }
+    @if (part.isMember()) {
+      <formula-part-member #editablePart #externalChild [formula-part]="part"
+        (click)="clickOnPart(part)"
+        (startedEditing)="startedEditingSubPart($event)" (acceptedEditing)="acceptedEditingSubPart($event)" (finishedEditing)="finishedEditingSubPart($event)"
+        class="member"
+      ></formula-part-member>
+    }
+    @if (part.isFunction()) {
+      <formula-part-function [formula-part]="part"
+        (click)="clickOnPart(part)"
+      ></formula-part-function>
+    }
+    @if (part.isOperation()) {
+      <formula-part-operation [formula-part]="part"
+        (click)="clickOnPart(part)"
+      ></formula-part-operation>
+    }
+    @if (part.isSpecial()) {
+      <formula-part-special [formula-part]="part"
+        (click)="clickOnPart(part)"
+      ></formula-part-special>
+    }
+    @if (part.isLiteral()) {
+      <formula-part-literal #editablePart [formula-part]="part"
+        (click)="clickOnPart(part)"
+        (startedEditing)="startedEditingSubPart($event)" (acceptedEditing)="acceptedEditingSubPart($event)" (finishedEditing)="finishedEditingSubPart($event)"
+      ></formula-part-literal>
+    }
+  }
+  @if (showCaret && !partWithCaret) {
+    <span class="caret">|</span>
+    }<!-- each part has a caret in front of it. This one is for the end of the formula -->
+    <!-- for a proxy if there is no visible formula part -->
+    @if (proxyIndex === formula.visibleParts.length) {
+      <formula-proxy #externalChild
+        [formula]="formula"
+        (selectionChange)="finishProxy($event)"
+      ></formula-proxy>
+    }
+  </div>

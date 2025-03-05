@@ -52,7 +52,8 @@ export interface TriggeredAction {
  * Base class for all components, modelling-actions can be done on
  */
 @Component({
-    template: ''
+    template: '',
+    standalone: false
 })
 export class ModellingObjectComponent implements OnInit, OnDestroy {
 
@@ -374,7 +375,8 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
  * Base class for all components, that represent an XoItem
  */
 @Component({
-    template: ''
+    template: '',
+    standalone: false
 })
 export class ModellingItemComponent extends ModellingObjectComponent implements OnDestroy {
 

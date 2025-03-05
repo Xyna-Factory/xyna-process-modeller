@@ -30,22 +30,22 @@ export class XoRuntimeContext extends XoObject {
     }
 
     static fromQueryParam(param: string): XoRuntimeContext {
-        /* eslint-disable @typescript-eslint/no-use-before-define */
+         
         return XoApplication.isApplicationQueryParam(param)
             ? XoApplication.fromQueryParam(param)
             : XoWorkspace.fromQueryParam(param);
-        /* eslint-enable @typescript-eslint/no-use-before-define */
+         
     }
 
     static fromRuntimeContext(rtc: RuntimeContext): XoRuntimeContext {
-        /* eslint-disable @typescript-eslint/no-use-before-define */
+         
         if (rtc.ws) {
             return XoWorkspace.fromWorkspace(rtc.ws);
         }
         if (rtc.av) {
             return XoApplication.fromApplication(rtc.av);
         }
-        /* eslint-enable @typescript-eslint/no-use-before-define */
+         
         return null;
     }
 }

@@ -1,4 +1,5 @@
-<xc-icon-button *ngIf="!readonly"
+@if (!readonly) {
+  <xc-icon-button
     class="complete-button"
     xc-icon-name="add"
     xc-icon-size="small"
@@ -7,22 +8,27 @@
     xc-tooltip="tooltip-complete-sub-types"
     xc-tooltip-position="right"
     (click)="complete()"
-></xc-icon-button>
-<formula-input-area *ngIf="choice.formulaArea"
+  ></xc-icon-button>
+}
+@if (choice.formulaArea) {
+  <formula-input-area
     [formulaArea]="choice.formulaArea"
     [documentModel]="documentModel"
     questionmarkEditable="false"
     (triggerAction)="performAction($event)"
-></formula-input-area>
+  ></formula-input-area>
+}
 <content-area
-    [contentArea]="choice.contentArea"
-    [documentModel]="documentModel"
-    xc-content-area-direction="row"
-    (triggerAction)="performAction($event)"
+  [contentArea]="choice.contentArea"
+  [documentModel]="documentModel"
+  xc-content-area-direction="row"
+  (triggerAction)="performAction($event)"
 ></content-area>
-<variable-area-choice *ngIf="choice.outputArea"
+@if (choice.outputArea) {
+  <variable-area-choice
     [variableArea]="choice.outputArea"
     [documentModel]="documentModel"
     xc-variable-area-kind="output-area"
     (triggerAction)="performAction($event)"
-></variable-area-choice>
+  ></variable-area-choice>
+}

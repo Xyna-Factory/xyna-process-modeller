@@ -1,21 +1,23 @@
 <!-- TODO remove id -->
 <div
-    id="{{contentArea ? contentArea.id : ''}}"
-    [mod-drop-area]="contentArea.items?.data"
-    [mod-drop-area-allow-item]="allowItem"
-    [mod-drop-area-can-drop]="canDrop"
-    (mod-drop-area-dropped)="dropped($event)"
-    [mod-drop-area-direction]="direction === 'column' ? 'vertical' : 'horizontal'"
-    [mod-drop-area-allow-parallel]="direction === 'column'"
-    class="drop-area"
->
-    <service-step *ngFor="let serviceStep of contentArea.items"
-        [mod-draggable]="serviceStep"
-        [item]="serviceStep"
-        [documentModel]="documentModel"
-        [parent-direction]="direction"
-        (triggerAction)="performAction($event)"
-        tabindex="0"
-    >
+  id="{{contentArea ? contentArea.id : ''}}"
+  [mod-drop-area]="contentArea.items?.data"
+  [mod-drop-area-allow-item]="allowItem"
+  [mod-drop-area-can-drop]="canDrop"
+  (mod-drop-area-dropped)="dropped($event)"
+  [mod-drop-area-direction]="direction === 'column' ? 'vertical' : 'horizontal'"
+  [mod-drop-area-allow-parallel]="direction === 'column'"
+  class="drop-area"
+  >
+  @for (serviceStep of contentArea.items; track serviceStep) {
+    <service-step
+      [mod-draggable]="serviceStep"
+      [item]="serviceStep"
+      [documentModel]="documentModel"
+      [parent-direction]="direction"
+      (triggerAction)="performAction($event)"
+      tabindex="0"
+      >
     </service-step>
+  }
 </div>

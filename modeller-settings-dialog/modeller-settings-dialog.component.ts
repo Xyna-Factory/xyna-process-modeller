@@ -27,7 +27,8 @@ import { modellerSettingsDialog_translations_en_US } from './locale/modeller-set
 
 @Component({
     templateUrl: './modeller-settings-dialog.component.html',
-    styleUrls: ['./modeller-settings-dialog.component.scss']
+    styleUrls: ['./modeller-settings-dialog.component.scss'],
+    standalone: false
 })
 export class ModellerSettingsDialogComponent extends XcDialogComponent<void, void> {
 

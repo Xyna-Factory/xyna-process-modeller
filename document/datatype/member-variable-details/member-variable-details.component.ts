@@ -37,7 +37,8 @@ import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
     selector: 'member-variable-details',
     templateUrl: './member-variable-details.component.html',
     styleUrls: ['./member-variable-details.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class MemberVariableDetailsComponent extends ModellingItemComponent implements OnDestroy {
 

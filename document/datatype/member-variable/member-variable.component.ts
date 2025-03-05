@@ -26,7 +26,8 @@ import { SelectableModellingObjectComponent } from '../../workflow/shared/select
 @Component({
     selector: 'member-variable',
     templateUrl: './member-variable.component.html',
-    styleUrls: ['./member-variable.component.scss']
+    styleUrls: ['./member-variable.component.scss'],
+    standalone: false
 })
 export class MemberVariableComponent extends SelectableModellingObjectComponent {
 

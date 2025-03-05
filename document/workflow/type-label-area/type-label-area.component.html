@@ -1,13 +1,15 @@
 <label-area
-    [labelArea]="typeLabelArea"
-    [documentModel]="documentModel"
-    [menuItems]="menuItems"
-    [menuTemplateRef]="menuTemplateRef"
-    (triggerAction)="performAction($event)">
+  [labelArea]="typeLabelArea"
+  [documentModel]="documentModel"
+  [menuItems]="menuItems"
+  [menuTemplateRef]="menuTemplateRef"
+  (triggerAction)="performAction($event)">
 </label-area>
-<div *ngIf="showFqn" class="fqn-area">
+@if (showFqn) {
+  <div class="fqn-area">
     <div
-        class="fqn-string"
-        [xc-tooltip]="typeLabelArea.$fqn"
+      class="fqn-string"
+      [xc-tooltip]="typeLabelArea.$fqn"
     >{{typeLabelArea.$fqn}}</div>
-</div>
+  </div>
+}

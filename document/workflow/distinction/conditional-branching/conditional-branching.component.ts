@@ -25,7 +25,8 @@ import { ChoiceComponent } from '../choice.component';
 @Component({
     selector: 'conditional-branching',
     templateUrl: './conditional-branching.component.html',
-    styleUrls: ['../choice.component.scss', './conditional-branching.component.scss']
+    styleUrls: ['../choice.component.scss', './conditional-branching.component.scss'],
+    standalone: false
 })
 export class ConditionalBranchingComponent extends ChoiceComponent {
 

@@ -15,10 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-$member-variable-area-background-color: unset !default;
-$dnd-hover-background-color: unset !default;
-
-@import "const";
+@use '../../../const' as *;
 
 :host {
     background-color: $member-variable-area-background-color;

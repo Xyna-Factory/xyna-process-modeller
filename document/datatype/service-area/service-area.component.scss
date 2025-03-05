@@ -15,11 +15,8 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-$workflow-area-background-color: unset !default;
-$content-area-padding: unset !default;
-$dnd-hover-background-color: unset !default;
 
-@import "const";
+@use '../../../const' as *;
 
 :host {
     display: flex;

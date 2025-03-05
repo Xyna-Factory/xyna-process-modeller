@@ -29,7 +29,8 @@ import { ModellingObjectComponent } from '../../workflow/shared/modelling-object
     selector: 'global-storable-properties-area',
     templateUrl: './global-storable-properties-area.component.html',
     styleUrls: ['./global-storable-properties-area.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class GlobalStorablePropertiesAreaComponent extends ModellingObjectComponent {
 

@@ -32,7 +32,8 @@ import { XoWarningArray } from '@pmod/xo/warning.model';
     selector: 'xfm-mod-nav-errors',
     templateUrl: './errors.component.html',
     styleUrls: ['./errors.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class ErrorsComponent extends CommonNavigationComponent implements OnDestroy {
     issues: ErrorItem[] = [];

@@ -35,7 +35,8 @@ import { CommonNavigationComponent } from '../common-navigation-class/common-nav
     selector: 'xfm-mod-nav-clipboard',
     templateUrl: './clipboard.component.html',
     styleUrls: ['./clipboard.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class ClipboardComponent extends CommonNavigationComponent {
 

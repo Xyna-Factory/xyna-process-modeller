@@ -1,13 +1,15 @@
 <div
-    [mod-drop-area]="formulaArea.items?.data" [mod-drop-area-allow-item]="allowItem" [mod-drop-area-can-drop]="canDrop" mod-drop-area-direction="horizontal" (mod-drop-area-dropped)="dropped($event)"
-    class="drop-area"
->
-    <formula
-        [formula]="formula"
-        [documentModel]="documentModel"
-        [hideQuestionmark]="!questionmarkEditable"
-        (triggerAction)="performAction($event)"
-        tabindex="0"
-    ></formula>
+  [mod-drop-area]="formulaArea.items?.data" [mod-drop-area-allow-item]="allowItem" [mod-drop-area-can-drop]="canDrop" mod-drop-area-direction="horizontal" (mod-drop-area-dropped)="dropped($event)"
+  class="drop-area"
+  >
+  <formula
+    [formula]="formula"
+    [documentModel]="documentModel"
+    [hideQuestionmark]="!questionmarkEditable"
+    (triggerAction)="performAction($event)"
+    tabindex="0"
+  ></formula>
 </div>
-<span *ngIf="!questionmarkEditable" class="questionmark">?</span>
+@if (!questionmarkEditable) {
+  <span class="questionmark">?</span>
+}

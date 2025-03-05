@@ -32,7 +32,8 @@ import { TypeDocumentComponent } from './type-document.component';
     templateUrl: './exceptiontype.component.html',
     styleUrls: ['./exceptiontype.component.scss'],
     // single service instances per document
-    providers: [SelectionService]
+    providers: [SelectionService],
+    standalone: false
 })
 export class ExceptionTypeComponent extends TypeDocumentComponent<ExceptionTypeDocumentModel> {
 

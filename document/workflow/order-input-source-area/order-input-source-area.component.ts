@@ -29,7 +29,8 @@ import { ModellingObjectComponent } from '../shared/modelling-object.component';
 @Component({
     selector: 'order-input-source-area',
     templateUrl: './order-input-source-area.component.html',
-    styleUrls: ['./order-input-source-area.component.scss']
+    styleUrls: ['./order-input-source-area.component.scss'],
+    standalone: false
 })
 export class OrderInputSourceAreaComponent extends ModellingObjectComponent implements OnInit {
 

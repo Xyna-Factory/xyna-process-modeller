@@ -46,7 +46,8 @@ export interface LabelPathDialogData {
 
 @Component({
     templateUrl: './label-path-dialog.component.html',
-    styleUrls: ['./label-path-dialog.component.scss']
+    styleUrls: ['./label-path-dialog.component.scss'],
+    standalone: false
 })
 export class LabelPathDialogComponent extends XcDialogComponent<LabelPathDialogResult, LabelPathDialogData> {
 

@@ -1,24 +1,48 @@
-<div *ngIf="isBranching || isChoice || isParallelism" tabindex="0">
-    <span *ngFor="let i of content" class="lane"></span>
-    <div *ngIf="!isParallelism" class="input"></div>
-    <div *ngIf="!isParallelism" class="output"></div>
-</div>
-<div *ngIf="isInvocation || isMapping || isQuery || isThrow" tabindex="0">
-    <div *ngIf="!isQuery" class="input">
-        <span *ngFor="let i of inputs" class="var"></span>
-    </div>
+@if (isBranching || isChoice || isParallelism) {
+  <div tabindex="0">
+    @for (i of content; track i) {
+      <span class="lane"></span>
+    }
+    @if (!isParallelism) {
+      <div class="input"></div>
+    }
+    @if (!isParallelism) {
+      <div class="output"></div>
+    }
+  </div>
+}
+@if (isInvocation || isMapping || isQuery || isThrow) {
+  <div tabindex="0">
+    @if (!isQuery) {
+      <div class="input">
+        @for (i of inputs; track i) {
+          <span class="var"></span>
+        }
+      </div>
+    }
     <div class="label">
-        <xc-icon *ngIf="icon" icon [xc-icon-name]="icon" xc-icon-style="modeller" xc-icon-size="large"></xc-icon>
-        <span>{{label}}</span>
+      @if (icon) {
+        <xc-icon icon [xc-icon-name]="icon" xc-icon-style="modeller" xc-icon-size="large"></xc-icon>
+      }
+      <span>{{label}}</span>
     </div>
-    <div *ngIf="!isThrow" class="output">
-        <span *ngFor="let i of outputs" class="var"></span>
-    </div>
-</div>
-<div *ngIf="isVariable" tabindex="0">
+    @if (!isThrow) {
+      <div class="output">
+        @for (i of outputs; track i) {
+          <span class="var"></span>
+        }
+      </div>
+    }
+  </div>
+}
+@if (isVariable) {
+  <div tabindex="0">
     <div class="rim">{{isList ? 'n' : '1'}}</div>
     <div class="label">{{label}}</div>
-</div>
-<div *ngIf="isTemplate" tabindex="0">
+  </div>
+}
+@if (isTemplate) {
+  <div tabindex="0">
     <div class="row">0</div>
-</div>
+  </div>
+}

@@ -1,15 +1,17 @@
 <div class="header">
-    <xc-form-label xc-i18n>documentation-label</xc-form-label>
-    <xc-definition-proxy *ngFor="let bundle of pluginBundles"
-        [xc-base-definition]="bundle.definition"
-        [xc-base-definition-data]="bundle.data"
-        [xc-definition-observer]="pluginService"
+  <xc-form-label xc-i18n>documentation-label</xc-form-label>
+  @for (bundle of pluginBundles; track bundle) {
+    <xc-definition-proxy
+      [xc-base-definition]="bundle.definition"
+      [xc-base-definition-data]="bundle.data"
+      [xc-definition-observer]="pluginService"
     ></xc-definition-proxy>
+  }
 </div>
 <xc-form-textarea
-    xc-i18n
-    [value]="documentation"
-    [readonly]="readonly"
-    [xc-form-textarea-lines]="lines"
-    (blur)="documentationFieldBlur($event)"
+  xc-i18n
+  [value]="documentation"
+  [readonly]="readonly"
+  [xc-form-textarea-lines]="lines"
+  (blur)="documentationFieldBlur($event)"
 ></xc-form-textarea>

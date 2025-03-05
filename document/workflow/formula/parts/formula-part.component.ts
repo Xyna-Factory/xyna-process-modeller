@@ -26,7 +26,8 @@ export interface FormulaChildComponent {
 
 
 @Component({
-    template: ''
+    template: '',
+    standalone: false
 })
 export class FormulaPartComponent {
 

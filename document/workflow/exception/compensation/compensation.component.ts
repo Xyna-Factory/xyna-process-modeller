@@ -26,7 +26,8 @@ import { ModellingItemComponent } from '../../shared/modelling-object.component'
 @Component({
     selector: 'compensation',
     templateUrl: './compensation.component.html',
-    styleUrls: ['./compensation.component.scss', '../../common.scss']
+    styleUrls: ['./compensation.component.scss', '../../common.scss'],
+    standalone: false
 })
 export class CompensationComponent extends ModellingItemComponent {
 

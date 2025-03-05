@@ -15,9 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-$formula-background-color: unset !default;
-
-@import "const";
+@use '../../../const' as *;
 
 :host {
     display: flex;

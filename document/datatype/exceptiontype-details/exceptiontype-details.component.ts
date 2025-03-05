@@ -36,7 +36,8 @@ import { DocumentationTabComponent } from '../tabs/shared/documentation-tab.comp
     selector: 'exceptiontype-details',
     templateUrl: './exceptiontype-details.component.html',
     styleUrls: ['./exceptiontype-details.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class ExceptionTypeDetailsComponent extends ModellingItemComponent implements OnDestroy {
 

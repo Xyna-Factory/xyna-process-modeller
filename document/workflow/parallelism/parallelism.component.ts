@@ -24,7 +24,8 @@ import { ModellingItemComponent } from '../shared/modelling-object.component';
 @Component({
     selector: 'parallelism',
     templateUrl: './parallelism.component.html',
-    styleUrls: ['./parallelism.component.scss']
+    styleUrls: ['./parallelism.component.scss'],
+    standalone: false
 })
 export class ParallelismComponent extends ModellingItemComponent {
 

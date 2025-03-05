@@ -33,7 +33,6 @@ export class XoSetDataflowConnectionRequest extends XoRequest {
     @XoProperty()
     branchId: string;
 
-    // eslint-disable-next-line zeta/xo
     @XoProperty()
     type: DataConnectionType;
 

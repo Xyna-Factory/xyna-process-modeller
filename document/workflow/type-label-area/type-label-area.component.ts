@@ -27,7 +27,8 @@ import { ModellingObjectComponent } from '../shared/modelling-object.component';
 @Component({
     selector: 'type-label-area',
     templateUrl: './type-label-area.component.html',
-    styleUrls: ['./type-label-area.component.scss']
+    styleUrls: ['./type-label-area.component.scss'],
+    standalone: false
 })
 export class TypeLabelAreaComponent extends ModellingObjectComponent {
 

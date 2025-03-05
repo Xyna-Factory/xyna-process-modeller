@@ -39,7 +39,8 @@ export const CONSTANT_DIALOG_DELETE_TOKEN = Symbol();
 @Component({
     selector: 'constant-dialog',
     templateUrl: './constant-dialog.component.html',
-    styleUrls: ['./constant-dialog.component.scss']
+    styleUrls: ['./constant-dialog.component.scss'],
+    standalone: false
 })
 export class ConstantDialogComponent extends XcDialogComponent<Xo | typeof CONSTANT_DIALOG_DELETE_TOKEN, ConstantDialogData> {
 

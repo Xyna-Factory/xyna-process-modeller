@@ -34,7 +34,8 @@ export interface RepairDialogData {
 
 @Component({
     templateUrl: './repair-dialog.component.html',
-    styleUrls: ['./repair-dialog.component.scss']
+    styleUrls: ['./repair-dialog.component.scss'],
+    standalone: false
 })
 export class RepairDialogComponent extends XcDialogComponent<boolean, RepairDialogData> {
 

@@ -1,84 +1,82 @@
 <xc-dialog-wrapper xc-i18n-context="pmod.show-gui">
-    <ng-container header>
-        <span xc-i18n>span-type-script-model-of</span>
-        <span>{{convertable ? ' ' + convertable.name : ' DataType'}}</span>
-    </ng-container>
-    <section content>
+  <ng-container header>
+    <span xc-i18n>span-type-script-model-of</span>
+    <span>{{convertable ? ' ' + convertable.name : ' DataType'}}</span>
+  </ng-container>
+  <section content>
 
-        <!-- ############################################  -->
-        <xc-master-detail
-            [xc-master-detail-opened]="convertable"
-            xc-master-detail-side-area-size="golden"
-        >
-            <!-- MASTER -->
-            <xc-panel master>
-                <section class="stretch scroll">
-                    <xc-form-textarea
-                        [(value)]="modelStr"
-                        xc-form-textarea-lines="30"
-                        xc-form-field-compact
-                    ></xc-form-textarea>
+    <!-- ############################################  -->
+    <xc-master-detail
+      [xc-master-detail-opened]="convertable"
+      xc-master-detail-side-area-size="golden"
+      >
+      <!-- MASTER -->
+      <xc-panel master>
+        <section class="stretch scroll">
+          <xc-form-textarea
+            [(value)]="modelStr"
+            xc-form-textarea-lines="30"
+            xc-form-field-compact
+          ></xc-form-textarea>
+        </section>
+      </xc-panel>
+
+      <!-- DETAILS -->
+      @if (convertable) {
+        <xc-panel detail (click)="guiUpdate()" (keyup)="guiUpdate()">
+          <header>
+            <h2 class="items-left" xc-i18n>header-details</h2>
+          </header>
+          <section xc-form class="stretch scroll">
+            <!-- DATATYPE DETAILS-->
+            <xc-checkbox [(checked)]="convertable.options.convertInheritance" label="label-use-inheritance" xc-i18n></xc-checkbox>
+            <xc-checkbox [(checked)]="convertable.options.convertDocumentation" label="label-write-documentation" xc-i18n></xc-checkbox>
+            <xc-checkbox [(checked)]="convertable.options.createConstructor" label="label-create-constructor-husk" xc-i18n></xc-checkbox>
+            @if (convertable.isChild) {
+              <xc-checkbox [(checked)]="convertable.options.convertChildProperties" label="label-include-inherited-members" xc-i18n></xc-checkbox>
+            }
+            <!-- PROPERTY DETAILS -->
+            @for (property of convertableProperties; track property; let i = $index) {
+              <xc-panel class="compact" xc-panel-collapsable="true" xc-panel-collapsed="true">
+                <header><h3 class="items-left">{{property.label}} - <span>{{property.name}}</span></h3></header>
+                <section>
+                  <xc-checkbox [(checked)]="property.options.convertDocumentation" label="label-write-documentation" xc-i18n></xc-checkbox>
+                  <xc-checkbox [(checked)]="property.options.preinitilize" label="label-preinitialize" xc-i18n></xc-checkbox>
+                  @if (property.options.preinitilize) {
+                    <xc-form-input label="label-preinitialize-value" [(value)]="property.options.value" xc-form-field-compact xc-i18n></xc-form-input>
+                  }
+                  <left-right-component
+                    [(leftItems)]="property.options.decoratorPool"
+                    [(rightItems)]="property.options.decorators"
+                    [leftTitle]="'Inactive Decorators (' + property.options.decoratorPool.length + ')'"
+                    [rightTitle]="'Active Decorators (' + property.options.decorators.length + ')'"
+                    (change)="guiUpdate()"
+                  ></left-right-component>
                 </section>
-            </xc-panel>
+              </xc-panel>
+            }
+            <!-- DISTRIBUTE OPTIONS -->
+            <div class="download-model items-row" >
+              <xc-form-input label="label-filename" [(value)]="convertable.filename" xc-form-field-compact xc-i18n></xc-form-input>
+              <xc-button (click)="downloadModel()" xc-i18n>button-download</xc-button>
+            </div>
+            @if (copyAble) {
+              <xc-button (click)="addModelToClipboard()" xc-i18n>button-copy</xc-button>
+            }
+          </section>
+          <footer>
+          </footer>
+        </xc-panel>
+      }
+      @if (!convertable) {
+        <xc-panel detail>
+          <xc-button (click)="reset()" xc-i18n>button-reset</xc-button>
+        </xc-panel>
+      }
+    </xc-master-detail>
 
-            <!-- DETAILS -->
-            <xc-panel detail *ngIf="convertable" (click)="guiUpdate()" (keyup)="guiUpdate()">
-                <header>
-                    <h2 class="items-left" xc-i18n>header-details</h2>
-                </header>
-                <section xc-form class="stretch scroll">
-
-                    <!-- DATATYPE DETAILS-->
-                    <xc-checkbox [(checked)]="convertable.options.convertInheritance" label="label-use-inheritance" xc-i18n></xc-checkbox>
-                    <xc-checkbox [(checked)]="convertable.options.convertDocumentation" label="label-write-documentation" xc-i18n></xc-checkbox>
-                    <xc-checkbox [(checked)]="convertable.options.createConstructor" label="label-create-constructor-husk" xc-i18n></xc-checkbox>
-                    <ng-container *ngIf="convertable.isChild">
-                        <xc-checkbox [(checked)]="convertable.options.convertChildProperties" label="label-include-inherited-members" xc-i18n></xc-checkbox>
-                    </ng-container>
-
-                    <!-- PROPERTY DETAILS -->
-                    <ng-container *ngFor="let property of convertableProperties; index as i">
-                        <xc-panel class="compact" xc-panel-collapsable="true" xc-panel-collapsed="true">
-                            <header><h3 class="items-left">{{property.label}} - <span>{{property.name}}</span></h3></header>
-                            <section>
-                                <xc-checkbox [(checked)]="property.options.convertDocumentation" label="label-write-documentation" xc-i18n></xc-checkbox>
-                                <xc-checkbox [(checked)]="property.options.preinitilize" label="label-preinitialize" xc-i18n></xc-checkbox>
-                                <ng-container *ngIf="property.options.preinitilize">
-                                    <xc-form-input label="label-preinitialize-value" [(value)]="property.options.value" xc-form-field-compact xc-i18n></xc-form-input>
-                                </ng-container>
-
-                                <left-right-component
-                                    [(leftItems)]="property.options.decoratorPool"
-                                    [(rightItems)]="property.options.decorators"
-                                    [leftTitle]="'Inactive Decorators (' + property.options.decoratorPool.length + ')'"
-                                    [rightTitle]="'Active Decorators (' + property.options.decorators.length + ')'"
-                                    (change)="guiUpdate()"
-                                ></left-right-component>
-
-                            </section>
-                        </xc-panel>
-                    </ng-container>
-
-                    <!-- DISTRIBUTE OPTIONS -->
-                    <div class="download-model items-row" >
-                        <xc-form-input label="label-filename" [(value)]="convertable.filename" xc-form-field-compact xc-i18n></xc-form-input>
-                        <xc-button (click)="downloadModel()" xc-i18n>button-download</xc-button>
-                    </div>
-
-                    <xc-button *ngIf="copyAble" (click)="addModelToClipboard()" xc-i18n>button-copy</xc-button>
-
-                </section>
-                <footer>
-
-                </footer>
-            </xc-panel>
-            <xc-panel detail *ngIf="!convertable">
-                <xc-button (click)="reset()" xc-i18n>button-reset</xc-button>
-            </xc-panel>
-        </xc-master-detail>
-
-    </section>
-    <ng-container footer>
-        <xc-button (click)="dismiss()" xc-i18n>button-close</xc-button>
-    </ng-container>
+  </section>
+  <ng-container footer>
+    <xc-button (click)="dismiss()" xc-i18n>button-close</xc-button>
+  </ng-container>
 </xc-dialog-wrapper>

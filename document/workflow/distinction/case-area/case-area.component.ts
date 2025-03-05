@@ -37,7 +37,8 @@ import { ModellingObjectComponent, TriggeredAction } from '../../shared/modellin
 @Component({
     selector: 'case-area',
     templateUrl: './case-area.component.html',
-    styleUrls: ['./case-area.component.scss']
+    styleUrls: ['./case-area.component.scss'],
+    standalone: false
 })
 export class CaseAreaComponent extends ModellingObjectComponent {
 

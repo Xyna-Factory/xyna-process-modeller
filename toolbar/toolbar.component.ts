@@ -67,7 +67,8 @@ export type ToolbarItem = ToolbarButtonDescription | ToolbarButtonDescriptionGro
     selector: 'xfm-mod-toolbar',
     templateUrl: './toolbar.component.html',
     styleUrls: ['./toolbar.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class ToolbarComponent implements AfterViewInit, OnDestroy {
 

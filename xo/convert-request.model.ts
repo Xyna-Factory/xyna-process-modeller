@@ -31,7 +31,6 @@ export enum ConversionTarget {
 @XoObjectClass(XoRequest, 'xmcp.processmodeller.datatypes.request', 'ConvertRequest')
 export class XoConvertRequest extends XoRequest {
 
-    // eslint-disable-next-line zeta/xo
     @XoProperty()
     targetType: ConversionTarget;
 }

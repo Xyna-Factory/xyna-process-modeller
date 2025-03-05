@@ -1,24 +1,30 @@
 <xc-dialog-wrapper xc-i18n-context="pmod.repair-dialog">
-    <ng-container header>
-        <div class="header">
-            <xc-icon xc-icon-name="settings"></xc-icon>
-            <div xc-i18n>header</div>
-        </div>
-    </ng-container>
-    <section content class="content">
-        <div *ngIf="injectedData.preRepair" class="message" xc-i18n>preRepair-message-1</div>
-        <div *ngIf="!injectedData.preRepair" class="message" xc-i18n>preRepair-message-2</div>
-        <div class="repair-details">
-            <repair-entry *ngFor="let entry of entries" [entry]="entry" xc-i18n-context="repair-entry"></repair-entry>
-        </div>
-    </section>
-    <ng-container footer>
-        <ng-container *ngIf="injectedData.preRepair">
-            <xc-button (click)="dismiss(false)" xc-i18n>button-cancel</xc-button>
-            <xc-button (click)="dismiss(true)" xc-i18n>button-repair</xc-button>
-        </ng-container>
-        <ng-container *ngIf="!injectedData.preRepair">
-            <xc-button (click)="dismiss()" xc-i18n>button-close</xc-button>
-        </ng-container>
-    </ng-container>
+  <ng-container header>
+    <div class="header">
+      <xc-icon xc-icon-name="settings"></xc-icon>
+      <div xc-i18n>header</div>
+    </div>
+  </ng-container>
+  <section content class="content">
+    @if (injectedData.preRepair) {
+      <div class="message" xc-i18n>preRepair-message-1</div>
+    }
+    @if (!injectedData.preRepair) {
+      <div class="message" xc-i18n>preRepair-message-2</div>
+    }
+    <div class="repair-details">
+      @for (entry of entries; track entry) {
+        <repair-entry [entry]="entry" xc-i18n-context="repair-entry"></repair-entry>
+      }
+    </div>
+  </section>
+  <ng-container footer>
+    @if (injectedData.preRepair) {
+      <xc-button (click)="dismiss(false)" xc-i18n>button-cancel</xc-button>
+      <xc-button (click)="dismiss(true)" xc-i18n>button-repair</xc-button>
+    }
+    @if (!injectedData.preRepair) {
+      <xc-button (click)="dismiss()" xc-i18n>button-close</xc-button>
+    }
+  </ng-container>
 </xc-dialog-wrapper>

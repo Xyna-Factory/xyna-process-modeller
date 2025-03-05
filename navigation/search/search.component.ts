@@ -48,7 +48,8 @@ export interface FilterConditionData {
     selector: 'xfm-mod-nav-search',
     templateUrl: './search.component.html',
     styleUrls: ['./search.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SearchComponent extends CommonNavigationComponent {
 

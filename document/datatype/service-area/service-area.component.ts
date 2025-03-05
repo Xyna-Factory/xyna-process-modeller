@@ -38,7 +38,8 @@ import { ModellingObjectComponent } from '../../workflow/shared/modelling-object
 @Component({
     selector: 'service-area',
     templateUrl: './service-area.component.html',
-    styleUrls: ['./service-area.component.scss']
+    styleUrls: ['./service-area.component.scss'],
+    standalone: false
 })
 export class ServiceAreaComponent extends ModellingObjectComponent {
 
@@ -54,10 +55,10 @@ export class ServiceAreaComponent extends ModellingObjectComponent {
         super(elementRef, componentMappingService, documentService, detailLevelService, injector);
 
         // instantiate specific member models such that they aren't pruned for the release build
-        /* eslint-disable @typescript-eslint/no-unused-vars */
+         
         const dynamicMethod = new XoDynamicMethod();
         const staticMethod = new XoStaticMethod();
-        /* eslint-enable @typescript-eslint/no-unused-vars */
+         
     }
 
 

@@ -1,16 +1,18 @@
 <xc-form-autocomplete
-    label="storable-role"
-    placeholder="select"
-    [(xc-form-autocomplete-option)]="storableRoleDataWrapper.value"
-    [xc-form-autocomplete-options]="storableRoleDataWrapper.values"
-    [readonly]="readonly"
-    xc-form-autocomplete-asdropdown
-    xc-i18n
+  label="storable-role"
+  placeholder="select"
+  [(xc-form-autocomplete-option)]="storableRoleDataWrapper.value"
+  [xc-form-autocomplete-options]="storableRoleDataWrapper.values"
+  [readonly]="readonly"
+  xc-form-autocomplete-asdropdown
+  xc-i18n
 ></xc-form-autocomplete>
 
-<div *ngIf="memberVariable.storablePropertyArea" class="row">
+@if (memberVariable.storablePropertyArea) {
+  <div class="row">
     <xc-form-label xc-i18n>storable-properties</xc-form-label>
     <storable-properties-area
-        [storablePropertyArea]="memberVariable.storablePropertyArea"
+      [storablePropertyArea]="memberVariable.storablePropertyArea"
     ></storable-properties-area>
-</div>
+  </div>
+}

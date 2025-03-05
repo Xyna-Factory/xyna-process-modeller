@@ -32,7 +32,7 @@ export class XoRepairsRequiredError extends XoError {
         super(_ident);
 
         // Xo has to be instantiated such that class will not be not pruned on build
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+         
         const entry = new XoRepairEntry();
     }
 }

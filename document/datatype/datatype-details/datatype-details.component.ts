@@ -42,7 +42,8 @@ import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
     selector: 'datatype-details',
     templateUrl: './datatype-details.component.html',
     styleUrls: ['./datatype-details.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class DataTypeDetailsComponent extends ModellingItemComponent implements OnDestroy {
 

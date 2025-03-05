@@ -1,18 +1,22 @@
 <div class="info-table">
-    <div class="header">
-        <label xc-i18n>header</label>
-        <xc-icon-button xc-i18n xc-icon-name="reload" (click)="refresh.emit()" xc-icon-size="small" xc-tooltip="refresh"></xc-icon-button>
-    </div>
-    <div class="content zeta-scrollbar">
-        <div *ngFor="let group of groupedRelationList">
-            <div class="group-header">
-                <span class="expand-button" (click)="group.visible = !group.visible">
-                    <div class="arrow">{{ group.visible ? '&#x25BC;' : '&#9658;' }}</div>
-                    <label>{{ group.type | xcI18n }}</label>
-                </span>
-                <small>{{ group.relations.length }}</small>
-            </div>
-            <xfm-mod-nav-xmomlist xc-i18n-context='xfm-mod-nav-xmomlist' *ngIf="group.visible" [presetXmoms]="group.relations" show-fqn></xfm-mod-nav-xmomlist>
+  <div class="header">
+    <label xc-i18n>header</label>
+    <xc-icon-button xc-i18n xc-icon-name="reload" (click)="refresh.emit()" xc-icon-size="small" xc-tooltip="refresh"></xc-icon-button>
+  </div>
+  <div class="content zeta-scrollbar">
+    @for (group of groupedRelationList; track group) {
+      <div>
+        <div class="group-header">
+          <span class="expand-button" (click)="group.visible = !group.visible">
+            <div class="arrow">{{ group.visible ? '&#x25BC;' : '&#9658;' }}</div>
+            <label>{{ group.type | xcI18n }}</label>
+          </span>
+          <small>{{ group.relations.length }}</small>
         </div>
-    </div>
+        @if (group.visible) {
+          <xfm-mod-nav-xmomlist xc-i18n-context='xfm-mod-nav-xmomlist' [presetXmoms]="group.relations" show-fqn></xfm-mod-nav-xmomlist>
+        }
+      </div>
+    }
+  </div>
 </div>

@@ -87,7 +87,8 @@ class ExpressionWrapper {
     selector: 'visual-mapping',
     templateUrl: './visual-mapping.component.html',
     styleUrls: ['./visual-mapping.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class VisualMappingComponent extends ModellingObjectComponent implements OnInit, OnDestroy, SkeletonTreeDataSourceObserver {
 
@@ -134,7 +135,7 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
         super(elementRef, componentMappingService, documentService, detailLevelService, injector);
 
         // anti-prune
-        /* eslint-disable @typescript-eslint/no-unused-vars */
+         
         const p0 = new XoSingleVarExpression();
         const p1 = new XoLiteralExpression();
         const p2 = new XoExpression2Args();
@@ -142,7 +143,7 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
         const p4 = new XoVariableInstanceFunctionIncovation();
         const p5 = new XoFunctionExpression();
         const p6 = new XoCastExpression();
-        /* eslint-enable @typescript-eslint/no-unused-vars */
+         
 
     }
 

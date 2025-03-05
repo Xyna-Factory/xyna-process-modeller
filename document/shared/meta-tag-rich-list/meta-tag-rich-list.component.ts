@@ -28,7 +28,8 @@ export interface MetaTagRichListData {
 
 @Component({
     templateUrl: './meta-tag-rich-list.component.html',
-    styleUrls: [ './meta-tag-rich-list.component.scss']
+    styleUrls: ['./meta-tag-rich-list.component.scss'],
+    standalone: false
 })
 export class MetaTagComponent extends XcRichListItemComponent<void, MetaTagRichListData> {
 

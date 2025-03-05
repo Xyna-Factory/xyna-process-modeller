@@ -25,7 +25,8 @@ import { DatatypeTabComponent, DocumentationTabData } from '../datatype-tab.comp
 @Component({
     templateUrl: './documentation-tab.component.html',
     styleUrls: ['./documentation-tab.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class DocumentationTabComponent extends DatatypeTabComponent<DocumentationTabData> {
 

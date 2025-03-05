@@ -26,7 +26,8 @@ import { ChoiceComponent } from '../choice.component';
 @Component({
     selector: 'type-choice',
     templateUrl: './type-choice.component.html',
-    styleUrls: ['../choice.component.scss', './type-choice.component.scss']
+    styleUrls: ['../choice.component.scss', './type-choice.component.scss'],
+    standalone: false
 })
 export class TypeChoiceComponent extends ChoiceComponent {
 

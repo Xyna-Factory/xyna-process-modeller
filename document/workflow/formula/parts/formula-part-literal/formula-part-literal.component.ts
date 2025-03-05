@@ -24,7 +24,8 @@ import { FormulaEditablePartComponent } from '../formula-editable-part.component
 @Component({
     selector: 'formula-part-literal',
     templateUrl: './formula-part-literal.component.html',
-    styleUrls: ['./formula-part-literal.component.scss']
+    styleUrls: ['./formula-part-literal.component.scss'],
+    standalone: false
 })
 export class FormulaPartLiteralComponent extends FormulaEditablePartComponent {
 

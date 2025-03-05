@@ -43,7 +43,8 @@ import { SelectableModellingObjectComponent } from '../shared/selectable-modelli
     selector: 'service-step',
     templateUrl: './service-step.component.html',
     styleUrls: ['./service-step.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class ServiceStepComponent extends SelectableModellingObjectComponent implements AfterViewChecked, OnDestroy {
     private _parentDirection: 'row' | 'column' = 'column';

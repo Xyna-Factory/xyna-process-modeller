@@ -25,7 +25,8 @@ import { DatatypeTabComponent, MetaTabData } from '../datatype-tab.component';
 @Component({
     templateUrl: './meta-tab.component.html',
     styleUrls: ['./meta-tab.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class MetaTabComponent extends DatatypeTabComponent<MetaTabData> {
 
