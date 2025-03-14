@@ -153,12 +153,21 @@ export class PluginService implements XoDefinitionObserver {
         }
 
         const rtc = (definition.serviceRTC ? definition.serviceRTC : this.getDefaultRTC()).toRuntimeContext();
-        return preStartorder.pipe(switchMap(() => this.apiService.startOrder(
-            rtc,
-            definition.serviceFQN,
-            input, null,
-            new StartOrderOptionsBuilder().withErrorMessage(true).async(!definition.synchronously).options
-        )), map(result => result.output));
+        return preStartorder.pipe(
+            switchMap(() =>
+                this.apiService.startOrder(rtc, definition.serviceFQN, input, null,
+                    new StartOrderOptionsBuilder().withErrorMessage(true).async(!definition.synchronously).options)
+            ),
+            filter(result => {
+                if (!result || result.errorMessage) {
+                    if (definition.showResult) {
+                        this.dialogs.error(result.errorMessage);
+                    }
+                    return false;
+                }
+                return true;
+            }),
+            map(result => result.output));
     }
 
     uploadFile?(host?: string): Observable<XoManagedFileID> {
