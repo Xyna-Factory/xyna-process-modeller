@@ -159,7 +159,7 @@ export class PluginService implements XoDefinitionObserver {
                     new StartOrderOptionsBuilder().withErrorMessage(true).async(!definition.synchronously).options)
             ),
             filter(result => {
-                if (result.errorMessage || result.output?.length === 0) {
+                if (!result || result.errorMessage) {
                     if (definition.showResult) {
                         this.dialogs.error(result.errorMessage);
                     }
