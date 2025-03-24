@@ -6,25 +6,31 @@
     <xfm-mod-nav-errors xc-i18n-context='errors' [class.hidden]="area !== NavigationbarArea.Errors"></xfm-mod-nav-errors>
     <xfm-mod-nav-compare xc-i18n-context='compare' [class.hidden]="area !== NavigationbarArea.Compare"></xfm-mod-nav-compare>
     <xfm-mod-nav-help xc-i18n-context='help' [class.hidden]="area !== NavigationbarArea.Help"></xfm-mod-nav-help>
-    <xfm-mod-nav-plugin *ngFor="let plugin of datatypePlugins; let i = index"
-        [plugin-number]="i" [plugin]="plugin" [class.hidden]="!isActive(NavigationbarArea.Plugin, i)">
-    </xfm-mod-nav-plugin>
+    @for(plugin of datatypePlugins; track plugin; let i = $index) {
+        <xfm-mod-nav-plugin 
+            [plugin-number]="i" [plugin]="plugin" [class.hidden]="!isActive(NavigationbarArea.Plugin, i)">
+        </xfm-mod-nav-plugin>
+    }
 </div>
 <div class="iconbar">
     <xc-icon-button xc-i18n class="toggle" xc-icon-name="misc-collapse" xc-icon-style="modeller" [ngClass]="{'rotated': area}" (click)="toogle()"></xc-icon-button>
-    <div *ngFor="let button of buttons" class="icons">
-        <xc-icon-button
-            xc-i18n
-            [xc-icon-name]="button.iconName"
-            [xc-icon-style]="button.iconStyle"
-            [xc-icon-material]="button.iconStyle === 'material'"
-            [xc-tooltip]="button.label"
-            xc-tooltip-position="left"
-            [class.active]="isActive(button.areaType, button.pluginNumber)"
-            (click)="switchArea(button.areaType, button.pluginNumber)"
-        ></xc-icon-button>
-        <span class="badge" *ngIf=button.badge>{{button.badge}}</span>
-    </div>
+    @for(button of buttons; track button) {
+        <div class="icons">
+            <xc-icon-button
+                xc-i18n
+                [xc-icon-name]="button.iconName"
+                [xc-icon-style]="button.iconStyle"
+                [xc-icon-material]="button.iconStyle === 'material'"
+                [xc-tooltip]="button.label"
+                xc-tooltip-position="left"
+                [class.active]="isActive(button.areaType, button.pluginNumber)"
+                (click)="switchArea(button.areaType, button.pluginNumber)"
+            ></xc-icon-button>
+            @if(button.badge) {
+                <span class="badge">{{button.badge}}</span>
+            }
+        </div>
+    }
     <ng-container *xc-has-right="'xmcp.xfm.processmodeller.devmenu'">
         <xc-icon-button
             xc-i18n
