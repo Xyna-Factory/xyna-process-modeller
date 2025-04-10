@@ -17,18 +17,9 @@
  */
 import { XoObjectClass, XoArrayClass, XoArray } from '@zeta/api';
 import { XoContainerArea } from './modelling-item.model';
-import { XoMetaTag } from './meta-tag.model';
-
 
 @XoObjectClass(XoContainerArea, 'xmcp.processmodeller.datatypes', 'MetaTagArea')
 export class XoMetaTagArea extends XoContainerArea {
-
-
-    get metaTags(): XoMetaTag[] {
-        return this.items.data as XoMetaTag[];
-    }
-
-
 }
 
 @XoArrayClass(XoMetaTagArea)

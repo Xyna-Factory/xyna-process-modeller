@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2024 Xyna GmbH, Germany
+ * Copyright 2023 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,27 +15,24 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { XoObjectClass, XoArrayClass, XoProperty, XoArray } from '@zeta/api';
-import { XoItem } from './item.model';
-import { XoInsertRequestContent } from './insert-request-content.model';
-import { XoInsertMetaTagRequestContent } from './insert-meta-tag-request-content.model';
+import { XoObjectClass, XoProperty } from '@zeta/api';
+
+import { XoRequest } from './request.model';
 
 
-@XoObjectClass(XoItem, 'xmcp.processmodeller.datatypes', 'MetaTag')
-export class XoMetaTag extends XoItem {
-
+/**
+ * Change label of an Item
+ * @see XoChangeTextRequest for changing the text of an Area
+ */
+@XoObjectClass(XoRequest, 'xmcp.processmodeller.datatypes.request', 'ChangeMetaTagRequest')
+export class XoChangeMetaTagRequest extends XoRequest {
 
     @XoProperty()
-    tag: string;
+    tag = '';
 
 
-    createInsertRequestContent(): XoInsertRequestContent {
-        const content = new XoInsertMetaTagRequestContent();
-        content.tag = this.tag;
-        return content;
+    constructor(_ident?: string, tag?: string) {
+        super(_ident);
+        this.tag = tag;
     }
-}
-
-@XoArrayClass(XoMetaTag)
-export class XoMetaTagArray extends XoArray<XoMetaTag> {
 }

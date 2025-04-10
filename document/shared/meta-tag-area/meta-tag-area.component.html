@@ -1,21 +1,34 @@
-<div class="items-row">
+@if (!this.readonly) {
+    <div class="items-row">
+        <xc-form-textarea
+            xc-i18n
+            class="input"
+            [(value)]="newTag"
+            [xc-form-textarea-lines]="5"
+        ></xc-form-textarea>
 
-    <xc-form-textarea
-        xc-i18n
-        class="input"
-        [(value)]="newTag"
-        [readonly]="readonly"
-        [xc-form-textarea-lines]="5"
-    ></xc-form-textarea>
+        <xc-icon-button
+            (click)="addMetaTag()"
+            xc-tooltip="tooltip-add-meta-tag"
+            xc-i18n
+            class="add"
+            xc-icon-name="add"
+        ></xc-icon-button>
+    </div>
+}
 
-    <xc-icon-button
-        (click)="addMetaTag()"
-        xc-tooltip="tooltip-add-meta-tag"
-        xc-i18n
-        class="add"
-        xc-icon-name="add"
-    ></xc-icon-button>
-
+<div
+  [mod-drop-area]="metaTagArea.items?.data"
+  [mod-drop-area-allow-item]="allowItem"
+  (mod-drop-area-dropped)="dropped($event)"
+  class="drop-area"
+  >
+    @for (metaTag of metaTagArea.items; track metaTag) {
+        <meta-tag [mod-draggable]="metaTag"
+            [meta-tag]="metaTag"
+            [documentModel]="documentModel"
+            (triggerAction)="performAction($event)"
+            class="meta-tag"
+        ></meta-tag>
+    }
 </div>
-
-<xc-rich-list class="rich-list" [xc-rich-list-items]="metaTagsItems" xc-i18n-context="meta-tag"></xc-rich-list>

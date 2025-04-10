@@ -131,7 +131,19 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
     }
 
 
+    afterDocumentModelSet() {
+        super.afterDocumentModelSet();
+        this.tabBarItems.forEach(tabitem => {
+            tabitem.data.documentModel = this.documentModel;
+            tabitem.data.readonly = this.readonly;
+        });
+    }
+
+
     protected lockedChanged() {
+        this.tabBarItems.forEach(tabitem => {
+            tabitem.data.readonly = this.readonly;
+        });
         this.cdr.markForCheck();
     }
 
