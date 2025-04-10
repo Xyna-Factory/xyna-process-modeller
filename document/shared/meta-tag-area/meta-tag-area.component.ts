@@ -22,7 +22,6 @@ import { ComponentMappingService } from '@pmod/document/component-mapping.servic
 import { DocumentService } from '@pmod/document/document.service';
 import { ModellingObjectComponent } from '@pmod/document/workflow/shared/modelling-object.component';
 import { XoMetaTagArea } from '@pmod/xo/meta-tag-area.model';
-import { XoMetaTagRequest } from '@pmod/xo/meta-tag-request.model';
 import { XoMetaTag } from '@pmod/xo/meta-tag.model';
 
 import { WorkflowDetailLevelService } from '../../workflow-detail-level.service';
@@ -100,7 +99,6 @@ export class MetaTagAreaComponent extends ModellingObjectComponent {
     allowItem = (xoFqn: string, xoId?: string): boolean => {
         const allowedType = !!this.metaTagArea.itemTypes.find((itemType: string) => itemType.toLowerCase() === xoFqn.toLowerCase());
         return allowedType && !this.readonly;
-        //return xoFqn.toLowerCase() === XoMetaTag.fqn.encode().toLowerCase()
     }
 
     dropped(event: ModDropEvent<XoMetaTag>) {
