@@ -41,7 +41,26 @@
         }
     }
 
-    .rich-list {
-        padding: 10px;
+    .drop-area {
+        display: flex;
+        flex-direction: column;
+        flex: 1 0 auto;
+        transition: background-color 150ms linear;
+
+        &.mod-drop-area-hover {
+            background-color: $dnd-hover-background-color;
+            border-radius: 8px;
+        }
+
+        .meta-tag {
+            position: relative;
+            padding-top: 8px;
+
+            &::ng-deep > drop-indicator {
+                padding: 1px;
+                left: 0;
+                top: 2px;
+            }
+        }
     }
 }

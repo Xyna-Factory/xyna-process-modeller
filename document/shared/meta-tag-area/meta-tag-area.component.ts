@@ -20,18 +20,18 @@ import { Component, ElementRef, Injector, Input, Optional } from '@angular/core'
 import { HttpMethod, ModellingActionType } from '@pmod/api/xmom.service';
 import { ComponentMappingService } from '@pmod/document/component-mapping.service';
 import { DocumentService } from '@pmod/document/document.service';
-import { MetaTagComponent, MetaTagRichListData } from '@pmod/document/shared/meta-tag-rich-list/meta-tag-rich-list.component';
 import { ModellingObjectComponent } from '@pmod/document/workflow/shared/modelling-object.component';
 import { XoMetaTagArea } from '@pmod/xo/meta-tag-area.model';
 import { XoMetaTagRequest } from '@pmod/xo/meta-tag-request.model';
 import { XoMetaTag } from '@pmod/xo/meta-tag.model';
-import { ApiService } from '@zeta/api';
-import { I18nService } from '@zeta/i18n';
-import { XcRichListItem } from '@zeta/xc';
-
-import { Subject } from 'rxjs';
 
 import { WorkflowDetailLevelService } from '../../workflow-detail-level.service';
+import { ModDropEvent } from '@pmod/document/workflow/shared/drag-and-drop/mod-drop-area.directive';
+import { XoModellingItem } from '@pmod/xo/modelling-item.model';
+import { XoMoveModellingObjectRequest } from '@pmod/xo/move-modelling-object-request.model';
+import { DragType } from '@pmod/document/workflow/shared/drag-and-drop/mod-drag-and-drop.service';
+import { XoDeleteRequest } from '@pmod/xo/delete-request.model';
+import { XoChangeMetaTagRequest } from '@pmod/xo/change-meta-tag-request.model';
 
 
 @Component({
@@ -49,7 +49,6 @@ export class MetaTagAreaComponent extends ModellingObjectComponent {
     @Input()
     set metaTagArea(value: XoMetaTagArea) {
         this.setModel(value);
-        this.updateRichList();
     }
 
     @Input()
@@ -58,36 +57,16 @@ export class MetaTagAreaComponent extends ModellingObjectComponent {
     @Input()
     objectId = '';
 
-    metaTagsItems: XcRichListItem<MetaTagRichListData>[] = [];
     newTag: string;
-    removeSubject: Subject<XoMetaTag> = new Subject();
 
     constructor(
         elementRef: ElementRef,
         componentMappingService: ComponentMappingService,
         documentService: DocumentService,
-        private readonly i18nService: I18nService,
-        private readonly apiService: ApiService,
         detailLevelService: WorkflowDetailLevelService,
         @Optional() injector: Injector
     ) {
         super(elementRef, componentMappingService, documentService, detailLevelService, injector);
-
-        this.untilDestroyed(this.removeSubject.asObservable()).subscribe(metaTag => {
-            this.removeMetaTag(metaTag);
-        });
-    }
-
-    private updateRichList() {
-        this.metaTagsItems = this.metaTagArea.metaTags.map(tag =>
-            <XcRichListItem<MetaTagRichListData>>{
-                component: MetaTagComponent,
-                data: {
-                    metaTag: tag,
-                    removeSubject: this.removeSubject
-                }
-            }
-        );
     }
 
     addMetaTag() {
@@ -96,21 +75,37 @@ export class MetaTagAreaComponent extends ModellingObjectComponent {
         const request: XoMetaTagRequest = new XoMetaTagRequest();
         request.metaTag = metaTag;
         this.performAction({
-            type: ModellingActionType.meta,
-            objectIdKey: this.objectIdKey,
-            objectId: this.objectId,
-            request: request,
-            method: HttpMethod.PUT
+            type: ModellingActionType.insert,
+            objectId: this.metaTagArea.id,
+            request: request
         });
     }
 
-    removeMetaTag(metaTag: XoMetaTag) {
+    moveMetaTag(metaTag: XoMetaTag, index: number) {
         this.performAction({
-            type: ModellingActionType.meta,
-            objectIdKey: this.objectIdKey,
-            objectId: this.objectId,
-            method: HttpMethod.DELETE,
-            paramSet: {metaTagId: metaTag.id}
+            type: ModellingActionType.move,
+            objectId: metaTag.id,
+            request: new XoMoveModellingObjectRequest(undefined, index, this.metaTagArea.id)
         });
+    }
+
+    // drag and drop
+
+    allowItem = (xoFqn: string, xoId?: string): boolean => {
+        return xoFqn.toLowerCase() === XoMetaTag.fqn.encode().toLowerCase()
+    }
+
+    dropped(event: ModDropEvent<XoMetaTag>) {
+        if (event.operation === DragType.move || event.operation === DragType.copy) {
+            if (!(event.sameArea && event.sourceIndex === event.index)) {
+                let index: number = event.index;
+                if (event.sameArea && event.operation === DragType.move && event.index > event.sourceIndex) {
+                    index--;
+                }
+                index = index >= this.metaTagArea.items.length - 1 ? -1 : index;
+
+                this.moveMetaTag(event.item, index);
+            }
+        }
     }
 }

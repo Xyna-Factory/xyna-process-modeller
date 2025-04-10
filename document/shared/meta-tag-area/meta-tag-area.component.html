@@ -18,4 +18,18 @@
 
 </div>
 
-<xc-rich-list class="rich-list" [xc-rich-list-items]="metaTagsItems" xc-i18n-context="meta-tag"></xc-rich-list>
+<div
+  [mod-drop-area]="metaTagArea.items?.data"
+  [mod-drop-area-allow-item]="allowItem"
+  (mod-drop-area-dropped)="dropped($event)"
+  class="drop-area"
+  >
+@for (metaTag of metaTagArea.items; track metaTag) {
+    <meta-tag [mod-draggable]="metaTag"
+    [meta-tag]="metaTag"
+    [documentModel]="documentModel"
+    (triggerAction)="performAction($event)"
+    class="meta-tag"
+    ></meta-tag>
+}
+</div>

@@ -1,0 +1,15 @@
+<div class="item">
+    <div [mod-content-editable]="!readonly"
+        (mod-content-editable-after-edit)="changeMetaTag($event)"
+        class="tag"
+        xc-tooltip="{{metaTag.tag}}">
+        {{metaTag.tag}}
+    </div>
+    @if (!readonly) {
+        <xc-icon-button class="delete" xc-icon-name="delete"
+            xc-tooltip="tooltip-delete"
+            xc-i18n
+            (click)="removeMetaTag.emit(metaTag)"
+        ></xc-icon-button>
+    }
+</div>

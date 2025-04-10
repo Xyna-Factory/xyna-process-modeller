@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2024 Xyna GmbH, Germany
+ * Copyright 2023 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,24 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { XoObjectClass, XoArrayClass, XoArray } from '@zeta/api';
-import { XoContainerArea } from './modelling-item.model';
+import { XoObjectClass, XoProperty } from '@zeta/api';
 
-@XoObjectClass(XoContainerArea, 'xmcp.processmodeller.datatypes', 'MetaTagArea')
-export class XoMetaTagArea extends XoContainerArea {
-}
+import { XoRequest } from './request.model';
 
-@XoArrayClass(XoMetaTagArea)
-export class XoMetaTagAreaArray extends XoArray<XoMetaTagArea> {
+
+/**
+ * Change label of an Item
+ * @see XoChangeTextRequest for changing the text of an Area
+ */
+@XoObjectClass(XoRequest, 'xmcp.processmodeller.datatypes.request', 'ChangeMetaTagRequest')
+export class XoChangeMetaTagRequest extends XoRequest {
+
+    @XoProperty()
+    tag = '';
+
+
+    constructor(_ident?: string, tag?: string) {
+        super(_ident);
+        this.tag = tag;
+    }
 }

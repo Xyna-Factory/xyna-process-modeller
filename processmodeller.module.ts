@@ -73,7 +73,7 @@ import { LibAreaComponent } from './document/shared/lib-area/lib-area.component'
 import { LibItemComponent } from './document/shared/lib-area/lib-item.component';
 import { MemberAreaComponent } from './document/shared/member-area/member-area.component';
 import { MetaTagAreaComponent } from './document/shared/meta-tag-area/meta-tag-area.component';
-import { MetaTagComponent } from './document/shared/meta-tag-rich-list/meta-tag-rich-list.component';
+import { MetaTagComponent } from './document/shared/meta-tag/meta-tag.component';
 import { TypeDocumentComponent } from './document/type-document.component';
 import { WorkflowDetailLevelService } from './document/workflow-detail-level.service';
 import { WorkflowDocumentComponent } from './document/workflow-document.component';
