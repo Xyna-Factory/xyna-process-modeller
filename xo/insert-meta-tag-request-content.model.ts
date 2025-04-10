@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2024 Xyna GmbH, Germany
+ * Copyright 2023 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,27 +15,20 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { XoObjectClass, XoArrayClass, XoProperty, XoArray } from '@zeta/api';
-import { XoItem } from './item.model';
+import { XoObjectClass, XoProperty } from '@zeta/api';
+
 import { XoInsertRequestContent } from './insert-request-content.model';
-import { XoInsertMetaTagRequestContent } from './insert-meta-tag-request-content.model';
 
 
-@XoObjectClass(XoItem, 'xmcp.processmodeller.datatypes', 'MetaTag')
-export class XoMetaTag extends XoItem {
-
+@XoObjectClass(XoInsertRequestContent, 'xmcp.processmodeller.datatypes.request', 'InsertMetaTagRequestContent')
+export class XoInsertMetaTagRequestContent extends XoInsertRequestContent {
 
     @XoProperty()
     tag: string;
 
 
-    createInsertRequestContent(): XoInsertRequestContent {
-        const content = new XoInsertMetaTagRequestContent();
-        content.tag = this.tag;
-        return content;
+    constructor(_ident?: string) {
+        super(_ident);
+        this.type = 'metaTag';
     }
-}
-
-@XoArrayClass(XoMetaTag)
-export class XoMetaTagArray extends XoArray<XoMetaTag> {
 }

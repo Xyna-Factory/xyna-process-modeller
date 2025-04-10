@@ -29,6 +29,7 @@ import { WorkflowDetailLevelService } from '../../workflow-detail-level.service'
 import { ModDropEvent } from '@pmod/document/workflow/shared/drag-and-drop/mod-drop-area.directive';
 import { XoMoveModellingObjectRequest } from '@pmod/xo/move-modelling-object-request.model';
 import { DragType } from '@pmod/document/workflow/shared/drag-and-drop/mod-drag-and-drop.service';
+import { XoInsertModellingObjectRequest } from '@pmod/xo/insert-modelling-object-request.model';
 
 
 @Component({
@@ -76,8 +77,9 @@ export class MetaTagAreaComponent extends ModellingObjectComponent {
     addMetaTag() {
         const metaTag: XoMetaTag = new XoMetaTag();
         metaTag.tag = this.newTag;
-        const request: XoMetaTagRequest = new XoMetaTagRequest();
-        request.metaTag = metaTag;
+        const request: XoInsertModellingObjectRequest = new XoInsertModellingObjectRequest();
+        request.index = -1;
+        request.content = metaTag.createInsertRequestContent();
         this.performAction({
             type: ModellingActionType.insert,
             objectId: this.metaTagArea.id,
