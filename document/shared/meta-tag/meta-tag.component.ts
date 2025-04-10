@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input} from '@angular/core';
 import { ModellingActionType } from '@pmod/api/xmom.service';
 import { ModellingItemComponent } from '@pmod/document/workflow/shared/modelling-object.component';
 import { XoChangeMetaTagRequest } from '@pmod/xo/change-meta-tag-request.model';
@@ -30,6 +30,8 @@ import { XoMetaTag } from '@pmod/xo/meta-tag.model';
 })
 export class MetaTagComponent extends ModellingItemComponent {
 
+    private readonly cdr: ChangeDetectorRef = inject<ChangeDetectorRef>(ChangeDetectorRef);
+
     @Input('meta-tag')
     set metaTag(value: XoMetaTag) {
         this.setModel(value);
@@ -37,6 +39,10 @@ export class MetaTagComponent extends ModellingItemComponent {
 
     get metaTag(): XoMetaTag {
         return this.getModel() as XoMetaTag;
+    }
+
+    protected lockedChanged() {
+        this.cdr.markForCheck();
     }
 
     removeMetaTag(metaTag: XoMetaTag) {

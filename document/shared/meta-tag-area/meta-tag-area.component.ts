@@ -15,9 +15,9 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, Injector, Input, Optional } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, inject, Injector, Input, Optional } from '@angular/core';
 
-import { HttpMethod, ModellingActionType } from '@pmod/api/xmom.service';
+import { ModellingActionType } from '@pmod/api/xmom.service';
 import { ComponentMappingService } from '@pmod/document/component-mapping.service';
 import { DocumentService } from '@pmod/document/document.service';
 import { ModellingObjectComponent } from '@pmod/document/workflow/shared/modelling-object.component';
@@ -27,11 +27,8 @@ import { XoMetaTag } from '@pmod/xo/meta-tag.model';
 
 import { WorkflowDetailLevelService } from '../../workflow-detail-level.service';
 import { ModDropEvent } from '@pmod/document/workflow/shared/drag-and-drop/mod-drop-area.directive';
-import { XoModellingItem } from '@pmod/xo/modelling-item.model';
 import { XoMoveModellingObjectRequest } from '@pmod/xo/move-modelling-object-request.model';
 import { DragType } from '@pmod/document/workflow/shared/drag-and-drop/mod-drag-and-drop.service';
-import { XoDeleteRequest } from '@pmod/xo/delete-request.model';
-import { XoChangeMetaTagRequest } from '@pmod/xo/change-meta-tag-request.model';
 
 
 @Component({
@@ -41,6 +38,8 @@ import { XoChangeMetaTagRequest } from '@pmod/xo/change-meta-tag-request.model';
     standalone: false
 })
 export class MetaTagAreaComponent extends ModellingObjectComponent {
+
+    private readonly cdr: ChangeDetectorRef = inject<ChangeDetectorRef>(ChangeDetectorRef);
 
     get metaTagArea(): XoMetaTagArea {
         return this.getModel() as XoMetaTagArea;
@@ -69,6 +68,11 @@ export class MetaTagAreaComponent extends ModellingObjectComponent {
         super(elementRef, componentMappingService, documentService, detailLevelService, injector);
     }
 
+    protected lockedChanged() {
+        this.cdr.markForCheck();
+    }
+
+
     addMetaTag() {
         const metaTag: XoMetaTag = new XoMetaTag();
         metaTag.tag = this.newTag;
@@ -92,7 +96,9 @@ export class MetaTagAreaComponent extends ModellingObjectComponent {
     // drag and drop
 
     allowItem = (xoFqn: string, xoId?: string): boolean => {
-        return xoFqn.toLowerCase() === XoMetaTag.fqn.encode().toLowerCase()
+        const allowedType = !!this.metaTagArea.itemTypes.find((itemType: string) => itemType.toLowerCase() === xoFqn.toLowerCase());
+        return allowedType && !this.readonly;
+        //return xoFqn.toLowerCase() === XoMetaTag.fqn.encode().toLowerCase()
     }
 
     dropped(event: ModDropEvent<XoMetaTag>) {
