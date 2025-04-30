@@ -77,6 +77,8 @@ export interface CloseResult {
 @Injectable()
 export class DocumentService implements OnDestroy {
 
+    private _ignoreProgrammaticScroll = false;
+
     private readonly documentListSubject = new BehaviorSubject<DocumentModel[]>([]);
     private readonly documentUpdateSubject = new Subject<{ item: DocumentItem; response: XoUpdateXmomItemResponse }>();
     private readonly selectedDocumentSubject = new BehaviorSubject<DocumentModel>(null);
@@ -520,16 +522,16 @@ export class DocumentService implements OnDestroy {
      * @param item XMOM Instance to be refreshed with the backend state
      */
     refreshXmomItem(item: DocumentItem) {
-        this.xmomService.loadXmomObject(item.toRtc(), item.toFqn(), item.type).subscribe(
-            response => {
+        this.xmomService.loadXmomObject(item.toRtc(), item.toFqn(), item.type).subscribe({
+            next: response => {
                 // handle item update
                 this.handleXmomItemUpdate(item, response, [response.xmomItem]);
                 // update tab bar label due to changes of the document
                 const document = this.getOpenDocument(item.toRtc(), item.toFqn());
                 document?.updateTabBarLabel();
             },
-            error => this.showError(this.i18n.translate('This XMOM Item could not be refreshed.'), error)
-        );
+            error: error => this.showError(this.i18n.translate('This XMOM Item could not be refreshed.'), error)
+        });
     }
 
 
@@ -632,8 +634,8 @@ export class DocumentService implements OnDestroy {
 
 
     loadDocument(rtc: RuntimeContext, fqn: FullQualifiedName, type: XmomObjectType, errorMessage?: string) {
-        this.loadXmomObject(rtc, fqn, type).pipe(filter(response => !!response)).subscribe(
-            getItemResponse => {
+        this.loadXmomObject(rtc, fqn, type).pipe(filter(response => !!response)).subscribe({
+            next: getItemResponse => {
                 const item = <DocumentItem>getItemResponse.xmomItem;
                 const originRuntimeContext = this.factoryService.runtimeContext ?? item.toRtc();
                 this.handleXmomItemResponse(item, getItemResponse);
@@ -646,8 +648,8 @@ export class DocumentService implements OnDestroy {
                     default: console.error(item.type + ' ' + this.i18n.translate('could not be identified as a document type'));
                 }
             },
-            error => this.showError(this.i18n.translate(errorMessage ?? 'This XmomItem could not be loaded.'), error)
-        );
+            error: error => this.showError(this.i18n.translate(errorMessage ?? 'This XmomItem could not be loaded.'), error)
+        });
     }
 
 
@@ -664,15 +666,15 @@ export class DocumentService implements OnDestroy {
             label,
             input.map((variable: XoModellingItem) => variable.createInsertRequestContent()),
             output.map((variable: XoModellingItem) => variable.createInsertRequestContent())
-        ).subscribe(
-            (workflowResponse: XoGetWorkflowResponse) => {
+        ).subscribe({
+            next: (workflowResponse: XoGetWorkflowResponse) => {
                 const workflow = workflowResponse.workflow;
                 workflow.defaultWorkflow = defaultWorkflow;
                 this.handleXmomItemResponse(workflow, workflowResponse);
                 this.addDocument(new WorkflowDocumentModel(workflow, this.xmomService.runtimeContext, workflowResponse.focusId));
             },
-            error => this.showError(this.i18n.translate('A new Workflow could not be created.'), error)
-        );
+            error: error => this.showError(this.i18n.translate('A new Workflow could not be created.'), error)
+        });
     }
 
 
@@ -699,14 +701,14 @@ export class DocumentService implements OnDestroy {
             XmomObjectType.DataType,
             XoGetDataTypeResponse,
             label || 'New Data Type'
-        ).subscribe(
-            (dataTypeResponse: XoGetDataTypeResponse) => {
+        ).subscribe({
+            next: (dataTypeResponse: XoGetDataTypeResponse) => {
                 const dataType = dataTypeResponse.dataType;
                 this.handleXmomItemResponse(dataType, dataTypeResponse);
                 this.addDocument(new DataTypeDocumentModel(dataType, this.xmomService.runtimeContext, dataTypeResponse.focusId));
             },
-            error => this.showError(this.i18n.translate('A new Data Type could not be created.'), error)
-        );
+            error: error => this.showError(this.i18n.translate('A new Data Type could not be created.'), error)
+        });
     }
 
 
@@ -726,14 +728,14 @@ export class DocumentService implements OnDestroy {
             XmomObjectType.ExceptionType,
             XoGetExceptionTypeResponse,
             label || 'New Exception Type'
-        ).subscribe(
-            (exceptionTypeResponse: XoGetExceptionTypeResponse) => {
+        ).subscribe({
+            next: (exceptionTypeResponse: XoGetExceptionTypeResponse) => {
                 const exceptionType = exceptionTypeResponse.exceptionType;
                 this.handleXmomItemResponse(exceptionType, exceptionTypeResponse);
                 this.addDocument(new ExceptionTypeDocumentModel(exceptionType, this.xmomService.runtimeContext, exceptionTypeResponse.focusId));
             },
-            error => this.showError(this.i18n.translate('A new Exception Type could not be created.'), error)
-        );
+            error: error => this.showError(this.i18n.translate('A new Exception Type could not be created.'), error)
+        });
     }
 
 
@@ -753,14 +755,14 @@ export class DocumentService implements OnDestroy {
             XmomObjectType.ServiceGroup,
             XoGetServiceGroupResponse,
             label || 'New Service Group'
-        ).subscribe(
-            (response: XoGetServiceGroupResponse) => {
+        ).subscribe({
+            next: (response: XoGetServiceGroupResponse) => {
                 const serviceGroup = response.serviceGroup;
                 this.handleXmomItemResponse(serviceGroup, response);
                 this.addDocument(new ServiceGroupDocumentModel(serviceGroup, this.xmomService.runtimeContext, response.focusId));
             },
-            error => this.showError(this.i18n.translate('A new Service Group could not be created.'), error)
-        );
+            error: error => this.showError(this.i18n.translate('A new Service Group could not be created.'), error)
+        });
     }
 
 
@@ -783,8 +785,8 @@ export class DocumentService implements OnDestroy {
         // TODO: rewrite without subject. use pipe.
         const subj = new Subject<string[]>();
         rtc = rtc || this.xmomService.runtimeContext;
-        this.xmomService.listXmomPaths(rtc, undefined, 'flat').subscribe(
-            xmomPaths => {
+        this.xmomService.listXmomPaths(rtc, undefined, 'flat').subscribe({
+            next: xmomPaths => {
                 const pathArr: string[] = [];
                 xmomPaths.forEach(obj => {
                     if (obj.isAbsolute) {
@@ -795,9 +797,9 @@ export class DocumentService implements OnDestroy {
                 });
                 subj.next(pathArr);
             },
-            error => subj.error(error),
-            () => subj.complete()
-        );
+            error: error => subj.error(error),
+            complete: () => subj.complete()
+        });
         return subj.asObservable();
     }
 
@@ -1017,5 +1019,13 @@ export class DocumentService implements OnDestroy {
             documentModel.item.$fqn,
             documentModel.item.$rtc.runtimeContext().uniqueKey
         ));
+    }
+
+    get ignoreProgrammaticScroll(): boolean {
+        return this._ignoreProgrammaticScroll;
+    }
+
+    set ignoreProgrammaticScroll(value: boolean) {
+        this._ignoreProgrammaticScroll = value;
     }
 }
