@@ -245,8 +245,9 @@ export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowD
     changeDataflow(request: XoSetDataflowConnectionRequest) {
         this.untilDestroyed(
             this.documentService.xmomService.setDataflowConnection(this.workflow, request)
-        ).subscribe(() =>
-            this.documentService.refreshXmomItem(this.workflow)
-        );
+        ).subscribe(() => {
+            this.documentService.ignoreProgrammaticScroll  = true;
+            this.documentService.refreshXmomItem(this.workflow);
+        });
     }
 }
