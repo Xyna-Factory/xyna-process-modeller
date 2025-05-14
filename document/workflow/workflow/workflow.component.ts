@@ -36,15 +36,12 @@ import { ModellingItemComponent } from '../shared/modelling-object.component';
     changeDetection: ChangeDetectionStrategy.Default,
     standalone: false
 })
-export class WorkflowComponent extends ModellingItemComponent implements AfterViewChecked, AfterViewInit, OnDestroy {
-
-    needCentering = true;
-    needRestoring = true;
+export class WorkflowComponent extends ModellingItemComponent implements AfterViewInit, OnDestroy {
 
     private scrollListener: number;
     private clickListener: number;
-    private currentScrollTop: number;
-    private currentScrollLeft: number;
+    private currentScrollTop = 0;
+    private currentScrollLeft = 0;
 
     @Output()
     readonly initialized = new EventEmitter<XoWorkflow>();
@@ -64,14 +61,10 @@ export class WorkflowComponent extends ModellingItemComponent implements AfterVi
         // restore scroll position after action
         this.untilDestroyed(this.documentService.xmomService.afterReceivedDataflow).pipe(
             filter(item => item === this.workflow)
-        ).subscribe(
-            () => this.needRestoring = true
-        );
+        ).subscribe(() => this.restoreScrollPosition());
 
         // restore scroll position after "tab change"
-        this.untilDestroyed(this.documentService.selectionChange).subscribe(
-            () => this.needRestoring = true
-        );
+        this.untilDestroyed(this.documentService.selectionChange).subscribe(() => this.restoreScrollPosition());
     }
 
 
@@ -80,38 +73,34 @@ export class WorkflowComponent extends ModellingItemComponent implements AfterVi
         this.setModel(value);
     }
 
-
     get workflow(): XoWorkflow {
         return this.getModel() as XoWorkflow;
     }
 
 
-    ngAfterViewChecked() {
+    ngAfterViewInit() {
         const el = this.elementRef.nativeElement as HTMLElement;
-        // hacked way of finding the moment when the element delivers the values for centering the window
-        // TODO: Find a better solution to find out the moment that the element takes the space of all DOM children
-        // into account
-        if (el.scrollWidth !== 0 || el.scrollHeight !== 0) {
-            if (this.needCentering) {
-                this.needCentering = false;
+
+        setTimeout(() => {
+            if (el.scrollWidth > el.clientWidth || el.scrollHeight > el.clientHeight) {
                 this.currentScrollLeft = (el.scrollWidth - el.clientWidth) / 2;
                 el.scrollLeft = this.currentScrollLeft;
             }
+        });
 
-            if (this.needRestoring) {
-                this.needRestoring = false;
-                this.restoreScrollPosition();
+        this.scrollListener = this.outsideListener.addOutsideListener(el, 'scroll', () => {
+            if (this.documentService.ignoreProgrammaticScroll) {
+                this.documentService.ignoreProgrammaticScroll = false;
+                return;
             }
-        }
-    }
+            this.setScrollPosition();
+        });
 
+        this.clickListener = this.outsideListener.addOutsideListener(el, 'click', () => {
+            this.selectionService.selectedObject = null;
+        });
 
-    ngAfterViewInit() {
-        const el = this.elementRef.nativeElement as HTMLElement;
-        this.scrollListener = this.outsideListener.addOutsideListener(el, 'scroll', () => this.setScrollPosition());
-        this.clickListener = this.outsideListener.addOutsideListener(el, 'click', () => this.selectionService.selectedObject = null);
-        this.needRestoring = true;
-
+        this.restoreScrollPosition();
         this.initialized.emit(this.workflow);
     }
 
@@ -123,19 +112,14 @@ export class WorkflowComponent extends ModellingItemComponent implements AfterVi
     }
 
 
-    setScrollPosition() {
+    private setScrollPosition() {
         const el = this.elementRef.nativeElement as HTMLElement;
-
-        if (el.scrollLeft) {
-            this.currentScrollLeft = el.scrollLeft;
-        }
-        if (el.scrollTop) {
-            this.currentScrollTop = el.scrollTop;
-        }
+        this.currentScrollLeft = el.scrollLeft;
+        this.currentScrollTop = el.scrollTop;
     }
 
 
-    restoreScrollPosition() {
+    private restoreScrollPosition() {
         const el = this.elementRef.nativeElement as HTMLElement;
         el.scrollLeft = this.currentScrollLeft;
         el.scrollTop = this.currentScrollTop;
