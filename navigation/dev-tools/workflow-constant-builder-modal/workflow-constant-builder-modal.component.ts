@@ -78,11 +78,10 @@ export class WorkflowConstantBuilderModalComponent extends XcDialogComponent<voi
             criteria,
             this.constName,
             this.withSignature
-        ).subscribe(
-            res => downloadFile(res, 'const_file.txt'),
-            err => this.building = false,
-            () => this.building = false
-        );
-
+        ).subscribe({
+            next: res => downloadFile(res, 'const_file.txt'),
+            error: err => this.building = false,
+            complete: () => this.building = false
+        });
     }
 }
