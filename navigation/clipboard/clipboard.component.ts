@@ -21,7 +21,7 @@ import { I18nService } from '@zeta/i18n';
 import { XcDialogService } from '@zeta/xc';
 
 import { throwError } from 'rxjs';
-import { catchError, switchMapTo } from 'rxjs/operators';
+import { catchError, switchMap } from 'rxjs/operators';
 
 import { DocumentService } from '../../document/document.service';
 import { TriggeredAction } from '../../document/workflow/shared/modelling-object.component';
@@ -96,7 +96,7 @@ export class ClipboardComponent extends CommonNavigationComponent {
             this.i18n.translate('pmod.nav.clipboard.clear-confirm-title'),
             this.i18n.translate('pmod.nav.clipboard.clear-confirm-message')
         ).afterDismissResult(true).pipe(
-            switchMapTo(this.documentService.xmomService.clearClipboard())
+            switchMap(() => this.documentService.xmomService.clearClipboard())
         ).subscribe(
             response => this.handleResponse(response)
         );

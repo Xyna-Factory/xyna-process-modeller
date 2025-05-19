@@ -16,6 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+
 import { XmomState } from '@pmod/api/xmom.service';
 import { DocumentService } from '@pmod/document/document.service';
 import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model';
@@ -26,6 +27,7 @@ import { XoWorkflow } from '@pmod/xo/workflow.model';
 import { FullQualifiedName } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService } from '@zeta/xc';
+
 import { catchError, of } from 'rxjs';
 
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
@@ -63,7 +65,7 @@ export class CompareComponent extends CommonNavigationComponent {
                 FullQualifiedName.decode(savedWorkflow.$fqn),
                 savedWorkflow.type, false, XmomState.DEPLOYED
             ).pipe(
-                catchError(error => {
+                catchError(() => {
                     this.dialogs.error(this.i18n.translate('pmod.nav.compare.load-error', { key: '$0', value: savedWorkflow.$fqn }));
                     return of(new XoGetXmomItemResponse());
                 })

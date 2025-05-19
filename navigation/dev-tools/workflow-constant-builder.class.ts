@@ -42,51 +42,53 @@ export class WorkflowConstantBuilder {
 
         const tree = {};
 
-        this.makeRequests(documentService, rtc, preselectedXmomPaths).subscribe(items => {
-            // console.log('#', items.map<string>(i => i.$fqn));
-            items.forEach(item => {
-                const parts = item.$fqn.split('.');
-                let branch = tree;
-                parts.forEach((part, i) => {
-                    if (i < parts.length - 1) {
-                        branch[part] = branch[part] ? branch[part] : {};
-                        branch = branch[part];
-                    } else {
-                        branch[part] = item.$fqn;
-                    }
+        this.makeRequests(documentService, rtc, preselectedXmomPaths).subscribe({
+            next: items => {
+                // console.log('#', items.map<string>(i => i.$fqn));
+                items.forEach(item => {
+                    const parts = item.$fqn.split('.');
+                    let branch = tree;
+                    parts.forEach((part, i) => {
+                        if (i < parts.length - 1) {
+                            branch[part] = branch[part] ? branch[part] : {};
+                            branch = branch[part];
+                        } else {
+                            branch[part] = item.$fqn;
+                        }
+                    });
                 });
-            });
 
-            // transform tree to typescript const
-            let object = this.transformTreeToTypeScriptObject(tree, withWorkflowSignature);
+                // transform tree to typescript const
+                let object = this.transformTreeToTypeScriptObject(tree, withWorkflowSignature);
 
-            if (withWorkflowSignature) {
+                if (withWorkflowSignature) {
 
-                this.makeSignatureRequests(apiService, rtc, items).subscribe(
-                    keyValuePairs => {
-                        keyValuePairs.forEach(pair => {
-                            object = object.replace(pair.key, pair.value);
-                        });
-                        const CONST = 'export const ' + constName + ' = ' + object + ';';
-                        subj.next(CONST);
-                        subj.complete();
-                    },
-                    error => {
-                        subj.error(error);
-                        subj.complete();
-                    }
-                );
+                    this.makeSignatureRequests(apiService, rtc, items).subscribe({
+                        next: keyValuePairs => {
+                            keyValuePairs.forEach(pair => {
+                                object = object.replace(pair.key, pair.value);
+                            });
+                            const CONST = 'export const ' + constName + ' = ' + object + ';';
+                            subj.next(CONST);
+                            subj.complete();
+                        },
+                        error: error => {
+                            subj.error(error);
+                            subj.complete();
+                        }
+                    });
 
-            } else {
-                const CONST = 'export const ' + constName + ' = ' + object + ';';
-                subj.next(CONST);
-                subj.complete();
-            }
-        },
-            error => {
+                } else {
+                    const CONST = 'export const ' + constName + ' = ' + object + ';';
+                    subj.next(CONST);
+                    subj.complete();
+                }
+            },
+            error: error => {
                 subj.error(error);
                 subj.complete();
-            });
+            }
+        });
 
         return subj.asObservable();
     }
@@ -121,23 +123,23 @@ export class WorkflowConstantBuilder {
             responses.push(res);
         }
 
-        concat(...responses).subscribe(
-            items => {
+        concat(...responses).subscribe({
+            next: items => {
                 items.forEach(item => {
                     if (item.type === XmomObjectType.Workflow && allowed(item.$fqn, prePaths)) {
                         allowedItems.push(item);
                     }
                 });
             },
-            err => {
+            error: err => {
                 subj.error(err);
                 subj.complete();
             },
-            () => {
+            complete: () => {
                 subj.next(allowedItems);
                 subj.complete();
             }
-        );
+        });
 
         return subj.asObservable();
     }
@@ -187,8 +189,8 @@ export class WorkflowConstantBuilder {
 
         let num = 0;
         const recursiveRequests = () => {
-            singleRequest(rtc, items[num].$fqn).subscribe(
-                sig => {
+            singleRequest(rtc, items[num].$fqn).subscribe({
+                next: sig => {
                     const inputs = sig.inputs.map<string>(input => input.fqn.name);
                     const outputs = sig.outputs.map<string>(output => output.fqn.name);
                     const value = 'INPUTS [' + inputs.join(', ') + '] OUTPUTS [' + outputs.join(', ') + ']';
@@ -203,11 +205,11 @@ export class WorkflowConstantBuilder {
                         recursiveRequests();
                     }
                 },
-                error => {
+                error: error => {
                     subj.error(error);
                     subj.complete();
                 }
-            );
+            });
         };
 
         if (items.length) {

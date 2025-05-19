@@ -29,7 +29,7 @@ import { I18nService } from '@zeta/i18n';
 import { XcDialogService } from '@zeta/xc';
 
 import { merge } from 'rxjs';
-import { filter, finalize, switchMapTo } from 'rxjs/operators';
+import { filter, finalize, switchMap } from 'rxjs/operators';
 
 import { DocumentService } from '../../document/document.service';
 import { DocumentItem, DocumentModel } from '../../document/model/document.model';
@@ -143,7 +143,7 @@ export class DetailsComponent extends CommonNavigationComponent {
             this.i18n.translate('pmod.nav.details.steal-lock-confirm')
         ).afterDismissResult().pipe(
             filter(result => result),
-            switchMapTo(this.xmomService.unlockXmomObject(this.item))
+            switchMap(() => this.xmomService.unlockXmomObject(this.item))
         ).subscribe(() => {
             this.documentService.refreshXmomItem(this.item);
             this.getDeploymentItem();
