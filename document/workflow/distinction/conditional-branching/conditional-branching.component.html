@@ -1,27 +1,24 @@
 @if (choice.formulaArea) {
-  <formula-input-area
-    [formulaArea]="choice.formulaArea"
+  <formula-input-area [formulaArea]="choice.formulaArea"
     [documentModel]="documentModel"
     questionmarkEditable="true"
     (triggerAction)="performAction($event)"
-  ></formula-input-area>
+   />
 }
-<content-area
-  [contentArea]="choice.contentArea"
+<content-area [contentArea]="choice.contentArea"
   [documentModel]="documentModel"
   class="dark"
   (triggerAction)="performAction($event)"
-></content-area>
+ />
 @if (!readonly) {
   <div class="add-branch-button-area">
     <xc-icon-button xc-icon-name="add" color="invert" (click)="addBranch()"></xc-icon-button>
   </div>
 }
 @if (choice.outputArea) {
-  <variable-area-choice
-    [variableArea]="choice.outputArea"
+  <variable-area-choice [variableArea]="choice.outputArea"
     [documentModel]="documentModel"
     xc-variable-area-kind="output-area"
     (triggerAction)="performAction($event)"
-  ></variable-area-choice>
+   />
 }

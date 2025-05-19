@@ -1,17 +1,15 @@
 @if (editing) {
-  <xc-form-autocomplete
-    [(xc-form-autocomplete-option)]="memberDataWrapper.value"
+  <xc-form-autocomplete [(xc-form-autocomplete-option)]="memberDataWrapper.value"
     [xc-form-autocomplete-options]="memberDataWrapper.values"
     (xc-form-autocomplete-optionsOpened)="opened()"
     (xc-form-autocomplete-optionsClosed)="closed()"
     xc-form-autocomplete-fulltextsearch
     xc-form-autocomplete-showtooltip
     xc-form-field-compact
-    class="select-box">
-  </xc-form-autocomplete>
+    class="select-box" />
 }
 @if (!editing && formulaPart.isMemberVariable()) {
-  <variable [variable]="formulaPart.variable" [hasMenu]="false"></variable>
+  <variable [variable]="formulaPart.variable" [hasMenu]="false" />
 }
 @if (!editing && formulaPart.isMemberFunction()) {
   <span class="member-function">{{formulaPart.text}}</span>

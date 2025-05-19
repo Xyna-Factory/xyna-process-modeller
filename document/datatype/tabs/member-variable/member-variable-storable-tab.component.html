@@ -1,12 +1,11 @@
-<xc-form-autocomplete
-  label="storable-role"
+<xc-form-autocomplete label="storable-role"
   placeholder="select"
   [(xc-form-autocomplete-option)]="storableRoleDataWrapper.value"
   [xc-form-autocomplete-options]="storableRoleDataWrapper.values"
   [readonly]="readonly"
   xc-form-autocomplete-asdropdown
   xc-i18n
-></xc-form-autocomplete>
+ />
 
 @if (memberVariable.storablePropertyArea) {
   <div class="row">

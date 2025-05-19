@@ -1,9 +1,8 @@
-<variable-area-document
-  [variableArea]="method.inputArea"
+<variable-area-document [variableArea]="method.inputArea"
   [documentModel]="documentModel"
   (triggerAction)="performAction($event)"
   xc-variable-area-kind="input-area"
-></variable-area-document>
+ />
 <div class="service-label">
   <div>{{method.label}}</div>
   <div class="align-right">
@@ -24,20 +23,17 @@
     }
   </div>
 </div>
-<coding
-  [method]="method"
+<coding [method]="method"
   [readonly]="readonly || isAbstractMethod"
   (implementationChange)="implementationChange($event)"
-></coding>
-<variable-area-document
-  [variableArea]="method.throwsArea"
+ />
+<variable-area-document [variableArea]="method.throwsArea"
   [documentModel]="documentModel"
   (triggerAction)="performAction($event)"
   xc-variable-area-kind="throws-area"
-></variable-area-document>
-<variable-area-document
-  [variableArea]="method.outputArea"
+ />
+<variable-area-document [variableArea]="method.outputArea"
   [documentModel]="documentModel"
   (triggerAction)="performAction($event)"
   xc-variable-area-kind="output-area"
-></variable-area-document>
+ />

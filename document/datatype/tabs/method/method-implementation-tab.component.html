@@ -39,10 +39,9 @@
 }
 
 @if (isMethodImplementationTypeSet) {
-  <method-implementation
-    (triggerAction)="performAction($event)"
+  <method-implementation (triggerAction)="performAction($event)"
     [documentModel]="documentModel"
     [method]="method"
     xc-i18n-context="method-implementation"
-  ></method-implementation>
+   />
 }

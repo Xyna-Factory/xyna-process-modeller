@@ -1,10 +1,9 @@
 @if (mapping.inputArea) {
-  <variable-area-service
-    [variableArea]="mapping.inputArea"
+  <variable-area-service [variableArea]="mapping.inputArea"
     [documentModel]="documentModel"
     xc-variable-area-kind="input-area"
     (triggerAction)="performAction($event)"
-  ></variable-area-service>
+   />
 }
 @if (mapping.labelArea) {
   <label-area
@@ -14,48 +13,43 @@
     [menuTemplateRef]="menuTemplateRef"
     (triggerAction)="performAction($event)"
     >
-    <xc-icon icon xc-icon-name="tb-mapping" xc-icon-style="modeller" xc-icon-size="large" (dblclick)="toggleCollapsed()"></xc-icon>
+    <xc-icon icon xc-icon-name="tb-mapping" xc-icon-style="modeller" xc-icon-size="large" (dblclick)="toggleCollapsed()" />
   </label-area>
 }
 @if (documentationArea) {
-  <documentation-area
-    [documentationArea]="documentationArea"
+  <documentation-area [documentationArea]="documentationArea"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
-  ></documentation-area>
+   />
 }
 @if (mapping.formulaArea && programmaticMode) {
-  <formula-area
-    [formulaArea]="mapping.formulaArea"
+  <formula-area [formulaArea]="mapping.formulaArea"
     [documentModel]="documentModel"
     [newFormulaExpression]="newFormulaExpression"
     (triggerAction)="performAction($event)"
-  ></formula-area>
+   />
 }
 @if (mapping.formulaArea && visualMode) {
-  <visual-mapping
-    [mapping]="mapping"
+  <visual-mapping [mapping]="mapping"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
-  ></visual-mapping>
+   />
 }
 @if (mapping.outputArea) {
-  <variable-area-service
-    [variableArea]="mapping.outputArea"
+  <variable-area-service [variableArea]="mapping.outputArea"
     [documentModel]="documentModel"
     xc-variable-area-kind="output-area"
     (triggerAction)="performAction($event)"
-  ></variable-area-service>
+   />
 }
 
 <ng-template #menuTemplateRef>
-  <xc-icon-button
-    *xc-menu-service="showMenu; let menuService"
+  <xc-icon-button *xc-menu-service="showMenu; let menuService"
     [xc-menu-trigger]="menuService.component"
     (xc-menu-trigger)="menuService.set(menuItems, {withArrow: true, xNexttoTrigger: true, xOffset: 8})"
     xc-icon-style="modeller"
     xc-icon-name="misc-contextmenu"
     xc-icon-size="small"
     class="menu-button"
-  ></xc-icon-button>
+   />
 </ng-template>

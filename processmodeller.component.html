@@ -1,4 +1,4 @@
-<xfm-mod-toolbar xc-i18n-context='pmod.toolbar'></xfm-mod-toolbar>
-<xc-tab-bar xc-i18n-context='pmod' (xc-tab-bar-selectionChange)="changeTab($event)" [busy]="documentService.xmomService.isPendingAny()"></xc-tab-bar>
-<xfm-mod-nav xc-i18n-context='pmod.nav'></xfm-mod-nav>
+<xfm-mod-toolbar xc-i18n-context='pmod.toolbar' />
+<xc-tab-bar xc-i18n-context='pmod' (xc-tab-bar-selectionChange)="changeTab($event)" [busy]="documentService.xmomService.isPendingAny()" />
+<xfm-mod-nav xc-i18n-context='pmod.nav' />
 <div class="lock-screen" [ngClass]="{'locked': documentService.pendingModellingAction}"></div>

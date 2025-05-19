@@ -1,7 +1,6 @@
 @if (flows?.length > 0) {
-  <flow-canvas
-    [flowDefinitions]="flows"
-  ></flow-canvas>
+  <flow-canvas [flowDefinitions]="flows"
+   />
 }
 <div class="outputs">
   @for (outputDataSource of outputDataSources; track outputDataSource) {
@@ -30,5 +29,5 @@
     [newFormulaExpression]="selectedNode.toXFL()"
     [expressionFilter]="selectedNode.toXFL()"
     (triggerAction)="performAction($event)"
-  ></formula-area>
+   />
 }

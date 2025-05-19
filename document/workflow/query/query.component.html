@@ -6,69 +6,62 @@
     [menuTemplateRef]="menuTemplateRef"
     (triggerAction)="performAction($event)"
     >
-    <xc-icon icon xc-icon-name="tb-database" xc-icon-style="modeller" xc-icon-size="large" (dblclick)="toggleCollapsed()"></xc-icon>
+    <xc-icon icon xc-icon-name="tb-database" xc-icon-style="modeller" xc-icon-size="large" (dblclick)="toggleCollapsed()" />
   </label-area>
 }
 @if (documentationArea) {
-  <documentation-area
-    [documentationArea]="documentationArea"
+  <documentation-area [documentationArea]="documentationArea"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
-  ></documentation-area>
+   />
 }
 @if (query.filterArea) {
-  <filter-criterion-area
-    [formulaArea]="query.filterArea"
+  <filter-criterion-area [formulaArea]="query.filterArea"
     [documentModel]="documentModel"
     areaLabel="header-filter-criteria"
     (triggerAction)="performAction($event)"
-  ></filter-criterion-area>
+   />
 }
 @if (query.selectionMaskArea) {
-  <selection-mask-criterion-area
-    [formulaArea]="query.selectionMaskArea"
+  <selection-mask-criterion-area [formulaArea]="query.selectionMaskArea"
     [documentModel]="documentModel"
     areaLabel="header-selection-masks"
     (triggerAction)="performAction($event)"
-  ></selection-mask-criterion-area>
+   />
 }
 @if (query.sortingArea) {
-  <sorting-criterion-area
-    [formulaArea]="query.sortingArea"
+  <sorting-criterion-area [formulaArea]="query.sortingArea"
     [documentModel]="documentModel"
     areaLabel="header-sortings"
     (triggerAction)="performAction($event)"
-  ></sorting-criterion-area>
+   />
 }
 <div class="config-area">
   <xc-form-input xc-i18n label="label-limit-results" [(value)]="limitDataWrapper.value" (valueKeydown)="keydown($event)" (blur)="changedConfig()" xc-form-field-compact xc-form-validator-number></xc-form-input>
   <xc-checkbox xc-i18n label="label-query-history" [(checked)]="historyDataWrapper.value" color="invert"></xc-checkbox>
 </div>
 @if (query.exceptionHandlingArea) {
-  <exception-handling-area
-    [exceptionHandlingArea]="query.exceptionHandlingArea"
+  <exception-handling-area [exceptionHandlingArea]="query.exceptionHandlingArea"
     [documentModel]="documentModel"
     [inline]="true"
     (triggerAction)="performAction($event)"
-  ></exception-handling-area>
+   />
 }
 @if (query.outputArea) {
-  <variable-area-service
-    [variableArea]="query.outputArea"
+  <variable-area-service [variableArea]="query.outputArea"
     [documentModel]="documentModel"
     xc-variable-area-kind="output-area"
     (triggerAction)="performAction($event)"
-  ></variable-area-service>
+   />
 }
 
 <ng-template #menuTemplateRef>
-  <xc-icon-button
-    *xc-menu-service="showMenu; let menuService"
+  <xc-icon-button *xc-menu-service="showMenu; let menuService"
     [xc-menu-trigger]="menuService.component"
     (xc-menu-trigger)="menuService.set(menuItems, {withArrow: true, xNexttoTrigger: true, xOffset: 8})"
     xc-icon-style="modeller"
     xc-icon-name="misc-contextmenu"
     xc-icon-size="small"
     class="menu-button"
-  ></xc-icon-button>
+   />
 </ng-template>

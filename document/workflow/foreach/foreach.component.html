@@ -26,16 +26,14 @@
     ></xc-icon-button>
   </div>
 </div>
-<content-area
-  [contentArea]="foreach.contentArea"
+<content-area [contentArea]="foreach.contentArea"
   [documentModel]="documentModel"
   (triggerAction)="performAction($event)"
-></content-area>
+ />
 @if (foreach.outputArea) {
-  <variable-area-service
-    [variableArea]="foreach.outputArea"
+  <variable-area-service [variableArea]="foreach.outputArea"
     [documentModel]="documentModel"
     xc-variable-area-kind="output-area"
     (triggerAction)="performAction($event)"
-  ></variable-area-service>
+   />
 }
