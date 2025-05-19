@@ -123,8 +123,6 @@ export class WorkflowConstantBuilder {
             responses.push(res);
         }
 
-        // TODO: migrate subscribe(...) to object-based syntax for RxJS 8
-
         concat(...responses).subscribe({
             next: items => {
                 items.forEach(item => {
