@@ -27,13 +27,16 @@ import { DocumentService } from '../../../document.service';
 import { SelectionService } from '../../../selection.service';
 import { SelectableModellingObjectComponent } from '../../shared/selectable-modelling-object.component';
 import { BranchSelectionService } from './branch-selection.service';
+import { XcModule } from '../../../../../../zeta/xc/xc.module';
+import { CaseAreaComponent } from '../case-area/case-area.component';
+import { ContentAreaComponent } from '../../content-area/content-area.component';
 
 
 @Component({
     selector: 'branch',
     templateUrl: './branch.component.html',
     styleUrls: ['./branch.component.scss'],
-    standalone: false
+    imports: [XcModule, CaseAreaComponent, ContentAreaComponent]
 })
 export class BranchComponent extends SelectableModellingObjectComponent implements OnDestroy {
 

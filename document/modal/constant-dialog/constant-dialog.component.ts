@@ -24,6 +24,8 @@ import { XcDialogComponent, XcStructureTreeDataSource } from '@zeta/xc';
 import { XoVariable } from '../../../xo/variable.model';
 import { constantDialog_translations_de_DE } from './locale/constant-dialog-translations.de-DE';
 import { constantDialog_translations_en_US } from './locale/constant-dialog-translations.en-US';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 export interface ConstantDialogData {
@@ -40,7 +42,7 @@ export const CONSTANT_DIALOG_DELETE_TOKEN = Symbol();
     selector: 'constant-dialog',
     templateUrl: './constant-dialog.component.html',
     styleUrls: ['./constant-dialog.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class ConstantDialogComponent extends XcDialogComponent<Xo | typeof CONSTANT_DIALOG_DELETE_TOKEN, ConstantDialogData> {
 

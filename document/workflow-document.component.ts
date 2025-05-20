@@ -40,6 +40,15 @@ import { WorkflowDocumentModel } from './model/workflow-document.model';
 import { SelectionService } from './selection.service';
 import { WorkflowDetailLevelService } from './workflow-detail-level.service';
 import { BranchSelectionService } from './workflow/distinction/branch/branch-selection.service';
+import { I18nModule } from '../../../zeta/i18n/i18n.module';
+import { DataflowComponent } from './workflow/dataflow/dataflow.component';
+import { VariableAreaDocumentComponent } from './workflow/variable-area/variable-area-document.component';
+import { TypeLabelAreaComponent } from './workflow/type-label-area/type-label-area.component';
+import { DocumentationAreaComponent } from './workflow/documentation-area/documentation-area.component';
+import { WorkflowComponent } from './workflow/workflow/workflow.component';
+import { ExceptionHandlingAreaComponent } from './workflow/exception/exception-handling-area/exception-handling-area.component';
+import { XcModule } from '../../../zeta/xc/xc.module';
+import { DropIndicatorComponent } from './workflow/drop-indicator/drop-indicator.component';
 
 
 @Component({
@@ -47,7 +56,7 @@ import { BranchSelectionService } from './workflow/distinction/branch/branch-sel
     styleUrls: ['./workflow-document.component.scss'],
     // single service instances per document
     providers: [SelectionService, BranchSelectionService, WorkflowDetailLevelService],
-    standalone: false
+    imports: [I18nModule, DataflowComponent, VariableAreaDocumentComponent, TypeLabelAreaComponent, DocumentationAreaComponent, WorkflowComponent, ExceptionHandlingAreaComponent, XcModule, DropIndicatorComponent]
 })
 export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowDocumentModel> implements OnDestroy {
 

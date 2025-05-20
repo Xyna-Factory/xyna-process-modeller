@@ -22,6 +22,8 @@ import { XcDialogComponent } from '@zeta/xc';
 
 import { conflictDialog_translations_de_DE } from './locale/conflict-dialog-translations.de-DE';
 import { conflictDialog_translations_en_US } from './locale/conflict-dialog-translations.en-US';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 export interface ConflictHandling {
@@ -41,7 +43,7 @@ export interface ConflictDialogData {
 @Component({
     templateUrl: './conflict-dialog.component.html',
     styleUrls: ['./conflict-dialog.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class ConflictDialogComponent extends XcDialogComponent<string, ConflictDialogData> {
 

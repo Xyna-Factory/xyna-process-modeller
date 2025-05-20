@@ -39,13 +39,20 @@ import { XoWorkflowInvocation } from '../../../xo/workflow-invocation.model';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { ModellingItemComponent, TriggeredAction } from '../shared/modelling-object.component';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { OrderInputSourceAreaComponent } from '../order-input-source-area/order-input-source-area.component';
+import { RemoteDestinationAreaComponent } from '../remote-destination-area/remote-destination-area.component';
+import { VariableAreaServiceComponent } from '../variable-area/variable-area-service.component';
+import { TypeLabelAreaServiceComponent } from '../type-label-area/type-label-area-service.component';
+import { DocumentationAreaComponent } from '../documentation-area/documentation-area.component';
+import { ExceptionHandlingAreaComponent } from '../exception/exception-handling-area/exception-handling-area.component';
 
 
 @Component({
     selector: 'invocation',
     templateUrl: './invocation.component.html',
     styleUrls: ['./invocation.component.scss'],
-    standalone: false
+    imports: [XcModule, OrderInputSourceAreaComponent, RemoteDestinationAreaComponent, VariableAreaServiceComponent, TypeLabelAreaServiceComponent, DocumentationAreaComponent, ExceptionHandlingAreaComponent]
 })
 export class InvocationComponent extends ModellingItemComponent {
 

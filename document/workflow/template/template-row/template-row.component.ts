@@ -32,6 +32,7 @@ import { TemplateRow } from '../model/template-row.model';
 import { TemplateText } from '../model/template-text.model';
 import { TemplatePartModifyEvent, TemplatePartTextComponent } from '../template-part/template-part-text.component';
 import { NavigationDirection, TemplatePartComponent, TemplatePartSwitchFocusEvent } from '../template-part/template-part.component';
+import { TemplatePartFormulaComponent } from '../template-part/template-part-formula.component';
 
 
 export interface SplitTemplateRowEvent {
@@ -50,7 +51,7 @@ export interface SwitchTemplateRowFocusEvent {
     selector: 'template-row',
     templateUrl: './template-row.component.html',
     styleUrls: ['./template-row.component.scss'],
-    standalone: false
+    imports: [ModDropAreaDirective, TemplatePartFormulaComponent, TemplatePartTextComponent]
 })
 export class TemplateRowComponent extends ModellingObjectComponent {
 

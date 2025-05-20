@@ -25,6 +25,7 @@ import { ModellingActionType } from '../../../api/xmom.service';
 import { XoUsedRequest } from '../../../xo/change-used-request.model';
 import { XoJavaSharedLibrary } from '../../../xo/java-shared-library.model';
 import { TriggeredAction } from '../../workflow/shared/modelling-object.component';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 export interface JavaSharedLibItemData {
@@ -37,7 +38,7 @@ export interface JavaSharedLibItemData {
 @Component({
     templateUrl: './java-shared-lib-item.component.html',
     styleUrls: ['./java-shared-lib-item.component.scss'],
-    standalone: false
+    imports: [XcModule]
 })
 export class JavaSharedLibItemComponent extends XcRichListItemComponent<void, JavaSharedLibItemData> {
 

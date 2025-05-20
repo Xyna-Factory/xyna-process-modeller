@@ -26,13 +26,14 @@ import { XcStackItem } from '@zeta/xc/xc-stack/xc-stack-item/xc-stack-item';
 import { XcComponentTemplate } from '@zeta/xc/xc-template/xc-template';
 
 import { DatatypeTabComponent, PluginTabData } from '../datatype-tab.component';
+import { XcModule } from '../../../../../../zeta/xc/xc.module';
 
 
 @Component({
     templateUrl: './datatype-plugin-tab.component.html',
     styleUrls: ['./datatype-plugin-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [XcModule]
 })
 export class DataTypePluginTabComponent extends DatatypeTabComponent<XoDataType, PluginTabData> {
 

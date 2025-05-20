@@ -39,6 +39,9 @@ import { XoRetry } from '../xo/retry.model';
 import { XoTemplate } from '../xo/template.model';
 import { XoTypeChoice } from '../xo/type-choice.model';
 import { XoWorkflowInvocation } from '../xo/workflow-invocation.model';
+import { XcModule } from '../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../zeta/i18n/i18n.module';
+import { ModDraggableDirective } from '../document/workflow/shared/drag-and-drop/mod-draggable.directive';
 
 
 export interface ToolbarButtonDescription {
@@ -68,7 +71,7 @@ export type ToolbarItem = ToolbarButtonDescription | ToolbarButtonDescriptionGro
     templateUrl: './toolbar.component.html',
     styleUrls: ['./toolbar.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [XcModule, I18nModule, ModDraggableDirective]
 })
 export class ToolbarComponent implements AfterViewInit, OnDestroy {
 

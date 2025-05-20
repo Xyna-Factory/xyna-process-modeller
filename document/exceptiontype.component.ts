@@ -26,6 +26,15 @@ import { XoMemberVariable } from '../xo/member-variable.model';
 import { ExceptionTypeDocumentModel } from './model/exception-type-document.model';
 import { SelectionService } from './selection.service';
 import { TypeDocumentComponent } from './type-document.component';
+import { I18nModule } from '../../../zeta/i18n/i18n.module';
+import { TypeInfoAreaComponent } from './datatype/type-info-area/type-info-area.component';
+import { ExceptionMessagesAreaComponent } from './datatype/exception-messages-area/exception-messages-area.component';
+import { DetailsItemComponent } from './shared/details-item/details-item.component';
+import { MemberAreaComponent } from './shared/member-area/member-area.component';
+import { MemberVariableAreaComponent } from './datatype/member-variable-area/member-variable-area.component';
+import { ExceptionTypeDetailsComponent } from './datatype/exceptiontype-details/exceptiontype-details.component';
+import { MemberVariableDetailsComponent } from './datatype/member-variable-details/member-variable-details.component';
+import { DropIndicatorComponent } from './workflow/drop-indicator/drop-indicator.component';
 
 
 @Component({
@@ -33,7 +42,7 @@ import { TypeDocumentComponent } from './type-document.component';
     styleUrls: ['./exceptiontype.component.scss'],
     // single service instances per document
     providers: [SelectionService],
-    standalone: false
+    imports: [I18nModule, TypeInfoAreaComponent, ExceptionMessagesAreaComponent, DetailsItemComponent, MemberAreaComponent, MemberVariableAreaComponent, ExceptionTypeDetailsComponent, MemberVariableDetailsComponent, DropIndicatorComponent]
 })
 export class ExceptionTypeComponent extends TypeDocumentComponent<ExceptionTypeDocumentModel> {
 

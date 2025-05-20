@@ -25,13 +25,17 @@ import { XoRequest } from '../../../xo/request.model';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { ModellingItemComponent } from '../shared/modelling-object.component';
+import { VariableComponent } from '../variable/variable.component';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { ContentAreaComponent } from '../content-area/content-area.component';
+import { VariableAreaServiceComponent } from '../variable-area/variable-area-service.component';
 
 
 @Component({
     selector: 'foreach',
     templateUrl: './foreach.component.html',
     styleUrls: ['./foreach.component.scss'],
-    standalone: false
+    imports: [VariableComponent, XcModule, ContentAreaComponent, VariableAreaServiceComponent]
 })
 export class ForeachComponent extends ModellingItemComponent {
 

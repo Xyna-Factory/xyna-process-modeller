@@ -21,13 +21,14 @@ import { Component, Input } from '@angular/core';
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 
 import { SelectableModellingObjectComponent } from '../../workflow/shared/selectable-modelling-object.component';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 @Component({
     selector: 'details-item',
     templateUrl: './details-item.component.html',
     styleUrls: ['./details-item.component.scss'],
-    standalone: false
+    imports: [I18nModule]
 })
 export class DetailsItemComponent extends SelectableModellingObjectComponent {
 

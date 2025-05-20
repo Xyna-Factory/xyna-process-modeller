@@ -24,6 +24,9 @@ import { XoDataType } from '../../../../xo/data-type.model';
 import { DataTypeConvertable, DataTypeConverterService, DataTypeProperty } from './data-type-converter.service';
 import { showGui_translations_de_DE } from './locale/show-gui-translations.de-DE';
 import { showGui_translations_en_US } from './locale/show-gui-translations.en-US';
+import { XcModule } from '../../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { LeftRightComponent } from './left-right-component/left-right.component';
 
 
 export interface ShowGuiModelModalComponentData {
@@ -34,7 +37,7 @@ export interface ShowGuiModelModalComponentData {
 @Component({
     templateUrl: './show-gui-model-modal.component.html',
     styleUrls: ['./show-gui-model-modal.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule, LeftRightComponent]
 })
 export class ShowGuiModelModalComponent extends XcDialogComponent<void, ShowGuiModelModalComponentData> {
 

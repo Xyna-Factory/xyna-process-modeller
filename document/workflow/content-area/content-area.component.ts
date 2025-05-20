@@ -23,15 +23,17 @@ import { XoInsertModellingObjectRequest } from '../../../xo/insert-modelling-obj
 import { XoModellingItem } from '../../../xo/modelling-item.model';
 import { XoMoveModellingObjectRequest } from '../../../xo/move-modelling-object-request.model';
 import { DragType, ModRelativeHoverSide, ModRelativeHoverSideFlip } from '../shared/drag-and-drop/mod-drag-and-drop.service';
-import { ModDragEvent, ModDropEvent } from '../shared/drag-and-drop/mod-drop-area.directive';
+import { ModDragEvent, ModDropEvent, ModDropAreaDirective } from '../shared/drag-and-drop/mod-drop-area.directive';
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
+import { ServiceStepComponent } from '../service-step/service-step.component';
+import { ModDraggableDirective } from '../shared/drag-and-drop/mod-draggable.directive';
 
 
 @Component({
     selector: 'content-area',
     templateUrl: './content-area.component.html',
     styleUrls: ['./content-area.component.scss'],
-    standalone: false
+    imports: [ModDropAreaDirective, ServiceStepComponent, ModDraggableDirective]
 })
 export class ContentAreaComponent extends ModellingObjectComponent {
     private _direction: 'row' | 'column' = 'column';

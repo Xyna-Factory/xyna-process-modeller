@@ -21,13 +21,16 @@ import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoChangeCompensationRequest } from '../../../../xo/change-compensation-request.model';
 import { XoCompensation } from '../../../../xo/compensation.model';
 import { ModellingItemComponent } from '../../shared/modelling-object.component';
+import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { ContentAreaComponent } from '../../content-area/content-area.component';
+import { XcModule } from '../../../../../../zeta/xc/xc.module';
 
 
 @Component({
     selector: 'compensation',
     templateUrl: './compensation.component.html',
     styleUrls: ['./compensation.component.scss', '../../common.scss'],
-    standalone: false
+    imports: [I18nModule, ContentAreaComponent, XcModule]
 })
 export class CompensationComponent extends ModellingItemComponent {
 

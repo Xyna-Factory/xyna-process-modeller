@@ -20,10 +20,7 @@ import { Directive, ElementRef, EventEmitter, HostListener, Input, Output } from
 import { coerceBoolean } from '@zeta/base';
 
 
-@Directive({
-    selector: '[mod-content-editable]',
-    standalone: false
-})
+@Directive({ selector: '[mod-content-editable]' })
 export class ModContentEditableDirective {
 
     private _enabled = true;

@@ -22,7 +22,6 @@ import { rightGuardCanActivate } from '@zeta/nav/right.guard';
 
 import { RIGHT_PROCESS_MODELLER } from './const';
 import { ProcessmodellerComponent } from './processmodeller.component';
-import { ProcessmodellerModule } from './processmodeller.module';
 
 
 const root = 'Process-Modeller';
@@ -46,8 +45,7 @@ export const ProcessmodellerRoutes: XynaRoutes = [
 ];
 
 export const ProcessmodellerRoutingModules = [
-    RouterModule.forChild(ProcessmodellerRoutes),
-    ProcessmodellerModule
+    RouterModule.forChild(ProcessmodellerRoutes)
 ];
 
 export const ProcessmodellerRoutingProviders = [

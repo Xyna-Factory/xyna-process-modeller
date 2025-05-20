@@ -36,6 +36,8 @@ import { TemplateRow } from './model/template-row.model';
 import { TemplateText } from './model/template-text.model';
 import { SplitTemplateRowEvent, SwitchTemplateRowFocusEvent, TemplateRowComponent } from './template-row/template-row.component';
 import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
+import { NonDraggableTextAreaComponent } from '../non-draggable-text-area/non-draggable-text-area.component';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 enum ConcatParameterType {
@@ -54,7 +56,7 @@ interface ConcatParameter {
     selector: 'template-block',
     templateUrl: './template.component.html',
     styleUrls: ['./template.component.scss'],
-    standalone: false
+    imports: [TemplateRowComponent, NonDraggableTextAreaComponent, XcModule]
 })
 export class TemplateComponent extends ModellingItemComponent implements OnDestroy {
 

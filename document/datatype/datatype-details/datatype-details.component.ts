@@ -36,6 +36,7 @@ import { DataTypePluginTabComponent } from '../tabs/datatype/datatype-plugin-tab
 import { DataTypeStorableTabComponent } from '../tabs/datatype/datatype-storable-tab.component';
 import { DocumentationTabComponent } from '../tabs/shared/documentation-tab.component';
 import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 @Component({
@@ -43,7 +44,7 @@ import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
     templateUrl: './datatype-details.component.html',
     styleUrls: ['./datatype-details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [XcModule]
 })
 export class DataTypeDetailsComponent extends ModellingItemComponent implements OnDestroy {
 

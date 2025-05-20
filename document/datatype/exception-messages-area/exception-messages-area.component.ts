@@ -31,6 +31,8 @@ import { ExceptionMessageRichListItemComponent, ExceptionMessageRichListItemData
 import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 import { combineLatest } from 'rxjs';
 import { PluginService } from '../../plugin.service';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 export enum ExceptionMessageLanguage {
@@ -43,7 +45,7 @@ export enum ExceptionMessageLanguage {
     selector: 'exception-messages-area',
     templateUrl: './exception-messages-area.component.html',
     styleUrls: ['./exception-messages-area.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class ExceptionMessagesAreaComponent extends ModellingObjectComponent {
 

@@ -22,6 +22,8 @@ import { XcDialogComponent } from '@zeta/xc';
 
 import { errorDialog_translations_de_DE } from './locale/error-dialog-translations.de-DE';
 import { errorDialog_translations_en_US } from './locale/error-dialog-translations.en-US';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 export interface ErrorDialogData {
@@ -35,7 +37,7 @@ export interface ErrorDialogData {
     selector: 'error-dialog',
     templateUrl: './error-dialog.component.html',
     styleUrls: ['./error-dialog.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class ErrorDialogComponent extends XcDialogComponent<void, ErrorDialogData> {
 

@@ -171,7 +171,9 @@ Algorithm for nested drop areas:
     enter: inside ? inc count : add onto stack at correct position
     leave: dec count; count == 0 => remove from stack
  */
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ModDragAndDropService {
 
     serverId: string;

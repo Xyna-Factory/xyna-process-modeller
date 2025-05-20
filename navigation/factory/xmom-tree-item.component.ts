@@ -18,6 +18,7 @@
 import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
 
 import { XmomPath } from '../../api/xmom.service';
+import { XcModule } from '../../../../zeta/xc/xc.module';
 
 
 export interface XMOMTreeItemState {
@@ -34,7 +35,7 @@ export interface XMOMTreeItemState {
     selector: 'xfm-mod-nav-xmomtreeitem',
     templateUrl: './xmom-tree-item.component.html',
     styleUrls: ['./xmom-tree-item.component.scss'],
-    standalone: false
+    imports: [XcModule]
 })
 export class XMOMTreeItemComponent {
 

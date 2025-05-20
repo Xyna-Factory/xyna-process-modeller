@@ -27,6 +27,8 @@ import { debounceTime, filter } from 'rxjs/operators';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 import { FactoryService } from '../factory.service';
 import { XMOMListComponent } from '../xmom/xmom-list.component';
+import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../zeta/xc/xc.module';
 
 
 interface FilterData {
@@ -49,7 +51,7 @@ export interface FilterConditionData {
     templateUrl: './search.component.html',
     styleUrls: ['./search.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [I18nModule, XcModule, XMOMListComponent]
 })
 export class SearchComponent extends CommonNavigationComponent {
 

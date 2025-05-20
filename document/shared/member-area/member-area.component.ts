@@ -28,12 +28,14 @@ import { XoMemberVariableArea } from '../../../xo/member-variable-area.model';
 import { XoMemberMethodArea } from '../../../xo/member-method-area.model';
 import { XoPlugin } from '@yggdrasil/plugin/plugin.model';
 import { combineLatest } from 'rxjs';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 @Component({
     selector: 'member-area',
     templateUrl: './member-area.component.html',
     styleUrls: ['./member-area.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class MemberAreaComponent extends ModellingObjectComponent {
 

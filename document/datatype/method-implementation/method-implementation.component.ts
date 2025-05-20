@@ -32,13 +32,17 @@ import { ModellingItemComponent, TriggeredAction } from '../../workflow/shared/m
 import { combineLatest } from 'rxjs';
 import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 import { PluginService } from '@pmod/document/plugin.service';
+import { VariableAreaDocumentComponent } from '../../workflow/variable-area/variable-area-document.component';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { CodingComponent } from '../coding/coding.component';
 
 
 @Component({
     selector: 'method-implementation',
     templateUrl: './method-implementation.component.html',
     styleUrls: ['./method-implementation.component.scss'],
-    standalone: false
+    imports: [VariableAreaDocumentComponent, XcModule, I18nModule, CodingComponent]
 })
 export class MethodImplementationComponent extends ModellingItemComponent {
 

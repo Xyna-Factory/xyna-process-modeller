@@ -20,10 +20,7 @@ import { Directive, ElementRef, HostListener, Input, OnInit } from '@angular/cor
 import { DRAG_CSS_CLASSES, DragType, Draggable, ModDnDEventConvert, ModDragAndDropService, ModDragDataInfo, ModDragDataTransferKey } from './mod-drag-and-drop.service';
 
 
-@Directive({
-    selector: '[mod-draggable]',
-    standalone: false
-})
+@Directive({ selector: '[mod-draggable]' })
 export class ModDraggableDirective implements OnInit {
 
     @Input('mod-draggable')

@@ -21,12 +21,15 @@ import { ModellingItemComponent } from '@pmod/document/workflow/shared/modelling
 import { XoChangeMetaTagRequest } from '@pmod/xo/change-meta-tag-request.model';
 import { XoDeleteRequest } from '@pmod/xo/delete-request.model';
 import { XoMetaTag } from '@pmod/xo/meta-tag.model';
+import { ModContentEditableDirective } from '../../workflow/shared/mod-content-editable.directive';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 @Component({
     selector: 'meta-tag',
     templateUrl: './meta-tag.component.html',
     styleUrls: ['./meta-tag.component.scss'],
-    standalone: false
+    imports: [ModContentEditableDirective, XcModule, I18nModule]
 })
 export class MetaTagComponent extends ModellingItemComponent {
 

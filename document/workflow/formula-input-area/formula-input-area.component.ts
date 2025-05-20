@@ -26,15 +26,16 @@ import { XoInsertFormulaRequest } from '../../../xo/insert-formula-request.model
 import { XoModellingItem } from '../../../xo/modelling-item.model';
 import { XoVariable, XoVariableArray } from '../../../xo/variable.model';
 import { XoXmomItem } from '../../../xo/xmom-item.model';
-import { ModDropEvent } from '../shared/drag-and-drop/mod-drop-area.directive';
+import { ModDropEvent, ModDropAreaDirective } from '../shared/drag-and-drop/mod-drop-area.directive';
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
+import { FormulaComponent } from '../formula/formula.component';
 
 
 @Component({
     selector: 'formula-input-area',
     templateUrl: './formula-input-area.component.html',
     styleUrls: ['./formula-input-area.component.scss'],
-    standalone: false
+    imports: [ModDropAreaDirective, FormulaComponent]
 })
 export class FormulaInputAreaComponent extends ModellingObjectComponent {
 

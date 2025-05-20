@@ -18,7 +18,9 @@
 import { Injectable } from '@angular/core';
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class WorkflowDetailSettingsService {
 
     // Workflow Details (initial states on document-open)

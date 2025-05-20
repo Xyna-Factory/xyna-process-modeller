@@ -19,13 +19,16 @@ import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output }
 import * as monaco from 'monaco-editor';
 
 import { XoMethod } from '../../../xo/method.model';
+import { EditorComponent } from 'ngx-monaco-editor-v2';
+import { NgClass } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 @Component({
     selector: 'coding',
     templateUrl: './coding.component.html',
     styleUrls: ['./coding.component.scss'],
-    standalone: false
+    imports: [EditorComponent, NgClass, ReactiveFormsModule, FormsModule]
 })
 export class CodingComponent {
 

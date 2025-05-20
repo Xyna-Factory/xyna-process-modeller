@@ -74,7 +74,9 @@ export interface CloseResult {
 }
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class DocumentService implements OnDestroy {
 
     private _ignoreProgrammaticScroll = false;

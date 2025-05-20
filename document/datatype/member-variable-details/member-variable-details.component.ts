@@ -31,6 +31,7 @@ import { DocumentTabData, MetaTabData, VariableTabData } from '../tabs/datatype-
 import { MemberVariableBaseTabComponent } from '../tabs/member-variable/member-variable-base-tab.component';
 import { MemberVariableStorableTabComponent } from '../tabs/member-variable/member-variable-storable-tab.component';
 import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 @Component({
@@ -38,7 +39,7 @@ import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
     templateUrl: './member-variable-details.component.html',
     styleUrls: ['./member-variable-details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [XcModule]
 })
 export class MemberVariableDetailsComponent extends ModellingItemComponent implements OnDestroy {
 

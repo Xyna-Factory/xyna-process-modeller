@@ -26,7 +26,9 @@ import { map, switchMap } from 'rxjs/operators';
 import { XoServiceReferenceCandidates } from '../xo/service-reference-candidates.model';
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class DataTypeService {
 
     static ANYTYPE = 'base.AnyType';

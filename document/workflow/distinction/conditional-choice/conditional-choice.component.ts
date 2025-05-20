@@ -18,13 +18,16 @@
 import { Component } from '@angular/core';
 
 import { ChoiceComponent } from '../choice.component';
+import { FormulaInputAreaComponent } from '../../formula-input-area/formula-input-area.component';
+import { ContentAreaComponent } from '../../content-area/content-area.component';
+import { VariableAreaChoiceComponent } from '../../variable-area/variable-area-choice.component';
 
 
 @Component({
     selector: 'conditional-choice',
     templateUrl: './conditional-choice.component.html',
     styleUrls: ['../choice.component.scss', './conditional-choice.component.scss'],
-    standalone: false
+    imports: [FormulaInputAreaComponent, ContentAreaComponent, VariableAreaChoiceComponent]
 })
 export class ConditionalChoiceComponent extends ChoiceComponent {
 }

@@ -30,6 +30,7 @@ import { WorkflowDetailLevelService } from '../../workflow-detail-level.service'
 import { ModellingItemComponent } from '../../workflow/shared/modelling-object.component';
 import { DocumentationTabData, DocumentTabData } from '../tabs/datatype-tab.component';
 import { DocumentationTabComponent } from '../tabs/shared/documentation-tab.component';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 @Component({
@@ -37,7 +38,7 @@ import { DocumentationTabComponent } from '../tabs/shared/documentation-tab.comp
     templateUrl: './exceptiontype-details.component.html',
     styleUrls: ['./exceptiontype-details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [XcModule]
 })
 export class ExceptionTypeDetailsComponent extends ModellingItemComponent implements OnDestroy {
 

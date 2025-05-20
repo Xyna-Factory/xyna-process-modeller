@@ -20,6 +20,9 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import { XMOMListComponent } from '@pmod/navigation/xmom/xmom-list.component';
 import { XoFactoryItemArray } from '@pmod/xo/factory-item.model';
 import { RelationTypeEnum, XoGetXmomRelationsResponse } from '@pmod/xo/get-xmom-relations-response.model';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { XMOMListComponent as XMOMListComponent_1 } from '../../xmom/xmom-list.component';
 
 
 export interface RelationGroup {
@@ -32,7 +35,7 @@ export interface RelationGroup {
     selector: 'relation-table',
     templateUrl: './relation-table.component.html',
     styleUrls: ['./relation-table.component.scss'],
-    standalone: false
+    imports: [I18nModule, XcModule, XMOMListComponent_1]
 })
 export class RelationTableComponent {
     @ViewChild(XMOMListComponent, { static: true })

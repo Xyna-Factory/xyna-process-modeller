@@ -22,13 +22,15 @@ import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model
 import { ErrorItem } from '@pmod/xo/issue.model';
 
 import { ErrorService } from '../error.service';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 @Component({
     selector: 'xfm-mod-nav-error',
     templateUrl: './error-item.component.html',
     styleUrls: ['./error-item.component.scss'],
-    standalone: false
+    imports: [I18nModule, XcModule]
 })
 export class ErrorItemComponent {
     @Input()

@@ -18,7 +18,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnDestroy, OnInit } from '@angular/core';
 import { ApiService, FullQualifiedName, XoDescriberCache, XoStructureObject } from '@zeta/api';
 import { Subscription, filter, first, forkJoin, of, tap } from 'rxjs';
-import { FlowDefinition } from './flow-canvas/flow-canvas.component';
+import { FlowDefinition, FlowCanvasComponent } from './flow-canvas/flow-canvas.component';
 import { XoMapping } from '@pmod/xo/mapping.model';
 import { ComponentMappingService } from '@pmod/document/component-mapping.service';
 import { DocumentService } from '@pmod/document/document.service';
@@ -38,6 +38,7 @@ import { XoFunctionExpression } from '@pmod/xo/expressions/function-expression.m
 import { RecursiveStructure } from '@pmod/xo/expressions/RecursiveStructurePart';
 import { XoCastExpression } from '@pmod/xo/expressions/cast-expression.model';
 import { SkeletonTreeNode } from '../variable-tree/data-source/skeleton-tree-node';
+import { VariableTreeComponent } from '../variable-tree/variable-tree.component';
 
 
 
@@ -88,7 +89,7 @@ class ExpressionWrapper {
     templateUrl: './visual-mapping.component.html',
     styleUrls: ['./visual-mapping.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FlowCanvasComponent, VariableTreeComponent, FormulaAreaComponent]
 })
 export class VisualMappingComponent extends ModellingObjectComponent implements OnInit, OnDestroy, SkeletonTreeDataSourceObserver {
 

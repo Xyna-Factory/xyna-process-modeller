@@ -27,6 +27,8 @@ import { ModellingObjectComponent } from '../../workflow/shared/modelling-object
 import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 import { PluginService } from '../../plugin.service';
 import { combineLatest } from 'rxjs';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 @Component({
@@ -34,7 +36,7 @@ import { combineLatest } from 'rxjs';
     templateUrl: './type-documentation-area.component.html',
     styleUrls: ['./type-documentation-area.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class TypeDocumentationAreaComponent extends ModellingObjectComponent {
 

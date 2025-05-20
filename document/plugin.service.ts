@@ -33,7 +33,9 @@ import { Observable, filter, map, of, switchMap, tap, throwError } from 'rxjs';
  * - call workflows to define Plugin UI
  * - caches results from workflows
  */
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class PluginService implements XoDefinitionObserver {
 
     constructor(private readonly apiService: ApiService, private readonly dialogs: XcDialogService) { }

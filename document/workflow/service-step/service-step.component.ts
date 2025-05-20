@@ -37,6 +37,19 @@ import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { SelectionService } from '../../selection.service';
 import { SelectableModellingObjectComponent } from '../shared/selectable-modelling-object.component';
+import { BranchComponent } from '../distinction/branch/branch.component';
+import { NgClass } from '@angular/common';
+import { ConditionalBranchingComponent } from '../distinction/conditional-branching/conditional-branching.component';
+import { ConditionalChoiceComponent } from '../distinction/conditional-choice/conditional-choice.component';
+import { ForeachComponent } from '../foreach/foreach.component';
+import { InvocationComponent } from '../invocation/invocation.component';
+import { MappingComponent } from '../mapping/mapping.component';
+import { ParallelismComponent } from '../parallelism/parallelism.component';
+import { QueryComponent } from '../query/query.component';
+import { RetryComponent } from '../retry/retry.component';
+import { TemplateComponent } from '../template/template.component';
+import { ThrowComponent } from '../exception/throw/throw.component';
+import { TypeChoiceComponent } from '../distinction/type-choice/type-choice.component';
 
 
 @Component({
@@ -44,7 +57,7 @@ import { SelectableModellingObjectComponent } from '../shared/selectable-modelli
     templateUrl: './service-step.component.html',
     styleUrls: ['./service-step.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [BranchComponent, NgClass, ConditionalBranchingComponent, ConditionalChoiceComponent, ForeachComponent, InvocationComponent, MappingComponent, ParallelismComponent, QueryComponent, RetryComponent, TemplateComponent, ThrowComponent, TypeChoiceComponent]
 })
 export class ServiceStepComponent extends SelectableModellingObjectComponent implements AfterViewChecked, OnDestroy {
     private _parentDirection: 'row' | 'column' = 'column';

@@ -21,13 +21,16 @@ import { XoInsertSelectionMaskRequest } from '@pmod/xo/insert-selection-mask-req
 
 import { XoInsertRequest } from '../../../xo/insert-request.model';
 import { FormulaAreaComponent } from './formula-area.component';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { FormulaComponent } from '../formula/formula.component';
 
 
 @Component({
     selector: 'selection-mask-criterion-area',
     templateUrl: './formula-area.component.html',
     styleUrls: ['./formula-area.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule, FormulaComponent]
 })
 export class SelectionMaskCriterionAreaComponent extends FormulaAreaComponent {
 

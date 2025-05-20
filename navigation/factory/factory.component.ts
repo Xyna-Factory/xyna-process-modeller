@@ -28,6 +28,10 @@ import { CommonNavigationComponent } from '../common-navigation-class/common-nav
 import { FactoryService } from '../factory.service';
 import { XMOMListComponent } from '../xmom/xmom-list.component';
 import { XMOMTreeItemState } from './xmom-tree-item.component';
+import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../zeta/xc/xc.module';
+import { PmodOutsideListenerDirective } from '../../misc/directives/pmod-outside-listener.directives';
+import { XMOMTreeComponent } from './xmom-tree.component';
 
 
 @Component({
@@ -35,7 +39,7 @@ import { XMOMTreeItemState } from './xmom-tree-item.component';
     templateUrl: './factory.component.html',
     styleUrls: ['./factory.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [I18nModule, XcModule, PmodOutsideListenerDirective, XMOMTreeComponent, XMOMListComponent]
 })
 export class FactoryComponent extends CommonNavigationComponent implements AfterViewInit {
 

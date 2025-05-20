@@ -19,13 +19,14 @@ import { Component, Input } from '@angular/core';
 
 import { XoParallelism } from '../../../xo/parallelism.model';
 import { ModellingItemComponent } from '../shared/modelling-object.component';
+import { ContentAreaComponent } from '../content-area/content-area.component';
 
 
 @Component({
     selector: 'parallelism',
     templateUrl: './parallelism.component.html',
     styleUrls: ['./parallelism.component.scss'],
-    standalone: false
+    imports: [ContentAreaComponent]
 })
 export class ParallelismComponent extends ModellingItemComponent {
 

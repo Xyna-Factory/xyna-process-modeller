@@ -27,6 +27,7 @@ import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { SelectionService } from '../../selection.service';
 import { ModellingItemComponent } from '../shared/modelling-object.component';
+import { ContentAreaComponent } from '../content-area/content-area.component';
 
 
 @Component({
@@ -34,7 +35,7 @@ import { ModellingItemComponent } from '../shared/modelling-object.component';
     templateUrl: './workflow.component.html',
     styleUrls: ['./workflow.component.scss'],
     changeDetection: ChangeDetectionStrategy.Default,
-    standalone: false
+    imports: [ContentAreaComponent]
 })
 export class WorkflowComponent extends ModellingItemComponent implements AfterViewInit, OnDestroy {
 

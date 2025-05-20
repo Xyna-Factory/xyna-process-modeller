@@ -29,13 +29,22 @@ import { XoChangeQueryConfigurationRequest } from '../../../xo/change-query-conf
 import { XoQuery } from '../../../xo/query.model';
 import { XoTextArea } from '../../../xo/text-area.model';
 import { InvocationComponent } from '../invocation/invocation.component';
+import { LabelAreaComponent } from '../label-area/label-area.component';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { DocumentationAreaComponent } from '../documentation-area/documentation-area.component';
+import { FilterCriterionAreaComponent } from '../formula-area/filter-criterion-area.component';
+import { SelectionMaskCriterionAreaComponent } from '../formula-area/selection-mask-criterion-area.component';
+import { SortingCriterionAreaComponent } from '../formula-area/sorting-criterion-area.component';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { ExceptionHandlingAreaComponent } from '../exception/exception-handling-area/exception-handling-area.component';
+import { VariableAreaServiceComponent } from '../variable-area/variable-area-service.component';
 
 
 @Component({
     selector: 'query',
     templateUrl: './query.component.html',
     styleUrls: ['./query.component.scss'],
-    standalone: false
+    imports: [LabelAreaComponent, XcModule, DocumentationAreaComponent, FilterCriterionAreaComponent, SelectionMaskCriterionAreaComponent, SortingCriterionAreaComponent, I18nModule, ExceptionHandlingAreaComponent, VariableAreaServiceComponent]
 })
 export class QueryComponent extends InvocationComponent {
 
