@@ -1,8 +1,7 @@
 @if ((dataSource.root$ | async)) {
-  <variable-tree-node
-    [node]="(dataSource.root$ | async)"
+  <variable-tree-node [node]="(dataSource.root$ | async)"
     [highlightMarks]="highlightMarkedNodes"
     (assignedVariable)="createdAssignment.emit($event)"
     (selectionChange)="select($event)"
-  ></variable-tree-node>
+   />
 }

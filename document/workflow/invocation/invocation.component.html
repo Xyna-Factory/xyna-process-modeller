@@ -1,29 +1,26 @@
 <ng-template #menuTemplateRef>
-  <xc-icon-button
-    *xc-menu-service="showMenu; let menuService"
+  <xc-icon-button *xc-menu-service="showMenu; let menuService"
     [xc-menu-trigger]="menuService.component"
     (xc-menu-trigger)="menuService.set(menuItems, {withArrow: true, xNexttoTrigger: true, xOffset: 8})"
     xc-icon-style="modeller"
     xc-icon-name="misc-contextmenu"
     xc-icon-size="small"
     class="menu-button"
-  ></xc-icon-button>
+   />
 </ng-template>
 
 @if (invocation.allowsOrderInputSource) {
-  <order-input-source-area
-    [orderInputSourceArea]="invocation.orderInputSourceArea"
+  <order-input-source-area [orderInputSourceArea]="invocation.orderInputSourceArea"
     [documentModel]="documentModel"
     [invocation]="invocation"
     (triggerAction)="performAction($event)"
-  ></order-input-source-area>
+   />
 }
 @if (remoteDestinationArea) {
-  <remote-destination-area
-    [remoteDestinationArea]="remoteDestinationArea"
+  <remote-destination-area [remoteDestinationArea]="remoteDestinationArea"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
-  ></remote-destination-area>
+   />
 }
 @if (invocation.inputArea) {
   <variable-area-service (dblclick)="doubleClickProxy.emit()"
@@ -31,7 +28,7 @@
     [documentModel]="documentModel"
     xc-variable-area-kind="input-area"
     (triggerAction)="performAction($event)"
-  ></variable-area-service>
+   />
 }
 <div class="type-label-area-service-wrapper" (dblclick)="doubleClickProxy.emit()">
   @if (invocation.typeLabelArea) {
@@ -51,19 +48,17 @@
   }
 </div>
 @if (documentationArea) {
-  <documentation-area
-    [documentationArea]="documentationArea"
+  <documentation-area [documentationArea]="documentationArea"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
-  ></documentation-area>
+   />
 }
 @if (exceptionHandlingArea) {
-  <exception-handling-area
-    [exceptionHandlingArea]="exceptionHandlingArea"
+  <exception-handling-area [exceptionHandlingArea]="exceptionHandlingArea"
     [documentModel]="documentModel"
     [inline]="true"
     (triggerAction)="performAction($event)"
-  ></exception-handling-area>
+   />
 }
 @if (invocation.outputArea) {
   <variable-area-service (dblclick)="doubleClickProxy.emit()"
@@ -71,5 +66,5 @@
     [documentModel]="documentModel"
     xc-variable-area-kind="output-area"
     (triggerAction)="performAction($event)"
-  ></variable-area-service>
+   />
 }

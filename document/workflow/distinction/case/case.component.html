@@ -1,7 +1,6 @@
 @if (!case.isDefault) {
   @if (detachable) {
-    <xc-icon-button
-      class="detach"
+    <xc-icon-button class="detach"
       (click)="detach()"
       xc-icon-name="external"
       xc-icon-size="small"
@@ -9,15 +8,14 @@
       xc-tooltip="tooltip-detach"
       xc-tooltip-showdelay="500"
       color="invert"
-    ></xc-icon-button>
+     />
   }
   @if (!case.isCollapsed || !case.label) {
-    <formula
-      [formula]="case.formula"
+    <formula [formula]="case.formula"
       [documentModel]="documentModel"
       (triggerAction)="performAction($event)"
       tabindex="0"
-    ></formula>
+     />
   }
   @if (case.label) {
     <input [value]="case.label" class="label-input" (blur)="finishEditLabel($event.target.value)"/>

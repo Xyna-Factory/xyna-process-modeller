@@ -1,22 +1,20 @@
 <!-- will always be only one exception-handling -->
 @for (handling of exceptionHandlingArea?.exceptionHandlings; track handling) {
-  <exception-handling
-    [exceptionHandling]="handling"
+  <exception-handling [exceptionHandling]="handling"
     [documentModel]="documentModel"
     [inline]="inline"
     (triggerAction)="performAction($event)"
     class="handling"
-  ></exception-handling>
+   />
 }
 
 <!-- will always be only one compensation -->
 @for (compensation of exceptionHandlingArea?.compensations; track compensation) {
-  <compensation
-    [compensation]="compensation"
+  <compensation [compensation]="compensation"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
     class="handling"
-  ></compensation>
+   />
 }
 
 <div class="toggle-buttons">
