@@ -1,6 +1,6 @@
 <div id="xmom-list"
   class="zeta-scrollbar">
-  @for (xmomItem of xmomItems; track xmomItem) {
+  @for (xmomItem of xmomItems; let i = $index; track i) {
     <xfm-mod-nav-xmomlistitem
       [mod-draggable]="xmomItem" mod-draggable-allowed-drag-type="insert"
       [xmom-item]="xmomItem"

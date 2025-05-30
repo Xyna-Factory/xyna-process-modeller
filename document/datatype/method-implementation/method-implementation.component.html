@@ -14,7 +14,7 @@
       [disabled]="readonly || isAbstractMethod"
       xc-tooltip="use-generated-template-library-tooltip"
     >template-call-button</xc-button>
-    @for (bundle of pluginBundles; track bundle) {
+    @for (bundle of pluginBundles; let i = $index; track i) {
       <xc-definition-proxy
         [xc-base-definition]="bundle.definition"
         [xc-base-definition-data]="bundle.data"

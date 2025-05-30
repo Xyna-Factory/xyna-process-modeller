@@ -246,7 +246,7 @@ export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowD
         this.untilDestroyed(
             this.documentService.xmomService.setDataflowConnection(this.workflow, request)
         ).subscribe(() => {
-            this.documentService.ignoreProgrammaticScroll  = true;
+            this.documentService.ignoreProgrammaticScroll = true;
             this.documentService.refreshXmomItem(this.workflow);
         });
     }

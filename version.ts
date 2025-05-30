@@ -16,4 +16,4 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 export const ProcessModellerName = 'Process Modeller';
-export const ProcessModellerVersion = '2.8.7';
+export const ProcessModellerVersion = '2.8.8';

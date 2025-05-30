@@ -1,7 +1,7 @@
 @if (!readonlyMode) {
   <div
     (focusout)="blur($event.relatedTarget)">
-    @for (row of rows; track row; let i = $index) {
+    @for (row of rows; let i = $index; track i) {
       <template-row #templateRow
         [row]="row"
         [lineNumber]="i"

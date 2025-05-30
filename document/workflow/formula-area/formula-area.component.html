@@ -2,7 +2,7 @@
   <xc-form-label xc-i18n>{{areaLabel}}</xc-form-label>
 }
 <div class="formula-list" xc-i18n-context="formula-area">
-  @for (formula of formulas; track formula; let i = $index) {
+  @for (formula of formulas; let i = $index; track i) {
     <div class="formula-row">
       <formula
         [formula]="formula"

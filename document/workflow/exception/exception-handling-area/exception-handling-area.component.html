@@ -1,5 +1,5 @@
 <!-- will always be only one exception-handling -->
-@for (handling of exceptionHandlingArea?.exceptionHandlings; track handling) {
+@for (handling of exceptionHandlingArea?.exceptionHandlings; let i = $index; track i) {
   <exception-handling [exceptionHandling]="handling"
     [documentModel]="documentModel"
     [inline]="inline"
@@ -9,7 +9,7 @@
 }
 
 <!-- will always be only one compensation -->
-@for (compensation of exceptionHandlingArea?.compensations; track compensation) {
+@for (compensation of exceptionHandlingArea?.compensations; let i = $index; track i) {
   <compensation [compensation]="compensation"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
