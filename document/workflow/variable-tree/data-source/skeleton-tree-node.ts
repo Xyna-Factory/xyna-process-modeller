@@ -1,3 +1,4 @@
+import { RecursiveStructurePart } from '@pmod/xo/expressions/RecursiveStructurePart';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2024 Xyna GmbH, Germany
@@ -17,10 +18,12 @@
  */
 import { FullQualifiedName, Xo, XoJson, XoStructureArray, XoStructureField, XoStructureObject, XoStructurePrimitive, XoStructureType } from '@zeta/api';
 import { GraphicallyRepresented } from '@zeta/base';
-import { BehaviorSubject, Observable, filter, first, forkJoin, map, of, switchMap } from 'rxjs';
+
+import { BehaviorSubject, defaultIfEmpty, filter, first, firstValueFrom, forkJoin, map, Observable, of, switchMap } from 'rxjs';
+
 import { Draggable } from '../../shared/drag-and-drop/mod-drag-and-drop.service';
-import { RecursiveStructurePart } from '@pmod/xo/expressions/RecursiveStructurePart';
 import { TreeNodeFactory, TreeNodeObserver } from './skeleton-tree-data-source';
+
 
 export abstract class SkeletonTreeNode implements GraphicallyRepresented<Element>, Draggable {
     private _structure: XoStructureField;
@@ -373,37 +376,39 @@ export class ObjectSkeletonTreeNode extends ComplexSkeletonTreeNode {
 
 
     updateChildren(): Observable<boolean> {
-
-        return this.markForCheckChildren.pipe(
-            first(),
-            switchMap(markForCheck => {
+        return new Observable<boolean>(observer => {
+            firstValueFrom(this.markForCheckChildren.pipe(defaultIfEmpty(false))).then(markForCheck => {
                 if (markForCheck) {
-                    this.runningUpdateChildren = this.runningUpdateChildren ??
-                        this.nodeFactory.getNewChildren(this.getStructure()).pipe(
-                            first(),
-                            map(newChildren => {
-                                this.getStructure().addChildren(...newChildren);
+                    this.runningUpdateChildren = this.runningUpdateChildren ?? this.nodeFactory.getNewChildren(this.getStructure()).pipe(
+                        first(() => true),
+                        map(newChildren => {
+                            this.getStructure().addChildren(...newChildren);
 
-                                // here comes the whole structure including children and their types
-                                // build all node children here and give them their describer
-                                newChildren.forEach(field => {
-                                    const node = this.nodeFactory.createNodeFromStructure(field);
-                                    if (node) {
-                                        this._children.push(node);
-                                        node.parent = this;
-                                    }
-                                });
-                                this.notifyObservers();
-                                this._markForCheckChildren.next(false);
-                                this.runningUpdateChildren = undefined;
-                                return true;
-                            })
-                        );
-                    return this.runningUpdateChildren;
+                            // here comes the whole structure including children and their types
+                            // build all node children here and give them their describer
+                            newChildren.forEach(field => {
+                                const node = this.nodeFactory.createNodeFromStructure(field);
+                                if (node) {
+                                    this._children.push(node);
+                                    node.parent = this;
+                                }
+                            });
+                            this.notifyObservers();
+                            this._markForCheckChildren.next(false);
+                            this.runningUpdateChildren = undefined;
+                            return true;
+                        })
+                    );
+                    this.runningUpdateChildren.subscribe(result => {
+                        observer.next(result);
+                        observer.complete();
+                    });
+                } else {
+                    observer.next(false);
+                    observer.complete();
                 }
-                return of(false);
-            })
-        );
+            });
+        });
     }
 
 

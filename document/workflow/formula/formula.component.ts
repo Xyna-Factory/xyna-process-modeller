@@ -16,10 +16,11 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, ElementRef, HostBinding, HostListener, Injector, Input, Optional, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 
+import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { ApiService } from '@zeta/api';
 import { coerceBoolean } from '@zeta/base';
+
 import { filter } from 'rxjs/operators';
 
 import { ModellingActionType } from '../../../api/xmom.service';
@@ -318,7 +319,7 @@ export class FormulaComponent extends ModellingItemComponent {
 
 
     finishedEditingSubPart(_: FormulaPart) {
-        this.formulaWrapper.nativeElement.focus();       // refocus formula-area
+        this.formulaWrapper?.nativeElement.focus();       // refocus formula-area
 
         // if it hasn't been accepted before, leave formula
         if (this._partInEditing) {

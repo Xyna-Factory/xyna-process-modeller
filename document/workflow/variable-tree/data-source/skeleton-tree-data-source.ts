@@ -15,10 +15,12 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ApiService, FullQualifiedName, RuntimeContext, XoDescriber, XoDescriberCache, XoStructureArray, XoStructureComplexField, XoStructureField, XoStructureObject, XoStructurePrimitive, XoStructureType } from '@zeta/api';
-import { BehaviorSubject, Observable, concat, filter, finalize, first, map, switchMap } from 'rxjs';
 import { RecursiveStructure } from '@pmod/xo/expressions/RecursiveStructurePart';
 import { XoVariable } from '@pmod/xo/variable.model';
+import { ApiService, FullQualifiedName, RuntimeContext, XoDescriber, XoDescriberCache, XoStructureArray, XoStructureComplexField, XoStructureField, XoStructureObject, XoStructurePrimitive, XoStructureType } from '@zeta/api';
+
+import { BehaviorSubject, concat, filter, finalize, first, map, Observable, of, switchMap } from 'rxjs';
+
 import { ArraySkeletonTreeNode, ObjectSkeletonTreeNode, PrimitiveSkeletonTreeNode, SkeletonTreeNode } from './skeleton-tree-node';
 
 
@@ -127,6 +129,9 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
      * Modifies the tree (changes selected subtype or adds array entries) if necessary/possible.
      */
     processStructure(wrapper: StructureProcessWrapper[]): Observable<SkeletonTreeNode> {
+        if (!wrapper.length) {
+            return of(null);
+        }
 
         return concat(...wrapper.map(
             pair => this.root$.pipe(

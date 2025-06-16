@@ -16,29 +16,32 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnDestroy, OnInit } from '@angular/core';
-import { ApiService, FullQualifiedName, XoDescriberCache, XoStructureObject } from '@zeta/api';
-import { Subscription, filter, first, forkJoin, of, tap } from 'rxjs';
-import { FlowDefinition } from './flow-canvas/flow-canvas.component';
-import { XoMapping } from '@pmod/xo/mapping.model';
+
+import { ModellingActionType, XmomService } from '@pmod/api/xmom.service';
 import { ComponentMappingService } from '@pmod/document/component-mapping.service';
 import { DocumentService } from '@pmod/document/document.service';
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
-import { SkeletonTreeDataSource, SkeletonTreeDataSourceObserver, StructureProcessWrapper, VariableDescriber } from '../variable-tree/data-source/skeleton-tree-data-source';
-import { ModellingActionType, XmomService } from '@pmod/api/xmom.service';
-import { CreateAssignmentEvent } from '../variable-tree-node/variable-tree-node.component';
-import { XoModelledExpression } from '@pmod/xo/expressions/modelled-expression.model';
-import { XoSingleVarExpression } from '@pmod/xo/expressions/single-var-expression.model';
-import { ModellingObjectComponent } from '../shared/modelling-object.component';
-import { FormulaAreaComponent } from '../formula-area/formula-area.component';
-import { XoLiteralExpression } from '@pmod/xo/expressions/literal-expression.model';
-import { XoExpression2Args } from '@pmod/xo/expressions/expression2-args.model';
-import { XoNotExpression } from '@pmod/xo/expressions/not-expression.model';
-import { XoVariableInstanceFunctionIncovation } from '@pmod/xo/expressions/variable-instance-function-incovation.model';
-import { XoFunctionExpression } from '@pmod/xo/expressions/function-expression.model';
-import { RecursiveStructure } from '@pmod/xo/expressions/RecursiveStructurePart';
 import { XoCastExpression } from '@pmod/xo/expressions/cast-expression.model';
-import { SkeletonTreeNode } from '../variable-tree/data-source/skeleton-tree-node';
+import { XoExpression2Args } from '@pmod/xo/expressions/expression2-args.model';
+import { XoFunctionExpression } from '@pmod/xo/expressions/function-expression.model';
+import { XoLiteralExpression } from '@pmod/xo/expressions/literal-expression.model';
+import { XoModelledExpression } from '@pmod/xo/expressions/modelled-expression.model';
+import { XoNotExpression } from '@pmod/xo/expressions/not-expression.model';
+import { RecursiveStructure } from '@pmod/xo/expressions/RecursiveStructurePart';
+import { XoSingleVarExpression } from '@pmod/xo/expressions/single-var-expression.model';
+import { XoVariableInstanceFunctionIncovation } from '@pmod/xo/expressions/variable-instance-function-incovation.model';
+import { XoMapping } from '@pmod/xo/mapping.model';
+import { ApiService, FullQualifiedName, XoDescriberCache, XoStructureObject } from '@zeta/api';
 
+import { filter, first, forkJoin, of, Subscription, tap } from 'rxjs';
+
+import { SelectionService } from '../../selection.service';
+import { FormulaAreaComponent } from '../formula-area/formula-area.component';
+import { ModellingObjectComponent } from '../shared/modelling-object.component';
+import { CreateAssignmentEvent } from '../variable-tree-node/variable-tree-node.component';
+import { SkeletonTreeDataSource, SkeletonTreeDataSourceObserver, StructureProcessWrapper, VariableDescriber } from '../variable-tree/data-source/skeleton-tree-data-source';
+import { SkeletonTreeNode } from '../variable-tree/data-source/skeleton-tree-node';
+import { FlowDefinition } from './flow-canvas/flow-canvas.component';
 
 
 /**
@@ -130,12 +133,13 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
         documentService: DocumentService,
         detailLevelService: WorkflowDetailLevelService,
         injector: Injector,
-        protected readonly cdr: ChangeDetectorRef
+        protected readonly cdr: ChangeDetectorRef,
+        protected readonly selectionService: SelectionService
     ) {
         super(elementRef, componentMappingService, documentService, detailLevelService, injector);
 
         // anti-prune
-         
+
         const p0 = new XoSingleVarExpression();
         const p1 = new XoLiteralExpression();
         const p2 = new XoExpression2Args();
@@ -143,7 +147,7 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
         const p4 = new XoVariableInstanceFunctionIncovation();
         const p5 = new XoFunctionExpression();
         const p6 = new XoCastExpression();
-         
+
 
     }
 
@@ -238,12 +242,16 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
         this.expressions.forEach(expression => {
             expression.parts.forEach(part => {
                 const index = part.expression?.getVariable().varNum ?? 0;
-                const pair: StructureProcessWrapper = {structure: part.expression, postProcess: node => of(part.node = node)};
+                const pair: StructureProcessWrapper = { structure: part.expression, postProcess: node => of(part.node = node) };
                 pairs[index].push(pair);
             });
         });
 
-        forkJoin(pairs.map((pair, index) => dataSources[index].processStructure(pair))).subscribe({
+        const observables = pairs.map((pair, index) =>
+            pair.length ? dataSources[index].processStructure(pair) : of(null)
+        );
+
+        forkJoin(observables).subscribe({
             complete: () => {
                 // construct flows for graphical representation
                 this.flows = this.expressions
@@ -292,20 +300,27 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
     }
 
 
-    select(node: SkeletonTreeNode) {
-        this._selectionSubscription?.unsubscribe();
-        if (this.selectedNode) {
-            this.selectedNode.selected = false;
-        }
-        this.selectedNode = node;
-        if (node) {
-            node.selected = true;
-            this._selectionSubscription = node.selectedChange.pipe(filter(value => !value)).subscribe(() => {
-                this.selectedNode = undefined;
-                this._selectionSubscription?.unsubscribe();
-            });
-        }
+select(node: SkeletonTreeNode) {
+    this._selectionSubscription?.unsubscribe();
+
+    if (this.selectedNode) {
+        this.selectedNode.selected = false;
     }
+
+    this.selectedNode = node;
+
+    if (node) {
+        node.selected = true;
+
+        // 🔽 Suppress the next selection event so that the mapping is not affected by this selection
+        this.selectionService.selectedObjectSilently();
+
+        this._selectionSubscription = node.selectedChange.pipe(filter(value => !value)).subscribe(() => {
+            this.selectedNode = undefined;
+            this._selectionSubscription?.unsubscribe();
+        });
+    }
+}
 
 
     nodeChange(dataSource: SkeletonTreeDataSource, node: SkeletonTreeNode): void {

@@ -105,7 +105,7 @@ class Flow {
     */
     static getOffsetX(from: ModellingObjectComponent, to: ModellingObjectComponent): number {
         const outlet = from.outletPosition() || new Vector2();
-        const inlet  = to.inletPosition()    || new Vector2();
+        const inlet = to.inletPosition() || new Vector2();
         return outlet.x - inlet.x;
     }
 
@@ -157,8 +157,8 @@ class Flow {
             const inY = this.inlet.y + 1;
 
             const [centerOfBezierPathX, centerOfBezierPathY] = [0.5 * inX + 0.5 * outX, 0.5 * inY + 0.5 * outY];
-            this.tooltip.nativeElement.style.left =  (centerOfBezierPathX - (this.tooltip.nativeElement.offsetWidth / 2)) + 'px';
-            this.tooltip.nativeElement.style.top =  (centerOfBezierPathY -  (this.tooltip.nativeElement.offsetHeight / 2)) + 'px';
+            this.tooltip.nativeElement.style.left = (centerOfBezierPathX - (this.tooltip.nativeElement.offsetWidth / 2)) + 'px';
+            this.tooltip.nativeElement.style.top = (centerOfBezierPathY - (this.tooltip.nativeElement.offsetHeight / 2)) + 'px';
             this.tooltip.nativeElement.innerHTML = `${(this.from.getModel() as any).label} &rArr; ${(this.to.getModel() as any).label}`;
         }
     }
@@ -309,20 +309,20 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
     private readonly outgoingAmbigueConnections = new Map<ModellingObjectComponent, Array<ConnectionObject>>();
     private readonly outgoingUserConnections = new Map<ModellingObjectComponent, Array<ConnectionObject>>();
 
-    @ViewChild('SVG', {static: false})
+    @ViewChild('SVG', { static: false })
     private readonly element: ElementRef;
     private view: SVGElement;
     private flows: Flow[] = [];
 
-    @ViewChild('addFrom', {static: false})
+    @ViewChild('addFrom', { static: false })
     private readonly addButtonFrom: ElementRef;
-    @ViewChild('addTo', {static: false})
+    @ViewChild('addTo', { static: false })
     private readonly addButtonTo: ElementRef;
-    @ViewChild('removeFrom', {static: false})
+    @ViewChild('removeFrom', { static: false })
     private readonly removeButtonFrom: ElementRef;
-    @ViewChild('removeTo', {static: false})
+    @ViewChild('removeTo', { static: false })
     private readonly removeButtonTo: ElementRef;
-    @ViewChild('tooltip', {static: false})
+    @ViewChild('tooltip', { static: false })
     private readonly tooltip: ElementRef;
 
     @Input()
@@ -443,7 +443,7 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
         let currentFlowOut = 0;
 
         const drawConnections = (items: Array<ConnectionObject>, directionIn: boolean, type: DataConnectionType) => {
-            if (items) {
+            if (items.length > 0) {
                 for (const item of items) {
                     // if a branch is selected, don't show connections belonging to another branch
                     const branchId = this.branchSelection.selectedObject ? this.branchSelection.selectedObject.getModel().id : null;

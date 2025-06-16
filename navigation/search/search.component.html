@@ -18,7 +18,7 @@
     (valueKeydown)="$event.key === 'Enter' && search()"
   ></xc-form-input>
   <div class="filter-options">
-    @for (filterItem of filterItems; track filterItem) {
+    @for (filterItem of filterItems; let i = $index; track i) {
       <xc-checkbox
         xc-i18n
         class="filter"

@@ -8,7 +8,7 @@
   [mod-drop-area-allow-parallel]="false"
   class="drop-area"
   >
-  @for (item of serviceArea.items; track item) {
+  @for (item of serviceArea.items; let i = $index; track i) {
     <div class ="service-row">
       <member-service [mod-draggable]="item" [memberService]="item" (triggerAction)="performAction($event)" tabindex="0"> </member-service>
       @if (item.deletable && !readonly) {

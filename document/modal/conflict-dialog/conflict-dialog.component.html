@@ -2,7 +2,7 @@
   <ng-container header>{{injectedData.title}}</ng-container>
   <section content class="content">
     <div class="message">{{injectedData.message}}</div>
-    @for (handling of injectedData.handlings; track handling) {
+    @for (handling of injectedData.handlings; let i = $index; track i) {
       <xc-checkbox
         class="value"
         [label]="handling.value"

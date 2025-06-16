@@ -3,7 +3,7 @@
    />
 }
 <div class="outputs">
-  @for (outputDataSource of outputDataSources; track outputDataSource) {
+  @for (outputDataSource of outputDataSources; let i = $index; track i) {
     <variable-tree
       [tree-datasource]="outputDataSource"
       highlightMarkedNodes
@@ -14,7 +14,7 @@
 </div>
 <div class="assignments"></div>
 <div class="inputs">
-  @for (inputDataSource of inputDataSources; track inputDataSource) {
+  @for (inputDataSource of inputDataSources; let i = $index; track i) {
     <variable-tree
       [tree-datasource]="inputDataSource"
       (createdAssignment)="addAssignment($event)"

@@ -1,4 +1,4 @@
-@for (xmomPath of xmomPaths; track xmomPath) {
+@for (xmomPath of xmomPaths; let i = $index; track i) {
   <xfm-mod-nav-xmomtreeitem [root]="true"
     [xmomPath]="xmomPath"
     [selectedXmomPaths]="selectedXmomPaths"

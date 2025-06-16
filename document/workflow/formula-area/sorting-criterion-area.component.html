@@ -2,7 +2,7 @@
   <xc-form-label xc-i18n>{{areaLabel}}</xc-form-label>
 }
 <div class="formula-list">
-  @for (sortingCriterion of sortingCriteria; track sortingCriterion) {
+  @for (sortingCriterion of sortingCriteria; let i = $index; track i) {
     <div class="formula-row">
       <xc-icon-button xc-icon-name="accordion" color="invert" (click)="toggleSorting(sortingCriterion)" class="sort-button" [ngClass]="{'ascending': sortingCriterion.ascending}"></xc-icon-button>
       <formula

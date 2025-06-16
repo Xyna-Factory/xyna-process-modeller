@@ -1,6 +1,6 @@
 @if (isBranching || isChoice || isParallelism) {
   <div tabindex="0">
-    @for (i of content; track i) {
+    @for (con of content; let i = $index; track i) {
       <span class="lane"></span>
     }
     @if (!isParallelism) {
@@ -15,7 +15,7 @@
   <div tabindex="0">
     @if (!isQuery) {
       <div class="input">
-        @for (i of inputs; track i) {
+        @for (in of inputs; let i = $index; track i) {
           <span class="var"></span>
         }
       </div>
@@ -28,7 +28,7 @@
     </div>
     @if (!isThrow) {
       <div class="output">
-        @for (i of outputs; track i) {
+        @for (out of outputs; let i = $index; track i) {
           <span class="var"></span>
         }
       </div>
