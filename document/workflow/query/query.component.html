@@ -38,7 +38,7 @@
 }
 <div class="config-area">
   <xc-form-input xc-i18n label="label-limit-results" [(value)]="limitDataWrapper.value" (valueKeydown)="keydown($event)" (blur)="changedConfig()" xc-form-field-compact xc-form-validator-number></xc-form-input>
-  <xc-checkbox xc-i18n label="label-query-history" [(checked)]="historyDataWrapper.value" color="invert"></xc-checkbox>
+  <xc-checkbox xc-i18n label="label-query-history" [(checked)]="historyDataWrapper.value" color="color-black"></xc-checkbox>
 </div>
 @if (query.exceptionHandlingArea) {
   <exception-handling-area [exceptionHandlingArea]="query.exceptionHandlingArea"
@@ -62,6 +62,7 @@
     xc-icon-style="modeller"
     xc-icon-name="misc-contextmenu"
     xc-icon-size="small"
+    color="color-white"
     class="menu-button"
    />
 </ng-template>
