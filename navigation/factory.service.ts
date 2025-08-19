@@ -59,12 +59,12 @@ export class FactoryService {
             }
         });
 
-        this.refresh();
+        this.refresh(true);
     }
 
 
-    refresh() {
-        this.apiService.getRuntimeContexts().subscribe(runtimeContexts => {
+    refresh(useCache = false) {
+        this.apiService.getRuntimeContexts(useCache).subscribe(runtimeContexts => {
             // set new values to data wrapper
             this._runtimeContextDataWrapper.values = runtimeContexts.map(rtc => <XcOptionItem>{
                 name: rtc.toString(),
