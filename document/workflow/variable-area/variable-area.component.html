@@ -7,7 +7,7 @@
   (mod-drop-area-dropped)="dropped($event)"
   class="variable-drop-area">
 
-  @for (variable of variableArea.items; track variable) {
+  @for (variable of variableArea.items; let i = $index; track i) {
     <variable
       [mod-draggable]="variable" [mod-draggable-allowed-drag-type]="readonly ? 'copy' : 'move'"
       [variable]="variable"

@@ -63,31 +63,17 @@
         }
       } @else {
         @for (description of [castToDescription(item)]; let idx = $index; track idx) {
-          @if (isIconButtonForVersion1_0(description)) {
-            @if (!description.isVisible || description.isVisible(documentService)) {
-              <xc-icon-button
-                xc-i18n
-                [disabled]="(description.isDisabled ? description.isDisabled(documentService) : false)"
-                [busy]="(description.isBusy ? description.isBusy(documentService) : false)"
-                [xc-icon-style]="description.iconStyle ? description.iconStyle : 'modeller'"
-                [xc-icon-name]="description.iconName"
-                [xc-tooltip]="description.tooltip"
-                (click)="clickToolbarButton(description)"
-                xc-tooltip-position="right"
-              ></xc-icon-button>
-            }
-          } @else {
-            <xc-icon
-              xc-i18n
-              [mod-draggable]="description.xmomItem" mod-draggable-allowed-drag-type="insert"
-              [xc-icon-style]="description.iconStyle ? description.iconStyle : 'modeller'"
-              [class.inactive]="!description.xmomItem"
-              [xc-icon-name]="description.iconName"
-              [xc-tooltip]="description.tooltip"
-              xc-tooltip-position="right"
-              class="draggable-icon"
-            ></xc-icon>
-          }
+          <xc-icon
+            xc-i18n
+            [mod-draggable]="description.xmomItem"
+            mod-draggable-allowed-drag-type="insert"
+            [xc-icon-style]="description.iconStyle ? description.iconStyle : 'modeller'"
+            [class.inactive]="!description.xmomItem"
+            [xc-icon-name]="description.iconName"
+            [xc-tooltip]="description.tooltip"
+            xc-tooltip-position="right"
+            class="draggable-icon"
+          ></xc-icon>
         }
       }
     }

@@ -90,7 +90,6 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     private static readonly BUTTON_NAME_NOTIFY = 'Notify';
     private static readonly BUTTON_NAME_MI = 'Manual Interaction';
     // private static readonly BUTTON_NAME_OPERATOR = 'Operator';
-    private static readonly BUTTON_NAME_THROW = 'Throw';
     private static readonly BUTTON_NAME_RETRY = 'Retry';
     private static readonly BUTTON_NAME_TEMPLATE = 'Template';
     private static readonly BUTTON_NAME_BEGIN_DOCUMENT = 'Begin Document';
@@ -273,12 +272,6 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
                     xmomItem: XoWorkflowInvocation.manualInteraction()
                 }
             ]
-        },
-        {
-            name: ToolbarComponent.BUTTON_NAME_THROW,
-            tooltip: 'throw',
-            iconName: 'tb-exception'
-            /*xmomItem: XoThrow.throw()*/
         },
         {
             name: ToolbarComponent.BUTTON_NAME_RETRY,
@@ -484,9 +477,6 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
             case ToolbarComponent.BUTTON_NAME_WAIT:
                 this.dialogService.info('Note', 'The respective services can be found inside xprc.waitsuspend, xprc.synchronization, and xmcp.manualinteraction');
                 break;
-            case ToolbarComponent.BUTTON_NAME_THROW:
-                this.dialogService.info('Note', 'Drag an Exception Type into the Workflow to create a Throw step');
-                break;
             case ToolbarComponent.BUTTON_NAME_PRINT:
                 this.dialogService.info('Note', 'Not yet supported');
                 break;
@@ -501,12 +491,5 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
                 }
                 break;
         }
-    }
-
-
-    isIconButtonForVersion1_0(description: ToolbarButtonDescription): boolean {
-        return [
-            ToolbarComponent.BUTTON_NAME_THROW
-        ].indexOf(description.name) >= 0;
     }
 }
