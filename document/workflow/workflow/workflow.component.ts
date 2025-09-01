@@ -22,7 +22,7 @@ import { OutsideListenerService } from '@zeta/base';
 
 import { filter } from 'rxjs/operators';
 
-import { XoWorkflow } from '../../../xo/workflow.model';
+import { XoWorkflow, XoWorkflowStub } from '../../../xo/workflow.model';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { SelectionService } from '../../selection.service';
@@ -75,6 +75,10 @@ export class WorkflowComponent extends ModellingItemComponent implements AfterVi
 
     get workflow(): XoWorkflow {
         return this.getModel() as XoWorkflow;
+    }
+
+    get hasWorkflowData() {
+        return this.workflow && !(this.workflow instanceof XoWorkflowStub);
     }
 
 

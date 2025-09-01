@@ -32,23 +32,23 @@ export class XoService extends XoXmomItem {
 
     @XoProperty(XoVariableArea)
     @XoTransient()
-    inputArea: XoVariableArea;
+    inputArea = new XoVariableArea();;
 
     @XoProperty(XoVariableArea)
     @XoTransient()
-    outputArea: XoVariableArea;
+    outputArea = new XoVariableArea();
 
     @XoProperty(XoTypeLabelArea)
     @XoTransient()
-    typeLabelArea: XoTypeLabelArea;
+    typeLabelArea = new XoTypeLabelArea();
 
     @XoProperty(XoTextArea)
     @XoTransient()
-    documentationArea: XoTextArea;
+    documentationArea = new XoTextArea();
 
     @XoProperty(XoExceptionHandlingArea)
     @XoTransient()
-    exceptionHandlingArea: XoExceptionHandlingArea;
+    exceptionHandlingArea = new XoExceptionHandlingArea();
 
 
     afterDecode() {
