@@ -41,7 +41,8 @@ import { ModellingObjectComponent } from '../shared/modelling-object.component';
 import { CreateAssignmentEvent } from '../variable-tree-node/variable-tree-node.component';
 import { SkeletonTreeDataSource, SkeletonTreeDataSourceObserver, StructureProcessWrapper, VariableDescriber } from '../variable-tree/data-source/skeleton-tree-data-source';
 import { SkeletonTreeNode } from '../variable-tree/data-source/skeleton-tree-node';
-import { FlowDefinition } from './flow-canvas/flow-canvas.component';
+import { VariableTreeComponent } from '../variable-tree/variable-tree.component';
+import { FlowCanvasComponent, FlowDefinition } from './flow-canvas/flow-canvas.component';
 
 
 /**
