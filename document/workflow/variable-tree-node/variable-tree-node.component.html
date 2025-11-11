@@ -28,7 +28,7 @@
 </div>
 @if (!node.collapsed) {
   <div class="children">
-    @for (childNode of node.children; track childNode) {
+    @for (childNode of node.children; let i = $index; track i) {
       <variable-tree-node
         [node]="childNode"
         [highlightMarks]="highlightMarks"

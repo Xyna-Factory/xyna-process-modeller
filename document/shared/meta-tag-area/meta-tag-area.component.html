@@ -23,7 +23,7 @@
   (mod-drop-area-dropped)="dropped($event)"
   class="drop-area"
   >
-    @for (metaTag of metaTagArea.items; track metaTag) {
+    @for (metaTag of metaTagArea.items; let i = $index; track i) {
         <meta-tag [mod-draggable]="metaTag"
             [meta-tag]="metaTag"
             [documentModel]="documentModel"

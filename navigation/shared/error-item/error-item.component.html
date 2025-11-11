@@ -2,5 +2,5 @@
   <xc-icon [xc-icon-name]="checkable ? 'msginfo' : 'msgwarning'" xc-icon-style="xds" xc-icon-size="small" [class.checkable]="checkable" xc-i18n>{{error.messageCode}}</xc-icon>
 </div>
 @if (checkable) {
-  <xc-icon-button xc-icon-name="close" xc-icon-size="small" color="invert" (click)="checkErrorHandler(error)" xc-tooltip="check" xc-i18n></xc-icon-button>
+  <xc-icon-button xc-icon-name="close" xc-icon-size="small" color="invert" (click)="checkErrorHandler(error)" xc-tooltip="check" xc-i18n />
 }

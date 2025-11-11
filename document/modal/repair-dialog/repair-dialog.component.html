@@ -13,7 +13,7 @@
       <div class="message" xc-i18n>preRepair-message-2</div>
     }
     <div class="repair-details">
-      @for (entry of entries; track entry) {
+      @for (entry of entries; let i = $index; track i) {
         <repair-entry [entry]="entry" xc-i18n-context="repair-entry"></repair-entry>
       }
     </div>

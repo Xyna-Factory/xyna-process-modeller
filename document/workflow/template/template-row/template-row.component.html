@@ -6,7 +6,7 @@
   mod-drop-area-direction="horizontal"
   (mod-drop-area-dropped)="dropped($event)"
   >
-  @for (part of row.templateParts; track part; let i = $index) {
+  @for (part of row.templateParts; let i = $index; track i) {
     @if (isFormula(part)) {
       <template-part-formula #templatePart
         [part]="part"

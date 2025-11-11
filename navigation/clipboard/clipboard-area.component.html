@@ -5,7 +5,7 @@
   (mod-drop-area-dropped)="dropped($event)"
   class="drop-area zeta-scrollbar"
   >
-  @for (item of clipboardArea.items; track item) {
+  @for (item of clipboardArea.items; let i = $index; track i) {
     <clipboard-item
       (triggerAction)="performAction($event)"
       [mod-draggable]="item"

@@ -1,28 +1,26 @@
 <!-- will always be only one exception-handling -->
-@for (handling of exceptionHandlingArea?.exceptionHandlings; track handling) {
-  <exception-handling
-    [exceptionHandling]="handling"
+@for (handling of exceptionHandlingArea?.exceptionHandlings; let i = $index; track i) {
+  <exception-handling [exceptionHandling]="handling"
     [documentModel]="documentModel"
     [inline]="inline"
     (triggerAction)="performAction($event)"
     class="handling"
-  ></exception-handling>
+   />
 }
 
 <!-- will always be only one compensation -->
-@for (compensation of exceptionHandlingArea?.compensations; track compensation) {
-  <compensation
-    [compensation]="compensation"
+@for (compensation of exceptionHandlingArea?.compensations; let i = $index; track i) {
+  <compensation [compensation]="compensation"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
     class="handling"
-  ></compensation>
+   />
 }
 
 <div class="toggle-buttons">
   <xc-icon-button
     class="exception button" xc-icon-style="modeller" xc-icon-name="tb-exception" xc-icon-size="small"
-    [color]="exceptionHandlingArea?.hasHandledExceptions() ? 'normal' : 'invert'"
+    [color]="exceptionHandlingArea?.hasHandledExceptions() ? 'color-white' : 'color-black'"
     [class.empty]="!exceptionHandlingArea?.hasHandledExceptions()"
     (click)="toggleExceptionArea()"
     xc-i18n
@@ -31,7 +29,7 @@
   @if (inline) {
     <xc-icon-button
       class="compensation button" xc-icon-style="modeller" xc-icon-name="mini-compensation" xc-icon-size="small"
-      [color]="exceptionHandlingArea?.hasCompensations() ? 'normal' : 'invert'"
+      [color]="exceptionHandlingArea?.hasCompensations() ? 'color-white' : 'color-black'"
       [class.empty]="!exceptionHandlingArea?.hasCompensations()"
       (click)="toggleCompensationArea()"
       xc-i18n

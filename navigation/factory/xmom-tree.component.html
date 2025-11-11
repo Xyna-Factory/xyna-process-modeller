@@ -1,9 +1,8 @@
-@for (xmomPath of xmomPaths; track xmomPath) {
-  <xfm-mod-nav-xmomtreeitem
-    [root]="true"
+@for (xmomPath of xmomPaths; let i = $index; track i) {
+  <xfm-mod-nav-xmomtreeitem [root]="true"
     [xmomPath]="xmomPath"
     [selectedXmomPaths]="selectedXmomPaths"
     [expandedXmomPaths]="expandedXmomPaths"
     (stateChange)="change($event)"
-  ></xfm-mod-nav-xmomtreeitem>
+   />
 }

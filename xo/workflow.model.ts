@@ -34,7 +34,7 @@ export class XoWorkflow extends XoService implements Orderable {
 
     @XoProperty(XoContentArea)
     @XoTransient()
-    contentArea: XoContentArea;
+    contentArea = new XoContentArea();
 
     @XoProperty()
     @XoTransient()
@@ -130,4 +130,15 @@ export class XoWorkflow extends XoService implements Orderable {
     get revisionChange(): Observable<number> {
         return this.revisionSubject.asObservable();
     }
+
+}
+
+
+export class XoWorkflowStub extends XoWorkflow {
+
+   constructor(_ident?: string) {
+        super(_ident);
+        this.id = 'wf'
+    }
+
 }

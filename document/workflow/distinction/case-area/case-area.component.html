@@ -6,7 +6,7 @@
   mod-drop-area-hide-indicator
   class="case-drop-area"
   >
-  @for (case of caseArea.items; track case) {
+  @for (case of caseArea.items; let i = $index; track i) {
     <case
       [mod-draggable]="case"
       [documentModel]="documentModel"

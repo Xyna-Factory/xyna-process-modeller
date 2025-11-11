@@ -1,6 +1,5 @@
 @if (!readonly) {
-  <xc-icon-button
-    class="complete-button"
+  <xc-icon-button class="complete-button"
     xc-icon-name="add"
     xc-icon-size="small"
     color="invert"
@@ -8,27 +7,24 @@
     xc-tooltip="tooltip-complete-sub-types"
     xc-tooltip-position="right"
     (click)="complete()"
-  ></xc-icon-button>
+   />
 }
 @if (choice.formulaArea) {
-  <formula-input-area
-    [formulaArea]="choice.formulaArea"
+  <formula-input-area [formulaArea]="choice.formulaArea"
     [documentModel]="documentModel"
     questionmarkEditable="false"
     (triggerAction)="performAction($event)"
-  ></formula-input-area>
+   />
 }
-<content-area
-  [contentArea]="choice.contentArea"
+<content-area [contentArea]="choice.contentArea"
   [documentModel]="documentModel"
   xc-content-area-direction="row"
   (triggerAction)="performAction($event)"
-></content-area>
+ />
 @if (choice.outputArea) {
-  <variable-area-choice
-    [variableArea]="choice.outputArea"
+  <variable-area-choice [variableArea]="choice.outputArea"
     [documentModel]="documentModel"
     xc-variable-area-kind="output-area"
     (triggerAction)="performAction($event)"
-  ></variable-area-choice>
+   />
 }

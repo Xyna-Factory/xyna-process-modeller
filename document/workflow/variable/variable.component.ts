@@ -340,7 +340,7 @@ export class VariableComponent extends SelectableModellingObjectComponent {
 
     @HostBinding('class.prototype')
     get isAbstract(): boolean {
-        return this.variable.isAbstract;
+        return this.variable?.$fqn ? this.variable.isAbstract : undefined;
     }
 
 

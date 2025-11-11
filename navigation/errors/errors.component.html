@@ -6,7 +6,7 @@
     <span xc-i18n>no-errors</span>
   }
   @if (errors.length > 0) {
-    @for (error of errors; track error) {
+    @for (error of errors; let i = $index; track i) {
       <xfm-mod-nav-error [error]="error" [checkable]="error.checkable" (errorSelectionChanged)="selectedError($event)" (errorCheckedChanged)="checkedError($event)"></xfm-mod-nav-error>
     }
   }

@@ -4,7 +4,7 @@
     <xc-icon-button xc-i18n xc-icon-name="reload" (click)="refresh.emit()" xc-icon-size="small" xc-tooltip="refresh"></xc-icon-button>
   </div>
   <div class="content zeta-scrollbar">
-    @for (group of groupedRelationList; track group) {
+    @for (group of groupedRelationList; let i = $index; track i) {
       <div>
         <div class="group-header">
           <span class="expand-button" (click)="group.visible = !group.visible">

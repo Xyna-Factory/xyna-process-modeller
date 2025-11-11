@@ -1,6 +1,6 @@
 <div class="header">
   <xc-form-label xc-i18n>documentation-label</xc-form-label>
-  @for (bundle of pluginBundles; track bundle) {
+  @for (bundle of pluginBundles; let i = $index; track i) {
     <xc-definition-proxy
       [xc-base-definition]="bundle.definition"
       [xc-base-definition-data]="bundle.data"
@@ -8,10 +8,9 @@
     ></xc-definition-proxy>
   }
 </div>
-<xc-form-textarea
-  xc-i18n
+<xc-form-textarea xc-i18n
   [value]="documentation"
   [readonly]="readonly"
   [xc-form-textarea-lines]="lines"
   (blur)="documentationFieldBlur($event)"
-></xc-form-textarea>
+ />

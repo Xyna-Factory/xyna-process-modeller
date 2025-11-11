@@ -12,7 +12,7 @@
 </div>
 @if (expanded) {
   <div class="content">
-    @for (child of children; track child) {
+    @for (child of children; let i = $index; track i) {
       <xfm-mod-nav-xmomtreeitem
         [xmomPath]="child"
         [selectedXmomPaths]="selectedXmomPaths"

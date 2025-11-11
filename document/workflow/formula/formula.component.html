@@ -5,7 +5,7 @@
   class="formula-wrapper"
   tabindex="0"
   >
-  @for (part of formula.visibleParts; track part; let i = $index) {
+  @for (part of formula.visibleParts; let i = $index; track i) {
     @if (showCaret && partWithCaret === part) {
       <span class="caret">|</span>
     }

@@ -18,42 +18,42 @@
 @use '../const' as *;
 
 :host {
-    display         : flex;
-    flex-direction  : row;
-    padding-left    : 4px;
+    display: flex;
+    flex-direction: row;
+    padding-left: 4px;
     background-color: $color-background-bar;
 
     ::ng-deep {
         .navigationbar-title {
-            color         : $color-gray-5;
-            font-family   : $font-family-light;
-            padding       : 6px;
-            height        : 40px;
-            display       : flex;
-            flex          : 0 0 auto;
-            align-items   : center;
+            color: $color-gray-5;
+            font-family: $font-family-light;
+            padding: 6px;
+            height: 40px;
+            display: flex;
+            flex: 0 0 auto;
+            align-items: center;
             pointer-events: none;
         }
 
         .area-content {
-            display         : flex;
-            flex-direction  : column;
-            flex            : 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 auto;
             background-color: $color-background-default;
-            padding         : 6px;
+            padding: 6px;
         }
     }
 
     .area {
         overflow-x: hidden;
         overflow-y: auto;
-        height    : 100%;
-        display   : flex;
+        height: 100%;
+        display: flex;
 
         >* {
-            display       : flex;
+            display: flex;
             flex-direction: column;
-            min-width     : 300px;
+            min-width: 300px;
 
             &.hidden {
                 display: none;
@@ -62,8 +62,8 @@
     }
 
     .iconbar {
-        display         : flex;
-        flex-direction  : column;
+        display: flex;
+        flex-direction: column;
         background-color: $color-background-bar;
 
         .icons {
@@ -99,7 +99,7 @@
             &.toggle {
 
                 xc-icon {
-                    transform : rotate(180deg);
+                    transform: rotate(180deg);
                     transition: transform .15s ease-in-out;
                 }
 
@@ -115,9 +115,12 @@
             // style can be removed as soon as msgwarning-icon has been replaced
             xc-icon[name="msgwarning"]>i {
                 background-color: #fff;
-                color           : #2a2a2b;
-                padding         : 1px;
-                border-radius   : 50%;
+                color: #2a2a2b;
+                padding: 1.5px;
+                border-radius: 50%;
+                position: relative;
+                top: -1px;
+                left: 1px;
 
                 &::before {
                     vertical-align: text-top;

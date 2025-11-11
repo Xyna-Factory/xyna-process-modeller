@@ -1,5 +1,5 @@
 <div class="iconbar">
-  @for (description of genericButtonDescriptions; track description) {
+  @for (description of genericButtonDescriptions; let i = $index; track i) {
     @if (!description.isVisible || description.isVisible(documentService)) {
       <xc-icon-button
         xc-i18n
@@ -27,9 +27,9 @@
 }
 @if (!documentService.selectedDocument?.isLocked) {
   <div id="toolbar" class="iconbar">
-    @for (item of specificToolbarItems; track item) {
+    @for (item of specificToolbarItems; let i = $index; track i) {
       @if (isMenu(item)) {
-        @for (group of [castToDescriptionGroup(item)]; track group) {
+        @for (group of [castToDescriptionGroup(item)]; let idx = $index; track idx) {
           <div class="menu-draggable-icons">
             <xc-icon
               xc-i18n
@@ -43,7 +43,7 @@
               class="menu-point draggable-icon"
             ></xc-icon>
             <div class="menu">
-              @for (description of group.buttons; track description) {
+              @for (description of group.buttons; let index = $index; track index) {
                 <xc-icon
                   xc-i18n
                   [xc-icon-style]="description.iconStyle ? description.iconStyle : 'modeller'"
@@ -62,32 +62,18 @@
           </div>
         }
       } @else {
-        @for (description of [castToDescription(item)]; track description) {
-          @if (isIconButtonForVersion1_0(description)) {
-            @if (!description.isVisible || description.isVisible(documentService)) {
-              <xc-icon-button
-                xc-i18n
-                [disabled]="(description.isDisabled ? description.isDisabled(documentService) : false)"
-                [busy]="(description.isBusy ? description.isBusy(documentService) : false)"
-                [xc-icon-style]="description.iconStyle ? description.iconStyle : 'modeller'"
-                [xc-icon-name]="description.iconName"
-                [xc-tooltip]="description.tooltip"
-                (click)="clickToolbarButton(description)"
-                xc-tooltip-position="right"
-              ></xc-icon-button>
-            }
-          } @else {
-            <xc-icon
-              xc-i18n
-              [mod-draggable]="description.xmomItem" mod-draggable-allowed-drag-type="insert"
-              [xc-icon-style]="description.iconStyle ? description.iconStyle : 'modeller'"
-              [class.inactive]="!description.xmomItem"
-              [xc-icon-name]="description.iconName"
-              [xc-tooltip]="description.tooltip"
-              xc-tooltip-position="right"
-              class="draggable-icon"
-            ></xc-icon>
-          }
+        @for (description of [castToDescription(item)]; let idx = $index; track idx) {
+          <xc-icon
+            xc-i18n
+            [mod-draggable]="description.xmomItem"
+            mod-draggable-allowed-drag-type="insert"
+            [xc-icon-style]="description.iconStyle ? description.iconStyle : 'modeller'"
+            [class.inactive]="!description.xmomItem"
+            [xc-icon-name]="description.iconName"
+            [xc-tooltip]="description.tooltip"
+            xc-tooltip-position="right"
+            class="draggable-icon"
+          ></xc-icon>
         }
       }
     }

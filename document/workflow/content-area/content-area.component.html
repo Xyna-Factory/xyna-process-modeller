@@ -9,7 +9,7 @@
   [mod-drop-area-allow-parallel]="direction === 'column'"
   class="drop-area"
   >
-  @for (serviceStep of contentArea.items; track serviceStep) {
+  @for (serviceStep of contentArea.items; let i = $index; track i) {
     <service-step
       [mod-draggable]="serviceStep"
       [item]="serviceStep"

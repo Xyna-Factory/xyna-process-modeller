@@ -2,11 +2,10 @@
   <h2 class="area-side-label" xc-i18n>header-compensation</h2>
 </div>
 @if (compensation.contentArea) {
-  <content-area
-    [contentArea]="compensation.contentArea"
+  <content-area [contentArea]="compensation.contentArea"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
-  ></content-area>
+   />
 }
 @if (!compensation.overriddenDefaultCompensation) {
   <xc-button

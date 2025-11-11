@@ -27,6 +27,8 @@ import { SelectableModellingObjectComponent } from './workflow/shared/selectable
 })
 export class SelectionService {
 
+    private _suppressNext = false;
+
     private readonly _doubleClickObjectSubject = new Subject<SelectableModellingObjectComponent>();
     private readonly _selectedObjectSubject = new BehaviorSubject<SelectableModellingObjectComponent>(null);
 
@@ -52,9 +54,14 @@ export class SelectionService {
 
 
     set selectedObject(value: SelectableModellingObjectComponent) {
-        if (value !== this.selectedObject) {
+        if (value !== this.selectedObject && !this._suppressNext) {
             this._selectedObjectSubject.next(value);
         }
+        this._suppressNext = false;
+    }
+
+    selectedObjectSilently() {
+        this._suppressNext = true;
     }
 
 
