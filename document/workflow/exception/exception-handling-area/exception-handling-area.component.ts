@@ -17,15 +17,15 @@
  */
 import { Component, ElementRef, HostBinding, Injector, Input, Optional } from '@angular/core';
 
+import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { XoExceptionHandlingArea } from '../../../../xo/exception-handling-area.model';
 import { ComponentMappingService } from '../../../component-mapping.service';
 import { DocumentService } from '../../../document.service';
 import { WorkflowDetailLevelService } from '../../../workflow-detail-level.service';
 import { ModellingObjectComponent } from '../../shared/modelling-object.component';
-import { ExceptionHandlingComponent } from '../exception-handling/exception-handling.component';
 import { CompensationComponent } from '../compensation/compensation.component';
-import { XcModule } from '../../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { ExceptionHandlingComponent } from '../exception-handling/exception-handling.component';
 
 
 @Component({

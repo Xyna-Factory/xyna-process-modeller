@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,6 +17,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostBinding, Injector, Input, OnDestroy, Optional } from '@angular/core';
+
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 
 import { Subscription } from 'rxjs';
@@ -36,20 +38,19 @@ import { XoTypeChoice } from '../../../xo/type-choice.model';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { SelectionService } from '../../selection.service';
-import { SelectableModellingObjectComponent } from '../shared/selectable-modelling-object.component';
 import { BranchComponent } from '../distinction/branch/branch.component';
-import { NgClass } from '@angular/common';
 import { ConditionalBranchingComponent } from '../distinction/conditional-branching/conditional-branching.component';
 import { ConditionalChoiceComponent } from '../distinction/conditional-choice/conditional-choice.component';
+import { TypeChoiceComponent } from '../distinction/type-choice/type-choice.component';
+import { ThrowComponent } from '../exception/throw/throw.component';
 import { ForeachComponent } from '../foreach/foreach.component';
 import { InvocationComponent } from '../invocation/invocation.component';
 import { MappingComponent } from '../mapping/mapping.component';
 import { ParallelismComponent } from '../parallelism/parallelism.component';
 import { QueryComponent } from '../query/query.component';
 import { RetryComponent } from '../retry/retry.component';
+import { SelectableModellingObjectComponent } from '../shared/selectable-modelling-object.component';
 import { TemplateComponent } from '../template/template.component';
-import { ThrowComponent } from '../exception/throw/throw.component';
-import { TypeChoiceComponent } from '../distinction/type-choice/type-choice.component';
 
 
 @Component({

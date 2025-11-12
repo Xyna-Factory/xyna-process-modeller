@@ -15,6 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+import { NgClass } from '@angular/common';
 import { ChangeDetectorRef, Component, Injector, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 import { ApiService, FullQualifiedName, RuntimeContextSelectionSettings } from '@zeta/api';
@@ -27,6 +28,8 @@ import { XcDialogService, XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 import { Subject, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
+import { I18nModule } from '../../zeta/i18n/i18n.module';
+import { XcModule } from '../../zeta/xc/xc.module';
 import { XmomObjectType } from './api/xmom-types';
 import { DataTypeComponent } from './document/datatype.component';
 import { DocumentService } from './document/document.service';
@@ -41,14 +44,11 @@ import { WorkflowDocumentComponent } from './document/workflow-document.componen
 import { PMOD_DE } from './locale/pmod.DE';
 import { PMOD_EN } from './locale/pmod.EN';
 import { ShowXmlModalComponent, ShowXmlModalData } from './navigation/details/show-xml-modal/show-xml-modal.component';
+import { NavigationComponent } from './navigation/navigation.component';
 import { ErrorService } from './navigation/shared/error.service';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { XoRuntimeContext } from './xo/runtime-context.model';
 import { XoWorkflow } from './xo/workflow.model';
-import { I18nModule } from '../../zeta/i18n/i18n.module';
-import { XcModule } from '../../zeta/xc/xc.module';
-import { NavigationComponent } from './navigation/navigation.component';
-import { NgClass } from '@angular/common';
 
 
 @Component({
