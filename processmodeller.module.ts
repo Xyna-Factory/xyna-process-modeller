@@ -19,7 +19,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { FactoryManagerModule } from '@fman/factory-manager.module';
 import { I18nService } from '@zeta/i18n';
 import { QueryParameterService } from '@zeta/nav/query-parameter.service';
 import { ZetaModule } from '@zeta/zeta.module';
@@ -161,6 +160,7 @@ import { FactoryComponent } from './navigation/factory/factory.component';
 import { XMOMTreeItemComponent } from './navigation/factory/xmom-tree-item.component';
 import { XMOMTreeComponent } from './navigation/factory/xmom-tree.component';
 import { HelpComponent } from './navigation/help/help.component';
+import { NavPluginComponent } from './navigation/nav-plugin/nav-plugin.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { SearchComponent } from './navigation/search/search.component';
 import { ErrorItemComponent } from './navigation/shared/error-item/error-item.component';
@@ -170,7 +170,6 @@ import { XMOMListComponent } from './navigation/xmom/xmom-list.component';
 import { ProcessmodellerComponent } from './processmodeller.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { WorkflowDetailSettingsService } from './workflow-detail-settings.service';
-import { NavPluginComponent } from './navigation/nav-plugin/nav-plugin.component';
 
 
 @NgModule({
@@ -178,7 +177,6 @@ import { NavPluginComponent } from './navigation/nav-plugin/nav-plugin.component
         CommonModule,
         FormsModule,
         ZetaModule,
-        FactoryManagerModule,
         ShowGUIModelModalModule,
         DevToolsModule,
         MonacoEditorModule.forRoot()

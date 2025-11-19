@@ -18,11 +18,21 @@
 :host {
     display: flex;
     flex: 1 1 auto;
+    overflow: hidden;
+    min-width: 0;
+
     .editor {
         flex: 1 1 auto;
-        height: unset;
-    }
+        width: 100%;
+        height: 100%;
+        min-width: 0;
+        min-height: 0;
 
+        ::ng-deep .editor-container {
+            height: 100% !important;
+        }
+    }
+    
     .editor-hide {
         display: none;
     }

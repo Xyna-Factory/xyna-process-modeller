@@ -25,6 +25,31 @@
 
     background-color: $color-gray-5;
 
+    .input-area {
+        min-height: 56px;
+
+        ::ng-deep .variable-drop-area {
+            &.mod-drop-area-hover {
+                &:empty {
+                    padding: 0px;
+                }
+            }
+        }
+    }
+
+    .throws-area,
+    .output-area {
+        min-height: 30px;
+
+        ::ng-deep .variable-drop-area {
+            &.mod-drop-area-hover {
+                &:empty {
+                    padding: 0px;
+                }
+            }
+        }
+    }
+
     .service-label {
         width: 100%;
         position: relative;
@@ -38,13 +63,13 @@
 
         border-radius: $service-step-border-radius;
 
-        & > div {
+        &>div {
             padding: 12px 8px;
             flex: 1 1 auto;
             text-align: center;
         }
 
-        & > .align-right {
+        &>.align-right {
             position: absolute;
             right: 10px;
             display: flex;
