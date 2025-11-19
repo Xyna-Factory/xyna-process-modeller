@@ -15,7 +15,8 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, inject, Input, Output } from '@angular/core';
+
 import * as monaco from 'monaco-editor';
 
 import { XoMethod } from '../../../xo/method.model';
@@ -29,7 +30,25 @@ import { XoMethod } from '../../../xo/method.model';
 })
 export class CodingComponent {
 
-    constructor(private readonly cdr: ChangeDetectorRef, private readonly elementRef: ElementRef) {  }
+    private readonly cdr = inject(ChangeDetectorRef);
+    private readonly elementRef = inject(ElementRef);
+
+    private resizeObserver: ResizeObserver;
+
+    constructor() {
+        this.resizeObserver = new ResizeObserver(() => {
+            const editor = this.isPython ? this.pythonEditor : this.javaEditor;
+            editor?.layout();
+        });
+    }
+
+    ngAfterViewInit() {
+        this.resizeObserver.observe(this.elementRef.nativeElement);
+    }
+
+    ngOnDestroy() {
+        this.resizeObserver.disconnect();
+    }
 
     private _method: XoMethod;
     private javaEditor: monaco.editor.IStandaloneCodeEditor;
@@ -38,34 +57,33 @@ export class CodingComponent {
     javaCode: string;
     pythonCode: string;
 
-    private oldHeight: number;
-    private oldWidth: number;
-
-    private readonly _javaEditorOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
+    readonly javaEditorOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
         theme: 'vs-dark',
         language: 'java',
         scrollBeyondLastLine: false,
         readOnly: false,
         automaticLayout: false,
-        lineNumbers: 'off'
+        lineNumbers: 'on',
+        minimap: { enabled: true },
+        wordWrap: 'off',
+        folding: true,
+        fontSize: 13,
+        renderWhitespace: 'none'
     };
 
-    private readonly _pythonEditorOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
+    readonly pythonEditorOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
         theme: 'vs-dark',
         language: 'python',
         scrollBeyondLastLine: false,
         readOnly: false,
         automaticLayout: false,
-        lineNumbers: 'off'
+        lineNumbers: 'on',
+        minimap: { enabled: true },
+        wordWrap: 'off',
+        folding: true,
+        fontSize: 13,
+        renderWhitespace: 'none'
     };
-
-    get javaEditorOptions(): monaco.editor.IStandaloneEditorConstructionOptions {
-        return this._javaEditorOptions;
-    }
-
-    get pythonEditorOptions(): monaco.editor.IStandaloneEditorConstructionOptions {
-        return this._pythonEditorOptions;
-    }
 
     @Input()
     set method(value: XoMethod) {
@@ -102,30 +120,28 @@ export class CodingComponent {
     readonly implementationChange = new EventEmitter<string>();
 
     private updateEditor() {
+        const editor = this.isPython ? this.pythonEditor : this.javaEditor;
+
+        if (!editor) {
+            setTimeout(() => this.updateEditor(), 20);
+            return;
+        }
+
         if (this.method) {
             if (this.isPython) {
                 this.pythonCode = this.implementation;
-                this.javaCode = '';
-                this._pythonEditorOptions.readOnly = this.readonly;
-                this.pythonEditor?.updateOptions(this._pythonEditorOptions);
+                this.pythonEditorOptions.readOnly = this.readonly;
+                this.pythonEditor.updateOptions(this.pythonEditorOptions);
             } else {
                 this.javaCode = this.isAbstract ? '/* Abstract Method */' : this.implementation;
-                this.pythonCode = '';
-                this._javaEditorOptions.readOnly = this.readonly;
-                this.javaEditor?.updateOptions(this._javaEditorOptions);
+                this.javaEditorOptions.readOnly = this.readonly;
+                this.javaEditor.updateOptions(this.javaEditorOptions);
             }
-        } else {
-            this.javaCode = '';
-            this._javaEditorOptions.readOnly = this.readonly;
-            this.javaEditor?.updateOptions(this._javaEditorOptions);
         }
 
-        const editor = this.isPython ? this.pythonEditor : this.javaEditor;
-        const width = this.elementRef.nativeElement.offsetWidth ? this.elementRef.nativeElement.offsetWidth : this.oldWidth;
-        const height = this.elementRef.nativeElement.offsetHeight ? this.elementRef.nativeElement.offsetHeight : this.oldHeight;
-        this.oldWidth = width;
-        this.oldHeight = height;
-        editor?.layout({width: width, height: height});
+        const rect = this.elementRef.nativeElement.getBoundingClientRect();
+        editor.layout({ width: rect.width, height: rect.height });
+
         this.cdr.markForCheck();
     }
 

@@ -2,6 +2,7 @@
   [documentModel]="documentModel"
   (triggerAction)="performAction($event)"
   xc-variable-area-kind="input-area"
+  class="input-area"
  />
 <div class="service-label">
   <div>{{method.label}}</div>
@@ -31,9 +32,11 @@
   [documentModel]="documentModel"
   (triggerAction)="performAction($event)"
   xc-variable-area-kind="throws-area"
+  class="throws-area"
  />
 <variable-area-document [variableArea]="method.outputArea"
   [documentModel]="documentModel"
   (triggerAction)="performAction($event)"
   xc-variable-area-kind="output-area"
+  class="output-area"
  />
