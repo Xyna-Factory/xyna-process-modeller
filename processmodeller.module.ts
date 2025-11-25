@@ -23,8 +23,6 @@ import { I18nService } from '@zeta/i18n';
 import { QueryParameterService } from '@zeta/nav/query-parameter.service';
 import { ZetaModule } from '@zeta/zeta.module';
 
-import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
-
 import { XmomService } from './api/xmom.service';
 import { ComponentMappingService } from './document/component-mapping.service';
 import { DataTypeComponent } from './document/datatype.component';
@@ -178,8 +176,7 @@ import { WorkflowDetailSettingsService } from './workflow-detail-settings.servic
         FormsModule,
         ZetaModule,
         ShowGUIModelModalModule,
-        DevToolsModule,
-        MonacoEditorModule.forRoot()
+        DevToolsModule
     ],
     declarations: [
         BranchComponent,
