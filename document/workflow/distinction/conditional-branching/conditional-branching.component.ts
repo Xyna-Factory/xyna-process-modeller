@@ -17,20 +17,20 @@
  */
 import { Component } from '@angular/core';
 
+import { XcIconButtonComponent } from '../../../../../../zeta/xc/xc-button/xc-icon-button.component';
 import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoInsertBranchRequest } from '../../../../xo/insert-branch-request.model';
-import { ChoiceComponent } from '../choice.component';
-import { FormulaInputAreaComponent } from '../../formula-input-area/formula-input-area.component';
 import { ContentAreaComponent } from '../../content-area/content-area.component';
-import { XcModule } from '../../../../../../zeta/xc/xc.module';
+import { FormulaInputAreaComponent } from '../../formula-input-area/formula-input-area.component';
 import { VariableAreaChoiceComponent } from '../../variable-area/variable-area-choice.component';
+import { ChoiceComponent } from '../choice.component';
 
 
 @Component({
     selector: 'conditional-branching',
     templateUrl: './conditional-branching.component.html',
     styleUrls: ['../choice.component.scss', './conditional-branching.component.scss'],
-    imports: [FormulaInputAreaComponent, ContentAreaComponent, XcModule, VariableAreaChoiceComponent]
+    imports: [FormulaInputAreaComponent, ContentAreaComponent, XcIconButtonComponent, VariableAreaChoiceComponent]
 })
 export class ConditionalBranchingComponent extends ChoiceComponent {
 

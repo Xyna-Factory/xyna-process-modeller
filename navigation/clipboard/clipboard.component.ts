@@ -23,14 +23,14 @@ import { XcDialogService } from '@zeta/xc';
 import { throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n/i18n.directive';
+import { XcButtonComponent } from '../../../../zeta/xc/xc-button/xc-button.component';
 import { DocumentService } from '../../document/document.service';
 import { TriggeredAction } from '../../document/workflow/shared/modelling-object.component';
 import { XoError } from '../../xo/error.model';
 import { XoGetClipboardResponse } from '../../xo/get-clipboard-response.model';
 import { XoContainerArea } from '../../xo/modelling-item.model';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
-import { I18nModule } from '../../../../zeta/i18n/i18n.module';
-import { XcModule } from '../../../../zeta/xc/xc.module';
 import { ClipboardAreaComponent } from './clipboard-area.component';
 
 
@@ -39,7 +39,7 @@ import { ClipboardAreaComponent } from './clipboard-area.component';
     templateUrl: './clipboard.component.html',
     styleUrls: ['./clipboard.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [I18nModule, XcModule, ClipboardAreaComponent]
+    imports: [XcI18nTranslateDirective, XcButtonComponent, ClipboardAreaComponent, XcI18nContextDirective]
 })
 export class ClipboardComponent extends CommonNavigationComponent {
 

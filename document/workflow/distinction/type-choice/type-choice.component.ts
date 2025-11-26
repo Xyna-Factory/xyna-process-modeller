@@ -17,22 +17,23 @@
  */
 import { Component } from '@angular/core';
 
+import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n/i18n.directive';
+import { XcIconButtonComponent } from '../../../../../../zeta/xc/xc-button/xc-icon-button.component';
+import { XcTooltipDirective } from '../../../../../../zeta/xc/xc-tooltip/xc-tooltip.directive';
 import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoRequest } from '../../../../xo/request.model';
 import { XoTypeChoice } from '../../../../xo/type-choice.model';
-import { ChoiceComponent } from '../choice.component';
-import { XcModule } from '../../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
-import { FormulaInputAreaComponent } from '../../formula-input-area/formula-input-area.component';
 import { ContentAreaComponent } from '../../content-area/content-area.component';
+import { FormulaInputAreaComponent } from '../../formula-input-area/formula-input-area.component';
 import { VariableAreaChoiceComponent } from '../../variable-area/variable-area-choice.component';
+import { ChoiceComponent } from '../choice.component';
 
 
 @Component({
     selector: 'type-choice',
     templateUrl: './type-choice.component.html',
     styleUrls: ['../choice.component.scss', './type-choice.component.scss'],
-    imports: [XcModule, I18nModule, FormulaInputAreaComponent, ContentAreaComponent, VariableAreaChoiceComponent]
+    imports: [XcIconButtonComponent, XcI18nTranslateDirective, XcTooltipDirective, FormulaInputAreaComponent, ContentAreaComponent, VariableAreaChoiceComponent]
 })
 export class TypeChoiceComponent extends ChoiceComponent {
 

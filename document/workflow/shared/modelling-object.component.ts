@@ -34,6 +34,7 @@ import { XoRequest } from '../../../xo/request.model';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { WorkflowDetailLevelService } from '../../workflow-detail-level.service';
+import { BranchComponent } from '../distinction/branch/branch.component';
 
 
 export interface TriggeredAction {
@@ -51,7 +52,10 @@ export interface TriggeredAction {
 /**
  * Base class for all components, modelling-actions can be done on
  */
-@Component({ template: '' })
+@Component({
+    template: '',
+    imports: [BranchComponent]
+})
 export class ModellingObjectComponent implements OnInit, OnDestroy {
 
     private readonly destroySubject = new Subject<void>();

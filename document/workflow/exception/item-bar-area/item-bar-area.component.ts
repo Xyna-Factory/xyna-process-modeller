@@ -17,6 +17,8 @@
  */
 import { Component, Input } from '@angular/core';
 
+import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n/i18n.directive';
+import { XcButtonComponent } from '../../../../../../zeta/xc/xc-button/xc-button.component';
 import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoContentArea } from '../../../../xo/content-area.model';
 import { XoInsertBranchRequest } from '../../../../xo/insert-branch-request.model';
@@ -25,15 +27,13 @@ import { XoRequest } from '../../../../xo/request.model';
 import { XoVariable } from '../../../../xo/variable.model';
 import { ModellingObjectComponent } from '../../shared/modelling-object.component';
 import { VariableComponent } from '../../variable/variable.component';
-import { XcModule } from '../../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
 
 
 @Component({
     selector: 'item-bar-area',
     templateUrl: './item-bar-area.component.html',
     styleUrls: ['./item-bar-area.component.scss'],
-    imports: [VariableComponent, XcModule, I18nModule]
+    imports: [VariableComponent, XcButtonComponent, XcI18nTranslateDirective]
 })
 export class ItemBarAreaComponent extends ModellingObjectComponent {
 

@@ -17,9 +17,12 @@
  */
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
+import { XcI18nTranslateDirective } from '../../../../zeta/i18n/i18n.directive';
+import { XcTooltipDirective } from '../../../../zeta/xc/xc-tooltip/xc-tooltip.directive';
 import { ModellingActionType } from '../../api/xmom.service';
 import { ModRelativeHoverSide } from '../../document/workflow/shared/drag-and-drop/mod-drag-and-drop.service';
-import { ModDragEvent, ModDropEvent, ModDropAreaDirective } from '../../document/workflow/shared/drag-and-drop/mod-drop-area.directive';
+import { ModDraggableDirective } from '../../document/workflow/shared/drag-and-drop/mod-draggable.directive';
+import { ModDragEvent, ModDropAreaDirective, ModDropEvent } from '../../document/workflow/shared/drag-and-drop/mod-drop-area.directive';
 import { TriggeredAction } from '../../document/workflow/shared/modelling-object.component';
 import { XoBranch } from '../../xo/branch.model';
 import { XoClipboardEntryData } from '../../xo/clipboard-entry.model';
@@ -27,16 +30,13 @@ import { XoCopyToClipboardRequest } from '../../xo/copy-to-clipboard-request.mod
 import { XoFormula } from '../../xo/formula.model';
 import { XoContainerArea, XoModellingItem } from '../../xo/modelling-item.model';
 import { ClipboardItemComponent } from './clipboard-item.component';
-import { ModDraggableDirective } from '../../document/workflow/shared/drag-and-drop/mod-draggable.directive';
-import { XcModule } from '../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../zeta/i18n/i18n.module';
 
 
 @Component({
     selector: 'clipboard-area',
     templateUrl: './clipboard-area.component.html',
     styleUrls: ['./clipboard-area.component.scss'],
-    imports: [ModDropAreaDirective, ClipboardItemComponent, ModDraggableDirective, XcModule, I18nModule]
+    imports: [ModDropAreaDirective, ClipboardItemComponent, ModDraggableDirective, XcTooltipDirective, XcI18nTranslateDirective]
 })
 export class ClipboardAreaComponent {
 

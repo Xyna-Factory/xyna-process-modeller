@@ -30,14 +30,14 @@ import { XcDialogService } from '@zeta/xc';
 
 import { catchError, of } from 'rxjs';
 
-import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
-import { I18nModule } from '../../../../zeta/i18n/i18n.module';
-import { XcModule } from '../../../../zeta/xc/xc.module';
+import { XcI18nTranslateDirective } from '../../../../zeta/i18n/i18n.directive';
+import { XcButtonComponent } from '../../../../zeta/xc/xc-button/xc-button.component';
 import { DataflowComponent } from '../../document/workflow/dataflow/dataflow.component';
-import { VariableAreaDocumentComponent } from '../../document/workflow/variable-area/variable-area-document.component';
-import { TypeLabelAreaComponent } from '../../document/workflow/type-label-area/type-label-area.component';
-import { WorkflowComponent } from '../../document/workflow/workflow/workflow.component';
 import { ExceptionHandlingAreaComponent } from '../../document/workflow/exception/exception-handling-area/exception-handling-area.component';
+import { TypeLabelAreaComponent } from '../../document/workflow/type-label-area/type-label-area.component';
+import { VariableAreaDocumentComponent } from '../../document/workflow/variable-area/variable-area-document.component';
+import { WorkflowComponent } from '../../document/workflow/workflow/workflow.component';
+import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 
 
 @Component({
@@ -45,7 +45,7 @@ import { ExceptionHandlingAreaComponent } from '../../document/workflow/exceptio
     templateUrl: './compare.component.html',
     styleUrls: ['./compare.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [I18nModule, XcModule, DataflowComponent, VariableAreaDocumentComponent, TypeLabelAreaComponent, WorkflowComponent, ExceptionHandlingAreaComponent]
+    imports: [XcI18nTranslateDirective, XcButtonComponent, DataflowComponent, VariableAreaDocumentComponent, TypeLabelAreaComponent, WorkflowComponent, ExceptionHandlingAreaComponent]
 })
 export class CompareComponent extends CommonNavigationComponent {
 

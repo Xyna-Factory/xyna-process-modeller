@@ -16,7 +16,6 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, ElementRef, Injector, Input, Optional } from '@angular/core';
-import { WorkflowDetailLevelService } from '../../workflow-detail-level.service';
 
 import { ApiService, XoManagedFileID } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
@@ -24,21 +23,24 @@ import { XcRichListItem } from '@zeta/xc';
 
 import { catchError, EMPTY, Observable, Subject, switchMap } from 'rxjs';
 
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n/i18n.directive';
+import { XcIconButtonComponent } from '../../../../../zeta/xc/xc-button/xc-icon-button.component';
+import { XcFormLabelComponent } from '../../../../../zeta/xc/xc-form/xc-form-label/xc-form-label.component';
+import { XcRichListComponent } from '../../../../../zeta/xc/xc-list/xc-rich-list/xc-rich-list.component';
 import { HttpMethod, ModellingActionType } from '../../../api/xmom.service';
 import { XoLibrariesArea } from '../../../xo/libraries-area.model';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
+import { WorkflowDetailLevelService } from '../../workflow-detail-level.service';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { LibItemComponent, LibItemData } from './lib-item.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 @Component({
     selector: 'lib-area',
     templateUrl: './lib-area.component.html',
     styleUrls: ['./lib-area.component.scss'],
-    imports: [XcModule, I18nModule]
+    imports: [XcIconButtonComponent, XcFormLabelComponent, XcI18nTranslateDirective, XcRichListComponent]
 })
 export class LibAreaComponent extends ModellingObjectComponent {
 

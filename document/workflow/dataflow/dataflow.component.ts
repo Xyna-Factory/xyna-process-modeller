@@ -22,6 +22,7 @@ import { createSVGGroup, createSVGHorizontalCubicBezierPath, removeAllChildren }
 import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { Vector2 } from 'three';
 
+import { XcIconButtonComponent } from '../../../../../zeta/xc/xc-button/xc-icon-button.component';
 import { DataConnectionType, XoConnection, XoConnectionArray } from '../../../xo/connection.model';
 import { XoSetDataflowConnectionRequest } from '../../../xo/set-dataflow-connection-request.model';
 import { XoWorkflow } from '../../../xo/workflow.model';
@@ -30,7 +31,6 @@ import { SelectionService } from '../../selection.service';
 import { BranchSelectionService } from '../distinction/branch/branch-selection.service';
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
 import { SelectableModellingObjectComponent } from '../shared/selectable-modelling-object.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 class Flow {
@@ -292,7 +292,7 @@ interface ConnectionObject {
     selector: 'dataflow',
     templateUrl: './dataflow.component.html',
     styleUrls: ['./dataflow.component.scss'],
-    imports: [XcModule]
+    imports: [XcIconButtonComponent]
 })
 export class DataflowComponent implements AfterViewInit, OnDestroy {
 

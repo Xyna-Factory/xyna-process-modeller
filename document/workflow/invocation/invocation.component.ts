@@ -24,6 +24,10 @@ import { FullQualifiedName } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcMenuItem } from '@zeta/xc';
 
+import { XcIconButtonComponent } from '../../../../../zeta/xc/xc-button/xc-icon-button.component';
+import { XcMenuTriggerDirective } from '../../../../../zeta/xc/xc-menu/xc-menu-trigger.directive';
+import { XcMenuServiceDirective } from '../../../../../zeta/xc/xc-menu/xc-menu.service';
+import { XcTooltipDirective } from '../../../../../zeta/xc/xc-tooltip/xc-tooltip.directive';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { LabelPathDialogComponent, LabelPathDialogData } from '../../../misc/modal/label-path-dialog/label-path-dialog.component';
 import { XoChangeCompensationRequest } from '../../../xo/change-compensation-request.model';
@@ -38,21 +42,20 @@ import { XoTextArea } from '../../../xo/text-area.model';
 import { XoWorkflowInvocation } from '../../../xo/workflow-invocation.model';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
-import { ModellingItemComponent, TriggeredAction } from '../shared/modelling-object.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { OrderInputSourceAreaComponent } from '../order-input-source-area/order-input-source-area.component';
-import { RemoteDestinationAreaComponent } from '../remote-destination-area/remote-destination-area.component';
-import { VariableAreaServiceComponent } from '../variable-area/variable-area-service.component';
-import { TypeLabelAreaServiceComponent } from '../type-label-area/type-label-area-service.component';
 import { DocumentationAreaComponent } from '../documentation-area/documentation-area.component';
 import { ExceptionHandlingAreaComponent } from '../exception/exception-handling-area/exception-handling-area.component';
+import { OrderInputSourceAreaComponent } from '../order-input-source-area/order-input-source-area.component';
+import { RemoteDestinationAreaComponent } from '../remote-destination-area/remote-destination-area.component';
+import { ModellingItemComponent, TriggeredAction } from '../shared/modelling-object.component';
+import { TypeLabelAreaServiceComponent } from '../type-label-area/type-label-area-service.component';
+import { VariableAreaServiceComponent } from '../variable-area/variable-area-service.component';
 
 
 @Component({
     selector: 'invocation',
     templateUrl: './invocation.component.html',
     styleUrls: ['./invocation.component.scss'],
-    imports: [XcModule, OrderInputSourceAreaComponent, RemoteDestinationAreaComponent, VariableAreaServiceComponent, TypeLabelAreaServiceComponent, DocumentationAreaComponent, ExceptionHandlingAreaComponent]
+    imports: [XcMenuServiceDirective, XcIconButtonComponent, XcMenuTriggerDirective, OrderInputSourceAreaComponent, RemoteDestinationAreaComponent, VariableAreaServiceComponent, TypeLabelAreaServiceComponent, XcTooltipDirective, DocumentationAreaComponent, ExceptionHandlingAreaComponent]
 })
 export class InvocationComponent extends ModellingItemComponent {
 

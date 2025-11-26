@@ -19,20 +19,22 @@ import { Component, HostListener, Input } from '@angular/core';
 
 import { XoRequest } from '@pmod/xo/request.model';
 
+import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n/i18n.directive';
+import { XcIconButtonComponent } from '../../../../../../zeta/xc/xc-button/xc-icon-button.component';
+import { XcTooltipDirective } from '../../../../../../zeta/xc/xc-tooltip/xc-tooltip.directive';
 import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoCase } from '../../../../xo/case.model';
 import { XoChangeTextRequest } from '../../../../xo/change-text-request.model';
-import { ModellingItemComponent } from '../../shared/modelling-object.component';
-import { XcModule } from '../../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
 import { FormulaComponent } from '../../formula/formula.component';
+import { ModellingItemComponent } from '../../shared/modelling-object.component';
+import { BranchComponent } from '../branch/branch.component';
 
 
 @Component({
     selector: 'case',
     templateUrl: './case.component.html',
     styleUrls: ['./case.component.scss'],
-    imports: [XcModule, I18nModule, FormulaComponent]
+    imports: [XcIconButtonComponent, XcI18nTranslateDirective, XcTooltipDirective, FormulaComponent, BranchComponent]
 })
 export class CaseComponent extends ModellingItemComponent {
 

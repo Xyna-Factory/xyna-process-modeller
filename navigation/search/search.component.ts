@@ -24,11 +24,14 @@ import { XcFormInputComponent } from '@zeta/xc';
 import { Subject } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n/i18n.directive';
+import { XcI18nPipe } from '../../../../zeta/i18n/i18n.pipe';
+import { XcCheckboxComponent } from '../../../../zeta/xc/xc-checkbox/xc-checkbox.component';
+import { XcFormAutocompleteComponent } from '../../../../zeta/xc/xc-form/xc-form-autocomplete/xc-form-autocomplete.component';
+import { XcFormInputComponent as XcFormInputComponent_1 } from '../../../../zeta/xc/xc-form/xc-form-input/xc-form-input.component';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 import { FactoryService } from '../factory.service';
 import { XMOMListComponent } from '../xmom/xmom-list.component';
-import { I18nModule } from '../../../../zeta/i18n/i18n.module';
-import { XcModule } from '../../../../zeta/xc/xc.module';
 
 
 interface FilterData {
@@ -51,7 +54,7 @@ export interface FilterConditionData {
     templateUrl: './search.component.html',
     styleUrls: ['./search.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [I18nModule, XcModule, XMOMListComponent]
+    imports: [XcI18nTranslateDirective, XcFormAutocompleteComponent, XcFormInputComponent_1, XcCheckboxComponent, XMOMListComponent, XcI18nContextDirective, XcI18nPipe]
 })
 export class SearchComponent extends CommonNavigationComponent {
 

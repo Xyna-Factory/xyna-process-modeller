@@ -16,18 +16,18 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, ElementRef, Injector, Input, Optional } from '@angular/core';
-import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 
+import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { XcAutocompleteDataWrapper, XcOptionItem } from '@zeta/xc';
 
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n/i18n.directive';
+import { XcFormAutocompleteComponent } from '../../../../../zeta/xc/xc-form/xc-form-autocomplete/xc-form-autocomplete.component';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeRemoteDestinationRequest } from '../../../xo/change-remote-destination-request.model';
 import { XoRemoteDestinationArea } from '../../../xo/remote-destination-area.model';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 import { VariableAreaComponent } from '../variable-area/variable-area.component';
 
 
@@ -35,7 +35,7 @@ import { VariableAreaComponent } from '../variable-area/variable-area.component'
     selector: 'remote-destination-area',
     templateUrl: './remote-destination-area.component.html',
     styleUrls: ['./remote-destination-area.component.scss'],
-    imports: [XcModule, I18nModule, VariableAreaComponent]
+    imports: [XcFormAutocompleteComponent, XcI18nTranslateDirective, VariableAreaComponent]
 })
 export class RemoteDestinationAreaComponent extends ModellingObjectComponent {
 

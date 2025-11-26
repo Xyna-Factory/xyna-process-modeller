@@ -16,27 +16,27 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, ElementRef, HostBinding, Injector, Input, OnDestroy, Optional } from '@angular/core';
-import { WorkflowDetailLevelService } from '../../../../document/workflow-detail-level.service';
 
 import { XoConditionalBranching } from '@pmod/xo/conditional-branching.model';
 import { coerceBoolean } from '@zeta/base';
 
+import { XcIconButtonComponent } from '../../../../../../zeta/xc/xc-button/xc-icon-button.component';
+import { WorkflowDetailLevelService } from '../../../../document/workflow-detail-level.service';
 import { XoBranch } from '../../../../xo/branch.model';
 import { ComponentMappingService } from '../../../component-mapping.service';
 import { DocumentService } from '../../../document.service';
 import { SelectionService } from '../../../selection.service';
-import { SelectableModellingObjectComponent } from '../../shared/selectable-modelling-object.component';
-import { BranchSelectionService } from './branch-selection.service';
-import { XcModule } from '../../../../../../zeta/xc/xc.module';
-import { CaseAreaComponent } from '../case-area/case-area.component';
 import { ContentAreaComponent } from '../../content-area/content-area.component';
+import { SelectableModellingObjectComponent } from '../../shared/selectable-modelling-object.component';
+import { CaseAreaComponent } from '../case-area/case-area.component';
+import { BranchSelectionService } from './branch-selection.service';
 
 
 @Component({
     selector: 'branch',
     templateUrl: './branch.component.html',
     styleUrls: ['./branch.component.scss'],
-    imports: [XcModule, CaseAreaComponent, ContentAreaComponent]
+    imports: [XcIconButtonComponent, CaseAreaComponent, ContentAreaComponent]
 })
 export class BranchComponent extends SelectableModellingObjectComponent implements OnDestroy {
 

@@ -24,6 +24,15 @@ import { XcAutocompleteDataWrapper, XcCheckboxComponent, XcDialogService, XcForm
 import { merge, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n/i18n.directive';
+import { XcHasRightDirective } from '../../../../../zeta/xc/shared/xc-has-right.directive';
+import { XcButtonComponent } from '../../../../../zeta/xc/xc-button/xc-button.component';
+import { XcCheckboxComponent as XcCheckboxComponent_1 } from '../../../../../zeta/xc/xc-checkbox/xc-checkbox.component';
+import { XcFormAutocompleteComponent as XcFormAutocompleteComponent_1 } from '../../../../../zeta/xc/xc-form/xc-form-autocomplete/xc-form-autocomplete.component';
+import { XcFormValidatorRequiredDirective } from '../../../../../zeta/xc/xc-form/xc-form-base/xc-form-validators.directive';
+import { XcFormInputComponent } from '../../../../../zeta/xc/xc-form/xc-form-input/xc-form-input.component';
+import { XcFormLabelComponent } from '../../../../../zeta/xc/xc-form/xc-form-label/xc-form-label.component';
+import { XcTooltipDirective } from '../../../../../zeta/xc/xc-tooltip/xc-tooltip.directive';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
 import { XoChangeAbstractRequest } from '../../../xo/change-abstract-request.model';
@@ -40,11 +49,9 @@ import { DataTypeDocumentModel } from '../../model/data-type-document.model';
 import { ExceptionTypeDocumentModel } from '../../model/exception-type-document.model';
 import { ServiceGroupDocumentModel } from '../../model/service-group-document.model';
 import { TypeDocumentModel } from '../../model/type-document.model';
-import { ModDropEvent, ModDropAreaDirective } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
+import { ModDropAreaDirective, ModDropEvent } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { ShowGuiModelModalComponent } from './show-gui-model-modal/show-gui-model-modal.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 @Component({
@@ -52,7 +59,7 @@ import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
     templateUrl: './type-info-area.component.html',
     styleUrls: ['./type-info-area.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, I18nModule, ModDropAreaDirective]
+    imports: [XcFormLabelComponent, XcI18nTranslateDirective, XcCheckboxComponent_1, XcTooltipDirective, XcHasRightDirective, XcButtonComponent, XcFormInputComponent, XcFormValidatorRequiredDirective, XcFormAutocompleteComponent_1, ModDropAreaDirective]
 })
 export class TypeInfoAreaComponent extends ModellingObjectComponent implements OnInit {
 

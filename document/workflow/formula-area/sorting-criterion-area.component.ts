@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -17,23 +18,23 @@
  */
 import { Component } from '@angular/core';
 
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n/i18n.directive';
+import { XcIconButtonComponent } from '../../../../../zeta/xc/xc-button/xc-icon-button.component';
+import { XcFormLabelComponent } from '../../../../../zeta/xc/xc-form/xc-form-label/xc-form-label.component';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeSortingRequest } from '../../../xo/change-sorting-request.model';
 import { XoInsertRequest } from '../../../xo/insert-request.model';
 import { XoInsertSortingCriterionRequest } from '../../../xo/insert-sort-criterion-request.model';
 import { XoSortingCriterion } from '../../../xo/sorting-criterion.model';
-import { FormulaAreaComponent } from './formula-area.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
-import { NgClass } from '@angular/common';
 import { FormulaComponent } from '../formula/formula.component';
+import { FormulaAreaComponent } from './formula-area.component';
 
 
 @Component({
     selector: 'sorting-criterion-area',
     templateUrl: './sorting-criterion-area.component.html',
     styleUrls: ['./sorting-criterion-area.component.scss', './formula-area.component.scss'],
-    imports: [XcModule, I18nModule, NgClass, FormulaComponent]
+    imports: [XcFormLabelComponent, XcI18nTranslateDirective, XcIconButtonComponent, NgClass, FormulaComponent]
 })
 export class SortingCriterionAreaComponent extends FormulaAreaComponent {
 

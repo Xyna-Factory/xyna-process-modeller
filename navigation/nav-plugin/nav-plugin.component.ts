@@ -22,8 +22,8 @@ import { XoGuiDefiningWorkflow } from '@yggdrasil/plugin/gui-defining-workflow.m
 import { XoPlugin } from '@zeta/xc';
 import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 
+import { XcDefinitionProxyComponent } from '../../../../zeta/xc/xc-form/definitions/containers/xc-definition-proxy/xc-definition-proxy.component';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
-import { XcModule } from '../../../../zeta/xc/xc.module';
 
 
 @Component({
@@ -31,7 +31,7 @@ import { XcModule } from '../../../../zeta/xc/xc.module';
     templateUrl: './nav-plugin.component.html',
     styleUrls: ['./nav-plugin.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule]
+    imports: [XcDefinitionProxyComponent]
 })
 export class NavPluginComponent extends CommonNavigationComponent {
 

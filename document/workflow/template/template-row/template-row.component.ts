@@ -25,14 +25,15 @@ import { XoInsertFormulaVariableRequest } from '../../../../xo/insert-formula-va
 import { XoItem } from '../../../../xo/item.model';
 import { XoRequest } from '../../../../xo/request.model';
 import { XoVariable } from '../../../../xo/variable.model';
+import { BranchComponent } from '../../distinction/branch/branch.component';
 import { Distance, ModRelativeHoverSide } from '../../shared/drag-and-drop/mod-drag-and-drop.service';
 import { ModDragEvent, ModDropAreaDirective, ModDropEvent } from '../../shared/drag-and-drop/mod-drop-area.directive';
 import { ModellingObjectComponent, TriggeredAction } from '../../shared/modelling-object.component';
 import { TemplateRow } from '../model/template-row.model';
 import { TemplateText } from '../model/template-text.model';
+import { TemplatePartFormulaComponent } from '../template-part/template-part-formula.component';
 import { TemplatePartModifyEvent, TemplatePartTextComponent } from '../template-part/template-part-text.component';
 import { NavigationDirection, TemplatePartComponent, TemplatePartSwitchFocusEvent } from '../template-part/template-part.component';
-import { TemplatePartFormulaComponent } from '../template-part/template-part-formula.component';
 
 
 export interface SplitTemplateRowEvent {
@@ -51,7 +52,7 @@ export interface SwitchTemplateRowFocusEvent {
     selector: 'template-row',
     templateUrl: './template-row.component.html',
     styleUrls: ['./template-row.component.scss'],
-    imports: [ModDropAreaDirective, TemplatePartFormulaComponent, TemplatePartTextComponent]
+    imports: [ModDropAreaDirective, TemplatePartFormulaComponent, TemplatePartTextComponent, BranchComponent]
 })
 export class TemplateRowComponent extends ModellingObjectComponent {
 

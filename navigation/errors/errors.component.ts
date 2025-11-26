@@ -17,17 +17,17 @@
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 
-import { DocumentService } from '../../document/document.service';
-import { of, Subscription } from 'rxjs';
+import { ErrorItem, XoIssueArray } from '@pmod/xo/issue.model';
+import { XoWarningArray } from '@pmod/xo/warning.model';
 
+import { of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { ErrorItem, XoIssueArray } from '@pmod/xo/issue.model';
-import { ErrorService } from '../shared/error.service';
+import { XcI18nTranslateDirective } from '../../../../zeta/i18n/i18n.directive';
+import { DocumentService } from '../../document/document.service';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
-import { XoWarningArray } from '@pmod/xo/warning.model';
-import { I18nModule } from '../../../../zeta/i18n/i18n.module';
 import { ErrorItemComponent } from '../shared/error-item/error-item.component';
+import { ErrorService } from '../shared/error.service';
 
 
 @Component({
@@ -35,7 +35,7 @@ import { ErrorItemComponent } from '../shared/error-item/error-item.component';
     templateUrl: './errors.component.html',
     styleUrls: ['./errors.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [I18nModule, ErrorItemComponent]
+    imports: [XcI18nTranslateDirective, ErrorItemComponent]
 })
 export class ErrorsComponent extends CommonNavigationComponent implements OnDestroy {
     issues: ErrorItem[] = [];

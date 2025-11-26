@@ -25,7 +25,11 @@ import { XcContentEditableDirective, XcMenuItem, XcStatusBarEntryType, XcStatusB
 import { Subscription, throwError } from 'rxjs';
 import { catchError, filter, map } from 'rxjs/operators';
 
+import { XcI18nContextDirective } from '../../../zeta/i18n/i18n.directive';
 import { I18nModule } from '../../../zeta/i18n/i18n.module';
+import { XcIconButtonComponent } from '../../../zeta/xc/xc-button/xc-icon-button.component';
+import { XcMenuTriggerDirective } from '../../../zeta/xc/xc-menu/xc-menu-trigger.directive';
+import { XcMenuServiceDirective } from '../../../zeta/xc/xc-menu/xc-menu.service';
 import { XcModule } from '../../../zeta/xc/xc.module';
 import { DeploymentState } from '../api/xmom-types';
 import { ModellingActionType, XmomState } from '../api/xmom.service';
@@ -56,7 +60,7 @@ import { WorkflowComponent } from './workflow/workflow/workflow.component';
     styleUrls: ['./workflow-document.component.scss'],
     // single service instances per document
     providers: [SelectionService, BranchSelectionService, WorkflowDetailLevelService],
-    imports: [I18nModule, DataflowComponent, VariableAreaDocumentComponent, TypeLabelAreaComponent, DocumentationAreaComponent, WorkflowComponent, ExceptionHandlingAreaComponent, XcModule, DropIndicatorComponent]
+    imports: [XcI18nContextDirective, DataflowComponent, VariableAreaDocumentComponent, TypeLabelAreaComponent, DocumentationAreaComponent, WorkflowComponent, ExceptionHandlingAreaComponent, XcMenuServiceDirective, XcIconButtonComponent, XcMenuTriggerDirective, DropIndicatorComponent]
 })
 export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowDocumentModel> implements OnDestroy {
 

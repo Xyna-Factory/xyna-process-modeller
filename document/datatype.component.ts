@@ -19,6 +19,7 @@ import { Component, Injector } from '@angular/core';
 
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 
+import { XcI18nContextDirective } from '../../../zeta/i18n/i18n.directive';
 import { ModellingActionType } from '../api/xmom.service';
 import { XoDataTypeTypeLabelArea } from '../xo/data-type-type-label-area.model';
 import { XoDataType } from '../xo/data-type.model';
@@ -27,20 +28,19 @@ import { XoExceptionType } from '../xo/exception-type.model';
 import { XoInsertModellingObjectRequest } from '../xo/insert-modelling-object-request.model';
 import { XoMemberVariableArea } from '../xo/member-variable-area.model';
 import { XoMemberVariable } from '../xo/member-variable.model';
-import { DataTypeDocumentModel } from './model/data-type-document.model';
-import { SelectionService } from './selection.service';
-import { TypeDocumentComponent } from './type-document.component';
-import { I18nModule } from '../../../zeta/i18n/i18n.module';
-import { TypeInfoAreaComponent } from './datatype/type-info-area/type-info-area.component';
-import { LibAreaComponent } from './shared/lib-area/lib-area.component';
-import { JavaSharedLibAreaComponent } from './shared/java-shared-lib-area/java-shared-lib-area.component';
-import { DetailsItemComponent } from './shared/details-item/details-item.component';
-import { MemberAreaComponent } from './shared/member-area/member-area.component';
-import { MemberVariableAreaComponent } from './datatype/member-variable-area/member-variable-area.component';
-import { ServiceAreaComponent } from './datatype/service-area/service-area.component';
 import { DataTypeDetailsComponent } from './datatype/datatype-details/datatype-details.component';
+import { MemberVariableAreaComponent } from './datatype/member-variable-area/member-variable-area.component';
 import { MemberVariableDetailsComponent } from './datatype/member-variable-details/member-variable-details.component';
 import { MethodDetailsComponent } from './datatype/method-details/method-details.component';
+import { ServiceAreaComponent } from './datatype/service-area/service-area.component';
+import { TypeInfoAreaComponent } from './datatype/type-info-area/type-info-area.component';
+import { DataTypeDocumentModel } from './model/data-type-document.model';
+import { SelectionService } from './selection.service';
+import { DetailsItemComponent } from './shared/details-item/details-item.component';
+import { JavaSharedLibAreaComponent } from './shared/java-shared-lib-area/java-shared-lib-area.component';
+import { LibAreaComponent } from './shared/lib-area/lib-area.component';
+import { MemberAreaComponent } from './shared/member-area/member-area.component';
+import { TypeDocumentComponent } from './type-document.component';
 import { DropIndicatorComponent } from './workflow/drop-indicator/drop-indicator.component';
 
 
@@ -48,7 +48,7 @@ import { DropIndicatorComponent } from './workflow/drop-indicator/drop-indicator
     templateUrl: './datatype.component.html',
     styleUrls: ['./datatype.component.scss'],
     providers: [SelectionService],
-    imports: [I18nModule, TypeInfoAreaComponent, LibAreaComponent, JavaSharedLibAreaComponent, DetailsItemComponent, MemberAreaComponent, MemberVariableAreaComponent, ServiceAreaComponent, DataTypeDetailsComponent, MemberVariableDetailsComponent, MethodDetailsComponent, DropIndicatorComponent]
+    imports: [XcI18nContextDirective, TypeInfoAreaComponent, LibAreaComponent, JavaSharedLibAreaComponent, DetailsItemComponent, MemberAreaComponent, MemberVariableAreaComponent, ServiceAreaComponent, DataTypeDetailsComponent, MemberVariableDetailsComponent, MethodDetailsComponent, DropIndicatorComponent]
 })
 export class DataTypeComponent extends TypeDocumentComponent<DataTypeDocumentModel> {
 

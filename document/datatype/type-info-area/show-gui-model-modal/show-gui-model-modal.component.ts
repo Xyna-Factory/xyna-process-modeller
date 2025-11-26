@@ -20,13 +20,20 @@ import { Component, Injector } from '@angular/core';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent } from '@zeta/xc';
 
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../../zeta/i18n/i18n.directive';
+import { XcButtonComponent } from '../../../../../../zeta/xc/xc-button/xc-button.component';
+import { XcCheckboxComponent } from '../../../../../../zeta/xc/xc-checkbox/xc-checkbox.component';
+import { XcDialogWrapperComponent } from '../../../../../../zeta/xc/xc-dialog/xc-dialog-wrapper.component';
+import { XcFormDirective } from '../../../../../../zeta/xc/xc-form/xc-form-base/xc-form.directive';
+import { XcFormInputComponent } from '../../../../../../zeta/xc/xc-form/xc-form-input/xc-form-input.component';
+import { XcFormTextareaComponent } from '../../../../../../zeta/xc/xc-form/xc-form-textarea/xc-form-textarea.component';
+import { XcMasterDetailComponent } from '../../../../../../zeta/xc/xc-master-detail/xc-master-detail.component';
+import { XcPanelComponent } from '../../../../../../zeta/xc/xc-panel/xc-panel.component';
 import { XoDataType } from '../../../../xo/data-type.model';
 import { DataTypeConvertable, DataTypeConverterService, DataTypeProperty } from './data-type-converter.service';
+import { LeftRightComponent } from './left-right-component/left-right.component';
 import { showGui_translations_de_DE } from './locale/show-gui-translations.de-DE';
 import { showGui_translations_en_US } from './locale/show-gui-translations.en-US';
-import { XcModule } from '../../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
-import { LeftRightComponent } from './left-right-component/left-right.component';
 
 
 export interface ShowGuiModelModalComponentData {
@@ -37,7 +44,7 @@ export interface ShowGuiModelModalComponentData {
 @Component({
     templateUrl: './show-gui-model-modal.component.html',
     styleUrls: ['./show-gui-model-modal.component.scss'],
-    imports: [XcModule, I18nModule, LeftRightComponent]
+    imports: [XcDialogWrapperComponent, XcI18nContextDirective, XcI18nTranslateDirective, XcMasterDetailComponent, XcPanelComponent, XcFormTextareaComponent, XcFormDirective, XcCheckboxComponent, XcFormInputComponent, LeftRightComponent, XcButtonComponent]
 })
 export class ShowGuiModelModalComponent extends XcDialogComponent<void, ShowGuiModelModalComponentData> {
 

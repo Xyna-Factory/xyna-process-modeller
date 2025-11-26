@@ -21,11 +21,13 @@ import { XcRichListItemComponent } from '@zeta/xc';
 
 import { Subject } from 'rxjs';
 
+import { XcCheckboxComponent } from '../../../../../zeta/xc/xc-checkbox/xc-checkbox.component';
+import { XcTooltipDirective } from '../../../../../zeta/xc/xc-tooltip/xc-tooltip.directive';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoUsedRequest } from '../../../xo/change-used-request.model';
 import { XoJavaSharedLibrary } from '../../../xo/java-shared-library.model';
+import { BranchComponent } from '../../workflow/distinction/branch/branch.component';
 import { TriggeredAction } from '../../workflow/shared/modelling-object.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 export interface JavaSharedLibItemData {
@@ -38,7 +40,7 @@ export interface JavaSharedLibItemData {
 @Component({
     templateUrl: './java-shared-lib-item.component.html',
     styleUrls: ['./java-shared-lib-item.component.scss'],
-    imports: [XcModule]
+    imports: [XcTooltipDirective, XcCheckboxComponent, BranchComponent]
 })
 export class JavaSharedLibItemComponent extends XcRichListItemComponent<void, JavaSharedLibItemData> {
 

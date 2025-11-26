@@ -39,25 +39,26 @@ import { FormulaPartVariable } from '../../../xo/util/formula-parts/formula-part
 import { XoVariable } from '../../../xo/variable.model';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
-import { ModDropEvent, ModDropAreaDirective } from '../shared/drag-and-drop/mod-drop-area.directive';
-import { ModellingItemComponent, TriggeredAction } from '../shared/modelling-object.component';
-import { FormulaEditablePartComponent } from './parts/formula-editable-part.component';
-import { FormulaChildComponent } from './parts/formula-part.component';
-import { FormulaProxyComponent } from './parts/formula-proxy/formula-proxy.component';
-import { VariableComponent } from '../variable/variable.component';
+import { BranchComponent } from '../distinction/branch/branch.component';
 import { ModDraggableDirective } from '../shared/drag-and-drop/mod-draggable.directive';
-import { FormulaPartMemberComponent } from './parts/formula-part-member/formula-part-member.component';
+import { ModDropAreaDirective, ModDropEvent } from '../shared/drag-and-drop/mod-drop-area.directive';
+import { ModellingItemComponent, TriggeredAction } from '../shared/modelling-object.component';
+import { VariableComponent } from '../variable/variable.component';
+import { FormulaEditablePartComponent } from './parts/formula-editable-part.component';
 import { FormulaPartFunctionComponent } from './parts/formula-part-function/formula-part-function.component';
+import { FormulaPartLiteralComponent } from './parts/formula-part-literal/formula-part-literal.component';
+import { FormulaPartMemberComponent } from './parts/formula-part-member/formula-part-member.component';
 import { FormulaPartOperationComponent } from './parts/formula-part-operation/formula-part-operation.component';
 import { FormulaPartSpecialComponent } from './parts/formula-part-special/formula-part-special.component';
-import { FormulaPartLiteralComponent } from './parts/formula-part-literal/formula-part-literal.component';
+import { FormulaChildComponent } from './parts/formula-part.component';
+import { FormulaProxyComponent } from './parts/formula-proxy/formula-proxy.component';
 
 
 @Component({
     selector: 'formula',
     templateUrl: './formula.component.html',
     styleUrls: ['./formula.component.scss'],
-    imports: [ModDropAreaDirective, FormulaProxyComponent, VariableComponent, ModDraggableDirective, FormulaPartMemberComponent, FormulaPartFunctionComponent, FormulaPartOperationComponent, FormulaPartSpecialComponent, FormulaPartLiteralComponent]
+    imports: [ModDropAreaDirective, FormulaProxyComponent, VariableComponent, ModDraggableDirective, FormulaPartMemberComponent, FormulaPartFunctionComponent, FormulaPartOperationComponent, FormulaPartSpecialComponent, FormulaPartLiteralComponent, BranchComponent]
 })
 export class FormulaComponent extends ModellingItemComponent {
 

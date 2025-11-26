@@ -31,16 +31,19 @@ import { XcDialogService } from '@zeta/xc';
 import { merge } from 'rxjs';
 import { filter, finalize, switchMap } from 'rxjs/operators';
 
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n/i18n.directive';
+import { XcHasRightDirective } from '../../../../zeta/xc/shared/xc-has-right.directive';
+import { XcButtonComponent } from '../../../../zeta/xc/xc-button/xc-button.component';
+import { XcIconButtonComponent } from '../../../../zeta/xc/xc-button/xc-icon-button.component';
+import { XcPanelComponent } from '../../../../zeta/xc/xc-panel/xc-panel.component';
+import { XcTooltipDirective } from '../../../../zeta/xc/xc-tooltip/xc-tooltip.directive';
 import { DocumentService } from '../../document/document.service';
 import { DocumentItem, DocumentModel } from '../../document/model/document.model';
 import { TypeDocumentModel } from '../../document/model/type-document.model';
 import { XoApplication, XoWorkspace } from '../../xo/runtime-context.model';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
-import { ShowXmlModalComponent, ShowXmlModalData } from './show-xml-modal/show-xml-modal.component';
-import { I18nModule } from '../../../../zeta/i18n/i18n.module';
-import { XcModule } from '../../../../zeta/xc/xc.module';
-import { DeploymentStateDetailComponent } from '../../../factorymanager/deployment-items/components/deployment-state-detail/deployment-state-detail.component';
 import { RelationTableComponent } from './relation-table/relation-table.component';
+import { ShowXmlModalComponent, ShowXmlModalData } from './show-xml-modal/show-xml-modal.component';
 
 
 @Component({
@@ -48,7 +51,7 @@ import { RelationTableComponent } from './relation-table/relation-table.componen
     templateUrl: './details.component.html',
     styleUrls: ['./details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [I18nModule, XcModule, DeploymentStateDetailComponent, RelationTableComponent]
+    imports: [XcI18nTranslateDirective, XcPanelComponent, XcI18nContextDirective, XcIconButtonComponent, XcTooltipDirective, XcHasRightDirective, XcButtonComponent, RelationTableComponent]
 })
 export class DetailsComponent extends CommonNavigationComponent {
     private _deploymentItem: XoDeploymentItem;

@@ -16,26 +16,28 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, ElementRef, Injector, Input, OnDestroy, Optional } from '@angular/core';
-import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
 
 import { XcRichListItem } from '@zeta/xc';
 
 import { Subject, Subscription } from 'rxjs';
 
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n/i18n.directive';
+import { XcIconButtonComponent } from '../../../../../zeta/xc/xc-button/xc-icon-button.component';
+import { XcFormLabelComponent } from '../../../../../zeta/xc/xc-form/xc-form-label/xc-form-label.component';
+import { XcRichListComponent } from '../../../../../zeta/xc/xc-list/xc-rich-list/xc-rich-list.component';
+import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
 import { XoJavaSharedLibrariesArea } from '../../../xo/java-shared-libraries-area.model';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { ModellingObjectComponent, TriggeredAction } from '../../workflow/shared/modelling-object.component';
 import { JavaSharedLibItemComponent, JavaSharedLibItemData } from './java-shared-lib-item.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 @Component({
     selector: 'java-shared-lib-area',
     templateUrl: './java-shared-lib-area.component.html',
     styleUrls: ['./java-shared-lib-area.component.scss'],
-    imports: [XcModule, I18nModule]
+    imports: [XcIconButtonComponent, XcFormLabelComponent, XcI18nTranslateDirective, XcRichListComponent]
 })
 export class JavaSharedLibAreaComponent extends ModellingObjectComponent implements OnDestroy {
 

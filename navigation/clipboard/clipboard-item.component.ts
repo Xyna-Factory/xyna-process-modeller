@@ -17,6 +17,7 @@
  */
 import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
 
+import { XcIconComponent } from '../../../../zeta/xc/xc-icon/xc-icon.component';
 import { XoChoice } from '../../xo/choice.model';
 import { XoConditionalBranching } from '../../xo/conditional-branching.model';
 import { XoConditionalChoice } from '../../xo/conditional-choice.model';
@@ -31,7 +32,6 @@ import { XoThrow } from '../../xo/throw.model';
 import { XoTypeChoice } from '../../xo/type-choice.model';
 import { XoVariable } from '../../xo/variable.model';
 import { XoXmomItem } from '../../xo/xmom-item.model';
-import { XcModule } from '../../../../zeta/xc/xc.module';
 
 
 @Component({
@@ -39,7 +39,7 @@ import { XcModule } from '../../../../zeta/xc/xc.module';
     templateUrl: './clipboard-item.component.html',
     styleUrls: ['./clipboard-item.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule]
+    imports: [XcIconComponent]
 })
 export class ClipboardItemComponent {
 

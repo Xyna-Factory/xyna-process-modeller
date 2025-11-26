@@ -16,18 +16,24 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, Optional } from '@angular/core';
+
 import { DocumentService } from '@pmod/document/document.service';
 import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
-import { DatatypeMethodTabComponent } from '../datatype-tab.component';
-import { XcModule } from '../../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+
+import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n/i18n.directive';
+import { XcButtonComponent } from '../../../../../../zeta/xc/xc-button/xc-button.component';
+import { XcFormValidatorRequiredDirective } from '../../../../../../zeta/xc/xc-form/xc-form-base/xc-form-validators.directive';
+import { XcFormInputComponent } from '../../../../../../zeta/xc/xc-form/xc-form-input/xc-form-input.component';
+import { XcFormLabelComponent } from '../../../../../../zeta/xc/xc-form/xc-form-label/xc-form-label.component';
 import { TypeDocumentationAreaComponent } from '../../type-documentation-area/type-documentation-area.component';
+import { DatatypeMethodTabComponent } from '../datatype-tab.component';
+
 
 @Component({
     templateUrl: './method-base-tab.component.html',
     styleUrls: ['./method-base-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, I18nModule, TypeDocumentationAreaComponent]
+    imports: [XcFormInputComponent, XcFormValidatorRequiredDirective, XcI18nTranslateDirective, XcFormLabelComponent, XcButtonComponent, TypeDocumentationAreaComponent]
 })
 export class MethodBaseTabComponent extends DatatypeMethodTabComponent {
 

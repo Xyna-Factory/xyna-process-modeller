@@ -16,13 +16,22 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { NgClass } from '@angular/common';
 import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 
+import { TypeDocumentModel } from '@pmod/document/model/type-document.model';
+import { PluginService } from '@pmod/document/plugin.service';
 import { XoArray } from '@zeta/api';
 import { XcDialogService, XcMenuItem, XoPlugin, XoPluginArray } from '@zeta/xc';
 
 import { merge, of, Subscription } from 'rxjs';
 
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../zeta/i18n/i18n.directive';
+import { XcHasRightDirective } from '../../../zeta/xc/shared/xc-has-right.directive';
+import { XcIconButtonComponent } from '../../../zeta/xc/xc-button/xc-icon-button.component';
+import { XcMenuTriggerDirective } from '../../../zeta/xc/xc-menu/xc-menu-trigger.directive';
+import { XcMenuComponent } from '../../../zeta/xc/xc-menu/xc-menu.component';
+import { XcTooltipDirective } from '../../../zeta/xc/xc-tooltip/xc-tooltip.directive';
 import { XmomService } from '../api/xmom.service';
 import { DocumentService } from '../document/document.service';
 import { ClipboardComponent } from './clipboard/clipboard.component';
@@ -33,13 +42,9 @@ import { WorkflowConstantBuilderModalComponent } from './dev-tools/workflow-cons
 import { ErrorsComponent } from './errors/errors.component';
 import { FactoryComponent } from './factory/factory.component';
 import { HelpComponent } from './help/help.component';
-import { SearchComponent } from './search/search.component';
-import { TypeDocumentModel } from '@pmod/document/model/type-document.model';
-import { PluginService } from '@pmod/document/plugin.service';
 import { NavPluginComponent } from './nav-plugin/nav-plugin.component';
-import { I18nModule } from '../../../zeta/i18n/i18n.module';
-import { XcModule } from '../../../zeta/xc/xc.module';
-import { NgClass } from '@angular/common';
+import { SearchComponent } from './search/search.component';
+
 
 enum NavigationbarArea {
     Factory = 1,
@@ -88,7 +93,7 @@ export enum AreaValue {
             transition('opened => opened_half', animate('.3s ease-in'))
         ])
     ],
-    imports: [FactoryComponent, I18nModule, SearchComponent, DetailsComponent, ClipboardComponent, ErrorsComponent, CompareComponent, HelpComponent, NavPluginComponent, XcModule, NgClass]
+    imports: [FactoryComponent, XcI18nContextDirective, SearchComponent, DetailsComponent, ClipboardComponent, ErrorsComponent, CompareComponent, HelpComponent, NavPluginComponent, XcIconButtonComponent, XcI18nTranslateDirective, NgClass, XcTooltipDirective, XcHasRightDirective, XcMenuTriggerDirective, XcMenuComponent]
 })
 export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
 

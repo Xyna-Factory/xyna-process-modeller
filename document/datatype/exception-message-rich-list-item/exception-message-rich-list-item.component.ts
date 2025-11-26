@@ -20,8 +20,10 @@ import { Component, ElementRef, HostBinding, Injector, OnDestroy, OnInit } from 
 import { OutsideListenerService } from '@zeta/base';
 import { XcRichListItemComponent } from '@zeta/xc';
 
+import { XcIconButtonComponent } from '../../../../../zeta/xc/xc-button/xc-icon-button.component';
+import { XcTooltipDirective } from '../../../../../zeta/xc/xc-tooltip/xc-tooltip.directive';
 import { XoExceptionMessage } from '../../../xo/exception-message.model';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { BranchComponent } from '../../workflow/distinction/branch/branch.component';
 
 
 export interface ExceptionMessageRichListItemData {
@@ -35,7 +37,7 @@ export interface ExceptionMessageRichListItemData {
 @Component({
     templateUrl: './exception-message-rich-list-item.component.html',
     styleUrls: ['./exception-message-rich-list-item.component.scss'],
-    imports: [XcModule]
+    imports: [XcTooltipDirective, XcIconButtonComponent, BranchComponent]
 })
 export class ExceptionMessageRichListItemComponent extends XcRichListItemComponent<void, ExceptionMessageRichListItemData> implements OnInit, OnDestroy {
 

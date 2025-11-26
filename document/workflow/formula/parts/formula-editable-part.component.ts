@@ -18,10 +18,14 @@
 import { Component, EventEmitter, HostListener, Output } from '@angular/core';
 
 import { FormulaPart } from '../../../../xo/util/formula-parts/formula-part';
+import { BranchComponent } from '../../distinction/branch/branch.component';
 import { FormulaPartComponent } from './formula-part.component';
 
 
-@Component({ template: '' })
+@Component({
+    template: '',
+    imports: [BranchComponent]
+})
 export class FormulaEditablePartComponent extends FormulaPartComponent {
 
     /**

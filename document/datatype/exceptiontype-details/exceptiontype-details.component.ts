@@ -24,13 +24,13 @@ import { XcTabBarItem } from '@zeta/xc';
 
 import { BehaviorSubject, Subject } from 'rxjs';
 
+import { XcTabBarComponent } from '../../../../../zeta/xc/xc-tab-bar/xc-tab-bar.component';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { WorkflowDetailLevelService } from '../../workflow-detail-level.service';
 import { ModellingItemComponent } from '../../workflow/shared/modelling-object.component';
 import { DocumentationTabData, DocumentTabData } from '../tabs/datatype-tab.component';
 import { DocumentationTabComponent } from '../tabs/shared/documentation-tab.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 @Component({
@@ -38,7 +38,7 @@ import { XcModule } from '../../../../../zeta/xc/xc.module';
     templateUrl: './exceptiontype-details.component.html',
     styleUrls: ['./exceptiontype-details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule]
+    imports: [XcTabBarComponent]
 })
 export class ExceptionTypeDetailsComponent extends ModellingItemComponent implements OnDestroy {
 

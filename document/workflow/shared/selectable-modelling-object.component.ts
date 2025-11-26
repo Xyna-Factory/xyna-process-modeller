@@ -16,18 +16,23 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, ElementRef, HostBinding, HostListener, Injector, OnDestroy, Optional } from '@angular/core';
+
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { SelectionService } from '../../selection.service';
+import { BranchComponent } from '../distinction/branch/branch.component';
 import { ModellingItemComponent } from './modelling-object.component';
 
 
 /**
  * Base class for all selectable modelling object components
  */
-@Component({ template: '' })
+@Component({
+    template: '',
+    imports: [BranchComponent]
+})
 export class SelectableModellingObjectComponent extends ModellingItemComponent implements OnDestroy {
 
     @HostBinding('class.selected')

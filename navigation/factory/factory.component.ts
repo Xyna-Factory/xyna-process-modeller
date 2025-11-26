@@ -22,15 +22,16 @@ import { MessageBusService } from '@yggdrasil/events';
 import { merge, of } from 'rxjs';
 import { debounceTime, filter, switchMap, tap } from 'rxjs/operators';
 
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n/i18n.directive';
+import { XcVarDirective } from '../../../../zeta/xc/shared/xc-var.directive';
+import { XcFormAutocompleteComponent } from '../../../../zeta/xc/xc-form/xc-form-autocomplete/xc-form-autocomplete.component';
 import { XmomPath } from '../../api/xmom.service';
 import { DocumentService } from '../../document/document.service';
+import { PmodOutsideListenerDirective } from '../../misc/directives/pmod-outside-listener.directives';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 import { FactoryService } from '../factory.service';
 import { XMOMListComponent } from '../xmom/xmom-list.component';
 import { XMOMTreeItemState } from './xmom-tree-item.component';
-import { I18nModule } from '../../../../zeta/i18n/i18n.module';
-import { XcModule } from '../../../../zeta/xc/xc.module';
-import { PmodOutsideListenerDirective } from '../../misc/directives/pmod-outside-listener.directives';
 import { XMOMTreeComponent } from './xmom-tree.component';
 
 
@@ -39,7 +40,7 @@ import { XMOMTreeComponent } from './xmom-tree.component';
     templateUrl: './factory.component.html',
     styleUrls: ['./factory.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [I18nModule, XcModule, PmodOutsideListenerDirective, XMOMTreeComponent, XMOMListComponent]
+    imports: [XcI18nTranslateDirective, XcFormAutocompleteComponent, PmodOutsideListenerDirective, XcVarDirective, XMOMTreeComponent, XMOMListComponent, XcI18nContextDirective]
 })
 export class FactoryComponent extends CommonNavigationComponent implements AfterViewInit {
 

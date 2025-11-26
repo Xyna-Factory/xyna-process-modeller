@@ -16,25 +16,32 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, Optional, ViewChild } from '@angular/core';
+
 import { DataTypeService } from '@pmod/document/datatype.service';
 import { DocumentService } from '@pmod/document/document.service';
-import { I18nService } from '@zeta/i18n';
-import { DatatypeMethodTabComponent } from '../datatype-tab.component';
-import { XoMethod } from '@pmod/xo/method.model';
-import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItem, XcOptionItemStringOrUndefined, XcOptionItemTranslate } from '@zeta/xc';
 import { XoChangeMemberMethodImplementationTypeRequest } from '@pmod/xo/change-member-method-implementation-type-request.model';
-import { XoDynamicMethod } from '@pmod/xo/dynamic-method.model';
 import { XoChangeMemberMethodReferenceRequest } from '@pmod/xo/change-member-method-reference-request.model';
+import { XoDynamicMethod } from '@pmod/xo/dynamic-method.model';
+import { XoMethod } from '@pmod/xo/method.model';
+import { I18nService } from '@zeta/i18n';
+import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItem, XcOptionItemStringOrUndefined, XcOptionItemTranslate } from '@zeta/xc';
+
 import { filter } from 'rxjs';
-import { XcModule } from '../../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../../zeta/i18n/i18n.directive';
+import { XcButtonComponent } from '../../../../../../zeta/xc/xc-button/xc-button.component';
+import { XcIconButtonComponent } from '../../../../../../zeta/xc/xc-button/xc-icon-button.component';
+import { XcFormAutocompleteComponent as XcFormAutocompleteComponent_1 } from '../../../../../../zeta/xc/xc-form/xc-form-autocomplete/xc-form-autocomplete.component';
+import { XcTooltipDirective } from '../../../../../../zeta/xc/xc-tooltip/xc-tooltip.directive';
 import { MethodImplementationComponent } from '../../method-implementation/method-implementation.component';
+import { DatatypeMethodTabComponent } from '../datatype-tab.component';
+
 
 @Component({
     templateUrl: './method-implementation-tab.component.html',
     styleUrls: ['./method-implementation-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, I18nModule, MethodImplementationComponent]
+    imports: [XcFormAutocompleteComponent_1, XcI18nTranslateDirective, XcIconButtonComponent, XcTooltipDirective, XcButtonComponent, MethodImplementationComponent, XcI18nContextDirective]
 })
 export class MethodImplementationTabComponent extends DatatypeMethodTabComponent {
 

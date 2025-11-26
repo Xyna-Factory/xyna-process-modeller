@@ -23,11 +23,18 @@ import { XcDialogService, XcMenuItem } from '@zeta/xc';
 import { merge, of, Subscription } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 
+import { XcI18nTranslateDirective } from '../../../zeta/i18n/i18n.directive';
+import { XcIconButtonComponent } from '../../../zeta/xc/xc-button/xc-icon-button.component';
+import { XcIconComponent } from '../../../zeta/xc/xc-icon/xc-icon.component';
+import { XcMenuTriggerDirective } from '../../../zeta/xc/xc-menu/xc-menu-trigger.directive';
+import { XcMenuComponent } from '../../../zeta/xc/xc-menu/xc-menu.component';
+import { XcTooltipDirective } from '../../../zeta/xc/xc-tooltip/xc-tooltip.directive';
 import { XmomObjectType } from '../api/xmom-types';
 import { DocumentService } from '../document/document.service';
 import { TypeDocumentModel } from '../document/model/type-document.model';
 import { WorkflowDocumentModel } from '../document/model/workflow-document.model';
 import { SelectionService } from '../document/selection.service';
+import { ModDraggableDirective } from '../document/workflow/shared/drag-and-drop/mod-draggable.directive';
 import { XoConditionalBranching } from '../xo/conditional-branching.model';
 import { XoConditionalChoice } from '../xo/conditional-choice.model';
 import { XoData } from '../xo/data.model';
@@ -39,9 +46,6 @@ import { XoRetry } from '../xo/retry.model';
 import { XoTemplate } from '../xo/template.model';
 import { XoTypeChoice } from '../xo/type-choice.model';
 import { XoWorkflowInvocation } from '../xo/workflow-invocation.model';
-import { XcModule } from '../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../zeta/i18n/i18n.module';
-import { ModDraggableDirective } from '../document/workflow/shared/drag-and-drop/mod-draggable.directive';
 
 
 export interface ToolbarButtonDescription {
@@ -71,7 +75,7 @@ export type ToolbarItem = ToolbarButtonDescription | ToolbarButtonDescriptionGro
     templateUrl: './toolbar.component.html',
     styleUrls: ['./toolbar.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, I18nModule, ModDraggableDirective]
+    imports: [XcIconButtonComponent, XcI18nTranslateDirective, XcTooltipDirective, XcMenuTriggerDirective, XcMenuComponent, XcIconComponent, ModDraggableDirective]
 })
 export class ToolbarComponent implements AfterViewInit, OnDestroy {
 

@@ -18,7 +18,17 @@
 import { Component, ElementRef, Injector, Input, Optional } from '@angular/core';
 
 import { XcAutocompleteDataWrapper, XcOptionItem, XcRichListItem } from '@zeta/xc';
+import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 
+import { combineLatest } from 'rxjs';
+
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n/i18n.directive';
+import { XcButtonComponent } from '../../../../../zeta/xc/xc-button/xc-button.component';
+import { XcDefinitionProxyComponent } from '../../../../../zeta/xc/xc-form/definitions/containers/xc-definition-proxy/xc-definition-proxy.component';
+import { XcFormAutocompleteComponent } from '../../../../../zeta/xc/xc-form/xc-form-autocomplete/xc-form-autocomplete.component';
+import { XcFormInputComponent } from '../../../../../zeta/xc/xc-form/xc-form-input/xc-form-input.component';
+import { XcFormLabelComponent } from '../../../../../zeta/xc/xc-form/xc-form-label/xc-form-label.component';
+import { XcRichListComponent } from '../../../../../zeta/xc/xc-list/xc-rich-list/xc-rich-list.component';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
 import { XoChangeExceptionMessageRequest } from '../../../xo/change-exception-message-request.model';
@@ -26,13 +36,9 @@ import { XoExceptionMessage } from '../../../xo/exception-message.model';
 import { XoExceptionMessagesArea } from '../../../xo/exception-messages-area.model';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
+import { PluginService } from '../../plugin.service';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { ExceptionMessageRichListItemComponent, ExceptionMessageRichListItemData } from '../exception-message-rich-list-item/exception-message-rich-list-item.component';
-import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
-import { combineLatest } from 'rxjs';
-import { PluginService } from '../../plugin.service';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 export enum ExceptionMessageLanguage {
@@ -45,7 +51,7 @@ export enum ExceptionMessageLanguage {
     selector: 'exception-messages-area',
     templateUrl: './exception-messages-area.component.html',
     styleUrls: ['./exception-messages-area.component.scss'],
-    imports: [XcModule, I18nModule]
+    imports: [XcFormLabelComponent, XcI18nTranslateDirective, XcDefinitionProxyComponent, XcFormAutocompleteComponent, XcFormInputComponent, XcButtonComponent, XcRichListComponent]
 })
 export class ExceptionMessagesAreaComponent extends ModellingObjectComponent {
 

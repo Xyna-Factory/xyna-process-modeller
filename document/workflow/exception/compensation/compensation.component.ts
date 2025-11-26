@@ -17,20 +17,21 @@
  */
 import { Component, Input } from '@angular/core';
 
+import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n/i18n.directive';
+import { XcButtonComponent } from '../../../../../../zeta/xc/xc-button/xc-button.component';
+import { XcTooltipDirective } from '../../../../../../zeta/xc/xc-tooltip/xc-tooltip.directive';
 import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoChangeCompensationRequest } from '../../../../xo/change-compensation-request.model';
 import { XoCompensation } from '../../../../xo/compensation.model';
-import { ModellingItemComponent } from '../../shared/modelling-object.component';
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
 import { ContentAreaComponent } from '../../content-area/content-area.component';
-import { XcModule } from '../../../../../../zeta/xc/xc.module';
+import { ModellingItemComponent } from '../../shared/modelling-object.component';
 
 
 @Component({
     selector: 'compensation',
     templateUrl: './compensation.component.html',
     styleUrls: ['./compensation.component.scss', '../../common.scss'],
-    imports: [I18nModule, ContentAreaComponent, XcModule]
+    imports: [XcI18nTranslateDirective, ContentAreaComponent, XcButtonComponent, XcTooltipDirective]
 })
 export class CompensationComponent extends ModellingItemComponent {
 

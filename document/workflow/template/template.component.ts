@@ -16,12 +16,16 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, ElementRef, HostBinding, Injector, Input, OnDestroy, Optional, QueryList, ViewChildren } from '@angular/core';
-import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
 
+import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
 import { ApiService } from '@zeta/api';
 import { XcMenuItem } from '@zeta/xc';
 
+import { XcIconButtonComponent } from '../../../../../zeta/xc/xc-button/xc-icon-button.component';
+import { XcMenuTriggerDirective } from '../../../../../zeta/xc/xc-menu/xc-menu-trigger.directive';
+import { XcMenuServiceDirective } from '../../../../../zeta/xc/xc-menu/xc-menu.service';
 import { ModellingActionType } from '../../../api/xmom.service';
+import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
 import { XoChangeFormulaRequest } from '../../../xo/change-formula-request.model';
 import { XoChangeMultiplicityRequest } from '../../../xo/change-multiplicity-request.model';
 import { XoDeleteRequest } from '../../../xo/delete-request.model';
@@ -31,13 +35,12 @@ import { FormulaPart } from '../../../xo/util/formula-parts/formula-part';
 import { FormulaPartLiteral } from '../../../xo/util/formula-parts/formula-part-literal';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
+import { BranchComponent } from '../distinction/branch/branch.component';
+import { NonDraggableTextAreaComponent } from '../non-draggable-text-area/non-draggable-text-area.component';
 import { ModellingItemComponent, TriggeredAction } from '../shared/modelling-object.component';
 import { TemplateRow } from './model/template-row.model';
 import { TemplateText } from './model/template-text.model';
 import { SplitTemplateRowEvent, SwitchTemplateRowFocusEvent, TemplateRowComponent } from './template-row/template-row.component';
-import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
-import { NonDraggableTextAreaComponent } from '../non-draggable-text-area/non-draggable-text-area.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 enum ConcatParameterType {
@@ -56,7 +59,7 @@ interface ConcatParameter {
     selector: 'template-block',
     templateUrl: './template.component.html',
     styleUrls: ['./template.component.scss'],
-    imports: [TemplateRowComponent, NonDraggableTextAreaComponent, XcModule]
+    imports: [TemplateRowComponent, NonDraggableTextAreaComponent, XcMenuServiceDirective, XcIconButtonComponent, XcMenuTriggerDirective, BranchComponent]
 })
 export class TemplateComponent extends ModellingItemComponent implements OnDestroy {
 

@@ -22,13 +22,13 @@ import { coerceBoolean } from '@zeta/base';
 import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { filter, first, map, switchMap, tap } from 'rxjs/operators';
 
+import { XcSpinnerComponent } from '../../../../zeta/xc/xc-spinner/xc-spinner.component';
 import { XmomService } from '../../api/xmom.service';
+import { ModDraggableDirective } from '../../document/workflow/shared/drag-and-drop/mod-draggable.directive';
 import { XoXmomItem, XoXmomItemArray } from '../../xo/xmom-item.model';
 import { FactoryService } from '../factory.service';
 import { FilterConditionData } from '../search/search.component';
 import { XMOMListItemComponent } from './xmom-list-item.component';
-import { ModDraggableDirective } from '../../document/workflow/shared/drag-and-drop/mod-draggable.directive';
-import { XcModule } from '../../../../zeta/xc/xc.module';
 
 
 @Component({
@@ -36,7 +36,7 @@ import { XcModule } from '../../../../zeta/xc/xc.module';
     templateUrl: './xmom-list.component.html',
     styleUrls: ['./xmom-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XMOMListItemComponent, ModDraggableDirective, XcModule]
+    imports: [XMOMListItemComponent, ModDraggableDirective, XcSpinnerComponent]
 })
 export class XMOMListComponent {
 

@@ -21,16 +21,21 @@ import { WorkflowDetailSettingsService } from '@pmod/workflow-detail-settings.se
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent, XDSIconName } from '@zeta/xc';
 
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../zeta/i18n/i18n.directive';
+import { XcButtonComponent } from '../../../zeta/xc/xc-button/xc-button.component';
+import { XcCheckboxComponent } from '../../../zeta/xc/xc-checkbox/xc-checkbox.component';
+import { XcDialogWrapperComponent } from '../../../zeta/xc/xc-dialog/xc-dialog-wrapper.component';
+import { XcIconComponent } from '../../../zeta/xc/xc-icon/xc-icon.component';
+import { XcLanguageSelectorComponent } from '../../../zeta/xc/xc-language-selector/xc-language-selector.component';
+import { XcPanelComponent } from '../../../zeta/xc/xc-panel/xc-panel.component';
 import { modellerSettingsDialog_translations_de_DE } from './locale/modeller-settings-dialog-translations.de-DE';
 import { modellerSettingsDialog_translations_en_US } from './locale/modeller-settings-dialog-translations.en-US';
-import { XcModule } from '../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../zeta/i18n/i18n.module';
 
 
 @Component({
     templateUrl: './modeller-settings-dialog.component.html',
     styleUrls: ['./modeller-settings-dialog.component.scss'],
-    imports: [XcModule, I18nModule]
+    imports: [XcDialogWrapperComponent, XcI18nContextDirective, XcI18nTranslateDirective, XcLanguageSelectorComponent, XcPanelComponent, XcCheckboxComponent, XcIconComponent, XcButtonComponent]
 })
 export class ModellerSettingsDialogComponent extends XcDialogComponent<void, void> {
 

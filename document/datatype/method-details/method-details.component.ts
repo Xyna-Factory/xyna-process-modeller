@@ -22,6 +22,7 @@ import { XcTabBarItem } from '@zeta/xc';
 
 import { BehaviorSubject, Subject } from 'rxjs';
 
+import { XcTabBarComponent } from '../../../../../zeta/xc/xc-tab-bar/xc-tab-bar.component';
 import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
 import { XoMethod } from '../../../xo/method.model';
 import { ComponentMappingService } from '../../component-mapping.service';
@@ -31,7 +32,6 @@ import { DocumentTabData, MetaTabData, MethodTabData } from '../tabs/datatype-ta
 import { MethodBaseTabComponent } from '../tabs/method/method-base-tab.component';
 import { MethodImplementationTabComponent } from '../tabs/method/method-implementation-tab.component';
 import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 @Component({
@@ -39,7 +39,7 @@ import { XcModule } from '../../../../../zeta/xc/xc.module';
     templateUrl: './method-details.component.html',
     styleUrls: ['./method-details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule]
+    imports: [XcTabBarComponent]
 })
 export class MethodDetailsComponent extends ModellingItemComponent implements OnDestroy {
 

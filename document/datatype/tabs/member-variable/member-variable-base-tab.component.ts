@@ -16,26 +16,36 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, Optional, ViewChild } from '@angular/core';
+
 import { DataTypeService } from '@pmod/document/datatype.service';
 import { DocumentService } from '@pmod/document/document.service';
+import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
+import { XoChangeMemberVariableFqnRequest } from '@pmod/xo/change-member-variable-fqn-request.model';
+import { XoChangeMemberVariablePrimitiveTypeRequest } from '@pmod/xo/change-member-variable-primitive-type-request.model';
+import { XoChangeTextRequest } from '@pmod/xo/change-text-request.model';
 import { FullQualifiedName } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItemString, XcOptionItemStringOrUndefined, XcOptionItemTranslate } from '@zeta/xc';
-import { XoChangeMemberVariablePrimitiveTypeRequest } from '@pmod/xo/change-member-variable-primitive-type-request.model';
-import { XoChangeMemberVariableFqnRequest } from '@pmod/xo/change-member-variable-fqn-request.model';
+
 import { filter } from 'rxjs';
-import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
-import { XoChangeTextRequest } from '@pmod/xo/change-text-request.model';
-import { DatatypeVariableTabComponent } from '../datatype-tab.component';
-import { XcModule } from '../../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+
+import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n/i18n.directive';
+import { XcI18nPipe } from '../../../../../../zeta/i18n/i18n.pipe';
+import { XcButtonComponent } from '../../../../../../zeta/xc/xc-button/xc-button.component';
+import { XcFormAutocompleteComponent as XcFormAutocompleteComponent_1 } from '../../../../../../zeta/xc/xc-form/xc-form-autocomplete/xc-form-autocomplete.component';
+import { XcFormValidatorRequiredDirective } from '../../../../../../zeta/xc/xc-form/xc-form-base/xc-form-validators.directive';
+import { XcFormInputComponent } from '../../../../../../zeta/xc/xc-form/xc-form-input/xc-form-input.component';
+import { XcFormLabelComponent } from '../../../../../../zeta/xc/xc-form/xc-form-label/xc-form-label.component';
+import { XcTooltipDirective } from '../../../../../../zeta/xc/xc-tooltip/xc-tooltip.directive';
 import { TypeDocumentationAreaComponent } from '../../type-documentation-area/type-documentation-area.component';
+import { DatatypeVariableTabComponent } from '../datatype-tab.component';
+
 
 @Component({
     templateUrl: './member-variable-base-tab.component.html',
     styleUrls: ['./member-variable-base-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, I18nModule, TypeDocumentationAreaComponent]
+    imports: [XcFormInputComponent, XcFormValidatorRequiredDirective, XcI18nTranslateDirective, XcFormLabelComponent, XcFormAutocompleteComponent_1, XcButtonComponent, XcTooltipDirective, TypeDocumentationAreaComponent, XcI18nPipe]
 })
 export class MemberVariableBaseTabComponent extends DatatypeVariableTabComponent {
 

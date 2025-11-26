@@ -21,7 +21,11 @@ import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcRichListItemComponent } from '@zeta/xc';
 
 import { Subject } from 'rxjs';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
+
+import { XcIconButtonComponent } from '../../../../../zeta/xc/xc-button/xc-icon-button.component';
+import { XcTooltipDirective } from '../../../../../zeta/xc/xc-tooltip/xc-tooltip.directive';
+import { BranchComponent } from '../../workflow/distinction/branch/branch.component';
+
 
 export interface LibItemData {
     libraryName: string;
@@ -34,7 +38,7 @@ export interface LibItemData {
 @Component({
     templateUrl: './lib-item.component.html',
     styleUrls: ['./lib-item.component.scss'],
-    imports: [XcModule]
+    imports: [XcTooltipDirective, XcIconButtonComponent, BranchComponent]
 })
 export class LibItemComponent extends XcRichListItemComponent<void, LibItemData> {
 

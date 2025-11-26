@@ -23,18 +23,18 @@ import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItem } 
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { XcFormAutocompleteComponent as XcFormAutocompleteComponent_1 } from '../../../../../../../zeta/xc/xc-form/xc-form-autocomplete/xc-form-autocomplete.component';
 import { FormulaPartMember } from '../../../../../xo/util/formula-parts/formula-part-member';
+import { VariableComponent } from '../../../variable/variable.component';
 import { FormulaEditablePartComponent } from '../formula-editable-part.component';
 import { FormulaChildComponent } from '../formula-part.component';
-import { XcModule } from '../../../../../../../zeta/xc/xc.module';
-import { VariableComponent } from '../../../variable/variable.component';
 
 
 @Component({
     selector: 'formula-part-member',
     templateUrl: './formula-part-member.component.html',
     styleUrls: ['./formula-part-member.component.scss'],
-    imports: [XcModule, VariableComponent]
+    imports: [XcFormAutocompleteComponent_1, VariableComponent]
 })
 export class FormulaPartMemberComponent extends FormulaEditablePartComponent implements AfterViewInit, AfterContentInit, FormulaChildComponent {
 

@@ -23,6 +23,10 @@ import { XcDialogService, XcMenuItem } from '@zeta/xc';
 
 import { filter, Subscription } from 'rxjs';
 
+import { XcIconButtonComponent } from '../../../../../zeta/xc/xc-button/xc-icon-button.component';
+import { XcIconComponent } from '../../../../../zeta/xc/xc-icon/xc-icon.component';
+import { XcMenuTriggerDirective } from '../../../../../zeta/xc/xc-menu/xc-menu-trigger.directive';
+import { XcMenuServiceDirective } from '../../../../../zeta/xc/xc-menu/xc-menu.service';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { ComponentMappingService } from '../../../document/component-mapping.service';
 import { DocumentService } from '../../../document/document.service';
@@ -31,12 +35,11 @@ import { XoMapping } from '../../../xo/mapping.model';
 import { XoRequest } from '../../../xo/request.model';
 import { XoTextArea } from '../../../xo/text-area.model';
 import { XoVariable } from '../../../xo/variable.model';
-import { ModellingItemComponent } from '../shared/modelling-object.component';
-import { VariableAreaServiceComponent } from '../variable-area/variable-area-service.component';
-import { LabelAreaComponent } from '../label-area/label-area.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { DocumentationAreaComponent } from '../documentation-area/documentation-area.component';
 import { FormulaAreaComponent } from '../formula-area/formula-area.component';
+import { LabelAreaComponent } from '../label-area/label-area.component';
+import { ModellingItemComponent } from '../shared/modelling-object.component';
+import { VariableAreaServiceComponent } from '../variable-area/variable-area-service.component';
 import { VisualMappingComponent } from '../visual-mapping/visual-mapping.component';
 
 
@@ -44,7 +47,7 @@ import { VisualMappingComponent } from '../visual-mapping/visual-mapping.compone
     selector: 'mapping',
     templateUrl: './mapping.component.html',
     styleUrls: ['./mapping.component.scss'],
-    imports: [VariableAreaServiceComponent, LabelAreaComponent, XcModule, DocumentationAreaComponent, FormulaAreaComponent, VisualMappingComponent]
+    imports: [VariableAreaServiceComponent, LabelAreaComponent, XcIconComponent, DocumentationAreaComponent, FormulaAreaComponent, VisualMappingComponent, XcMenuServiceDirective, XcIconButtonComponent, XcMenuTriggerDirective]
 })
 export class MappingComponent extends ModellingItemComponent implements OnDestroy {
 

@@ -20,27 +20,29 @@ import { ChangeDetectorRef, Component, ElementRef, inject, Injector, Input, Opti
 import { ModellingActionType } from '@pmod/api/xmom.service';
 import { ComponentMappingService } from '@pmod/document/component-mapping.service';
 import { DocumentService } from '@pmod/document/document.service';
+import { DragType } from '@pmod/document/workflow/shared/drag-and-drop/mod-drag-and-drop.service';
+import { ModDropEvent } from '@pmod/document/workflow/shared/drag-and-drop/mod-drop-area.directive';
 import { ModellingObjectComponent } from '@pmod/document/workflow/shared/modelling-object.component';
+import { XoInsertModellingObjectRequest } from '@pmod/xo/insert-modelling-object-request.model';
 import { XoMetaTagArea } from '@pmod/xo/meta-tag-area.model';
 import { XoMetaTag } from '@pmod/xo/meta-tag.model';
-
-import { WorkflowDetailLevelService } from '../../workflow-detail-level.service';
-import { ModDropEvent } from '@pmod/document/workflow/shared/drag-and-drop/mod-drop-area.directive';
 import { XoMoveModellingObjectRequest } from '@pmod/xo/move-modelling-object-request.model';
-import { DragType } from '@pmod/document/workflow/shared/drag-and-drop/mod-drag-and-drop.service';
-import { XoInsertModellingObjectRequest } from '@pmod/xo/insert-modelling-object-request.model';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n/i18n.directive';
+import { XcIconButtonComponent } from '../../../../../zeta/xc/xc-button/xc-icon-button.component';
+import { XcFormTextareaComponent } from '../../../../../zeta/xc/xc-form/xc-form-textarea/xc-form-textarea.component';
+import { XcTooltipDirective } from '../../../../../zeta/xc/xc-tooltip/xc-tooltip.directive';
+import { WorkflowDetailLevelService } from '../../workflow-detail-level.service';
+import { ModDraggableDirective } from '../../workflow/shared/drag-and-drop/mod-draggable.directive';
 import { ModDropAreaDirective } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
 import { MetaTagComponent } from '../meta-tag/meta-tag.component';
-import { ModDraggableDirective } from '../../workflow/shared/drag-and-drop/mod-draggable.directive';
 
 
 @Component({
     selector: 'meta-tag-area',
     templateUrl: './meta-tag-area.component.html',
     styleUrl: './meta-tag-area.component.scss',
-    imports: [XcModule, I18nModule, ModDropAreaDirective, MetaTagComponent, ModDraggableDirective]
+    imports: [XcFormTextareaComponent, XcI18nTranslateDirective, XcIconButtonComponent, XcTooltipDirective, ModDropAreaDirective, MetaTagComponent, ModDraggableDirective]
 })
 export class MetaTagAreaComponent extends ModellingObjectComponent {
 

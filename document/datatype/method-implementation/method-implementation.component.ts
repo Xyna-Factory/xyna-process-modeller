@@ -17,10 +17,19 @@
  */
 import { ChangeDetectorRef, Component, ElementRef, Injector, Input, Optional } from '@angular/core';
 
+import { PluginService } from '@pmod/document/plugin.service';
 import { XoLibraryCallRequest } from '@pmod/xo/library-call-request.model';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService } from '@zeta/xc';
+import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 
+import { combineLatest } from 'rxjs';
+
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n/i18n.directive';
+import { XcButtonComponent } from '../../../../../zeta/xc/xc-button/xc-button.component';
+import { XcCheckboxComponent } from '../../../../../zeta/xc/xc-checkbox/xc-checkbox.component';
+import { XcDefinitionProxyComponent } from '../../../../../zeta/xc/xc-form/definitions/containers/xc-definition-proxy/xc-definition-proxy.component';
+import { XcTooltipDirective } from '../../../../../zeta/xc/xc-tooltip/xc-tooltip.directive';
 import { ModellingAction, ModellingActionType } from '../../../api/xmom.service';
 import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
 import { XoChangeAbortableRequest } from '../../../xo/change-abortable-request.model';
@@ -29,12 +38,7 @@ import { XoMethod } from '../../../xo/method.model';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { ModellingItemComponent, TriggeredAction } from '../../workflow/shared/modelling-object.component';
-import { combineLatest } from 'rxjs';
-import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
-import { PluginService } from '@pmod/document/plugin.service';
 import { VariableAreaDocumentComponent } from '../../workflow/variable-area/variable-area-document.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 import { CodingComponent } from '../coding/coding.component';
 
 
@@ -42,7 +46,7 @@ import { CodingComponent } from '../coding/coding.component';
     selector: 'method-implementation',
     templateUrl: './method-implementation.component.html',
     styleUrls: ['./method-implementation.component.scss'],
-    imports: [VariableAreaDocumentComponent, XcModule, I18nModule, CodingComponent]
+    imports: [VariableAreaDocumentComponent, XcCheckboxComponent, XcI18nTranslateDirective, XcButtonComponent, XcTooltipDirective, XcDefinitionProxyComponent, CodingComponent]
 })
 export class MethodImplementationComponent extends ModellingItemComponent {
 

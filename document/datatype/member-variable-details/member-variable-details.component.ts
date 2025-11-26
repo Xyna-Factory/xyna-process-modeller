@@ -21,6 +21,7 @@ import { XcTabBarItem } from '@zeta/xc';
 
 import { BehaviorSubject, Subject } from 'rxjs';
 
+import { XcTabBarComponent } from '../../../../../zeta/xc/xc-tab-bar/xc-tab-bar.component';
 import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
 import { XoMemberVariable } from '../../../xo/member-variable.model';
 import { XoRuntimeContext } from '../../../xo/runtime-context.model';
@@ -31,7 +32,6 @@ import { DocumentTabData, MetaTabData, VariableTabData } from '../tabs/datatype-
 import { MemberVariableBaseTabComponent } from '../tabs/member-variable/member-variable-base-tab.component';
 import { MemberVariableStorableTabComponent } from '../tabs/member-variable/member-variable-storable-tab.component';
 import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 @Component({
@@ -39,7 +39,7 @@ import { XcModule } from '../../../../../zeta/xc/xc.module';
     templateUrl: './member-variable-details.component.html',
     styleUrls: ['./member-variable-details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule]
+    imports: [XcTabBarComponent]
 })
 export class MemberVariableDetailsComponent extends ModellingItemComponent implements OnDestroy {
 

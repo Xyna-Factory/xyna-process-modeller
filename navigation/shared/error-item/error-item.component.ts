@@ -17,20 +17,22 @@
  */
 import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 
-import { DocumentService } from '../../../document/document.service';
 import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model';
 import { ErrorItem } from '@pmod/xo/issue.model';
 
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n/i18n.directive';
+import { XcIconButtonComponent } from '../../../../../zeta/xc/xc-button/xc-icon-button.component';
+import { XcIconComponent } from '../../../../../zeta/xc/xc-icon/xc-icon.component';
+import { XcTooltipDirective } from '../../../../../zeta/xc/xc-tooltip/xc-tooltip.directive';
+import { DocumentService } from '../../../document/document.service';
 import { ErrorService } from '../error.service';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 @Component({
     selector: 'xfm-mod-nav-error',
     templateUrl: './error-item.component.html',
     styleUrls: ['./error-item.component.scss'],
-    imports: [I18nModule, XcModule]
+    imports: [XcI18nTranslateDirective, XcTooltipDirective, XcIconComponent, XcIconButtonComponent]
 })
 export class ErrorItemComponent {
     @Input()

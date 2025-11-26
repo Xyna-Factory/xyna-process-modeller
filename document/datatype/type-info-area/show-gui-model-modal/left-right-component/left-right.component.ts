@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,7 +17,8 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { NgClass } from '@angular/common';
+
+import { ShowGuiModelModalComponent } from '../show-gui-model-modal.component';
 
 
 /** @deprecated */
@@ -24,7 +26,7 @@ import { NgClass } from '@angular/common';
     selector: 'left-right-component',
     templateUrl: './left-right.component.html',
     styleUrls: ['./left-right.component.scss'],
-    imports: [NgClass]
+    imports: [NgClass, ShowGuiModelModalComponent]
 })
 export class LeftRightComponent implements OnInit {
 

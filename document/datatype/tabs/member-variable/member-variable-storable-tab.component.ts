@@ -16,21 +16,24 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, Optional } from '@angular/core';
-import { XcAutocompleteDataWrapper, XcOptionItemString, XcOptionItemTranslate } from '@zeta/xc';
-import { I18nService } from '@zeta/i18n';
-import { XoChangeMemberVariableStorableRoleRequest } from '@pmod/xo/change-member-variable-storable-role-request.model';
+
 import { DocumentService } from '@pmod/document/document.service';
-import { DatatypeVariableTabComponent } from '../datatype-tab.component';
-import { XcModule } from '../../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { XoChangeMemberVariableStorableRoleRequest } from '@pmod/xo/change-member-variable-storable-role-request.model';
+import { I18nService } from '@zeta/i18n';
+import { XcAutocompleteDataWrapper, XcOptionItemString, XcOptionItemTranslate } from '@zeta/xc';
+
+import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n/i18n.directive';
+import { XcFormAutocompleteComponent } from '../../../../../../zeta/xc/xc-form/xc-form-autocomplete/xc-form-autocomplete.component';
+import { XcFormLabelComponent } from '../../../../../../zeta/xc/xc-form/xc-form-label/xc-form-label.component';
 import { StorablePropertiesAreaComponent } from '../../storable-properties-area/storable-properties-area.component';
+import { DatatypeVariableTabComponent } from '../datatype-tab.component';
 
 
 @Component({
     templateUrl: './member-variable-storable-tab.component.html',
     styleUrls: ['./member-variable-storable-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, I18nModule, StorablePropertiesAreaComponent]
+    imports: [XcFormAutocompleteComponent, XcI18nTranslateDirective, XcFormLabelComponent, StorablePropertiesAreaComponent]
 })
 export class MemberVariableStorableTabComponent extends DatatypeVariableTabComponent {
 

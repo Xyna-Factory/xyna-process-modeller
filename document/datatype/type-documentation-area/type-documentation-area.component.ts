@@ -17,18 +17,22 @@
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, Optional } from '@angular/core';
 
+import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
+
+import { combineLatest } from 'rxjs';
+
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n/i18n.directive';
+import { XcDefinitionProxyComponent } from '../../../../../zeta/xc/xc-form/definitions/containers/xc-definition-proxy/xc-definition-proxy.component';
+import { XcFormLabelComponent } from '../../../../../zeta/xc/xc-form/xc-form-label/xc-form-label.component';
+import { XcFormTextareaComponent } from '../../../../../zeta/xc/xc-form/xc-form-textarea/xc-form-textarea.component';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeTextRequest } from '../../../xo/change-text-request.model';
 import { XoTextArea } from '../../../xo/text-area.model';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
+import { PluginService } from '../../plugin.service';
 import { WorkflowDetailLevelService } from '../../workflow-detail-level.service';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
-import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
-import { PluginService } from '../../plugin.service';
-import { combineLatest } from 'rxjs';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 @Component({
@@ -36,7 +40,7 @@ import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
     templateUrl: './type-documentation-area.component.html',
     styleUrls: ['./type-documentation-area.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, I18nModule]
+    imports: [XcFormLabelComponent, XcI18nTranslateDirective, XcDefinitionProxyComponent, XcFormTextareaComponent]
 })
 export class TypeDocumentationAreaComponent extends ModellingObjectComponent {
 

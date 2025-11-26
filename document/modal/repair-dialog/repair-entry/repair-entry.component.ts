@@ -17,15 +17,15 @@
  */
 import { Component, Input } from '@angular/core';
 
+import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n/i18n.directive';
 import { XoRepairEntry } from '../../../../xo/repair-entry.model';
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
 
 
 @Component({
     selector: 'repair-entry',
     templateUrl: './repair-entry.component.html',
     styleUrls: ['./repair-entry.component.scss'],
-    imports: [I18nModule]
+    imports: [XcI18nTranslateDirective]
 })
 export class RepairEntryComponent {
 

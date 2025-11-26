@@ -19,20 +19,20 @@ import { Component, Input, OnInit } from '@angular/core';
 
 import { XcAutocompleteDataWrapper, XcOptionItemString } from '@zeta/xc';
 
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n/i18n.directive';
+import { XcFormAutocompleteComponent } from '../../../../../zeta/xc/xc-form/xc-form-autocomplete/xc-form-autocomplete.component';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeOrderInputSourceRequest } from '../../../xo/change-orderinputsource-request.model';
 import { XoInvocation } from '../../../xo/invocation.model';
 import { XoOrderInputSourceArea } from '../../../xo/order-input-source-area.model';
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 @Component({
     selector: 'order-input-source-area',
     templateUrl: './order-input-source-area.component.html',
     styleUrls: ['./order-input-source-area.component.scss'],
-    imports: [XcModule, I18nModule]
+    imports: [XcFormAutocompleteComponent, XcI18nTranslateDirective]
 })
 export class OrderInputSourceAreaComponent extends ModellingObjectComponent implements OnInit {
 

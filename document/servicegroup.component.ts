@@ -17,21 +17,21 @@
  */
 import { Component } from '@angular/core';
 
+import { XcI18nContextDirective } from '../../../zeta/i18n/i18n.directive';
 import { ModellingActionType } from '../api/xmom.service';
 import { XoChangeTextRequest } from '../xo/change-text-request.model';
 import { XoInsertModellingObjectRequest } from '../xo/insert-modelling-object-request.model';
 import { XoServiceGroup } from '../xo/service-group.model';
 import { XoStaticMethod } from '../xo/static-method.model';
+import { MethodDetailsComponent } from './datatype/method-details/method-details.component';
+import { ServiceAreaComponent } from './datatype/service-area/service-area.component';
+import { TypeInfoAreaComponent } from './datatype/type-info-area/type-info-area.component';
 import { ServiceGroupDocumentModel } from './model/service-group-document.model';
 import { SelectionService } from './selection.service';
-import { TypeDocumentComponent } from './type-document.component';
-import { I18nModule } from '../../../zeta/i18n/i18n.module';
-import { TypeInfoAreaComponent } from './datatype/type-info-area/type-info-area.component';
-import { LibAreaComponent } from './shared/lib-area/lib-area.component';
 import { JavaSharedLibAreaComponent } from './shared/java-shared-lib-area/java-shared-lib-area.component';
+import { LibAreaComponent } from './shared/lib-area/lib-area.component';
 import { MemberAreaComponent } from './shared/member-area/member-area.component';
-import { ServiceAreaComponent } from './datatype/service-area/service-area.component';
-import { MethodDetailsComponent } from './datatype/method-details/method-details.component';
+import { TypeDocumentComponent } from './type-document.component';
 import { DropIndicatorComponent } from './workflow/drop-indicator/drop-indicator.component';
 
 
@@ -40,7 +40,7 @@ import { DropIndicatorComponent } from './workflow/drop-indicator/drop-indicator
     styleUrls: ['./servicegroup.component.scss'],
     // single service instances per document
     providers: [SelectionService],
-    imports: [I18nModule, TypeInfoAreaComponent, LibAreaComponent, JavaSharedLibAreaComponent, MemberAreaComponent, ServiceAreaComponent, MethodDetailsComponent, DropIndicatorComponent]
+    imports: [XcI18nContextDirective, TypeInfoAreaComponent, LibAreaComponent, JavaSharedLibAreaComponent, MemberAreaComponent, ServiceAreaComponent, MethodDetailsComponent, DropIndicatorComponent]
 })
 export class ServiceGroupComponent extends TypeDocumentComponent<ServiceGroupDocumentModel> {
 

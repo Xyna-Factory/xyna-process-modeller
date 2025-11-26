@@ -17,19 +17,21 @@
  */
 import { Component } from '@angular/core';
 
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n/i18n.directive';
+import { XcIconButtonComponent } from '../../../../../zeta/xc/xc-button/xc-icon-button.component';
+import { XcFormLabelComponent } from '../../../../../zeta/xc/xc-form/xc-form-label/xc-form-label.component';
+import { XcTooltipDirective } from '../../../../../zeta/xc/xc-tooltip/xc-tooltip.directive';
 import { XoInsertFilterCriterionRequest } from '../../../xo/insert-filter-criterion-request.model';
 import { XoInsertRequest } from '../../../xo/insert-request.model';
-import { FormulaAreaComponent } from './formula-area.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 import { FormulaComponent } from '../formula/formula.component';
+import { FormulaAreaComponent } from './formula-area.component';
 
 
 @Component({
     selector: 'filter-criterion-area',
     templateUrl: './formula-area.component.html',
     styleUrls: ['./formula-area.component.scss'],
-    imports: [XcModule, I18nModule, FormulaComponent]
+    imports: [XcFormLabelComponent, XcI18nTranslateDirective, XcI18nContextDirective, FormulaComponent, XcIconButtonComponent, XcTooltipDirective]
 })
 export class FilterCriterionAreaComponent extends FormulaAreaComponent {
 

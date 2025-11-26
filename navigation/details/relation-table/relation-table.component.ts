@@ -20,8 +20,11 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import { XMOMListComponent } from '@pmod/navigation/xmom/xmom-list.component';
 import { XoFactoryItemArray } from '@pmod/xo/factory-item.model';
 import { RelationTypeEnum, XoGetXmomRelationsResponse } from '@pmod/xo/get-xmom-relations-response.model';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
+
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n/i18n.directive';
+import { XcI18nPipe } from '../../../../../zeta/i18n/i18n.pipe';
+import { XcIconButtonComponent } from '../../../../../zeta/xc/xc-button/xc-icon-button.component';
+import { XcTooltipDirective } from '../../../../../zeta/xc/xc-tooltip/xc-tooltip.directive';
 import { XMOMListComponent as XMOMListComponent_1 } from '../../xmom/xmom-list.component';
 
 
@@ -35,7 +38,7 @@ export interface RelationGroup {
     selector: 'relation-table',
     templateUrl: './relation-table.component.html',
     styleUrls: ['./relation-table.component.scss'],
-    imports: [I18nModule, XcModule, XMOMListComponent_1]
+    imports: [XcI18nTranslateDirective, XcIconButtonComponent, XcTooltipDirective, XMOMListComponent_1, XcI18nContextDirective, XcI18nPipe]
 })
 export class RelationTableComponent {
     @ViewChild(XMOMListComponent, { static: true })

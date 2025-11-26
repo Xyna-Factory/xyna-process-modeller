@@ -22,10 +22,18 @@ import { XcAutocompleteDataWrapper, XcDialogComponent, XcFormDirective, XcOption
 
 import { Observable } from 'rxjs';
 
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n/i18n.directive';
+import { XcButtonComponent } from '../../../../../zeta/xc/xc-button/xc-button.component';
+import { XcCheckboxComponent } from '../../../../../zeta/xc/xc-checkbox/xc-checkbox.component';
+import { XcDialogWrapperComponent } from '../../../../../zeta/xc/xc-dialog/xc-dialog-wrapper.component';
+import { XcFormAutocompleteComponent } from '../../../../../zeta/xc/xc-form/xc-form-autocomplete/xc-form-autocomplete.component';
+import { XcFormValidatorRequiredDirective } from '../../../../../zeta/xc/xc-form/xc-form-base/xc-form-validators.directive';
+import { XcFormDirective as XcFormDirective_1 } from '../../../../../zeta/xc/xc-form/xc-form-base/xc-form.directive';
+import { XcFormInputComponent } from '../../../../../zeta/xc/xc-form/xc-form-input/xc-form-input.component';
+import { XcTooltipDirective } from '../../../../../zeta/xc/xc-tooltip/xc-tooltip.directive';
+import { BranchComponent } from '../../../document/workflow/distinction/branch/branch.component';
 import { labelPathDialog_translations_de_DE } from './locale/label-path-dialog-translations.de-DE';
 import { labelPathDialog_translations_en_US } from './locale/label-path-dialog-translations.en-US';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 export interface LabelPathDialogResult {
@@ -49,7 +57,7 @@ export interface LabelPathDialogData {
 @Component({
     templateUrl: './label-path-dialog.component.html',
     styleUrls: ['./label-path-dialog.component.scss'],
-    imports: [XcModule, I18nModule]
+    imports: [XcDialogWrapperComponent, XcI18nContextDirective, XcFormDirective_1, XcFormInputComponent, XcI18nTranslateDirective, XcFormValidatorRequiredDirective, XcFormAutocompleteComponent, XcTooltipDirective, XcCheckboxComponent, XcButtonComponent, BranchComponent]
 })
 export class LabelPathDialogComponent extends XcDialogComponent<LabelPathDialogResult, LabelPathDialogData> {
 

@@ -23,6 +23,10 @@ import { RuntimeContext, Xo } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcMenuItem } from '@zeta/xc';
 
+import { XcIconButtonComponent } from '../../../../../zeta/xc/xc-button/xc-icon-button.component';
+import { XcMenuTriggerDirective } from '../../../../../zeta/xc/xc-menu/xc-menu-trigger.directive';
+import { XcMenuServiceDirective } from '../../../../../zeta/xc/xc-menu/xc-menu.service';
+import { XcTooltipDirective } from '../../../../../zeta/xc/xc-tooltip/xc-tooltip.directive';
 import { XmomObjectType } from '../../../api/xmom-types';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { LabelPathDialogComponent, LabelPathDialogData } from '../../../misc/modal/label-path-dialog/label-path-dialog.component';
@@ -44,17 +48,17 @@ import { DocumentService } from '../../document.service';
 import { CONSTANT_DIALOG_DELETE_TOKEN, ConstantDialogComponent, ConstantDialogData } from '../../modal/constant-dialog/constant-dialog.component';
 import { SelectionService } from '../../selection.service';
 import { BranchSelectionService } from '../distinction/branch/branch-selection.service';
-import { ModDropEvent, ModDropAreaDirective } from '../shared/drag-and-drop/mod-drop-area.directive';
-import { SelectableModellingObjectComponent } from '../shared/selectable-modelling-object.component';
+import { BranchComponent } from '../distinction/branch/branch.component';
+import { ModDropAreaDirective, ModDropEvent } from '../shared/drag-and-drop/mod-drop-area.directive';
 import { ModContentEditableDirective } from '../shared/mod-content-editable.directive';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { SelectableModellingObjectComponent } from '../shared/selectable-modelling-object.component';
 
 
 @Component({
     selector: 'variable',
     templateUrl: './variable.component.html',
     styleUrls: ['./variable.component.scss'],
-    imports: [ModDropAreaDirective, ModContentEditableDirective, XcModule]
+    imports: [ModDropAreaDirective, ModContentEditableDirective, XcTooltipDirective, XcMenuServiceDirective, XcIconButtonComponent, XcMenuTriggerDirective, BranchComponent]
 })
 export class VariableComponent extends SelectableModellingObjectComponent {
 

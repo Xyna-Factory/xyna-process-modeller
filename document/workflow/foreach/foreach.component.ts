@@ -19,23 +19,26 @@ import { Component, ElementRef, HostBinding, Injector, Input, Optional } from '@
 
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 
+import { XcIconButtonComponent } from '../../../../../zeta/xc/xc-button/xc-icon-button.component';
+import { XcMenuTriggerDirective } from '../../../../../zeta/xc/xc-menu/xc-menu-trigger.directive';
+import { XcMenuServiceDirective } from '../../../../../zeta/xc/xc-menu/xc-menu.service';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoForeach } from '../../../xo/foreach.model';
 import { XoRequest } from '../../../xo/request.model';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
-import { ModellingItemComponent } from '../shared/modelling-object.component';
-import { VariableComponent } from '../variable/variable.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { ContentAreaComponent } from '../content-area/content-area.component';
+import { BranchComponent } from '../distinction/branch/branch.component';
+import { ModellingItemComponent } from '../shared/modelling-object.component';
 import { VariableAreaServiceComponent } from '../variable-area/variable-area-service.component';
+import { VariableComponent } from '../variable/variable.component';
 
 
 @Component({
     selector: 'foreach',
     templateUrl: './foreach.component.html',
     styleUrls: ['./foreach.component.scss'],
-    imports: [VariableComponent, XcModule, ContentAreaComponent, VariableAreaServiceComponent]
+    imports: [VariableComponent, XcMenuServiceDirective, XcIconButtonComponent, XcMenuTriggerDirective, ContentAreaComponent, VariableAreaServiceComponent, BranchComponent]
 })
 export class ForeachComponent extends ModellingItemComponent {
 

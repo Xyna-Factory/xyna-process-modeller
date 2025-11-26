@@ -20,15 +20,15 @@ import { Component, Input } from '@angular/core';
 
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 
+import { XcI18nPipe } from '../../../../../zeta/i18n/i18n.pipe';
 import { SelectableModellingObjectComponent } from '../../workflow/shared/selectable-modelling-object.component';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 @Component({
     selector: 'details-item',
     templateUrl: './details-item.component.html',
     styleUrls: ['./details-item.component.scss'],
-    imports: [I18nModule]
+    imports: [XcI18nPipe]
 })
 export class DetailsItemComponent extends SelectableModellingObjectComponent {
 

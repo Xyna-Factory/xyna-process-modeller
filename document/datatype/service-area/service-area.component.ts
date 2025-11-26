@@ -19,6 +19,7 @@ import { Component, ElementRef, Injector, Input, Optional } from '@angular/core'
 
 import { XoDeleteRequest } from '@pmod/xo/delete-request.model';
 
+import { XcIconButtonComponent } from '../../../../../zeta/xc/xc-button/xc-icon-button.component';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
 import { XoDataType } from '../../../xo/data-type.model';
@@ -31,18 +32,17 @@ import { XoStaticMethod } from '../../../xo/static-method.model';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { ModRelativeHoverSide } from '../../workflow/shared/drag-and-drop/mod-drag-and-drop.service';
-import { ModDragEvent, ModDropEvent, ModDropAreaDirective } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
+import { ModDraggableDirective } from '../../workflow/shared/drag-and-drop/mod-draggable.directive';
+import { ModDragEvent, ModDropAreaDirective, ModDropEvent } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { MemberServiceComponent } from '../member-service/member-service.component';
-import { ModDraggableDirective } from '../../workflow/shared/drag-and-drop/mod-draggable.directive';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 @Component({
     selector: 'service-area',
     templateUrl: './service-area.component.html',
     styleUrls: ['./service-area.component.scss'],
-    imports: [ModDropAreaDirective, MemberServiceComponent, ModDraggableDirective, XcModule]
+    imports: [ModDropAreaDirective, MemberServiceComponent, ModDraggableDirective, XcIconButtonComponent]
 })
 export class ServiceAreaComponent extends ModellingObjectComponent {
 

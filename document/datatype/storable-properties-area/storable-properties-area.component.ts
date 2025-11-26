@@ -21,12 +21,12 @@ import { ApiService } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
 import { XcLocalTableDataSource } from '@zeta/xc';
 
+import { XcTableComponent } from '../../../../../zeta/xc/xc-table/xc-table.component';
 import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
 import { XoStorablePropertyArea } from '../../../xo/storable-property-area.model';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 @Component({
@@ -34,7 +34,7 @@ import { XcModule } from '../../../../../zeta/xc/xc.module';
     templateUrl: './storable-properties-area.component.html',
     styleUrls: ['./storable-properties-area.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule]
+    imports: [XcTableComponent]
 })
 export class StorablePropertiesAreaComponent extends ModellingObjectComponent {
 

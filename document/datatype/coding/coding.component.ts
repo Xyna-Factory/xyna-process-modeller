@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,19 +17,18 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import * as monaco from 'monaco-editor';
+import { EditorComponent } from 'ngx-monaco-editor-v2';
 
 import { XoMethod } from '../../../xo/method.model';
-import { EditorComponent } from 'ngx-monaco-editor-v2';
-import { NgClass } from '@angular/common';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 @Component({
     selector: 'coding',
     templateUrl: './coding.component.html',
-    styleUrls: ['./coding.component.scss'],
-    imports: [EditorComponent, NgClass, ReactiveFormsModule, FormsModule]
+    styleUrls: ['./coding.component.scss']
 })
 export class CodingComponent {
 

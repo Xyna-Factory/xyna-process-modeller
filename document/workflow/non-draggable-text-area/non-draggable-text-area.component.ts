@@ -17,13 +17,15 @@
  */
 import { AfterViewInit, Component, HostListener, Input } from '@angular/core';
 
+import { BranchComponent } from '../distinction/branch/branch.component';
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
 
 
 @Component({
     selector: 'non-draggable-text-area',
     templateUrl: './non-draggable-text-area.component.html',
-    styleUrls: ['./non-draggable-text-area.component.scss']
+    styleUrls: ['./non-draggable-text-area.component.scss'],
+    imports: [BranchComponent]
 })
 export class NonDraggableTextAreaComponent extends ModellingObjectComponent implements AfterViewInit {
 

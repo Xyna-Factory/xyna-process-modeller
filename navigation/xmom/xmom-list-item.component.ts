@@ -25,8 +25,15 @@ import { XcDialogService, XcMenuItem } from '@zeta/xc';
 
 import { filter } from 'rxjs/operators';
 
+import { XcI18nTranslateDirective } from '../../../../zeta/i18n/i18n.directive';
+import { XcIconButtonComponent } from '../../../../zeta/xc/xc-button/xc-icon-button.component';
+import { XcIconComponent } from '../../../../zeta/xc/xc-icon/xc-icon.component';
+import { XcMenuTriggerDirective } from '../../../../zeta/xc/xc-menu/xc-menu-trigger.directive';
+import { XcMenuServiceDirective } from '../../../../zeta/xc/xc-menu/xc-menu.service';
+import { XcTooltipDirective } from '../../../../zeta/xc/xc-tooltip/xc-tooltip.directive';
 import { XmomObjectType } from '../../api/xmom-types';
 import { DocumentService } from '../../document/document.service';
+import { BranchComponent } from '../../document/workflow/distinction/branch/branch.component';
 import { XoData } from '../../xo/data.model';
 import { XoDynamicMethodInvocation } from '../../xo/dynamic-method-invocation.model';
 import { XoException } from '../../xo/exception.model';
@@ -36,15 +43,13 @@ import { XoStaticMethodInvocation } from '../../xo/static-method-invocation.mode
 import { XoWorkflowInvocation } from '../../xo/workflow-invocation.model';
 import { XoWorkflow } from '../../xo/workflow.model';
 import { XoXmomItem } from '../../xo/xmom-item.model';
-import { XcModule } from '../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../zeta/i18n/i18n.module';
 
 
 @Component({
     selector: 'xfm-mod-nav-xmomlistitem',
     templateUrl: './xmom-list-item.component.html',
     styleUrls: ['./xmom-list-item.component.scss'],
-    imports: [XcModule, I18nModule]
+    imports: [XcIconComponent, XcMenuServiceDirective, XcIconButtonComponent, XcMenuTriggerDirective, XcI18nTranslateDirective, XcTooltipDirective, BranchComponent]
 })
 export class XMOMListItemComponent {
 

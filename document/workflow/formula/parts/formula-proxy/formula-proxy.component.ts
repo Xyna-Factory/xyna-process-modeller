@@ -16,20 +16,20 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+
 import { XoFormula } from '@pmod/xo/formula.model';
 import { FormulaFunctionGroup, FormulaPartFunction } from '@pmod/xo/util/formula-parts/formula-part-function';
-
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent } from '@zeta/xc';
-import { FormulaChildComponent } from '../formula-part.component';
-import { XcModule } from '../../../../../../../zeta/xc/xc.module';
 
+import { XcFormAutocompleteComponent as XcFormAutocompleteComponent_1 } from '../../../../../../../zeta/xc/xc-form/xc-form-autocomplete/xc-form-autocomplete.component';
+import { FormulaChildComponent } from '../formula-part.component';
 
 
 @Component({
     selector: 'formula-proxy',
     templateUrl: './formula-proxy.component.html',
     styleUrls: ['./formula-proxy.component.scss'],
-    imports: [XcModule]
+    imports: [XcFormAutocompleteComponent_1]
 })
 export class FormulaProxyComponent implements AfterViewInit, FormulaChildComponent {
 

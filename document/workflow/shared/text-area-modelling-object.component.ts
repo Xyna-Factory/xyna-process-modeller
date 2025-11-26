@@ -20,13 +20,17 @@ import { Component, HostListener } from '@angular/core';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeTextRequest } from '../../../xo/change-text-request.model';
 import { XoTextArea } from '../../../xo/text-area.model';
+import { BranchComponent } from '../distinction/branch/branch.component';
 import { ModellingObjectComponent } from './modelling-object.component';
 
 
 /**
  * Base class for all components, text-actions can be done on
  */
-@Component({ template: '' })
+@Component({
+    template: '',
+    imports: [BranchComponent]
+})
 export class TextAreaModellingObjectComponent extends ModellingObjectComponent {
 
     getTextArea(): XoTextArea {

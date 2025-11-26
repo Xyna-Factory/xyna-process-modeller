@@ -19,12 +19,13 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Inje
 
 import { XoGlobalStorablePropertyArea } from '@pmod/xo/global-storable-property-area.model';
 
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n/i18n.directive';
+import { XcCheckboxComponent } from '../../../../../zeta/xc/xc-checkbox/xc-checkbox.component';
+import { XcFormLabelComponent } from '../../../../../zeta/xc/xc-form/xc-form-label/xc-form-label.component';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { WorkflowDetailLevelService } from '../../workflow-detail-level.service';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 @Component({
@@ -32,7 +33,7 @@ import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
     templateUrl: './global-storable-properties-area.component.html',
     styleUrls: ['./global-storable-properties-area.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, I18nModule]
+    imports: [XcFormLabelComponent, XcI18nTranslateDirective, XcCheckboxComponent]
 })
 export class GlobalStorablePropertiesAreaComponent extends ModellingObjectComponent {
 

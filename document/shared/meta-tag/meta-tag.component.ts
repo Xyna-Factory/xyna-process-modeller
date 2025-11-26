@@ -15,21 +15,25 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, inject, Input} from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+
 import { ModellingActionType } from '@pmod/api/xmom.service';
 import { ModellingItemComponent } from '@pmod/document/workflow/shared/modelling-object.component';
 import { XoChangeMetaTagRequest } from '@pmod/xo/change-meta-tag-request.model';
 import { XoDeleteRequest } from '@pmod/xo/delete-request.model';
 import { XoMetaTag } from '@pmod/xo/meta-tag.model';
+
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n/i18n.directive';
+import { XcIconButtonComponent } from '../../../../../zeta/xc/xc-button/xc-icon-button.component';
+import { XcTooltipDirective } from '../../../../../zeta/xc/xc-tooltip/xc-tooltip.directive';
 import { ModContentEditableDirective } from '../../workflow/shared/mod-content-editable.directive';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+
 
 @Component({
     selector: 'meta-tag',
     templateUrl: './meta-tag.component.html',
     styleUrls: ['./meta-tag.component.scss'],
-    imports: [ModContentEditableDirective, XcModule, I18nModule]
+    imports: [ModContentEditableDirective, XcTooltipDirective, XcIconButtonComponent, XcI18nTranslateDirective]
 })
 export class MetaTagComponent extends ModellingItemComponent {
 

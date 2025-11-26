@@ -17,10 +17,11 @@
  */
 import { Component, HostBinding, Input } from '@angular/core';
 
+import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n/i18n.directive';
 import { XoExceptionHandling } from '../../../../xo/exception-handling.model';
-import { ModellingItemComponent } from '../../shared/modelling-object.component';
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
 import { ContentAreaComponent } from '../../content-area/content-area.component';
+import { BranchComponent } from '../../distinction/branch/branch.component';
+import { ModellingItemComponent } from '../../shared/modelling-object.component';
 import { ItemBarAreaComponent } from '../item-bar-area/item-bar-area.component';
 
 
@@ -28,7 +29,7 @@ import { ItemBarAreaComponent } from '../item-bar-area/item-bar-area.component';
     selector: 'exception-handling',
     templateUrl: './exception-handling.component.html',
     styleUrls: ['./exception-handling.component.scss', '../../common.scss'],
-    imports: [I18nModule, ContentAreaComponent, ItemBarAreaComponent]
+    imports: [XcI18nTranslateDirective, ContentAreaComponent, ItemBarAreaComponent, BranchComponent]
 })
 export class ExceptionHandlingComponent extends ModellingItemComponent {
 
