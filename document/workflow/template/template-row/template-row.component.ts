@@ -145,7 +145,7 @@ export class TemplateRowComponent extends ModellingObjectComponent {
 
 
     @HostListener('click', ['$event.target'])
-    private selectRow(target: Element) {
+    public selectRow(target: Element) {
         const hitStart = target === this.lineNumberElement.nativeElement;
         const hitEnd = target === this.elementRef.nativeElement || target === this.dropArea.elementRef.nativeElement;
         if (hitStart && this.row.templateParts.length > 0) {

@@ -24,7 +24,7 @@ import { RouteComponent, RuntimeContextSelectionComponent } from '@zeta/nav';
 import { QueryParameterService } from '@zeta/nav/query-parameter.service';
 import { XcDialogService, XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 
-import { Subject, Subscription } from 'rxjs';
+import { ReplaySubject, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
 import { XmomObjectType } from './api/xmom-types';
@@ -63,7 +63,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
     private urlProcessed = false;
 
     private _tabBar: XcTabBarComponent;
-    private readonly _tabBarInitialized = new Subject();
+    private _tabBarInitialized = new ReplaySubject<XcTabBarComponent>(1);
 
     private openedDefaultWorkflow = false;
 
@@ -78,8 +78,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
     @ViewChild(XcTabBarComponent, { static: false })
     set tabBar(value: XcTabBarComponent) {
         this._tabBar = value;
-        this._tabBarInitialized.next(null);
-        this._tabBarInitialized.complete();
+        this._tabBarInitialized.next(value);
     }
 
     get tabBar(): XcTabBarComponent {
@@ -127,7 +126,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
                 }
                 // close tabs whose documents have been already closed
                 const closeDocumentList = this.tabBar?.items.filter(item =>
-                    !documents.find(document => document === item.data)
+                    !documents.includes(item.data)
                 ) ?? [];
                 closeDocumentList.forEach(document => this.tabBar.close(document).subscribe());
             };
@@ -252,6 +251,8 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
 
     ngOnDestroy() {
         this.outsideListenerService.removeAllOutsideListenerFromElement(<HTMLElement><unknown>window);
+        this.runtimeContextChangeSubscription?.unsubscribe();
+
     }
 
 
@@ -304,6 +305,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
                 )
             );
         }
+
         if (this.documentService.selectedDocument) {
             this.documentService.selectedDocument.tabActive = true;
         }
@@ -377,7 +379,8 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
 
 
     changeTab(event: XcTabBarItem<DocumentModel>) {
-        this.documentService.selectedDocument = event ? event.data : null;
+        if (!event) return;
+        this.documentService.selectedDocument = event.data;
     }
 
 
@@ -386,21 +389,16 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
      * Any existing query params are being destroyed in the process.
      */
     private transformUrl() {
-        if (!this.urlProcessed) {
-            return;
-        }
-
-        let i = 1;
-
-        // not all tabs - only the selected document
-        // const tabs = this._tabBar.items;
-        const tabs: XcTabBarItem[] = [{ data: this.documentService.selectedDocument, component: null }];
+        if (!this.urlProcessed) return;
 
         this.queryParamService.removeParamsStartWith('tab');
 
+        let i = 1;
+        const tabs: XcTabBarItem[] = this.tabBar?.items || [];
+
         tabs.forEach(item => {
             const doc = item.data as DocumentModel;
-            if (!!doc && doc.item.saved) {
+            if (doc?.item.saved) {
                 this.queryParamService.add('tab' + i++, doc.item.toQueryValue());
             }
         });

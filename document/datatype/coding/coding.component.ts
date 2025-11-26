@@ -119,16 +119,103 @@ export class CodingComponent {
     @Output()
     readonly implementationChange = new EventEmitter<string>();
 
-    private updateEditor() {
-        const editor = this.isPython ? this.pythonEditor : this.javaEditor;
+    constructor() {
+        this.resizeObserver = new ResizeObserver(() => {
+            const editor = this.isPython ? this.pythonEditor : this.javaEditor;
+            editor?.layout();
+        });
+    }
 
-        if (!editor) {
-            setTimeout(() => this.updateEditor(), 20);
-            return;
+    // ---------------------------------------------------------------------
+    // LIFECYCLE
+    // ---------------------------------------------------------------------
+
+    async ngAfterViewInit() {
+        await this.lazyLoadMonaco();
+        await this.createEditors();
+        this.resizeObserver.observe(this.elementRef.nativeElement);
+    }
+
+    ngOnDestroy() {
+        this.resizeObserver.disconnect();
+        this.javaEditor?.dispose();
+        this.pythonEditor?.dispose();
+    }
+
+    // ---------------------------------------------------------------------
+    // LAZY LOAD MONACO
+    // ---------------------------------------------------------------------
+
+    private async lazyLoadMonaco() {
+        if (this.monacoLoaded) return;
+        const monacoPkg = await import('monaco-editor');
+        this.monaco = monacoPkg;
+        this.monacoLoaded = true;
+    }
+
+    // ---------------------------------------------------------------------
+    // EDITOR ERSTELLUNG
+    // ---------------------------------------------------------------------
+
+    private async createEditors() {
+        if (!this.monacoLoaded) return;
+
+        // Java Editor
+        if (this.javaEditorContainer) {
+            this.javaEditor = this.monaco.editor.create(this.javaEditorContainer.nativeElement, {
+                theme: 'vs-dark',
+                language: 'java',
+                scrollBeyondLastLine: false,
+                readOnly: this.readonly,
+                minimap: { enabled: true },
+                automaticLayout: false,
+                fontSize: 13,
+                lineNumbers: 'on',
+                folding: true
+            });
+            this.javaEditor.onDidBlurEditorWidget(() => {
+                if (!this.readonly && this.javaEditor.getValue() !== this.implementation) {
+                    this.codingBlur(this.javaEditor.getValue());
+                }
+            });
         }
 
-        if (this.method) {
-            if (this.isPython) {
+        // Python Editor
+        if (this.pythonEditorContainer) {
+            this.pythonEditor = this.monaco.editor.create(this.pythonEditorContainer.nativeElement, {
+                theme: 'vs-dark',
+                language: 'python',
+                scrollBeyondLastLine: false,
+                readOnly: this.readonly,
+                minimap: { enabled: true },
+                automaticLayout: false,
+                fontSize: 13,
+                lineNumbers: 'on',
+                folding: true
+            });
+            this.pythonEditor.onDidBlurEditorWidget(() => {
+                if (!this.readonly && this.pythonEditor.getValue() !== this.implementation) {
+                    this.codingBlur(this.pythonEditor.getValue());
+                }
+            });
+        }
+
+        this.updateEditor(true);
+    }
+
+    // ---------------------------------------------------------------------
+    // UPDATE / LAYOUT
+    // ---------------------------------------------------------------------
+
+    private updateEditor(initial = false) {
+        if (!this.method) return;
+
+        const isPy = this.isPython;
+
+        // Python Editor
+        if (isPy && this.pythonEditor) {
+            // nur initial setzen oder wenn Wert unterschiedlich
+            if (initial || this.pythonEditor.getValue() !== this.implementation) {
                 this.pythonCode = this.implementation;
                 this.pythonEditorOptions.readOnly = this.readonly;
                 this.pythonEditor.updateOptions(this.pythonEditorOptions);

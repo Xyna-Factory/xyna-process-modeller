@@ -69,7 +69,7 @@ export class CaseComponent extends ModellingItemComponent {
 
 
     @HostListener('keydown.enter', ['$event.target'])
-    private onKeydownEnter(target: any) {
+    public onKeydownEnter(target: any) {
         if (target.blur) {
             target.blur();
         }

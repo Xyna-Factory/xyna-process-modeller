@@ -63,10 +63,10 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
      * Collapsed state of this modelling object (concerns both, item (e. g. variable) and area)
      */
     @HostBinding('class.collapsed')
-    private _collapsed = false;
+    public _collapsed = false;
 
     @HostBinding('class.locked')
-    private _locked = false;
+    public _locked = false;
 
     private _model: XoReferableObject;
     private _menuItems: XcMenuItem[] = [];
