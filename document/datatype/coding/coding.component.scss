@@ -30,18 +30,6 @@
         min-height: 0;
         position: relative;
         transition: opacity 0.3s ease;
-
-        .monaco-editor {
-            width: 100% !important;
-            height: 100% !important;
-            display: flex;
-            flex: 1 1 auto;
-
-            .overflow-guard {
-                width: 100% !important;
-                height: 100% !important;
-            }
-        }
     }
 
     .editor-hide {
@@ -49,13 +37,5 @@
         pointer-events: none;
         position: relative;
         display: none;
-    }
-
-    /* Der eigentliche Monaco-Canvas */
-    .monaco-editor,
-    .monaco-editor-background,
-    .monaco-editor .overflow-guard {
-        width: 100% !important;
-        height: 100% !important;
     }
 }

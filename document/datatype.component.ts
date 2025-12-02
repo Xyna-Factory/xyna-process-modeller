@@ -49,7 +49,7 @@ export class DataTypeComponent extends TypeDocumentComponent<DataTypeDocumentMod
     overriddenServicesCollapsed = false;
     memberServicesCollapsed = false;
 
-    minimized = this.minmaxService.minimized;
+    maximizedImplementation = this.minmaxService.maximizedImplementation;
 
     constructor(injector: Injector) {
         super(injector);

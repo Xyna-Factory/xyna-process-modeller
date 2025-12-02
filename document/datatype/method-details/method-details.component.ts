@@ -167,12 +167,12 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
 
 
     private updateTabBarItemList() {
-        if (this.minMaxService.minimized()) {
-            this.baseTabItem.disabled = false;
-            this.metaTabItem.disabled = false;
-        } else {
+        if (this.minMaxService.maximizedImplementation()) {
             this.baseTabItem.disabled = true;
             this.metaTabItem.disabled = true;
+        } else {
+            this.baseTabItem.disabled = false;
+            this.metaTabItem.disabled = false;
         }
 
         this.cdr.markForCheck();

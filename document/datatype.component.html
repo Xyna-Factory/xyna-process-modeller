@@ -1,5 +1,5 @@
 <div class="area-wrapper" xc-i18n-context="datatype">
-  <div class="datatype-header" [class.minimized]="!minimized()">
+  <div class="datatype-header" [class.minimized]="maximizedImplementation()">
     <div class="type-info-area">
       <type-info-area xc-i18n-context="type-info-area" [typeInfoArea]="dataType.typeInfoArea"
         (triggerAction)="performModellingAction($event)" [documentModel]="document" [showConverterButton]="true"
@@ -15,7 +15,7 @@
   </div>
 
   <div class="datatype-body">
-    <section class="members" [class.minimized]="!minimized()">
+    <section class="members" [class.minimized]="maximizedImplementation()">
       <!-- Datatype Details -->
       <div class="detail-items">
         <details-item icon="mini-datatype" [detailsItem]="detailsItem"></details-item>

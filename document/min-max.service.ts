@@ -21,13 +21,13 @@ import { computed, Injectable, signal } from '@angular/core';
 @Injectable()
 export class MinMaxService {
 
-    minimized = signal(true);
+    maximizedImplementation = signal(false);
 
     toggle() {
-        this.minimized.update(v => !v);
+        this.maximizedImplementation.update(v => !v);
     }
 
-    icon = computed(() => this.minimized() ? 'maximize' : 'minimize');
+    icon = computed(() => this.maximizedImplementation() ? 'minimize' : 'maximize');
 
-    tooltip = computed(() => this.minimized() ? 'maximize' : 'minimize');
+    tooltip = computed(() => this.maximizedImplementation() ? 'minimize' : 'maximize');
 }
