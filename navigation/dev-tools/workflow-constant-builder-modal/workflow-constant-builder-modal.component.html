@@ -1,26 +1,15 @@
 <xc-dialog-wrapper xc-i18n-context="pmod.workflow-constant-builder-modal">
-    <ng-container header xc-i18n><span xc-i18n>header</span></ng-container>
+    <ng-container header><span xc-i18n>header</span></ng-container>
     <section content>
 
         <xc-panel class="compact">
             <div class="items-row grid-12">
-                <xc-form-input
-                class="col-6"
-                xc-i18n
-                label="label-const-name"
-                xc-form-field-suffix="clear"
-                [(value)]="constName"
-            ></xc-form-input>
-            <xc-form-autocomplete
-                class="col-6"
-                label="label-runtime-context"
-                xc-i18n
-                placeholder="placeholder-select"
-                [(xc-form-autocomplete-option)]="rtcDataWrapper.value"
-                [xc-form-autocomplete-options]="rtcDataWrapper.values"
-                xc-form-autocomplete-fulltextsearch
-                xc-form-field-suffix="clear"
-            ></xc-form-autocomplete>
+                <xc-form-input class="col-6" xc-i18n label="label-const-name" xc-form-field-suffix="clear"
+                    [(value)]="constName"></xc-form-input>
+                <xc-form-autocomplete class="col-6" label="label-runtime-context" xc-i18n
+                    placeholder="placeholder-select" [(xc-form-autocomplete-option)]="rtcDataWrapper.value"
+                    [xc-form-autocomplete-options]="rtcDataWrapper.values" xc-form-autocomplete-fulltextsearch
+                    xc-form-field-suffix="clear"></xc-form-autocomplete>
             </div>
         </xc-panel>
 
@@ -31,18 +20,15 @@
                 <h3 xc-i18n>header2</h3>
             </header>
             <section>
-                <xc-form-textarea
-                    label="label-criteria"
-                    xc-i18n
-                    [(value)]="searchCriteria"
-                    xc-form-textarea-lines="5"
-                ></xc-form-textarea>
+                <xc-form-textarea label="label-criteria" xc-i18n [(value)]="searchCriteria"
+                    xc-form-textarea-lines="5"></xc-form-textarea>
             </section>
         </xc-panel>
 
     </section>
     <ng-container footer>
         <xc-button (click)="dismiss(null)" xc-i18n>button-cancel</xc-button>
-        <xc-button (click)="build()" color="primary" [busy]="building" [disabled]="building" xc-i18n>button-build</xc-button>
+        <xc-button (click)="build()" color="primary" [busy]="building" [disabled]="building"
+            xc-i18n>button-build</xc-button>
     </ng-container>
 </xc-dialog-wrapper>
