@@ -15,11 +15,9 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, inject, Input, Output } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, inject, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 
-import * as monaco from 'monaco-editor';
-
-import { XoMethod } from '../../../xo/method.model';
+import { XoMethod } from '@pmod/xo/method.model';
 
 
 @Component({
@@ -28,71 +26,44 @@ import { XoMethod } from '../../../xo/method.model';
     styleUrls: ['./coding.component.scss'],
     standalone: false
 })
-export class CodingComponent {
+export class CodingComponent implements AfterViewInit, OnDestroy {
+
+    @ViewChild('javaEditorContainer', { static: false }) javaEditorContainer!: ElementRef;
+    @ViewChild('pythonEditorContainer', { static: false }) pythonEditorContainer!: ElementRef;
 
     private readonly cdr = inject(ChangeDetectorRef);
     private readonly elementRef = inject(ElementRef);
 
     private resizeObserver: ResizeObserver;
 
-    constructor() {
-        this.resizeObserver = new ResizeObserver(() => {
-            const editor = this.isPython ? this.pythonEditor : this.javaEditor;
-            editor?.layout();
-        });
-    }
+    private javaEditor: any = null;
+    private pythonEditor: any = null;
 
-    ngAfterViewInit() {
-        this.resizeObserver.observe(this.elementRef.nativeElement);
-    }
+    private monaco: any = null;
+    private monacoLoaded = false;
 
-    ngOnDestroy() {
-        this.resizeObserver.disconnect();
-    }
+    javaCode = '';
+    pythonCode = '';
 
-    private _method: XoMethod;
-    private javaEditor: monaco.editor.IStandaloneCodeEditor;
-    private pythonEditor: monaco.editor.IStandaloneCodeEditor;
-
-    javaCode: string;
-    pythonCode: string;
-
-    readonly javaEditorOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
-        theme: 'vs-dark',
-        language: 'java',
-        scrollBeyondLastLine: false,
-        readOnly: false,
-        automaticLayout: false,
-        lineNumbers: 'on',
-        minimap: { enabled: true },
-        wordWrap: 'off',
-        folding: true,
-        fontSize: 13,
-        renderWhitespace: 'none'
-    };
-
-    readonly pythonEditorOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
-        theme: 'vs-dark',
-        language: 'python',
-        scrollBeyondLastLine: false,
-        readOnly: false,
-        automaticLayout: false,
-        lineNumbers: 'on',
-        minimap: { enabled: true },
-        wordWrap: 'off',
-        folding: true,
-        fontSize: 13,
-        renderWhitespace: 'none'
-    };
+    private _method: XoMethod | null = null;
 
     @Input()
     set method(value: XoMethod) {
+        if (value === this._method) return;
         this._method = value;
-        this.updateEditor();
+        this.updateEditor(true);
     }
 
     get method(): XoMethod {
         return this._method;
+    }
+
+    @Input() readonly = false;
+
+    @Output() readonly implementationChange = new EventEmitter<string>();
+
+    get implementation(): string {
+        return this.method ? this.method.implementationArea.text : '';
     }
 
     set implementation(value: string) {
@@ -101,69 +72,150 @@ export class CodingComponent {
         }
     }
 
-    get implementation(): string {
-        return this.method ? this.method.implementationArea.text : '';
-    }
-
-    @Input()
-    readonly: boolean;
-
-    get isAbstract(): boolean {
-        return this.method ? this.method.implementationType === XoMethod.IMPL_TYPE_ABSTRACT : true;
-    }
-
     get isPython(): boolean {
         return this.method?.implementationType === XoMethod.IMPL_TYPE_CODED_SERVICE_PYTHON;
     }
 
-    @Output()
-    readonly implementationChange = new EventEmitter<string>();
+    get isAbstract(): boolean {
+        return this.method?.implementationType === XoMethod.IMPL_TYPE_ABSTRACT;
+    }
 
-    private updateEditor() {
-        const editor = this.isPython ? this.pythonEditor : this.javaEditor;
+    constructor() {
+        this.resizeObserver = new ResizeObserver(() => {
+            const editor = this.isPython ? this.pythonEditor : this.javaEditor;
+            setTimeout(() => editor?.layout(), 0);
+        });
+    }
 
-        if (!editor) {
-            setTimeout(() => this.updateEditor(), 20);
-            return;
-        }
+    // ---------------------------------------------------------------------
+    // LIFECYCLE
+    // ---------------------------------------------------------------------
 
-        if (this.method) {
-            if (this.isPython) {
-                this.pythonCode = this.implementation;
-                this.pythonEditorOptions.readOnly = this.readonly;
-                this.pythonEditor.updateOptions(this.pythonEditorOptions);
-            } else {
-                this.javaCode = this.isAbstract ? '/* Abstract Method */' : this.implementation;
-                this.javaEditorOptions.readOnly = this.readonly;
-                this.javaEditor.updateOptions(this.javaEditorOptions);
+    async ngAfterViewInit() {
+        await this.lazyLoadMonaco();
+        // Java sofort erstellen
+        await this.createJavaEditor();
+        this.updateEditor(true);
+
+        this.resizeObserver.observe(this.elementRef.nativeElement);
+    }
+
+    ngOnDestroy() {
+        this.resizeObserver.disconnect();
+        this.javaEditor?.dispose();
+        this.pythonEditor?.dispose();
+    }
+
+    // ---------------------------------------------------------------------
+    // LAZY LOAD MONACO
+    // ---------------------------------------------------------------------
+
+    private async lazyLoadMonaco() {
+        if (this.monacoLoaded) return;
+        const monacoPkg = await import('monaco-editor/esm/vs/editor/editor.api');
+        this.monaco = monacoPkg;
+        this.monacoLoaded = true;
+    }
+
+    // ---------------------------------------------------------------------
+    // EDITOR CREATION
+    // ---------------------------------------------------------------------
+
+    private async createJavaEditor() {
+        if (this.javaEditor || !this.javaEditorContainer) return;
+
+        await import('monaco-editor/esm/vs/basic-languages/java/java.contribution');
+
+        this.javaEditor = this.monaco.editor.create(this.javaEditorContainer.nativeElement, {
+            theme: 'vs-dark',
+            language: 'java',
+            scrollBeyondLastLine: false,
+            readOnly: this.readonly,
+            minimap: { enabled: true },
+            automaticLayout: false,
+            fontSize: 13,
+            lineNumbers: 'on',
+            folding: true
+        });
+
+        this.javaEditor.onDidBlurEditorWidget(() => {
+            if (!this.readonly && this.javaEditor.getValue() !== this.implementation) {
+                this.codingBlur(this.javaEditor.getValue());
             }
+        });
+    }
+
+    private async createPythonEditor() {
+        if (this.pythonEditor || !this.pythonEditorContainer) return;
+
+        await import('monaco-editor/esm/vs/basic-languages/python/python.contribution');
+
+        this.pythonEditor = this.monaco.editor.create(this.pythonEditorContainer.nativeElement, {
+            theme: 'vs-dark',
+            language: 'python',
+            scrollBeyondLastLine: false,
+            readOnly: this.readonly,
+            minimap: { enabled: true },
+            automaticLayout: false,
+            fontSize: 13,
+            lineNumbers: 'on',
+            folding: true
+        });
+
+        this.pythonEditor.onDidBlurEditorWidget(() => {
+            if (!this.readonly && this.pythonEditor.getValue() !== this.implementation) {
+                this.codingBlur(this.pythonEditor.getValue());
+            }
+        });
+    }
+
+    // ---------------------------------------------------------------------
+    // UPDATE / LAYOUT
+    // ---------------------------------------------------------------------
+
+    private async updateEditor(initial = false) {
+        if (!this.method || !this.monacoLoaded) return;
+
+        const isPy = this.isPython;
+
+        // Python nur erstellen, wenn sichtbar
+        if (isPy && !this.pythonEditor) {
+            await this.createPythonEditor();
         }
 
+        // Python Editor
+        if (isPy && this.pythonEditor) {
+            if (initial || this.pythonEditor.getValue() !== this.implementation) {
+                this.pythonCode = this.implementation;
+                this.pythonEditor.setValue(this.implementation);
+            }
+            this.pythonEditor.updateOptions({ readOnly: this.readonly });
+        }
+
+        // Java Editor
+        if (!isPy && this.javaEditor) {
+            const code = this.isAbstract ? '/* Abstract Method */' : this.implementation;
+            if (initial || this.javaEditor.getValue() !== code) {
+                this.javaCode = code;
+                this.javaEditor.setValue(code);
+            }
+            this.javaEditor.updateOptions({ readOnly: this.readonly });
+        }
+
+        // Layout
         const rect = this.elementRef.nativeElement.getBoundingClientRect();
-        editor.layout({ width: rect.width, height: rect.height });
+        const editor = isPy ? this.pythonEditor : this.javaEditor;
+        // Timeout, damit der Container gerendert ist
+        setTimeout(() => editor?.layout({ width: rect.width, height: rect.height }), 0);
 
         this.cdr.markForCheck();
     }
 
-    codingBlur(implementation: string) {
-        this.implementation = implementation;
-    }
+    // ---------------------------------------------------------------------
+    // EVENTS
+    // ---------------------------------------------------------------------
 
-    monacoInitJava(editor: monaco.editor.IStandaloneCodeEditor) {
-        this.javaEditor = editor;
-        editor.onDidBlurEditorWidget(() => {
-            if (!this.javaEditorOptions.readOnly && this.javaCode !== this.implementation) {
-                this.codingBlur(this.javaCode);
-            }
-        });
-    }
-
-    monacoInitPython(editor: monaco.editor.IStandaloneCodeEditor) {
-        this.pythonEditor = editor;
-        editor.onDidBlurEditorWidget(() => {
-            if (!this.pythonEditorOptions.readOnly && this.pythonCode !== this.implementation) {
-                this.codingBlur(this.pythonCode);
-            }
-        });
+    codingBlur(code: string) {
+        this.implementation = code;
     }
 }

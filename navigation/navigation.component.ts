@@ -18,6 +18,8 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 
+import { TypeDocumentModel } from '@pmod/document/model/type-document.model';
+import { PluginService } from '@pmod/document/plugin.service';
 import { XoArray } from '@zeta/api';
 import { XcDialogService, XcMenuItem, XoPlugin, XoPluginArray } from '@zeta/xc';
 
@@ -33,10 +35,9 @@ import { WorkflowConstantBuilderModalComponent } from './dev-tools/workflow-cons
 import { ErrorsComponent } from './errors/errors.component';
 import { FactoryComponent } from './factory/factory.component';
 import { HelpComponent } from './help/help.component';
-import { SearchComponent } from './search/search.component';
-import { TypeDocumentModel } from '@pmod/document/model/type-document.model';
-import { PluginService } from '@pmod/document/plugin.service';
 import { NavPluginComponent } from './nav-plugin/nav-plugin.component';
+import { SearchComponent } from './search/search.component';
+
 
 enum NavigationbarArea {
     Factory = 1,

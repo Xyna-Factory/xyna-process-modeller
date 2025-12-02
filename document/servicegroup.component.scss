@@ -33,7 +33,7 @@
             background-color: $color-normal;
             display: flex;
             flex: 0 1 auto;
-            height: 216px;
+            max-height: 216px;
 
             & > *:not(:first-child) {
                 margin-left: 4px;
