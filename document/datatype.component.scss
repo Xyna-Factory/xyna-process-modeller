@@ -22,6 +22,10 @@
     display: flex;
     flex-direction: column;
 
+    .minimized {
+        display: none !important;
+    }
+
     .area-wrapper {
         position: relative;
         display: flex;
@@ -33,17 +37,17 @@
             background-color: $color-normal;
             display: flex;
             flex: 0 1 auto;
-            height: 216px;
+            max-height: 216px;
 
             .type-info-area {
                 flex: 0.7;
             }
 
-            & > *:not(:first-child) {
+            &>*:not(:first-child) {
                 margin-left: 4px;
             }
 
-            & > * {
+            &>* {
                 background-color: $color-gray-2;
                 padding: 8px;
             }
@@ -52,7 +56,7 @@
                 flex: 0.3;
                 overflow: auto;
 
-                & > *:not(:last-child) {
+                &>*:not(:last-child) {
                     margin-bottom: 12px;
                 }
             }
@@ -82,7 +86,7 @@
             }
 
             .detail-items {
-                padding: 8px;
+                height: 56px;
             }
         }
     }

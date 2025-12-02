@@ -49,9 +49,9 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
 
     @Input()
     set method(value: XoMethod) {
-        if (value === this._method) return; // unnötige Updates vermeiden
+        if (value === this._method) return;
         this._method = value;
-        this.updateEditor(true); // true = initial update
+        this.updateEditor(true);
     }
 
     get method(): XoMethod {
@@ -83,7 +83,7 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
     constructor() {
         this.resizeObserver = new ResizeObserver(() => {
             const editor = this.isPython ? this.pythonEditor : this.javaEditor;
-            editor?.layout();
+            setTimeout(() => editor?.layout(), 0);
         });
     }
 
@@ -93,7 +93,10 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
 
     async ngAfterViewInit() {
         await this.lazyLoadMonaco();
-        await this.createEditors();
+        // Java sofort erstellen
+        await this.createJavaEditor();
+        this.updateEditor(true);
+
         this.resizeObserver.observe(this.elementRef.nativeElement);
     }
 
@@ -115,69 +118,73 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
     }
 
     // ---------------------------------------------------------------------
-    // EDITOR ERSTELLUNG
+    // EDITOR CREATION
     // ---------------------------------------------------------------------
 
-    private async createEditors() {
-        if (!this.monacoLoaded) return;
+    private async createJavaEditor() {
+        if (this.javaEditor || !this.javaEditorContainer) return;
 
-        // Java Editor
-        if (this.javaEditorContainer) {
-            await import('monaco-editor/esm/vs/basic-languages/java/java.contribution');
-            this.javaEditor = this.monaco.editor.create(this.javaEditorContainer.nativeElement, {
-                theme: 'vs-dark',
-                language: 'java',
-                scrollBeyondLastLine: false,
-                readOnly: this.readonly,
-                minimap: { enabled: true },
-                automaticLayout: false,
-                fontSize: 13,
-                lineNumbers: 'on',
-                folding: true
-            });
-            this.javaEditor.onDidBlurEditorWidget(() => {
-                if (!this.readonly && this.javaEditor.getValue() !== this.implementation) {
-                    this.codingBlur(this.javaEditor.getValue());
-                }
-            });
-        }
+        await import('monaco-editor/esm/vs/basic-languages/java/java.contribution');
 
-        // Python Editor
-        if (this.pythonEditorContainer) {
-            await import('monaco-editor/esm/vs/basic-languages/python/python.contribution');
-            this.pythonEditor = this.monaco.editor.create(this.pythonEditorContainer.nativeElement, {
-                theme: 'vs-dark',
-                language: 'python',
-                scrollBeyondLastLine: false,
-                readOnly: this.readonly,
-                minimap: { enabled: true },
-                automaticLayout: false,
-                fontSize: 13,
-                lineNumbers: 'on',
-                folding: true
-            });
-            this.pythonEditor.onDidBlurEditorWidget(() => {
-                if (!this.readonly && this.pythonEditor.getValue() !== this.implementation) {
-                    this.codingBlur(this.pythonEditor.getValue());
-                }
-            });
-        }
+        this.javaEditor = this.monaco.editor.create(this.javaEditorContainer.nativeElement, {
+            theme: 'vs-dark',
+            language: 'java',
+            scrollBeyondLastLine: false,
+            readOnly: this.readonly,
+            minimap: { enabled: true },
+            automaticLayout: false,
+            fontSize: 13,
+            lineNumbers: 'on',
+            folding: true
+        });
 
-        this.updateEditor(true);
+        this.javaEditor.onDidBlurEditorWidget(() => {
+            if (!this.readonly && this.javaEditor.getValue() !== this.implementation) {
+                this.codingBlur(this.javaEditor.getValue());
+            }
+        });
+    }
+
+    private async createPythonEditor() {
+        if (this.pythonEditor || !this.pythonEditorContainer) return;
+
+        await import('monaco-editor/esm/vs/basic-languages/python/python.contribution');
+
+        this.pythonEditor = this.monaco.editor.create(this.pythonEditorContainer.nativeElement, {
+            theme: 'vs-dark',
+            language: 'python',
+            scrollBeyondLastLine: false,
+            readOnly: this.readonly,
+            minimap: { enabled: true },
+            automaticLayout: false,
+            fontSize: 13,
+            lineNumbers: 'on',
+            folding: true
+        });
+
+        this.pythonEditor.onDidBlurEditorWidget(() => {
+            if (!this.readonly && this.pythonEditor.getValue() !== this.implementation) {
+                this.codingBlur(this.pythonEditor.getValue());
+            }
+        });
     }
 
     // ---------------------------------------------------------------------
     // UPDATE / LAYOUT
     // ---------------------------------------------------------------------
 
-    private updateEditor(initial = false) {
-        if (!this.method) return;
+    private async updateEditor(initial = false) {
+        if (!this.method || !this.monacoLoaded) return;
 
         const isPy = this.isPython;
 
+        // Python nur erstellen, wenn sichtbar
+        if (isPy && !this.pythonEditor) {
+            await this.createPythonEditor();
+        }
+
         // Python Editor
         if (isPy && this.pythonEditor) {
-            // nur initial setzen oder wenn Wert unterschiedlich
             if (initial || this.pythonEditor.getValue() !== this.implementation) {
                 this.pythonCode = this.implementation;
                 this.pythonEditor.setValue(this.implementation);
@@ -186,7 +193,7 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
         }
 
         // Java Editor
-        else if (!isPy && this.javaEditor) {
+        if (!isPy && this.javaEditor) {
             const code = this.isAbstract ? '/* Abstract Method */' : this.implementation;
             if (initial || this.javaEditor.getValue() !== code) {
                 this.javaCode = code;
@@ -198,7 +205,8 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
         // Layout
         const rect = this.elementRef.nativeElement.getBoundingClientRect();
         const editor = isPy ? this.pythonEditor : this.javaEditor;
-        editor?.layout({ width: rect.width, height: rect.height });
+        // Timeout, damit der Container gerendert ist
+        setTimeout(() => editor?.layout({ width: rect.width, height: rect.height }), 0);
 
         this.cdr.markForCheck();
     }

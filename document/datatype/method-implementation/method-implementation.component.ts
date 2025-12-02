@@ -15,11 +15,16 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, ElementRef, Injector, Input, Optional } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, inject, Injector, Input, Optional } from '@angular/core';
 
+import { MinMaxService } from '@pmod/document/min-max.service';
+import { PluginService } from '@pmod/document/plugin.service';
 import { XoLibraryCallRequest } from '@pmod/xo/library-call-request.model';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService } from '@zeta/xc';
+import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
+
+import { combineLatest } from 'rxjs';
 
 import { ModellingAction, ModellingActionType } from '../../../api/xmom.service';
 import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
@@ -29,9 +34,6 @@ import { XoMethod } from '../../../xo/method.model';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { ModellingItemComponent, TriggeredAction } from '../../workflow/shared/modelling-object.component';
-import { combineLatest } from 'rxjs';
-import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
-import { PluginService } from '@pmod/document/plugin.service';
 
 
 @Component({
@@ -41,6 +43,8 @@ import { PluginService } from '@pmod/document/plugin.service';
     standalone: false
 })
 export class MethodImplementationComponent extends ModellingItemComponent {
+
+    private readonly minmaxService = inject(MinMaxService);
 
     pluginBundles: XoDefinitionBundle[];
 
@@ -143,5 +147,17 @@ export class MethodImplementationComponent extends ModellingItemComponent {
                 this.cdr.markForCheck();
             });
         }
+    }
+
+    resize() {
+        this.minmaxService.toggle();
+    }
+
+    getTooltip(): string {
+        return this.minmaxService.tooltip();
+    }
+
+    getIcon(): string {
+        return this.minmaxService.icon();
     }
 }

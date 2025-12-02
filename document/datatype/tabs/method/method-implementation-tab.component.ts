@@ -16,16 +16,20 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, Optional, ViewChild } from '@angular/core';
+
 import { DataTypeService } from '@pmod/document/datatype.service';
 import { DocumentService } from '@pmod/document/document.service';
-import { I18nService } from '@zeta/i18n';
-import { DatatypeMethodTabComponent } from '../datatype-tab.component';
-import { XoMethod } from '@pmod/xo/method.model';
-import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItem, XcOptionItemStringOrUndefined, XcOptionItemTranslate } from '@zeta/xc';
 import { XoChangeMemberMethodImplementationTypeRequest } from '@pmod/xo/change-member-method-implementation-type-request.model';
-import { XoDynamicMethod } from '@pmod/xo/dynamic-method.model';
 import { XoChangeMemberMethodReferenceRequest } from '@pmod/xo/change-member-method-reference-request.model';
+import { XoDynamicMethod } from '@pmod/xo/dynamic-method.model';
+import { XoMethod } from '@pmod/xo/method.model';
+import { I18nService } from '@zeta/i18n';
+import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItem, XcOptionItemStringOrUndefined, XcOptionItemTranslate } from '@zeta/xc';
+
 import { filter } from 'rxjs';
+
+import { DatatypeMethodTabComponent } from '../datatype-tab.component';
+
 
 @Component({
     templateUrl: './method-implementation-tab.component.html',

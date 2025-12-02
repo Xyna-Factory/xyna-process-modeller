@@ -1,42 +1,23 @@
-<variable-area-document [variableArea]="method.inputArea"
-  [documentModel]="documentModel"
-  (triggerAction)="performAction($event)"
-  xc-variable-area-kind="input-area"
-  class="input-area"
- />
+<variable-area-document [variableArea]="method.inputArea" [documentModel]="documentModel"
+  (triggerAction)="performAction($event)" xc-variable-area-kind="input-area" class="input-area" />
 <div class="service-label">
+  <xc-icon-button [xc-tooltip]="getTooltip()" [xc-icon-name]="getIcon()" c-icon-size="small" xc-button-aria-label=" "
+    (click)="resize()"></xc-icon-button>
   <div>{{method.label}}</div>
   <div class="align-right">
-    <xc-checkbox [(checked)]="isAbortable" label="is-abortable-label" [disabled]="readonly || isAbstractMethod" xc-i18n></xc-checkbox>
-    <xc-button
-      xc-i18n
-      color="normal"
-      (click)="useTemplateCall()"
-      [disabled]="readonly || isAbstractMethod"
-      xc-tooltip="use-generated-template-library-tooltip"
-    >template-call-button</xc-button>
+    <xc-checkbox [(checked)]="isAbortable" label="is-abortable-label" [disabled]="readonly || isAbstractMethod"
+      xc-i18n></xc-checkbox>
+    <xc-button xc-i18n color="normal" (click)="useTemplateCall()" [disabled]="readonly || isAbstractMethod"
+      xc-tooltip="use-generated-template-library-tooltip">template-call-button</xc-button>
     @for (bundle of pluginBundles; let i = $index; track i) {
-      <xc-definition-proxy
-        [xc-base-definition]="bundle.definition"
-        [xc-base-definition-data]="bundle.data"
-        [xc-definition-observer]="pluginService"
-      ></xc-definition-proxy>
+    <xc-definition-proxy [xc-base-definition]="bundle.definition" [xc-base-definition-data]="bundle.data"
+      [xc-definition-observer]="pluginService"></xc-definition-proxy>
     }
   </div>
 </div>
-<coding [method]="method"
-  [readonly]="readonly || isAbstractMethod"
-  (implementationChange)="implementationChange($event)"
- />
-<variable-area-document [variableArea]="method.throwsArea"
-  [documentModel]="documentModel"
-  (triggerAction)="performAction($event)"
-  xc-variable-area-kind="throws-area"
-  class="throws-area"
- />
-<variable-area-document [variableArea]="method.outputArea"
-  [documentModel]="documentModel"
-  (triggerAction)="performAction($event)"
-  xc-variable-area-kind="output-area"
-  class="output-area"
- />
+<coding [method]="method" [readonly]="readonly || isAbstractMethod"
+  (implementationChange)="implementationChange($event)" />
+<variable-area-document [variableArea]="method.throwsArea" [documentModel]="documentModel"
+  (triggerAction)="performAction($event)" xc-variable-area-kind="throws-area" class="throws-area" />
+<variable-area-document [variableArea]="method.outputArea" [documentModel]="documentModel"
+  (triggerAction)="performAction($event)" xc-variable-area-kind="output-area" class="output-area" />

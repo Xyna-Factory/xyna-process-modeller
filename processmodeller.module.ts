@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import { DeploymentStateDetailComponent } from '@fman/deployment-items/components/deployment-state-detail/deployment-state-detail.component';
 import { I18nService } from '@zeta/i18n';
 import { QueryParameterService } from '@zeta/nav/query-parameter.service';
 import { ZetaModule } from '@zeta/zeta.module';
@@ -176,7 +177,8 @@ import { WorkflowDetailSettingsService } from './workflow-detail-settings.servic
         FormsModule,
         ZetaModule,
         ShowGUIModelModalModule,
-        DevToolsModule
+        DevToolsModule,
+        DeploymentStateDetailComponent
     ],
     declarations: [
         BranchComponent,

@@ -15,5 +15,19 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-export const ProcessModellerName = 'Process Modeller';
-export const ProcessModellerVersion = '2.8.18';
+import { computed, Injectable, signal } from '@angular/core';
+
+
+@Injectable()
+export class MinMaxService {
+
+    minimized = signal(true);
+
+    toggle() {
+        this.minimized.update(v => !v);
+    }
+
+    icon = computed(() => this.minimized() ? 'maximize' : 'minimize');
+
+    tooltip = computed(() => this.minimized() ? 'maximize' : 'minimize');
+}
