@@ -325,15 +325,12 @@ import { WorkflowDetailSettingsService } from './workflow-detail-settings.servic
         BranchSelectionService,
         ComponentMappingService,
         DataTypeService,
-        DocumentService,
         FactoryService,
         I18nService,
         ModDragAndDropService,
         PluginService,
         QueryParameterService,
         WorkflowDetailSettingsService,
-        WorkflowDetailLevelService,
-        SelectionService,
         XmomService,
         ErrorService
     ]
