@@ -19,7 +19,6 @@ import { Component, inject, Injector } from '@angular/core';
 
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 
-import { XcI18nContextDirective } from '../../../zeta/i18n/i18n.directive';
 import { ModellingActionType } from '../api/xmom.service';
 import { XoDataTypeTypeLabelArea } from '../xo/data-type-type-label-area.model';
 import { XoDataType } from '../xo/data-type.model';
@@ -34,6 +33,7 @@ import { MemberVariableDetailsComponent } from './datatype/member-variable-detai
 import { MethodDetailsComponent } from './datatype/method-details/method-details.component';
 import { ServiceAreaComponent } from './datatype/service-area/service-area.component';
 import { TypeInfoAreaComponent } from './datatype/type-info-area/type-info-area.component';
+import { MinMaxService } from './min-max.service';
 import { DataTypeDocumentModel } from './model/data-type-document.model';
 import { SelectionService } from './selection.service';
 import { DetailsItemComponent } from './shared/details-item/details-item.component';
@@ -48,7 +48,7 @@ import { DropIndicatorComponent } from './workflow/drop-indicator/drop-indicator
     templateUrl: './datatype.component.html',
     styleUrls: ['./datatype.component.scss'],
     providers: [SelectionService],
-    imports: [XcI18nContextDirective, TypeInfoAreaComponent, LibAreaComponent, JavaSharedLibAreaComponent, DetailsItemComponent, MemberAreaComponent, MemberVariableAreaComponent, ServiceAreaComponent, DataTypeDetailsComponent, MemberVariableDetailsComponent, MethodDetailsComponent, DropIndicatorComponent]
+    imports: [TypeInfoAreaComponent, LibAreaComponent, JavaSharedLibAreaComponent, DetailsItemComponent, MemberAreaComponent, MemberVariableAreaComponent, ServiceAreaComponent, DataTypeDetailsComponent, MemberVariableDetailsComponent, MethodDetailsComponent, DropIndicatorComponent]
 })
 export class DataTypeComponent extends TypeDocumentComponent<DataTypeDocumentModel> {
 

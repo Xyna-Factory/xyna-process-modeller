@@ -71,7 +71,6 @@ export interface VariableTabData {
 
 export interface MethodTabData {
     method: XoMethod;
-    
 }
 
 

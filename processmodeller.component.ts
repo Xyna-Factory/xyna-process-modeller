@@ -28,10 +28,6 @@ import { XcDialogService, XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 import { Subject, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
-import { XcI18nContextDirective } from '../../zeta/i18n/i18n.directive';
-import { I18nModule } from '../../zeta/i18n/i18n.module';
-import { XcTabBarComponent as XcTabBarComponent_1 } from '../../zeta/xc/xc-tab-bar/xc-tab-bar.component';
-import { XcModule } from '../../zeta/xc/xc.module';
 import { XmomObjectType } from './api/xmom-types';
 import { DataTypeComponent } from './document/datatype.component';
 import { DocumentService } from './document/document.service';
@@ -58,7 +54,7 @@ import { XoWorkflow } from './xo/workflow.model';
     templateUrl: './processmodeller.component.html',
     styleUrls: ['./processmodeller.component.scss'],
     providers: [I18nService],
-    imports: [ToolbarComponent, XcI18nContextDirective, XcTabBarComponent_1, NavigationComponent, NgClass]
+    imports: [ToolbarComponent, NavigationComponent, NgClass]
 })
 export class ProcessmodellerComponent extends RouteComponent implements OnInit, OnDestroy {
 
