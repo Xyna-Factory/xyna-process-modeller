@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, input, Input, OnInit } from '@angular/core';
 
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 
@@ -30,7 +30,7 @@ import { SelectableModellingObjectComponent } from '../../workflow/shared/select
     styleUrls: ['./details-item.component.scss'],
     imports: [XcI18nPipe]
 })
-export class DetailsItemComponent extends SelectableModellingObjectComponent {
+export class DetailsItemComponent extends SelectableModellingObjectComponent implements OnInit {
 
     @Input()
     set detailsItem(value: XoDetailsItem) {
@@ -39,6 +39,12 @@ export class DetailsItemComponent extends SelectableModellingObjectComponent {
 
     get detailsItem(): XoDetailsItem {
         return this.getModel() as XoDetailsItem;
+    }
+
+    icon = input.required<string>()
+
+    ngOnInit(): void {
+        this.select();
     }
 
 }

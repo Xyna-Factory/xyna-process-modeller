@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector } from '@angular/core';
+import { Component, inject, Injector } from '@angular/core';
 
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 
@@ -52,22 +52,26 @@ import { DropIndicatorComponent } from './workflow/drop-indicator/drop-indicator
 })
 export class DataTypeComponent extends TypeDocumentComponent<DataTypeDocumentModel> {
 
+    private readonly minmaxService = inject(MinMaxService);
+
     inheritedVariablesCollapsed = false;
     memberVariablesCollapsed = false;
     inheritedServicesCollapsed = false;
     overriddenServicesCollapsed = false;
     memberServicesCollapsed = false;
 
+    maximizedImplementation = this.minmaxService.maximizedImplementation;
+
     constructor(injector: Injector) {
         super(injector);
 
         // workaround such that model types are not pruned by compiler
-         
+
         const dataType = new XoDataType();
         const exceptionType = new XoExceptionType();
         const dataTypeTypeLabelArea = new XoDataTypeTypeLabelArea();
         const memberVariableArea = new XoMemberVariableArea();
-         
+
 
         this.detailsItem = new XoDetailsItem();
         this.detailsItem.name = 'Data Type Details';

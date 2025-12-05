@@ -48,6 +48,7 @@
         letter-spacing: 3px;
         font-weight: bold;
         color: $type-info-badge-color;
+        align-self: center;
     }
 
     .identification {
@@ -69,13 +70,14 @@
         }
 
         .id-left-saved {
-            flex-grow: 0;
+            flex-grow: 1;
             width: fit-content;
             margin: 8px 0;
         }
 
         .converter-button {
             margin-left: 20px;
+            align-self: center;
         }
 
         // .id-left-new-type {
@@ -93,17 +95,64 @@
         }
     }
 
-    .base-type {
-        &>.base-type-wrapper {
-            flex: 1 1 auto;
+    dl {
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        align-content: flex-start;
+        column-gap: 8px;
+        -moz-column-gap: 8px;
+        row-gap: 4px;
+
+        >dt {
+            display: flex;
+            flex: 1 1 80px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            height: 32px;
+            align-items: center;
+
+            // Standardmäßig kein Stern
+            &::after {
+                content: '';
+            }
         }
 
-        &>xc-button {
-            flex: 0 0 auto;
+        >dd {
+            display: flex;
+            flex: 1 1 calc(100% - 88px);
+            font-weight: bold;
+            margin-inline-start: 0;
+            overflow: hidden;
+            overflow-wrap: break-word;
+            word-break: break-all;
+
+            ::ng-deep .mdc-floating-label {
+                display: none !important;
+            }
+
+            &>.base-type-wrapper {
+                flex: 1 1 auto;
+            }
+
+            &>xc-button {
+                flex: 0 0 auto;
+            }
+
+            &>*:not(:first-child) {
+                margin-left: 4px;
+            }
         }
 
-        &>*:not(:first-child) {
-            margin-left: 4px;
+        // Stern am <dt>, wenn das NÄCHSTE <dd> ein Required-Feld enthält
+        >dt:has(+ dd > xc-form-input[xc-form-validator-required]),
+        >dt:has(+ dd > xc-form-textarea[xc-form-validator-required]) {
+            &::after {
+                content: '\a0*';
+                font-weight: bold;
+                color: $type-info-badge-color;
+            }
         }
     }
 }

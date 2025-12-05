@@ -23,17 +23,14 @@
 
     .config-area {
         display: flex;
-        margin-top: -$service-step-border-radius;   // to compensate rounded corners of area above
+        margin-top: -$service-step-border-radius; // to compensate rounded corners of area above
         padding: 12px;
-        align-items: baseline;
-
         background-color: $formula-background-color;
-
         border: 1px solid $color-gray-3;
         border-bottom-left-radius: $service-step-border-radius;
         border-bottom-right-radius: $service-step-border-radius;
 
-        > *:not(:last-child) {
+        >*:not(:last-child) {
             margin-right: 16px;
         }
     }

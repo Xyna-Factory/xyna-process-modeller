@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, ElementRef, Injector, Input, Optional } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, inject, Injector, Input, Optional } from '@angular/core';
 
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoLibraryCallRequest } from '@pmod/xo/library-call-request.model';
@@ -49,6 +49,8 @@ import { CodingComponent } from '../coding/coding.component';
     imports: [VariableAreaDocumentComponent, XcCheckboxComponent, XcI18nTranslateDirective, XcButtonComponent, XcTooltipDirective, XcDefinitionProxyComponent, CodingComponent]
 })
 export class MethodImplementationComponent extends ModellingItemComponent {
+
+    private readonly minmaxService = inject(MinMaxService);
 
     pluginBundles: XoDefinitionBundle[];
 
@@ -151,5 +153,17 @@ export class MethodImplementationComponent extends ModellingItemComponent {
                 this.cdr.markForCheck();
             });
         }
+    }
+
+    resize() {
+        this.minmaxService.toggle();
+    }
+
+    getTooltip(): string {
+        return this.minmaxService.tooltip();
+    }
+
+    getIcon(): string {
+        return this.minmaxService.icon();
     }
 }
