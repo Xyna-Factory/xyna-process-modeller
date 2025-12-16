@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, EventEmitter, HostBinding, HostListener, Injector, Input, OnDestroy, OnInit, Optional, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostBinding, HostListener, inject, Injector, Input, OnDestroy, OnInit, Optional, Output } from '@angular/core';
 
 import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model';
 import { MessageBusService } from '@yggdrasil/events';
@@ -57,38 +57,34 @@ export interface TriggeredAction {
 })
 export class ModellingObjectComponent implements OnInit, OnDestroy {
 
+    protected readonly componentMappingService = inject(ComponentMappingService);
+    protected readonly elementRef = inject(ElementRef);
+    protected readonly documentService = inject(DocumentService);
+    protected readonly detailLevelService = inject(WorkflowDetailLevelService);
+    protected readonly messageBus = inject(MessageBusService);
+    protected readonly detailSettings = inject(WorkflowDetailSettingsService);
+    protected readonly injector = inject(Injector);
+
     private readonly destroySubject = new Subject<void>();
 
     /**
      * Collapsed state of this modelling object (concerns both, item (e. g. variable) and area)
      */
     @HostBinding('class.collapsed')
-    private _collapsed = false;
+    _collapsed = false;
 
     @HostBinding('class.locked')
-    private _locked = false;
+    _locked = false;
 
     private _model: XoReferableObject;
     private _menuItems: XcMenuItem[] = [];
-    protected readonly detailSettings: WorkflowDetailSettingsService;
-    protected readonly messageBus: MessageBusService;
     private _documentModel: DocumentModel<DocumentItem>;
     private lockedSubscription: Subscription;
 
     @Output()
     readonly triggerAction = new EventEmitter<TriggeredAction>();
 
-
-    constructor(
-        protected readonly elementRef: ElementRef,
-        protected readonly componentMappingService: ComponentMappingService,
-        protected readonly documentService: DocumentService,
-        protected readonly detailLevelService: WorkflowDetailLevelService,
-        @Optional() protected injector: Injector  // TODO: delete other injected services and get all via injector
-    ) {
-        this.detailSettings = injector.get(WorkflowDetailSettingsService);
-        this.messageBus = injector.get(MessageBusService);
-
+    constructor() {
         this.menuItems.push(
             <XcMenuItem>{
                 name: 'Remove',
@@ -241,9 +237,9 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
 
     /** Returns true if the corresponding element is visible in DOM */
     isElementVisible(): boolean {
-        return this.elementRef.nativeElement.offsetWidth  ||
-               this.elementRef.nativeElement.offsetHeight ||
-               this.elementRef.nativeElement.getClientRects().length;
+        return this.elementRef.nativeElement.offsetWidth ||
+            this.elementRef.nativeElement.offsetHeight ||
+            this.elementRef.nativeElement.getClientRects().length;
     }
 
 
@@ -251,13 +247,29 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
         return this._model;
     }
 
-
+    /**
+     * Updates the represented model and updates component mapping accordingly.
+     * 
+     * ✅ FIXED: Removed removeComponentForObject(old) call from this method.
+     * 
+     * REASON: Each component instance now represents exactly ONE model ID over its lifetime.
+     * The same VariableComponent instance should NOT "wander" between different model IDs
+     * (e.g. var37-in0 → var56-in0 during step renumbering).
+     * 
+     * NEW BEHAVIOR:
+     * - Mapping is added on setModel() and stays stable for this component instance
+     * - getComponentForId(root, 'var37-in0') will continue working until component destruction
+     * - Cleanup happens ONLY in ngOnDestroy() when the component is actually destroyed
+     * 
+     * REQUIREMENTS for this to work correctly:
+     * - Use trackBy: trackById() in *ngFor templates to ensure stable component instances per model ID
+     * - Angular will create/destroy components when model IDs change, preserving mappings correctly
+     * 
+     * OLD BEHAVIOR (removed):
+     * - removeComponentForObject(old) cleaned up mapping immediately on model switch
+     * - Caused getComponentForId() to return null for previously mapped IDs
+     */
     setModel(value: XoReferableObject) {
-        // remove former mapping
-        if (this.getModel() && this.allowRegisterAtComponentMapping()) {
-            this.componentMappingService.removeComponentForObject(this.getModel());
-        }
-
         this._model = value;
 
         /** @todo fixme: Assuming that created component is created for currently opened document. That is not necessarily the case (e. g. potentially for coming multi-user-updates).

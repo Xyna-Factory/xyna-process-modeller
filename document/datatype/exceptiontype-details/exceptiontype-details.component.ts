@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnDestroy, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy } from '@angular/core';
 
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 import { XoExceptionType } from '@pmod/xo/exception-type.model';
@@ -24,9 +24,6 @@ import { XcTabBarItem } from '@zeta/xc';
 
 import { BehaviorSubject, Subject } from 'rxjs';
 
-import { ComponentMappingService } from '../../component-mapping.service';
-import { DocumentService } from '../../document.service';
-import { WorkflowDetailLevelService } from '../../workflow-detail-level.service';
 import { ModellingItemComponent } from '../../workflow/shared/modelling-object.component';
 import { DocumentationTabData, DocumentTabData } from '../tabs/datatype-tab.component';
 import { DocumentationTabComponent } from '../tabs/shared/documentation-tab.component';
@@ -40,6 +37,9 @@ import { DocumentationTabComponent } from '../tabs/shared/documentation-tab.comp
     standalone: false
 })
 export class ExceptionTypeDetailsComponent extends ModellingItemComponent implements OnDestroy {
+
+    protected readonly i18nService = inject(I18nService);
+    protected readonly cdr = inject(ChangeDetectorRef);
 
     get exceptionType(): XoExceptionType {
         return this.getModel() as XoExceptionType;
@@ -79,16 +79,8 @@ export class ExceptionTypeDetailsComponent extends ModellingItemComponent implem
     tabBarSelection: XcTabBarItem<DocumentTabData<any>>;
     tabBarItems: XcTabBarItem<DocumentTabData<any>>[];
 
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        detailLevelService: WorkflowDetailLevelService,
-        private readonly i18nService: I18nService,
-        private readonly cdr: ChangeDetectorRef,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
+    constructor() {
+        super();
         this.tabBarSelection = this.documentationTabItem;
         this.updateTabBarItemList();
     }

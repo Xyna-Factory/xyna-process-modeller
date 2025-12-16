@@ -15,17 +15,14 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnDestroy, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy } from '@angular/core';
 
 import { XcTabBarItem } from '@zeta/xc';
 
 import { BehaviorSubject, Subject } from 'rxjs';
 
-import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
 import { XoMemberVariable } from '../../../xo/member-variable.model';
 import { XoRuntimeContext } from '../../../xo/runtime-context.model';
-import { ComponentMappingService } from '../../component-mapping.service';
-import { DocumentService } from '../../document.service';
 import { ModellingItemComponent } from '../../workflow/shared/modelling-object.component';
 import { DocumentTabData, MetaTabData, VariableTabData } from '../tabs/datatype-tab.component';
 import { MemberVariableBaseTabComponent } from '../tabs/member-variable/member-variable-base-tab.component';
@@ -41,6 +38,8 @@ import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
     standalone: false
 })
 export class MemberVariableDetailsComponent extends ModellingItemComponent implements OnDestroy {
+
+    protected readonly cdr = inject(ChangeDetectorRef);
 
     @Input()
     dataTypeRTC: XoRuntimeContext = null;
@@ -111,15 +110,8 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
     tabBarSelection: XcTabBarItem<DocumentTabData<any>>;
     tabBarItems: XcTabBarItem<DocumentTabData<any>>[];
 
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        detailLevelService: WorkflowDetailLevelService,
-        private readonly cdr: ChangeDetectorRef,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
+    constructor() {
+        super();
         this.tabBarSelection = this.baseTabItem;
         this.updateTabBarItemList();
     }

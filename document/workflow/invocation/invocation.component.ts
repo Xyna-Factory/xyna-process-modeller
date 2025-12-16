@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, EventEmitter, Injector, Input, Optional, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
@@ -36,7 +36,6 @@ import { XoOrderInputSourceArea } from '../../../xo/order-input-source-area.mode
 import { XoRemoteDestinationArea } from '../../../xo/remote-destination-area.model';
 import { XoTextArea } from '../../../xo/text-area.model';
 import { XoWorkflowInvocation } from '../../../xo/workflow-invocation.model';
-import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { ModellingItemComponent, TriggeredAction } from '../shared/modelling-object.component';
 
@@ -49,36 +48,33 @@ import { ModellingItemComponent, TriggeredAction } from '../shared/modelling-obj
 })
 export class InvocationComponent extends ModellingItemComponent {
 
-
+    protected readonly router = inject(Router);
+    protected readonly documentService = inject(DocumentService);
+    protected readonly detailLevelService = inject(WorkflowDetailLevelService);
+    protected readonly i18n = inject(I18nService);
+    protected readonly dialogService = inject(XcDialogService);
     @Output()
     readonly doubleClickProxy = new EventEmitter<void>();
 
 
-    constructor(
-        router: Router,
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        readonly detailLevelService: WorkflowDetailLevelService,
-        private readonly i18n: I18nService,
-        private readonly dialogService: XcDialogService,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
+    constructor() {
+        super();
 
         this.menuItems.unshift(
-            <XcMenuItem>{ name: 'Open in new Tab', translate: true,
+            <XcMenuItem>{
+                name: 'Open in new Tab', translate: true,
                 visible: () => !!this.invocation.$fqn, // prototype step does not have an fqn
                 click: () => {
                     if (this.invocation.type) {
                         const fqn = this.invocation.toFqn();
                         const rtc = (this.invocation.$rtc ?? this.invocation.evaluatedRtc).runtimeContext();
                         this.documentService.loadDocument(rtc, fqn, this.invocation.type);
-                        void router.navigate(['xfm/Process-Modeller/']);
+                        void this.router.navigate(['xfm/Process-Modeller/']);
                     }
                 }
             },
-            <XcMenuItem>{ name: 'Test Workflow...', translate: true,
+            <XcMenuItem>{
+                name: 'Test Workflow...', translate: true,
                 visible: () => this.invocation instanceof XoWorkflowInvocation && !this.invocation.isAbstract,
                 click: () => {
                     const fqn = this.invocation.toFqn();
@@ -93,53 +89,62 @@ export class InvocationComponent extends ModellingItemComponent {
                     ).afterDismiss().subscribe();
                 }
             },
-            <XcMenuItem>{ name: 'Show/Hide Order Input Source Area', translate: true,
+            <XcMenuItem>{
+                name: 'Show/Hide Order Input Source Area', translate: true,
                 visible: () => !!this.orderInputSourceArea && this.invocation.allowsOrderInputSource,
-                click: () => detailLevelService.toggleCollapsed(this.orderInputSourceArea.id)
+                click: () => this.detailLevelService.toggleCollapsed(this.orderInputSourceArea.id)
             },
-            <XcMenuItem>{ name: 'Show/Hide Remote Destination Area', translate: true,
+            <XcMenuItem>{
+                name: 'Show/Hide Remote Destination Area', translate: true,
                 visible: () => !!this.remoteDestinationArea,
-                click: () => detailLevelService.toggleCollapsed(this.remoteDestinationArea.id)
+                click: () => this.detailLevelService.toggleCollapsed(this.remoteDestinationArea.id)
             },
-            <XcMenuItem>{ name: 'Show/Hide Documentation Area', translate: true,
+            <XcMenuItem>{
+                name: 'Show/Hide Documentation Area', translate: true,
                 visible: () => !!this.documentationArea,
-                click: () => detailLevelService.toggleCollapsed(this.documentationArea.id)
+                click: () => this.detailLevelService.toggleCollapsed(this.documentationArea.id)
             },
-            <XcMenuItem>{ name: 'Convert', translate: true,
+            <XcMenuItem>{
+                name: 'Convert', translate: true,
                 visible: () => this.invocation && this.invocation.isAbstract && !this.readonly,
                 children: [
                     // { name: 'to Service', translate: true, click: item => {
                     //     // TODO: implement! PMOD-808
                     //     console.log('Convert to Service: ' + item.name);
                     // }},
-                    { name: 'into Workflow...', translate: true, click: item => {
-                        const data: LabelPathDialogData = {
-                            header: this.i18n.translate(LabelPathDialogComponent.HEADER_CONVERT_TO_WORKFLOW),
-                            confirm: this.i18n.translate(LabelPathDialogComponent.CONFIRM_CREATE),
-                            presetLabel: this.invocation?.typeLabelArea?.text ?? '',
-                            presetPath: FullQualifiedName.decode(this.documentModel.item.$fqn).path,
-                            pathsObservable: this.documentService.getPaths()
-                        };
-                        this.dialogService.custom(LabelPathDialogComponent, data).afterDismissResult().subscribe(result => {
-                            if (result) {
-                                this.performAction({
-                                    type: ModellingActionType.convert,
-                                    objectId: this.invocation.id,
-                                    request: XoConvertServiceRequest.convertToWorkflow(result)
-                                });
-                            }
-                        });
-                    }},
-                    { name: 'into Mapping', translate: true, click: item => {
-                        this.performAction({
-                            type: ModellingActionType.convert,
-                            objectId: this.invocation.id,
-                            request: XoConvertServiceRequest.convertToMapping()
-                        });
-                    }}
+                    {
+                        name: 'into Workflow...', translate: true, click: item => {
+                            const data: LabelPathDialogData = {
+                                header: this.i18n.translate(LabelPathDialogComponent.HEADER_CONVERT_TO_WORKFLOW),
+                                confirm: this.i18n.translate(LabelPathDialogComponent.CONFIRM_CREATE),
+                                presetLabel: this.invocation?.typeLabelArea?.text ?? '',
+                                presetPath: FullQualifiedName.decode(this.documentModel.item.$fqn).path,
+                                pathsObservable: this.documentService.getPaths()
+                            };
+                            this.dialogService.custom(LabelPathDialogComponent, data).afterDismissResult().subscribe(result => {
+                                if (result) {
+                                    this.performAction({
+                                        type: ModellingActionType.convert,
+                                        objectId: this.invocation.id,
+                                        request: XoConvertServiceRequest.convertToWorkflow(result)
+                                    });
+                                }
+                            });
+                        }
+                    },
+                    {
+                        name: 'into Mapping', translate: true, click: item => {
+                            this.performAction({
+                                type: ModellingActionType.convert,
+                                objectId: this.invocation.id,
+                                request: XoConvertServiceRequest.convertToMapping()
+                            });
+                        }
+                    }
                 ]
             },
-            <XcMenuItem>{ name: 'Add/Remove Detached Operator', translate: true,
+            <XcMenuItem>{
+                name: 'Add/Remove Detached Operator', translate: true,
                 visible: () => this.invocation.detachedTaggable && !this.readonly && !this.exceptionHandlingArea.hasCompensations(),
                 click: () => {
                     this.performAction({
@@ -149,7 +154,8 @@ export class InvocationComponent extends ModellingItemComponent {
                     });
                 }
             },
-            <XcMenuItem>{ name: 'Add/Remove Free Capacities Operator', translate: true,
+            <XcMenuItem>{
+                name: 'Add/Remove Free Capacities Operator', translate: true,
                 visible: () => this.invocation.freeCapacitiesTaggable && !this.readonly,
                 click: () => {
                     this.performAction({

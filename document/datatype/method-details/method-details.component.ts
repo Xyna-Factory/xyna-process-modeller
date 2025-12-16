@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, ElementRef, inject, Injector, Input, OnDestroy, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, Input, OnDestroy } from '@angular/core';
 
 import { MinMaxService } from '@pmod/document/min-max.service';
 import { I18nService } from '@zeta/i18n';
@@ -23,10 +23,7 @@ import { XcTabBarItem } from '@zeta/xc';
 
 import { BehaviorSubject, Subject } from 'rxjs';
 
-import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
 import { XoMethod } from '../../../xo/method.model';
-import { ComponentMappingService } from '../../component-mapping.service';
-import { DocumentService } from '../../document.service';
 import { ModellingItemComponent } from '../../workflow/shared/modelling-object.component';
 import { DocumentTabData, MetaTabData, MethodTabData } from '../tabs/datatype-tab.component';
 import { MethodBaseTabComponent } from '../tabs/method/method-base-tab.component';
@@ -43,6 +40,8 @@ import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
 })
 export class MethodDetailsComponent extends ModellingItemComponent implements OnDestroy {
 
+    protected readonly i18nService = inject(I18nService);
+    protected readonly cdr = inject(ChangeDetectorRef);
     private readonly minMaxService = inject(MinMaxService);
 
     get method(): XoMethod {
@@ -102,16 +101,8 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
     tabBarSelection: XcTabBarItem<DocumentTabData<any>>;
     tabBarItems: XcTabBarItem<DocumentTabData<any>>[];
 
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        detailLevelService: WorkflowDetailLevelService,
-        private readonly i18nService: I18nService,
-        private readonly cdr: ChangeDetectorRef,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
+    constructor() {
+        super();
 
         this.tabBarItems = [this.baseTabItem, this.metaTabItem, this.implementationTabItem];
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnInit, Optional, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit, ViewChild } from '@angular/core';
 
 import { FullQualifiedName, XoStructureType } from '@zeta/api';
 import { isString } from '@zeta/base';
@@ -25,7 +25,6 @@ import { merge, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { ModellingActionType } from '../../../api/xmom.service';
-import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
 import { XoChangeAbstractRequest } from '../../../xo/change-abstract-request.model';
 import { XoChangeBaseTypeRequest } from '../../../xo/change-base-type-request.model';
 import { XoChangeLabelRequest } from '../../../xo/change-label-request.model';
@@ -33,7 +32,6 @@ import { XoDataTypeTypeLabelArea } from '../../../xo/data-type-type-label-area.m
 import { XoData } from '../../../xo/data.model';
 import { XoServiceGroupTypeLabelArea } from '../../../xo/service-group-type-label-area.model';
 import { XoXmomItem } from '../../../xo/xmom-item.model';
-import { ComponentMappingService } from '../../component-mapping.service';
 import { DataTypeService } from '../../datatype.service';
 import { DocumentService } from '../../document.service';
 import { DataTypeDocumentModel } from '../../model/data-type-document.model';
@@ -53,6 +51,11 @@ import { ShowGuiModelModalComponent } from './show-gui-model-modal/show-gui-mode
     standalone: false
 })
 export class TypeInfoAreaComponent extends ModellingObjectComponent implements OnInit {
+
+    protected readonly documentService = inject(DocumentService);
+    protected readonly dataTypeService = inject(DataTypeService);
+    protected readonly dialogService = inject(XcDialogService);
+    protected readonly cdr = inject(ChangeDetectorRef);
 
     private _isStorable: boolean;
 
@@ -75,17 +78,8 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
     isStorableCheckbox: XcCheckboxComponent;
 
 
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        detailLevelService: WorkflowDetailLevelService,
-        private readonly dataTypeService: DataTypeService,
-        private readonly dialogService: XcDialogService,
-        private readonly cdr: ChangeDetectorRef,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
+    constructor() {
+        super();
 
         this.pathDataWrapper = new XcAutocompleteDataWrapper(
             ()    => this.typeDocument.newTypePath,

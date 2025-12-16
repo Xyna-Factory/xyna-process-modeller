@@ -15,9 +15,8 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, HostBinding, HostListener, Injector, Input, Optional, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, HostBinding, HostListener, inject, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
 
-import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { ApiService } from '@zeta/api';
 import { coerceBoolean } from '@zeta/base';
 
@@ -37,8 +36,6 @@ import { FormulaPartOperation } from '../../../xo/util/formula-parts/formula-par
 import { FormulaPartSpecial } from '../../../xo/util/formula-parts/formula-part-special';
 import { FormulaPartVariable } from '../../../xo/util/formula-parts/formula-part-variable';
 import { XoVariable } from '../../../xo/variable.model';
-import { ComponentMappingService } from '../../component-mapping.service';
-import { DocumentService } from '../../document.service';
 import { ModDropEvent } from '../shared/drag-and-drop/mod-drop-area.directive';
 import { ModellingItemComponent, TriggeredAction } from '../shared/modelling-object.component';
 import { FormulaEditablePartComponent } from './parts/formula-editable-part.component';
@@ -52,6 +49,9 @@ import { FormulaChildComponent } from './parts/formula-part.component';
     standalone: false
 })
 export class FormulaComponent extends ModellingItemComponent {
+
+    protected readonly elementRef = inject(ElementRef);
+    protected readonly apiService = inject(ApiService);
 
     @ViewChild('formulaWrapper', {static: false})
     formulaWrapper: ElementRef;
@@ -67,17 +67,6 @@ export class FormulaComponent extends ModellingItemComponent {
     private _variableMenuDisabled = false;          // no menu for formula variables
 
     proxyIndex = -1;                                // if >= 0, the proxy-dropdown with all the xfl-functions is shown
-
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        readonly detailLevelService: WorkflowDetailLevelService,
-        private readonly apiService: ApiService,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
-    }
 
 
     /**

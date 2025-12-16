@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, HostBinding, Injector, Input, Optional } from '@angular/core';
+import { Component, HostBinding, inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
@@ -39,7 +39,6 @@ import { XoModellingItem } from '../../../xo/modelling-item.model';
 import { XoReferableObject } from '../../../xo/referable-object.model';
 import { XoSetConstantRequest } from '../../../xo/set-constant-request.model';
 import { XoVariable } from '../../../xo/variable.model';
-import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { CONSTANT_DIALOG_DELETE_TOKEN, ConstantDialogComponent, ConstantDialogData } from '../../modal/constant-dialog/constant-dialog.component';
 import { SelectionService } from '../../selection.service';
@@ -56,6 +55,14 @@ import { SelectableModellingObjectComponent } from '../shared/selectable-modelli
 })
 export class VariableComponent extends SelectableModellingObjectComponent {
 
+    protected readonly router = inject(Router);
+    protected readonly documentService = inject(DocumentService);
+    protected readonly detailLevelService = inject(WorkflowDetailLevelService);
+    protected readonly selectionService = inject(SelectionService);
+    protected readonly i18n = inject(I18nService);
+    protected readonly dialogService = inject(XcDialogService);
+    protected readonly branchSelection = inject(BranchSelectionService);
+
     @Input()
     hasMenu = true;
 
@@ -68,19 +75,8 @@ export class VariableComponent extends SelectableModellingObjectComponent {
     private readonly constantMenuItem: XcMenuItem;
 
 
-    constructor(
-        router: Router,
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        readonly detailLevelService: WorkflowDetailLevelService,
-        selectionService: SelectionService,
-        private readonly i18n: I18nService,
-        private readonly dialogService: XcDialogService,
-        private readonly branchSelection: BranchSelectionService,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, selectionService, injector);
+    constructor() {
+        super();
 
         // get constant from selected branch, if any
         const getConstant = (): Xo =>
@@ -101,8 +97,8 @@ export class VariableComponent extends SelectableModellingObjectComponent {
             name: '',
             translate: true,
             visible: () => viewConstant(),
-            click:   () => {
-                dialogService.custom(
+            click: () => {
+                this.dialogService.custom(
                     ConstantDialogComponent,
                     <ConstantDialogData>{
                         rtc: this.getDocumentRtc(),
@@ -131,9 +127,10 @@ export class VariableComponent extends SelectableModellingObjectComponent {
             }
         };
         this.menuItems.unshift(
-            <XcMenuItem>{ name: 'Open in new Tab', translate: true,
+            <XcMenuItem>{
+                name: 'Open in new Tab', translate: true,
                 visible: () => !!this.variable.$fqn, // prototype variable does not have an fqn
-                click:   () => {
+                click: () => {
                     const fqn = this.variable.toFqn();
                     const rtc = (this.variable.$rtc ?? this.variable.evaluatedRtc).runtimeContext();
                     let type: XmomObjectType;
@@ -145,7 +142,7 @@ export class VariableComponent extends SelectableModellingObjectComponent {
                     }
                     if (type) {
                         this.documentService.loadDocument(rtc, fqn, type);
-                        void router.navigate(['xfm/Process-Modeller/']);
+                        void this.router.navigate(['xfm/Process-Modeller/']);
                     }
                 }
             },
@@ -154,17 +151,18 @@ export class VariableComponent extends SelectableModellingObjectComponent {
                 name: 'Convert into List',
                 translate: true,
                 visible: () => !this.variable.isList && !this.readonly,
-                click:   () => this.toggleMultiplicity()
+                click: () => this.toggleMultiplicity()
             },
             <XcMenuItem>{
                 name: 'Convert into Single',
                 translate: true,
                 visible: () => this.variable.isList && !this.readonly,
-                click:   () => this.toggleMultiplicity()
+                click: () => this.toggleMultiplicity()
             },
-            <XcMenuItem>{ name: 'Convert into Data Type...', translate: true,
+            <XcMenuItem>{
+                name: 'Convert into Data Type...', translate: true,
                 visible: () => this.variable.isAbstract && !this.readonly, // prototype variable
-                click:   () => {
+                click: () => {
                     this.dialogService.custom(
                         LabelPathDialogComponent,
                         <LabelPathDialogData>{
@@ -191,7 +189,7 @@ export class VariableComponent extends SelectableModellingObjectComponent {
                 name: 'Remove Dynamic Type',
                 translate: true,
                 visible: () => this.hasDynamicType && this.variable.allowCast && !this.isLocked(),
-                click:   () => this.performAction({
+                click: () => this.performAction({
                     type: ModellingActionType.change,
                     objectId: this.variable.id,
                     request: XoChangeDynamicTypingRequest.castTo('')
@@ -199,7 +197,7 @@ export class VariableComponent extends SelectableModellingObjectComponent {
             }
         );
 
-        this.untilDestroyed(branchSelection.selectionChange).subscribe(
+        this.untilDestroyed(this.branchSelection.selectionChange).subscribe(
             () => this.constantMenuItem.name = this.selectedBranch
                 ? 'Constant for selected Branch...'
                 : 'Constant...'

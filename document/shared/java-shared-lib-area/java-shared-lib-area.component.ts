@@ -15,16 +15,13 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, Injector, Input, OnDestroy, Optional } from '@angular/core';
-import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
+import { Component, Input, OnDestroy } from '@angular/core';
 
 import { XcRichListItem } from '@zeta/xc';
 
 import { Subject, Subscription } from 'rxjs';
 
 import { XoJavaSharedLibrariesArea } from '../../../xo/java-shared-libraries-area.model';
-import { ComponentMappingService } from '../../component-mapping.service';
-import { DocumentService } from '../../document.service';
 import { ModellingObjectComponent, TriggeredAction } from '../../workflow/shared/modelling-object.component';
 import { JavaSharedLibItemComponent, JavaSharedLibItemData } from './java-shared-lib-item.component';
 
@@ -54,14 +51,8 @@ export class JavaSharedLibAreaComponent extends ModellingObjectComponent impleme
 
     expand = true;
 
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        detailLevelService: WorkflowDetailLevelService,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
+    constructor() {
+        super();
         this.usedChangeSubjectSubscription = this.usedChangeSubject.subscribe(action => {
             // console.log('java shared library used action', action);
             this.performAction(action);
