@@ -102,3 +102,13 @@ $color-step-warning: #fabb00;
 // *** T Y P E S *******************************
 
 $type-info-badge-color: $color-gray-5;
+
+// toolbar
+
+$toolbar-separator-border-color: $color-gray-5;
+$toolbar-separator-background-color: $color-gray-3;
+
+@if $theme ==xyna {
+    $toolbar-separator-border-color: $color-gray-1;
+    $toolbar-separator-background-color: $color-gray-2;
+}

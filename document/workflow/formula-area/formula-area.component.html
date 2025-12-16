@@ -15,7 +15,7 @@
         <xc-icon-button
           xc-icon-name="copy"
           xc-icon-size="small"
-          color="invert"
+          color="color-black"
           (click)="duplicateFormula(formula, i + 1)"
           xc-tooltip="duplicate-formula"
           xc-i18n
@@ -25,7 +25,7 @@
         <xc-icon-button
           xc-icon-name="delete"
           xc-icon-size="small"
-          color="invert"
+          color="color-black"
           (click)="removeFormula(formula)"
           xc-tooltip="delete-formula"
           xc-i18n
@@ -35,5 +35,5 @@
   }
 </div>
 @if (!readonly) {
-  <xc-icon-button xc-icon-name="add" xc-icon-size="small" color="invert" (click)="addFormula()" />
+  <xc-icon-button xc-icon-name="add" xc-icon-size="small" color="color-black" (click)="addFormula()" />
 }

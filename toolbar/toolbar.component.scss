@@ -113,8 +113,8 @@
         display: flex;
         flex: 0 0 auto;
         height: 10px;
-        border: 4px solid $color-gray-1;
-        background-color: $color-gray-2;
+        border: 4px solid $toolbar-separator-border-color;
+        background-color: $toolbar-separator-background-color;
     }
 
     // TODO: remove once the library-call icon exists
