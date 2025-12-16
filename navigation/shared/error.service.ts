@@ -27,7 +27,6 @@ import { merge } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 
-
 @Injectable()
 export class ErrorService {
     // private currentErrorIndex = -1;

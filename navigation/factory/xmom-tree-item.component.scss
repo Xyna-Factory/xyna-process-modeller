@@ -17,23 +17,22 @@
  */
 @use '../../const' as *;
 
-
 :host {
     display: flex;
     flex: 1 1 auto;
     flex-direction: column;
 
-    > .header {
+    >.header {
         display: flex;
         align-items: center;
         background-color: $color-gray-5;
         border-bottom: 1px solid #5a5a5d;
 
         &:hover {
-            background-color: $color-normal;
+            background-color: $xc-tree-background-color-hover;
         }
 
-        > label {
+        >label {
             font-size: $font-size-small;
             user-select: none;
             line-height: 24px;
@@ -41,53 +40,53 @@
             padding-right: 6px;
         }
 
-        > xc-icon-button + label {
+        >xc-icon-button+label {
             padding-left: 0;
         }
 
-        > xc-icon-button {
+        >xc-icon-button {
             ::ng-deep xc-icon {
                 transition: transform $transition-time-fast ease-in-out;
             }
         }
 
-        > xc-icon-button.expanded {
+        >xc-icon-button.expanded {
             ::ng-deep xc-icon {
                 transform: rotate(90deg);
             }
         }
     }
 
-    > .content {
+    >.content {
         margin-left: 20px;
     }
 }
 
 
 :host.selected {
-    > .header {
+    >.header {
         background-color: $color-primary;
     }
 }
 
 
 :host.root {
-    > .header {
+    >.header {
         background-color: unset;
 
-        > label {
+        >label {
             color: $color-normal;
         }
     }
 
-    > .content {
+    >.content {
         margin-left: 0;
     }
 }
 
 
 :host.root.selected {
-    > .header {
+    >.header {
         background-color: $color-gray-1;
     }
 }
