@@ -112,9 +112,9 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
 
 
     ngOnDestroy() {
-        if (this.getModel() && this.allowRegisterAtComponentMapping()) {
-            this.componentMappingService.removeComponentForObject(this.getModel());
-        }
+        // if (this.getModel() && this.allowRegisterAtComponentMapping()) {
+        //     this.componentMappingService.removeComponentForObject(this.getModel());
+        // }
         this.lockedSubscription?.unsubscribe();
         this.destroySubject.next();
     }
@@ -247,29 +247,13 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
         return this._model;
     }
 
-    /**
-     * Updates the represented model and updates component mapping accordingly.
-     * 
-     * ✅ FIXED: Removed removeComponentForObject(old) call from this method.
-     * 
-     * REASON: Each component instance now represents exactly ONE model ID over its lifetime.
-     * The same VariableComponent instance should NOT "wander" between different model IDs
-     * (e.g. var37-in0 → var56-in0 during step renumbering).
-     * 
-     * NEW BEHAVIOR:
-     * - Mapping is added on setModel() and stays stable for this component instance
-     * - getComponentForId(root, 'var37-in0') will continue working until component destruction
-     * - Cleanup happens ONLY in ngOnDestroy() when the component is actually destroyed
-     * 
-     * REQUIREMENTS for this to work correctly:
-     * - Use trackBy: trackById() in *ngFor templates to ensure stable component instances per model ID
-     * - Angular will create/destroy components when model IDs change, preserving mappings correctly
-     * 
-     * OLD BEHAVIOR (removed):
-     * - removeComponentForObject(old) cleaned up mapping immediately on model switch
-     * - Caused getComponentForId() to return null for previously mapped IDs
-     */
+
     setModel(value: XoReferableObject) {
+        // remove former mapping
+        if (this.getModel() && this.allowRegisterAtComponentMapping()) {
+            this.componentMappingService.removeComponentForObject(this.getModel());
+        }
+
         this._model = value;
 
         /** @todo fixme: Assuming that created component is created for currently opened document. That is not necessarily the case (e. g. potentially for coming multi-user-updates).

@@ -6,13 +6,11 @@
       <span class="parallel-char">⦷</span>
     }
     <div class="variable-container">
-      @for (variable of foreach.inputArea.items.data; let i = $index; track i) {
-        <variable
-          [variable]="variable"
-          [documentModel]="documentModel"
-          [hasMenu]="false"
-        ></variable>
-      }
+      <variable *ngFor="let variable of foreach.inputArea.items.data"
+        [variable]="variable"
+        [documentModel]="documentModel"
+        [hasMenu]="false"
+      ></variable>
     </div>
     <xc-icon-button
       *xc-menu-service="showMenu; let menuService"
