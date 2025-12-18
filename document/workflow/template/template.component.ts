@@ -15,9 +15,9 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, HostBinding, Injector, Input, OnDestroy, Optional, QueryList, ViewChildren } from '@angular/core';
-import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
+import { Component, ElementRef, HostBinding, inject, Input, OnDestroy, QueryList, ViewChildren } from '@angular/core';
 
+import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
 import { ApiService } from '@zeta/api';
 import { XcMenuItem } from '@zeta/xc';
 
@@ -29,13 +29,10 @@ import { XoFormula } from '../../../xo/formula.model';
 import { XoTemplate } from '../../../xo/template.model';
 import { FormulaPart } from '../../../xo/util/formula-parts/formula-part';
 import { FormulaPartLiteral } from '../../../xo/util/formula-parts/formula-part-literal';
-import { ComponentMappingService } from '../../component-mapping.service';
-import { DocumentService } from '../../document.service';
 import { ModellingItemComponent, TriggeredAction } from '../shared/modelling-object.component';
 import { TemplateRow } from './model/template-row.model';
 import { TemplateText } from './model/template-text.model';
 import { SplitTemplateRowEvent, SwitchTemplateRowFocusEvent, TemplateRowComponent } from './template-row/template-row.component';
-import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
 
 
 enum ConcatParameterType {
@@ -58,6 +55,9 @@ interface ConcatParameter {
 })
 export class TemplateComponent extends ModellingItemComponent implements OnDestroy {
 
+    protected readonly elementRef = inject(ElementRef);
+    protected readonly apiService = inject(ApiService);
+
     private static readonly LOCALE_READONLY_MODE = 'Switch to Readonly Mode';   // TODO: i18n - use language key
     private static readonly LOCALE_EDIT_MODE = 'Switch to Edit Mode';   // TODO: i18n - use language key
 
@@ -73,15 +73,8 @@ export class TemplateComponent extends ModellingItemComponent implements OnDestr
     private readonly readonlyMenuItem: XcMenuItem;
 
 
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        readonly detailLevelService: WorkflowDetailLevelService,
-        private readonly apiService: ApiService,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
+    constructor() {
+        super();
 
         this.readonlyMenuItem = <XcMenuItem>{
             name: TemplateComponent.LOCALE_READONLY_MODE,

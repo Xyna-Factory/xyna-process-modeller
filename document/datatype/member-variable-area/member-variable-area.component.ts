@@ -15,21 +15,19 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, Injector, Input, Optional } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
+import { XoModellingItem } from '@pmod/xo/modelling-item.model';
 
 import { ModellingActionType } from '../../../api/xmom.service';
-import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
 import { XoDataMemberVariable } from '../../../xo/data-member-variable.model';
 import { XoDeleteRequest } from '../../../xo/delete-request.model';
 import { XoInsertModellingObjectRequest } from '../../../xo/insert-modelling-object-request.model';
 import { XoMemberVariableArea } from '../../../xo/member-variable-area.model';
 import { XoMoveModellingObjectRequest } from '../../../xo/move-modelling-object-request.model';
-import { ComponentMappingService } from '../../component-mapping.service';
-import { DocumentService } from '../../document.service';
 import { DragType } from '../../workflow/shared/drag-and-drop/mod-drag-and-drop.service';
 import { ModDropEvent } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
-import { XoModellingItem } from '@pmod/xo/modelling-item.model';
 
 
 @Component({
@@ -40,14 +38,8 @@ import { XoModellingItem } from '@pmod/xo/modelling-item.model';
 })
 export class MemberVariableAreaComponent extends ModellingObjectComponent {
 
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        detailLevelService: WorkflowDetailLevelService,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
+    constructor() {
+        super();
          
         const antiTreeShakingInstance = new XoDataMemberVariable();
     }

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnDestroy, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy } from '@angular/core';
 
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoDataType } from '@pmod/xo/data-type.model';
@@ -27,9 +27,6 @@ import { XoBaseDefinition, XoDefinitionBundle } from '@zeta/xc/xc-form/definitio
 import { BehaviorSubject, combineLatest, map, Observable, of, Subject } from 'rxjs';
 
 import { XoRuntimeContext } from '../../../xo/runtime-context.model';
-import { ComponentMappingService } from '../../component-mapping.service';
-import { DocumentService } from '../../document.service';
-import { WorkflowDetailLevelService } from '../../workflow-detail-level.service';
 import { ModellingItemComponent } from '../../workflow/shared/modelling-object.component';
 import { DocumentationTabData, DocumentTabData, MetaTabData, PluginTabData } from '../tabs/datatype-tab.component';
 import { DataTypePluginTabComponent } from '../tabs/datatype/datatype-plugin-tab.component';
@@ -46,6 +43,10 @@ import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
     standalone: false
 })
 export class DataTypeDetailsComponent extends ModellingItemComponent implements OnDestroy {
+
+    protected readonly pluginService = inject(PluginService);
+    protected readonly i18nService = inject(I18nService);
+    protected readonly cdr = inject(ChangeDetectorRef);
 
     @Input()
     dataTypeRTC: XoRuntimeContext = null;
@@ -121,17 +122,8 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
     tabBarSelection: XcTabBarItem<DocumentTabData<any>>;
     tabBarItems: XcTabBarItem<DocumentTabData<any>>[];
 
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        detailLevelService: WorkflowDetailLevelService,
-        private readonly pluginService: PluginService,
-        private readonly i18nService: I18nService,
-        private readonly cdr: ChangeDetectorRef,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
+    constructor() {
+        super();
         this.tabBarSelection = this.documentationTabItem;
     }
 

@@ -15,13 +15,10 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, Injector, Input } from '@angular/core';
-import { Router } from '@angular/router';
-import { ComponentMappingService } from '@pmod/document/component-mapping.service';
-import { DocumentService } from '@pmod/document/document.service';
+import { Component, inject, Input } from '@angular/core';
+
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { I18nService } from '@zeta/i18n';
-
 import { XcDialogService, XcIdentityDataWrapper, XcMenuItem, XcStringIntegerDataWrapper } from '@zeta/xc';
 
 import { ModellingActionType } from '../../../api/xmom.service';
@@ -38,6 +35,10 @@ import { InvocationComponent } from '../invocation/invocation.component';
     standalone: false
 })
 export class QueryComponent extends InvocationComponent {
+
+    protected readonly detailLevelService = inject(WorkflowDetailLevelService);
+    protected readonly i18n = inject(I18nService);
+    protected readonly dialogs = inject(XcDialogService);
 
     showDocumentation = false;
 
@@ -58,20 +59,12 @@ export class QueryComponent extends InvocationComponent {
     );
 
 
-    constructor(
-        router: Router,
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        detailLevelService: WorkflowDetailLevelService,
-        i18n: I18nService,
-        dialogs: XcDialogService,
-        injector: Injector
-    ) {
-        super(router, elementRef, componentMappingService, documentService, detailLevelService, i18n, dialogs, injector);
+    constructor() {
+        super();
 
         this.menuItems.unshift(
-            <XcMenuItem>{ name: 'Show/Hide Configurations', translate: true,
+            <XcMenuItem>{
+                name: 'Show/Hide Configurations', translate: true,
                 click: () => this.toggleCollapsed()
             }
         );

@@ -15,12 +15,9 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 
 import { ModellingActionType, XmomService } from '@pmod/api/xmom.service';
-import { ComponentMappingService } from '@pmod/document/component-mapping.service';
-import { DocumentService } from '@pmod/document/document.service';
-import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { XoCastExpression } from '@pmod/xo/expressions/cast-expression.model';
 import { XoExpression2Args } from '@pmod/xo/expressions/expression2-args.model';
 import { XoFunctionExpression } from '@pmod/xo/expressions/function-expression.model';
@@ -95,6 +92,9 @@ class ExpressionWrapper {
 })
 export class VisualMappingComponent extends ModellingObjectComponent implements OnInit, OnDestroy, SkeletonTreeDataSourceObserver {
 
+    protected readonly selectionService = inject(SelectionService);
+    protected readonly cdr = inject(ChangeDetectorRef);
+
     private _replacedSubscription: Subscription;
     private _selectionSubscription: Subscription;
     private initialized = false;
@@ -127,16 +127,8 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
     }
 
 
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        detailLevelService: WorkflowDetailLevelService,
-        injector: Injector,
-        protected readonly cdr: ChangeDetectorRef,
-        protected readonly selectionService: SelectionService
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
+    constructor() {
+        super();
 
         // anti-prune
 
@@ -300,27 +292,27 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
     }
 
 
-select(node: SkeletonTreeNode) {
-    this._selectionSubscription?.unsubscribe();
+    select(node: SkeletonTreeNode) {
+        this._selectionSubscription?.unsubscribe();
 
-    if (this.selectedNode) {
-        this.selectedNode.selected = false;
+        if (this.selectedNode) {
+            this.selectedNode.selected = false;
+        }
+
+        this.selectedNode = node;
+
+        if (node) {
+            node.selected = true;
+
+            // 🔽 Suppress the next selection event so that the mapping is not affected by this selection
+            this.selectionService.selectedObjectSilently();
+
+            this._selectionSubscription = node.selectedChange.pipe(filter(value => !value)).subscribe(() => {
+                this.selectedNode = undefined;
+                this._selectionSubscription?.unsubscribe();
+            });
+        }
     }
-
-    this.selectedNode = node;
-
-    if (node) {
-        node.selected = true;
-
-        // 🔽 Suppress the next selection event so that the mapping is not affected by this selection
-        this.selectionService.selectedObjectSilently();
-
-        this._selectionSubscription = node.selectedChange.pipe(filter(value => !value)).subscribe(() => {
-            this.selectedNode = undefined;
-            this._selectionSubscription?.unsubscribe();
-        });
-    }
-}
 
 
     nodeChange(dataSource: SkeletonTreeDataSource, node: SkeletonTreeNode): void {

@@ -15,18 +15,17 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+
+import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
+
+import { combineLatest } from 'rxjs';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeTextRequest } from '../../../xo/change-text-request.model';
 import { XoTextArea } from '../../../xo/text-area.model';
-import { ComponentMappingService } from '../../component-mapping.service';
-import { DocumentService } from '../../document.service';
-import { WorkflowDetailLevelService } from '../../workflow-detail-level.service';
-import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
-import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 import { PluginService } from '../../plugin.service';
-import { combineLatest } from 'rxjs';
+import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 
 
 @Component({
@@ -38,25 +37,15 @@ import { combineLatest } from 'rxjs';
 })
 export class TypeDocumentationAreaComponent extends ModellingObjectComponent {
 
+    protected readonly pluginService = inject(PluginService);
+    protected readonly cdr = inject(ChangeDetectorRef);
+
     pluginBundles: XoDefinitionBundle[];
 
     documentation: string;
 
     @Input()
     lines: number;
-
-
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        detailLevelService: WorkflowDetailLevelService,
-        readonly pluginService: PluginService,
-        private readonly cdr: ChangeDetectorRef,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
-    }
 
 
     protected lockedChanged() {

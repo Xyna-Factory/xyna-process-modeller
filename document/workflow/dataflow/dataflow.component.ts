@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, inject, Input, NgZone, OnDestroy, Output, ViewChild } from '@angular/core';
 
 import { createSVGGroup, createSVGHorizontalCubicBezierPath, removeAllChildren } from '@zeta/base/draw';
 
@@ -295,6 +295,11 @@ interface ConnectionObject {
 })
 export class DataflowComponent implements AfterViewInit, OnDestroy {
 
+    private readonly selectionService = inject(SelectionService);
+    private readonly componentMappingService = inject(ComponentMappingService);
+    private readonly branchSelection = inject(BranchSelectionService);
+    private readonly ngZone = inject(NgZone);
+
     private _workflow: XoWorkflow;
     private _dataflow: XoConnectionArray;
     private selectionSubscription: Subscription;
@@ -330,15 +335,6 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
 
     @Output()
     readonly dataflowChange = new EventEmitter<XoSetDataflowConnectionRequest>();
-
-
-    constructor(
-        private readonly selectionService: SelectionService,
-        private readonly componentMappingService: ComponentMappingService,
-        private readonly branchSelection: BranchSelectionService,
-        private readonly ngZone: NgZone
-    ) {
-    }
 
 
     ngAfterViewInit() {

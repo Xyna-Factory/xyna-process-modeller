@@ -15,22 +15,20 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, Injector, Input, Optional } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 
+import { PluginService } from '@pmod/document/plugin.service';
 import { XcAutocompleteDataWrapper, XcOptionItem, XcRichListItem } from '@zeta/xc';
+import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
+
+import { combineLatest } from 'rxjs';
 
 import { ModellingActionType } from '../../../api/xmom.service';
-import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
 import { XoChangeExceptionMessageRequest } from '../../../xo/change-exception-message-request.model';
 import { XoExceptionMessage } from '../../../xo/exception-message.model';
 import { XoExceptionMessagesArea } from '../../../xo/exception-messages-area.model';
-import { ComponentMappingService } from '../../component-mapping.service';
-import { DocumentService } from '../../document.service';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { ExceptionMessageRichListItemComponent, ExceptionMessageRichListItemData } from '../exception-message-rich-list-item/exception-message-rich-list-item.component';
-import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
-import { combineLatest } from 'rxjs';
-import { PluginService } from '../../plugin.service';
 
 
 export enum ExceptionMessageLanguage {
@@ -47,6 +45,8 @@ export enum ExceptionMessageLanguage {
 })
 export class ExceptionMessagesAreaComponent extends ModellingObjectComponent {
 
+    protected readonly pluginService = inject(PluginService);
+
     private readonly onclick: (item: XoExceptionMessage) => void;
     private readonly ondelete: (item: XoExceptionMessage) => void;
 
@@ -59,15 +59,8 @@ export class ExceptionMessagesAreaComponent extends ModellingObjectComponent {
     exceptionMessageRichListItems: XcRichListItem<ExceptionMessageRichListItemData>[] = [];
 
 
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        detailLevelService: WorkflowDetailLevelService,
-        readonly pluginService: PluginService,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
+    constructor() {
+        super();
 
          
         const antiTreeShakingInstance = new XoExceptionMessage();

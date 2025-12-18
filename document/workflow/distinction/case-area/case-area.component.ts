@@ -15,11 +15,9 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, Injector, Input, Optional } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 
 import { ModellingActionType } from '@pmod/api/xmom.service';
-import { ComponentMappingService } from '@pmod/document/component-mapping.service';
-import { DocumentService } from '@pmod/document/document.service';
 import { ConflictDialogComponent, ConflictDialogData } from '@pmod/document/modal/conflict-dialog/conflict-dialog.component';
 import { XoCase } from '@pmod/xo/case.model';
 import { XoModellingItem } from '@pmod/xo/modelling-item.model';
@@ -27,7 +25,6 @@ import { XoMoveModellingObjectRequest } from '@pmod/xo/move-modelling-object-req
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService } from '@zeta/xc';
 
-import { WorkflowDetailLevelService } from '../../../../document/workflow-detail-level.service';
 import { XoCaseArea } from '../../../../xo/case-area.model';
 import { ModDnDEvent } from '../../shared/drag-and-drop/mod-drag-and-drop.service';
 import { ModDragEvent, ModDropEvent } from '../../shared/drag-and-drop/mod-drop-area.directive';
@@ -42,6 +39,9 @@ import { ModellingObjectComponent, TriggeredAction } from '../../shared/modellin
 })
 export class CaseAreaComponent extends ModellingObjectComponent {
 
+    protected readonly i18n = inject(I18nService);
+    protected readonly dialogService = inject(XcDialogService);
+
     allowItem = (xoFqn: string): boolean => {
         const allowedType = !!this.caseArea.itemTypes.find(itemType => itemType.toLowerCase() === xoFqn.toLowerCase());
         return allowedType && !this.readonly;
@@ -55,20 +55,6 @@ export class CaseAreaComponent extends ModellingObjectComponent {
         }
         return false;
     };
-
-
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        readonly detailLevelService: WorkflowDetailLevelService,
-        private readonly i18n: I18nService,
-        private readonly dialogService: XcDialogService,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
-    }
-
 
     dropped(event: ModDropEvent) {
         const request = new XoMoveModellingObjectRequest(undefined, -1, this.caseArea.id);

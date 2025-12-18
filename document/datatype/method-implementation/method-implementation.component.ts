@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, ElementRef, inject, Injector, Input, Optional } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 
 import { MinMaxService } from '@pmod/document/min-max.service';
 import { PluginService } from '@pmod/document/plugin.service';
@@ -27,11 +27,9 @@ import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definit
 import { combineLatest } from 'rxjs';
 
 import { ModellingAction, ModellingActionType } from '../../../api/xmom.service';
-import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
 import { XoChangeAbortableRequest } from '../../../xo/change-abortable-request.model';
 import { XoChangeMemberMethodImplementationRequest } from '../../../xo/change-member-method-implementation-request.model';
 import { XoMethod } from '../../../xo/method.model';
-import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { ModellingItemComponent, TriggeredAction } from '../../workflow/shared/modelling-object.component';
 
@@ -44,24 +42,14 @@ import { ModellingItemComponent, TriggeredAction } from '../../workflow/shared/m
 })
 export class MethodImplementationComponent extends ModellingItemComponent {
 
-    private readonly minmaxService = inject(MinMaxService);
+    protected readonly documentService = inject(DocumentService);
+    protected readonly dialogService = inject(XcDialogService);
+    protected readonly minmaxService = inject(MinMaxService);
+    protected readonly i18nService = inject(I18nService);
+    protected readonly pluginService = inject(PluginService);
+    protected readonly cdr = inject(ChangeDetectorRef);
 
     pluginBundles: XoDefinitionBundle[];
-
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        private readonly dialogService: XcDialogService,
-        private readonly i18nService: I18nService,
-        readonly pluginService: PluginService,
-        detailLevelService: WorkflowDetailLevelService,
-        private readonly cdr: ChangeDetectorRef,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
-    }
-
 
     get isAbstractMethod() {
         return this.method

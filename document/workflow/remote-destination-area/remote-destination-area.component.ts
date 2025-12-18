@@ -15,15 +15,13 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, Injector, Input, Optional } from '@angular/core';
-import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
+import { Component, inject, Input } from '@angular/core';
 
 import { XcAutocompleteDataWrapper, XcOptionItem } from '@zeta/xc';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeRemoteDestinationRequest } from '../../../xo/change-remote-destination-request.model';
 import { XoRemoteDestinationArea } from '../../../xo/remote-destination-area.model';
-import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
 
@@ -35,6 +33,8 @@ import { ModellingObjectComponent } from '../shared/modelling-object.component';
     standalone: false
 })
 export class RemoteDestinationAreaComponent extends ModellingObjectComponent {
+
+    protected readonly documentService = inject(DocumentService);
 
     dataWrapper = new XcAutocompleteDataWrapper(
         () => this.remoteDestinationArea && this.remoteDestinationArea.usedDestination ? this.remoteDestinationArea.usedDestination.name : null,
@@ -49,15 +49,9 @@ export class RemoteDestinationAreaComponent extends ModellingObjectComponent {
     );
 
 
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        readonly detailLevelService: WorkflowDetailLevelService,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
-        documentService.xmomService.getRemoteDestinations().subscribe(remoteDestinations =>
+    constructor() {
+        super();
+        this.documentService.xmomService.getRemoteDestinations().subscribe(remoteDestinations =>
             this.dataWrapper.values = [
                 <XcOptionItem>{ name: '', value: '' },
                 ...remoteDestinations.data.map(rd => <XcOptionItem>{ name: rd.name, value: rd.name })

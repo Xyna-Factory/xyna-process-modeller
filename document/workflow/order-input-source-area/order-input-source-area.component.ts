@@ -15,8 +15,9 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 
+import { DocumentService } from '@pmod/document/document.service';
 import { XcAutocompleteDataWrapper, XcOptionItemString } from '@zeta/xc';
 
 import { ModellingActionType } from '../../../api/xmom.service';
@@ -33,6 +34,8 @@ import { ModellingObjectComponent } from '../shared/modelling-object.component';
     standalone: false
 })
 export class OrderInputSourceAreaComponent extends ModellingObjectComponent implements OnInit {
+
+    protected readonly documentService = inject(DocumentService);
 
     private _invocation: XoInvocation;
     private invalidated = true;

@@ -15,11 +15,8 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, HostBinding, HostListener, Injector, OnDestroy, Optional } from '@angular/core';
-import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
+import { Component, HostBinding, HostListener, inject, OnDestroy } from '@angular/core';
 
-import { ComponentMappingService } from '../../component-mapping.service';
-import { DocumentService } from '../../document.service';
 import { SelectionService } from '../../selection.service';
 import { ModellingItemComponent } from './modelling-object.component';
 
@@ -33,21 +30,16 @@ import { ModellingItemComponent } from './modelling-object.component';
 })
 export class SelectableModellingObjectComponent extends ModellingItemComponent implements OnDestroy {
 
+    protected readonly selectionService = inject(SelectionService);
+
     @HostBinding('class.selected')
     protected _selected = false;
 
 
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        readonly detailLevelService: WorkflowDetailLevelService,
-        protected readonly selectionService: SelectionService,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
+    constructor( ) {
+        super();
 
-        this.untilDestroyed(selectionService.selectionChange).subscribe(
+        this.untilDestroyed(this.selectionService.selectionChange).subscribe(
             selectedObject => this.selectionChanged(selectedObject)
         );
     }

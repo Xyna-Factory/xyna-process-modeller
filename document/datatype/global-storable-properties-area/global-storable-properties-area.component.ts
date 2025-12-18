@@ -15,13 +15,10 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 
 import { XoGlobalStorablePropertyArea } from '@pmod/xo/global-storable-property-area.model';
 
-import { ComponentMappingService } from '../../component-mapping.service';
-import { DocumentService } from '../../document.service';
-import { WorkflowDetailLevelService } from '../../workflow-detail-level.service';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 
 
@@ -34,6 +31,8 @@ import { ModellingObjectComponent } from '../../workflow/shared/modelling-object
 })
 export class GlobalStorablePropertiesAreaComponent extends ModellingObjectComponent {
 
+    protected readonly cdr = inject(ChangeDetectorRef);
+
     @Input()
     set propertiesArea(value: XoGlobalStorablePropertyArea) {
         this.setModel(value);
@@ -42,19 +41,6 @@ export class GlobalStorablePropertiesAreaComponent extends ModellingObjectCompon
     get propertiesArea(): XoGlobalStorablePropertyArea {
         return this.getModel() as XoGlobalStorablePropertyArea;
     }
-
-
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        detailLevelService: WorkflowDetailLevelService,
-        private readonly cdr: ChangeDetectorRef,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
-    }
-
 
     protected lockedChanged() {
         this.cdr.markForCheck();

@@ -15,16 +15,12 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 
-import { ApiService } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
 import { XcLocalTableDataSource } from '@zeta/xc';
 
-import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
 import { XoStorablePropertyArea } from '../../../xo/storable-property-area.model';
-import { ComponentMappingService } from '../../component-mapping.service';
-import { DocumentService } from '../../document.service';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 
 
@@ -37,24 +33,10 @@ import { ModellingObjectComponent } from '../../workflow/shared/modelling-object
 })
 export class StorablePropertiesAreaComponent extends ModellingObjectComponent {
 
-    private readonly i18n: I18nService;
+    protected readonly cdr = inject(ChangeDetectorRef);
+    protected readonly i18n = inject(I18nService);
 
     readonly dataSource = new XcLocalTableDataSource<XoStorablePropertyArea>();
-
-
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        detailLevelService: WorkflowDetailLevelService,
-        private readonly apiService: ApiService,
-        private readonly cdr: ChangeDetectorRef,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
-        this.i18n = injector.get(I18nService);
-    }
-
 
     protected lockedChanged() {
         this.cdr.markForCheck();

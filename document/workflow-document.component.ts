@@ -171,9 +171,7 @@ export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowD
         this.untilDestroyed(this.workflow.revisionChange).subscribe(() => {
             this.untilDestroyed(
                 this.documentService.xmomService.getDataflow(this.workflow)
-            ).subscribe(
-                dataflowResponse => this.dataflow = dataflowResponse.connections
-            );
+            ).subscribe(dataflowResponse => this.dataflow = dataflowResponse.connections);
         });
 
         // copy

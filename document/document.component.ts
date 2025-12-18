@@ -15,9 +15,8 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, Injector, OnDestroy, OnInit, Optional } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Injector, OnDestroy, OnInit, Optional } from '@angular/core';
 
-import { WorkflowDetailSettingsService } from '@pmod/workflow-detail-settings.service';
 import { RuntimeContext } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcTabComponent } from '@zeta/xc';
@@ -42,16 +41,17 @@ import { SelectableModellingObjectComponent } from './workflow/shared/selectable
 })
 export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponent<R, D> implements OnInit, OnDestroy {
 
+    protected readonly cdr = inject(ChangeDetectorRef);
+    protected readonly i18n = inject(I18nService);
+    protected readonly dialogService = inject(XcDialogService);
+    protected readonly documentService = inject(DocumentService);
+    protected readonly selectionService = inject(SelectionService);
+    protected readonly componentMappingService = inject(ComponentMappingService);
+
+
     private readonly destroySubject = new Subject<void>();
     private dismissing = false;
 
-    protected readonly cdr: ChangeDetectorRef;
-    protected readonly i18n: I18nService;
-    protected readonly dialogService: XcDialogService;
-    protected readonly documentService: DocumentService;
-    protected readonly selectionService: SelectionService;
-    protected readonly componentMappingService: ComponentMappingService;
-    protected readonly settingsService: WorkflowDetailSettingsService;
 
     protected readonly actionQueue = new Array<TriggeredAction>();
     protected readonly isVisibleSubject: BehaviorSubject<boolean>;
@@ -62,18 +62,10 @@ export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponen
     constructor(@Optional() injector: Injector) {
         super(injector);
 
-        this.cdr = injector.get(ChangeDetectorRef);
-        this.i18n = injector.get(I18nService);
-        this.dialogService = injector.get(XcDialogService);
-        this.documentService = injector.get(DocumentService);
-        this.selectionService = injector.get(SelectionService);
-        this.componentMappingService = injector.get(ComponentMappingService);
-        this.settingsService = injector.get(WorkflowDetailSettingsService);
-
         const foreignRtcObserver: Observer<RuntimeContext> = {
             next: () => this.insideForeignRtc = this.documentService.selectedDocument && !this.documentService.selectedDocument.originRuntimeContext?.equals(this.documentService.xmomService.runtimeContext),
-            error: () => {},
-            complete: () => {}
+            error: () => { },
+            complete: () => { }
         };
 
         this.isVisibleSubject = new BehaviorSubject(this.documentService.selectedDocument === this.document);
