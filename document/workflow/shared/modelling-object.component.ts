@@ -112,9 +112,6 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
 
 
     ngOnDestroy() {
-        // if (this.getModel() && this.allowRegisterAtComponentMapping()) {
-        //     this.componentMappingService.removeComponentForObject(this.getModel());
-        // }
         this.lockedSubscription?.unsubscribe();
         this.destroySubject.next();
     }
