@@ -25,13 +25,13 @@ import { XoStaticMethod } from '../xo/static-method.model';
 import { ServiceGroupDocumentModel } from './model/service-group-document.model';
 import { SelectionService } from './selection.service';
 import { TypeDocumentComponent } from './type-document.component';
+import { MinMaxService } from './min-max.service';
 
 
 @Component({
     templateUrl: './servicegroup.component.html',
     styleUrls: ['./servicegroup.component.scss'],
-    // single service instances per document
-    providers: [SelectionService],
+    providers: [SelectionService, MinMaxService], // single service instances per document
     standalone: false
 })
 export class ServiceGroupComponent extends TypeDocumentComponent<ServiceGroupDocumentModel> {
