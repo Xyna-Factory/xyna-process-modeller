@@ -1,5 +1,5 @@
 <div class="area-wrapper" xc-i18n-context="datatype">
-  <div class="servicegroup-header">
+  <div class="servicegroup-header" [class.minimized]="maximizedImplementation()">
     <div class="type-info-area">
       <type-info-area
         xc-i18n-context="type-info-area"
@@ -25,7 +25,7 @@
   </div>
 
   <div class="servicegroup-body">
-    <section class="members">
+    <section class="members" [class.minimized]="maximizedImplementation()">
       <member-area
         xc-i18n-context="member-area"
         caption="Services"

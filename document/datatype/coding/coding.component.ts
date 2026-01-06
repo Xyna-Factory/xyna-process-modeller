@@ -138,6 +138,8 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
             folding: true
         });
 
+        this.monaco.editor.setTheme('vs-dark');
+
         this.javaEditor.onDidBlurEditorWidget(() => {
             if (!this.readonly && this.javaEditor.getValue() !== this.implementation) {
                 this.codingBlur(this.javaEditor.getValue());
@@ -161,6 +163,8 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
             lineNumbers: 'on',
             folding: true
         });
+
+        this.monaco.editor.setTheme('vs-dark');
 
         this.pythonEditor.onDidBlurEditorWidget(() => {
             if (!this.readonly && this.pythonEditor.getValue() !== this.implementation) {
