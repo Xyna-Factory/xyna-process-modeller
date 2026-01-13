@@ -112,7 +112,7 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
 
     private async lazyLoadMonaco() {
         if (this.monacoLoaded) return;
-        const monacoPkg = await import('monaco-editor/esm/vs/editor/editor.api');
+        const monacoPkg = await import('monaco-editor');
         this.monaco = monacoPkg;
         this.monacoLoaded = true;
     }
@@ -124,7 +124,7 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
     private async createJavaEditor() {
         if (this.javaEditor || !this.javaEditorContainer) return;
 
-        await import('monaco-editor/esm/vs/basic-languages/java/java.contribution');
+        await import('monaco-editor/esm/vs/basic-languages/java/java.contribution.js');
 
         this.javaEditor = this.monaco.editor.create(this.javaEditorContainer.nativeElement, {
             theme: 'vs-dark',
@@ -150,7 +150,7 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
     private async createPythonEditor() {
         if (this.pythonEditor || !this.pythonEditorContainer) return;
 
-        await import('monaco-editor/esm/vs/basic-languages/python/python.contribution');
+        await import('monaco-editor/esm/vs/basic-languages/python/python.contribution.js');
 
         this.pythonEditor = this.monaco.editor.create(this.pythonEditorContainer.nativeElement, {
             theme: 'vs-dark',
