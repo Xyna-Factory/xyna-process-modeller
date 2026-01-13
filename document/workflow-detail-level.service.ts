@@ -16,8 +16,11 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Injectable } from '@angular/core';
+
 import { WorkflowDetailSettingsService } from '@pmod/workflow-detail-settings.service';
+
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+
 
 export enum MappingMode {
     PROGRAMMATIC = 'programmatic',
@@ -30,7 +33,7 @@ export enum MappingMode {
  * - one flag to display the FQNs throughout the whole Workflow
  * - mappingMode states for mappings
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class WorkflowDetailLevelService {
 
     /**

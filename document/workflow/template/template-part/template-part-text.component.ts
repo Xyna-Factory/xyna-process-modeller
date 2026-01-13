@@ -15,14 +15,11 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, EventEmitter, Injector, Input, Output, ViewChild } from '@angular/core';
-import { ComponentMappingService } from '@pmod/document/component-mapping.service';
-import { DocumentService } from '@pmod/document/document.service';
-import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
+import { Component, ElementRef, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
 
 import { XcContentEditableDirective } from '@zeta/xc';
-import { Distance, ModDragAndDropService } from '../../shared/drag-and-drop/mod-drag-and-drop.service';
 
+import { Distance, ModDragAndDropService } from '../../shared/drag-and-drop/mod-drag-and-drop.service';
 import { TemplateText } from '../model/template-text.model';
 import { TemplatePartComponent } from './template-part.component';
 
@@ -41,9 +38,12 @@ export interface TemplatePartModifyEvent {
 })
 export class TemplatePartTextComponent extends TemplatePartComponent {
 
+    protected readonly elementRef = inject(ElementRef);
+    protected readonly dnd = inject(ModDragAndDropService);
+
     private _inputElement: ElementRef;
 
-    @ViewChild('textInput', {static: false})
+    @ViewChild('textInput', { static: false })
     set inputElement(value: ElementRef) {
         this._inputElement = value;
         if (this.inputElement && this.inputElement.nativeElement && this.part) {
@@ -62,19 +62,6 @@ export class TemplatePartTextComponent extends TemplatePartComponent {
     readonly deletePart = new EventEmitter<TemplatePartModifyEvent>();
 
     readonly contentEditableValue = XcContentEditableDirective.getContentEditableValue();
-
-
-    constructor(
-        readonly elementRef: ElementRef,
-        readonly componentMappingService: ComponentMappingService,
-        readonly documentService: DocumentService,
-        readonly detailLevelService: WorkflowDetailLevelService,
-        readonly dnd: ModDragAndDropService,
-        injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
-    }
-
 
     @Input()
     set part(value: TemplateText) {

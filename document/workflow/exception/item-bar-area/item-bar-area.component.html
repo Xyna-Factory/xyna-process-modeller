@@ -1,14 +1,12 @@
-@for (item of itemBarArea.items; let i = $index; track i) {
-  <div class="variable-wrapper">
-    <variable
-      [variable]="item"
-      [documentModel]="documentModel"
-      [hasMenu]="false"
-      tabindex="0"
-      (dblclick)="addBranch(item)"
-    ></variable>
-  </div>
-}
+<div *ngFor="let item of itemBarArea.items" class="variable-wrapper">
+  <variable
+    [variable]="item"
+    [documentModel]="documentModel"
+    [hasMenu]="false"
+    tabindex="0"
+    (dblclick)="addBranch(item)"
+  ></variable>
+</div>
 @if (!readonly) {
   <xc-button
     (click)="completeBranches()"

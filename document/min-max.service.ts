@@ -15,27 +15,19 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-:host {
-    display: flex;
-    flex: 1 1 auto;
-    overflow: hidden;
-    min-width: 0;
-    min-height: 0;
+import { computed, Injectable, signal } from '@angular/core';
 
-    .editor {
-        flex: 1 1 auto;
-        width: 100%;
-        height: 100%;
-        min-width: 0;
-        min-height: 0;
-        position: relative;
-        transition: opacity 0.3s ease;
+
+@Injectable()
+export class MinMaxService {
+
+    maximizedImplementation = signal(false);
+
+    toggle() {
+        this.maximizedImplementation.update(v => !v);
     }
 
-    .editor-hide {
-        opacity: 0;
-        pointer-events: none;
-        position: relative;
-        display: none;
-    }
+    icon = computed(() => this.maximizedImplementation() ? 'minimize' : 'maximize');
+
+    tooltip = computed(() => this.maximizedImplementation() ? 'minimize' : 'maximize');
 }

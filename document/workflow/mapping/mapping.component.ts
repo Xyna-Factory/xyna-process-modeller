@@ -15,8 +15,9 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, Injector, Input, OnDestroy, Optional } from '@angular/core';
+import { Component, inject, Input, OnDestroy } from '@angular/core';
 
+import { SelectionService } from '@pmod/document/selection.service';
 import { MappingMode, WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { ApiService, StartOrderOptionsBuilder } from '@zeta/api';
 import { XcDialogService, XcMenuItem } from '@zeta/xc';
@@ -24,9 +25,6 @@ import { XcDialogService, XcMenuItem } from '@zeta/xc';
 import { filter, Subscription } from 'rxjs';
 
 import { ModellingActionType } from '../../../api/xmom.service';
-import { ComponentMappingService } from '../../../document/component-mapping.service';
-import { DocumentService } from '../../../document/document.service';
-import { SelectionService } from '../../../document/selection.service';
 import { XoMapping } from '../../../xo/mapping.model';
 import { XoRequest } from '../../../xo/request.model';
 import { XoTextArea } from '../../../xo/text-area.model';
@@ -41,6 +39,11 @@ import { ModellingItemComponent } from '../shared/modelling-object.component';
     standalone: false
 })
 export class MappingComponent extends ModellingItemComponent implements OnDestroy {
+
+    protected readonly detailLevelService = inject(WorkflowDetailLevelService);
+    protected readonly apiService = inject(ApiService);
+    protected readonly dialogs = inject(XcDialogService);
+    protected readonly selectionService = inject(SelectionService);
 
     private readonly language = {
         showHideDocumentation: 'pmod.workflow.show-hide-documentation',
@@ -63,22 +66,14 @@ export class MappingComponent extends ModellingItemComponent implements OnDestro
     }
 
 
-    constructor(@Optional() elementRef: ElementRef,
-        @Optional() componentMappingService: ComponentMappingService,
-        @Optional() documentService: DocumentService,
-        readonly selectionService: SelectionService,
-        readonly detailLevelService: WorkflowDetailLevelService,
-        readonly apiService: ApiService,
-        readonly dialogs: XcDialogService,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
+    constructor() {
+        super();
 
         this.defaultMenuItems = [
             <XcMenuItem>{
                 name: this.language.showHideDocumentation, translate: true,
                 visible: () => !!this.mapping.documentationArea,
-                click: () => detailLevelService.toggleCollapsed(this.mapping.documentationArea.id)
+                click: () => this.detailLevelService.toggleCollapsed(this.mapping.documentationArea.id)
             },
             <XcMenuItem>{
                 name: this.language.sortAssignments, translate: true,
@@ -103,7 +98,7 @@ export class MappingComponent extends ModellingItemComponent implements OnDestro
             ...this.menuItems
         ];
 
-        this._selectionChangeSubscription = selectionService.selectionChange.subscribe(component => {
+        this._selectionChangeSubscription = this.selectionService.selectionChange.subscribe(component => {
             // TODO: limit to mappings where component is descendant of to improve performance
             if (this.mapping) {
                 const variables: XoVariable[] = Array.prototype.concat(

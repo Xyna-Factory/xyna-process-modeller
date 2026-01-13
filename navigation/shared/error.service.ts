@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ElementRef, Injectable } from '@angular/core';
+import { ElementRef, inject, Injectable } from '@angular/core';
 
 import { ComponentMappingService } from '@pmod/document/component-mapping.service';
 import { DocumentService } from '@pmod/document/document.service';
@@ -27,9 +27,12 @@ import { merge } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 
-
 @Injectable()
 export class ErrorService {
+
+    protected readonly documentService = inject(DocumentService);
+    protected readonly componentMappingService = inject(ComponentMappingService);
+
     // private currentErrorIndex = -1;
     tmpElementRef: ElementRef;
 
@@ -47,10 +50,7 @@ export class ErrorService {
     }
 
 
-    constructor(
-        private readonly documentService: DocumentService,
-        private readonly componentMappingService: ComponentMappingService
-    ) {
+    constructor() {
         merge(
             this.documentService.selectionChange,
             this.documentService.documentChange

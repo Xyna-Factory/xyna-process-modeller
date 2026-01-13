@@ -17,39 +17,57 @@
  */
 @use '../../../const' as *;
 
-$menu-width: 20px;
-
-
 :host {
     width: 100%;
     display: flex;
-    flex: 0 1 auto;
-    margin: 2px;
-    z-index: $service-step-label-z;
-    border-radius: $service-step-border-radius;
     overflow: hidden;
+    cursor: pointer;
+    height: 36px;
+    /* Grundfläche */
+    background-color: #343436;
+    border-radius: 4px;
+    transition: background-color 150ms ease, box-shadow 150ms ease;
+    
 
-    &:focus, &.selected {
-        outline: none;
+    .toggle  {
+        transition: transform .15s ease-in-out;
+        transform: rotate(180deg);
+    }
 
-        .label {
-            color: $color-invert;
-            background-color: $color-primary;
+    &:hover,
+    &:focus-visible {
+        box-shadow: 0 0 2px 2px #fabb00;
+    }
+
+    &.selected {
+        box-shadow: 0 0 2px 2px #fabb00;
+
+        .toggle {
+            transform: rotate(0deg);
         }
     }
 
     .label {
-        padding: 8px $menu-width 8px $menu-width;
-
-        color: $color-normal;
-        background-color: $color-invert;
+        display: flex;
         flex: 1 1 auto;
-        font-weight: bold;
-        font-size: $pmod-medium;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 12px;
+        padding-right: 8px;
 
-        max-width: 374px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        font-weight: 600;
+        font-size: $pmod-medium;
+        background: transparent;
+        color: $color-normal;
+        pointer-events: none;
+        gap: 8px;
+
+        .row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
     }
+
+
 }

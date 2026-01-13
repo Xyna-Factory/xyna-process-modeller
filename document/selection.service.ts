@@ -22,7 +22,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { SelectableModellingObjectComponent } from './workflow/shared/selectable-modelling-object.component';
 
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SelectionService {
 
     private _suppressNext = false;

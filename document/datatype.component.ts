@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector } from '@angular/core';
+import { Component, inject, Injector } from '@angular/core';
 
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 
@@ -27,6 +27,7 @@ import { XoExceptionType } from '../xo/exception-type.model';
 import { XoInsertModellingObjectRequest } from '../xo/insert-modelling-object-request.model';
 import { XoMemberVariableArea } from '../xo/member-variable-area.model';
 import { XoMemberVariable } from '../xo/member-variable.model';
+import { MinMaxService } from './min-max.service';
 import { DataTypeDocumentModel } from './model/data-type-document.model';
 import { SelectionService } from './selection.service';
 import { TypeDocumentComponent } from './type-document.component';
@@ -35,10 +36,12 @@ import { TypeDocumentComponent } from './type-document.component';
 @Component({
     templateUrl: './datatype.component.html',
     styleUrls: ['./datatype.component.scss'],
-    providers: [SelectionService], // single service instances per document
+    providers: [SelectionService, MinMaxService], // single service instances per document
     standalone: false
 })
 export class DataTypeComponent extends TypeDocumentComponent<DataTypeDocumentModel> {
+
+    private readonly minmaxService = inject(MinMaxService);
 
     inheritedVariablesCollapsed = false;
     memberVariablesCollapsed = false;
@@ -46,16 +49,18 @@ export class DataTypeComponent extends TypeDocumentComponent<DataTypeDocumentMod
     overriddenServicesCollapsed = false;
     memberServicesCollapsed = false;
 
+    maximizedImplementation = this.minmaxService.maximizedImplementation;
+
     constructor(injector: Injector) {
         super(injector);
 
         // workaround such that model types are not pruned by compiler
-         
+
         const dataType = new XoDataType();
         const exceptionType = new XoExceptionType();
         const dataTypeTypeLabelArea = new XoDataTypeTypeLabelArea();
         const memberVariableArea = new XoMemberVariableArea();
-         
+
 
         this.detailsItem = new XoDetailsItem();
         this.detailsItem.name = 'Data Type Details';

@@ -15,11 +15,9 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, HostBinding, Injector, Input, Optional } from '@angular/core';
+import { Component, HostBinding, inject, Input } from '@angular/core';
 
 import { XoExceptionHandlingArea } from '../../../../xo/exception-handling-area.model';
-import { ComponentMappingService } from '../../../component-mapping.service';
-import { DocumentService } from '../../../document.service';
 import { WorkflowDetailLevelService } from '../../../workflow-detail-level.service';
 import { ModellingObjectComponent } from '../../shared/modelling-object.component';
 
@@ -31,6 +29,8 @@ import { ModellingObjectComponent } from '../../shared/modelling-object.componen
     standalone: false
 })
 export class ExceptionHandlingAreaComponent extends ModellingObjectComponent {
+
+    protected readonly detailLevelService = inject(WorkflowDetailLevelService);
 
     @Input()
     @HostBinding('class.inline')
@@ -62,17 +62,11 @@ export class ExceptionHandlingAreaComponent extends ModellingObjectComponent {
     }
 
 
-    constructor(
-        readonly elementRef: ElementRef,
-        readonly componentMappingService: ComponentMappingService,
-        readonly documentService: DocumentService,
-        readonly detailLevelService: WorkflowDetailLevelService,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
+    constructor() {
+        super();
 
         // if one child changes its collapsed state, re-evaluate empty-state
-        this.untilDestroyed(detailLevelService.collapsedChange()).subscribe(id => {
+        this.untilDestroyed(this.detailLevelService.collapsedChange()).subscribe(id => {
             if (this.childIds.includes(id)) {
                 this.updateEmptyState();
             }

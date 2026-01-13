@@ -15,17 +15,15 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnDestroy, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, Input, OnDestroy } from '@angular/core';
 
+import { MinMaxService } from '@pmod/document/min-max.service';
 import { I18nService } from '@zeta/i18n';
 import { XcTabBarItem } from '@zeta/xc';
 
 import { BehaviorSubject, Subject } from 'rxjs';
 
-import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
 import { XoMethod } from '../../../xo/method.model';
-import { ComponentMappingService } from '../../component-mapping.service';
-import { DocumentService } from '../../document.service';
 import { ModellingItemComponent } from '../../workflow/shared/modelling-object.component';
 import { DocumentTabData, MetaTabData, MethodTabData } from '../tabs/datatype-tab.component';
 import { MethodBaseTabComponent } from '../tabs/method/method-base-tab.component';
@@ -42,6 +40,10 @@ import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
 })
 export class MethodDetailsComponent extends ModellingItemComponent implements OnDestroy {
 
+    protected readonly i18nService = inject(I18nService);
+    protected readonly cdr = inject(ChangeDetectorRef);
+    private readonly minMaxService = inject(MinMaxService);
+
     get method(): XoMethod {
         return this.getModel() as XoMethod;
     }
@@ -56,6 +58,7 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
         }
         this.cdr.markForCheck();
     }
+
 
     methodTabUpdate: Subject<MethodTabData> = new BehaviorSubject(this.buildMethodTabData());
     metaTabUpdate: Subject<MetaTabData> = new BehaviorSubject(this.buildMetaTabData());
@@ -98,19 +101,16 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
     tabBarSelection: XcTabBarItem<DocumentTabData<any>>;
     tabBarItems: XcTabBarItem<DocumentTabData<any>>[];
 
+    constructor() {
+        super();
 
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        detailLevelService: WorkflowDetailLevelService,
-        private readonly i18nService: I18nService,
-        private readonly cdr: ChangeDetectorRef,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
+        this.tabBarItems = [this.baseTabItem, this.metaTabItem, this.implementationTabItem];
+
         this.tabBarSelection = this.baseTabItem;
-        this.updateTabBarItemList();
+
+        effect(() => {
+            this.updateTabBarItemList();
+        });
     }
 
 
@@ -123,6 +123,7 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
 
     afterDocumentModelSet() {
         super.afterDocumentModelSet();
+        if (!this.tabBarItems) return;
         this.tabBarItems.forEach(tabitem => {
             tabitem.data.documentModel = this.documentModel;
             tabitem.data.readonly = this.readonly;
@@ -139,14 +140,15 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
 
 
     private buildMethodTabData(): MethodTabData {
-        return <MethodTabData> {
+        return <MethodTabData>{
             method: this.method,
             readonly: this.readonly
         };
     }
 
+
     private buildMetaTabData(): MetaTabData {
-        return <MetaTabData> {
+        return <MetaTabData>{
             metaTagArea: this.method?.metaTagArea,
             objectIdKey: 'services',
             objectId: this.method?.name,
@@ -154,8 +156,16 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
         };
     }
 
+
     private updateTabBarItemList() {
-        this.tabBarItems = [this.baseTabItem, this.metaTabItem, this.implementationTabItem];
+        if (this.minMaxService.maximizedImplementation()) {
+            this.baseTabItem.disabled = true;
+            this.metaTabItem.disabled = true;
+        } else {
+            this.baseTabItem.disabled = false;
+            this.metaTabItem.disabled = false;
+        }
+
         this.cdr.markForCheck();
     }
 }

@@ -15,15 +15,11 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, HostBinding, Injector, Input, Optional } from '@angular/core';
-
-import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
+import { Component, HostBinding, Input } from '@angular/core';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoForeach } from '../../../xo/foreach.model';
 import { XoRequest } from '../../../xo/request.model';
-import { ComponentMappingService } from '../../component-mapping.service';
-import { DocumentService } from '../../document.service';
 import { ModellingItemComponent } from '../shared/modelling-object.component';
 
 
@@ -37,15 +33,8 @@ export class ForeachComponent extends ModellingItemComponent {
 
     @HostBinding('class.foreach') foreachClass = true;
 
-
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        readonly detailLevelService: WorkflowDetailLevelService,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
+    constructor() {
+        super();
 
         this.menuItems.push(...[
             // TODO activate as soon as backend supports change of execution type (PMOD-21)

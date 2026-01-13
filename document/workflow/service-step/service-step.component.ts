@@ -15,8 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostBinding, Injector, Input, OnDestroy, Optional } from '@angular/core';
-import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
+import { AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, inject, Input, OnDestroy } from '@angular/core';
 
 import { Subscription } from 'rxjs';
 
@@ -33,9 +32,6 @@ import { XoRetry } from '../../../xo/retry.model';
 import { XoTemplate } from '../../../xo/template.model';
 import { XoThrow } from '../../../xo/throw.model';
 import { XoTypeChoice } from '../../../xo/type-choice.model';
-import { ComponentMappingService } from '../../component-mapping.service';
-import { DocumentService } from '../../document.service';
-import { SelectionService } from '../../selection.service';
 import { SelectableModellingObjectComponent } from '../shared/selectable-modelling-object.component';
 
 
@@ -47,20 +43,11 @@ import { SelectableModellingObjectComponent } from '../shared/selectable-modelli
     standalone: false
 })
 export class ServiceStepComponent extends SelectableModellingObjectComponent implements AfterViewChecked, OnDestroy {
+    
+    protected readonly cdr = inject(ChangeDetectorRef);
+    
     private _parentDirection: 'row' | 'column' = 'column';
     private readonly subscriptions: Subscription[] = [];
-
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        readonly detailLevelService: WorkflowDetailLevelService,
-        selectionService: SelectionService,
-        private readonly cdr: ChangeDetectorRef,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, selectionService, injector);
-    }
 
 
     ngAfterViewChecked() {

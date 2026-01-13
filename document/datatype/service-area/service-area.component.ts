@@ -15,12 +15,11 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, Injector, Input, Optional } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { XoDeleteRequest } from '@pmod/xo/delete-request.model';
 
 import { ModellingActionType } from '../../../api/xmom.service';
-import { WorkflowDetailLevelService } from '../../../document/workflow-detail-level.service';
 import { XoDataType } from '../../../xo/data-type.model';
 import { XoDynamicMethod } from '../../../xo/dynamic-method.model';
 import { XoMemberMethodArea } from '../../../xo/member-method-area.model';
@@ -28,8 +27,6 @@ import { XoMethod } from '../../../xo/method.model';
 import { XoModellingItem } from '../../../xo/modelling-item.model';
 import { XoMoveModellingObjectRequest } from '../../../xo/move-modelling-object-request.model';
 import { XoStaticMethod } from '../../../xo/static-method.model';
-import { ComponentMappingService } from '../../component-mapping.service';
-import { DocumentService } from '../../document.service';
 import { ModRelativeHoverSide } from '../../workflow/shared/drag-and-drop/mod-drag-and-drop.service';
 import { ModDragEvent, ModDropEvent } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
@@ -45,14 +42,8 @@ export class ServiceAreaComponent extends ModellingObjectComponent {
 
     currentlyDraggedInheritedInstanceMethod: XoDynamicMethod;
 
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        detailLevelService: WorkflowDetailLevelService,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
+    constructor() {
+        super();
 
         // instantiate specific member models such that they aren't pruned for the release build
          

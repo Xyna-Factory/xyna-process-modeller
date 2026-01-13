@@ -17,7 +17,7 @@
  */
 import { FullQualifiedName, Xo, XoArray, XoArrayClass, XoObjectClass, XoProperty, XoTransient } from '@zeta/api';
 
-import { DataConnectionType, ConnectionTypeSeverity, XoConnection } from './connection.model';
+import { ConnectionTypeSeverity, DataConnectionType, XoConnection } from './connection.model';
 import { XoInsertRequestContent } from './insert-request-content.model';
 import { XoInsertVariableRequestContent } from './insert-variable-request-content.model';
 import { XoModellingItem } from './modelling-item.model';

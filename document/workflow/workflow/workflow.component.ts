@@ -15,15 +15,13 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Injector, Input, OnDestroy, Optional, Output } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, inject, Input, OnDestroy, Output } from '@angular/core';
 
-import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { OutsideListenerService } from '@zeta/base';
 
 import { filter } from 'rxjs/operators';
 
 import { XoWorkflow, XoWorkflowStub } from '../../../xo/workflow.model';
-import { ComponentMappingService } from '../../component-mapping.service';
 import { DocumentService } from '../../document.service';
 import { SelectionService } from '../../selection.service';
 import { ModellingItemComponent } from '../shared/modelling-object.component';
@@ -38,6 +36,11 @@ import { ModellingItemComponent } from '../shared/modelling-object.component';
 })
 export class WorkflowComponent extends ModellingItemComponent implements AfterViewInit, OnDestroy {
 
+    protected readonly elementRef = inject(ElementRef);
+    protected readonly outsideListener = inject(OutsideListenerService);
+    protected readonly documentService = inject(DocumentService);
+    private readonly selectionService = inject(SelectionService);
+
     private scrollListener: number;
     private clickListener: number;
     private currentScrollTop = 0;
@@ -47,16 +50,8 @@ export class WorkflowComponent extends ModellingItemComponent implements AfterVi
     readonly initialized = new EventEmitter<XoWorkflow>();
 
 
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        readonly detailLevelService: WorkflowDetailLevelService,
-        private readonly selectionService: SelectionService,
-        private readonly outsideListener: OutsideListenerService,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
+    constructor() {
+        super();
 
         // restore scroll position after action
         this.untilDestroyed(this.documentService.xmomService.afterReceivedDataflow).pipe(

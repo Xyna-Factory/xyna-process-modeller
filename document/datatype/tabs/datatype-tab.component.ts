@@ -71,6 +71,7 @@ export interface VariableTabData {
 
 export interface MethodTabData {
     method: XoMethod;
+    
 }
 
 
@@ -162,7 +163,7 @@ export abstract class DatatypeVariableTabComponent extends DatatypeTabComponent<
 
 
     get primitive(): boolean {
-        return !!this.memberVariable.primitiveType;
+        return !!this.memberVariable.primitiveType || this.memberVariable.primitiveType === undefined;
     }
 
 

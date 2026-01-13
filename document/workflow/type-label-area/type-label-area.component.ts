@@ -15,9 +15,8 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, HostBinding, Injector, Input, Optional, TemplateRef } from '@angular/core';
-import { ComponentMappingService } from '@pmod/document/component-mapping.service';
-import { DocumentService } from '@pmod/document/document.service';
+import { Component, HostBinding, inject, Input, TemplateRef } from '@angular/core';
+
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 
 import { XoTypeLabelArea } from '../../../xo/type-label-area.model';
@@ -31,6 +30,8 @@ import { ModellingObjectComponent } from '../shared/modelling-object.component';
     standalone: false
 })
 export class TypeLabelAreaComponent extends ModellingObjectComponent {
+
+    protected readonly detailLevelService = inject(WorkflowDetailLevelService);
 
     @Input()
     menuTemplateRef: TemplateRef<any> = null;
@@ -50,14 +51,8 @@ export class TypeLabelAreaComponent extends ModellingObjectComponent {
     }
 
 
-    constructor(
-        readonly elementRef: ElementRef,
-        readonly componentMappingService: ComponentMappingService,
-        readonly documentService: DocumentService,
-        readonly detailLevelService: WorkflowDetailLevelService,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
-        this.untilDestroyed(detailLevelService.showFQNChange()).subscribe(show => this.showFqn = show);
+    constructor() {
+        super();
+        this.untilDestroyed(this.detailLevelService.showFQNChange()).subscribe(show => this.showFqn = show);
     }
 }

@@ -15,13 +15,14 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { ModellingActionType } from '../api/xmom.service';
 import { XoChangeTextRequest } from '../xo/change-text-request.model';
 import { XoInsertModellingObjectRequest } from '../xo/insert-modelling-object-request.model';
 import { XoServiceGroup } from '../xo/service-group.model';
 import { XoStaticMethod } from '../xo/static-method.model';
+import { MinMaxService } from './min-max.service';
 import { ServiceGroupDocumentModel } from './model/service-group-document.model';
 import { SelectionService } from './selection.service';
 import { TypeDocumentComponent } from './type-document.component';
@@ -30,11 +31,14 @@ import { TypeDocumentComponent } from './type-document.component';
 @Component({
     templateUrl: './servicegroup.component.html',
     styleUrls: ['./servicegroup.component.scss'],
-    // single service instances per document
-    providers: [SelectionService],
+    providers: [SelectionService, MinMaxService], // single service instances per document
     standalone: false
 })
 export class ServiceGroupComponent extends TypeDocumentComponent<ServiceGroupDocumentModel> {
+
+    private readonly minmaxService = inject(MinMaxService);
+
+    maximizedImplementation = this.minmaxService.maximizedImplementation;
 
     get serviceGroup(): XoServiceGroup {
         return this.document.item;

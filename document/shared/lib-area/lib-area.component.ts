@@ -15,8 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, Injector, Input, Optional } from '@angular/core';
-import { WorkflowDetailLevelService } from '../../workflow-detail-level.service';
+import { Component, inject, Input } from '@angular/core';
 
 import { ApiService, XoManagedFileID } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
@@ -26,8 +25,6 @@ import { catchError, EMPTY, Observable, Subject, switchMap } from 'rxjs';
 
 import { HttpMethod, ModellingActionType } from '../../../api/xmom.service';
 import { XoLibrariesArea } from '../../../xo/libraries-area.model';
-import { ComponentMappingService } from '../../component-mapping.service';
-import { DocumentService } from '../../document.service';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { LibItemComponent, LibItemData } from './lib-item.component';
 
@@ -39,6 +36,9 @@ import { LibItemComponent, LibItemData } from './lib-item.component';
     standalone: false
 })
 export class LibAreaComponent extends ModellingObjectComponent {
+
+    protected readonly i18nService = inject(I18nService);
+    protected readonly apiService = inject(ApiService);
 
     get libArea(): XoLibrariesArea {
         return this.getModel() as XoLibrariesArea;
@@ -58,16 +58,8 @@ export class LibAreaComponent extends ModellingObjectComponent {
     deletePythonItemSubject = new Subject<number>();
     pythonExpand = true;
 
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        private readonly i18nService: I18nService,
-        private readonly apiService: ApiService,
-        detailLevelService: WorkflowDetailLevelService,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
+    constructor() {
+        super();
 
         this.untilDestroyed(this.deleteJavaItemSubject).subscribe(index => {
             this.performAction({
@@ -75,7 +67,7 @@ export class LibAreaComponent extends ModellingObjectComponent {
                 objectId: null,
                 request: null,
                 method: HttpMethod.DELETE,
-                paramSet: { index : index.toString() }
+                paramSet: { index: index.toString() }
             });
         });
         this.untilDestroyed(this.deletePythonItemSubject).subscribe(index => {
@@ -84,7 +76,7 @@ export class LibAreaComponent extends ModellingObjectComponent {
                 objectId: null,
                 request: null,
                 method: HttpMethod.DELETE,
-                paramSet: { index : index.toString() }
+                paramSet: { index: index.toString() }
             });
         });
     }
@@ -136,7 +128,7 @@ export class LibAreaComponent extends ModellingObjectComponent {
                 objectId: null,
                 request: null,
                 method: HttpMethod.PUT,
-                paramSet: { fileId : manFileId.iD}
+                paramSet: { fileId: manFileId.iD }
             })
         );
     }
@@ -148,7 +140,7 @@ export class LibAreaComponent extends ModellingObjectComponent {
                 objectId: null,
                 request: null,
                 method: HttpMethod.PUT,
-                paramSet: { fileId : manFileId.iD}
+                paramSet: { fileId: manFileId.iD }
             })
         );
     }

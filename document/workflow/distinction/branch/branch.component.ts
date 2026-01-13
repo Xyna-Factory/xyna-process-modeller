@@ -15,16 +15,12 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, HostBinding, Injector, Input, OnDestroy, Optional } from '@angular/core';
-import { WorkflowDetailLevelService } from '../../../../document/workflow-detail-level.service';
+import { Component, HostBinding, inject, Input, OnDestroy } from '@angular/core';
 
 import { XoConditionalBranching } from '@pmod/xo/conditional-branching.model';
 import { coerceBoolean } from '@zeta/base';
 
 import { XoBranch } from '../../../../xo/branch.model';
-import { ComponentMappingService } from '../../../component-mapping.service';
-import { DocumentService } from '../../../document.service';
-import { SelectionService } from '../../../selection.service';
 import { SelectableModellingObjectComponent } from '../../shared/selectable-modelling-object.component';
 import { BranchSelectionService } from './branch-selection.service';
 
@@ -37,21 +33,15 @@ import { BranchSelectionService } from './branch-selection.service';
 })
 export class BranchComponent extends SelectableModellingObjectComponent implements OnDestroy {
 
+    private readonly branchSelectionService = inject(BranchSelectionService);
+
     private _darkMode = false;
 
 
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        selectionService: SelectionService,
-        readonly detailLevelService: WorkflowDetailLevelService,
-        private readonly branchSelectionService: BranchSelectionService,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, selectionService, injector);
+    constructor() {
+        super();
 
-        this.untilDestroyed(branchSelectionService.selectionChange).subscribe(
+        this.untilDestroyed(this.branchSelectionService.selectionChange).subscribe(
             selectedObject => this.branchSelectionChanged(selectedObject)
         );
     }

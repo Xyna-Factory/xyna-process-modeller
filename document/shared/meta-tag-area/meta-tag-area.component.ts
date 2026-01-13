@@ -15,20 +15,16 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, ElementRef, inject, Injector, Input, Optional } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 
 import { ModellingActionType } from '@pmod/api/xmom.service';
-import { ComponentMappingService } from '@pmod/document/component-mapping.service';
-import { DocumentService } from '@pmod/document/document.service';
+import { DragType } from '@pmod/document/workflow/shared/drag-and-drop/mod-drag-and-drop.service';
+import { ModDropEvent } from '@pmod/document/workflow/shared/drag-and-drop/mod-drop-area.directive';
 import { ModellingObjectComponent } from '@pmod/document/workflow/shared/modelling-object.component';
+import { XoInsertModellingObjectRequest } from '@pmod/xo/insert-modelling-object-request.model';
 import { XoMetaTagArea } from '@pmod/xo/meta-tag-area.model';
 import { XoMetaTag } from '@pmod/xo/meta-tag.model';
-
-import { WorkflowDetailLevelService } from '../../workflow-detail-level.service';
-import { ModDropEvent } from '@pmod/document/workflow/shared/drag-and-drop/mod-drop-area.directive';
 import { XoMoveModellingObjectRequest } from '@pmod/xo/move-modelling-object-request.model';
-import { DragType } from '@pmod/document/workflow/shared/drag-and-drop/mod-drag-and-drop.service';
-import { XoInsertModellingObjectRequest } from '@pmod/xo/insert-modelling-object-request.model';
 
 
 @Component({
@@ -57,16 +53,6 @@ export class MetaTagAreaComponent extends ModellingObjectComponent {
     objectId = '';
 
     newTag: string;
-
-    constructor(
-        elementRef: ElementRef,
-        componentMappingService: ComponentMappingService,
-        documentService: DocumentService,
-        detailLevelService: WorkflowDetailLevelService,
-        @Optional() injector: Injector
-    ) {
-        super(elementRef, componentMappingService, documentService, detailLevelService, injector);
-    }
 
     protected lockedChanged() {
         this.cdr.markForCheck();
