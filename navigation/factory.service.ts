@@ -25,7 +25,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { XmomService } from '../api/xmom.service';
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class FactoryService {
 
     /**

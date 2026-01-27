@@ -25,6 +25,8 @@ import { XoWorkflow, XoWorkflowStub } from '../../../xo/workflow.model';
 import { DocumentService } from '../../document.service';
 import { SelectionService } from '../../selection.service';
 import { ModellingItemComponent } from '../shared/modelling-object.component';
+import { ContentAreaComponent } from '../content-area/content-area.component';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 @Component({
@@ -32,7 +34,7 @@ import { ModellingItemComponent } from '../shared/modelling-object.component';
     templateUrl: './workflow.component.html',
     styleUrls: ['./workflow.component.scss'],
     changeDetection: ChangeDetectionStrategy.Default,
-    standalone: false
+    imports: [ContentAreaComponent, I18nModule]
 })
 export class WorkflowComponent extends ModellingItemComponent implements AfterViewInit, OnDestroy {
 

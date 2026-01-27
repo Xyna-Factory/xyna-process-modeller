@@ -27,15 +27,17 @@ import { XcDialogService } from '@zeta/xc';
 
 import { XoCaseArea } from '../../../../xo/case-area.model';
 import { ModDnDEvent } from '../../shared/drag-and-drop/mod-drag-and-drop.service';
-import { ModDragEvent, ModDropEvent } from '../../shared/drag-and-drop/mod-drop-area.directive';
+import { ModDragEvent, ModDropEvent, ModDropAreaDirective } from '../../shared/drag-and-drop/mod-drop-area.directive';
 import { ModellingObjectComponent, TriggeredAction } from '../../shared/modelling-object.component';
+import { CaseComponent } from '../case/case.component';
+import { ModDraggableDirective } from '../../shared/drag-and-drop/mod-draggable.directive';
 
 
 @Component({
     selector: 'case-area',
     templateUrl: './case-area.component.html',
     styleUrls: ['./case-area.component.scss'],
-    standalone: false
+    imports: [ModDropAreaDirective, CaseComponent, ModDraggableDirective]
 })
 export class CaseAreaComponent extends ModellingObjectComponent {
 

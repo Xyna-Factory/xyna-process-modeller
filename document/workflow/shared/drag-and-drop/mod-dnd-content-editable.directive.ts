@@ -34,10 +34,7 @@ While the target element is focused, selecting text with the mouse is possible.
 
 On blur it reestablishes the former state.
  */
-@Directive({
-    selector: '[mod-dnd-contenteditable]',
-    standalone: false
-})
+@Directive({ selector: '[mod-dnd-contenteditable]' })
 export class ModDnDContentEditableDirective implements OnInit, OnDestroy {
 
     private readonly draggableElementsSet = new Set<HTMLElement>();

@@ -23,6 +23,8 @@ import { SelectionService } from '../../../selection.service';
 /**
  * Service to solely track the selection of branches
  */
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class BranchSelectionService extends SelectionService {
 }

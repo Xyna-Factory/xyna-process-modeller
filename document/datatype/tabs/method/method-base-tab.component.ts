@@ -19,12 +19,15 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, Option
 import { DocumentService } from '@pmod/document/document.service';
 import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
 import { DatatypeMethodTabComponent } from '../datatype-tab.component';
+import { XcModule } from '../../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { TypeDocumentationAreaComponent } from '../../type-documentation-area/type-documentation-area.component';
 
 @Component({
     templateUrl: './method-base-tab.component.html',
     styleUrls: ['./method-base-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [XcModule, I18nModule, TypeDocumentationAreaComponent]
 })
 export class MethodBaseTabComponent extends DatatypeMethodTabComponent {
 

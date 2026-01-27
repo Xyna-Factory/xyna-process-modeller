@@ -16,6 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { NgClass } from '@angular/common';
 
 
 /** @deprecated */
@@ -23,7 +24,7 @@ import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Outpu
     selector: 'left-right-component',
     templateUrl: './left-right.component.html',
     styleUrls: ['./left-right.component.scss'],
-    standalone: false
+    imports: [NgClass]
 })
 export class LeftRightComponent implements OnInit {
 

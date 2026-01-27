@@ -23,12 +23,14 @@ import { XcDialogComponent, XDSIconName } from '@zeta/xc';
 
 import { modellerSettingsDialog_translations_de_DE } from './locale/modeller-settings-dialog-translations.de-DE';
 import { modellerSettingsDialog_translations_en_US } from './locale/modeller-settings-dialog-translations.en-US';
+import { XcModule } from '../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../zeta/i18n/i18n.module';
 
 
 @Component({
     templateUrl: './modeller-settings-dialog.component.html',
     styleUrls: ['./modeller-settings-dialog.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class ModellerSettingsDialogComponent extends XcDialogComponent<void, void> {
 

@@ -26,6 +26,9 @@ import { XmomService } from '../../api/xmom.service';
 import { XoXmomItem, XoXmomItemArray } from '../../xo/xmom-item.model';
 import { FactoryService } from '../factory.service';
 import { FilterConditionData } from '../search/search.component';
+import { XMOMListItemComponent } from './xmom-list-item.component';
+import { ModDraggableDirective } from '../../document/workflow/shared/drag-and-drop/mod-draggable.directive';
+import { XcModule } from '../../../../zeta/xc/xc.module';
 
 
 @Component({
@@ -33,7 +36,7 @@ import { FilterConditionData } from '../search/search.component';
     templateUrl: './xmom-list.component.html',
     styleUrls: ['./xmom-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [XMOMListItemComponent, ModDraggableDirective, XcModule]
 })
 export class XMOMListComponent {
 

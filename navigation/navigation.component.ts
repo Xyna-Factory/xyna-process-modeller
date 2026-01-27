@@ -37,6 +37,9 @@ import { FactoryComponent } from './factory/factory.component';
 import { HelpComponent } from './help/help.component';
 import { NavPluginComponent } from './nav-plugin/nav-plugin.component';
 import { SearchComponent } from './search/search.component';
+import { I18nModule } from '../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../zeta/xc/xc.module';
+import { NgClass } from '@angular/common';
 
 
 enum NavigationbarArea {
@@ -86,7 +89,7 @@ export enum AreaValue {
             transition('opened => opened_half', animate('.3s ease-in'))
         ])
     ],
-    standalone: false
+    imports: [FactoryComponent, I18nModule, SearchComponent, DetailsComponent, ClipboardComponent, ErrorsComponent, CompareComponent, HelpComponent, NavPluginComponent, XcModule, NgClass]
 })
 export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
 

@@ -21,10 +21,7 @@ import { FormulaPart } from '../../../../xo/util/formula-parts/formula-part';
 import { FormulaPartComponent } from './formula-part.component';
 
 
-@Component({
-    template: '',
-    standalone: false
-})
+@Component({ template: '' })
 export class FormulaEditablePartComponent extends FormulaPartComponent {
 
     /**

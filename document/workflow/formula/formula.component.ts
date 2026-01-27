@@ -36,17 +36,25 @@ import { FormulaPartOperation } from '../../../xo/util/formula-parts/formula-par
 import { FormulaPartSpecial } from '../../../xo/util/formula-parts/formula-part-special';
 import { FormulaPartVariable } from '../../../xo/util/formula-parts/formula-part-variable';
 import { XoVariable } from '../../../xo/variable.model';
-import { ModDropEvent } from '../shared/drag-and-drop/mod-drop-area.directive';
+import { ModDropEvent, ModDropAreaDirective } from '../shared/drag-and-drop/mod-drop-area.directive';
 import { ModellingItemComponent, TriggeredAction } from '../shared/modelling-object.component';
 import { FormulaEditablePartComponent } from './parts/formula-editable-part.component';
 import { FormulaChildComponent } from './parts/formula-part.component';
+import { FormulaProxyComponent } from './parts/formula-proxy/formula-proxy.component';
+import { VariableComponent } from '../variable/variable.component';
+import { ModDraggableDirective } from '../shared/drag-and-drop/mod-draggable.directive';
+import { FormulaPartMemberComponent } from './parts/formula-part-member/formula-part-member.component';
+import { FormulaPartFunctionComponent } from './parts/formula-part-function/formula-part-function.component';
+import { FormulaPartOperationComponent } from './parts/formula-part-operation/formula-part-operation.component';
+import { FormulaPartSpecialComponent } from './parts/formula-part-special/formula-part-special.component';
+import { FormulaPartLiteralComponent } from './parts/formula-part-literal/formula-part-literal.component';
 
 
 @Component({
     selector: 'formula',
     templateUrl: './formula.component.html',
     styleUrls: ['./formula.component.scss'],
-    standalone: false
+    imports: [ModDropAreaDirective, FormulaProxyComponent, VariableComponent, ModDraggableDirective, FormulaPartMemberComponent, FormulaPartFunctionComponent, FormulaPartOperationComponent, FormulaPartSpecialComponent, FormulaPartLiteralComponent]
 })
 export class FormulaComponent extends ModellingItemComponent {
 

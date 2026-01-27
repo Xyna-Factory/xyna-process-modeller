@@ -19,13 +19,14 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 
 import { FormulaPartLiteral } from '../../../../../xo/util/formula-parts/formula-part-literal';
 import { FormulaEditablePartComponent } from '../formula-editable-part.component';
+import { ModDnDContentEditableDirective } from '../../../shared/drag-and-drop/mod-dnd-content-editable.directive';
 
 
 @Component({
     selector: 'formula-part-literal',
     templateUrl: './formula-part-literal.component.html',
     styleUrls: ['./formula-part-literal.component.scss'],
-    standalone: false
+    imports: [ModDnDContentEditableDirective]
 })
 export class FormulaPartLiteralComponent extends FormulaEditablePartComponent {
 

@@ -29,6 +29,8 @@ import { XoExceptionMessage } from '../../../xo/exception-message.model';
 import { XoExceptionMessagesArea } from '../../../xo/exception-messages-area.model';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { ExceptionMessageRichListItemComponent, ExceptionMessageRichListItemData } from '../exception-message-rich-list-item/exception-message-rich-list-item.component';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 export enum ExceptionMessageLanguage {
@@ -41,7 +43,7 @@ export enum ExceptionMessageLanguage {
     selector: 'exception-messages-area',
     templateUrl: './exception-messages-area.component.html',
     styleUrls: ['./exception-messages-area.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class ExceptionMessagesAreaComponent extends ModellingObjectComponent {
 

@@ -26,15 +26,13 @@ import { WorkflowConstantBuilderModalComponent } from './workflow-constant-build
 @NgModule({
     imports: [
         CommonModule,
-        ZetaModule
-    ],
-    declarations: [
+        ZetaModule,
         // ShowGuiModelModalComponent,
         // LeftRightComponent
         WorkflowConstantBuilderModalComponent
     ],
     providers: [
-        // DataTypeConverterService
+    // DataTypeConverterService
     ]
 })
 export class DevToolsModule {

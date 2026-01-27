@@ -28,9 +28,7 @@ import { ShowGuiModelModalComponent } from './show-gui-model-modal.component';
 @NgModule({
     imports: [
         CommonModule,
-        ZetaModule
-    ],
-    declarations: [
+        ZetaModule,
         ShowGuiModelModalComponent,
         LeftRightComponent
     ],

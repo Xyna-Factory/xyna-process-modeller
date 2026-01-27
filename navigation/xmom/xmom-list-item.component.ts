@@ -36,13 +36,15 @@ import { XoStaticMethodInvocation } from '../../xo/static-method-invocation.mode
 import { XoWorkflowInvocation } from '../../xo/workflow-invocation.model';
 import { XoWorkflow } from '../../xo/workflow.model';
 import { XoXmomItem } from '../../xo/xmom-item.model';
+import { XcModule } from '../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../zeta/i18n/i18n.module';
 
 
 @Component({
     selector: 'xfm-mod-nav-xmomlistitem',
     templateUrl: './xmom-list-item.component.html',
     styleUrls: ['./xmom-list-item.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class XMOMListItemComponent {
 

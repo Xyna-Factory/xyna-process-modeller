@@ -22,7 +22,9 @@ import { DocumentItem } from './model/document.model';
 import { ModellingObjectComponent } from './workflow/shared/modelling-object.component';
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ComponentMappingService {
     /**
      * (DocumentItem, string) -> ModellingObject

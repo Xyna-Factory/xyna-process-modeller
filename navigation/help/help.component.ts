@@ -18,6 +18,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
+import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../zeta/xc/xc.module';
 
 
 @Component({
@@ -25,7 +27,7 @@ import { CommonNavigationComponent } from '../common-navigation-class/common-nav
     templateUrl: './help.component.html',
     styleUrls: ['./help.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [I18nModule, XcModule]
 })
 export class HelpComponent extends CommonNavigationComponent {
 

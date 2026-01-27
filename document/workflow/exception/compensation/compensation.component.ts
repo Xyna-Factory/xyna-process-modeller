@@ -15,11 +15,14 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { Component, forwardRef, Input } from '@angular/core';
 
+import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoChangeCompensationRequest } from '../../../../xo/change-compensation-request.model';
 import { XoCompensation } from '../../../../xo/compensation.model';
+import { ContentAreaComponent } from '../../content-area/content-area.component';
 import { ModellingItemComponent } from '../../shared/modelling-object.component';
 
 
@@ -27,7 +30,7 @@ import { ModellingItemComponent } from '../../shared/modelling-object.component'
     selector: 'compensation',
     templateUrl: './compensation.component.html',
     styleUrls: ['./compensation.component.scss', '../../common.scss'],
-    standalone: false
+    imports: [I18nModule, forwardRef(() => ContentAreaComponent), XcModule]
 })
 export class CompensationComponent extends ModellingItemComponent {
 
