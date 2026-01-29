@@ -79,8 +79,7 @@ export interface MethodTabData {
  * Base class for tabs in Datatype view
  */
 @Component({
-    template: '',
-    standalone: false
+    template: ''
 })
 export abstract class DatatypeTabComponent<D, E extends DocumentTabData<D> = DocumentTabData<D>> extends XcTabComponent<void, E> implements OnDestroy {
 
@@ -125,8 +124,7 @@ export abstract class DatatypeTabComponent<D, E extends DocumentTabData<D> = Doc
 }
 
 @Component({
-    template: '',
-    standalone: false
+    template: ''
 })
 export abstract class DatatypeDetailsTabComponent extends DatatypeTabComponent<XoDataType> {
 
@@ -138,8 +136,7 @@ export abstract class DatatypeDetailsTabComponent extends DatatypeTabComponent<X
 }
 
 @Component({
-    template: '',
-    standalone: false
+    template: ''
 })
 export abstract class DatatypeVariableTabComponent extends DatatypeTabComponent<VariableTabData> {
 
@@ -189,8 +186,7 @@ export abstract class DatatypeVariableTabComponent extends DatatypeTabComponent<
 }
 
 @Component({
-    template: '',
-    standalone: false
+    template: ''
 })
 export abstract class DatatypeMethodTabComponent extends DatatypeTabComponent<MethodTabData> {
 

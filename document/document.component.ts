@@ -36,8 +36,7 @@ import { SelectableModellingObjectComponent } from './workflow/shared/selectable
 
 
 @Component({
-    template: '',
-    standalone: false
+    template: ''
 })
 export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponent<R, D> implements OnInit, OnDestroy {
 
