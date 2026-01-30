@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, inject } from '@angular/core';
 
 import { coerceBoolean } from '@zeta/base';
 
@@ -39,16 +39,16 @@ import { XcModule } from '../../../../zeta/xc/xc.module';
     imports: [XMOMListItemComponent, ModDraggableDirective, XcModule]
 })
 export class XMOMListComponent {
+    private readonly xmomService = inject(XmomService);
+    private readonly factoryService = inject(FactoryService);
+    private readonly cdr = inject(ChangeDetectorRef);
+
 
     private _xmomItems = new XoXmomItemArray();
     private _pending = false;
     private _showFQN = false;
 
     readonly openMenusSubject = new BehaviorSubject<number>(0);
-
-
-    constructor(private readonly xmomService: XmomService, private readonly factoryService: FactoryService, private readonly cdr: ChangeDetectorRef) {
-    }
 
 
     @Input()

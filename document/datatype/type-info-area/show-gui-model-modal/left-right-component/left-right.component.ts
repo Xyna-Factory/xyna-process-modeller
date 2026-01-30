@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild, inject } from '@angular/core';
 import { NgClass } from '@angular/common';
 
 
@@ -27,6 +27,8 @@ import { NgClass } from '@angular/common';
     imports: [NgClass]
 })
 export class LeftRightComponent implements OnInit {
+    private readonly elementRef = inject(ElementRef);
+
 
     private static _num = 0;
     leftId: string;
@@ -132,7 +134,7 @@ export class LeftRightComponent implements OnInit {
 
     // ---------------------------------------------------------------- METHODS
 
-    constructor(private readonly elementRef: ElementRef) {
+    constructor() {
         this.leftId = 'left-list-box-id-number_' + LeftRightComponent._num;
         this.rightId = 'right-list-box-id-number_' + LeftRightComponent._num++;
     }

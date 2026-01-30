@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector, Optional } from '@angular/core';
+import { Component, Injector, inject } from '@angular/core';
 
 import { WorkflowDetailSettingsService } from '@pmod/workflow-detail-settings.service';
 import { I18nService, LocaleService } from '@zeta/i18n';
@@ -33,8 +33,13 @@ import { I18nModule } from '../../../zeta/i18n/i18n.module';
     imports: [XcModule, I18nModule]
 })
 export class ModellerSettingsDialogComponent extends XcDialogComponent<void, void> {
+    readonly workflowSettings = inject(WorkflowDetailSettingsService);
+    private readonly i18n = inject(I18nService);
 
-    constructor(@Optional() injector: Injector, readonly workflowSettings: WorkflowDetailSettingsService, private readonly i18n: I18nService) {
+
+    constructor() {
+        const injector = inject(Injector, { optional: true });
+
         super(injector);
 
         this.i18n.setTranslations(LocaleService.DE_DE, modellerSettingsDialog_translations_de_DE);

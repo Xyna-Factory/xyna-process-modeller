@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector, Optional } from '@angular/core';
+import { Component, Injector, inject } from '@angular/core';
 
 import { ApiService, RuntimeContext } from '@zeta/api';
 import { downloadFile } from '@zeta/base';
@@ -37,6 +37,10 @@ import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
     imports: [XcModule, I18nModule]
 })
 export class WorkflowConstantBuilderModalComponent extends XcDialogComponent<void, void> {
+    private readonly documentService = inject(DocumentService);
+    private readonly apiService = inject(ApiService);
+    private readonly i18n = inject(I18nService);
+
 
     rtcDataWrapper: XcAutocompleteDataWrapper;
     rtc = RuntimeContext.defaultWorkspace;
@@ -45,12 +49,10 @@ export class WorkflowConstantBuilderModalComponent extends XcDialogComponent<voi
     withSignature = true;
     building = false;
 
-    constructor(@Optional() injector: Injector,
-        factoryService: FactoryService,
-        private readonly documentService: DocumentService,
-        private readonly apiService: ApiService,
-        private readonly i18n: I18nService
-    ) {
+    constructor() {
+        const injector = inject(Injector, { optional: true });
+        const factoryService = inject(FactoryService);
+
         super(injector);
 
         this.i18n.setTranslations(LocaleService.DE_DE, workflowConstantBuilderModal_translations_de_DE);

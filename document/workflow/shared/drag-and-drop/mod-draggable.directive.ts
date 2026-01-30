@@ -15,23 +15,22 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Directive, ElementRef, HostListener, Input, OnInit } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, OnInit, inject } from '@angular/core';
 
 import { DRAG_CSS_CLASSES, DragType, Draggable, ModDnDEventConvert, ModDragAndDropService, ModDragDataInfo, ModDragDataTransferKey } from './mod-drag-and-drop.service';
 
 
 @Directive({ selector: '[mod-draggable]' })
 export class ModDraggableDirective implements OnInit {
+    private readonly elementRef = inject(ElementRef);
+    private readonly dndService = inject(ModDragAndDropService);
+
 
     @Input('mod-draggable')
     data: Draggable;
 
     @Input('mod-draggable-allowed-drag-type')
     allowedDragType = DragType.move;
-
-
-    constructor(private readonly elementRef: ElementRef, private readonly dndService: ModDragAndDropService) {
-    }
 
 
     ngOnInit(): void {

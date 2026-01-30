@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, Injector, OnDestroy } from '@angular/core';
+import { Component, ElementRef, inject, Injector, OnDestroy } from '@angular/core';
 
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
 import { FullQualifiedName } from '@zeta/api';
@@ -25,6 +25,8 @@ import { XcContentEditableDirective, XcMenuItem, XcStatusBarEntryType, XcStatusB
 import { Subscription, throwError } from 'rxjs';
 import { catchError, filter, map } from 'rxjs/operators';
 
+import { I18nModule } from '../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../zeta/xc/xc.module';
 import { DeploymentState } from '../api/xmom-types';
 import { ModellingActionType, XmomState } from '../api/xmom.service';
 import { XoConnectionArray } from '../xo/connection.model';
@@ -39,16 +41,14 @@ import { DocumentItem } from './model/document.model';
 import { WorkflowDocumentModel } from './model/workflow-document.model';
 import { SelectionService } from './selection.service';
 import { WorkflowDetailLevelService } from './workflow-detail-level.service';
-import { BranchSelectionService } from './workflow/distinction/branch/branch-selection.service';
-import { I18nModule } from '../../../zeta/i18n/i18n.module';
 import { DataflowComponent } from './workflow/dataflow/dataflow.component';
-import { VariableAreaDocumentComponent } from './workflow/variable-area/variable-area-document.component';
-import { TypeLabelAreaComponent } from './workflow/type-label-area/type-label-area.component';
+import { BranchSelectionService } from './workflow/distinction/branch/branch-selection.service';
 import { DocumentationAreaComponent } from './workflow/documentation-area/documentation-area.component';
-import { WorkflowComponent } from './workflow/workflow/workflow.component';
-import { ExceptionHandlingAreaComponent } from './workflow/exception/exception-handling-area/exception-handling-area.component';
-import { XcModule } from '../../../zeta/xc/xc.module';
 import { DropIndicatorComponent } from './workflow/drop-indicator/drop-indicator.component';
+import { ExceptionHandlingAreaComponent } from './workflow/exception/exception-handling-area/exception-handling-area.component';
+import { TypeLabelAreaComponent } from './workflow/type-label-area/type-label-area.component';
+import { VariableAreaDocumentComponent } from './workflow/variable-area/variable-area-document.component';
+import { WorkflowComponent } from './workflow/workflow/workflow.component';
 
 
 @Component({
@@ -59,6 +59,10 @@ import { DropIndicatorComponent } from './workflow/drop-indicator/drop-indicator
     imports: [I18nModule, DataflowComponent, VariableAreaDocumentComponent, TypeLabelAreaComponent, DocumentationAreaComponent, WorkflowComponent, ExceptionHandlingAreaComponent, XcModule, DropIndicatorComponent]
 })
 export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowDocumentModel> implements OnDestroy {
+    private readonly elementRef = inject(ElementRef<HTMLElement>);
+    private readonly keyService = inject(KeyDistributionService);
+    private readonly statusBarService = inject(XcStatusBarService);
+    private readonly detailLevelService = inject(WorkflowDetailLevelService);
 
     private readonly menuItemTestWorkflow: XcMenuItem = {
         name: 'pmod.workflow.test-workflow...',
@@ -136,22 +140,12 @@ export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowD
         this.menuItemCompare
     ];
 
-    private readonly elementRef: ElementRef<HTMLElement>;
-    private readonly keyService: KeyDistributionService;
-    private readonly statusBarService: XcStatusBarService;
-    private readonly detailLevelService: WorkflowDetailLevelService;
-
     dataflow: XoConnectionArray;
     subscription: Subscription;
 
 
-    constructor(injector: Injector) {
-        super(injector);
-
-        this.elementRef = injector.get(ElementRef);
-        this.keyService = injector.get(KeyDistributionService);
-        this.statusBarService = injector.get(XcStatusBarService);
-        this.detailLevelService = injector.get(WorkflowDetailLevelService);
+    constructor() {
+        super();
 
         this.untilDestroyed(
             this.selectionService.doubleClickObject.pipe(

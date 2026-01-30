@@ -15,7 +15,7 @@
 * limitations under the License.
 * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 */
-import { ChangeDetectorRef, Component, Injector, OnDestroy, Optional } from '@angular/core';
+import { ChangeDetectorRef, Component, Injector, OnDestroy, inject } from '@angular/core';
 
 import { ModellingActionType } from '@pmod/api/xmom.service';
 import { DocumentService } from '@pmod/document/document.service';
@@ -82,6 +82,9 @@ export interface MethodTabData {
     template: ''
 })
 export abstract class DatatypeTabComponent<D, E extends DocumentTabData<D> = DocumentTabData<D>> extends XcTabComponent<void, E> implements OnDestroy {
+    protected readonly documentService = inject(DocumentService);
+    protected readonly cdr = inject(ChangeDetectorRef);
+
 
     private readonly destroySubject = new Subject<void>();
     protected tabData: D;
@@ -94,11 +97,9 @@ export abstract class DatatypeTabComponent<D, E extends DocumentTabData<D> = Doc
         return this.injectedData.documentModel;
     }
 
-    constructor(
-        protected readonly documentService: DocumentService,
-        protected readonly cdr: ChangeDetectorRef,
-        @Optional() injector: Injector
-    ) {
+    constructor() {
+        const injector = inject(Injector, { optional: true });
+
         super(injector);
 
         this.untilDestroyed(this.injectedData.update).subscribe(data => {

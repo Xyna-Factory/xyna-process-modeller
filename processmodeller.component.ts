@@ -16,7 +16,7 @@ import { NgClass } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, Injector, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Injector, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 
 import { ApiService, FullQualifiedName, RuntimeContextSelectionSettings } from '@zeta/api';
 import { KeyboardEventType, KeyDistributionService, OutsideListenerService } from '@zeta/base';
@@ -58,6 +58,17 @@ import { XoWorkflow } from './xo/workflow.model';
     imports: [ToolbarComponent, I18nModule, XcModule, NavigationComponent, NgClass]
 })
 export class ProcessmodellerComponent extends RouteComponent implements OnInit, OnDestroy {
+    documentService = inject(DocumentService);
+    private readonly cdr = inject(ChangeDetectorRef);
+    private readonly apiService = inject(ApiService);
+    private readonly dialogService = inject(XcDialogService);
+    readonly injector = inject(Injector);
+    private readonly i18nService = inject(I18nService);
+    private readonly queryParamService = inject(QueryParameterService);
+    private readonly outsideListenerService = inject(OutsideListenerService);
+    private readonly keyService = inject(KeyDistributionService);
+    private readonly errorService = inject(ErrorService);
+
 
     private runtimeContextChangeSubscription: Subscription;
 
@@ -91,18 +102,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
     }
 
 
-    constructor(
-        public documentService: DocumentService,
-        private readonly cdr: ChangeDetectorRef,
-        private readonly apiService: ApiService,
-        private readonly dialogService: XcDialogService,
-        readonly injector: Injector,
-        private readonly i18nService: I18nService,
-        private readonly queryParamService: QueryParameterService,
-        private readonly outsideListenerService: OutsideListenerService,
-        private readonly keyService: KeyDistributionService,
-        private readonly errorService: ErrorService
-    ) {
+    constructor() {
         super();
 
         this.i18nService.contextDismantlingSearch = true;

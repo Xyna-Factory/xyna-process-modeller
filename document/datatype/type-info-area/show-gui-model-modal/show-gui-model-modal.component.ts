@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, inject } from '@angular/core';
 
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent } from '@zeta/xc';
@@ -40,6 +40,9 @@ export interface ShowGuiModelModalComponentData {
     imports: [XcModule, I18nModule, LeftRightComponent]
 })
 export class ShowGuiModelModalComponent extends XcDialogComponent<void, ShowGuiModelModalComponentData> {
+    private readonly dataTypeConverterService = inject(DataTypeConverterService);
+    private readonly i18n = inject(I18nService);
+
 
     modelStr: string;
     convertable: DataTypeConvertable;
@@ -53,7 +56,9 @@ export class ShowGuiModelModalComponent extends XcDialogComponent<void, ShowGuiM
             : [];
     }
 
-    constructor(injector: Injector, private readonly dataTypeConverterService: DataTypeConverterService, private readonly i18n: I18nService) {
+    constructor() {
+        const injector = inject(Injector);
+
         super(injector);
 
         this.i18n.setTranslations(LocaleService.DE_DE, showGui_translations_de_DE);

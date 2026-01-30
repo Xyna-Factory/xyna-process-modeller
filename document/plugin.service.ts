@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { environment } from '@environments/environment';
 import { XoGuiDefiningWorkflow } from '@yggdrasil/plugin/gui-defining-workflow.model';
@@ -39,8 +39,9 @@ import { filter, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
     providedIn: 'root'
 })
 export class PluginService implements XoDefinitionObserver {
+    private readonly apiService = inject(ApiService);
+    private readonly dialogs = inject(XcDialogService);
 
-    constructor(private readonly apiService: ApiService, private readonly dialogs: XcDialogService) { }
 
     /**
      * holds the results from workflows

@@ -19,6 +19,7 @@ import { Component, inject, Injector } from '@angular/core';
 
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 
+import { I18nModule } from '../../../zeta/i18n/i18n.module';
 import { ModellingActionType } from '../api/xmom.service';
 import { XoDataTypeTypeLabelArea } from '../xo/data-type-type-label-area.model';
 import { XoDataType } from '../xo/data-type.model';
@@ -27,21 +28,20 @@ import { XoExceptionType } from '../xo/exception-type.model';
 import { XoInsertModellingObjectRequest } from '../xo/insert-modelling-object-request.model';
 import { XoMemberVariableArea } from '../xo/member-variable-area.model';
 import { XoMemberVariable } from '../xo/member-variable.model';
+import { DataTypeDetailsComponent } from './datatype/datatype-details/datatype-details.component';
+import { MemberVariableAreaComponent } from './datatype/member-variable-area/member-variable-area.component';
+import { MemberVariableDetailsComponent } from './datatype/member-variable-details/member-variable-details.component';
+import { MethodDetailsComponent } from './datatype/method-details/method-details.component';
+import { ServiceAreaComponent } from './datatype/service-area/service-area.component';
+import { TypeInfoAreaComponent } from './datatype/type-info-area/type-info-area.component';
 import { MinMaxService } from './min-max.service';
 import { DataTypeDocumentModel } from './model/data-type-document.model';
 import { SelectionService } from './selection.service';
-import { TypeDocumentComponent } from './type-document.component';
-import { I18nModule } from '../../../zeta/i18n/i18n.module';
-import { TypeInfoAreaComponent } from './datatype/type-info-area/type-info-area.component';
-import { LibAreaComponent } from './shared/lib-area/lib-area.component';
-import { JavaSharedLibAreaComponent } from './shared/java-shared-lib-area/java-shared-lib-area.component';
 import { DetailsItemComponent } from './shared/details-item/details-item.component';
+import { JavaSharedLibAreaComponent } from './shared/java-shared-lib-area/java-shared-lib-area.component';
+import { LibAreaComponent } from './shared/lib-area/lib-area.component';
 import { MemberAreaComponent } from './shared/member-area/member-area.component';
-import { MemberVariableAreaComponent } from './datatype/member-variable-area/member-variable-area.component';
-import { ServiceAreaComponent } from './datatype/service-area/service-area.component';
-import { DataTypeDetailsComponent } from './datatype/datatype-details/datatype-details.component';
-import { MemberVariableDetailsComponent } from './datatype/member-variable-details/member-variable-details.component';
-import { MethodDetailsComponent } from './datatype/method-details/method-details.component';
+import { TypeDocumentComponent } from './type-document.component';
 import { DropIndicatorComponent } from './workflow/drop-indicator/drop-indicator.component';
 
 
@@ -63,8 +63,8 @@ export class DataTypeComponent extends TypeDocumentComponent<DataTypeDocumentMod
 
     maximizedImplementation = this.minmaxService.maximizedImplementation;
 
-    constructor(injector: Injector) {
-        super(injector);
+    constructor() {
+        super();
 
         // workaround such that model types are not pruned by compiler
 

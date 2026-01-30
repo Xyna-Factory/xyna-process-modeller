@@ -15,13 +15,18 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, Optional } from '@angular/core';
-import { DocumentService } from '@pmod/document/document.service';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+
 import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
+
+import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../../../zeta/xc/xc.module';
+import { TypeDocumentationAreaComponent } from '../../type-documentation-area/type-documentation-area.component';
 import { DatatypeMethodTabComponent } from '../datatype-tab.component';
 import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
 import { TypeDocumentationAreaComponent } from '../../type-documentation-area/type-documentation-area.component';
+
 
 @Component({
     templateUrl: './method-base-tab.component.html',
@@ -31,12 +36,8 @@ import { TypeDocumentationAreaComponent } from '../../type-documentation-area/ty
 })
 export class MethodBaseTabComponent extends DatatypeMethodTabComponent {
 
-    constructor(
-        documentService: DocumentService,
-        cdr: ChangeDetectorRef,
-        @Optional() injector: Injector
-    ) {
-        super(documentService, cdr, injector);
+    constructor() {
+        super();
 
         this.untilDestroyed(this.injectedData.update).subscribe(() => {
             this.cdr.markForCheck();

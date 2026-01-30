@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output, inject } from '@angular/core';
 
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
 import { FullQualifiedName } from '@zeta/api';
@@ -47,6 +47,10 @@ import { I18nModule } from '../../../../zeta/i18n/i18n.module';
     imports: [XcModule, I18nModule]
 })
 export class XMOMListItemComponent {
+    private readonly i18n = inject(I18nService);
+    private readonly dialogService = inject(XcDialogService);
+    private readonly documentService = inject(DocumentService);
+
 
     private _xmomItem: XoXmomItem | XoFactoryItem;
     private _xmomIconName: string;
@@ -62,11 +66,7 @@ export class XMOMListItemComponent {
     readonly menuClosed = new EventEmitter<XoXmomItem>();
 
 
-    constructor(
-        private readonly i18n: I18nService,
-        private readonly dialogService: XcDialogService,
-        private readonly documentService: DocumentService
-    ) {
+    constructor() {
         this.writableMenuItems = [
             <XcMenuItem>{
                 name: 'Open',

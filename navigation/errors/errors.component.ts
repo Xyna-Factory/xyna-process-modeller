@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, inject } from '@angular/core';
 
 import { DocumentService } from '../../document/document.service';
 import { of, Subscription } from 'rxjs';
@@ -38,6 +38,8 @@ import { ErrorItemComponent } from '../shared/error-item/error-item.component';
     imports: [I18nModule, ErrorItemComponent]
 })
 export class ErrorsComponent extends CommonNavigationComponent implements OnDestroy {
+    protected readonly errorService = inject(ErrorService);
+
     issues: ErrorItem[] = [];
     warnings: ErrorItem[] = [];
 
@@ -48,11 +50,10 @@ export class ErrorsComponent extends CommonNavigationComponent implements OnDest
     private warningsChangeSubscription: Subscription;
 
 
-    constructor(
-        cdr: ChangeDetectorRef,
-        documentService: DocumentService,
-        protected readonly errorService: ErrorService
-    ) {
+    constructor() {
+        const cdr = inject(ChangeDetectorRef);
+        const documentService = inject(DocumentService);
+
         super(cdr);
 
         this.documentChangeSubscription = documentService.selectionChange.subscribe(document => {
