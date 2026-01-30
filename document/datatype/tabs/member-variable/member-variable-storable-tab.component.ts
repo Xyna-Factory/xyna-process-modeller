@@ -25,6 +25,9 @@ import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
 import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { StorablePropertiesAreaComponent } from '../../storable-properties-area/storable-properties-area.component';
 import { DatatypeVariableTabComponent } from '../datatype-tab.component';
+import { XcModule } from '../../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { StorablePropertiesAreaComponent } from '../../storable-properties-area/storable-properties-area.component';
 
 
 @Component({
