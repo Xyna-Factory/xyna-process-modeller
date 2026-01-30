@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild, inject } from '@angular/core';
 
 import { MessageBusService } from '@yggdrasil/events';
 
@@ -42,6 +42,10 @@ import { XMOMTreeComponent } from './xmom-tree.component';
     imports: [I18nModule, XcModule, PmodOutsideListenerDirective, XMOMTreeComponent, XMOMListComponent]
 })
 export class FactoryComponent extends CommonNavigationComponent implements AfterViewInit {
+    readonly factoryService = inject(FactoryService);
+    readonly documentService = inject(DocumentService);
+    private readonly messageBus = inject(MessageBusService);
+
 
     private static readonly DepartmentLabels = {
         xmcp: 'Multi-Channel Portal',
@@ -76,12 +80,9 @@ export class FactoryComponent extends CommonNavigationComponent implements After
     expandedXmomPaths = new Array<XmomPath>();
 
 
-    constructor(
-        cdr: ChangeDetectorRef,
-        readonly factoryService: FactoryService,
-        readonly documentService: DocumentService,
-        private readonly messageBus: MessageBusService
-    ) {
+    constructor() {
+        const cdr = inject(ChangeDetectorRef);
+
         super(cdr);
     }
 

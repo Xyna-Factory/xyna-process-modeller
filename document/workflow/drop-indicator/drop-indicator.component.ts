@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, inject } from '@angular/core';
 
 import { ModDragAndDropService } from '../shared/drag-and-drop/mod-drag-and-drop.service';
 
@@ -26,9 +26,9 @@ import { ModDragAndDropService } from '../shared/drag-and-drop/mod-drag-and-drop
     styleUrls: ['./drop-indicator.component.scss']
 })
 export class DropIndicatorComponent implements OnInit {
+    private readonly elementRef = inject(ElementRef);
+    private readonly dndService = inject(ModDragAndDropService);
 
-    constructor(private readonly elementRef: ElementRef, private readonly dndService: ModDragAndDropService) {
-    }
 
 
     ngOnInit() {

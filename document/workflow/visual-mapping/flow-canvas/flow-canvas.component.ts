@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, Component, ElementRef, Input, NgZone, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, NgZone, OnDestroy, ViewChild, inject } from '@angular/core';
 import { GraphicallyRepresented } from '@zeta/base';
 import { createSVGCircle, createSVGGroup, createSVGHorizontalCubicBezierPath, createSVGText, createSVGVerticalCubicBezierPath } from '@zeta/base/draw';
 import { filter, forkJoin, take, tap } from 'rxjs';
@@ -190,6 +190,8 @@ export class Flow {
     styleUrls: ['./flow-canvas.component.scss']
 })
 export class FlowCanvasComponent implements AfterViewInit, OnDestroy {
+    private readonly ngZone = inject(NgZone);
+
 
     @ViewChild('SVG', {static: false})
     private readonly element: ElementRef;
@@ -202,9 +204,6 @@ export class FlowCanvasComponent implements AfterViewInit, OnDestroy {
     private animationFrameHandle: number;
 
     private resizeObserver: ResizeObserver;
-
-    constructor(private readonly ngZone: NgZone) {
-    }
 
 
     ngAfterViewInit() {

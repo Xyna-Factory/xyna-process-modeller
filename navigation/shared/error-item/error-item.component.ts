@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, inject } from '@angular/core';
 
 import { DocumentService } from '../../../document/document.service';
 import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model';
@@ -33,6 +33,9 @@ import { XcModule } from '../../../../../zeta/xc/xc.module';
     imports: [I18nModule, XcModule]
 })
 export class ErrorItemComponent {
+    private readonly documentService = inject(DocumentService);
+    private readonly errorService = inject(ErrorService);
+
     @Input()
     error: ErrorItem;
 
@@ -55,11 +58,6 @@ export class ErrorItemComponent {
     get item(): DocumentItem {
         return this.document ? this.document.item : null;
     }
-
-    constructor(
-        private readonly documentService: DocumentService,
-        private readonly errorService: ErrorService
-    ) { }
 
 
     clickErrorHandler(error: ErrorItem) {

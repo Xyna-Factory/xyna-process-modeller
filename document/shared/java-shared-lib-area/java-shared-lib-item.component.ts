@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostBinding, Injector } from '@angular/core';
+import { Component, HostBinding, Injector, inject } from '@angular/core';
 
 import { XcRichListItemComponent } from '@zeta/xc';
 
@@ -47,7 +47,9 @@ export class JavaSharedLibItemComponent extends XcRichListItemComponent<void, Ja
     readonly clazz = 'java-shared-lib-item';
 
 
-    constructor(injector: Injector) {
+    constructor() {
+        const injector = inject(Injector);
+
         super(injector);
     }
 

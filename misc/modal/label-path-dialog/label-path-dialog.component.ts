@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostListener, Injector, Optional, ViewChild } from '@angular/core';
+import { Component, HostListener, Injector, ViewChild, inject } from '@angular/core';
 
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcDialogComponent, XcFormDirective, XcOptionItem, XcOptionItemString } from '@zeta/xc';
@@ -52,6 +52,8 @@ export interface LabelPathDialogData {
     imports: [XcModule, I18nModule]
 })
 export class LabelPathDialogComponent extends XcDialogComponent<LabelPathDialogResult, LabelPathDialogData> {
+    private readonly i18n = inject(I18nService);
+
 
     static readonly HEADER_SAVE_WORKFLOW_AS = 'Save Workflow as ...';
     static readonly HEADER_DEPLOY_TYPE_AS = 'Deploy Type as ...';
@@ -83,7 +85,9 @@ export class LabelPathDialogComponent extends XcDialogComponent<LabelPathDialogR
     );
 
 
-    constructor(@Optional() injector: Injector, private readonly i18n: I18nService) {
+    constructor() {
+        const injector = inject(Injector, { optional: true });
+
         super(injector);
 
         this.i18n.setTranslations(LocaleService.DE_DE, labelPathDialog_translations_de_DE);

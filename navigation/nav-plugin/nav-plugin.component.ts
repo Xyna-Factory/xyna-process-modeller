@@ -53,7 +53,9 @@ export class NavPluginComponent extends CommonNavigationComponent {
     @Input('plugin-number')
     pluginNumber: number;
 
-    constructor(cdr: ChangeDetectorRef) {
+    constructor() {
+        const cdr = inject(ChangeDetectorRef);
+
         super(cdr);
     }
 

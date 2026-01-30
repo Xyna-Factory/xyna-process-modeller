@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { XoModellingItem } from '@pmod/xo/modelling-item.model';
 import { FullQualifiedName, Xo, XoJson } from '@zeta/api';
@@ -199,7 +199,9 @@ export class ModDragAndDropService {
     private _canvas: HTMLCanvasElement;
 
 
-    constructor(authService: AuthService) {
+    constructor() {
+        const authService = inject(AuthService);
+
         authService.sessionInfoChange.pipe(
             filter(sessionInfo => !!sessionInfo)
         ).subscribe(

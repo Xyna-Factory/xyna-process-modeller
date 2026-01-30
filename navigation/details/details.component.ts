@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 
 import { FM_RTC } from '@fman/const';
 import { DEPLOYMENT_ITEMS_ISWP } from '@fman/deployment-items/restorable-deployment-items.component';
@@ -51,6 +51,13 @@ import { RelationTableComponent } from './relation-table/relation-table.componen
     imports: [I18nModule, XcModule, DeploymentStateDetailComponent, RelationTableComponent]
 })
 export class DetailsComponent extends CommonNavigationComponent {
+    private readonly i18n = inject(I18nService);
+    private readonly apiService = inject(ApiService);
+    private readonly authService = inject(AuthService);
+    private readonly dialogService = inject(XcDialogService);
+    private readonly documentService = inject(DocumentService);
+    private readonly xmomService = inject(XmomService);
+
     private _deploymentItem: XoDeploymentItem;
     pendingDeploymentItem = false;
 
@@ -58,15 +65,9 @@ export class DetailsComponent extends CommonNavigationComponent {
     hasRelations = false;
 
 
-    constructor(
-        private readonly i18n: I18nService,
-        private readonly apiService: ApiService,
-        private readonly authService: AuthService,
-        private readonly dialogService: XcDialogService,
-        private readonly documentService: DocumentService,
-        private readonly xmomService: XmomService,
-        cdr: ChangeDetectorRef
-    ) {
+    constructor() {
+        const cdr = inject(ChangeDetectorRef);
+
         super(cdr);
 
         merge(

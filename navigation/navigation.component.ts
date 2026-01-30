@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
 
 import { TypeDocumentModel } from '@pmod/document/model/type-document.model';
 import { PluginService } from '@pmod/document/plugin.service';
@@ -92,6 +92,11 @@ export enum AreaValue {
     imports: [FactoryComponent, I18nModule, SearchComponent, DetailsComponent, ClipboardComponent, ErrorsComponent, CompareComponent, HelpComponent, NavPluginComponent, XcModule, NgClass]
 })
 export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
+    private readonly documentService = inject(DocumentService);
+    private readonly dialogService = inject(XcDialogService);
+    private readonly xmomService = inject(XmomService);
+    private readonly pluginService = inject(PluginService);
+
 
     readonly NavigationbarArea = NavigationbarArea;
 
@@ -143,12 +148,7 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
     private _datatypePlugins: XoPlugin[] = [];
 
 
-    constructor(
-        private readonly documentService: DocumentService,
-        private readonly dialogService: XcDialogService,
-        private readonly xmomService: XmomService,
-        private readonly pluginService: PluginService
-    ) {
+    constructor() {
         this.pluginService.requestPluginsByPath(['datatypes/rightnav']).subscribe({
             next: (plugins: XoPluginArray) => {
                 this._datatypePlugins = plugins.data;

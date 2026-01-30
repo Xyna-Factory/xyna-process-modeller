@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 
 import { XmomState } from '@pmod/api/xmom.service';
 import { DocumentService } from '@pmod/document/document.service';
@@ -48,16 +48,18 @@ import { ExceptionHandlingAreaComponent } from '../../document/workflow/exceptio
     imports: [I18nModule, XcModule, DataflowComponent, VariableAreaDocumentComponent, TypeLabelAreaComponent, WorkflowComponent, ExceptionHandlingAreaComponent]
 })
 export class CompareComponent extends CommonNavigationComponent {
+    protected documentService = inject(DocumentService);
+    protected dialogs = inject(XcDialogService);
+    protected i18n = inject(I18nService);
+
 
     workflow: XoWorkflow;
     dataflow: XoConnectionArray;
     document: DocumentModel<XoWorkflow>;
 
-    constructor(cdr: ChangeDetectorRef,
-        protected documentService: DocumentService,
-        protected dialogs: XcDialogService,
-        protected i18n: I18nService
-    ) {
+    constructor() {
+        const cdr = inject(ChangeDetectorRef);
+
         super(cdr);
     }
 

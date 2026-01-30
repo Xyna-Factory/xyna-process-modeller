@@ -15,18 +15,16 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { DocumentService } from '@pmod/document/document.service';
-import { PluginService } from '@pmod/document/plugin.service';
 import { XoDataType } from '@pmod/xo/data-type.model';
 import { DefinitionStackItemComponentData, XcDefinitionStackItemComponent } from '@zeta/xc/xc-form/definitions/xc-definition-stack/xc-definition-stack-item/xc-definition-stack-item.component';
 import { XcStackDataSource } from '@zeta/xc/xc-stack/xc-stack-data-source';
 import { XcStackItem } from '@zeta/xc/xc-stack/xc-stack-item/xc-stack-item';
 import { XcComponentTemplate } from '@zeta/xc/xc-template/xc-template';
 
-import { DatatypeTabComponent, PluginTabData } from '../datatype-tab.component';
 import { XcModule } from '../../../../../../zeta/xc/xc.module';
+import { DatatypeTabComponent, PluginTabData } from '../datatype-tab.component';
 
 
 @Component({
@@ -36,16 +34,10 @@ import { XcModule } from '../../../../../../zeta/xc/xc.module';
     imports: [XcModule]
 })
 export class DataTypePluginTabComponent extends DatatypeTabComponent<XoDataType, PluginTabData> {
-
     readonly stackDataSource = new XcStackDataSource();
 
-    constructor(
-        protected readonly documentService: DocumentService,
-        readonly pluginService: PluginService,
-        protected readonly cdr: ChangeDetectorRef,
-        @Optional() injector: Injector
-    ) {
-        super(documentService, cdr, injector);
+    constructor() {
+        super();
 
         const item = new XcStackItem();
         item.setTemplate(new XcComponentTemplate(

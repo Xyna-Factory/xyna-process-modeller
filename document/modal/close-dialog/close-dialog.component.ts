@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, inject } from '@angular/core';
 
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent } from '@zeta/xc';
@@ -46,7 +46,10 @@ export interface CloseDialogResult {
 })
 export class CloseDialogComponent extends XcDialogComponent<CloseDialogResult, CloseDialogData> {
 
-    constructor(injector: Injector, i18nService: I18nService) {
+    constructor() {
+        const injector = inject(Injector);
+        const i18nService = inject(I18nService);
+
         super(injector);
 
         i18nService.setTranslations(LocaleService.DE_DE, closeDialog_translations_de_DE);

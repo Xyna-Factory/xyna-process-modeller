@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService } from '@zeta/xc';
@@ -42,16 +42,17 @@ import { ClipboardAreaComponent } from './clipboard-area.component';
     imports: [I18nModule, XcModule, ClipboardAreaComponent]
 })
 export class ClipboardComponent extends CommonNavigationComponent {
+    private readonly i18n = inject(I18nService);
+    private readonly dialogService = inject(XcDialogService);
+    private readonly documentService = inject(DocumentService);
+
 
     readonly clipboardArea = new XoContainerArea();
 
 
-    constructor(
-        cdr: ChangeDetectorRef,
-        private readonly i18n: I18nService,
-        private readonly dialogService: XcDialogService,
-        private readonly documentService: DocumentService
-    ) {
+    constructor() {
+        const cdr = inject(ChangeDetectorRef);
+
         super(cdr);
         this.documentService.xmomService.clipboardChange.subscribe(() => this.refreshClipboard());
         this.documentService.xmomService.invalidateClipboard();
