@@ -37,6 +37,10 @@ import { TypeDocumentModel } from '../../document/model/type-document.model';
 import { XoApplication, XoWorkspace } from '../../xo/runtime-context.model';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 import { ShowXmlModalComponent, ShowXmlModalData } from './show-xml-modal/show-xml-modal.component';
+import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../zeta/xc/xc.module';
+import { DeploymentStateDetailComponent } from '../../../factorymanager/deployment-items/components/deployment-state-detail/deployment-state-detail.component';
+import { RelationTableComponent } from './relation-table/relation-table.component';
 
 
 @Component({
@@ -44,7 +48,7 @@ import { ShowXmlModalComponent, ShowXmlModalData } from './show-xml-modal/show-x
     templateUrl: './details.component.html',
     styleUrls: ['./details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [I18nModule, XcModule, DeploymentStateDetailComponent, RelationTableComponent]
 })
 export class DetailsComponent extends CommonNavigationComponent {
     private _deploymentItem: XoDeploymentItem;

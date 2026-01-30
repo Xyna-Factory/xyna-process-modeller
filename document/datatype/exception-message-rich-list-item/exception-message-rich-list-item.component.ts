@@ -21,6 +21,7 @@ import { OutsideListenerService } from '@zeta/base';
 import { XcRichListItemComponent } from '@zeta/xc';
 
 import { XoExceptionMessage } from '../../../xo/exception-message.model';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 export interface ExceptionMessageRichListItemData {
@@ -34,7 +35,7 @@ export interface ExceptionMessageRichListItemData {
 @Component({
     templateUrl: './exception-message-rich-list-item.component.html',
     styleUrls: ['./exception-message-rich-list-item.component.scss'],
-    standalone: false
+    imports: [XcModule]
 })
 export class ExceptionMessageRichListItemComponent extends XcRichListItemComponent<void, ExceptionMessageRichListItemData> implements OnInit, OnDestroy {
 

@@ -18,13 +18,15 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { DatatypeDetailsTabComponent } from '../datatype-tab.component';
+import { GlobalStorablePropertiesAreaComponent } from '../../global-storable-properties-area/global-storable-properties-area.component';
+import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
 
 
 @Component({
     templateUrl: './datatype-storable-tab.component.html',
     styleUrls: ['./datatype-storable-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [GlobalStorablePropertiesAreaComponent, I18nModule]
 })
 export class DataTypeStorableTabComponent extends DatatypeDetailsTabComponent {
 

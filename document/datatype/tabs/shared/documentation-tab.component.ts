@@ -20,13 +20,15 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { XoTextArea } from '@pmod/xo/text-area.model';
 
 import { DatatypeTabComponent, DocumentationTabData } from '../datatype-tab.component';
+import { TypeDocumentationAreaComponent } from '../../type-documentation-area/type-documentation-area.component';
+import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
 
 
 @Component({
     templateUrl: './documentation-tab.component.html',
     styleUrls: ['./documentation-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [TypeDocumentationAreaComponent, I18nModule]
 })
 export class DocumentationTabComponent extends DatatypeTabComponent<DocumentationTabData> {
 

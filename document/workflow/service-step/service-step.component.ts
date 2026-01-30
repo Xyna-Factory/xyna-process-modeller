@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -15,7 +16,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, inject, Input, OnDestroy } from '@angular/core';
+import { AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, HostBinding, inject, Input, OnDestroy } from '@angular/core';
 
 import { Subscription } from 'rxjs';
 
@@ -32,7 +33,19 @@ import { XoRetry } from '../../../xo/retry.model';
 import { XoTemplate } from '../../../xo/template.model';
 import { XoThrow } from '../../../xo/throw.model';
 import { XoTypeChoice } from '../../../xo/type-choice.model';
+import { BranchComponent } from '../distinction/branch/branch.component';
+import { ConditionalBranchingComponent } from '../distinction/conditional-branching/conditional-branching.component';
+import { ConditionalChoiceComponent } from '../distinction/conditional-choice/conditional-choice.component';
+import { TypeChoiceComponent } from '../distinction/type-choice/type-choice.component';
+import { ThrowComponent } from '../exception/throw/throw.component';
+import { ForeachComponent } from '../foreach/foreach.component';
+import { InvocationComponent } from '../invocation/invocation.component';
+import { MappingComponent } from '../mapping/mapping.component';
+import { ParallelismComponent } from '../parallelism/parallelism.component';
+import { QueryComponent } from '../query/query.component';
+import { RetryComponent } from '../retry/retry.component';
 import { SelectableModellingObjectComponent } from '../shared/selectable-modelling-object.component';
+import { TemplateComponent } from '../template/template.component';
 
 
 @Component({
@@ -40,7 +53,21 @@ import { SelectableModellingObjectComponent } from '../shared/selectable-modelli
     templateUrl: './service-step.component.html',
     styleUrls: ['./service-step.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [    
+        NgClass,    
+        forwardRef(() => BranchComponent),
+        forwardRef(() => ConditionalBranchingComponent),
+        forwardRef(() => ConditionalChoiceComponent),
+        forwardRef(() => ForeachComponent),
+        forwardRef(() => InvocationComponent),
+        forwardRef(() => MappingComponent),
+        forwardRef(() => ParallelismComponent),
+        forwardRef(() => QueryComponent),
+        forwardRef(() => RetryComponent),
+        forwardRef(() => TemplateComponent),
+        forwardRef(() => ThrowComponent),
+        forwardRef(() => TypeChoiceComponent)
+    ]
 })
 export class ServiceStepComponent extends SelectableModellingObjectComponent implements AfterViewChecked, OnDestroy {
     

@@ -29,13 +29,16 @@ import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItem, X
 import { filter } from 'rxjs';
 
 import { DatatypeMethodTabComponent } from '../datatype-tab.component';
+import { XcModule } from '../../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { MethodImplementationComponent } from '../../method-implementation/method-implementation.component';
 
 
 @Component({
     templateUrl: './method-implementation-tab.component.html',
     styleUrls: ['./method-implementation-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [XcModule, I18nModule, MethodImplementationComponent]
 })
 export class MethodImplementationTabComponent extends DatatypeMethodTabComponent {
 

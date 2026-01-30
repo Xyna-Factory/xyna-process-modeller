@@ -31,13 +31,25 @@ import { MinMaxService } from './min-max.service';
 import { DataTypeDocumentModel } from './model/data-type-document.model';
 import { SelectionService } from './selection.service';
 import { TypeDocumentComponent } from './type-document.component';
+import { I18nModule } from '../../../zeta/i18n/i18n.module';
+import { TypeInfoAreaComponent } from './datatype/type-info-area/type-info-area.component';
+import { LibAreaComponent } from './shared/lib-area/lib-area.component';
+import { JavaSharedLibAreaComponent } from './shared/java-shared-lib-area/java-shared-lib-area.component';
+import { DetailsItemComponent } from './shared/details-item/details-item.component';
+import { MemberAreaComponent } from './shared/member-area/member-area.component';
+import { MemberVariableAreaComponent } from './datatype/member-variable-area/member-variable-area.component';
+import { ServiceAreaComponent } from './datatype/service-area/service-area.component';
+import { DataTypeDetailsComponent } from './datatype/datatype-details/datatype-details.component';
+import { MemberVariableDetailsComponent } from './datatype/member-variable-details/member-variable-details.component';
+import { MethodDetailsComponent } from './datatype/method-details/method-details.component';
+import { DropIndicatorComponent } from './workflow/drop-indicator/drop-indicator.component';
 
 
 @Component({
     templateUrl: './datatype.component.html',
     styleUrls: ['./datatype.component.scss'],
-    providers: [SelectionService, MinMaxService], // single service instances per document
-    standalone: false
+    providers: [SelectionService, MinMaxService],
+    imports: [I18nModule, TypeInfoAreaComponent, LibAreaComponent, JavaSharedLibAreaComponent, DetailsItemComponent, MemberAreaComponent, MemberVariableAreaComponent, ServiceAreaComponent, DataTypeDetailsComponent, MemberVariableDetailsComponent, MethodDetailsComponent, DropIndicatorComponent]
 })
 export class DataTypeComponent extends TypeDocumentComponent<DataTypeDocumentModel> {
 

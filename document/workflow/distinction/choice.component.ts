@@ -21,10 +21,7 @@ import { XoChoice } from '../../../xo/choice.model';
 import { ModellingItemComponent } from '../shared/modelling-object.component';
 
 
-@Component({
-    template: '',
-    standalone: false
-})
+@Component({ template: '' })
 export class ChoiceComponent extends ModellingItemComponent {
 
     @Input()

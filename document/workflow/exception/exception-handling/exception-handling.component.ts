@@ -15,17 +15,20 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostBinding, Input } from '@angular/core';
+import { Component, forwardRef, HostBinding, Input } from '@angular/core';
 
+import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
 import { XoExceptionHandling } from '../../../../xo/exception-handling.model';
+import { ContentAreaComponent } from '../../content-area/content-area.component';
 import { ModellingItemComponent } from '../../shared/modelling-object.component';
+import { ItemBarAreaComponent } from '../item-bar-area/item-bar-area.component';
 
 
 @Component({
     selector: 'exception-handling',
     templateUrl: './exception-handling.component.html',
     styleUrls: ['./exception-handling.component.scss', '../../common.scss'],
-    standalone: false
+    imports: [I18nModule, forwardRef(() => ContentAreaComponent), forwardRef(() => ItemBarAreaComponent)]
 })
 export class ExceptionHandlingComponent extends ModellingItemComponent {
 

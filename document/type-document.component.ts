@@ -29,10 +29,7 @@ import { DocumentComponent } from './document.component';
 import { DocumentModel } from './model/document.model';
 
 
-@Component({
-    template: '',
-    standalone: false
-})
+@Component({ template: '' })
 export class TypeDocumentComponent<D extends DocumentModel> extends DocumentComponent<void, D> {
 
     selectedVariable: XoMemberVariable;

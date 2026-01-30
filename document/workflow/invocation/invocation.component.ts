@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, forwardRef, inject, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
@@ -24,6 +24,7 @@ import { FullQualifiedName } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcMenuItem } from '@zeta/xc';
 
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { LabelPathDialogComponent, LabelPathDialogData } from '../../../misc/modal/label-path-dialog/label-path-dialog.component';
 import { XoChangeCompensationRequest } from '../../../xo/change-compensation-request.model';
@@ -37,14 +38,20 @@ import { XoRemoteDestinationArea } from '../../../xo/remote-destination-area.mod
 import { XoTextArea } from '../../../xo/text-area.model';
 import { XoWorkflowInvocation } from '../../../xo/workflow-invocation.model';
 import { DocumentService } from '../../document.service';
+import { DocumentationAreaComponent } from '../documentation-area/documentation-area.component';
+import { ExceptionHandlingAreaComponent } from '../exception/exception-handling-area/exception-handling-area.component';
+import { OrderInputSourceAreaComponent } from '../order-input-source-area/order-input-source-area.component';
+import { RemoteDestinationAreaComponent } from '../remote-destination-area/remote-destination-area.component';
 import { ModellingItemComponent, TriggeredAction } from '../shared/modelling-object.component';
+import { TypeLabelAreaServiceComponent } from '../type-label-area/type-label-area-service.component';
+import { VariableAreaServiceComponent } from '../variable-area/variable-area-service.component';
 
 
 @Component({
     selector: 'invocation',
     templateUrl: './invocation.component.html',
     styleUrls: ['./invocation.component.scss'],
-    standalone: false
+    imports: [XcModule, OrderInputSourceAreaComponent, RemoteDestinationAreaComponent, VariableAreaServiceComponent, TypeLabelAreaServiceComponent, DocumentationAreaComponent, forwardRef(() => ExceptionHandlingAreaComponent)]
 })
 export class InvocationComponent extends ModellingItemComponent {
 

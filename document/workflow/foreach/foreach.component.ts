@@ -1,3 +1,4 @@
+import { NgFor } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -15,19 +16,23 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostBinding, Input } from '@angular/core';
+import { Component, forwardRef, HostBinding, Input } from '@angular/core';
 
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoForeach } from '../../../xo/foreach.model';
 import { XoRequest } from '../../../xo/request.model';
+import { ContentAreaComponent } from '../content-area/content-area.component';
 import { ModellingItemComponent } from '../shared/modelling-object.component';
+import { VariableAreaServiceComponent } from '../variable-area/variable-area-service.component';
+import { VariableComponent } from '../variable/variable.component';
 
 
 @Component({
     selector: 'foreach',
     templateUrl: './foreach.component.html',
     styleUrls: ['./foreach.component.scss'],
-    standalone: false
+    imports: [NgFor, VariableComponent, XcModule, forwardRef(() => ContentAreaComponent), VariableAreaServiceComponent]
 })
 export class ForeachComponent extends ModellingItemComponent {
 

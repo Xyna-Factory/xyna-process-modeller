@@ -130,7 +130,9 @@ interface FactoryItem {
 
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class XmomService {
 
     private readonly _clipboardSubject = new Subject<void>();

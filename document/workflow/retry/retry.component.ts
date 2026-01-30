@@ -20,13 +20,17 @@ import { Component, Input } from '@angular/core';
 import { XoRetry } from '../../../xo/retry.model';
 import { XoTextArea } from '../../../xo/text-area.model';
 import { ModellingItemComponent } from '../shared/modelling-object.component';
+import { VariableAreaServiceComponent } from '../variable-area/variable-area-service.component';
+import { LabelAreaComponent } from '../label-area/label-area.component';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { DocumentationAreaComponent } from '../documentation-area/documentation-area.component';
 
 
 @Component({
     selector: 'retry',
     templateUrl: './retry.component.html',
     styleUrls: ['./retry.component.scss'],
-    standalone: false
+    imports: [VariableAreaServiceComponent, LabelAreaComponent, XcModule, DocumentationAreaComponent]
 })
 export class RetryComponent extends ModellingItemComponent {
 

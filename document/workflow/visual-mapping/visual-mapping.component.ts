@@ -38,7 +38,8 @@ import { ModellingObjectComponent } from '../shared/modelling-object.component';
 import { CreateAssignmentEvent } from '../variable-tree-node/variable-tree-node.component';
 import { SkeletonTreeDataSource, SkeletonTreeDataSourceObserver, StructureProcessWrapper, VariableDescriber } from '../variable-tree/data-source/skeleton-tree-data-source';
 import { SkeletonTreeNode } from '../variable-tree/data-source/skeleton-tree-node';
-import { FlowDefinition } from './flow-canvas/flow-canvas.component';
+import { FlowDefinition, FlowCanvasComponent } from './flow-canvas/flow-canvas.component';
+import { VariableTreeComponent } from '../variable-tree/variable-tree.component';
 
 
 /**
@@ -88,7 +89,7 @@ class ExpressionWrapper {
     templateUrl: './visual-mapping.component.html',
     styleUrls: ['./visual-mapping.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FlowCanvasComponent, VariableTreeComponent, FormulaAreaComponent]
 })
 export class VisualMappingComponent extends ModellingObjectComponent implements OnInit, OnDestroy, SkeletonTreeDataSourceObserver {
 

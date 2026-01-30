@@ -27,12 +27,14 @@ import { FactoryService } from '../../factory.service';
 import { WorkflowConstantBuilder } from '../workflow-constant-builder.class';
 import { workflowConstantBuilderModal_translations_de_DE } from './locale/workflow-constant-builder-modal-translations.de-DE';
 import { workflowConstantBuilderModal_translations_en_US } from './locale/workflow-constant-builder-modal-translations.en-US';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 @Component({
     templateUrl: './workflow-constant-builder-modal.component.html',
     styleUrls: ['./workflow-constant-builder-modal.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class WorkflowConstantBuilderModalComponent extends XcDialogComponent<void, void> {
 

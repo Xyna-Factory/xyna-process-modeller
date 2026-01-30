@@ -21,6 +21,7 @@ import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcRichListItemComponent } from '@zeta/xc';
 
 import { Subject } from 'rxjs';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 export interface LibItemData {
     libraryName: string;
@@ -33,7 +34,7 @@ export interface LibItemData {
 @Component({
     templateUrl: './lib-item.component.html',
     styleUrls: ['./lib-item.component.scss'],
-    standalone: false
+    imports: [XcModule]
 })
 export class LibItemComponent extends XcRichListItemComponent<void, LibItemData> {
 

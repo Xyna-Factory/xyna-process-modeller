@@ -23,6 +23,7 @@ import { XoPlugin } from '@zeta/xc';
 import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
+import { XcModule } from '../../../../zeta/xc/xc.module';
 
 
 @Component({
@@ -30,7 +31,7 @@ import { CommonNavigationComponent } from '../common-navigation-class/common-nav
     templateUrl: './nav-plugin.component.html',
     styleUrls: ['./nav-plugin.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [XcModule]
 })
 export class NavPluginComponent extends CommonNavigationComponent {
 

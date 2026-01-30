@@ -22,6 +22,7 @@ import { XcLocalTableDataSource } from '@zeta/xc';
 
 import { XoStorablePropertyArea } from '../../../xo/storable-property-area.model';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 @Component({
@@ -29,7 +30,7 @@ import { ModellingObjectComponent } from '../../workflow/shared/modelling-object
     templateUrl: './storable-properties-area.component.html',
     styleUrls: ['./storable-properties-area.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [XcModule]
 })
 export class StorablePropertiesAreaComponent extends ModellingObjectComponent {
 

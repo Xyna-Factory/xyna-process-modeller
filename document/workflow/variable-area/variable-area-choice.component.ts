@@ -18,13 +18,17 @@
 import { Component } from '@angular/core';
 
 import { VariableAreaServiceComponent } from './variable-area-service.component';
+import { ModDropAreaDirective } from '../shared/drag-and-drop/mod-drop-area.directive';
+import { NgFor } from '@angular/common';
+import { VariableComponent } from '../variable/variable.component';
+import { ModDraggableDirective } from '../shared/drag-and-drop/mod-draggable.directive';
 
 
 @Component({
     selector: 'variable-area-choice',
     templateUrl: './variable-area.component.html',
     styleUrls: ['./variable-area.component.scss', './variable-area-service.component.scss', './variable-area-choice.component.scss'],
-    standalone: false
+    imports: [ModDropAreaDirective, NgFor, VariableComponent, ModDraggableDirective]
 })
 export class VariableAreaChoiceComponent extends VariableAreaServiceComponent {
 }

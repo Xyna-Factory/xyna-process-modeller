@@ -38,9 +38,11 @@ import { DataTypeDocumentModel } from '../../model/data-type-document.model';
 import { ExceptionTypeDocumentModel } from '../../model/exception-type-document.model';
 import { ServiceGroupDocumentModel } from '../../model/service-group-document.model';
 import { TypeDocumentModel } from '../../model/type-document.model';
-import { ModDropEvent } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
+import { ModDropEvent, ModDropAreaDirective } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { ShowGuiModelModalComponent } from './show-gui-model-modal/show-gui-model-modal.component';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 @Component({
@@ -48,7 +50,7 @@ import { ShowGuiModelModalComponent } from './show-gui-model-modal/show-gui-mode
     templateUrl: './type-info-area.component.html',
     styleUrls: ['./type-info-area.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [XcModule, I18nModule, ModDropAreaDirective]
 })
 export class TypeInfoAreaComponent extends ModellingObjectComponent implements OnInit {
 

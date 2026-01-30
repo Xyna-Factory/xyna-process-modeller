@@ -187,8 +187,7 @@ export class Flow {
 @Component({
     selector: 'flow-canvas',
     templateUrl: './flow-canvas.component.html',
-    styleUrls: ['./flow-canvas.component.scss'],
-    standalone: false
+    styleUrls: ['./flow-canvas.component.scss']
 })
 export class FlowCanvasComponent implements AfterViewInit, OnDestroy {
 

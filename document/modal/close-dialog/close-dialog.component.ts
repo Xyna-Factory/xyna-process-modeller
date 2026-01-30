@@ -22,6 +22,8 @@ import { XcDialogComponent } from '@zeta/xc';
 
 import { closeDialog_translations_de_DE } from './locale/close-dialog-translations.de-DE';
 import { closeDialog_translations_en_US } from './locale/close-dialog-translations.en-US';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 export interface CloseDialogData {
@@ -40,7 +42,7 @@ export interface CloseDialogResult {
 @Component({
     templateUrl: './close-dialog.component.html',
     styleUrls: ['./close-dialog.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class CloseDialogComponent extends XcDialogComponent<CloseDialogResult, CloseDialogData> {
 

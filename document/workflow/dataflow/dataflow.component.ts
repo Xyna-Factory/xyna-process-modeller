@@ -30,6 +30,7 @@ import { SelectionService } from '../../selection.service';
 import { BranchSelectionService } from '../distinction/branch/branch-selection.service';
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
 import { SelectableModellingObjectComponent } from '../shared/selectable-modelling-object.component';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 class Flow {
@@ -291,7 +292,7 @@ interface ConnectionObject {
     selector: 'dataflow',
     templateUrl: './dataflow.component.html',
     styleUrls: ['./dataflow.component.scss'],
-    standalone: false
+    imports: [XcModule]
 })
 export class DataflowComponent implements AfterViewInit, OnDestroy {
 

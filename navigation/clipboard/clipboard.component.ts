@@ -29,6 +29,9 @@ import { XoError } from '../../xo/error.model';
 import { XoGetClipboardResponse } from '../../xo/get-clipboard-response.model';
 import { XoContainerArea } from '../../xo/modelling-item.model';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
+import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../zeta/xc/xc.module';
+import { ClipboardAreaComponent } from './clipboard-area.component';
 
 
 @Component({
@@ -36,7 +39,7 @@ import { CommonNavigationComponent } from '../common-navigation-class/common-nav
     templateUrl: './clipboard.component.html',
     styleUrls: ['./clipboard.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [I18nModule, XcModule, ClipboardAreaComponent]
 })
 export class ClipboardComponent extends CommonNavigationComponent {
 

@@ -16,6 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Injectable } from '@angular/core';
+
 import { environment } from '@environments/environment';
 import { XoGuiDefiningWorkflow } from '@yggdrasil/plugin/gui-defining-workflow.model';
 import { ApiService, StartOrderOptionsBuilder, Xo, XoManagedFileID, XoXPRCRuntimeContext, XoXPRCRuntimeContextFromRuntimeContext } from '@zeta/api';
@@ -25,7 +26,8 @@ import { XcDialogDefinitionComponent } from '@zeta/xc/xc-form/definitions/xc-dia
 import { XoDefinition, XoDefinitionBundle, XoDefinitionObserver } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 import { XoStartOrderButtonDefinition } from '@zeta/xc/xc-form/definitions/xo/item-definition.model';
 import { XoPluginPath, XoPluginPathArray } from '@zeta/xc/xc-form/definitions/xo/plugin-path.model';
-import { Observable, filter, map, of, switchMap, tap, throwError } from 'rxjs';
+
+import { filter, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
 
 
 /**
@@ -33,7 +35,9 @@ import { Observable, filter, map, of, switchMap, tap, throwError } from 'rxjs';
  * - call workflows to define Plugin UI
  * - caches results from workflows
  */
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class PluginService implements XoDefinitionObserver {
 
     constructor(private readonly apiService: ApiService, private readonly dialogs: XcDialogService) { }

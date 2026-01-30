@@ -24,13 +24,16 @@ import { XoChangeRemoteDestinationRequest } from '../../../xo/change-remote-dest
 import { XoRemoteDestinationArea } from '../../../xo/remote-destination-area.model';
 import { DocumentService } from '../../document.service';
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { VariableAreaComponent } from '../variable-area/variable-area.component';
 
 
 @Component({
     selector: 'remote-destination-area',
     templateUrl: './remote-destination-area.component.html',
     styleUrls: ['./remote-destination-area.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule, VariableAreaComponent]
 })
 export class RemoteDestinationAreaComponent extends ModellingObjectComponent {
 
