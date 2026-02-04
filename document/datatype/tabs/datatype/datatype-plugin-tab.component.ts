@@ -25,7 +25,6 @@ import { XcComponentTemplate } from '@zeta/xc/xc-template/xc-template';
 
 import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { DatatypeTabComponent, PluginTabData } from '../datatype-tab.component';
-import { XcModule } from '../../../../../../zeta/xc/xc.module';
 
 
 @Component({
