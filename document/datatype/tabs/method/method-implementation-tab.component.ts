@@ -31,9 +31,6 @@ import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
 import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { MethodImplementationComponent } from '../../method-implementation/method-implementation.component';
 import { DatatypeMethodTabComponent } from '../datatype-tab.component';
-import { XcModule } from '../../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
-import { MethodImplementationComponent } from '../../method-implementation/method-implementation.component';
 
 
 @Component({
