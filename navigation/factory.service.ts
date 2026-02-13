@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { ApiService, RuntimeContext } from '@zeta/api';
 import { XcAutocompleteDataWrapper, XcOptionItem } from '@zeta/xc';
@@ -25,8 +25,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { XmomService } from '../api/xmom.service';
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class FactoryService {
+    private readonly apiService = inject(ApiService);
+    private readonly xmomService = inject(XmomService);
+
 
     /**
      * Runtime Context used by Factory Navigation and Search
@@ -41,7 +46,7 @@ export class FactoryService {
     private readonly _runtimeContextDataWrapper: XcAutocompleteDataWrapper;
 
 
-    constructor(private readonly apiService: ApiService, private readonly xmomService: XmomService) {
+    constructor() {
         this._runtimeContextDataWrapper = new XcAutocompleteDataWrapper(
             () => this.runtimeContextSubject.value,
             value => {

@@ -15,26 +15,35 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, Optional, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, ViewChild } from '@angular/core';
+
 import { DataTypeService } from '@pmod/document/datatype.service';
-import { DocumentService } from '@pmod/document/document.service';
+import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
+import { XoChangeMemberVariableFqnRequest } from '@pmod/xo/change-member-variable-fqn-request.model';
+import { XoChangeMemberVariablePrimitiveTypeRequest } from '@pmod/xo/change-member-variable-primitive-type-request.model';
+import { XoChangeTextRequest } from '@pmod/xo/change-text-request.model';
 import { FullQualifiedName } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItemString, XcOptionItemStringOrUndefined, XcOptionItemTranslate } from '@zeta/xc';
-import { XoChangeMemberVariablePrimitiveTypeRequest } from '@pmod/xo/change-member-variable-primitive-type-request.model';
-import { XoChangeMemberVariableFqnRequest } from '@pmod/xo/change-member-variable-fqn-request.model';
+
 import { filter } from 'rxjs';
-import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
-import { XoChangeTextRequest } from '@pmod/xo/change-text-request.model';
+
+import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../../../zeta/xc/xc.module';
+import { TypeDocumentationAreaComponent } from '../../type-documentation-area/type-documentation-area.component';
 import { DatatypeVariableTabComponent } from '../datatype-tab.component';
+
 
 @Component({
     templateUrl: './member-variable-base-tab.component.html',
     styleUrls: ['./member-variable-base-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [XcModule, I18nModule, TypeDocumentationAreaComponent]
 })
 export class MemberVariableBaseTabComponent extends DatatypeVariableTabComponent {
+    private readonly dataTypeService = inject(DataTypeService);
+    private readonly i18n = inject(I18nService);
+
 
     private static readonly PRIMITIVE_TYPES = [
         FullQualifiedName.String.name,
@@ -50,14 +59,8 @@ export class MemberVariableBaseTabComponent extends DatatypeVariableTabComponent
 
     readonly dataTypeDataWrapper: XcAutocompleteDataWrapper<string>;
 
-    constructor(
-        documentService: DocumentService,
-        private readonly dataTypeService: DataTypeService,
-        private readonly i18n: I18nService,
-        cdr: ChangeDetectorRef,
-        @Optional() injector: Injector
-    ) {
-        super(documentService, cdr, injector);
+    constructor() {
+        super();
 
         this.dataTypeDataWrapper = new XcAutocompleteDataWrapper(
             ()    => this.memberVariable.primitiveType || this.memberVariable.$fqn,

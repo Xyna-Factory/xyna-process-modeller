@@ -15,13 +15,15 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, inject } from '@angular/core';
 
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent } from '@zeta/xc';
 
 import { closeDialog_translations_de_DE } from './locale/close-dialog-translations.de-DE';
 import { closeDialog_translations_en_US } from './locale/close-dialog-translations.en-US';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 export interface CloseDialogData {
@@ -40,11 +42,14 @@ export interface CloseDialogResult {
 @Component({
     templateUrl: './close-dialog.component.html',
     styleUrls: ['./close-dialog.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class CloseDialogComponent extends XcDialogComponent<CloseDialogResult, CloseDialogData> {
 
-    constructor(injector: Injector, i18nService: I18nService) {
+    constructor() {
+        const injector = inject(Injector);
+        const i18nService = inject(I18nService);
+
         super(injector);
 
         i18nService.setTranslations(LocaleService.DE_DE, closeDialog_translations_de_DE);

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService } from '@zeta/xc';
@@ -29,6 +29,9 @@ import { XoError } from '../../xo/error.model';
 import { XoGetClipboardResponse } from '../../xo/get-clipboard-response.model';
 import { XoContainerArea } from '../../xo/modelling-item.model';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
+import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../zeta/xc/xc.module';
+import { ClipboardAreaComponent } from './clipboard-area.component';
 
 
 @Component({
@@ -36,19 +39,20 @@ import { CommonNavigationComponent } from '../common-navigation-class/common-nav
     templateUrl: './clipboard.component.html',
     styleUrls: ['./clipboard.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [I18nModule, XcModule, ClipboardAreaComponent]
 })
 export class ClipboardComponent extends CommonNavigationComponent {
+    private readonly i18n = inject(I18nService);
+    private readonly dialogService = inject(XcDialogService);
+    private readonly documentService = inject(DocumentService);
+
 
     readonly clipboardArea = new XoContainerArea();
 
 
-    constructor(
-        cdr: ChangeDetectorRef,
-        private readonly i18n: I18nService,
-        private readonly dialogService: XcDialogService,
-        private readonly documentService: DocumentService
-    ) {
+    constructor() {
+        const cdr = inject(ChangeDetectorRef);
+
         super(cdr);
         this.documentService.xmomService.clipboardChange.subscribe(() => this.refreshClipboard());
         this.documentService.xmomService.invalidateClipboard();

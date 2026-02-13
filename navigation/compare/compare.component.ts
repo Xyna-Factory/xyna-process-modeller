@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 
 import { XmomState } from '@pmod/api/xmom.service';
 import { DocumentService } from '@pmod/document/document.service';
@@ -31,6 +31,13 @@ import { XcDialogService } from '@zeta/xc';
 import { catchError, of } from 'rxjs';
 
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
+import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../zeta/xc/xc.module';
+import { DataflowComponent } from '../../document/workflow/dataflow/dataflow.component';
+import { VariableAreaDocumentComponent } from '../../document/workflow/variable-area/variable-area-document.component';
+import { TypeLabelAreaComponent } from '../../document/workflow/type-label-area/type-label-area.component';
+import { WorkflowComponent } from '../../document/workflow/workflow/workflow.component';
+import { ExceptionHandlingAreaComponent } from '../../document/workflow/exception/exception-handling-area/exception-handling-area.component';
 
 
 @Component({
@@ -38,19 +45,21 @@ import { CommonNavigationComponent } from '../common-navigation-class/common-nav
     templateUrl: './compare.component.html',
     styleUrls: ['./compare.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [I18nModule, XcModule, DataflowComponent, VariableAreaDocumentComponent, TypeLabelAreaComponent, WorkflowComponent, ExceptionHandlingAreaComponent]
 })
 export class CompareComponent extends CommonNavigationComponent {
+    protected documentService = inject(DocumentService);
+    protected dialogs = inject(XcDialogService);
+    protected i18n = inject(I18nService);
+
 
     workflow: XoWorkflow;
     dataflow: XoConnectionArray;
     document: DocumentModel<XoWorkflow>;
 
-    constructor(cdr: ChangeDetectorRef,
-        protected documentService: DocumentService,
-        protected dialogs: XcDialogService,
-        protected i18n: I18nService
-    ) {
+    constructor() {
+        const cdr = inject(ChangeDetectorRef);
+
         super(cdr);
     }
 

@@ -18,14 +18,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { XmomPath } from '../../api/xmom.service';
-import { XMOMTreeItemState } from './xmom-tree-item.component';
+import { XMOMTreeItemState, XMOMTreeItemComponent } from './xmom-tree-item.component';
 
 
 @Component({
     selector: 'xfm-mod-nav-xmomtree',
     templateUrl: './xmom-tree.component.html',
     styleUrls: ['./xmom-tree.component.scss'],
-    standalone: false
+    imports: [XMOMTreeItemComponent]
 })
 export class XMOMTreeComponent {
 

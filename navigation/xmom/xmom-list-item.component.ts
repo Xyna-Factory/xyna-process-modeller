@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output, inject } from '@angular/core';
 
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
 import { FullQualifiedName } from '@zeta/api';
@@ -36,15 +36,21 @@ import { XoStaticMethodInvocation } from '../../xo/static-method-invocation.mode
 import { XoWorkflowInvocation } from '../../xo/workflow-invocation.model';
 import { XoWorkflow } from '../../xo/workflow.model';
 import { XoXmomItem } from '../../xo/xmom-item.model';
+import { XcModule } from '../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../zeta/i18n/i18n.module';
 
 
 @Component({
     selector: 'xfm-mod-nav-xmomlistitem',
     templateUrl: './xmom-list-item.component.html',
     styleUrls: ['./xmom-list-item.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class XMOMListItemComponent {
+    private readonly i18n = inject(I18nService);
+    private readonly dialogService = inject(XcDialogService);
+    private readonly documentService = inject(DocumentService);
+
 
     private _xmomItem: XoXmomItem | XoFactoryItem;
     private _xmomIconName: string;
@@ -60,11 +66,7 @@ export class XMOMListItemComponent {
     readonly menuClosed = new EventEmitter<XoXmomItem>();
 
 
-    constructor(
-        private readonly i18n: I18nService,
-        private readonly dialogService: XcDialogService,
-        private readonly documentService: DocumentService
-    ) {
+    constructor() {
         this.writableMenuItems = [
             <XcMenuItem>{
                 name: 'Open',

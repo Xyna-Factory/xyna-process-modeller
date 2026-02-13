@@ -15,16 +15,16 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, inject } from '@angular/core';
 
 import { OutsideListenerService } from '@zeta/base';
 
 
-@Directive({
-    selector: '[pmod-outside-listener]',
-    standalone: false
-})
+@Directive({ selector: '[pmod-outside-listener]' })
 export class PmodOutsideListenerDirective implements OnInit, OnDestroy {
+    private readonly element = inject(ElementRef);
+    private readonly outsideListenerService = inject(OutsideListenerService);
+
 
     private _handlerNum: number;
 
@@ -33,8 +33,6 @@ export class PmodOutsideListenerDirective implements OnInit, OnDestroy {
 
     @Input('pmod-outside-event')
     outsideEvent: string;
-
-    constructor(private readonly element: ElementRef, private readonly outsideListenerService: OutsideListenerService) {}
 
     ngOnInit() {
         if (this.element && this.element.nativeElement) {

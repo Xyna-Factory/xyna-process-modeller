@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild, inject } from '@angular/core';
 
 import { MessageBusService } from '@yggdrasil/events';
 
@@ -28,6 +28,10 @@ import { CommonNavigationComponent } from '../common-navigation-class/common-nav
 import { FactoryService } from '../factory.service';
 import { XMOMListComponent } from '../xmom/xmom-list.component';
 import { XMOMTreeItemState } from './xmom-tree-item.component';
+import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../zeta/xc/xc.module';
+import { PmodOutsideListenerDirective } from '../../misc/directives/pmod-outside-listener.directives';
+import { XMOMTreeComponent } from './xmom-tree.component';
 
 
 @Component({
@@ -35,9 +39,13 @@ import { XMOMTreeItemState } from './xmom-tree-item.component';
     templateUrl: './factory.component.html',
     styleUrls: ['./factory.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [I18nModule, XcModule, PmodOutsideListenerDirective, XMOMTreeComponent, XMOMListComponent]
 })
 export class FactoryComponent extends CommonNavigationComponent implements AfterViewInit {
+    readonly factoryService = inject(FactoryService);
+    readonly documentService = inject(DocumentService);
+    private readonly messageBus = inject(MessageBusService);
+
 
     private static readonly DepartmentLabels = {
         xmcp: 'Multi-Channel Portal',
@@ -72,12 +80,9 @@ export class FactoryComponent extends CommonNavigationComponent implements After
     expandedXmomPaths = new Array<XmomPath>();
 
 
-    constructor(
-        cdr: ChangeDetectorRef,
-        readonly factoryService: FactoryService,
-        readonly documentService: DocumentService,
-        private readonly messageBus: MessageBusService
-    ) {
+    constructor() {
+        const cdr = inject(ChangeDetectorRef);
+
         super(cdr);
     }
 

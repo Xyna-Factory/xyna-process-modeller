@@ -23,8 +23,7 @@ import { XoMethod } from '@pmod/xo/method.model';
 @Component({
     selector: 'coding',
     templateUrl: './coding.component.html',
-    styleUrls: ['./coding.component.scss'],
-    standalone: false
+    styleUrls: ['./coding.component.scss']
 })
 export class CodingComponent implements AfterViewInit, OnDestroy {
 

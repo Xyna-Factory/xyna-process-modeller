@@ -15,12 +15,13 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostBinding, Injector } from '@angular/core';
+import { Component, HostBinding, Injector, inject } from '@angular/core';
 
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcRichListItemComponent } from '@zeta/xc';
 
 import { Subject } from 'rxjs';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 export interface LibItemData {
     libraryName: string;
@@ -33,15 +34,19 @@ export interface LibItemData {
 @Component({
     templateUrl: './lib-item.component.html',
     styleUrls: ['./lib-item.component.scss'],
-    standalone: false
+    imports: [XcModule]
 })
 export class LibItemComponent extends XcRichListItemComponent<void, LibItemData> {
+    private readonly dialogService = inject(XcDialogService);
+
 
     get name(): string {
         return this.injectedData.libraryName;
     }
 
-    constructor(injector: Injector, private readonly dialogService: XcDialogService) {
+    constructor() {
+        const injector = inject(Injector);
+
         super(injector);
     }
 

@@ -30,13 +30,19 @@ import { XoRequest } from '../../../xo/request.model';
 import { XoTextArea } from '../../../xo/text-area.model';
 import { XoVariable } from '../../../xo/variable.model';
 import { ModellingItemComponent } from '../shared/modelling-object.component';
+import { VariableAreaServiceComponent } from '../variable-area/variable-area-service.component';
+import { LabelAreaComponent } from '../label-area/label-area.component';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { DocumentationAreaComponent } from '../documentation-area/documentation-area.component';
+import { FormulaAreaComponent } from '../formula-area/formula-area.component';
+import { VisualMappingComponent } from '../visual-mapping/visual-mapping.component';
 
 
 @Component({
     selector: 'mapping',
     templateUrl: './mapping.component.html',
     styleUrls: ['./mapping.component.scss'],
-    standalone: false
+    imports: [VariableAreaServiceComponent, LabelAreaComponent, XcModule, DocumentationAreaComponent, FormulaAreaComponent, VisualMappingComponent]
 })
 export class MappingComponent extends ModellingItemComponent implements OnDestroy {
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, ViewChild, inject } from '@angular/core';
 
 import { MessageBusService } from '@yggdrasil/events';
 import { AuthService } from '@zeta/auth';
@@ -27,6 +27,8 @@ import { debounceTime, filter } from 'rxjs/operators';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 import { FactoryService } from '../factory.service';
 import { XMOMListComponent } from '../xmom/xmom-list.component';
+import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../zeta/xc/xc.module';
 
 
 interface FilterData {
@@ -49,9 +51,13 @@ export interface FilterConditionData {
     templateUrl: './search.component.html',
     styleUrls: ['./search.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [I18nModule, XcModule, XMOMListComponent]
 })
 export class SearchComponent extends CommonNavigationComponent {
+    readonly messageBus = inject(MessageBusService);
+    readonly factoryService = inject(FactoryService);
+    private readonly zone = inject(NgZone);
+
 
     querySubject = new Subject<string>();
     debounce = false;
@@ -95,14 +101,14 @@ export class SearchComponent extends CommonNavigationComponent {
 
     filterConditions: FilterConditionData;
 
-    constructor(
-        readonly messageBus: MessageBusService,
-        readonly factoryService: FactoryService,
-        private readonly zone: NgZone,
-        cdr: ChangeDetectorRef,
-        auth: AuthService
-    ) {
+    constructor() {
+        const cdr = inject(ChangeDetectorRef);
+        const auth = inject(AuthService);
+
         super(cdr);
+        const messageBus = this.messageBus;
+        const factoryService = this.factoryService;
+
         this.querySubject.pipe(debounceTime(500)).subscribe(query => {
             this.debounce = false;
             this.xmomList.find(query, this.filterConditions.maxCount, this.filterConditions);

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Directive, ElementRef, EventEmitter, HostListener, Input, NgZone, OnDestroy, OnInit, Output } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, HostListener, Input, NgZone, OnDestroy, OnInit, Output, inject } from '@angular/core';
 
 import { coerceBoolean } from '@zeta/base';
 import { I18nService } from '@zeta/i18n';
@@ -51,11 +51,14 @@ export interface ModDropEvent<T = Draggable> extends ModDragEvent {
 }
 
 
-@Directive({
-    selector: '[mod-drop-area]',
-    standalone: false
-})
+@Directive({ selector: '[mod-drop-area]' })
 export class ModDropAreaDirective implements OnInit, OnDestroy {
+    readonly elementRef = inject(ElementRef);
+    private readonly dndService = inject(ModDragAndDropService);
+    private readonly dialogService = inject(XcDialogService);
+    private readonly i18n = inject(I18nService);
+    private readonly zone = inject(NgZone);
+
 
     @Input('mod-drop-area')
     items: { id: string }[];
@@ -116,13 +119,9 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
     private readonly subscriptions = new Array<Subscription>();
 
 
-    constructor(
-        readonly elementRef: ElementRef,
-        private readonly dndService: ModDragAndDropService,
-        private readonly dialogService: XcDialogService,
-        private readonly i18n: I18nService,
-        private readonly zone: NgZone
-    ) {
+    constructor() {
+        const zone = this.zone;
+
         this.subscriptions.push(
             this.dndService.currentAreaChange.pipe(filter(area => area === this.areaElement)).subscribe(area => {
                 zone.runOutsideAngular(() => area.addEventListener('dragover', this.dragOverHandler, false));

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, inject, Injector, OnDestroy, OnInit, Optional } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Injector, OnDestroy, OnInit } from '@angular/core';
 
 import { RuntimeContext } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
@@ -36,8 +36,7 @@ import { SelectableModellingObjectComponent } from './workflow/shared/selectable
 
 
 @Component({
-    template: '',
-    standalone: false
+    template: ''
 })
 export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponent<R, D> implements OnInit, OnDestroy {
 
@@ -59,7 +58,9 @@ export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponen
     insideForeignRtc = false;
 
 
-    constructor(@Optional() injector: Injector) {
+    constructor() {
+        const injector = inject(Injector, { optional: true });
+
         super(injector);
 
         const foreignRtcObserver: Observer<RuntimeContext> = {

@@ -15,24 +15,33 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, Input } from '@angular/core';
+import { Component, forwardRef, inject, Input } from '@angular/core';
 
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcIdentityDataWrapper, XcMenuItem, XcStringIntegerDataWrapper } from '@zeta/xc';
 
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeQueryConfigurationRequest } from '../../../xo/change-query-configuration-request.model';
 import { XoQuery } from '../../../xo/query.model';
 import { XoTextArea } from '../../../xo/text-area.model';
+import { DocumentationAreaComponent } from '../documentation-area/documentation-area.component';
+import { ExceptionHandlingAreaComponent } from '../exception/exception-handling-area/exception-handling-area.component';
+import { FilterCriterionAreaComponent } from '../formula-area/filter-criterion-area.component';
+import { SelectionMaskCriterionAreaComponent } from '../formula-area/selection-mask-criterion-area.component';
+import { SortingCriterionAreaComponent } from '../formula-area/sorting-criterion-area.component';
 import { InvocationComponent } from '../invocation/invocation.component';
+import { LabelAreaComponent } from '../label-area/label-area.component';
+import { VariableAreaServiceComponent } from '../variable-area/variable-area-service.component';
 
 
 @Component({
     selector: 'query',
     templateUrl: './query.component.html',
     styleUrls: ['./query.component.scss'],
-    standalone: false
+    imports: [LabelAreaComponent, XcModule, DocumentationAreaComponent, FilterCriterionAreaComponent, SelectionMaskCriterionAreaComponent, SortingCriterionAreaComponent, I18nModule, forwardRef(() => ExceptionHandlingAreaComponent), VariableAreaServiceComponent]
 })
 export class QueryComponent extends InvocationComponent {
 

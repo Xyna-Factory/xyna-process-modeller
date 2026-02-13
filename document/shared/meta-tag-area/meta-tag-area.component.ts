@@ -25,13 +25,18 @@ import { XoInsertModellingObjectRequest } from '@pmod/xo/insert-modelling-object
 import { XoMetaTagArea } from '@pmod/xo/meta-tag-area.model';
 import { XoMetaTag } from '@pmod/xo/meta-tag.model';
 import { XoMoveModellingObjectRequest } from '@pmod/xo/move-modelling-object-request.model';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { ModDropAreaDirective } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
+import { MetaTagComponent } from '../meta-tag/meta-tag.component';
+import { ModDraggableDirective } from '../../workflow/shared/drag-and-drop/mod-draggable.directive';
 
 
 @Component({
     selector: 'meta-tag-area',
     templateUrl: './meta-tag-area.component.html',
     styleUrl: './meta-tag-area.component.scss',
-    standalone: false
+    imports: [XcModule, I18nModule, ModDropAreaDirective, MetaTagComponent, ModDraggableDirective]
 })
 export class MetaTagAreaComponent extends ModellingObjectComponent {
 

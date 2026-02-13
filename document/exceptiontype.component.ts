@@ -15,17 +15,26 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 
+import { I18nModule } from '../../../zeta/i18n/i18n.module';
 import { ModellingActionType } from '../api/xmom.service';
 import { XoExceptionType } from '../xo/exception-type.model';
 import { XoInsertModellingObjectRequest } from '../xo/insert-modelling-object-request.model';
 import { XoMemberVariable } from '../xo/member-variable.model';
+import { ExceptionMessagesAreaComponent } from './datatype/exception-messages-area/exception-messages-area.component';
+import { ExceptionTypeDetailsComponent } from './datatype/exceptiontype-details/exceptiontype-details.component';
+import { MemberVariableAreaComponent } from './datatype/member-variable-area/member-variable-area.component';
+import { MemberVariableDetailsComponent } from './datatype/member-variable-details/member-variable-details.component';
+import { TypeInfoAreaComponent } from './datatype/type-info-area/type-info-area.component';
 import { ExceptionTypeDocumentModel } from './model/exception-type-document.model';
 import { SelectionService } from './selection.service';
+import { DetailsItemComponent } from './shared/details-item/details-item.component';
+import { MemberAreaComponent } from './shared/member-area/member-area.component';
 import { TypeDocumentComponent } from './type-document.component';
+import { DropIndicatorComponent } from './workflow/drop-indicator/drop-indicator.component';
 
 
 @Component({
@@ -33,7 +42,7 @@ import { TypeDocumentComponent } from './type-document.component';
     styleUrls: ['./exceptiontype.component.scss'],
     // single service instances per document
     providers: [SelectionService],
-    standalone: false
+    imports: [I18nModule, TypeInfoAreaComponent, ExceptionMessagesAreaComponent, DetailsItemComponent, MemberAreaComponent, MemberVariableAreaComponent, ExceptionTypeDetailsComponent, MemberVariableDetailsComponent, DropIndicatorComponent]
 })
 export class ExceptionTypeComponent extends TypeDocumentComponent<ExceptionTypeDocumentModel> {
 
@@ -45,8 +54,8 @@ export class ExceptionTypeComponent extends TypeDocumentComponent<ExceptionTypeD
         return this.document.item;
     }
 
-    constructor(injector: Injector) {
-        super(injector);
+    constructor() {
+        super();
 
         this.detailsItem = new XoDetailsItem();
         this.detailsItem.name = 'Exception Type Details';

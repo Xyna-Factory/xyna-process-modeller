@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -15,7 +16,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, Injector, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Injector, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 
 import { ApiService, FullQualifiedName, RuntimeContextSelectionSettings } from '@zeta/api';
 import { KeyboardEventType, KeyDistributionService, OutsideListenerService } from '@zeta/base';
@@ -27,6 +28,8 @@ import { XcDialogService, XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 import { Subject, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
+import { I18nModule } from '../../zeta/i18n/i18n.module';
+import { XcModule } from '../../zeta/xc/xc.module';
 import { XmomObjectType } from './api/xmom-types';
 import { DataTypeComponent } from './document/datatype.component';
 import { DocumentService } from './document/document.service';
@@ -42,6 +45,7 @@ import { PMOD_DE } from './locale/pmod.DE';
 import { PMOD_EN } from './locale/pmod.EN';
 import './monaco-environment';
 import { ShowXmlModalComponent, ShowXmlModalData } from './navigation/details/show-xml-modal/show-xml-modal.component';
+import { NavigationComponent } from './navigation/navigation.component';
 import { ErrorService } from './navigation/shared/error.service';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { XoRuntimeContext } from './xo/runtime-context.model';
@@ -51,10 +55,20 @@ import { XoWorkflow } from './xo/workflow.model';
 @Component({
     templateUrl: './processmodeller.component.html',
     styleUrls: ['./processmodeller.component.scss'],
-    providers: [I18nService],
-    standalone: false
+    imports: [ToolbarComponent, I18nModule, XcModule, NavigationComponent, NgClass]
 })
 export class ProcessmodellerComponent extends RouteComponent implements OnInit, OnDestroy {
+    documentService = inject(DocumentService);
+    private readonly cdr = inject(ChangeDetectorRef);
+    private readonly apiService = inject(ApiService);
+    private readonly dialogService = inject(XcDialogService);
+    readonly injector = inject(Injector);
+    private readonly i18nService = inject(I18nService);
+    private readonly queryParamService = inject(QueryParameterService);
+    private readonly outsideListenerService = inject(OutsideListenerService);
+    private readonly keyService = inject(KeyDistributionService);
+    private readonly errorService = inject(ErrorService);
+
 
     private runtimeContextChangeSubscription: Subscription;
 
@@ -88,18 +102,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
     }
 
 
-    constructor(
-        public documentService: DocumentService,
-        private readonly cdr: ChangeDetectorRef,
-        private readonly apiService: ApiService,
-        private readonly dialogService: XcDialogService,
-        readonly injector: Injector,
-        private readonly i18nService: I18nService,
-        private readonly queryParamService: QueryParameterService,
-        private readonly outsideListenerService: OutsideListenerService,
-        private readonly keyService: KeyDistributionService,
-        private readonly errorService: ErrorService
-    ) {
+    constructor() {
         super();
 
         this.i18nService.contextDismantlingSearch = true;

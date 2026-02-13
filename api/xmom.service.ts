@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { TriggeredAction } from '@pmod/document/workflow/shared/modelling-object.component';
 import { FilterConditionData } from '@pmod/navigation/search/search.component';
@@ -130,8 +130,12 @@ interface FactoryItem {
 
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class XmomService {
+    private readonly http = inject(HttpClient);
+
 
     private readonly _clipboardSubject = new Subject<void>();
 
@@ -139,10 +143,6 @@ export class XmomService {
     private readonly _remoteDestinationsSubject = new BehaviorSubject<XoRemoteDestinationArray>(null);
 
     private readonly pendingXmomUrls = new Set<string>();
-
-
-    constructor(private readonly http: HttpClient) {
-    }
 
 
     private readonly beforeActionTriggeredSubject = new Subject<ModellingAction>();

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, inject } from '@angular/core';
 
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent } from '@zeta/xc';
@@ -23,6 +23,9 @@ import { XcDialogComponent } from '@zeta/xc';
 import { XoRepairEntry, XoRepairEntryArray } from '../../../xo/repair-entry.model';
 import { repairDialog_translations_de_DE } from './locale/repair-dialog-translations.de-DE';
 import { repairDialog_translations_en_US } from './locale/repair-dialog-translations.en-US';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { RepairEntryComponent } from './repair-entry/repair-entry.component';
 
 
 export interface RepairDialogData {
@@ -35,15 +38,19 @@ export interface RepairDialogData {
 @Component({
     templateUrl: './repair-dialog.component.html',
     styleUrls: ['./repair-dialog.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule, RepairEntryComponent]
 })
 export class RepairDialogComponent extends XcDialogComponent<boolean, RepairDialogData> {
+    private readonly i18n = inject(I18nService);
+
 
     get entries(): XoRepairEntry[] {
         return this.injectedData.repairEntries ? this.injectedData.repairEntries.data : [];
     }
 
-    constructor(injector: Injector, private readonly i18n: I18nService) {
+    constructor() {
+        const injector = inject(Injector);
+
         super(injector);
 
         this.i18n.setTranslations(LocaleService.DE_DE, repairDialog_translations_de_DE);

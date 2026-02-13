@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Directive, ElementRef, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Directive, ElementRef, Input, NgZone, OnDestroy, OnInit, inject } from '@angular/core';
 
 import { coerceBoolean } from '@zeta/base';
 
@@ -34,11 +34,11 @@ While the target element is focused, selecting text with the mouse is possible.
 
 On blur it reestablishes the former state.
  */
-@Directive({
-    selector: '[mod-dnd-contenteditable]',
-    standalone: false
-})
+@Directive({ selector: '[mod-dnd-contenteditable]' })
 export class ModDnDContentEditableDirective implements OnInit, OnDestroy {
+    private readonly elementRef = inject(ElementRef);
+    private readonly ngZone = inject(NgZone);
+
 
     private readonly draggableElementsSet = new Set<HTMLElement>();
     private _contentEditable = false;
@@ -53,9 +53,6 @@ export class ModDnDContentEditableDirective implements OnInit, OnDestroy {
 
     get contentEditable(): boolean {
         return this._contentEditable;
-    }
-
-    constructor(private readonly elementRef: ElementRef, private readonly ngZone: NgZone) {
     }
 
 

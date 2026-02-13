@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, inject } from '@angular/core';
 
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcMenuItem } from '@zeta/xc';
@@ -39,6 +39,9 @@ import { XoRetry } from '../xo/retry.model';
 import { XoTemplate } from '../xo/template.model';
 import { XoTypeChoice } from '../xo/type-choice.model';
 import { XoWorkflowInvocation } from '../xo/workflow-invocation.model';
+import { XcModule } from '../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../zeta/i18n/i18n.module';
+import { ModDraggableDirective } from '../document/workflow/shared/drag-and-drop/mod-draggable.directive';
 
 
 export interface ToolbarButtonDescription {
@@ -68,9 +71,15 @@ export type ToolbarItem = ToolbarButtonDescription | ToolbarButtonDescriptionGro
     templateUrl: './toolbar.component.html',
     styleUrls: ['./toolbar.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [XcModule, I18nModule, ModDraggableDirective]
 })
 export class ToolbarComponent implements AfterViewInit, OnDestroy {
+    readonly documentService = inject(DocumentService);
+    private readonly dialogService = inject(XcDialogService);
+    private readonly selectionService = inject(SelectionService);
+    private readonly cdr = inject(ChangeDetectorRef);
+    protected readonly i18n = inject(I18nService);
+
 
     private static readonly BUTTON_NAME_NEW = 'new';
     private static readonly BUTTON_NAME_SAVE = 'save';
@@ -358,16 +367,6 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
 
     private cdrSubscription: Subscription;
     private lockedSubscription: Subscription;
-
-
-    constructor(
-        readonly documentService: DocumentService,
-        private readonly dialogService: XcDialogService,
-        private readonly selectionService: SelectionService,
-        private readonly cdr: ChangeDetectorRef,
-        protected readonly i18n: I18nService
-    ) {
-    }
 
 
     ngAfterViewInit() {

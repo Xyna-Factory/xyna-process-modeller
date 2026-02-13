@@ -29,6 +29,7 @@ import { DocumentTabData, MetaTabData, MethodTabData } from '../tabs/datatype-ta
 import { MethodBaseTabComponent } from '../tabs/method/method-base-tab.component';
 import { MethodImplementationTabComponent } from '../tabs/method/method-implementation-tab.component';
 import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 @Component({
@@ -36,7 +37,7 @@ import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
     templateUrl: './method-details.component.html',
     styleUrls: ['./method-details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [XcModule]
 })
 export class MethodDetailsComponent extends ModellingItemComponent implements OnDestroy {
 

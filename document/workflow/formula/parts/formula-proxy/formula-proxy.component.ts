@@ -15,12 +15,13 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
 import { XoFormula } from '@pmod/xo/formula.model';
 import { FormulaFunctionGroup, FormulaPartFunction } from '@pmod/xo/util/formula-parts/formula-part-function';
 
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent } from '@zeta/xc';
 import { FormulaChildComponent } from '../formula-part.component';
+import { XcModule } from '../../../../../../../zeta/xc/xc.module';
 
 
 
@@ -28,9 +29,11 @@ import { FormulaChildComponent } from '../formula-part.component';
     selector: 'formula-proxy',
     templateUrl: './formula-proxy.component.html',
     styleUrls: ['./formula-proxy.component.scss'],
-    standalone: false
+    imports: [XcModule]
 })
 export class FormulaProxyComponent implements AfterViewInit, FormulaChildComponent {
+    readonly elementRef = inject(ElementRef);
+
 
     @ViewChild(XcFormAutocompleteComponent, {static: false})
     private readonly _proxyInput: XcFormAutocompleteComponent;
@@ -52,7 +55,9 @@ export class FormulaProxyComponent implements AfterViewInit, FormulaChildCompone
     );
 
 
-    constructor(readonly elementRef: ElementRef) {
+    constructor() {
+        const elementRef = this.elementRef;
+
         elementRef.nativeElement.addEventListener('keydown', (event: KeyboardEvent) => {
             if (event.key === 'Enter') {
                 event.stopPropagation();
