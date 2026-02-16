@@ -15,15 +15,15 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent } from '@zeta/xc';
 
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { conflictDialog_translations_de_DE } from './locale/conflict-dialog-translations.de-DE';
 import { conflictDialog_translations_en_US } from './locale/conflict-dialog-translations.en-US';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 export interface ConflictHandling {
@@ -46,18 +46,16 @@ export interface ConflictDialogData {
     imports: [XcModule, I18nModule]
 })
 export class ConflictDialogComponent extends XcDialogComponent<string, ConflictDialogData> {
+    readonly i18nService = inject(I18nService);
 
     key: string;
 
 
     constructor() {
-        const injector = inject(Injector);
-        const i18nService = inject(I18nService);
+        super();
 
-        super(injector);
-
-        i18nService.setTranslations(LocaleService.DE_DE, conflictDialog_translations_de_DE);
-        i18nService.setTranslations(LocaleService.EN_US, conflictDialog_translations_en_US);
+        this.i18nService.setTranslations(LocaleService.DE_DE, conflictDialog_translations_de_DE);
+        this.i18nService.setTranslations(LocaleService.EN_US, conflictDialog_translations_en_US);
     }
 
 

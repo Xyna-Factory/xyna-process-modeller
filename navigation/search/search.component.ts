@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, NgZone, ViewChild } from '@angular/core';
 
 import { MessageBusService } from '@yggdrasil/events';
 import { AuthService } from '@zeta/auth';
@@ -24,11 +24,11 @@ import { XcFormInputComponent } from '@zeta/xc';
 import { Subject } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 
+import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../zeta/xc/xc.module';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 import { FactoryService } from '../factory.service';
 import { XMOMListComponent } from '../xmom/xmom-list.component';
-import { I18nModule } from '../../../../zeta/i18n/i18n.module';
-import { XcModule } from '../../../../zeta/xc/xc.module';
 
 
 interface FilterData {
@@ -57,7 +57,7 @@ export class SearchComponent extends CommonNavigationComponent {
     readonly messageBus = inject(MessageBusService);
     readonly factoryService = inject(FactoryService);
     private readonly zone = inject(NgZone);
-
+    private readonly auth = inject(AuthService);
 
     querySubject = new Subject<string>();
     debounce = false;
@@ -103,23 +103,20 @@ export class SearchComponent extends CommonNavigationComponent {
 
     constructor() {
         const cdr = inject(ChangeDetectorRef);
-        const auth = inject(AuthService);
 
         super(cdr);
-        const messageBus = this.messageBus;
-        const factoryService = this.factoryService;
 
         this.querySubject.pipe(debounceTime(500)).subscribe(query => {
             this.debounce = false;
             this.xmomList.find(query, this.filterConditions.maxCount, this.filterConditions);
         });
 
-        messageBus.xmomChange.pipe(
-            filter(changes => changes.creators.has(auth.username)),
+        this.messageBus.xmomChange.pipe(
+            filter(changes => changes.creators.has(this.auth.username)),
             debounceTime(500)
         ).subscribe(() => this.search());
 
-        factoryService.runtimeContextChange.pipe(
+        this.factoryService.runtimeContextChange.pipe(
             filter(rtc => !!rtc),
             debounceTime(500)
         ).subscribe(() => {

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Directive, ElementRef, Input, NgZone, OnDestroy, OnInit, inject } from '@angular/core';
+import { Directive, ElementRef, inject, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
 
 import { coerceBoolean } from '@zeta/base';
 
@@ -36,7 +36,7 @@ On blur it reestablishes the former state.
  */
 @Directive({ selector: '[mod-dnd-contenteditable]' })
 export class ModDnDContentEditableDirective implements OnInit, OnDestroy {
-    private readonly elementRef = inject(ElementRef);
+    private readonly elementRef = inject(ElementRef<HTMLElement>);
     private readonly ngZone = inject(NgZone);
 
 

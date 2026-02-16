@@ -15,13 +15,13 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, HostBinding, Injector, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, ElementRef, HostBinding, inject, Injector, OnDestroy, OnInit } from '@angular/core';
 
 import { OutsideListenerService } from '@zeta/base';
 import { XcRichListItemComponent } from '@zeta/xc';
 
-import { XoExceptionMessage } from '../../../xo/exception-message.model';
 import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { XoExceptionMessage } from '../../../xo/exception-message.model';
 
 
 export interface ExceptionMessageRichListItemData {
@@ -38,7 +38,7 @@ export interface ExceptionMessageRichListItemData {
     imports: [XcModule]
 })
 export class ExceptionMessageRichListItemComponent extends XcRichListItemComponent<void, ExceptionMessageRichListItemData> implements OnInit, OnDestroy {
-    private readonly elementRef = inject(ElementRef);
+    private readonly elementRef = inject(ElementRef<HTMLElement>);
     private readonly outsideListenerService = inject(OutsideListenerService);
 
 

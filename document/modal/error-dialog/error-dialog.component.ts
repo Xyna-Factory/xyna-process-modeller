@@ -15,15 +15,15 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent } from '@zeta/xc';
 
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { errorDialog_translations_de_DE } from './locale/error-dialog-translations.de-DE';
 import { errorDialog_translations_en_US } from './locale/error-dialog-translations.en-US';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 export interface ErrorDialogData {
@@ -47,9 +47,7 @@ export class ErrorDialogComponent extends XcDialogComponent<void, ErrorDialogDat
 
 
     constructor() {
-        const injector = inject(Injector);
-
-        super(injector);
+        super();
 
         this.i18n.setTranslations(LocaleService.DE_DE, errorDialog_translations_de_DE);
         this.i18n.setTranslations(LocaleService.EN_US, errorDialog_translations_en_US);

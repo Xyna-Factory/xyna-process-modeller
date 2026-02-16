@@ -15,20 +15,20 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { ApiService, RuntimeContext } from '@zeta/api';
 import { downloadFile } from '@zeta/base';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcDialogComponent } from '@zeta/xc';
 
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { DocumentService } from '../../../document/document.service';
 import { FactoryService } from '../../factory.service';
 import { WorkflowConstantBuilder } from '../workflow-constant-builder.class';
 import { workflowConstantBuilderModal_translations_de_DE } from './locale/workflow-constant-builder-modal-translations.de-DE';
 import { workflowConstantBuilderModal_translations_en_US } from './locale/workflow-constant-builder-modal-translations.en-US';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 @Component({
@@ -40,6 +40,7 @@ export class WorkflowConstantBuilderModalComponent extends XcDialogComponent<voi
     private readonly documentService = inject(DocumentService);
     private readonly apiService = inject(ApiService);
     private readonly i18n = inject(I18nService);
+    private readonly factoryService = inject(FactoryService);
 
 
     rtcDataWrapper: XcAutocompleteDataWrapper;
@@ -50,10 +51,7 @@ export class WorkflowConstantBuilderModalComponent extends XcDialogComponent<voi
     building = false;
 
     constructor() {
-        const injector = inject(Injector, { optional: true });
-        const factoryService = inject(FactoryService);
-
-        super(injector);
+        super();
 
         this.i18n.setTranslations(LocaleService.DE_DE, workflowConstantBuilderModal_translations_de_DE);
         this.i18n.setTranslations(LocaleService.EN_US, workflowConstantBuilderModal_translations_en_US);
@@ -61,7 +59,7 @@ export class WorkflowConstantBuilderModalComponent extends XcDialogComponent<voi
         this.rtcDataWrapper = new XcAutocompleteDataWrapper(
             () => this.rtc,
             val => this.rtc = val,
-            factoryService.runtimeContextDataWrapper.values
+            this.factoryService.runtimeContextDataWrapper.values
         );
     }
 

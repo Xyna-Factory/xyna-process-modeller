@@ -15,18 +15,18 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent } from '@zeta/xc';
 
+import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { XoDataType } from '../../../../xo/data-type.model';
 import { DataTypeConvertable, DataTypeConverterService, DataTypeProperty } from './data-type-converter.service';
+import { LeftRightComponent } from './left-right-component/left-right.component';
 import { showGui_translations_de_DE } from './locale/show-gui-translations.de-DE';
 import { showGui_translations_en_US } from './locale/show-gui-translations.en-US';
-import { XcModule } from '../../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
-import { LeftRightComponent } from './left-right-component/left-right.component';
 
 
 export interface ShowGuiModelModalComponentData {
@@ -57,9 +57,7 @@ export class ShowGuiModelModalComponent extends XcDialogComponent<void, ShowGuiM
     }
 
     constructor() {
-        const injector = inject(Injector);
-
-        super(injector);
+        super();
 
         this.i18n.setTranslations(LocaleService.DE_DE, showGui_translations_de_DE);
         this.i18n.setTranslations(LocaleService.EN_US, showGui_translations_en_US);
