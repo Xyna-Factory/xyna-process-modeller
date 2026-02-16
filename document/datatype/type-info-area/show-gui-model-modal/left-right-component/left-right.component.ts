@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -15,8 +16,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild, inject } from '@angular/core';
-import { NgClass } from '@angular/common';
+import { Component, ElementRef, EventEmitter, HostListener, inject, Input, OnInit, Output, ViewChild } from '@angular/core';
 
 
 /** @deprecated */
@@ -27,9 +27,6 @@ import { NgClass } from '@angular/common';
     imports: [NgClass]
 })
 export class LeftRightComponent implements OnInit {
-    private readonly elementRef = inject(ElementRef);
-
-
     private static _num = 0;
     leftId: string;
     rightId: string;

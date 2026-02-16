@@ -15,15 +15,15 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent } from '@zeta/xc';
 
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { showXMLModal_translations_de_DE } from './locale/show-xml-modal-translations.de-DE';
 import { showXMLModal_translations_en_US } from './locale/show-xml-modal-translations.en-US';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 export interface ShowXmlModalData {
@@ -59,9 +59,7 @@ export class ShowXmlModalComponent extends XcDialogComponent<void, ShowXmlModalD
 
 
     constructor() {
-        const injector = inject(Injector);
-
-        super(injector);
+        super();
 
         this.i18n.setTranslations(LocaleService.DE_DE, showXMLModal_translations_de_DE);
         this.i18n.setTranslations(LocaleService.EN_US, showXMLModal_translations_en_US);
