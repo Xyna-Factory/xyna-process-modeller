@@ -88,4 +88,12 @@ export class TemplateRow extends XoItem {
     toString(): string {
         return this.templateParts.filter(part => !!part.getText()).map(part => part.getText()).join(' ') || '';
     }
+
+    private static _idcounter: number = 0;
+    private static get idcounter(): number {
+        TemplateRow._idcounter = TemplateRow._idcounter + 1;
+        return TemplateRow._idcounter;
+    }
+
+    readonly rowid: number = TemplateRow.idcounter;
 }
