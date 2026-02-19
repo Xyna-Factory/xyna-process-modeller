@@ -110,6 +110,12 @@
         }
     }
 }
+// hide connection lines in Conditional Branching, because there is no sequell execution.
+::ng-deep conditional-branching > content-area > .drop-area > service-step {
+        &::before {
+            display: none;
+        }
+}
 
 
 // focus / selection
