@@ -15,16 +15,16 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent } from '@zeta/xc';
 
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { XoRepairEntry, XoRepairEntryArray } from '../../../xo/repair-entry.model';
 import { repairDialog_translations_de_DE } from './locale/repair-dialog-translations.de-DE';
 import { repairDialog_translations_en_US } from './locale/repair-dialog-translations.en-US';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 import { RepairEntryComponent } from './repair-entry/repair-entry.component';
 
 
@@ -49,9 +49,7 @@ export class RepairDialogComponent extends XcDialogComponent<boolean, RepairDial
     }
 
     constructor() {
-        const injector = inject(Injector);
-
-        super(injector);
+        super();
 
         this.i18n.setTranslations(LocaleService.DE_DE, repairDialog_translations_de_DE);
         this.i18n.setTranslations(LocaleService.EN_US, repairDialog_translations_en_US);

@@ -15,16 +15,16 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { WorkflowDetailSettingsService } from '@pmod/workflow-detail-settings.service';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent, XDSIconName } from '@zeta/xc';
 
+import { I18nModule } from '../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../zeta/xc/xc.module';
 import { modellerSettingsDialog_translations_de_DE } from './locale/modeller-settings-dialog-translations.de-DE';
 import { modellerSettingsDialog_translations_en_US } from './locale/modeller-settings-dialog-translations.en-US';
-import { XcModule } from '../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../zeta/i18n/i18n.module';
 
 
 @Component({
@@ -38,9 +38,7 @@ export class ModellerSettingsDialogComponent extends XcDialogComponent<void, voi
 
 
     constructor() {
-        const injector = inject(Injector, { optional: true });
-
-        super(injector);
+        super();
 
         this.i18n.setTranslations(LocaleService.DE_DE, modellerSettingsDialog_translations_de_DE);
         this.i18n.setTranslations(LocaleService.EN_US, modellerSettingsDialog_translations_en_US);

@@ -31,7 +31,7 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
     @ViewChild('pythonEditorContainer', { static: false }) pythonEditorContainer!: ElementRef;
 
     private readonly cdr = inject(ChangeDetectorRef);
-    private readonly elementRef = inject(ElementRef);
+    private readonly elementRef = inject(ElementRef<HTMLElement>);
 
     private resizeObserver: ResizeObserver;
 

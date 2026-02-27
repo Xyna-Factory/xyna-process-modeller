@@ -15,17 +15,17 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostListener, Injector, ViewChild, inject } from '@angular/core';
+import { Component, HostListener, inject, ViewChild } from '@angular/core';
 
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcDialogComponent, XcFormDirective, XcOptionItem, XcOptionItemString } from '@zeta/xc';
 
 import { Observable } from 'rxjs';
 
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { labelPathDialog_translations_de_DE } from './locale/label-path-dialog-translations.de-DE';
 import { labelPathDialog_translations_en_US } from './locale/label-path-dialog-translations.en-US';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 export interface LabelPathDialogResult {
@@ -86,9 +86,7 @@ export class LabelPathDialogComponent extends XcDialogComponent<LabelPathDialogR
 
 
     constructor() {
-        const injector = inject(Injector, { optional: true });
-
-        super(injector);
+        super();
 
         this.i18n.setTranslations(LocaleService.DE_DE, labelPathDialog_translations_de_DE);
         this.i18n.setTranslations(LocaleService.EN_US, labelPathDialog_translations_en_US);
