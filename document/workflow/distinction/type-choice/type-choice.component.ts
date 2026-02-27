@@ -15,11 +15,16 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component } from '@angular/core';
+import { Component, forwardRef } from '@angular/core';
 
+import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoRequest } from '../../../../xo/request.model';
 import { XoTypeChoice } from '../../../../xo/type-choice.model';
+import { ContentAreaComponent } from '../../content-area/content-area.component';
+import { FormulaInputAreaComponent } from '../../formula-input-area/formula-input-area.component';
+import { VariableAreaChoiceComponent } from '../../variable-area/variable-area-choice.component';
 import { ChoiceComponent } from '../choice.component';
 
 
@@ -27,7 +32,7 @@ import { ChoiceComponent } from '../choice.component';
     selector: 'type-choice',
     templateUrl: './type-choice.component.html',
     styleUrls: ['../choice.component.scss', './type-choice.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule, FormulaInputAreaComponent, forwardRef(() => ContentAreaComponent), VariableAreaChoiceComponent]
 })
 export class TypeChoiceComponent extends ChoiceComponent {
 

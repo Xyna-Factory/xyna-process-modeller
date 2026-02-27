@@ -20,13 +20,17 @@ import { Component, Input } from '@angular/core';
 import { XoTextArea } from '../../../../xo/text-area.model';
 import { XoThrow } from '../../../../xo/throw.model';
 import { ModellingItemComponent } from '../../shared/modelling-object.component';
+import { VariableAreaServiceComponent } from '../../variable-area/variable-area-service.component';
+import { LabelAreaComponent } from '../../label-area/label-area.component';
+import { XcModule } from '../../../../../../zeta/xc/xc.module';
+import { DocumentationAreaComponent } from '../../documentation-area/documentation-area.component';
 
 
 @Component({
     selector: 'throw',
     templateUrl: './throw.component.html',
     styleUrls: ['./throw.component.scss'],
-    standalone: false
+    imports: [VariableAreaServiceComponent, LabelAreaComponent, XcModule, DocumentationAreaComponent]
 })
 export class ThrowComponent extends ModellingItemComponent {
 

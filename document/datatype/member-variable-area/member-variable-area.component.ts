@@ -26,15 +26,18 @@ import { XoInsertModellingObjectRequest } from '../../../xo/insert-modelling-obj
 import { XoMemberVariableArea } from '../../../xo/member-variable-area.model';
 import { XoMoveModellingObjectRequest } from '../../../xo/move-modelling-object-request.model';
 import { DragType } from '../../workflow/shared/drag-and-drop/mod-drag-and-drop.service';
-import { ModDropEvent } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
+import { ModDropEvent, ModDropAreaDirective } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
+import { ModDraggableDirective } from '../../workflow/shared/drag-and-drop/mod-draggable.directive';
+import { MemberVariableComponent } from '../member-variable/member-variable.component';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 @Component({
     selector: 'member-variable-area',
     templateUrl: './member-variable-area.component.html',
     styleUrls: ['./member-variable-area.component.scss'],
-    standalone: false
+    imports: [ModDropAreaDirective, ModDraggableDirective, MemberVariableComponent, XcModule]
 })
 export class MemberVariableAreaComponent extends ModellingObjectComponent {
 

@@ -15,10 +15,9 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, Optional, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, ViewChild } from '@angular/core';
 
 import { DataTypeService } from '@pmod/document/datatype.service';
-import { DocumentService } from '@pmod/document/document.service';
 import { XoChangeMemberMethodImplementationTypeRequest } from '@pmod/xo/change-member-method-implementation-type-request.model';
 import { XoChangeMemberMethodReferenceRequest } from '@pmod/xo/change-member-method-reference-request.model';
 import { XoDynamicMethod } from '@pmod/xo/dynamic-method.model';
@@ -28,6 +27,9 @@ import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItem, X
 
 import { filter } from 'rxjs';
 
+import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../../../zeta/xc/xc.module';
+import { MethodImplementationComponent } from '../../method-implementation/method-implementation.component';
 import { DatatypeMethodTabComponent } from '../datatype-tab.component';
 
 
@@ -35,21 +37,18 @@ import { DatatypeMethodTabComponent } from '../datatype-tab.component';
     templateUrl: './method-implementation-tab.component.html',
     styleUrls: ['./method-implementation-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [XcModule, I18nModule, MethodImplementationComponent]
 })
 export class MethodImplementationTabComponent extends DatatypeMethodTabComponent {
+    private readonly dataTypeService = inject(DataTypeService);
+    private readonly i18n = inject(I18nService);
+
 
     readonly implementationTypeDataWrapper: XcAutocompleteDataWrapper;
     readonly referenceDataWrapper: XcAutocompleteDataWrapper;
 
-    constructor(
-        documentService: DocumentService,
-        private readonly dataTypeService: DataTypeService,
-        private readonly i18n: I18nService,
-        cdr: ChangeDetectorRef,
-        @Optional() injector: Injector
-    ) {
-        super(documentService, cdr, injector);
+    constructor() {
+        super();
 
         this.implementationTypeDataWrapper = new XcAutocompleteDataWrapper(
             ()    => this.method.implementationType,

@@ -24,13 +24,17 @@ import { XoItemBarArea } from '../../../../xo/item-bar-area.model';
 import { XoRequest } from '../../../../xo/request.model';
 import { XoVariable } from '../../../../xo/variable.model';
 import { ModellingObjectComponent } from '../../shared/modelling-object.component';
+import { NgFor } from '@angular/common';
+import { VariableComponent } from '../../variable/variable.component';
+import { XcModule } from '../../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
 
 
 @Component({
     selector: 'item-bar-area',
     templateUrl: './item-bar-area.component.html',
     styleUrls: ['./item-bar-area.component.scss'],
-    standalone: false
+    imports: [NgFor, VariableComponent, XcModule, I18nModule]
 })
 export class ItemBarAreaComponent extends ModellingObjectComponent {
 

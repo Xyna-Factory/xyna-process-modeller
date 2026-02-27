@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 
 import { XoModellingItem } from '@pmod/xo/modelling-item.model';
 import { FQNRTC, MessageBusService, XMOMLocated, XoDocumentChange, XoDocumentLock, XoDocumentUnlock } from '@yggdrasil/events';
@@ -76,6 +76,14 @@ export interface CloseResult {
 
 @Injectable({ providedIn: 'root' })
 export class DocumentService implements OnDestroy {
+    private readonly i18n = inject(I18nService);
+    private readonly apiService = inject(ApiService);
+    private readonly dialogService = inject(XcDialogService);
+    private readonly statusBarService = inject(XcStatusBarService);
+    private readonly factoryService = inject(FactoryService);
+    readonly xmomService = inject(XmomService);
+    readonly messageBus = inject(MessageBusService);
+
 
     private _ignoreProgrammaticScroll = false;
 
@@ -101,16 +109,10 @@ export class DocumentService implements OnDestroy {
     private readonly subscriptions: Subscription[] = [];
 
 
-    constructor(
-        authService: AuthService,
-        private readonly i18n: I18nService,
-        private readonly apiService: ApiService,
-        private readonly dialogService: XcDialogService,
-        private readonly statusBarService: XcStatusBarService,
-        private readonly factoryService: FactoryService,
-        readonly xmomService: XmomService,
-        readonly messageBus: MessageBusService
-    ) {
+    constructor() {
+        const authService = inject(AuthService);
+        const messageBus = this.messageBus;
+
         this.i18n.setTranslations(LocaleService.DE_DE, PMOD_DE);
         this.i18n.setTranslations(LocaleService.EN_US, PMOD_EN);
 

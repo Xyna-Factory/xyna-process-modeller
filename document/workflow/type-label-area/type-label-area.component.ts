@@ -21,13 +21,15 @@ import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level
 
 import { XoTypeLabelArea } from '../../../xo/type-label-area.model';
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
+import { LabelAreaComponent } from '../label-area/label-area.component';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 @Component({
     selector: 'type-label-area',
     templateUrl: './type-label-area.component.html',
     styleUrls: ['./type-label-area.component.scss'],
-    standalone: false
+    imports: [LabelAreaComponent, XcModule]
 })
 export class TypeLabelAreaComponent extends ModellingObjectComponent {
 

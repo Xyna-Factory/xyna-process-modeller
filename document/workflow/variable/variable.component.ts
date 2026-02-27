@@ -43,15 +43,17 @@ import { DocumentService } from '../../document.service';
 import { CONSTANT_DIALOG_DELETE_TOKEN, ConstantDialogComponent, ConstantDialogData } from '../../modal/constant-dialog/constant-dialog.component';
 import { SelectionService } from '../../selection.service';
 import { BranchSelectionService } from '../distinction/branch/branch-selection.service';
-import { ModDropEvent } from '../shared/drag-and-drop/mod-drop-area.directive';
+import { ModDropEvent, ModDropAreaDirective } from '../shared/drag-and-drop/mod-drop-area.directive';
 import { SelectableModellingObjectComponent } from '../shared/selectable-modelling-object.component';
+import { ModContentEditableDirective } from '../shared/mod-content-editable.directive';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 @Component({
     selector: 'variable',
     templateUrl: './variable.component.html',
     styleUrls: ['./variable.component.scss'],
-    standalone: false
+    imports: [ModDropAreaDirective, ModContentEditableDirective, XcModule]
 })
 export class VariableComponent extends SelectableModellingObjectComponent {
 

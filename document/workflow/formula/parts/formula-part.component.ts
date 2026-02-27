@@ -25,10 +25,7 @@ export interface FormulaChildComponent {
 }
 
 
-@Component({
-    template: '',
-    standalone: false
-})
+@Component({ template: '' })
 export class FormulaPartComponent {
 
     private _formulaPart: FormulaPart;

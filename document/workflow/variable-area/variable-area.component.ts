@@ -23,15 +23,18 @@ import { XoModellingItem } from '../../../xo/modelling-item.model';
 import { XoMoveModellingObjectRequest } from '../../../xo/move-modelling-object-request.model';
 import { XoVariableArea } from '../../../xo/variable-area.model';
 import { DragType, ModDnDEvent } from '../shared/drag-and-drop/mod-drag-and-drop.service';
-import { ModDragEvent, ModDropEvent } from '../shared/drag-and-drop/mod-drop-area.directive';
+import { ModDragEvent, ModDropEvent, ModDropAreaDirective } from '../shared/drag-and-drop/mod-drop-area.directive';
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
+import { NgFor } from '@angular/common';
+import { VariableComponent } from '../variable/variable.component';
+import { ModDraggableDirective } from '../shared/drag-and-drop/mod-draggable.directive';
 
 
 @Component({
     selector: 'variable-area',
     templateUrl: './variable-area.component.html',
     styleUrls: ['./variable-area.component.scss'],
-    standalone: false
+    imports: [ModDropAreaDirective, NgFor, VariableComponent, ModDraggableDirective]
 })
 export class VariableAreaComponent extends ModellingObjectComponent {
     private _kind: 'input-area' | 'output-area' | 'throws-area';

@@ -15,16 +15,15 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Directive, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, HostListener, Input, Output, inject } from '@angular/core';
 
 import { coerceBoolean } from '@zeta/base';
 
 
-@Directive({
-    selector: '[mod-content-editable]',
-    standalone: false
-})
+@Directive({ selector: '[mod-content-editable]' })
 export class ModContentEditableDirective {
+    private readonly elementRef = inject(ElementRef);
+
 
     private _enabled = true;
     private _finishOnEnter = true;
@@ -37,10 +36,6 @@ export class ModContentEditableDirective {
 
     @Output('mod-content-editable-after-edit')
     readonly afterEdit = new EventEmitter<string>();
-
-
-    constructor(private readonly elementRef: ElementRef) {
-    }
 
 
     @Input('mod-content-editable')

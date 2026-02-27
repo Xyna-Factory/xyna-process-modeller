@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
- 
+
 import { Injectable } from '@angular/core';
 
 import { FullQualifiedName } from '@zeta/api';
@@ -31,7 +31,7 @@ const ZETA_DEFAULT_DESTINATION = '@zeta/api';
 const ZETA_BASE_STORABLES = ['Storable', 'BaseStorable'];
 
 const ZETA_DEFAULT_CONSTRUCTOR =
-`constructor(_ident: string) {
+    `constructor(_ident: string) {
     super(_ident);
 }`;
 
@@ -458,7 +458,7 @@ export class DataTypeConvertable implements StringifyClass {
                 } break;
                 case TemplateTokenType.arrayClassBegin: {
                     const openArrayClass =
-                    'export class ' + this.zetaName + 'Array extends XoArray<' + this.zetaName + '> {';
+                        'export class ' + this.zetaName + 'Array extends XoArray<' + this.zetaName + '> {';
                     templateBuilder.insert(token, openArrayClass);
                 } break;
                 case TemplateTokenType.arrayClassEnd: {
@@ -536,7 +536,7 @@ export class PropertyConversionOptions {
     }
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class DataTypeConverterService {
 
     private readonly _domParser = new DOMParser();
@@ -707,7 +707,7 @@ export class DataTypeConverterService {
 class TemplateToken {
     replaced = false;
     replaceString: string;
-    constructor(public type: string, public args: string[]) {}
+    constructor(public type: string, public args: string[]) { }
 }
 
 /**
@@ -793,7 +793,7 @@ enum TemplateTokenType {
 // #OBJECT_PROPERTIES%identString%seperationString#
 
 const defaultDataTypeTemplate =
-`#${TemplateTokenType.imports}#
+    `#${TemplateTokenType.imports}#
 
 #${TemplateTokenType.objectDocumentation}#
 #${TemplateTokenType.objectDecorators}#

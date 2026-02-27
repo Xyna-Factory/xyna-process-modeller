@@ -19,13 +19,15 @@ import { Component, Input, TemplateRef } from '@angular/core';
 
 import { XoLabelArea } from '../../../xo/label-area.model';
 import { TextAreaModellingObjectComponent } from '../shared/text-area-modelling-object.component';
+import { ModContentEditableDirective } from '../shared/mod-content-editable.directive';
+import { NgTemplateOutlet } from '@angular/common';
 
 
 @Component({
     selector: 'label-area',
     templateUrl: './label-area.component.html',
     styleUrls: ['./label-area.component.scss'],
-    standalone: false
+    imports: [ModContentEditableDirective, NgTemplateOutlet]
 })
 export class LabelAreaComponent extends TextAreaModellingObjectComponent {
 

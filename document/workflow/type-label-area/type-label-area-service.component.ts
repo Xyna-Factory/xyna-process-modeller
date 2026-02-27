@@ -18,13 +18,15 @@
 import { Component } from '@angular/core';
 
 import { TypeLabelAreaComponent } from './type-label-area.component';
+import { LabelAreaComponent } from '../label-area/label-area.component';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 @Component({
     selector: 'type-label-area-service',
     templateUrl: './type-label-area.component.html',
     styleUrls: ['./type-label-area.component.scss', './type-label-area-service.component.scss'],
-    standalone: false
+    imports: [LabelAreaComponent, XcModule]
 })
 export class TypeLabelAreaServiceComponent extends TypeLabelAreaComponent {
 }

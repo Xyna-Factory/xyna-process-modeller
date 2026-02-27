@@ -27,13 +27,15 @@ import { HttpMethod, ModellingActionType } from '../../../api/xmom.service';
 import { XoLibrariesArea } from '../../../xo/libraries-area.model';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { LibItemComponent, LibItemData } from './lib-item.component';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 @Component({
     selector: 'lib-area',
     templateUrl: './lib-area.component.html',
     styleUrls: ['./lib-area.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class LibAreaComponent extends ModellingObjectComponent {
 

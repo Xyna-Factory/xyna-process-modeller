@@ -28,15 +28,18 @@ import { XoModellingItem } from '../../../xo/modelling-item.model';
 import { XoMoveModellingObjectRequest } from '../../../xo/move-modelling-object-request.model';
 import { XoStaticMethod } from '../../../xo/static-method.model';
 import { ModRelativeHoverSide } from '../../workflow/shared/drag-and-drop/mod-drag-and-drop.service';
-import { ModDragEvent, ModDropEvent } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
+import { ModDragEvent, ModDropEvent, ModDropAreaDirective } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
+import { MemberServiceComponent } from '../member-service/member-service.component';
+import { ModDraggableDirective } from '../../workflow/shared/drag-and-drop/mod-draggable.directive';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 @Component({
     selector: 'service-area',
     templateUrl: './service-area.component.html',
     styleUrls: ['./service-area.component.scss'],
-    standalone: false
+    imports: [ModDropAreaDirective, MemberServiceComponent, ModDraggableDirective, XcModule]
 })
 export class ServiceAreaComponent extends ModellingObjectComponent {
 

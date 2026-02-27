@@ -26,10 +26,7 @@ import { ModellingObjectComponent } from './modelling-object.component';
 /**
  * Base class for all components, text-actions can be done on
  */
-@Component({
-    template: '',
-    standalone: false
-})
+@Component({ template: '' })
 export class TextAreaModellingObjectComponent extends ModellingObjectComponent {
 
     getTextArea(): XoTextArea {

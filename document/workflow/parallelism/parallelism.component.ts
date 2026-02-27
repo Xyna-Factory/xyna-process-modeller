@@ -15,9 +15,10 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { Component, forwardRef, Input } from '@angular/core';
 
 import { XoParallelism } from '../../../xo/parallelism.model';
+import { ContentAreaComponent } from '../content-area/content-area.component';
 import { ModellingItemComponent } from '../shared/modelling-object.component';
 
 
@@ -25,7 +26,7 @@ import { ModellingItemComponent } from '../shared/modelling-object.component';
     selector: 'parallelism',
     templateUrl: './parallelism.component.html',
     styleUrls: ['./parallelism.component.scss'],
-    standalone: false
+    imports: [forwardRef(() => ContentAreaComponent)]
 })
 export class ParallelismComponent extends ModellingItemComponent {
 

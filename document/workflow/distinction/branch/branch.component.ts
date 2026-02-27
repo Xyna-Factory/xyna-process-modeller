@@ -15,13 +15,16 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostBinding, inject, Input, OnDestroy } from '@angular/core';
+import { Component, forwardRef, HostBinding, inject, Input, OnDestroy } from '@angular/core';
 
 import { XoConditionalBranching } from '@pmod/xo/conditional-branching.model';
 import { coerceBoolean } from '@zeta/base';
 
+import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { XoBranch } from '../../../../xo/branch.model';
+import { ContentAreaComponent } from '../../content-area/content-area.component';
 import { SelectableModellingObjectComponent } from '../../shared/selectable-modelling-object.component';
+import { CaseAreaComponent } from '../case-area/case-area.component';
 import { BranchSelectionService } from './branch-selection.service';
 
 
@@ -29,7 +32,7 @@ import { BranchSelectionService } from './branch-selection.service';
     selector: 'branch',
     templateUrl: './branch.component.html',
     styleUrls: ['./branch.component.scss'],
-    standalone: false
+    imports: [XcModule, CaseAreaComponent, forwardRef(() => ContentAreaComponent)]
 })
 export class BranchComponent extends SelectableModellingObjectComponent implements OnDestroy {
 

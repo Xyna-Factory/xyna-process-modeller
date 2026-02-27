@@ -15,15 +15,17 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostBinding, Input } from '@angular/core';
+import { Component, forwardRef, HostBinding, Input } from '@angular/core';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoContentArea } from '../../../xo/content-area.model';
 import { XoInsertModellingObjectRequest } from '../../../xo/insert-modelling-object-request.model';
 import { XoModellingItem } from '../../../xo/modelling-item.model';
 import { XoMoveModellingObjectRequest } from '../../../xo/move-modelling-object-request.model';
+import { ServiceStepComponent } from '../service-step/service-step.component';
 import { DragType, ModRelativeHoverSide, ModRelativeHoverSideFlip } from '../shared/drag-and-drop/mod-drag-and-drop.service';
-import { ModDragEvent, ModDropEvent } from '../shared/drag-and-drop/mod-drop-area.directive';
+import { ModDraggableDirective } from '../shared/drag-and-drop/mod-draggable.directive';
+import { ModDragEvent, ModDropAreaDirective, ModDropEvent } from '../shared/drag-and-drop/mod-drop-area.directive';
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
 
 
@@ -31,7 +33,7 @@ import { ModellingObjectComponent } from '../shared/modelling-object.component';
     selector: 'content-area',
     templateUrl: './content-area.component.html',
     styleUrls: ['./content-area.component.scss'],
-    standalone: false
+    imports: [ModDropAreaDirective, forwardRef(() => ServiceStepComponent), ModDraggableDirective]
 })
 export class ContentAreaComponent extends ModellingObjectComponent {
     private _direction: 'row' | 'column' = 'column';

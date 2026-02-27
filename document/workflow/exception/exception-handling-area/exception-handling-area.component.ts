@@ -15,18 +15,22 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostBinding, inject, Input } from '@angular/core';
+import { Component, forwardRef, HostBinding, inject, Input } from '@angular/core';
 
+import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { XoExceptionHandlingArea } from '../../../../xo/exception-handling-area.model';
 import { WorkflowDetailLevelService } from '../../../workflow-detail-level.service';
 import { ModellingObjectComponent } from '../../shared/modelling-object.component';
+import { CompensationComponent } from '../compensation/compensation.component';
+import { ExceptionHandlingComponent } from '../exception-handling/exception-handling.component';
 
 
 @Component({
     selector: 'exception-handling-area',
     templateUrl: './exception-handling-area.component.html',
     styleUrls: ['./exception-handling-area.component.scss'],
-    standalone: false
+    imports: [forwardRef(() => ExceptionHandlingComponent), forwardRef(() => CompensationComponent), XcModule, I18nModule]
 })
 export class ExceptionHandlingAreaComponent extends ModellingObjectComponent {
 

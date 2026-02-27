@@ -15,12 +15,13 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, HostBinding, Injector, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostBinding, Injector, OnDestroy, OnInit, inject } from '@angular/core';
 
 import { OutsideListenerService } from '@zeta/base';
 import { XcRichListItemComponent } from '@zeta/xc';
 
 import { XoExceptionMessage } from '../../../xo/exception-message.model';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 export interface ExceptionMessageRichListItemData {
@@ -34,9 +35,12 @@ export interface ExceptionMessageRichListItemData {
 @Component({
     templateUrl: './exception-message-rich-list-item.component.html',
     styleUrls: ['./exception-message-rich-list-item.component.scss'],
-    standalone: false
+    imports: [XcModule]
 })
 export class ExceptionMessageRichListItemComponent extends XcRichListItemComponent<void, ExceptionMessageRichListItemData> implements OnInit, OnDestroy {
+    private readonly elementRef = inject(ElementRef);
+    private readonly outsideListenerService = inject(OutsideListenerService);
+
 
     private outsideClickHandlerNumber: number;
 
@@ -52,7 +56,9 @@ export class ExceptionMessageRichListItemComponent extends XcRichListItemCompone
         return this.injectedData.isReadonly();
     }
 
-    constructor(injector: Injector, private readonly elementRef: ElementRef, private readonly outsideListenerService: OutsideListenerService) {
+    constructor() {
+        const injector = inject(Injector);
+
         super(injector);
     }
 

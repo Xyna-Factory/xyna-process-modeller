@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { WorkflowDetailSettingsService } from '@pmod/workflow-detail-settings.service';
 
@@ -35,6 +35,8 @@ export enum MappingMode {
  */
 @Injectable({ providedIn: 'root' })
 export class WorkflowDetailLevelService {
+    private readonly workflowSettings = inject(WorkflowDetailSettingsService);
+
 
     /**
      * holds the collapsed state for each referable object by its ID
@@ -62,7 +64,9 @@ export class WorkflowDetailLevelService {
     private readonly _mappingModeChange = new Subject<string>();
 
 
-    constructor(private readonly workflowSettings: WorkflowDetailSettingsService) {
+    constructor() {
+        const workflowSettings = this.workflowSettings;
+
         this._showFQN = new BehaviorSubject<boolean>(workflowSettings.showFQN);
     }
 

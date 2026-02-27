@@ -15,13 +15,15 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, inject } from '@angular/core';
 
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent } from '@zeta/xc';
 
 import { showXMLModal_translations_de_DE } from './locale/show-xml-modal-translations.de-DE';
 import { showXMLModal_translations_en_US } from './locale/show-xml-modal-translations.en-US';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 export interface ShowXmlModalData {
@@ -37,9 +39,11 @@ type XMLState = 'current' | 'saved' | 'deployed';
 @Component({
     templateUrl: './show-xml-modal.component.html',
     styleUrls: ['./show-xml-modal.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class ShowXmlModalComponent extends XcDialogComponent<void, ShowXmlModalData> {
+    private readonly i18n = inject(I18nService);
+
 
     mode: XMLState = 'current';
 
@@ -54,7 +58,9 @@ export class ShowXmlModalComponent extends XcDialogComponent<void, ShowXmlModalD
     }
 
 
-    constructor(injector: Injector, private readonly i18n: I18nService) {
+    constructor() {
+        const injector = inject(Injector);
+
         super(injector);
 
         this.i18n.setTranslations(LocaleService.DE_DE, showXMLModal_translations_de_DE);

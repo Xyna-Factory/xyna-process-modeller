@@ -18,13 +18,14 @@
 import { Component, Input } from '@angular/core';
 
 import { XoRepairEntry } from '../../../../xo/repair-entry.model';
+import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
 
 
 @Component({
     selector: 'repair-entry',
     templateUrl: './repair-entry.component.html',
     styleUrls: ['./repair-entry.component.scss'],
-    standalone: false
+    imports: [I18nModule]
 })
 export class RepairEntryComponent {
 

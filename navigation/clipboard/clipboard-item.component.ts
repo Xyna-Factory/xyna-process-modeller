@@ -31,6 +31,7 @@ import { XoThrow } from '../../xo/throw.model';
 import { XoTypeChoice } from '../../xo/type-choice.model';
 import { XoVariable } from '../../xo/variable.model';
 import { XoXmomItem } from '../../xo/xmom-item.model';
+import { XcModule } from '../../../../zeta/xc/xc.module';
 
 
 @Component({
@@ -38,7 +39,7 @@ import { XoXmomItem } from '../../xo/xmom-item.model';
     templateUrl: './clipboard-item.component.html',
     styleUrls: ['./clipboard-item.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [XcModule]
 })
 export class ClipboardItemComponent {
 

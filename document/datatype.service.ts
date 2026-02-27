@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { ApiService, FullQualifiedName, RuntimeContext, XoDescriber, XoJson, XoStructureType } from '@zeta/api';
 
@@ -26,19 +26,17 @@ import { map, switchMap } from 'rxjs/operators';
 import { XoServiceReferenceCandidates } from '../xo/service-reference-candidates.model';
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class DataTypeService {
+    private readonly http = inject(HttpClient);
+    private readonly apiService = inject(ApiService);
+
 
     static ANYTYPE = 'base.AnyType';
     static STORABLE = 'xnwh.persistence.Storable';
     static CORE_EXCEPTION = 'core.exception.Exception';
-
-
-    constructor(
-        private readonly http: HttpClient,
-        private readonly apiService: ApiService
-    ) {
-    }
 
 
     private getSubtypes(fqn: FullQualifiedName, rtc: RuntimeContext, excludeFqns: string[]): Observable<XoStructureType[]> {

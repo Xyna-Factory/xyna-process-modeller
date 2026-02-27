@@ -15,7 +15,7 @@
 * limitations under the License.
 * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 */
-import { ChangeDetectorRef, Component, Injector, OnDestroy, Optional } from '@angular/core';
+import { ChangeDetectorRef, Component, Injector, OnDestroy, inject } from '@angular/core';
 
 import { ModellingActionType } from '@pmod/api/xmom.service';
 import { DocumentService } from '@pmod/document/document.service';
@@ -79,10 +79,12 @@ export interface MethodTabData {
  * Base class for tabs in Datatype view
  */
 @Component({
-    template: '',
-    standalone: false
+    template: ''
 })
 export abstract class DatatypeTabComponent<D, E extends DocumentTabData<D> = DocumentTabData<D>> extends XcTabComponent<void, E> implements OnDestroy {
+    protected readonly documentService = inject(DocumentService);
+    protected readonly cdr = inject(ChangeDetectorRef);
+
 
     private readonly destroySubject = new Subject<void>();
     protected tabData: D;
@@ -95,11 +97,9 @@ export abstract class DatatypeTabComponent<D, E extends DocumentTabData<D> = Doc
         return this.injectedData.documentModel;
     }
 
-    constructor(
-        protected readonly documentService: DocumentService,
-        protected readonly cdr: ChangeDetectorRef,
-        @Optional() injector: Injector
-    ) {
+    constructor() {
+        const injector = inject(Injector, { optional: true });
+
         super(injector);
 
         this.untilDestroyed(this.injectedData.update).subscribe(data => {
@@ -125,8 +125,7 @@ export abstract class DatatypeTabComponent<D, E extends DocumentTabData<D> = Doc
 }
 
 @Component({
-    template: '',
-    standalone: false
+    template: ''
 })
 export abstract class DatatypeDetailsTabComponent extends DatatypeTabComponent<XoDataType> {
 
@@ -138,8 +137,7 @@ export abstract class DatatypeDetailsTabComponent extends DatatypeTabComponent<X
 }
 
 @Component({
-    template: '',
-    standalone: false
+    template: ''
 })
 export abstract class DatatypeVariableTabComponent extends DatatypeTabComponent<VariableTabData> {
 
@@ -189,8 +187,7 @@ export abstract class DatatypeVariableTabComponent extends DatatypeTabComponent<
 }
 
 @Component({
-    template: '',
-    standalone: false
+    template: ''
 })
 export abstract class DatatypeMethodTabComponent extends DatatypeTabComponent<MethodTabData> {
 

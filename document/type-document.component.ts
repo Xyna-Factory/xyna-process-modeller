@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { XoArea } from '@pmod/xo/area.model';
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
@@ -29,10 +29,7 @@ import { DocumentComponent } from './document.component';
 import { DocumentModel } from './model/document.model';
 
 
-@Component({
-    template: '',
-    standalone: false
-})
+@Component({ template: '' })
 export class TypeDocumentComponent<D extends DocumentModel> extends DocumentComponent<void, D> {
 
     selectedVariable: XoMemberVariable;
@@ -45,8 +42,8 @@ export class TypeDocumentComponent<D extends DocumentModel> extends DocumentComp
 
     detailsItem: XoDetailsItem;
 
-    constructor(injector: Injector) {
-        super(injector);
+    constructor() {
+        super();
 
         // watch for selection changes
         this.untilDestroyed(this.selectionService.selectionChange).subscribe(selectable => {
