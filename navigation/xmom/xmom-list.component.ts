@@ -29,6 +29,7 @@ import { FilterConditionData } from '../search/search.component';
 import { XMOMListItemComponent } from './xmom-list-item.component';
 import { ModDraggableDirective } from '../../document/workflow/shared/drag-and-drop/mod-draggable.directive';
 import { XcModule } from '../../../../zeta/xc/xc.module';
+import { NgFor } from '@angular/common';
 
 
 @Component({
@@ -36,7 +37,7 @@ import { XcModule } from '../../../../zeta/xc/xc.module';
     templateUrl: './xmom-list.component.html',
     styleUrls: ['./xmom-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XMOMListItemComponent, ModDraggableDirective, XcModule]
+    imports: [NgFor, XMOMListItemComponent, ModDraggableDirective, XcModule]
 })
 export class XMOMListComponent {
     private readonly xmomService = inject(XmomService);

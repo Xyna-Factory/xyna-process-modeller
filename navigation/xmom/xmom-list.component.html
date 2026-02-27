@@ -1,7 +1,7 @@
 <div id="xmom-list"
   class="zeta-scrollbar">
-  @for (xmomItem of xmomItems; let i = $index; track i) {
     <xfm-mod-nav-xmomlistitem
+      *ngFor="let xmomItem of xmomItems"
       [mod-draggable]="xmomItem" mod-draggable-allowed-drag-type="insert"
       [xmom-item]="xmomItem"
       [show-fqn]="showFQN"
@@ -10,7 +10,6 @@
       (menuClosed)="openMenusSubject.next(openMenusSubject.value - 1)"
       >
     </xfm-mod-nav-xmomlistitem>
-  }
 </div>
 @if (pending) {
   <div class="overlay">
