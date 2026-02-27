@@ -15,19 +15,19 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, inject } from '@angular/core';
-
-import { DocumentService } from '../../document/document.service';
-import { of, Subscription } from 'rxjs';
-
-import { map } from 'rxjs/operators';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy } from '@angular/core';
 
 import { ErrorItem, XoIssueArray } from '@pmod/xo/issue.model';
-import { ErrorService } from '../shared/error.service';
-import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 import { XoWarningArray } from '@pmod/xo/warning.model';
+
+import { of, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { DocumentService } from '../../document/document.service';
+import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 import { ErrorItemComponent } from '../shared/error-item/error-item.component';
+import { ErrorService } from '../shared/error.service';
 
 
 @Component({
@@ -39,6 +39,7 @@ import { ErrorItemComponent } from '../shared/error-item/error-item.component';
 })
 export class ErrorsComponent extends CommonNavigationComponent implements OnDestroy {
     protected readonly errorService = inject(ErrorService);
+    protected readonly documentService = inject(DocumentService);
 
     issues: ErrorItem[] = [];
     warnings: ErrorItem[] = [];
@@ -52,11 +53,10 @@ export class ErrorsComponent extends CommonNavigationComponent implements OnDest
 
     constructor() {
         const cdr = inject(ChangeDetectorRef);
-        const documentService = inject(DocumentService);
 
         super(cdr);
 
-        this.documentChangeSubscription = documentService.selectionChange.subscribe(document => {
+        this.documentChangeSubscription = this.documentService.selectionChange.subscribe(document => {
             this.issuesChangeSubscription?.unsubscribe();
             this.warningsChangeSubscription?.unsubscribe();
             this.issuesChangeSubscription = (document?.issuesChange ?? of(new XoIssueArray())).pipe(

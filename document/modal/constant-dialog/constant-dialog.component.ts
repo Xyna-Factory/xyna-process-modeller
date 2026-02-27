@@ -15,17 +15,17 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { ApiService, FullQualifiedName, RuntimeContext, Xo, XoDescriber, XoStructureArray } from '@zeta/api';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent, XcStructureTreeDataSource } from '@zeta/xc';
 
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { XoVariable } from '../../../xo/variable.model';
 import { constantDialog_translations_de_DE } from './locale/constant-dialog-translations.de-DE';
 import { constantDialog_translations_en_US } from './locale/constant-dialog-translations.en-US';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 export interface ConstantDialogData {
@@ -46,6 +46,7 @@ export const CONSTANT_DIALOG_DELETE_TOKEN = Symbol();
 })
 export class ConstantDialogComponent extends XcDialogComponent<Xo | typeof CONSTANT_DIALOG_DELETE_TOKEN, ConstantDialogData> {
     private readonly i18n = inject(I18nService);
+    readonly apiService = inject(ApiService);
 
 
     dataSource: XcStructureTreeDataSource;
@@ -53,10 +54,7 @@ export class ConstantDialogComponent extends XcDialogComponent<Xo | typeof CONST
 
 
     constructor() {
-        const injector = inject(Injector, { optional: true });
-        const apiService = inject(ApiService);
-
-        super(injector);
+        super();
 
         this.i18n.setTranslations(LocaleService.DE_DE, constantDialog_translations_de_DE);
         this.i18n.setTranslations(LocaleService.EN_US, constantDialog_translations_en_US);
@@ -75,7 +73,7 @@ export class ConstantDialogComponent extends XcDialogComponent<Xo | typeof CONST
             rtc: constant?.rtc ?? rtc
         };
         // initialize tree data source
-        this.dataSource = new XcStructureTreeDataSource(apiService, undefined, rtc, [describer]);
+        this.dataSource = new XcStructureTreeDataSource(this.apiService, undefined, rtc, [describer]);
         this.dataSource.readonlyMode = this.injectedData.readonly;
         // set structure fallback to array, if list
         if (variable.isList) {
