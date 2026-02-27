@@ -1,13 +1,17 @@
-<!-- JAVA Editor -->
-<div
-    #javaEditorContainer
-    class="editor"
-    [class.editor-hide]="isPython">
-</div>
+<div class="coding-editor-container">
 
-<!-- PYTHON Editor -->
-<div
-    #pythonEditorContainer
-    class="editor"
-    [class.editor-hide]="!isPython">
+    <!-- Java -->
+    @if(!isPython) {
+    <ngx-monaco-editor [(ngModel)]="javaCode" [options]="javaOptions"
+        (onInit)="onJavaInit($event)">
+    </ngx-monaco-editor>
+    }
+
+    <!-- Python -->
+    @if(isPython) {
+    <ngx-monaco-editor [(ngModel)]="pythonCode" [options]="pythonOptions"
+        (onInit)="onPythonInit($event)">
+    </ngx-monaco-editor>
+    }
+
 </div>
