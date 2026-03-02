@@ -67,7 +67,7 @@ export class ModContentEditableDirective {
 
 
     @HostListener('mousedown', ['$event'])
-    private mousedown(event: MouseEvent) {
+    mousedown(event: MouseEvent) {
         if (this.enabled && this.triggerType === 'mousedown') {
             this.startEditing();
             event.stopPropagation();
@@ -76,7 +76,7 @@ export class ModContentEditableDirective {
 
 
     @HostListener('dblclick', ['$event'])
-    private dblclick(event: MouseEvent) {
+    dblclick(event: MouseEvent) {
         if (this.enabled && this.triggerType === 'dblclick') {
             this.startEditing();
             event.stopPropagation();
@@ -98,7 +98,7 @@ export class ModContentEditableDirective {
 
 
     @HostListener('blur', ['$event.currentTarget.innerText'])
-    private finishEditing(text: string) {
+    finishEditing(text: string) {
         if (this.enabled) {
             this.elementRef.nativeElement.contentEditable = false;
             this.afterEdit.emit(text);
@@ -107,7 +107,7 @@ export class ModContentEditableDirective {
 
 
     @HostListener('keydown.enter')
-    private enterKey() {
+    enterKey() {
         if (this.finishOnEnter) {
             this.elementRef.nativeElement.blur();
         }
@@ -115,7 +115,7 @@ export class ModContentEditableDirective {
 
 
     @HostListener('keydown', ['$event'])
-    private keydown(event: Event) {
+    keydown(event: Event) {
         if (this.elementRef.nativeElement.contentEditable) {
             event.stopPropagation();
         }
