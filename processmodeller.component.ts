@@ -43,7 +43,6 @@ import { ServiceGroupComponent } from './document/servicegroup.component';
 import { WorkflowDocumentComponent } from './document/workflow-document.component';
 import { PMOD_DE } from './locale/pmod.DE';
 import { PMOD_EN } from './locale/pmod.EN';
-import './monaco-environment';
 import { ShowXmlModalComponent, ShowXmlModalData } from './navigation/details/show-xml-modal/show-xml-modal.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { ErrorService } from './navigation/shared/error.service';
