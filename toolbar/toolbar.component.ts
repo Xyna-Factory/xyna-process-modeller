@@ -40,7 +40,7 @@ import { XoTemplate } from '../xo/template.model';
 import { XoTypeChoice } from '../xo/type-choice.model';
 import { XoWorkflowInvocation } from '../xo/workflow-invocation.model';
 import { XcModule } from '../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../zeta/i18n/i18n.module';
+import { XcI18nTranslateDirective } from '../../../zeta/i18n';
 import { ModDraggableDirective } from '../document/workflow/shared/drag-and-drop/mod-draggable.directive';
 
 
@@ -71,7 +71,7 @@ export type ToolbarItem = ToolbarButtonDescription | ToolbarButtonDescriptionGro
     templateUrl: './toolbar.component.html',
     styleUrls: ['./toolbar.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, I18nModule, ModDraggableDirective]
+    imports: [XcModule, XcI18nTranslateDirective, ModDraggableDirective]
 })
 export class ToolbarComponent implements AfterViewInit, OnDestroy {
     readonly documentService = inject(DocumentService);

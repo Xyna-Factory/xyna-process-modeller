@@ -18,10 +18,9 @@
 import { Component, inject } from '@angular/core';
 
 import { ApiService, FullQualifiedName, RuntimeContext, Xo, XoDescriber, XoStructureArray } from '@zeta/api';
-import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent, XcStructureTreeDataSource } from '@zeta/xc';
 
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { XoVariable } from '../../../xo/variable.model';
 import { constantDialog_translations_de_DE } from './locale/constant-dialog-translations.de-DE';
@@ -42,7 +41,7 @@ export const CONSTANT_DIALOG_DELETE_TOKEN = Symbol();
     selector: 'constant-dialog',
     templateUrl: './constant-dialog.component.html',
     styleUrls: ['./constant-dialog.component.scss'],
-    imports: [XcModule, I18nModule]
+    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class ConstantDialogComponent extends XcDialogComponent<Xo | typeof CONSTANT_DIALOG_DELETE_TOKEN, ConstantDialogData> {
     private readonly i18n = inject(I18nService);

@@ -26,14 +26,14 @@ import { XoInvocation } from '../../../xo/invocation.model';
 import { XoOrderInputSourceArea } from '../../../xo/order-input-source-area.model';
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
 import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 
 
 @Component({
     selector: 'order-input-source-area',
     templateUrl: './order-input-source-area.component.html',
     styleUrls: ['./order-input-source-area.component.scss'],
-    imports: [XcModule, I18nModule]
+    imports: [XcModule, XcI18nTranslateDirective]
 })
 export class OrderInputSourceAreaComponent extends ModellingObjectComponent implements OnInit {
 

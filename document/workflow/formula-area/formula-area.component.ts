@@ -25,7 +25,7 @@ import { XoInsertRequest } from '../../../xo/insert-request.model';
 import { XoRequest } from '../../../xo/request.model';
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
 import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { FormulaComponent } from '../formula/formula.component';
 
 
@@ -33,7 +33,7 @@ import { FormulaComponent } from '../formula/formula.component';
     selector: 'formula-area',
     templateUrl: './formula-area.component.html',
     styleUrls: ['./formula-area.component.scss'],
-    imports: [XcModule, I18nModule, FormulaComponent]
+    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective, FormulaComponent]
 })
 export class FormulaAreaComponent extends ModellingObjectComponent {
 

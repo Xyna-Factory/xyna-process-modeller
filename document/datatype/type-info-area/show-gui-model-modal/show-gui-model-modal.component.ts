@@ -17,10 +17,9 @@
  */
 import { Component, inject } from '@angular/core';
 
-import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent } from '@zeta/xc';
 
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { XoDataType } from '../../../../xo/data-type.model';
 import { DataTypeConvertable, DataTypeConverterService, DataTypeProperty } from './data-type-converter.service';
@@ -37,7 +36,7 @@ export interface ShowGuiModelModalComponentData {
 @Component({
     templateUrl: './show-gui-model-modal.component.html',
     styleUrls: ['./show-gui-model-modal.component.scss'],
-    imports: [XcModule, I18nModule, LeftRightComponent]
+    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective, LeftRightComponent]
 })
 export class ShowGuiModelModalComponent extends XcDialogComponent<void, ShowGuiModelModalComponentData> {
     private readonly dataTypeConverterService = inject(DataTypeConverterService);

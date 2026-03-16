@@ -26,7 +26,7 @@ import { DocumentService } from '../../document.service';
 import { SelectionService } from '../../selection.service';
 import { ModellingItemComponent } from '../shared/modelling-object.component';
 import { ContentAreaComponent } from '../content-area/content-area.component';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 
 
 @Component({
@@ -34,7 +34,7 @@ import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
     templateUrl: './workflow.component.html',
     styleUrls: ['./workflow.component.scss'],
     changeDetection: ChangeDetectionStrategy.Default,
-    imports: [ContentAreaComponent, I18nModule]
+    imports: [ContentAreaComponent, XcI18nTranslateDirective]
 })
 export class WorkflowComponent extends ModellingItemComponent implements AfterViewInit, OnDestroy {
 

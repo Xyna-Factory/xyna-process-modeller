@@ -21,7 +21,7 @@ import { XoGlobalStorablePropertyArea } from '@pmod/xo/global-storable-property-
 
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 
 
 @Component({
@@ -29,7 +29,7 @@ import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
     templateUrl: './global-storable-properties-area.component.html',
     styleUrls: ['./global-storable-properties-area.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, I18nModule]
+    imports: [XcModule, XcI18nTranslateDirective]
 })
 export class GlobalStorablePropertiesAreaComponent extends ModellingObjectComponent {
 

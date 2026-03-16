@@ -25,14 +25,14 @@ import { XoJavaSharedLibrariesArea } from '../../../xo/java-shared-libraries-are
 import { ModellingObjectComponent, TriggeredAction } from '../../workflow/shared/modelling-object.component';
 import { JavaSharedLibItemComponent, JavaSharedLibItemData } from './java-shared-lib-item.component';
 import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 
 
 @Component({
     selector: 'java-shared-lib-area',
     templateUrl: './java-shared-lib-area.component.html',
     styleUrls: ['./java-shared-lib-area.component.scss'],
-    imports: [XcModule, I18nModule]
+    imports: [XcModule, XcI18nTranslateDirective]
 })
 export class JavaSharedLibAreaComponent extends ModellingObjectComponent implements OnDestroy {
 

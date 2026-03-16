@@ -17,10 +17,9 @@
  */
 import { Component, inject } from '@angular/core';
 
-import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent } from '@zeta/xc';
 
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { conflictDialog_translations_de_DE } from './locale/conflict-dialog-translations.de-DE';
 import { conflictDialog_translations_en_US } from './locale/conflict-dialog-translations.en-US';
@@ -43,7 +42,7 @@ export interface ConflictDialogData {
 @Component({
     templateUrl: './conflict-dialog.component.html',
     styleUrls: ['./conflict-dialog.component.scss'],
-    imports: [XcModule, I18nModule]
+    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class ConflictDialogComponent extends XcDialogComponent<string, ConflictDialogData> {
     readonly i18nService = inject(I18nService);

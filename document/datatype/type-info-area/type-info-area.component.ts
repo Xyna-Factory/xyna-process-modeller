@@ -42,7 +42,7 @@ import { ModDropEvent, ModDropAreaDirective } from '../../workflow/shared/drag-a
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { ShowGuiModelModalComponent } from './show-gui-model-modal/show-gui-model-modal.component';
 import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 
 
 @Component({
@@ -50,7 +50,7 @@ import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
     templateUrl: './type-info-area.component.html',
     styleUrls: ['./type-info-area.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, I18nModule, ModDropAreaDirective]
+    imports: [XcModule, XcI18nTranslateDirective, ModDropAreaDirective]
 })
 export class TypeInfoAreaComponent extends ModellingObjectComponent implements OnInit {
 

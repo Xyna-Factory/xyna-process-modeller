@@ -17,7 +17,7 @@
  */
 import { Component, forwardRef, Input } from '@angular/core';
 
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoChangeCompensationRequest } from '../../../../xo/change-compensation-request.model';
@@ -30,7 +30,7 @@ import { ModellingItemComponent } from '../../shared/modelling-object.component'
     selector: 'compensation',
     templateUrl: './compensation.component.html',
     styleUrls: ['./compensation.component.scss', '../../common.scss'],
-    imports: [I18nModule, forwardRef(() => ContentAreaComponent), XcModule]
+    imports: [XcI18nTranslateDirective, forwardRef(() => ContentAreaComponent), XcModule]
 })
 export class CompensationComponent extends ModellingItemComponent {
 

@@ -17,7 +17,7 @@
  */
 import { Component, forwardRef } from '@angular/core';
 
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoRequest } from '../../../../xo/request.model';
@@ -32,7 +32,7 @@ import { ChoiceComponent } from '../choice.component';
     selector: 'type-choice',
     templateUrl: './type-choice.component.html',
     styleUrls: ['../choice.component.scss', './type-choice.component.scss'],
-    imports: [XcModule, I18nModule, FormulaInputAreaComponent, forwardRef(() => ContentAreaComponent), VariableAreaChoiceComponent]
+    imports: [XcModule, XcI18nTranslateDirective, FormulaInputAreaComponent, forwardRef(() => ContentAreaComponent), VariableAreaChoiceComponent]
 })
 export class TypeChoiceComponent extends ChoiceComponent {
 
