@@ -18,10 +18,9 @@
 import { Component, inject } from '@angular/core';
 
 import { WorkflowDetailSettingsService } from '@pmod/workflow-detail-settings.service';
-import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent, XDSIconName } from '@zeta/xc';
 
-import { I18nModule } from '../../../zeta/i18n/i18n.module';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../zeta/i18n';
 import { XcModule } from '../../../zeta/xc/xc.module';
 import { modellerSettingsDialog_translations_de_DE } from './locale/modeller-settings-dialog-translations.de-DE';
 import { modellerSettingsDialog_translations_en_US } from './locale/modeller-settings-dialog-translations.en-US';
@@ -30,7 +29,7 @@ import { modellerSettingsDialog_translations_en_US } from './locale/modeller-set
 @Component({
     templateUrl: './modeller-settings-dialog.component.html',
     styleUrls: ['./modeller-settings-dialog.component.scss'],
-    imports: [XcModule, I18nModule]
+    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class ModellerSettingsDialogComponent extends XcDialogComponent<void, void> {
     readonly workflowSettings = inject(WorkflowDetailSettingsService);

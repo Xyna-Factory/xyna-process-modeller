@@ -17,7 +17,7 @@
  */
 import { Component, forwardRef, HostBinding, inject, Input } from '@angular/core';
 
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { XoExceptionHandlingArea } from '../../../../xo/exception-handling-area.model';
 import { WorkflowDetailLevelService } from '../../../workflow-detail-level.service';
@@ -30,7 +30,7 @@ import { ExceptionHandlingComponent } from '../exception-handling/exception-hand
     selector: 'exception-handling-area',
     templateUrl: './exception-handling-area.component.html',
     styleUrls: ['./exception-handling-area.component.scss'],
-    imports: [forwardRef(() => ExceptionHandlingComponent), forwardRef(() => CompensationComponent), XcModule, I18nModule]
+    imports: [forwardRef(() => ExceptionHandlingComponent), forwardRef(() => CompensationComponent), XcModule, XcI18nTranslateDirective]
 })
 export class ExceptionHandlingAreaComponent extends ModellingObjectComponent {
 

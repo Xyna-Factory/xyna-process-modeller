@@ -15,11 +15,11 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, Injector } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 
-import { I18nModule } from '../../../zeta/i18n/i18n.module';
+import { XcI18nContextDirective } from '../../../zeta/i18n';
 import { ModellingActionType } from '../api/xmom.service';
 import { XoDataTypeTypeLabelArea } from '../xo/data-type-type-label-area.model';
 import { XoDataType } from '../xo/data-type.model';
@@ -49,7 +49,7 @@ import { DropIndicatorComponent } from './workflow/drop-indicator/drop-indicator
     templateUrl: './datatype.component.html',
     styleUrls: ['./datatype.component.scss'],
     providers: [SelectionService, MinMaxService],
-    imports: [I18nModule, TypeInfoAreaComponent, LibAreaComponent, JavaSharedLibAreaComponent, DetailsItemComponent, MemberAreaComponent, MemberVariableAreaComponent, ServiceAreaComponent, DataTypeDetailsComponent, MemberVariableDetailsComponent, MethodDetailsComponent, DropIndicatorComponent]
+    imports: [XcI18nContextDirective, TypeInfoAreaComponent, LibAreaComponent, JavaSharedLibAreaComponent, DetailsItemComponent, MemberAreaComponent, MemberVariableAreaComponent, ServiceAreaComponent, DataTypeDetailsComponent, MemberVariableDetailsComponent, MethodDetailsComponent, DropIndicatorComponent]
 })
 export class DataTypeComponent extends TypeDocumentComponent<DataTypeDocumentModel> {
 

@@ -19,10 +19,9 @@ import { Component, inject } from '@angular/core';
 
 import { ApiService, RuntimeContext } from '@zeta/api';
 import { downloadFile } from '@zeta/base';
-import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcDialogComponent } from '@zeta/xc';
 
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { DocumentService } from '../../../document/document.service';
 import { FactoryService } from '../../factory.service';
@@ -34,7 +33,7 @@ import { workflowConstantBuilderModal_translations_en_US } from './locale/workfl
 @Component({
     templateUrl: './workflow-constant-builder-modal.component.html',
     styleUrls: ['./workflow-constant-builder-modal.component.scss'],
-    imports: [XcModule, I18nModule]
+    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class WorkflowConstantBuilderModalComponent extends XcDialogComponent<void, void> {
     private readonly documentService = inject(DocumentService);

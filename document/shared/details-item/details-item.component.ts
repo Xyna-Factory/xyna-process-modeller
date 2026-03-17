@@ -22,14 +22,14 @@ import { XoDetailsItem } from '@pmod/xo/details-item.model';
 
 import { SelectableModellingObjectComponent } from '../../workflow/shared/selectable-modelling-object.component';
 import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { XcI18nPipe } from '../../../../../zeta/i18n';
 
 
 @Component({
     selector: 'details-item',
     templateUrl: './details-item.component.html',
     styleUrls: ['./details-item.component.scss'],
-    imports: [XcModule, I18nModule]
+    imports: [XcModule, XcI18nPipe]
 })
 export class DetailsItemComponent extends SelectableModellingObjectComponent implements OnInit {
 

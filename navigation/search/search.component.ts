@@ -24,7 +24,7 @@ import { XcFormInputComponent } from '@zeta/xc';
 import { Subject } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 
-import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { XcModule } from '../../../../zeta/xc/xc.module';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 import { FactoryService } from '../factory.service';
@@ -51,7 +51,7 @@ export interface FilterConditionData {
     templateUrl: './search.component.html',
     styleUrls: ['./search.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [I18nModule, XcModule, XMOMListComponent]
+    imports: [XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective, XcModule, XMOMListComponent]
 })
 export class SearchComponent extends CommonNavigationComponent {
     readonly messageBus = inject(MessageBusService);

@@ -28,7 +28,7 @@ import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItemStr
 
 import { filter } from 'rxjs';
 
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { XcI18nPipe, XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { TypeDocumentationAreaComponent } from '../../type-documentation-area/type-documentation-area.component';
 import { DatatypeVariableTabComponent } from '../datatype-tab.component';
@@ -38,7 +38,7 @@ import { DatatypeVariableTabComponent } from '../datatype-tab.component';
     templateUrl: './member-variable-base-tab.component.html',
     styleUrls: ['./member-variable-base-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, I18nModule, TypeDocumentationAreaComponent]
+    imports: [XcModule, XcI18nTranslateDirective, XcI18nPipe, TypeDocumentationAreaComponent]
 })
 export class MemberVariableBaseTabComponent extends DatatypeVariableTabComponent {
     private readonly dataTypeService = inject(DataTypeService);

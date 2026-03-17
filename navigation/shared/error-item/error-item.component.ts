@@ -22,7 +22,7 @@ import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model
 import { ErrorItem } from '@pmod/xo/issue.model';
 
 import { ErrorService } from '../error.service';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
@@ -30,7 +30,7 @@ import { XcModule } from '../../../../../zeta/xc/xc.module';
     selector: 'xfm-mod-nav-error',
     templateUrl: './error-item.component.html',
     styleUrls: ['./error-item.component.scss'],
-    imports: [I18nModule, XcModule]
+    imports: [XcI18nTranslateDirective, XcModule]
 })
 export class ErrorItemComponent {
     private readonly documentService = inject(DocumentService);

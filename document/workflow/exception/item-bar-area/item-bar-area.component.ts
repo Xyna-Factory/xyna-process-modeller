@@ -27,14 +27,14 @@ import { ModellingObjectComponent } from '../../shared/modelling-object.componen
 import { NgFor } from '@angular/common';
 import { VariableComponent } from '../../variable/variable.component';
 import { XcModule } from '../../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 
 
 @Component({
     selector: 'item-bar-area',
     templateUrl: './item-bar-area.component.html',
     styleUrls: ['./item-bar-area.component.scss'],
-    imports: [NgFor, VariableComponent, XcModule, I18nModule]
+    imports: [NgFor, VariableComponent, XcModule, XcI18nTranslateDirective]
 })
 export class ItemBarAreaComponent extends ModellingObjectComponent {
 

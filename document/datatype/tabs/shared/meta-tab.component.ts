@@ -21,14 +21,14 @@ import { XoMetaTagArea } from '@pmod/xo/meta-tag-area.model';
 
 import { DatatypeTabComponent, MetaTabData } from '../datatype-tab.component';
 import { MetaTagAreaComponent } from '../../../shared/meta-tag-area/meta-tag-area.component';
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { XcI18nContextDirective } from '../../../../../../zeta/i18n';
 
 
 @Component({
     templateUrl: './meta-tab.component.html',
     styleUrls: ['./meta-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MetaTagAreaComponent, I18nModule]
+    imports: [MetaTagAreaComponent, XcI18nContextDirective]
 })
 export class MetaTabComponent extends DatatypeTabComponent<MetaTabData> {
 

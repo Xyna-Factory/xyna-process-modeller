@@ -27,7 +27,7 @@ import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItem, X
 
 import { filter } from 'rxjs';
 
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { MethodImplementationComponent } from '../../method-implementation/method-implementation.component';
 import { DatatypeMethodTabComponent } from '../datatype-tab.component';
@@ -37,7 +37,7 @@ import { DatatypeMethodTabComponent } from '../datatype-tab.component';
     templateUrl: './method-implementation-tab.component.html',
     styleUrls: ['./method-implementation-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, I18nModule, MethodImplementationComponent]
+    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective, MethodImplementationComponent]
 })
 export class MethodImplementationTabComponent extends DatatypeMethodTabComponent {
     private readonly dataTypeService = inject(DataTypeService);

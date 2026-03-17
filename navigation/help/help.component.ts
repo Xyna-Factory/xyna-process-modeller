@@ -18,7 +18,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
-import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { XcModule } from '../../../../zeta/xc/xc.module';
 
 
@@ -27,7 +27,7 @@ import { XcModule } from '../../../../zeta/xc/xc.module';
     templateUrl: './help.component.html',
     styleUrls: ['./help.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [I18nModule, XcModule]
+    imports: [XcI18nTranslateDirective, XcModule]
 })
 export class HelpComponent extends CommonNavigationComponent {
 

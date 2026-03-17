@@ -34,7 +34,7 @@ import { DocumentService } from '../../document.service';
 import { ModellingItemComponent, TriggeredAction } from '../../workflow/shared/modelling-object.component';
 import { VariableAreaDocumentComponent } from '../../workflow/variable-area/variable-area-document.component';
 import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { CodingComponent } from '../coding/coding.component';
 
 
@@ -42,7 +42,7 @@ import { CodingComponent } from '../coding/coding.component';
     selector: 'method-implementation',
     templateUrl: './method-implementation.component.html',
     styleUrls: ['./method-implementation.component.scss'],
-    imports: [VariableAreaDocumentComponent, XcModule, I18nModule, CodingComponent]
+    imports: [VariableAreaDocumentComponent, XcModule, XcI18nTranslateDirective, CodingComponent]
 })
 export class MethodImplementationComponent extends ModellingItemComponent {
 
