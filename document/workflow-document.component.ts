@@ -85,7 +85,7 @@ export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowD
     private readonly menuItemToggleDocumentation: XcMenuItem = {
         name: 'pmod.workflow.show-hide-documentation',
         translate: true,
-        visible: () => this.workflow.documentationArea && !this.documentService.selectedDocument.isLocked,
+        visible: () => !!this.workflow.documentationArea,
         click: () => this.detailLevelService.toggleCollapsed(this.workflow.documentationArea.id)
     };
 
