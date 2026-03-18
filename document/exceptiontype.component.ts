@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
 
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 
-import { I18nModule } from '../../../zeta/i18n/i18n.module';
+import { XcI18nContextDirective } from '../../../zeta/i18n';
 import { ModellingActionType } from '../api/xmom.service';
 import { XoExceptionType } from '../xo/exception-type.model';
 import { XoInsertModellingObjectRequest } from '../xo/insert-modelling-object-request.model';
@@ -42,7 +42,7 @@ import { DropIndicatorComponent } from './workflow/drop-indicator/drop-indicator
     styleUrls: ['./exceptiontype.component.scss'],
     // single service instances per document
     providers: [SelectionService],
-    imports: [I18nModule, TypeInfoAreaComponent, ExceptionMessagesAreaComponent, DetailsItemComponent, MemberAreaComponent, MemberVariableAreaComponent, ExceptionTypeDetailsComponent, MemberVariableDetailsComponent, DropIndicatorComponent]
+    imports: [XcI18nContextDirective, TypeInfoAreaComponent, ExceptionMessagesAreaComponent, DetailsItemComponent, MemberAreaComponent, MemberVariableAreaComponent, ExceptionTypeDetailsComponent, MemberVariableDetailsComponent, DropIndicatorComponent]
 })
 export class ExceptionTypeComponent extends TypeDocumentComponent<ExceptionTypeDocumentModel> {
 

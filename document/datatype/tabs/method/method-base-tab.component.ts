@@ -19,7 +19,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
 
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { TypeDocumentationAreaComponent } from '../../type-documentation-area/type-documentation-area.component';
 import { DatatypeMethodTabComponent } from '../datatype-tab.component';
@@ -29,7 +29,7 @@ import { DatatypeMethodTabComponent } from '../datatype-tab.component';
     templateUrl: './method-base-tab.component.html',
     styleUrls: ['./method-base-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, I18nModule, TypeDocumentationAreaComponent]
+    imports: [XcModule, XcI18nTranslateDirective, TypeDocumentationAreaComponent]
 })
 export class MethodBaseTabComponent extends DatatypeMethodTabComponent {
 

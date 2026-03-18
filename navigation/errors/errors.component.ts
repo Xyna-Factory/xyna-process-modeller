@@ -23,7 +23,7 @@ import { XoWarningArray } from '@pmod/xo/warning.model';
 import { of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { DocumentService } from '../../document/document.service';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 import { ErrorItemComponent } from '../shared/error-item/error-item.component';
@@ -35,7 +35,7 @@ import { ErrorService } from '../shared/error.service';
     templateUrl: './errors.component.html',
     styleUrls: ['./errors.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [I18nModule, ErrorItemComponent]
+    imports: [XcI18nTranslateDirective, ErrorItemComponent]
 })
 export class ErrorsComponent extends CommonNavigationComponent implements OnDestroy {
     protected readonly errorService = inject(ErrorService);

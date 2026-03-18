@@ -17,12 +17,11 @@
  */
 import { Component, HostListener, inject, ViewChild } from '@angular/core';
 
-import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcDialogComponent, XcFormDirective, XcOptionItem, XcOptionItemString } from '@zeta/xc';
 
 import { Observable } from 'rxjs';
 
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { labelPathDialog_translations_de_DE } from './locale/label-path-dialog-translations.de-DE';
 import { labelPathDialog_translations_en_US } from './locale/label-path-dialog-translations.en-US';
@@ -49,7 +48,7 @@ export interface LabelPathDialogData {
 @Component({
     templateUrl: './label-path-dialog.component.html',
     styleUrls: ['./label-path-dialog.component.scss'],
-    imports: [XcModule, I18nModule]
+    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class LabelPathDialogComponent extends XcDialogComponent<LabelPathDialogResult, LabelPathDialogData> {
     private readonly i18n = inject(I18nService);

@@ -29,7 +29,7 @@ import { XoError } from '../../xo/error.model';
 import { XoGetClipboardResponse } from '../../xo/get-clipboard-response.model';
 import { XoContainerArea } from '../../xo/modelling-item.model';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
-import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { XcModule } from '../../../../zeta/xc/xc.module';
 import { ClipboardAreaComponent } from './clipboard-area.component';
 
@@ -39,7 +39,7 @@ import { ClipboardAreaComponent } from './clipboard-area.component';
     templateUrl: './clipboard.component.html',
     styleUrls: ['./clipboard.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [I18nModule, XcModule, ClipboardAreaComponent]
+    imports: [XcI18nContextDirective, XcI18nTranslateDirective, XcModule, ClipboardAreaComponent]
 })
 export class ClipboardComponent extends CommonNavigationComponent {
     private readonly i18n = inject(I18nService);

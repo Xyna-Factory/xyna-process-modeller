@@ -26,7 +26,7 @@ import { MinMaxService } from './min-max.service';
 import { ServiceGroupDocumentModel } from './model/service-group-document.model';
 import { SelectionService } from './selection.service';
 import { TypeDocumentComponent } from './type-document.component';
-import { I18nModule } from '../../../zeta/i18n/i18n.module';
+import { XcI18nContextDirective } from '../../../zeta/i18n';
 import { TypeInfoAreaComponent } from './datatype/type-info-area/type-info-area.component';
 import { LibAreaComponent } from './shared/lib-area/lib-area.component';
 import { JavaSharedLibAreaComponent } from './shared/java-shared-lib-area/java-shared-lib-area.component';
@@ -40,7 +40,7 @@ import { DropIndicatorComponent } from './workflow/drop-indicator/drop-indicator
     templateUrl: './servicegroup.component.html',
     styleUrls: ['./servicegroup.component.scss'],
     providers: [SelectionService, MinMaxService],
-    imports: [I18nModule, TypeInfoAreaComponent, LibAreaComponent, JavaSharedLibAreaComponent, MemberAreaComponent, ServiceAreaComponent, MethodDetailsComponent, DropIndicatorComponent]
+    imports: [XcI18nContextDirective, TypeInfoAreaComponent, LibAreaComponent, JavaSharedLibAreaComponent, MemberAreaComponent, ServiceAreaComponent, MethodDetailsComponent, DropIndicatorComponent]
 })
 export class ServiceGroupComponent extends TypeDocumentComponent<ServiceGroupDocumentModel> {
 

@@ -17,10 +17,9 @@
  */
 import { Component, inject } from '@angular/core';
 
-import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent } from '@zeta/xc';
 
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { errorDialog_translations_de_DE } from './locale/error-dialog-translations.de-DE';
 import { errorDialog_translations_en_US } from './locale/error-dialog-translations.en-US';
@@ -37,7 +36,7 @@ export interface ErrorDialogData {
     selector: 'error-dialog',
     templateUrl: './error-dialog.component.html',
     styleUrls: ['./error-dialog.component.scss'],
-    imports: [XcModule, I18nModule]
+    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class ErrorDialogComponent extends XcDialogComponent<void, ErrorDialogData> {
     private readonly i18n = inject(I18nService);

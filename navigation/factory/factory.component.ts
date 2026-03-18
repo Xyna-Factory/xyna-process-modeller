@@ -28,7 +28,7 @@ import { CommonNavigationComponent } from '../common-navigation-class/common-nav
 import { FactoryService } from '../factory.service';
 import { XMOMListComponent } from '../xmom/xmom-list.component';
 import { XMOMTreeItemState } from './xmom-tree-item.component';
-import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { XcModule } from '../../../../zeta/xc/xc.module';
 import { PmodOutsideListenerDirective } from '../../misc/directives/pmod-outside-listener.directives';
 import { XMOMTreeComponent } from './xmom-tree.component';
@@ -39,7 +39,7 @@ import { XMOMTreeComponent } from './xmom-tree.component';
     templateUrl: './factory.component.html',
     styleUrls: ['./factory.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [I18nModule, XcModule, PmodOutsideListenerDirective, XMOMTreeComponent, XMOMListComponent]
+    imports: [XcI18nContextDirective, XcI18nTranslateDirective, XcModule, PmodOutsideListenerDirective, XMOMTreeComponent, XMOMListComponent]
 })
 export class FactoryComponent extends CommonNavigationComponent implements AfterViewInit {
     readonly factoryService = inject(FactoryService);

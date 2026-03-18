@@ -21,7 +21,7 @@ import { XoChangeMemberVariableStorableRoleRequest } from '@pmod/xo/change-membe
 import { I18nService } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcOptionItemString, XcOptionItemTranslate } from '@zeta/xc';
 
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { StorablePropertiesAreaComponent } from '../../storable-properties-area/storable-properties-area.component';
 import { DatatypeVariableTabComponent } from '../datatype-tab.component';
@@ -31,7 +31,7 @@ import { DatatypeVariableTabComponent } from '../datatype-tab.component';
     templateUrl: './member-variable-storable-tab.component.html',
     styleUrls: ['./member-variable-storable-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, I18nModule, StorablePropertiesAreaComponent]
+    imports: [XcModule, XcI18nTranslateDirective, StorablePropertiesAreaComponent]
 })
 export class MemberVariableStorableTabComponent extends DatatypeVariableTabComponent {
     private readonly i18n = inject(I18nService);

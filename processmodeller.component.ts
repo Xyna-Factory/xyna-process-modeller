@@ -20,7 +20,7 @@ import { ChangeDetectorRef, Component, Injector, OnDestroy, OnInit, ViewChild, i
 
 import { ApiService, FullQualifiedName, RuntimeContextSelectionSettings } from '@zeta/api';
 import { KeyboardEventType, KeyDistributionService, OutsideListenerService } from '@zeta/base';
-import { I18nService, LocaleService } from '@zeta/i18n';
+import { I18nService, LocaleService, XcI18nContextDirective } from '@zeta/i18n';
 import { RouteComponent, RuntimeContextSelectionComponent } from '@zeta/nav';
 import { QueryParameterService } from '@zeta/nav/query-parameter.service';
 import { XcDialogService, XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
@@ -28,7 +28,6 @@ import { XcDialogService, XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 import { ReplaySubject, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
-import { I18nModule } from '../../zeta/i18n/i18n.module';
 import { XcModule } from '../../zeta/xc/xc.module';
 import { XmomObjectType } from './api/xmom-types';
 import { DataTypeComponent } from './document/datatype.component';
@@ -54,7 +53,7 @@ import { XoWorkflow } from './xo/workflow.model';
 @Component({
     templateUrl: './processmodeller.component.html',
     styleUrls: ['./processmodeller.component.scss'],
-    imports: [ToolbarComponent, I18nModule, XcModule, NavigationComponent, NgClass]
+    imports: [ToolbarComponent, XcI18nContextDirective, XcModule, NavigationComponent, NgClass]
 })
 export class ProcessmodellerComponent extends RouteComponent implements OnInit, OnDestroy {
     documentService = inject(DocumentService);

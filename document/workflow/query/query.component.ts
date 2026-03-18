@@ -21,7 +21,7 @@ import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcIdentityDataWrapper, XcMenuItem, XcStringIntegerDataWrapper } from '@zeta/xc';
 
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeQueryConfigurationRequest } from '../../../xo/change-query-configuration-request.model';
@@ -41,7 +41,7 @@ import { VariableAreaServiceComponent } from '../variable-area/variable-area-ser
     selector: 'query',
     templateUrl: './query.component.html',
     styleUrls: ['./query.component.scss'],
-    imports: [LabelAreaComponent, XcModule, DocumentationAreaComponent, FilterCriterionAreaComponent, SelectionMaskCriterionAreaComponent, SortingCriterionAreaComponent, I18nModule, forwardRef(() => ExceptionHandlingAreaComponent), VariableAreaServiceComponent]
+    imports: [LabelAreaComponent, XcModule, DocumentationAreaComponent, FilterCriterionAreaComponent, SelectionMaskCriterionAreaComponent, SortingCriterionAreaComponent, XcI18nTranslateDirective, forwardRef(() => ExceptionHandlingAreaComponent), VariableAreaServiceComponent]
 })
 export class QueryComponent extends InvocationComponent {
 

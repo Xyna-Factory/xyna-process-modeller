@@ -21,14 +21,14 @@ import { XoTextArea } from '@pmod/xo/text-area.model';
 
 import { DatatypeTabComponent, DocumentationTabData } from '../datatype-tab.component';
 import { TypeDocumentationAreaComponent } from '../../type-documentation-area/type-documentation-area.component';
-import { I18nModule } from '../../../../../../zeta/i18n/i18n.module';
+import { XcI18nContextDirective } from '../../../../../../zeta/i18n';
 
 
 @Component({
     templateUrl: './documentation-tab.component.html',
     styleUrls: ['./documentation-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [TypeDocumentationAreaComponent, I18nModule]
+    imports: [TypeDocumentationAreaComponent, XcI18nContextDirective]
 })
 export class DocumentationTabComponent extends DatatypeTabComponent<DocumentationTabData> {
 

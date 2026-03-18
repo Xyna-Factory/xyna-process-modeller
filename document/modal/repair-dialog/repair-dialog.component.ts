@@ -17,10 +17,9 @@
  */
 import { Component, inject } from '@angular/core';
 
-import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogComponent } from '@zeta/xc';
 
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { XoRepairEntry, XoRepairEntryArray } from '../../../xo/repair-entry.model';
 import { repairDialog_translations_de_DE } from './locale/repair-dialog-translations.de-DE';
@@ -38,7 +37,7 @@ export interface RepairDialogData {
 @Component({
     templateUrl: './repair-dialog.component.html',
     styleUrls: ['./repair-dialog.component.scss'],
-    imports: [XcModule, I18nModule, RepairEntryComponent]
+    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective, RepairEntryComponent]
 })
 export class RepairDialogComponent extends XcDialogComponent<boolean, RepairDialogData> {
     private readonly i18n = inject(I18nService);

@@ -23,13 +23,13 @@ import { XoDeleteRequest } from '@pmod/xo/delete-request.model';
 import { XoMetaTag } from '@pmod/xo/meta-tag.model';
 import { ModContentEditableDirective } from '../../workflow/shared/mod-content-editable.directive';
 import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 
 @Component({
     selector: 'meta-tag',
     templateUrl: './meta-tag.component.html',
     styleUrls: ['./meta-tag.component.scss'],
-    imports: [ModContentEditableDirective, XcModule, I18nModule]
+    imports: [ModContentEditableDirective, XcModule, XcI18nTranslateDirective]
 })
 export class MetaTagComponent extends ModellingItemComponent {
 

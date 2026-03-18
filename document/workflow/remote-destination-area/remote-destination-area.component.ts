@@ -25,7 +25,7 @@ import { XoRemoteDestinationArea } from '../../../xo/remote-destination-area.mod
 import { DocumentService } from '../../document.service';
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
 import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { VariableAreaComponent } from '../variable-area/variable-area.component';
 
 
@@ -33,7 +33,7 @@ import { VariableAreaComponent } from '../variable-area/variable-area.component'
     selector: 'remote-destination-area',
     templateUrl: './remote-destination-area.component.html',
     styleUrls: ['./remote-destination-area.component.scss'],
-    imports: [XcModule, I18nModule, VariableAreaComponent]
+    imports: [XcModule, XcI18nTranslateDirective, VariableAreaComponent]
 })
 export class RemoteDestinationAreaComponent extends ModellingObjectComponent {
 
