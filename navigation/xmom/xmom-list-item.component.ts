@@ -15,16 +15,17 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, HostListener, Input, Output, inject } from '@angular/core';
+import { filter } from 'rxjs/operators';
 
+import { Component, EventEmitter, HostListener, inject, Input, Output } from '@angular/core';
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
 import { FullQualifiedName } from '@zeta/api';
 import { coerceBoolean } from '@zeta/base';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcMenuItem } from '@zeta/xc';
 
-import { filter } from 'rxjs/operators';
-
+import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
+import { XcModule } from '../../../../zeta/xc/xc.module';
 import { XmomObjectType } from '../../api/xmom-types';
 import { DocumentService } from '../../document/document.service';
 import { XoData } from '../../xo/data.model';
@@ -36,8 +37,6 @@ import { XoStaticMethodInvocation } from '../../xo/static-method-invocation.mode
 import { XoWorkflowInvocation } from '../../xo/workflow-invocation.model';
 import { XoWorkflow } from '../../xo/workflow.model';
 import { XoXmomItem } from '../../xo/xmom-item.model';
-import { XcModule } from '../../../../zeta/xc/xc.module';
-import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
 
 
 @Component({
@@ -146,7 +145,9 @@ export class XMOMListItemComponent {
         }
         const xmomItem = new XoXmomItem();
         xmomItem.fqn = FullQualifiedName.decode(this.xmomItem.$fqn);
+        xmomItem.$fqn = this.xmomItem.$fqn;
         xmomItem.rtc = this.xmomItem.$rtc.runtimeContext();
+        xmomItem.$rtc = this.xmomItem.$rtc;
         xmomItem.type = this.xmomItem.type as XmomObjectType;
         return xmomItem;
     }

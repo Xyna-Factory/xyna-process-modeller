@@ -15,32 +15,32 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { merge } from 'rxjs';
+import { filter, finalize, switchMap } from 'rxjs/operators';
 
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FM_RTC } from '@fman/const';
 import { DEPLOYMENT_ITEMS_ISWP } from '@fman/deployment-items/restorable-deployment-items.component';
 import { XoDeploymentItemId } from '@fman/deployment-items/xo/xo-deployment-item-id.model';
 import { XoDeploymentItem } from '@fman/deployment-items/xo/xo-deployment-item.model';
 import { XmomService } from '@pmod/api/xmom.service';
 import { XoGetXmomRelationsResponse } from '@pmod/xo/get-xmom-relations-response.model';
+import { MessageBusService } from '@yggdrasil/events';
 import { ApiService, FullQualifiedName, XoApplication as XoApplicationZeta, XoRuntimeContext, XoWorkspace as XoWorkspaceZeta } from '@zeta/api';
 import { AuthService } from '@zeta/auth';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService } from '@zeta/xc';
 
-import { merge } from 'rxjs';
-import { filter, finalize, switchMap } from 'rxjs/operators';
-
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
+import { XcModule } from '../../../../zeta/xc/xc.module';
+import { DeploymentStateDetailComponent } from '../../../factorymanager/deployment-items/components/deployment-state-detail/deployment-state-detail.component';
 import { DocumentService } from '../../document/document.service';
 import { DocumentItem, DocumentModel } from '../../document/model/document.model';
 import { TypeDocumentModel } from '../../document/model/type-document.model';
 import { XoApplication, XoWorkspace } from '../../xo/runtime-context.model';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
-import { ShowXmlModalComponent, ShowXmlModalData } from './show-xml-modal/show-xml-modal.component';
-import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
-import { XcModule } from '../../../../zeta/xc/xc.module';
-import { DeploymentStateDetailComponent } from '../../../factorymanager/deployment-items/components/deployment-state-detail/deployment-state-detail.component';
 import { RelationTableComponent } from './relation-table/relation-table.component';
+import { ShowXmlModalComponent, ShowXmlModalData } from './show-xml-modal/show-xml-modal.component';
 
 
 @Component({
@@ -50,13 +50,14 @@ import { RelationTableComponent } from './relation-table/relation-table.componen
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [XcI18nContextDirective, XcI18nTranslateDirective, XcModule, DeploymentStateDetailComponent, RelationTableComponent]
 })
-export class DetailsComponent extends CommonNavigationComponent {
+export class DetailsComponent extends CommonNavigationComponent implements AfterViewInit {
     private readonly i18n = inject(I18nService);
     private readonly apiService = inject(ApiService);
     private readonly authService = inject(AuthService);
     private readonly dialogService = inject(XcDialogService);
     private readonly documentService = inject(DocumentService);
     private readonly xmomService = inject(XmomService);
+    private readonly messageBus = inject(MessageBusService);
 
     private _deploymentItem: XoDeploymentItem;
     pendingDeploymentItem = false;
@@ -79,6 +80,14 @@ export class DetailsComponent extends CommonNavigationComponent {
                 this.getDeploymentItem();
                 this.getRelations();
             }
+        });
+    }
+
+    ngAfterViewInit() {
+        this.messageBus.xmomChange.pipe(filter(changes =>
+            changes.deletes.length > 0
+        )).subscribe(() => {
+            this.getRelations();
         });
     }
 
