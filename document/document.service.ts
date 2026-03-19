@@ -639,7 +639,7 @@ export class DocumentService implements OnDestroy {
         this.loadXmomObject(rtc, fqn, type).pipe(filter(response => !!response)).subscribe({
             next: getItemResponse => {
                 const item = <DocumentItem>getItemResponse.xmomItem;
-                const originRuntimeContext = this.factoryService.runtimeContext ?? item.toRtc();
+                const originRuntimeContext = item.toRtc() ?? this.factoryService.runtimeContext;
                 this.handleXmomItemResponse(item, getItemResponse);
 
                 switch (item.type) {
