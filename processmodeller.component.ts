@@ -396,7 +396,10 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
         this.queryParamService.removeParamsStartWith('tab');
 
         let i = 1;
-        const tabs: XcTabBarItem[] = this.tabBar?.items || [];
+        const tabs: XcTabBarItem[] = [];
+        if(this.tabBar?.selection) {
+            tabs.push(this.tabBar.selection)
+        }
 
         tabs.forEach(item => {
             const doc = item.data as DocumentModel;
