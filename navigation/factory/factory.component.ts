@@ -15,22 +15,20 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild, inject } from '@angular/core';
-
-import { MessageBusService } from '@yggdrasil/events';
-
 import { merge, of } from 'rxjs';
 import { debounceTime, filter, switchMap, tap } from 'rxjs/operators';
 
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, ViewChild } from '@angular/core';
+import { MessageBusService } from '@yggdrasil/events';
+
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
+import { XcModule } from '../../../../zeta/xc/xc.module';
 import { XmomPath } from '../../api/xmom.service';
 import { DocumentService } from '../../document/document.service';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 import { FactoryService } from '../factory.service';
 import { XMOMListComponent } from '../xmom/xmom-list.component';
 import { XMOMTreeItemState } from './xmom-tree-item.component';
-import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
-import { XcModule } from '../../../../zeta/xc/xc.module';
-import { PmodOutsideListenerDirective } from '../../misc/directives/pmod-outside-listener.directives';
 import { XMOMTreeComponent } from './xmom-tree.component';
 
 
@@ -39,7 +37,7 @@ import { XMOMTreeComponent } from './xmom-tree.component';
     templateUrl: './factory.component.html',
     styleUrls: ['./factory.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcI18nContextDirective, XcI18nTranslateDirective, XcModule, PmodOutsideListenerDirective, XMOMTreeComponent, XMOMListComponent]
+    imports: [XcI18nContextDirective, XcI18nTranslateDirective, XcModule, XMOMTreeComponent, XMOMListComponent]
 })
 export class FactoryComponent extends CommonNavigationComponent implements AfterViewInit {
     readonly factoryService = inject(FactoryService);
@@ -63,16 +61,13 @@ export class FactoryComponent extends CommonNavigationComponent implements After
         xact: 'Activation'
     };
 
-    @ViewChild(XMOMListComponent, {static: true})
+    @ViewChild(XMOMListComponent, { static: true })
     xmomList: XMOMListComponent;
 
     xmomPaths = new Array<XmomPath>();
     flatPaths = new Set<string>();
 
     selectedPath: string;
-    selectedDepartment: string;
-    hoveredDepartment: string;
-    hoveredDepartmentLabel: string;
 
     selectedPaths = new Set<string>();
     expandedPaths = new Set<string>();
@@ -109,7 +104,6 @@ export class FactoryComponent extends CommonNavigationComponent implements After
                     xmomPaths.forEach(xmomPath => this.expandedPaths.add(xmomPath.path));
                 }
                 // set xmom paths and restore tree
-                this.selectedDepartment = undefined;
                 this.xmomPaths = xmomPaths;
                 this.restore(false);
                 this.updateView();
@@ -181,7 +175,6 @@ export class FactoryComponent extends CommonNavigationComponent implements After
         const path = paths.join(', ');
         const newPath = this.selectedPath !== path;
         if (forceReselect || newPath) {
-            this.selectedDepartment = path;
             this.selectedPath = path;
             this.xmomList.listMultiple(paths, !newPath);
         }
@@ -193,33 +186,10 @@ export class FactoryComponent extends CommonNavigationComponent implements After
             this.selectedPaths.clear();
         }
 
-         
+
         (state.selected ? (Set.prototype.add) : Set.prototype.delete).call(this.selectedPaths, state.path);
         (state.expanded ? (Set.prototype.add) : Set.prototype.delete).call(this.expandedPaths, state.path);
-         
+
         this.restore();
-    }
-
-
-    isDepartmentSelected(department: string): boolean {
-        return this.selectedDepartment === department;
-    }
-
-
-    selectDepartment(department: string) {
-        this.selectedDepartment = department;
-        this.selectedPaths.clear();
-        this.selectedPaths.add(department);
-        this.restore();
-        this.updateView();
-    }
-
-
-    hoverDepartment(department: string) {
-        if (this.hoveredDepartment !== department) {
-            this.hoveredDepartment = department;
-            this.hoveredDepartmentLabel = FactoryComponent.DepartmentLabels[this.hoveredDepartment];
-            this.updateView();
-        }
     }
 }
