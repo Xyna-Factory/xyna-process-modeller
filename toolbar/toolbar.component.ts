@@ -15,19 +15,21 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, inject } from '@angular/core';
-
-import { I18nService } from '@zeta/i18n';
-import { XcDialogService, XcMenuItem } from '@zeta/xc';
-
 import { merge, of, Subscription } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy } from '@angular/core';
+import { I18nService } from '@zeta/i18n';
+import { XcDialogService, XcMenuItem } from '@zeta/xc';
+
+import { XcI18nTranslateDirective } from '../../../zeta/i18n';
+import { XcModule } from '../../../zeta/xc/xc.module';
 import { XmomObjectType } from '../api/xmom-types';
 import { DocumentService } from '../document/document.service';
 import { TypeDocumentModel } from '../document/model/type-document.model';
 import { WorkflowDocumentModel } from '../document/model/workflow-document.model';
 import { SelectionService } from '../document/selection.service';
+import { ModDraggableDirective } from '../document/workflow/shared/drag-and-drop/mod-draggable.directive';
 import { XoConditionalBranching } from '../xo/conditional-branching.model';
 import { XoConditionalChoice } from '../xo/conditional-choice.model';
 import { XoData } from '../xo/data.model';
@@ -39,9 +41,6 @@ import { XoRetry } from '../xo/retry.model';
 import { XoTemplate } from '../xo/template.model';
 import { XoTypeChoice } from '../xo/type-choice.model';
 import { XoWorkflowInvocation } from '../xo/workflow-invocation.model';
-import { XcModule } from '../../../zeta/xc/xc.module';
-import { XcI18nTranslateDirective } from '../../../zeta/i18n';
-import { ModDraggableDirective } from '../document/workflow/shared/drag-and-drop/mod-draggable.directive';
 
 
 export interface ToolbarButtonDescription {
@@ -144,23 +143,23 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
             name: ToolbarComponent.BUTTON_NAME_SAVE,
             tooltip: 'save',
             iconName: 'tb-save',
-            isDisabled: ds => ds.isSelectedDocumentSaving || ds.selectedDocument.isLocked,
-            isBusy: ds => ds.isSelectedDocumentSaving
+            isDisabled: ds => ds.pendingModellingAction || ds.isSelectedDocumentSaving || ds.selectedDocument.isLocked,
+            isBusy: ds => ds.pendingModellingAction || ds.isSelectedDocumentSaving
         },
         {
             name: ToolbarComponent.BUTTON_NAME_SAVE_AS,
             tooltip: 'save-as',
             iconName: 'tb-save',
             // save as is only allowed within the same RTC (PMOD-643)
-            isDisabled: ds => ds.isSelectedDocumentSaving || ds.selectedDocument.lockInfo.readonly || ds.selectedDocument.lockInfo.rtcLock,
-            isBusy: ds => ds.isSelectedDocumentSaving
+            isDisabled: ds => ds.pendingModellingAction || ds.isSelectedDocumentSaving || ds.selectedDocument.lockInfo.readonly || ds.selectedDocument.lockInfo.rtcLock,
+            isBusy: ds => ds.pendingModellingAction || ds.isSelectedDocumentSaving
         },
         {
             name: ToolbarComponent.BUTTON_NAME_DEPLOY,
             tooltip: 'deploy',
             iconName: 'tb-deploy',
-            isDisabled: ds => ds.isSelectedDocumentDeploying || ds.isSelectedDocumentSaving || ds.selectedDocument.isLocked,
-            isBusy: ds => ds.isSelectedDocumentDeploying
+            isDisabled: ds => ds.pendingModellingAction || ds.isSelectedDocumentDeploying || ds.isSelectedDocumentSaving || ds.selectedDocument.isLocked,
+            isBusy: ds => ds.pendingModellingAction || ds.isSelectedDocumentDeploying
         },
         {
             name: ToolbarComponent.BUTTON_NAME_PRINT,
@@ -176,22 +175,22 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
             name: ToolbarComponent.BUTTON_NAME_DEPLOY,
             tooltip: 'deploy',
             iconName: 'tb-deploy',
-            isDisabled: ds => ds.isSelectedDocumentDeploying || ds.selectedDocument.isLocked,
-            isBusy: ds => ds.isSelectedDocumentDeploying
+            isDisabled: ds => ds.pendingModellingAction || ds.isSelectedDocumentDeploying || ds.isSelectedDocumentSaving || ds.selectedDocument.isLocked,
+            isBusy: ds => ds.pendingModellingAction || ds.isSelectedDocumentDeploying
         },
         {
             name: ToolbarComponent.BUTTON_NAME_DEPLOY_AS,
             tooltip: 'deploy-as',
             iconName: 'tb-deploy',
             // deploy as is only allowed within the same RTC (PMOD-643)
-            isDisabled: ds => ds.isSelectedDocumentDeploying || ds.selectedDocument.lockInfo.readonly || ds.selectedDocument.lockInfo.rtcLock,
-            isBusy: ds => ds.isSelectedDocumentDeploying
+            isDisabled: ds => ds.pendingModellingAction || ds.isSelectedDocumentDeploying || ds.selectedDocument.lockInfo.readonly || ds.selectedDocument.lockInfo.rtcLock,
+            isBusy: ds => ds.pendingModellingAction ||ds.isSelectedDocumentDeploying
         },
         {
             name: ToolbarComponent.BUTTON_NAME_DOWNLOAD_TEMPLATE,
             tooltip: 'download-template',
             iconName: 'tb-template',
-            isDisabled: ds => (ds.selectedDocument && !ds.selectedDocument.item.saved) || ds.isSelectedDocumentDownloading,
+            isDisabled: ds => ds.pendingModellingAction || (ds.selectedDocument && !ds.selectedDocument.item.saved) || ds.isSelectedDocumentDownloading,
             isVisible: ds => (ds.selectedDocument && (ds.selectedDocument.item.type === XmomObjectType.ServiceGroup || ds.selectedDocument.item.type === XmomObjectType.DataType)),
             isBusy: ds => ds.isSelectedDocumentDownloading
         },
@@ -199,7 +198,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
             name: ToolbarComponent.BUTTON_NAME_DOWNLOAD_PYTHON_TEMPLATE,
             tooltip: 'download-python-template',
             iconName: 'tb-template',
-            isDisabled: ds => (ds.selectedDocument && !ds.selectedDocument.item.saved) || ds.isSelectedDocumentDownloading,
+            isDisabled: ds => ds.pendingModellingAction || (ds.selectedDocument && !ds.selectedDocument.item.saved) || ds.isSelectedDocumentDownloading,
             isVisible: ds => (ds.selectedDocument && (ds.selectedDocument.item.type === XmomObjectType.ServiceGroup || ds.selectedDocument.item.type === XmomObjectType.DataType)),
             isBusy: ds => ds.isSelectedDocumentDownloading
         },
@@ -380,7 +379,8 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
             this.documentService.documentDownloaded,
             this.documentService.xmomService.runtimeContextChange,
             this.documentService.xmomService.itemSaved,
-            this.documentService.xmomService.itemDeployed
+            this.documentService.xmomService.itemDeployed,
+            this.documentService.pendingModellingActionChange
         ).subscribe(() =>
             this.cdr.markForCheck()
         );
