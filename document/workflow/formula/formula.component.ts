@@ -1,5 +1,3 @@
-import { filter, take } from 'rxjs/operators';
-
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -17,6 +15,8 @@ import { filter, take } from 'rxjs/operators';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+import { filter, take } from 'rxjs/operators';
+
 import { Component, ElementRef, HostBinding, HostListener, inject, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ApiService } from '@zeta/api';
 import { coerceBoolean } from '@zeta/base';
