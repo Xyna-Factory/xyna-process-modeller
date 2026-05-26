@@ -15,6 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+import { NgFor } from '@angular/common';
 import { Component, HostBinding, Input } from '@angular/core';
 
 import { ModellingActionType } from '../../../api/xmom.service';
@@ -23,11 +24,10 @@ import { XoModellingItem } from '../../../xo/modelling-item.model';
 import { XoMoveModellingObjectRequest } from '../../../xo/move-modelling-object-request.model';
 import { XoVariableArea } from '../../../xo/variable-area.model';
 import { DragType, ModDnDEvent } from '../shared/drag-and-drop/mod-drag-and-drop.service';
-import { ModDragEvent, ModDropEvent, ModDropAreaDirective } from '../shared/drag-and-drop/mod-drop-area.directive';
-import { ModellingObjectComponent } from '../shared/modelling-object.component';
-import { NgFor } from '@angular/common';
-import { VariableComponent } from '../variable/variable.component';
 import { ModDraggableDirective } from '../shared/drag-and-drop/mod-draggable.directive';
+import { ModDragEvent, ModDropAreaDirective, ModDropEvent } from '../shared/drag-and-drop/mod-drop-area.directive';
+import { ModellingObjectComponent } from '../shared/modelling-object.component';
+import { VariableComponent } from '../variable/variable.component';
 
 
 @Component({
@@ -89,7 +89,8 @@ export class VariableAreaComponent extends ModellingObjectComponent {
                 )
             });
             // preview copy operation by inserting the variable before the request is done
-            this.variableArea.items.data.splice(event.index, 0, event.item);
+            const newItem = event.item.clone();
+            this.variableArea.items.data.splice(event.index, 0, newItem);
         } else if (event.operation === DragType.move) {
 
             // --< MOVE >--
