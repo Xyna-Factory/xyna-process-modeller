@@ -15,12 +15,11 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, HostBinding, HostListener, inject, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { filter, take } from 'rxjs/operators';
 
+import { Component, ElementRef, HostBinding, HostListener, inject, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ApiService } from '@zeta/api';
 import { coerceBoolean } from '@zeta/base';
-
-import { filter } from 'rxjs/operators';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeFormulaRequest } from '../../../xo/change-formula-request.model';
@@ -36,18 +35,18 @@ import { FormulaPartOperation } from '../../../xo/util/formula-parts/formula-par
 import { FormulaPartSpecial } from '../../../xo/util/formula-parts/formula-part-special';
 import { FormulaPartVariable } from '../../../xo/util/formula-parts/formula-part-variable';
 import { XoVariable } from '../../../xo/variable.model';
-import { ModDropEvent, ModDropAreaDirective } from '../shared/drag-and-drop/mod-drop-area.directive';
-import { ModellingItemComponent, TriggeredAction } from '../shared/modelling-object.component';
-import { FormulaEditablePartComponent } from './parts/formula-editable-part.component';
-import { FormulaChildComponent } from './parts/formula-part.component';
-import { FormulaProxyComponent } from './parts/formula-proxy/formula-proxy.component';
-import { VariableComponent } from '../variable/variable.component';
 import { ModDraggableDirective } from '../shared/drag-and-drop/mod-draggable.directive';
-import { FormulaPartMemberComponent } from './parts/formula-part-member/formula-part-member.component';
+import { ModDropAreaDirective, ModDropEvent } from '../shared/drag-and-drop/mod-drop-area.directive';
+import { ModellingItemComponent, TriggeredAction } from '../shared/modelling-object.component';
+import { VariableComponent } from '../variable/variable.component';
+import { FormulaEditablePartComponent } from './parts/formula-editable-part.component';
 import { FormulaPartFunctionComponent } from './parts/formula-part-function/formula-part-function.component';
+import { FormulaPartLiteralComponent } from './parts/formula-part-literal/formula-part-literal.component';
+import { FormulaPartMemberComponent } from './parts/formula-part-member/formula-part-member.component';
 import { FormulaPartOperationComponent } from './parts/formula-part-operation/formula-part-operation.component';
 import { FormulaPartSpecialComponent } from './parts/formula-part-special/formula-part-special.component';
-import { FormulaPartLiteralComponent } from './parts/formula-part-literal/formula-part-literal.component';
+import { FormulaChildComponent } from './parts/formula-part.component';
+import { FormulaProxyComponent } from './parts/formula-proxy/formula-proxy.component';
 
 
 @Component({
@@ -61,7 +60,7 @@ export class FormulaComponent extends ModellingItemComponent {
     protected readonly elementRef = inject(ElementRef);
     protected readonly apiService = inject(ApiService);
 
-    @ViewChild('formulaWrapper', {static: false})
+    @ViewChild('formulaWrapper', { static: false })
     formulaWrapper: ElementRef;
 
     private _partWithCaret: FormulaPart = null;     // caret is at the beginning of this part
@@ -73,6 +72,7 @@ export class FormulaComponent extends ModellingItemComponent {
     private _externalChildren = new QueryList<FormulaChildComponent>();     // elements with children outside of formula-DOM-hierarchy (such as dropdown-options)
     private _dropDisabled = false;
     private _variableMenuDisabled = false;          // no menu for formula variables
+    private _suppressNextClick = false;
 
     proxyIndex = -1;                                // if >= 0, the proxy-dropdown with all the xfl-functions is shown
 
@@ -304,13 +304,19 @@ export class FormulaComponent extends ModellingItemComponent {
         const nextPartForCaret = this.formula.getVisibleSucceedingPart(part);
 
         /** @todo This should pe placed inside FormulaPartMemberComponent, somehow */
-        part.isMemberFunction$().pipe(filter(result => result)).subscribe(() => {
+        part.isMemberFunction$().pipe(filter(result => result), take(1)).subscribe(() => {
             const successor = this.formula.getVisibleSucceedingPart(part);
             this.formula.addPart(new FormulaPartSpecial('(', null, this.apiService, this.documentModel.originRuntimeContext), successor, true);
             this.formula.addPart(new FormulaPartSpecial(')', null, this.apiService, this.documentModel.originRuntimeContext), successor, true);
         });
 
         this._partInEditing = null;
+        this._suppressNextClick = true;
+        // optional: failsafe reset
+        setTimeout(() => {
+            this._suppressNextClick = false;
+        }, 0);
+
         this.setCaretToPart(nextPartForCaret);
     }
 
@@ -330,6 +336,11 @@ export class FormulaComponent extends ModellingItemComponent {
     // -----------------------------------------------------------------------------
 
     clickOnPart(part: FormulaPart) {
+        if (this._suppressNextClick) {
+            this._suppressNextClick = false;
+            return;
+        }
+
         if (this.readonly) {
             return;
         }
