@@ -1201,6 +1201,17 @@ export const PMOD_DE: I18nTranslation[] = [
         key: 'pmod.workflow.dnd.unsupported-server-message',
         value: 'Das Kopieren zwischen verschiedenen Servern wird noch nicht unterstützt.'
     },
+
+    //foreach
+    {
+        key: 'pmod.workflow.foreach.parallel-execution',
+        value: 'In parallele Ausführung ändern'
+    },
+    {
+        key: 'pmod.workflow.foreach.sequential-execution',
+        value: 'In sequenzielle Ausführung ändern'
+    },
+
     // service group
     {
         key: 'Confirm',

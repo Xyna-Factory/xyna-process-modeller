@@ -1176,6 +1176,17 @@ export const PMOD_EN: I18nTranslation[] = [
         key: 'pmod.workflow.dnd.unsupported-server-message',
         value: 'Copy and paste of objects across different servers is not yet supported.'
     },
+
+    //foreach
+    {
+        key: 'pmod.workflow.foreach.parallel-execution',
+        value: 'Change to parallel execution'
+    },
+    {
+        key: 'pmod.workflow.foreach.sequential-execution',
+        value: 'Change to sequential execution'
+    },
+
     // service group
     {
         key: 'Confirm',
