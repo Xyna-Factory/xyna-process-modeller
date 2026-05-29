@@ -1,6 +1,6 @@
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- * Copyright 2023 Xyna GmbH, Germany
+ * Copyright 2026 Xyna GmbH, Germany
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,5 +15,23 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-export const ProcessModellerName = 'Process Modeller';
-export const ProcessModellerVersion = '2.8.39';
+import { XoObjectClass, XoProperty } from '@zeta/api';
+
+import { XoRequest } from './request.model';
+
+
+/**
+ * Change parallel or sequential execution of a foreach
+ */
+@XoObjectClass(XoRequest, 'xmcp.processmodeller.datatypes.request', 'ChangeParallelExecutionRequest')
+export class XoChangeParallelExecutionRequest extends XoRequest {
+
+    @XoProperty()
+    parallelExecution = false;
+
+
+    constructor(_ident?: string, parallelExecution?: boolean) {
+        super(_ident);
+        this.parallelExecution = parallelExecution ?? false;
+    }
+}

@@ -26,6 +26,8 @@ import { ContentAreaComponent } from '../content-area/content-area.component';
 import { ModellingItemComponent } from '../shared/modelling-object.component';
 import { VariableAreaServiceComponent } from '../variable-area/variable-area-service.component';
 import { VariableComponent } from '../variable/variable.component';
+import { XcMenuItem } from '@zeta/xc/xc-menu/xc-menu.types';
+import { XoChangeParallelExecutionRequest } from '@pmod/xo/change-parallel-execution-request';
 
 
 @Component({
@@ -42,19 +44,19 @@ export class ForeachComponent extends ModellingItemComponent {
         super();
 
         this.menuItems.push(...[
-            // TODO activate as soon as backend supports change of execution type (PMOD-21)
-            // <XcMenuItem>{
-            //     name: 'parallel execution',
-            //     translate: true,
-            //     visible: _ => !this.foreach.parallelExecution,
-            //     click: _ => this.toggleExecutionType()
-            // },
-            // <XcMenuItem>{
-            //     name: 'sequential execution',
-            //     translate: true,
-            //     visible: _ => this.foreach.parallelExecution,
-            //     click: _ => this.toggleExecutionType()
-            // },
+            <XcMenuItem>{
+                 name: 'pmod.workflow.foreach.parallel-execution',
+                 translate: true,
+                 visible: _ => !this.foreach.parallelExecution,
+                 click: _ => this.toggleExecutionType()
+             },
+             <XcMenuItem>{
+                 name: 'pmod.workflow.foreach.sequential-execution',
+                 translate: true,
+                 visible: _ => this.foreach.parallelExecution,
+                 click: _ => this.toggleExecutionType()
+             }
+            // TODO activate as soon as backend supports change
             // <XcMenuItem>{
             //     name: 'split merged foreaches',
             //     translate: true,
@@ -83,7 +85,8 @@ export class ForeachComponent extends ModellingItemComponent {
 
 
     toggleExecutionType() {
-        this.performAction({ type: ModellingActionType.toggle, objectId: this.foreach.id, request: new XoRequest() });
+
+        this.performAction({ type: ModellingActionType.change, objectId: this.foreach.id, request: new XoChangeParallelExecutionRequest(undefined, !this.foreach.parallelExecution) });
     }
 
 
