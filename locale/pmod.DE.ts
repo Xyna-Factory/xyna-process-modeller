@@ -1236,7 +1236,7 @@ export const PMOD_DE: I18nTranslation[] = [
     },
     {
         key: 'The document has unsaved changes.',
-        value: 'Das Dokument hat nicht gespeicherte Änderungen.'
+        value: 'Das Dokument "$0" enthält ungespeicherte Änderungen.'
     },
     {
         key: 'Do you want to save it now?',

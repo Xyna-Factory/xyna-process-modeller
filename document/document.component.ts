@@ -15,14 +15,13 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, inject, Injector, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable, Observer, of, Subject } from 'rxjs';
+import { distinctUntilChanged, filter, map, switchMap, takeUntil } from 'rxjs/operators';
 
+import { ChangeDetectorRef, Component, inject, Injector, OnDestroy, OnInit } from '@angular/core';
 import { RuntimeContext } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcTabComponent } from '@zeta/xc';
-
-import { BehaviorSubject, Observable, Observer, of, Subject } from 'rxjs';
-import { distinctUntilChanged, filter, map, switchMap, takeUntil } from 'rxjs/operators';
 
 import { XmomObjectType } from '../api/xmom-types';
 import { ModellingAction } from '../api/xmom.service';
@@ -185,7 +184,8 @@ export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponen
                     }
                     dismiss(true);
                 } else {
-                    let message = this.i18n.translate('The document has unsaved changes.');
+                    let message = this.i18n.translate('The document has unsaved changes.', { key: '$0', value: this.document.item.label });
+
                     const saveButtonLabel = this.i18n.translate(isWorkflow ? 'Save' : 'Deploy');
                     const dontSaveButtonLabel = isWorkflow ? this.i18n.translate('Don\'t Save') : this.i18n.translate('Don\'t Deploy');
                     if (isWorkflow) {

@@ -1210,10 +1210,10 @@ export const PMOD_EN: I18nTranslation[] = [
     //     key: 'Document could not be closed for some reason. Force close?',
     //     value: 'Document could not be closed for some reason. Force close?'
     // },
-    // {
-    //     key: 'The document has unsaved changes.',
-    //     value: 'The document has unsaved changes.'
-    // },
+    {
+        key: 'The document has unsaved changes.',
+        value: 'The document "$0" has unsaved changes.'
+    },
     // {
     //     key: 'Don\'t Save',
     //     value: 'Don\'t Save'
