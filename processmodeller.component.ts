@@ -1,4 +1,3 @@
-import { NgClass } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,17 +15,17 @@ import { NgClass } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, Injector, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import { ReplaySubject, Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
 
+import { NgClass } from '@angular/common';
+import { ChangeDetectorRef, Component, inject, Injector, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ApiService, FullQualifiedName, RuntimeContextSelectionSettings } from '@zeta/api';
 import { KeyboardEventType, KeyDistributionService, OutsideListenerService } from '@zeta/base';
 import { I18nService, LocaleService, XcI18nContextDirective } from '@zeta/i18n';
 import { RouteComponent, RuntimeContextSelectionComponent } from '@zeta/nav';
 import { QueryParameterService } from '@zeta/nav/query-parameter.service';
 import { XcDialogService, XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
-
-import { ReplaySubject, Subscription } from 'rxjs';
-import { first } from 'rxjs/operators';
 
 import { XcModule } from '../../zeta/xc/xc.module';
 import { XmomObjectType } from './api/xmom-types';
@@ -397,7 +396,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
 
         let i = 1;
         const tabs: XcTabBarItem[] = [];
-        if(this.tabBar?.selection) {
+        if (this.tabBar?.selection) {
             tabs.push(this.tabBar.selection)
         }
 
