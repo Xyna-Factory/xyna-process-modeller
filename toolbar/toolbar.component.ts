@@ -85,7 +85,6 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     private static readonly BUTTON_NAME_SAVE_AS = 'save as';
     private static readonly BUTTON_NAME_DEPLOY = 'deploy';
     private static readonly BUTTON_NAME_DEPLOY_AS = 'deploy as';
-    private static readonly BUTTON_NAME_PRINT = 'print';
 
     private static readonly BUTTON_NAME_SERVICE = 'Service';
     private static readonly BUTTON_NAME_PARAMETER = 'Parameter';
@@ -160,11 +159,6 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
             iconName: 'tb-deploy',
             isDisabled: ds => ds.pendingModellingAction || ds.isSelectedDocumentDeploying || ds.isSelectedDocumentSaving || ds.selectedDocument.isLocked,
             isBusy: ds => ds.pendingModellingAction || ds.isSelectedDocumentDeploying
-        },
-        {
-            name: ToolbarComponent.BUTTON_NAME_PRINT,
-            tooltip: 'print',
-            iconName: 'tb-print'
         }
     ];
 
@@ -201,12 +195,6 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
             isDisabled: ds => ds.pendingModellingAction || (ds.selectedDocument && !ds.selectedDocument.item.saved) || ds.isSelectedDocumentDownloading,
             isVisible: ds => (ds.selectedDocument && (ds.selectedDocument.item.type === XmomObjectType.ServiceGroup || ds.selectedDocument.item.type === XmomObjectType.DataType)),
             isBusy: ds => ds.isSelectedDocumentDownloading
-        },
-        {
-            name: ToolbarComponent.BUTTON_NAME_PRINT,
-            tooltip: 'print',
-            iconName: 'tb-print',
-            isDisabled: ds => !ds.selectedDocument
         }
     ];
 
@@ -476,9 +464,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
             case ToolbarComponent.BUTTON_NAME_WAIT:
                 this.dialogService.info('Note', 'The respective services can be found inside xprc.waitsuspend, xprc.synchronization, and xmcp.manualinteraction');
                 break;
-            case ToolbarComponent.BUTTON_NAME_PRINT:
-                this.dialogService.info('Note', 'Not yet supported');
-                break;
+
             case ToolbarComponent.BUTTON_NAME_DOWNLOAD_TEMPLATE:
                 if (document instanceof TypeDocumentModel) {
                     this.documentService.downloadTemplate(document);
