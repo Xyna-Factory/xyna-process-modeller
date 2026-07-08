@@ -15,8 +15,8 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ReplaySubject, Subscription } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { asyncScheduler, concat, ReplaySubject, Subject, Subscription } from 'rxjs';
+import { ignoreElements, take } from 'rxjs/operators';
 
 import { NgClass } from '@angular/common';
 import { ChangeDetectorRef, Component, inject, Injector, OnDestroy, OnInit, ViewChild } from '@angular/core';
@@ -76,6 +76,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
 
     private _tabBar: XcTabBarComponent;
     private _tabBarInitialized = new ReplaySubject<XcTabBarComponent>(1);
+    private _componentInitialized = new Subject<boolean>();
 
     private openedDefaultWorkflow = false;
 
@@ -105,8 +106,10 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
         this.i18nService.setTranslations(LocaleService.DE_DE, PMOD_DE);
         this.i18nService.setTranslations(LocaleService.EN_US, PMOD_EN);
 
-        this.documentService.documentListChange.subscribe(documents => {
-            const updateDocuments = () => {
+        // waiting for the component to be initialized
+        concat(concat(this._componentInitialized, this._tabBarInitialized).pipe(take(2), ignoreElements()),
+        // and then subscribing to the document list change
+        this.documentService.documentListChange).subscribe(documents => {
                 const openNewDocuments = () => {
                     documents.forEach(document => {
                         // open document, if not already opened in a tab
@@ -130,12 +133,6 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
                     !documents.includes(item.data)
                 ) ?? [];
                 closeDocumentList.forEach(document => this.tabBar.close(document).subscribe());
-            };
-            if (this.tabBar) {
-                updateDocuments();
-            } else {
-                this._tabBarInitialized.pipe(first()).subscribe(() => updateDocuments());
-            }
         });
 
         this.documentService.selectionChange.subscribe(document => {
@@ -149,6 +146,10 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
 
     ngOnInit() {
         super.ngOnInit();
+        asyncScheduler.schedule(() => {
+            this._componentInitialized.next(true);
+            this._componentInitialized.complete();
+        });
 
         this.documentService.documentChange.subscribe(() => this.transformUrl());
 

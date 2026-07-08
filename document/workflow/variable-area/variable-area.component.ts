@@ -15,7 +15,6 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { NgFor } from '@angular/common';
 import { Component, HostBinding, Input } from '@angular/core';
 
 import { ModellingActionType } from '../../../api/xmom.service';
@@ -34,7 +33,7 @@ import { VariableComponent } from '../variable/variable.component';
     selector: 'variable-area',
     templateUrl: './variable-area.component.html',
     styleUrls: ['./variable-area.component.scss'],
-    imports: [ModDropAreaDirective, NgFor, VariableComponent, ModDraggableDirective]
+    imports: [ModDropAreaDirective, VariableComponent, ModDraggableDirective]
 })
 export class VariableAreaComponent extends ModellingObjectComponent {
     private _kind: 'input-area' | 'output-area' | 'throws-area';
