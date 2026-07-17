@@ -20,7 +20,7 @@ import { first } from 'rxjs/operators';
 
 import { NgClass } from '@angular/common';
 import { ChangeDetectorRef, Component, inject, Injector, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ApiService, FullQualifiedName, RuntimeContextSelectionSettings } from '@zeta/api';
+import { ApiService, FullQualifiedName, RuntimeContext, RuntimeContextSelectionSettings } from '@zeta/api';
 import { KeyboardEventType, KeyDistributionService, OutsideListenerService } from '@zeta/base';
 import { I18nService, LocaleService, XcI18nContextDirective } from '@zeta/i18n';
 import { RouteComponent, RuntimeContextSelectionComponent } from '@zeta/nav';
@@ -47,6 +47,9 @@ import { ErrorService } from './navigation/shared/error.service';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { XoRuntimeContext } from './xo/runtime-context.model';
 import { XoWorkflow } from './xo/workflow.model';
+import { ConfigService } from '@zeta/api/config.service';
+
+export let PMOD_RTC = RuntimeContext.guiHttpApplication;
 
 
 @Component({
@@ -100,6 +103,19 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
 
     constructor() {
         super();
+        const configService = inject(ConfigService);
+        if (configService.config['modeller']?.runtimeContext) {
+            if (configService.config['modeller'].runtimeContext.application) {
+                PMOD_RTC = RuntimeContext.fromApplicationVersion(
+                    configService.config['modeller'].runtimeContext.application,
+                    configService.config['modeller'].runtimeContext.version
+                );
+            } else if (configService.config['modeller'].runtimeContext.workspace) {
+                PMOD_RTC = RuntimeContext.fromWorkspace(
+                    configService.config['modeller'].runtimeContext.workspace
+                );
+            }
+        }
 
         this.i18nService.contextDismantlingSearch = true;
         this.i18nService.setTranslations(LocaleService.DE_DE, PMOD_DE);

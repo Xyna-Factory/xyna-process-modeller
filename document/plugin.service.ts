@@ -16,10 +16,11 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Injectable, inject } from '@angular/core';
+import { PMOD_RTC } from '@pmod/processmodeller.component';
 
-import { environment } from '@environments/environment';
 import { XoGuiDefiningWorkflow } from '@yggdrasil/plugin/gui-defining-workflow.model';
 import { ApiService, StartOrderOptionsBuilder, Xo, XoManagedFileID, XoXPRCRuntimeContext, XoXPRCRuntimeContextFromRuntimeContext } from '@zeta/api';
+import { ConfigService } from '@zeta/api/config.service';
 import { pack } from '@zeta/base';
 import { XcDialogService, XoPluginArray } from '@zeta/xc';
 import { XcDialogDefinitionComponent } from '@zeta/xc/xc-form/definitions/xc-dialog-definition/xc-dialog-definition.component';
@@ -39,6 +40,7 @@ import { filter, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
     providedIn: 'root'
 })
 export class PluginService implements XoDefinitionObserver {
+    private readonly configService = inject(ConfigService);
     private readonly apiService = inject(ApiService);
     private readonly dialogs = inject(XcDialogService);
 
@@ -92,7 +94,7 @@ export class PluginService implements XoDefinitionObserver {
         xoPaths.append(...pathsData);
 
         return this.apiService.startOrder(
-            environment.zeta.xo.runtimeContext,
+            PMOD_RTC,
             'xmcp.forms.plugin.FilterPluginsByPaths',
             xoPaths, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage
         ).pipe(
@@ -140,7 +142,7 @@ export class PluginService implements XoDefinitionObserver {
 
 
     getDefaultRTC(): XoXPRCRuntimeContext {
-        return XoXPRCRuntimeContextFromRuntimeContext(environment.zeta.xo.runtimeContext);
+        return XoXPRCRuntimeContextFromRuntimeContext(this.configService.config.zeta.xo.runtimeContext);
     }
 
 

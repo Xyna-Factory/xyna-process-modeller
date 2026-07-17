@@ -19,7 +19,6 @@ import { merge } from 'rxjs';
 import { filter, finalize, switchMap } from 'rxjs/operators';
 
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
-import { FM_RTC } from '@fman/const';
 import { DEPLOYMENT_ITEMS_ISWP } from '@fman/deployment-items/restorable-deployment-items.component';
 import { XoDeploymentItemId } from '@fman/deployment-items/xo/xo-deployment-item-id.model';
 import { XoDeploymentItem } from '@fman/deployment-items/xo/xo-deployment-item.model';
@@ -41,6 +40,7 @@ import { XoApplication, XoWorkspace } from '../../xo/runtime-context.model';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 import { RelationTableComponent } from './relation-table/relation-table.component';
 import { ShowXmlModalComponent, ShowXmlModalData } from './show-xml-modal/show-xml-modal.component';
+import { PMOD_RTC } from '@pmod/processmodeller.component';
 
 
 @Component({
@@ -186,7 +186,7 @@ export class DetailsComponent extends CommonNavigationComponent implements After
 
             // Get deployment state
             this.apiService
-                .startOrder(FM_RTC, DEPLOYMENT_ITEMS_ISWP.Details, [id, rtc], XoDeploymentItem).pipe(
+                .startOrder(PMOD_RTC, DEPLOYMENT_ITEMS_ISWP.Details, [id, rtc], XoDeploymentItem).pipe(
                     finalize(() => {
                         this.pendingDeploymentItem = false;
                         this.updateView();
