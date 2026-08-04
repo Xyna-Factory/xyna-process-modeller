@@ -22,7 +22,6 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, i
 import { MessageBusService } from '@yggdrasil/events';
 
 import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
-import { XcModule } from '../../../../zeta/xc/xc.module';
 import { XmomPath } from '../../api/xmom.service';
 import { DocumentService } from '../../document/document.service';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
@@ -30,6 +29,7 @@ import { FactoryService } from '../factory.service';
 import { XMOMListComponent } from '../xmom/xmom-list.component';
 import { XMOMTreeItemState } from './xmom-tree-item.component';
 import { XMOMTreeComponent } from './xmom-tree.component';
+import { XcFormAutocompleteComponent } from '@zeta/xc';
 
 
 @Component({
@@ -37,7 +37,7 @@ import { XMOMTreeComponent } from './xmom-tree.component';
     templateUrl: './factory.component.html',
     styleUrls: ['./factory.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcI18nContextDirective, XcI18nTranslateDirective, XcModule, XMOMTreeComponent, XMOMListComponent]
+    imports: [XcI18nContextDirective, XcI18nTranslateDirective, XcFormAutocompleteComponent, XMOMTreeComponent, XMOMListComponent]
 })
 export class FactoryComponent extends CommonNavigationComponent implements AfterViewInit {
     readonly factoryService = inject(FactoryService);

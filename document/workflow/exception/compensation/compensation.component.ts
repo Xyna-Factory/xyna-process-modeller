@@ -18,19 +18,19 @@
 import { Component, forwardRef, Input } from '@angular/core';
 
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
-import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoChangeCompensationRequest } from '../../../../xo/change-compensation-request.model';
 import { XoCompensation } from '../../../../xo/compensation.model';
 import { ContentAreaComponent } from '../../content-area/content-area.component';
 import { ModellingItemComponent } from '../../shared/modelling-object.component';
+import { XcButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({
     selector: 'compensation',
     templateUrl: './compensation.component.html',
     styleUrls: ['./compensation.component.scss', '../../common.scss'],
-    imports: [XcI18nTranslateDirective, forwardRef(() => ContentAreaComponent), XcModule]
+    imports: [XcI18nTranslateDirective, forwardRef(() => ContentAreaComponent), XcButtonComponent, XcTooltipDirective]
 })
 export class CompensationComponent extends ModellingItemComponent {
 

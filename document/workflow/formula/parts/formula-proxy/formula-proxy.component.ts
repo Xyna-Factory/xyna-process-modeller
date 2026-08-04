@@ -21,7 +21,6 @@ import { FormulaFunctionGroup, FormulaPartFunction } from '@pmod/xo/util/formula
 
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent } from '@zeta/xc';
 import { FormulaChildComponent } from '../formula-part.component';
-import { XcModule } from '../../../../../../../zeta/xc/xc.module';
 
 
 
@@ -29,7 +28,7 @@ import { XcModule } from '../../../../../../../zeta/xc/xc.module';
     selector: 'formula-proxy',
     templateUrl: './formula-proxy.component.html',
     styleUrls: ['./formula-proxy.component.scss'],
-    imports: [XcModule]
+    imports: [XcFormAutocompleteComponent]
 })
 export class FormulaProxyComponent implements AfterViewInit, FormulaChildComponent {
     readonly elementRef = inject(ElementRef);

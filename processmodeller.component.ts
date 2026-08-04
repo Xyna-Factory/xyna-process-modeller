@@ -27,7 +27,6 @@ import { RouteComponent, RuntimeContextSelectionComponent } from '@zeta/nav';
 import { QueryParameterService } from '@zeta/nav/query-parameter.service';
 import { XcDialogService, XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 
-import { XcModule } from '../../zeta/xc/xc.module';
 import { XmomObjectType } from './api/xmom-types';
 import { DataTypeComponent } from './document/datatype.component';
 import { DocumentService } from './document/document.service';
@@ -52,7 +51,7 @@ import { XoWorkflow } from './xo/workflow.model';
 @Component({
     templateUrl: './processmodeller.component.html',
     styleUrls: ['./processmodeller.component.scss'],
-    imports: [ToolbarComponent, XcI18nContextDirective, XcModule, NavigationComponent, NgClass]
+    imports: [ToolbarComponent, XcI18nContextDirective, XcTabBarComponent, NavigationComponent, NgClass]
 })
 export class ProcessmodellerComponent extends RouteComponent implements OnInit, OnDestroy {
     documentService = inject(DocumentService);

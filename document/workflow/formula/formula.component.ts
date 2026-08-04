@@ -168,9 +168,9 @@ export class FormulaComponent extends ModellingItemComponent {
     }
 
 
-    @Input()
+    @Input({transform: coerceBoolean})
     set hideQuestionmark(value: boolean) {
-        this.formula.isQuestionmarkHidden = coerceBoolean(value);
+        this.formula.isQuestionmarkHidden = value;
     }
 
 
@@ -179,9 +179,9 @@ export class FormulaComponent extends ModellingItemComponent {
     }
 
 
-    @Input('drop-disabled')
+    @Input({alias: 'drop-disabled', transform: coerceBoolean})
     set dropDisabled(value: boolean) {
-        this._dropDisabled = coerceBoolean(value);
+        this._dropDisabled = value;
     }
 
 
@@ -190,9 +190,9 @@ export class FormulaComponent extends ModellingItemComponent {
     }
 
 
-    @Input('variable-menu-disabled')
+    @Input({alias: 'variable-menu-disabled', transform: coerceBoolean})
     set variableMenuDisabled(value: boolean) {
-        this._variableMenuDisabled = coerceBoolean(value);
+        this._variableMenuDisabled = value;
     }
 
 

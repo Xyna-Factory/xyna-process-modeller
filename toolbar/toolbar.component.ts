@@ -20,10 +20,9 @@ import { switchMap, tap } from 'rxjs/operators';
 
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy } from '@angular/core';
 import { I18nService } from '@zeta/i18n';
-import { XcDialogService, XcMenuItem } from '@zeta/xc';
+import { XcDialogService, XcIconButtonComponent, XcIconComponent, XcMenuComponent, XcMenuItem, XcMenuTriggerDirective, XcTooltipDirective } from '@zeta/xc';
 
 import { XcI18nTranslateDirective } from '../../../zeta/i18n';
-import { XcModule } from '../../../zeta/xc/xc.module';
 import { XmomObjectType } from '../api/xmom-types';
 import { DocumentService } from '../document/document.service';
 import { TypeDocumentModel } from '../document/model/type-document.model';
@@ -70,7 +69,7 @@ export type ToolbarItem = ToolbarButtonDescription | ToolbarButtonDescriptionGro
     templateUrl: './toolbar.component.html',
     styleUrls: ['./toolbar.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, XcI18nTranslateDirective, ModDraggableDirective]
+    imports: [XcIconButtonComponent, XcIconComponent, XcMenuComponent, XcMenuTriggerDirective, XcTooltipDirective, XcI18nTranslateDirective, ModDraggableDirective]
 })
 export class ToolbarComponent implements AfterViewInit, OnDestroy {
     readonly documentService = inject(DocumentService);

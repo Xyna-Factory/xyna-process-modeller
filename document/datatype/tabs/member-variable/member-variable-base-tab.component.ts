@@ -16,6 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, Component, inject, ViewChild } from '@angular/core';
+import { XcButtonComponent, XcFormInputComponent, XcFormValidatorRequiredDirective, XcTooltipDirective } from '@zeta/xc';
 
 import { DataTypeService } from '@pmod/document/datatype.service';
 import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
@@ -29,7 +30,6 @@ import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItemStr
 import { filter } from 'rxjs';
 
 import { XcI18nPipe, XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
-import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { TypeDocumentationAreaComponent } from '../../type-documentation-area/type-documentation-area.component';
 import { DatatypeVariableTabComponent } from '../datatype-tab.component';
 
@@ -38,7 +38,7 @@ import { DatatypeVariableTabComponent } from '../datatype-tab.component';
     templateUrl: './member-variable-base-tab.component.html',
     styleUrls: ['./member-variable-base-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, XcI18nTranslateDirective, XcI18nPipe, TypeDocumentationAreaComponent]
+    imports: [XcButtonComponent, XcFormAutocompleteComponent, XcFormInputComponent, XcFormValidatorRequiredDirective, XcTooltipDirective, XcI18nTranslateDirective, XcI18nPipe, TypeDocumentationAreaComponent]
 })
 export class MemberVariableBaseTabComponent extends DatatypeVariableTabComponent {
     private readonly dataTypeService = inject(DataTypeService);

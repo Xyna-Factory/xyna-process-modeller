@@ -20,14 +20,13 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, O
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 import { XoExceptionType } from '@pmod/xo/exception-type.model';
 import { I18nService } from '@zeta/i18n';
-import { XcTabBarItem } from '@zeta/xc';
+import { XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 
 import { BehaviorSubject, Subject } from 'rxjs';
 
 import { ModellingItemComponent } from '../../workflow/shared/modelling-object.component';
 import { DocumentationTabData, DocumentTabData } from '../tabs/datatype-tab.component';
 import { DocumentationTabComponent } from '../tabs/shared/documentation-tab.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 @Component({
@@ -35,7 +34,7 @@ import { XcModule } from '../../../../../zeta/xc/xc.module';
     templateUrl: './exceptiontype-details.component.html',
     styleUrls: ['./exceptiontype-details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule]
+    imports: [XcTabBarComponent]
 })
 export class ExceptionTypeDetailsComponent extends ModellingItemComponent implements OnDestroy {
 

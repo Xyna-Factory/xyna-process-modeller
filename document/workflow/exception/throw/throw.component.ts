@@ -22,15 +22,15 @@ import { XoThrow } from '../../../../xo/throw.model';
 import { ModellingItemComponent } from '../../shared/modelling-object.component';
 import { VariableAreaServiceComponent } from '../../variable-area/variable-area-service.component';
 import { LabelAreaComponent } from '../../label-area/label-area.component';
-import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { DocumentationAreaComponent } from '../../documentation-area/documentation-area.component';
+import { XcIconComponent } from '@zeta/xc';
 
 
 @Component({
     selector: 'throw',
     templateUrl: './throw.component.html',
     styleUrls: ['./throw.component.scss'],
-    imports: [VariableAreaServiceComponent, LabelAreaComponent, XcModule, DocumentationAreaComponent]
+    imports: [VariableAreaServiceComponent, LabelAreaComponent, XcIconComponent, DocumentationAreaComponent]
 })
 export class ThrowComponent extends ModellingItemComponent {
 

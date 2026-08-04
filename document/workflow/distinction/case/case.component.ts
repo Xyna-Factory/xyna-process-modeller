@@ -23,16 +23,16 @@ import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoCase } from '../../../../xo/case.model';
 import { XoChangeTextRequest } from '../../../../xo/change-text-request.model';
 import { ModellingItemComponent } from '../../shared/modelling-object.component';
-import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { FormulaComponent } from '../../formula/formula.component';
+import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({
     selector: 'case',
     templateUrl: './case.component.html',
     styleUrls: ['./case.component.scss'],
-    imports: [XcModule, XcI18nTranslateDirective, FormulaComponent]
+    imports: [XcIconButtonComponent, XcTooltipDirective, XcI18nTranslateDirective, FormulaComponent]
 })
 export class CaseComponent extends ModellingItemComponent {
 

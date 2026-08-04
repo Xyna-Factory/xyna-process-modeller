@@ -16,12 +16,12 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, Input } from '@angular/core';
+import { XcTooltipDirective } from '@zeta/xc';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeLabelRequest } from '../../../xo/change-label-request.model';
 import { XoMethod } from '../../../xo/method.model';
 import { SelectableModellingObjectComponent } from '../../workflow/shared/selectable-modelling-object.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { ModContentEditableDirective } from '../../workflow/shared/mod-content-editable.directive';
 
 
@@ -29,7 +29,7 @@ import { ModContentEditableDirective } from '../../workflow/shared/mod-content-e
     selector: 'member-service',
     templateUrl: './member-service.component.html',
     styleUrls: ['./member-service.component.scss'],
-    imports: [XcModule, ModContentEditableDirective]
+    imports: [XcTooltipDirective, ModContentEditableDirective]
 })
 export class MemberServiceComponent extends SelectableModellingObjectComponent {
 

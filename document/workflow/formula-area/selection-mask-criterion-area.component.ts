@@ -21,16 +21,16 @@ import { XoInsertSelectionMaskRequest } from '@pmod/xo/insert-selection-mask-req
 
 import { XoInsertRequest } from '../../../xo/insert-request.model';
 import { FormulaAreaComponent } from './formula-area.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { FormulaComponent } from '../formula/formula.component';
+import { XcFormLabelComponent, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({
     selector: 'selection-mask-criterion-area',
     templateUrl: './formula-area.component.html',
     styleUrls: ['./formula-area.component.scss'],
-    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective, FormulaComponent]
+    imports: [XcFormLabelComponent, XcIconButtonComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, FormulaComponent]
 })
 export class SelectionMaskCriterionAreaComponent extends FormulaAreaComponent {
 
