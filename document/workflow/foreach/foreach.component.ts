@@ -18,7 +18,6 @@
 import { NgFor } from '@angular/common';
 import { Component, forwardRef, HostBinding, Input } from '@angular/core';
 
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoForeach } from '../../../xo/foreach.model';
 import { XoRequest } from '../../../xo/request.model';
