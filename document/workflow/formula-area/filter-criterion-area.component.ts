@@ -20,16 +20,16 @@ import { Component } from '@angular/core';
 import { XoInsertFilterCriterionRequest } from '../../../xo/insert-filter-criterion-request.model';
 import { XoInsertRequest } from '../../../xo/insert-request.model';
 import { FormulaAreaComponent } from './formula-area.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { FormulaComponent } from '../formula/formula.component';
+import { XcFormLabelComponent, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({
     selector: 'filter-criterion-area',
     templateUrl: './formula-area.component.html',
     styleUrls: ['./formula-area.component.scss'],
-    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective, FormulaComponent]
+    imports: [XcFormLabelComponent, XcIconButtonComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, FormulaComponent]
 })
 export class FilterCriterionAreaComponent extends FormulaAreaComponent {
 

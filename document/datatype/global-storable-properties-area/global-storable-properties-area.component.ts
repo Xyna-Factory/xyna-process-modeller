@@ -20,7 +20,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } 
 import { XoGlobalStorablePropertyArea } from '@pmod/xo/global-storable-property-area.model';
 
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { XcCheckboxComponent, XcFormLabelComponent } from '@zeta/xc';
 import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 
 
@@ -29,7 +29,7 @@ import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
     templateUrl: './global-storable-properties-area.component.html',
     styleUrls: ['./global-storable-properties-area.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, XcI18nTranslateDirective]
+    imports: [XcCheckboxComponent, XcFormLabelComponent, XcI18nTranslateDirective]
 })
 export class GlobalStorablePropertiesAreaComponent extends ModellingObjectComponent {
 

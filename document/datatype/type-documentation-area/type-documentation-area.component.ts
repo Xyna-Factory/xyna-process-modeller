@@ -26,8 +26,8 @@ import { XoChangeTextRequest } from '../../../xo/change-text-request.model';
 import { XoTextArea } from '../../../xo/text-area.model';
 import { PluginService } from '../../plugin.service';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { XcFormLabelComponent, XcFormTextareaComponent, XcDefinitionProxyComponent } from '@zeta/xc';
 
 
 @Component({
@@ -35,7 +35,7 @@ import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
     templateUrl: './type-documentation-area.component.html',
     styleUrls: ['./type-documentation-area.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, XcI18nTranslateDirective]
+    imports: [XcFormLabelComponent, XcFormTextareaComponent, XcDefinitionProxyComponent, XcI18nTranslateDirective]
 })
 export class TypeDocumentationAreaComponent extends ModellingObjectComponent {
 

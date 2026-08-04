@@ -18,9 +18,8 @@
 import { Component, ElementRef, HostBinding, inject, Injector, OnDestroy, OnInit } from '@angular/core';
 
 import { OutsideListenerService } from '@zeta/base';
-import { XcRichListItemComponent } from '@zeta/xc';
+import { XcIconButtonComponent, XcRichListItemComponent, XcTooltipDirective } from '@zeta/xc';
 
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { XoExceptionMessage } from '../../../xo/exception-message.model';
 
 
@@ -35,7 +34,7 @@ export interface ExceptionMessageRichListItemData {
 @Component({
     templateUrl: './exception-message-rich-list-item.component.html',
     styleUrls: ['./exception-message-rich-list-item.component.scss'],
-    imports: [XcModule]
+    imports: [XcIconButtonComponent, XcTooltipDirective]
 })
 export class ExceptionMessageRichListItemComponent extends XcRichListItemComponent<void, ExceptionMessageRichListItemData> implements OnInit, OnDestroy {
     private readonly elementRef = inject(ElementRef<HTMLElement>);

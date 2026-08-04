@@ -28,15 +28,15 @@ import { XoFormula } from '../../xo/formula.model';
 import { XoContainerArea, XoModellingItem } from '../../xo/modelling-item.model';
 import { ClipboardItemComponent } from './clipboard-item.component';
 import { ModDraggableDirective } from '../../document/workflow/shared/drag-and-drop/mod-draggable.directive';
-import { XcModule } from '../../../../zeta/xc/xc.module';
 import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
+import { XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({
     selector: 'clipboard-area',
     templateUrl: './clipboard-area.component.html',
     styleUrls: ['./clipboard-area.component.scss'],
-    imports: [ModDropAreaDirective, ClipboardItemComponent, ModDraggableDirective, XcModule, XcI18nTranslateDirective]
+    imports: [ModDropAreaDirective, ClipboardItemComponent, ModDraggableDirective, XcTooltipDirective, XcI18nTranslateDirective]
 })
 export class ClipboardAreaComponent {
 

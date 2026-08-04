@@ -22,14 +22,14 @@ import { XoChangeLabelRequest } from '../../../xo/change-label-request.model';
 import { XoMemberVariable } from '../../../xo/member-variable.model';
 import { SelectableModellingObjectComponent } from '../../workflow/shared/selectable-modelling-object.component';
 import { ModContentEditableDirective } from '../../workflow/shared/mod-content-editable.directive';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({
     selector: 'member-variable',
     templateUrl: './member-variable.component.html',
     styleUrls: ['./member-variable.component.scss'],
-    imports: [ModContentEditableDirective, XcModule]
+    imports: [ModContentEditableDirective, XcTooltipDirective]
 })
 export class MemberVariableComponent extends SelectableModellingObjectComponent {
 

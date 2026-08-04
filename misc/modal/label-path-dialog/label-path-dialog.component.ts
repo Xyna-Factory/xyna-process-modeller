@@ -17,12 +17,11 @@
  */
 import { Component, HostListener, inject, ViewChild } from '@angular/core';
 
-import { XcAutocompleteDataWrapper, XcDialogComponent, XcFormDirective, XcOptionItem, XcOptionItemString } from '@zeta/xc';
+import { XcAutocompleteDataWrapper, XcButtonComponent, XcCheckboxComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormAutocompleteComponent, XcFormDirective, XcFormInputComponent, XcFormValidatorRequiredDirective, XcOptionItem, XcOptionItemString, XcTooltipDirective } from '@zeta/xc';
 
 import { Observable } from 'rxjs';
 
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { labelPathDialog_translations_de_DE } from './locale/label-path-dialog-translations.de-DE';
 import { labelPathDialog_translations_en_US } from './locale/label-path-dialog-translations.en-US';
 
@@ -48,7 +47,7 @@ export interface LabelPathDialogData {
 @Component({
     templateUrl: './label-path-dialog.component.html',
     styleUrls: ['./label-path-dialog.component.scss'],
-    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective]
+    imports: [XcButtonComponent, XcCheckboxComponent, XcDialogWrapperComponent, XcFormAutocompleteComponent, XcFormDirective, XcFormInputComponent, XcFormValidatorRequiredDirective, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class LabelPathDialogComponent extends XcDialogComponent<LabelPathDialogResult, LabelPathDialogData> {
     private readonly i18n = inject(I18nService);

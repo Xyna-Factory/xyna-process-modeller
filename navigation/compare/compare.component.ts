@@ -26,13 +26,12 @@ import { XoGetXmomItemResponse } from '@pmod/xo/get-xmom-item-response.model';
 import { XoWorkflow } from '@pmod/xo/workflow.model';
 import { FullQualifiedName } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
-import { XcDialogService } from '@zeta/xc';
+import { XcButtonComponent, XcDialogService } from '@zeta/xc';
 
 import { catchError, of } from 'rxjs';
 
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
-import { XcModule } from '../../../../zeta/xc/xc.module';
 import { DataflowComponent } from '../../document/workflow/dataflow/dataflow.component';
 import { VariableAreaDocumentComponent } from '../../document/workflow/variable-area/variable-area-document.component';
 import { TypeLabelAreaComponent } from '../../document/workflow/type-label-area/type-label-area.component';
@@ -45,7 +44,7 @@ import { ExceptionHandlingAreaComponent } from '../../document/workflow/exceptio
     templateUrl: './compare.component.html',
     styleUrls: ['./compare.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcI18nTranslateDirective, XcModule, DataflowComponent, VariableAreaDocumentComponent, TypeLabelAreaComponent, WorkflowComponent, ExceptionHandlingAreaComponent]
+    imports: [XcI18nTranslateDirective, XcButtonComponent, DataflowComponent, VariableAreaDocumentComponent, TypeLabelAreaComponent, WorkflowComponent, ExceptionHandlingAreaComponent]
 })
 export class CompareComponent extends CommonNavigationComponent {
     protected documentService = inject(DocumentService);

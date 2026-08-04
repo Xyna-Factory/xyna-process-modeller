@@ -23,15 +23,15 @@ import { XcStackDataSource } from '@zeta/xc/xc-stack/xc-stack-data-source';
 import { XcStackItem } from '@zeta/xc/xc-stack/xc-stack-item/xc-stack-item';
 import { XcComponentTemplate } from '@zeta/xc/xc-template/xc-template';
 
-import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { DatatypeTabComponent, PluginTabData } from '../datatype-tab.component';
+import { XcStackComponent } from '@zeta/xc';
 
 
 @Component({
     templateUrl: './datatype-plugin-tab.component.html',
     styleUrls: ['./datatype-plugin-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule]
+    imports: [XcStackComponent]
 })
 export class DataTypePluginTabComponent extends DatatypeTabComponent<XoDataType, PluginTabData> {
     readonly stackDataSource = new XcStackDataSource();

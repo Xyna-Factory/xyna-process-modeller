@@ -18,11 +18,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 
 import { I18nService } from '@zeta/i18n';
-import { XcLocalTableDataSource } from '@zeta/xc';
+import { XcLocalTableDataSource, XcTableComponent } from '@zeta/xc';
 
 import { XoStorablePropertyArea } from '../../../xo/storable-property-area.model';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 @Component({
@@ -30,7 +29,7 @@ import { XcModule } from '../../../../../zeta/xc/xc.module';
     templateUrl: './storable-properties-area.component.html',
     styleUrls: ['./storable-properties-area.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule]
+    imports: [XcTableComponent]
 })
 export class StorablePropertiesAreaComponent extends ModellingObjectComponent {
 

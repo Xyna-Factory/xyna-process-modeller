@@ -18,7 +18,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 
 import { I18nService } from '@zeta/i18n';
-import { XcDialogService } from '@zeta/xc';
+import { XcButtonComponent, XcDialogService } from '@zeta/xc';
 
 import { throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
@@ -30,7 +30,6 @@ import { XoGetClipboardResponse } from '../../xo/get-clipboard-response.model';
 import { XoContainerArea } from '../../xo/modelling-item.model';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
-import { XcModule } from '../../../../zeta/xc/xc.module';
 import { ClipboardAreaComponent } from './clipboard-area.component';
 
 
@@ -39,7 +38,7 @@ import { ClipboardAreaComponent } from './clipboard-area.component';
     templateUrl: './clipboard.component.html',
     styleUrls: ['./clipboard.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcI18nContextDirective, XcI18nTranslateDirective, XcModule, ClipboardAreaComponent]
+    imports: [XcI18nContextDirective, XcI18nTranslateDirective, XcButtonComponent, ClipboardAreaComponent]
 })
 export class ClipboardComponent extends CommonNavigationComponent {
     private readonly i18n = inject(I18nService);

@@ -32,14 +32,14 @@ import { ModDragEvent, ModDropEvent, ModDropAreaDirective } from '../../workflow
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { MemberServiceComponent } from '../member-service/member-service.component';
 import { ModDraggableDirective } from '../../workflow/shared/drag-and-drop/mod-draggable.directive';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { XcIconButtonComponent } from '@zeta/xc';
 
 
 @Component({
     selector: 'service-area',
     templateUrl: './service-area.component.html',
     styleUrls: ['./service-area.component.scss'],
-    imports: [ModDropAreaDirective, MemberServiceComponent, ModDraggableDirective, XcModule]
+    imports: [ModDropAreaDirective, MemberServiceComponent, ModDraggableDirective, XcIconButtonComponent]
 })
 export class ServiceAreaComponent extends ModellingObjectComponent {
 

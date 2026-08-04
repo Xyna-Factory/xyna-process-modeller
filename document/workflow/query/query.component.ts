@@ -19,10 +19,9 @@ import { Component, forwardRef, inject, Input } from '@angular/core';
 
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { I18nService } from '@zeta/i18n';
-import { XcDialogService, XcIdentityDataWrapper, XcMenuItem, XcStringIntegerDataWrapper } from '@zeta/xc';
+import { XcCheckboxComponent, XcDialogService, XcFormInputComponent, XcFormValidatorNumberDirective, XcIconButtonComponent, XcIconComponent, XcIdentityDataWrapper, XcMenuItem, XcMenuServiceDirective, XcMenuTriggerDirective, XcStringIntegerDataWrapper } from '@zeta/xc';
 
 import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeQueryConfigurationRequest } from '../../../xo/change-query-configuration-request.model';
 import { XoQuery } from '../../../xo/query.model';
@@ -41,7 +40,7 @@ import { VariableAreaServiceComponent } from '../variable-area/variable-area-ser
     selector: 'query',
     templateUrl: './query.component.html',
     styleUrls: ['./query.component.scss'],
-    imports: [LabelAreaComponent, XcModule, DocumentationAreaComponent, FilterCriterionAreaComponent, SelectionMaskCriterionAreaComponent, SortingCriterionAreaComponent, XcI18nTranslateDirective, forwardRef(() => ExceptionHandlingAreaComponent), VariableAreaServiceComponent]
+    imports: [LabelAreaComponent, XcCheckboxComponent, XcFormInputComponent, XcFormValidatorNumberDirective, XcIconButtonComponent, XcIconComponent, XcMenuServiceDirective, XcMenuTriggerDirective, DocumentationAreaComponent, FilterCriterionAreaComponent, SelectionMaskCriterionAreaComponent, SortingCriterionAreaComponent, XcI18nTranslateDirective, forwardRef(() => ExceptionHandlingAreaComponent), VariableAreaServiceComponent]
 })
 export class QueryComponent extends InvocationComponent {
 

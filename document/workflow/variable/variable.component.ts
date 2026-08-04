@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { RuntimeContext, Xo } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
-import { XcDialogService, XcMenuItem } from '@zeta/xc';
+import { XcDialogService, XcIconButtonComponent, XcMenuItem, XcMenuServiceDirective, XcMenuTriggerDirective, XcTooltipDirective } from '@zeta/xc';
 
 import { XmomObjectType } from '../../../api/xmom-types';
 import { ModellingActionType } from '../../../api/xmom.service';
@@ -46,14 +46,13 @@ import { BranchSelectionService } from '../distinction/branch/branch-selection.s
 import { ModDropEvent, ModDropAreaDirective } from '../shared/drag-and-drop/mod-drop-area.directive';
 import { SelectableModellingObjectComponent } from '../shared/selectable-modelling-object.component';
 import { ModContentEditableDirective } from '../shared/mod-content-editable.directive';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 @Component({
     selector: 'variable',
     templateUrl: './variable.component.html',
     styleUrls: ['./variable.component.scss'],
-    imports: [ModDropAreaDirective, ModContentEditableDirective, XcModule]
+    imports: [ModDropAreaDirective, ModContentEditableDirective, XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective, XcTooltipDirective]
 })
 export class VariableComponent extends SelectableModellingObjectComponent {
 

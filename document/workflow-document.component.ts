@@ -20,13 +20,12 @@ import { Component, ElementRef, inject, OnDestroy } from '@angular/core';
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
 import { FullQualifiedName } from '@zeta/api';
 import { copyToClipboard, KeyboardEventType, KeyDistributionService, pasteFromClipboard } from '@zeta/base';
-import { XcContentEditableDirective, XcMenuItem, XcStatusBarEntryType, XcStatusBarService } from '@zeta/xc';
+import { XcContentEditableDirective, XcIconButtonComponent, XcMenuItem, XcMenuServiceDirective, XcMenuTriggerDirective, XcStatusBarEntryType, XcStatusBarService } from '@zeta/xc';
 
 import { Subscription, throwError } from 'rxjs';
 import { catchError, filter, map } from 'rxjs/operators';
 
 import { XcI18nContextDirective } from '../../../zeta/i18n';
-import { XcModule } from '../../../zeta/xc/xc.module';
 import { DeploymentState } from '../api/xmom-types';
 import { ModellingActionType, XmomState } from '../api/xmom.service';
 import { XoConnectionArray } from '../xo/connection.model';
@@ -56,7 +55,7 @@ import { WorkflowComponent } from './workflow/workflow/workflow.component';
     styleUrls: ['./workflow-document.component.scss'],
     // single service instances per document
     providers: [SelectionService, BranchSelectionService, WorkflowDetailLevelService],
-    imports: [XcI18nContextDirective, DataflowComponent, VariableAreaDocumentComponent, TypeLabelAreaComponent, DocumentationAreaComponent, WorkflowComponent, ExceptionHandlingAreaComponent, XcModule, DropIndicatorComponent]
+    imports: [XcI18nContextDirective, DataflowComponent, VariableAreaDocumentComponent, TypeLabelAreaComponent, DocumentationAreaComponent, WorkflowComponent, ExceptionHandlingAreaComponent, XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective, DropIndicatorComponent]
 })
 export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowDocumentModel> implements OnDestroy {
     private readonly elementRef = inject(ElementRef<HTMLElement>);

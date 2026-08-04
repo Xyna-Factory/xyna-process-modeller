@@ -23,14 +23,14 @@ import { ErrorItem } from '@pmod/xo/issue.model';
 
 import { ErrorService } from '../error.service';
 import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { XcIconButtonComponent, XcIconComponent, XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({
     selector: 'xfm-mod-nav-error',
     templateUrl: './error-item.component.html',
     styleUrls: ['./error-item.component.scss'],
-    imports: [XcI18nTranslateDirective, XcModule]
+    imports: [XcI18nTranslateDirective, XcIconButtonComponent, XcIconComponent, XcTooltipDirective]
 })
 export class ErrorItemComponent {
     private readonly documentService = inject(DocumentService);

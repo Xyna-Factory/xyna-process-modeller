@@ -17,10 +17,9 @@
  */
 import { Component, inject } from '@angular/core';
 
-import { XcDialogComponent } from '@zeta/xc';
+import { XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormTextareaComponent } from '@zeta/xc';
 
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { showXMLModal_translations_de_DE } from './locale/show-xml-modal-translations.de-DE';
 import { showXMLModal_translations_en_US } from './locale/show-xml-modal-translations.en-US';
 
@@ -38,7 +37,7 @@ type XMLState = 'current' | 'saved' | 'deployed';
 @Component({
     templateUrl: './show-xml-modal.component.html',
     styleUrls: ['./show-xml-modal.component.scss'],
-    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective]
+    imports: [XcButtonComponent, XcDialogWrapperComponent, XcFormTextareaComponent, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class ShowXmlModalComponent extends XcDialogComponent<void, ShowXmlModalData> {
     private readonly i18n = inject(I18nService);

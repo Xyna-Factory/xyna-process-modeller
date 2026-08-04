@@ -19,7 +19,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, O
 
 import { FullQualifiedName, XoStructureType } from '@zeta/api';
 import { isString } from '@zeta/base';
-import { XcAutocompleteDataWrapper, XcCheckboxComponent, XcDialogService, XcFormAutocompleteComponent, XcOptionItemString, XcOptionItemStringOrUndefined } from '@zeta/xc';
+import { XcAutocompleteDataWrapper, XcButtonComponent, XcCheckboxComponent, XcDialogService, XcFormAutocompleteComponent, XcFormInputComponent, XcFormLabelComponent, XcFormValidatorRequiredDirective, XcOptionItemString, XcOptionItemStringOrUndefined, XcTooltipDirective } from '@zeta/xc';
 
 import { merge, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -41,8 +41,8 @@ import { TypeDocumentModel } from '../../model/type-document.model';
 import { ModDropEvent, ModDropAreaDirective } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { ShowGuiModelModalComponent } from './show-gui-model-modal/show-gui-model-modal.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { XcHasRightDirective } from '@zeta/xc/shared/xc-has-right.directive';
 
 
 @Component({
@@ -50,7 +50,7 @@ import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
     templateUrl: './type-info-area.component.html',
     styleUrls: ['./type-info-area.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, XcI18nTranslateDirective, ModDropAreaDirective]
+    imports: [XcButtonComponent, XcCheckboxComponent, XcFormAutocompleteComponent, XcFormInputComponent, XcFormLabelComponent, XcFormValidatorRequiredDirective, XcHasRightDirective, XcTooltipDirective, XcI18nTranslateDirective, ModDropAreaDirective]
 })
 export class TypeInfoAreaComponent extends ModellingObjectComponent implements OnInit {
 

@@ -29,7 +29,7 @@ import { DatatypeMethodTabComponent } from '../datatype-tab.component';
     templateUrl: './method-base-tab.component.html',
     styleUrls: ['./method-base-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, XcI18nTranslateDirective, TypeDocumentationAreaComponent]
+    imports: [XcButtonComponent, XcFormInputComponent, XcFormValidatorRequiredDirective, XcI18nTranslateDirective, TypeDocumentationAreaComponent]
 })
 export class MethodBaseTabComponent extends DatatypeMethodTabComponent {
 
