@@ -23,12 +23,11 @@ import { XoChangeMemberMethodReferenceRequest } from '@pmod/xo/change-member-met
 import { XoDynamicMethod } from '@pmod/xo/dynamic-method.model';
 import { XoMethod } from '@pmod/xo/method.model';
 import { I18nService } from '@zeta/i18n';
-import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItem, XcOptionItemStringOrUndefined, XcOptionItemTranslate } from '@zeta/xc';
+import { XcAutocompleteDataWrapper, XcButtonComponent, XcFormAutocompleteComponent, XcIconButtonComponent, XcOptionItem, XcOptionItemStringOrUndefined, XcOptionItemTranslate, XcTooltipDirective } from '@zeta/xc';
 
 import { filter } from 'rxjs';
 
 import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
-import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { MethodImplementationComponent } from '../../method-implementation/method-implementation.component';
 import { DatatypeMethodTabComponent } from '../datatype-tab.component';
 
@@ -37,7 +36,7 @@ import { DatatypeMethodTabComponent } from '../datatype-tab.component';
     templateUrl: './method-implementation-tab.component.html',
     styleUrls: ['./method-implementation-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective, MethodImplementationComponent]
+    imports: [XcButtonComponent, XcFormAutocompleteComponent, XcIconButtonComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, MethodImplementationComponent]
 })
 export class MethodImplementationTabComponent extends DatatypeMethodTabComponent {
     private readonly dataTypeService = inject(DataTypeService);

@@ -19,7 +19,7 @@ import { Component, inject, Input } from '@angular/core';
 
 import { ApiService, XoManagedFileID } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
-import { XcRichListItem } from '@zeta/xc';
+import { XcFormLabelComponent, XcIconButtonComponent, XcRichListComponent, XcRichListItem } from '@zeta/xc';
 
 import { catchError, EMPTY, Observable, Subject, switchMap } from 'rxjs';
 
@@ -27,7 +27,6 @@ import { HttpMethod, ModellingActionType } from '../../../api/xmom.service';
 import { XoLibrariesArea } from '../../../xo/libraries-area.model';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { LibItemComponent, LibItemData } from './lib-item.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 
 
@@ -35,7 +34,7 @@ import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
     selector: 'lib-area',
     templateUrl: './lib-area.component.html',
     styleUrls: ['./lib-area.component.scss'],
-    imports: [XcModule, XcI18nTranslateDirective]
+    imports: [XcFormLabelComponent, XcIconButtonComponent, XcRichListComponent, XcI18nTranslateDirective]
 })
 export class LibAreaComponent extends ModellingObjectComponent {
 

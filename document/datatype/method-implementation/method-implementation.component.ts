@@ -21,7 +21,7 @@ import { MinMaxService } from '@pmod/document/min-max.service';
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoLibraryCallRequest } from '@pmod/xo/library-call-request.model';
 import { I18nService } from '@zeta/i18n';
-import { XcDialogService } from '@zeta/xc';
+import { XcButtonComponent, XcCheckboxComponent, XcDefinitionProxyComponent, XcDialogService, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 
 import { combineLatest } from 'rxjs';
@@ -33,7 +33,6 @@ import { XoMethod } from '../../../xo/method.model';
 import { DocumentService } from '../../document.service';
 import { ModellingItemComponent, TriggeredAction } from '../../workflow/shared/modelling-object.component';
 import { VariableAreaDocumentComponent } from '../../workflow/variable-area/variable-area-document.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { CodingComponent } from '../coding/coding.component';
 
@@ -42,7 +41,7 @@ import { CodingComponent } from '../coding/coding.component';
     selector: 'method-implementation',
     templateUrl: './method-implementation.component.html',
     styleUrls: ['./method-implementation.component.scss'],
-    imports: [VariableAreaDocumentComponent, XcModule, XcI18nTranslateDirective, CodingComponent]
+    imports: [VariableAreaDocumentComponent, XcButtonComponent, XcCheckboxComponent, XcIconButtonComponent, XcTooltipDirective, XcDefinitionProxyComponent, XcI18nTranslateDirective, CodingComponent]
 })
 export class MethodImplementationComponent extends ModellingItemComponent {
 

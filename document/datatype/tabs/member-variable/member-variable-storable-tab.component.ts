@@ -19,10 +19,9 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { XoChangeMemberVariableStorableRoleRequest } from '@pmod/xo/change-member-variable-storable-role-request.model';
 import { I18nService } from '@zeta/i18n';
-import { XcAutocompleteDataWrapper, XcOptionItemString, XcOptionItemTranslate } from '@zeta/xc';
+import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcFormLabelComponent, XcOptionItemString, XcOptionItemTranslate } from '@zeta/xc';
 
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
-import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { StorablePropertiesAreaComponent } from '../../storable-properties-area/storable-properties-area.component';
 import { DatatypeVariableTabComponent } from '../datatype-tab.component';
 
@@ -31,7 +30,7 @@ import { DatatypeVariableTabComponent } from '../datatype-tab.component';
     templateUrl: './member-variable-storable-tab.component.html',
     styleUrls: ['./member-variable-storable-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, XcI18nTranslateDirective, StorablePropertiesAreaComponent]
+    imports: [XcFormAutocompleteComponent, XcFormLabelComponent, XcI18nTranslateDirective, StorablePropertiesAreaComponent]
 })
 export class MemberVariableStorableTabComponent extends DatatypeVariableTabComponent {
     private readonly i18n = inject(I18nService);

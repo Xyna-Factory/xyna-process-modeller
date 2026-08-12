@@ -18,7 +18,6 @@
 import { Component, forwardRef } from '@angular/core';
 
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
-import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoRequest } from '../../../../xo/request.model';
 import { XoTypeChoice } from '../../../../xo/type-choice.model';
@@ -26,13 +25,14 @@ import { ContentAreaComponent } from '../../content-area/content-area.component'
 import { FormulaInputAreaComponent } from '../../formula-input-area/formula-input-area.component';
 import { VariableAreaChoiceComponent } from '../../variable-area/variable-area-choice.component';
 import { ChoiceComponent } from '../choice.component';
+import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({
     selector: 'type-choice',
     templateUrl: './type-choice.component.html',
     styleUrls: ['../choice.component.scss', './type-choice.component.scss'],
-    imports: [XcModule, XcI18nTranslateDirective, FormulaInputAreaComponent, forwardRef(() => ContentAreaComponent), VariableAreaChoiceComponent]
+    imports: [XcIconButtonComponent, XcTooltipDirective, XcI18nTranslateDirective, FormulaInputAreaComponent, forwardRef(() => ContentAreaComponent), VariableAreaChoiceComponent]
 })
 export class TypeChoiceComponent extends ChoiceComponent {
 

@@ -21,15 +21,15 @@ import { Component, input, Input, OnInit } from '@angular/core';
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 
 import { SelectableModellingObjectComponent } from '../../workflow/shared/selectable-modelling-object.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { XcI18nPipe } from '../../../../../zeta/i18n';
+import { XcIconComponent } from '@zeta/xc';
 
 
 @Component({
     selector: 'details-item',
     templateUrl: './details-item.component.html',
     styleUrls: ['./details-item.component.scss'],
-    imports: [XcModule, XcI18nPipe]
+    imports: [XcIconComponent, XcI18nPipe]
 })
 export class DetailsItemComponent extends SelectableModellingObjectComponent implements OnInit {
 

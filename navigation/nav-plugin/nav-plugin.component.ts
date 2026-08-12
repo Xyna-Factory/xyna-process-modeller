@@ -19,11 +19,10 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } 
 
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoGuiDefiningWorkflow } from '@yggdrasil/plugin/gui-defining-workflow.model';
-import { XoPlugin } from '@zeta/xc';
+import { XcDefinitionProxyComponent, XoPlugin } from '@zeta/xc';
 import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
-import { XcModule } from '../../../../zeta/xc/xc.module';
 
 
 @Component({
@@ -31,7 +30,7 @@ import { XcModule } from '../../../../zeta/xc/xc.module';
     templateUrl: './nav-plugin.component.html',
     styleUrls: ['./nav-plugin.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule]
+    imports: [XcDefinitionProxyComponent]
 })
 export class NavPluginComponent extends CommonNavigationComponent {
 

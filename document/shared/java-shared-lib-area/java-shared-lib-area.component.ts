@@ -17,14 +17,13 @@
  */
 import { Component, Input, OnDestroy } from '@angular/core';
 
-import { XcRichListItem } from '@zeta/xc';
+import { XcFormLabelComponent, XcIconButtonComponent, XcRichListComponent, XcRichListItem } from '@zeta/xc';
 
 import { Subject, Subscription } from 'rxjs';
 
 import { XoJavaSharedLibrariesArea } from '../../../xo/java-shared-libraries-area.model';
 import { ModellingObjectComponent, TriggeredAction } from '../../workflow/shared/modelling-object.component';
 import { JavaSharedLibItemComponent, JavaSharedLibItemData } from './java-shared-lib-item.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 
 
@@ -32,7 +31,7 @@ import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
     selector: 'java-shared-lib-area',
     templateUrl: './java-shared-lib-area.component.html',
     styleUrls: ['./java-shared-lib-area.component.scss'],
-    imports: [XcModule, XcI18nTranslateDirective]
+    imports: [XcFormLabelComponent, XcIconButtonComponent, XcRichListComponent, XcI18nTranslateDirective]
 })
 export class JavaSharedLibAreaComponent extends ModellingObjectComponent implements OnDestroy {
 

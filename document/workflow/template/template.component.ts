@@ -19,7 +19,7 @@ import { Component, ElementRef, HostBinding, inject, Input, OnDestroy, QueryList
 
 import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
 import { ApiService } from '@zeta/api';
-import { XcMenuItem } from '@zeta/xc';
+import { XcIconButtonComponent, XcMenuItem, XcMenuServiceDirective, XcMenuTriggerDirective } from '@zeta/xc';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeFormulaRequest } from '../../../xo/change-formula-request.model';
@@ -34,7 +34,6 @@ import { TemplateRow } from './model/template-row.model';
 import { TemplateText } from './model/template-text.model';
 import { SplitTemplateRowEvent, SwitchTemplateRowFocusEvent, TemplateRowComponent } from './template-row/template-row.component';
 import { NonDraggableTextAreaComponent } from '../non-draggable-text-area/non-draggable-text-area.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 enum ConcatParameterType {
@@ -53,7 +52,7 @@ interface ConcatParameter {
     selector: 'template-block',
     templateUrl: './template.component.html',
     styleUrls: ['./template.component.scss'],
-    imports: [TemplateRowComponent, NonDraggableTextAreaComponent, XcModule]
+    imports: [TemplateRowComponent, NonDraggableTextAreaComponent, XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective]
 })
 export class TemplateComponent extends ModellingItemComponent implements OnDestroy {
 

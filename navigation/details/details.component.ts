@@ -28,10 +28,9 @@ import { MessageBusService } from '@yggdrasil/events';
 import { ApiService, FullQualifiedName, XoApplication as XoApplicationZeta, XoRuntimeContext, XoWorkspace as XoWorkspaceZeta } from '@zeta/api';
 import { AuthService } from '@zeta/auth';
 import { I18nService } from '@zeta/i18n';
-import { XcDialogService } from '@zeta/xc';
+import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcPanelComponent, XcTooltipDirective } from '@zeta/xc';
 
 import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
-import { XcModule } from '../../../../zeta/xc/xc.module';
 import { DeploymentStateDetailComponent } from '../../../factorymanager/deployment-items/components/deployment-state-detail/deployment-state-detail.component';
 import { DocumentService } from '../../document/document.service';
 import { DocumentItem, DocumentModel } from '../../document/model/document.model';
@@ -40,6 +39,7 @@ import { XoApplication, XoWorkspace } from '../../xo/runtime-context.model';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 import { RelationTableComponent } from './relation-table/relation-table.component';
 import { ShowXmlModalComponent, ShowXmlModalData } from './show-xml-modal/show-xml-modal.component';
+import { XcHasRightDirective } from '@zeta/xc/shared/xc-has-right.directive';
 import { PMOD_RTC } from '@pmod/processmodeller.component';
 
 
@@ -48,7 +48,7 @@ import { PMOD_RTC } from '@pmod/processmodeller.component';
     templateUrl: './details.component.html',
     styleUrls: ['./details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcI18nContextDirective, XcI18nTranslateDirective, XcModule, DeploymentStateDetailComponent, RelationTableComponent]
+    imports: [XcI18nContextDirective, XcI18nTranslateDirective, XcButtonComponent, XcHasRightDirective, XcIconButtonComponent, XcPanelComponent, XcTooltipDirective, DeploymentStateDetailComponent, RelationTableComponent]
 })
 export class DetailsComponent extends CommonNavigationComponent implements AfterViewInit {
     private readonly i18n = inject(I18nService);

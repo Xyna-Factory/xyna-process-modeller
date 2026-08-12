@@ -20,7 +20,7 @@ import { Component, inject, Input, OnDestroy } from '@angular/core';
 import { SelectionService } from '@pmod/document/selection.service';
 import { MappingMode, WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { ApiService, StartOrderOptionsBuilder } from '@zeta/api';
-import { XcDialogService, XcMenuItem } from '@zeta/xc';
+import { XcDialogService, XcIconButtonComponent, XcIconComponent, XcMenuItem, XcMenuServiceDirective, XcMenuTriggerDirective } from '@zeta/xc';
 
 import { filter, Subscription } from 'rxjs';
 
@@ -32,7 +32,6 @@ import { XoVariable } from '../../../xo/variable.model';
 import { ModellingItemComponent } from '../shared/modelling-object.component';
 import { VariableAreaServiceComponent } from '../variable-area/variable-area-service.component';
 import { LabelAreaComponent } from '../label-area/label-area.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { DocumentationAreaComponent } from '../documentation-area/documentation-area.component';
 import { FormulaAreaComponent } from '../formula-area/formula-area.component';
 import { VisualMappingComponent } from '../visual-mapping/visual-mapping.component';
@@ -42,7 +41,7 @@ import { VisualMappingComponent } from '../visual-mapping/visual-mapping.compone
     selector: 'mapping',
     templateUrl: './mapping.component.html',
     styleUrls: ['./mapping.component.scss'],
-    imports: [VariableAreaServiceComponent, LabelAreaComponent, XcModule, DocumentationAreaComponent, FormulaAreaComponent, VisualMappingComponent]
+    imports: [VariableAreaServiceComponent, LabelAreaComponent, XcIconButtonComponent, XcIconComponent, XcMenuServiceDirective, XcMenuTriggerDirective, DocumentationAreaComponent, FormulaAreaComponent, VisualMappingComponent]
 })
 export class MappingComponent extends ModellingItemComponent implements OnDestroy {
 

@@ -23,17 +23,17 @@ import { XoInsertRequest } from '../../../xo/insert-request.model';
 import { XoInsertSortingCriterionRequest } from '../../../xo/insert-sort-criterion-request.model';
 import { XoSortingCriterion } from '../../../xo/sorting-criterion.model';
 import { FormulaAreaComponent } from './formula-area.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { NgClass } from '@angular/common';
 import { FormulaComponent } from '../formula/formula.component';
+import { XcFormLabelComponent, XcIconButtonComponent } from '@zeta/xc';
 
 
 @Component({
     selector: 'sorting-criterion-area',
     templateUrl: './sorting-criterion-area.component.html',
     styleUrls: ['./sorting-criterion-area.component.scss', './formula-area.component.scss'],
-    imports: [XcModule, XcI18nTranslateDirective, NgClass, FormulaComponent]
+    imports: [XcFormLabelComponent, XcIconButtonComponent, XcI18nTranslateDirective, NgClass, FormulaComponent]
 })
 export class SortingCriterionAreaComponent extends FormulaAreaComponent {
 

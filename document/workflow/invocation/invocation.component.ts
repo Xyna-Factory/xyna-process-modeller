@@ -22,9 +22,8 @@ import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflo
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { FullQualifiedName } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
-import { XcDialogService, XcMenuItem } from '@zeta/xc';
+import { XcDialogService, XcIconButtonComponent, XcMenuItem, XcMenuServiceDirective, XcMenuTriggerDirective, XcTooltipDirective } from '@zeta/xc';
 
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { LabelPathDialogComponent, LabelPathDialogData } from '../../../misc/modal/label-path-dialog/label-path-dialog.component';
 import { XoChangeCompensationRequest } from '../../../xo/change-compensation-request.model';
@@ -51,7 +50,7 @@ import { VariableAreaServiceComponent } from '../variable-area/variable-area-ser
     selector: 'invocation',
     templateUrl: './invocation.component.html',
     styleUrls: ['./invocation.component.scss'],
-    imports: [XcModule, OrderInputSourceAreaComponent, RemoteDestinationAreaComponent, VariableAreaServiceComponent, TypeLabelAreaServiceComponent, DocumentationAreaComponent, forwardRef(() => ExceptionHandlingAreaComponent)]
+    imports: [XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective, XcTooltipDirective, OrderInputSourceAreaComponent, RemoteDestinationAreaComponent, VariableAreaServiceComponent, TypeLabelAreaServiceComponent, DocumentationAreaComponent, forwardRef(() => ExceptionHandlingAreaComponent)]
 })
 export class InvocationComponent extends ModellingItemComponent {
 

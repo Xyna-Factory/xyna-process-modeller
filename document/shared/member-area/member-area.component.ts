@@ -27,15 +27,15 @@ import { XoMemberMethodArea } from '../../../xo/member-method-area.model';
 import { XoMemberVariableArea } from '../../../xo/member-variable-area.model';
 import { PluginService } from '../../plugin.service';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { XcI18nPipe } from '../../../../../zeta/i18n';
+import { XcIconButtonComponent, XcDefinitionProxyComponent } from '@zeta/xc';
 
 
 @Component({
     selector: 'member-area',
     templateUrl: './member-area.component.html',
     styleUrls: ['./member-area.component.scss'],
-    imports: [XcModule, XcI18nPipe]
+    imports: [XcIconButtonComponent, XcDefinitionProxyComponent, XcI18nPipe]
 })
 export class MemberAreaComponent extends ModellingObjectComponent {
 

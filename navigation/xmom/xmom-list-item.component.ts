@@ -22,10 +22,9 @@ import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflo
 import { FullQualifiedName } from '@zeta/api';
 import { coerceBoolean } from '@zeta/base';
 import { I18nService } from '@zeta/i18n';
-import { XcDialogService, XcMenuItem } from '@zeta/xc';
+import { XcDialogService, XcIconButtonComponent, XcIconComponent, XcMenuItem, XcMenuServiceDirective, XcMenuTriggerDirective, XcTooltipDirective } from '@zeta/xc';
 
 import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
-import { XcModule } from '../../../../zeta/xc/xc.module';
 import { XmomObjectType } from '../../api/xmom-types';
 import { DocumentService } from '../../document/document.service';
 import { XoData } from '../../xo/data.model';
@@ -43,7 +42,7 @@ import { XoXmomItem } from '../../xo/xmom-item.model';
     selector: 'xfm-mod-nav-xmomlistitem',
     templateUrl: './xmom-list-item.component.html',
     styleUrls: ['./xmom-list-item.component.scss'],
-    imports: [XcModule, XcI18nTranslateDirective]
+    imports: [XcIconButtonComponent, XcIconComponent, XcMenuServiceDirective, XcMenuTriggerDirective, XcTooltipDirective, XcI18nTranslateDirective]
 })
 export class XMOMListItemComponent {
     private readonly i18n = inject(I18nService);

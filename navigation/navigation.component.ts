@@ -21,7 +21,7 @@ import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChild, View
 import { TypeDocumentModel } from '@pmod/document/model/type-document.model';
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoArray } from '@zeta/api';
-import { XcDialogService, XcMenuItem, XoPlugin, XoPluginArray } from '@zeta/xc';
+import { XcDialogService, XcIconButtonComponent, XcMenuComponent, XcMenuItem, XcMenuTriggerDirective, XcTooltipDirective, XoPlugin, XoPluginArray } from '@zeta/xc';
 
 import { merge, of, Subscription } from 'rxjs';
 
@@ -38,8 +38,8 @@ import { HelpComponent } from './help/help.component';
 import { NavPluginComponent } from './nav-plugin/nav-plugin.component';
 import { SearchComponent } from './search/search.component';
 import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../zeta/i18n';
-import { XcModule } from '../../../zeta/xc/xc.module';
 import { NgClass } from '@angular/common';
+import { XcHasRightDirective } from '@zeta/xc/shared/xc-has-right.directive';
 
 
 enum NavigationbarArea {
@@ -89,7 +89,7 @@ export enum AreaValue {
             transition('opened => opened_half', animate('.3s ease-in'))
         ])
     ],
-    imports: [FactoryComponent, XcI18nContextDirective, XcI18nTranslateDirective, SearchComponent, DetailsComponent, ClipboardComponent, ErrorsComponent, CompareComponent, HelpComponent, NavPluginComponent, XcModule, NgClass]
+    imports: [FactoryComponent, XcI18nContextDirective, XcI18nTranslateDirective, SearchComponent, DetailsComponent, ClipboardComponent, ErrorsComponent, CompareComponent, HelpComponent, NavPluginComponent, XcHasRightDirective, XcIconButtonComponent, XcMenuComponent, XcMenuTriggerDirective, XcTooltipDirective, NgClass]
 })
 export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
     private readonly documentService = inject(DocumentService);

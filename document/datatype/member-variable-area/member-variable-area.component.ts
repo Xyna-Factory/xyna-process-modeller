@@ -30,14 +30,14 @@ import { ModDropEvent, ModDropAreaDirective } from '../../workflow/shared/drag-a
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { ModDraggableDirective } from '../../workflow/shared/drag-and-drop/mod-draggable.directive';
 import { MemberVariableComponent } from '../member-variable/member-variable.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { XcIconButtonComponent } from '@zeta/xc';
 
 
 @Component({
     selector: 'member-variable-area',
     templateUrl: './member-variable-area.component.html',
     styleUrls: ['./member-variable-area.component.scss'],
-    imports: [ModDropAreaDirective, ModDraggableDirective, MemberVariableComponent, XcModule]
+    imports: [ModDropAreaDirective, ModDraggableDirective, MemberVariableComponent, XcIconButtonComponent]
 })
 export class MemberVariableAreaComponent extends ModellingObjectComponent {
 

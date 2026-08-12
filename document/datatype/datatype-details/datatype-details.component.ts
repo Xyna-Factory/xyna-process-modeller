@@ -21,7 +21,7 @@ import { PluginService } from '@pmod/document/plugin.service';
 import { XoDataType } from '@pmod/xo/data-type.model';
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 import { I18nService } from '@zeta/i18n';
-import { XcTabBarItem } from '@zeta/xc';
+import { XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 import { XoBaseDefinition, XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 
 import { BehaviorSubject, combineLatest, map, Observable, of, Subject } from 'rxjs';
@@ -33,7 +33,6 @@ import { DataTypePluginTabComponent } from '../tabs/datatype/datatype-plugin-tab
 import { DataTypeStorableTabComponent } from '../tabs/datatype/datatype-storable-tab.component';
 import { DocumentationTabComponent } from '../tabs/shared/documentation-tab.component';
 import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 
 
 @Component({
@@ -41,7 +40,7 @@ import { XcModule } from '../../../../../zeta/xc/xc.module';
     templateUrl: './datatype-details.component.html',
     styleUrls: ['./datatype-details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule]
+    imports: [XcTabBarComponent]
 })
 export class DataTypeDetailsComponent extends ModellingItemComponent implements OnDestroy {
 

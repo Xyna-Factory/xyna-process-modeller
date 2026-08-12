@@ -21,8 +21,8 @@ import { XMOMListComponent } from '@pmod/navigation/xmom/xmom-list.component';
 import { XoFactoryItemArray } from '@pmod/xo/factory-item.model';
 import { RelationTypeEnum, XoGetXmomRelationsResponse } from '@pmod/xo/get-xmom-relations-response.model';
 import { XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { XMOMListComponent as XMOMListComponent_1 } from '../../xmom/xmom-list.component';
+import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 
 export interface RelationGroup {
@@ -35,7 +35,7 @@ export interface RelationGroup {
     selector: 'relation-table',
     templateUrl: './relation-table.component.html',
     styleUrls: ['./relation-table.component.scss'],
-    imports: [XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective, XcModule, XMOMListComponent_1]
+    imports: [XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective, XcIconButtonComponent, XcTooltipDirective, XMOMListComponent_1]
 })
 export class RelationTableComponent {
     @ViewChild(XMOMListComponent, { static: true })

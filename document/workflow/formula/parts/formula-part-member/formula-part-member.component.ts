@@ -26,7 +26,6 @@ import { map } from 'rxjs/operators';
 import { FormulaPartMember } from '../../../../../xo/util/formula-parts/formula-part-member';
 import { FormulaEditablePartComponent } from '../formula-editable-part.component';
 import { FormulaChildComponent } from '../formula-part.component';
-import { XcModule } from '../../../../../../../zeta/xc/xc.module';
 import { VariableComponent } from '../../../variable/variable.component';
 
 
@@ -34,7 +33,7 @@ import { VariableComponent } from '../../../variable/variable.component';
     selector: 'formula-part-member',
     templateUrl: './formula-part-member.component.html',
     styleUrls: ['./formula-part-member.component.scss'],
-    imports: [XcModule, VariableComponent]
+    imports: [XcFormAutocompleteComponent, VariableComponent]
 })
 export class FormulaPartMemberComponent extends FormulaEditablePartComponent implements AfterViewInit, AfterContentInit, FormulaChildComponent {
 

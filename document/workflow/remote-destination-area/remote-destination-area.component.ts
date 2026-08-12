@@ -17,14 +17,13 @@
  */
 import { Component, inject, Input } from '@angular/core';
 
-import { XcAutocompleteDataWrapper, XcOptionItem } from '@zeta/xc';
+import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItem } from '@zeta/xc';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeRemoteDestinationRequest } from '../../../xo/change-remote-destination-request.model';
 import { XoRemoteDestinationArea } from '../../../xo/remote-destination-area.model';
 import { DocumentService } from '../../document.service';
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { VariableAreaComponent } from '../variable-area/variable-area.component';
 
@@ -33,7 +32,7 @@ import { VariableAreaComponent } from '../variable-area/variable-area.component'
     selector: 'remote-destination-area',
     templateUrl: './remote-destination-area.component.html',
     styleUrls: ['./remote-destination-area.component.scss'],
-    imports: [XcModule, XcI18nTranslateDirective, VariableAreaComponent]
+    imports: [XcFormAutocompleteComponent, XcI18nTranslateDirective, VariableAreaComponent]
 })
 export class RemoteDestinationAreaComponent extends ModellingObjectComponent {
 

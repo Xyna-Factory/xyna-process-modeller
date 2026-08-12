@@ -1,4 +1,3 @@
-import { NgFor } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,9 +15,9 @@ import { NgFor } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+import { NgFor } from '@angular/common';
 import { Component, forwardRef, HostBinding, Input } from '@angular/core';
 
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoForeach } from '../../../xo/foreach.model';
 import { XoRequest } from '../../../xo/request.model';
@@ -28,13 +27,14 @@ import { VariableAreaServiceComponent } from '../variable-area/variable-area-ser
 import { VariableComponent } from '../variable/variable.component';
 import { XcMenuItem } from '@zeta/xc/xc-menu/xc-menu.types';
 import { XoChangeParallelExecutionRequest } from '@pmod/xo/change-parallel-execution-request';
+import { XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective } from '@zeta/xc';
 
 
 @Component({
     selector: 'foreach',
     templateUrl: './foreach.component.html',
     styleUrls: ['./foreach.component.scss'],
-    imports: [NgFor, VariableComponent, XcModule, forwardRef(() => ContentAreaComponent), VariableAreaServiceComponent]
+    imports: [NgFor, VariableComponent, XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective, forwardRef(() => ContentAreaComponent), VariableAreaServiceComponent]
 })
 export class ForeachComponent extends ModellingItemComponent {
 

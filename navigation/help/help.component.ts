@@ -19,7 +19,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@
 
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
-import { XcModule } from '../../../../zeta/xc/xc.module';
+import { XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({
@@ -27,7 +27,7 @@ import { XcModule } from '../../../../zeta/xc/xc.module';
     templateUrl: './help.component.html',
     styleUrls: ['./help.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcI18nTranslateDirective, XcModule]
+    imports: [XcI18nTranslateDirective, XcTooltipDirective]
 })
 export class HelpComponent extends CommonNavigationComponent {
 

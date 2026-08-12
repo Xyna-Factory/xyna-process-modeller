@@ -17,7 +17,7 @@
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy } from '@angular/core';
 
-import { XcTabBarItem } from '@zeta/xc';
+import { XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 
 import { BehaviorSubject, Subject } from 'rxjs';
 
@@ -28,15 +28,13 @@ import { DocumentTabData, MetaTabData, VariableTabData } from '../tabs/datatype-
 import { MemberVariableBaseTabComponent } from '../tabs/member-variable/member-variable-base-tab.component';
 import { MemberVariableStorableTabComponent } from '../tabs/member-variable/member-variable-storable-tab.component';
 import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-
 
 @Component({
     selector: 'member-variable-details',
     templateUrl: './member-variable-details.component.html',
     styleUrls: ['./member-variable-details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule]
+    imports: [XcTabBarComponent]
 })
 export class MemberVariableDetailsComponent extends ModellingItemComponent implements OnDestroy {
 

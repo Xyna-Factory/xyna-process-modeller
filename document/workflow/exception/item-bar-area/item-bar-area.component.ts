@@ -26,15 +26,15 @@ import { XoVariable } from '../../../../xo/variable.model';
 import { ModellingObjectComponent } from '../../shared/modelling-object.component';
 import { NgFor } from '@angular/common';
 import { VariableComponent } from '../../variable/variable.component';
-import { XcModule } from '../../../../../../zeta/xc/xc.module';
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
+import { XcButtonComponent } from '@zeta/xc';
 
 
 @Component({
     selector: 'item-bar-area',
     templateUrl: './item-bar-area.component.html',
     styleUrls: ['./item-bar-area.component.scss'],
-    imports: [NgFor, VariableComponent, XcModule, XcI18nTranslateDirective]
+    imports: [NgFor, VariableComponent, XcButtonComponent, XcI18nTranslateDirective]
 })
 export class ItemBarAreaComponent extends ModellingObjectComponent {
 
