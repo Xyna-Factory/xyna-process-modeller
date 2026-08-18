@@ -20,6 +20,7 @@ import { debounceTime, filter, switchMap, tap } from 'rxjs/operators';
 
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, ViewChild } from '@angular/core';
 import { MessageBusService } from '@yggdrasil/events';
+import { XcFormAutocompleteComponent } from '@zeta/xc';
 
 import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { XmomPath } from '../../api/xmom.service';
@@ -29,7 +30,6 @@ import { FactoryService } from '../factory.service';
 import { XMOMListComponent } from '../xmom/xmom-list.component';
 import { XMOMTreeItemState } from './xmom-tree-item.component';
 import { XMOMTreeComponent } from './xmom-tree.component';
-import { XcFormAutocompleteComponent } from '@zeta/xc';
 
 
 @Component({
@@ -186,9 +186,17 @@ export class FactoryComponent extends CommonNavigationComponent implements After
             this.selectedPaths.clear();
         }
 
+        if (state.selected) {
+            this.selectedPaths.add(state.path);
+        } else {
+            this.selectedPaths.delete(state.path);
+        }
 
-        (state.selected ? (Set.prototype.add) : Set.prototype.delete).call(this.selectedPaths, state.path);
-        (state.expanded ? (Set.prototype.add) : Set.prototype.delete).call(this.expandedPaths, state.path);
+        if (state.expanded) {
+            this.expandedPaths.add(state.path);
+        } else {
+            this.expandedPaths.delete(state.path);
+        }
 
         this.restore();
     }

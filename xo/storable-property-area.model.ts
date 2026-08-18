@@ -15,7 +15,8 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { XoObjectClass, XoArrayClass, XoProperty, XoArray, XoTransient } from '@zeta/api';
+import { XoArray, XoArrayClass, XoObjectClass, XoProperty, XoTransient } from '@zeta/api';
+
 import { XoContentArea } from './content-area.model';
 import { XoItem } from './item.model';
 
@@ -54,8 +55,8 @@ export class XoStorablePropertyArea extends XoContentArea {
         super.afterDecode();
 
         this.children = this.items.data
-            .filter(item => !!(item as XoItem & HasStorablePropertyArea).storablePropertyArea)
-            .map((item: XoItem & HasStorablePropertyArea) => item.storablePropertyArea);
+            .filter((item): item is XoItem & HasStorablePropertyArea => !!(item as XoItem & HasStorablePropertyArea).storablePropertyArea)
+            .map(item => item.storablePropertyArea);
     }
 }
 

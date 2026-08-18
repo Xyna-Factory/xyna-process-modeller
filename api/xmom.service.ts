@@ -1,3 +1,6 @@
+import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
+import { catchError, finalize, map, tap } from 'rxjs/operators';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,8 +19,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
-
+import { inject, Injectable } from '@angular/core';
 import { TriggeredAction } from '@pmod/document/workflow/shared/modelling-object.component';
 import { FilterConditionData } from '@pmod/navigation/search/search.component';
 import { XoDeleteRequest } from '@pmod/xo/delete-request.model';
@@ -30,9 +32,6 @@ import { XoItem } from '@pmod/xo/item.model';
 import { XoUnlockResponse } from '@pmod/xo/unlock-response.model';
 import { FullQualifiedName, RuntimeContext, XoClassInterface, XoJson } from '@zeta/api';
 import { downloadFile, MimeTypes } from '@zeta/base';
-
-import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
-import { catchError, finalize, map, tap } from 'rxjs/operators';
 
 import { XoCloseResponse } from '../xo/close-response.model';
 import { XoData } from '../xo/data.model';
@@ -522,8 +521,7 @@ export class XmomService {
     }
 
 
-    newXmomWorkflowWithSignature(rtc: RuntimeContext, type: XmomObjectType, output: XoClassInterface<XoGetXmomItemResponse>, label: string, wfInput: XoInsertRequestContent[], wfOutput: XoInsertRequestContent[]) {
-
+    newXmomWorkflowWithSignature<T extends XoGetXmomItemResponse>(rtc: RuntimeContext, type: XmomObjectType, output: XoClassInterface<T>, label: string, wfInput: XoInsertRequestContent[], wfOutput: XoInsertRequestContent[]): Observable<T> {
         const payload = { label: label, input: wfInput.map(value => value.encode()), output: wfOutput.map(value => value.encode()) };
         /**
          * @todo remove this as soon as XoRequest is accepted by the backend
@@ -543,13 +541,13 @@ export class XmomService {
         return this.requestNewXmomObject(rtc, type, output, payload);
     }
 
-    newXmomObject(rtc: RuntimeContext, type: XmomObjectType, output: XoClassInterface<XoGetXmomItemResponse>, label: string): Observable<XoGetXmomItemResponse> {
+    newXmomObject<T extends XoGetXmomItemResponse>(rtc: RuntimeContext, type: XmomObjectType, output: XoClassInterface<T>, label: string): Observable<T> {
         const payload = { label: label };
         return this.requestNewXmomObject(rtc, type, output, payload);
     }
 
 
-    private requestNewXmomObject(rtc: RuntimeContext, type: XmomObjectType, output: XoClassInterface<XoGetXmomItemResponse>, payload): Observable<XoGetXmomItemResponse> {
+    private requestNewXmomObject<T extends XoGetXmomItemResponse>(rtc: RuntimeContext, type: XmomObjectType, output: XoClassInterface<T>, payload: unknown): Observable<T> {
         const url = 'runtimeContext/' + rtc.uniqueKey + '/xmom/' + this.xmomTypeToPath(type);
         return this.http.post(url, payload).pipe(
             map((data: any) => (new output().decode(data)))
@@ -562,11 +560,11 @@ export class XmomService {
         // remember, that url is now pending
         this.pendingXmomUrls.add(url);
         // fetch xmom object representation
-        return this.http.get(url + (repair ? '?repair=true' : '')).pipe(
+        return this.http.get<XoJson>(url + (repair ? '?repair=true' : '')).pipe(
             // forget, that url is pending
             finalize(() => this.pendingXmomUrls.delete(url)),
             // decode json to corresponding xmom object
-            map((data: XoJson) => new (this.xmomTypeToResponseType(type))().decode(data))
+            map(data => new (this.xmomTypeToResponseType(type))().decode(data))
         );
     }
 

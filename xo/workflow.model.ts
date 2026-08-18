@@ -1,3 +1,5 @@
+import { BehaviorSubject, Observable } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,8 +18,6 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { XoObjectClass, XoProperty, XoTransient } from '@zeta/api';
-
-import { BehaviorSubject, Observable } from 'rxjs';
 
 import { DeploymentState, Orderable, XmomObjectType } from '../api/xmom-types';
 import { XoContentArea } from './content-area.model';
@@ -97,11 +97,14 @@ export class XoWorkflow extends XoService implements Orderable {
      */
     updateVariableMap() {
         this._variables.clear();
-        this.getVariables().forEach((variable: XoVariable) => {
-            const variables = this._variables.get(variable.id) || [];
-            variables.push(variable);
-            this._variables.set(variable.id, variables);
-        });
+        this.getVariables()
+            .filter((variable): variable is XoVariable => variable instanceof XoVariable
+            )
+            .forEach(variable => {
+                const variables = this._variables.get(variable.id) || [];
+                variables.push(variable);
+                this._variables.set(variable.id, variables);
+            });
     }
 
 
@@ -136,7 +139,7 @@ export class XoWorkflow extends XoService implements Orderable {
 
 export class XoWorkflowStub extends XoWorkflow {
 
-   constructor(_ident?: string) {
+    constructor(_ident?: string) {
         super(_ident);
         this.id = 'wf'
     }

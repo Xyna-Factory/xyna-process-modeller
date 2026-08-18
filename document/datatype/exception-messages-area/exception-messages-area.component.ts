@@ -15,21 +15,20 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, Input } from '@angular/core';
+import { combineLatest } from 'rxjs';
 
+import { Component, inject, Input } from '@angular/core';
 import { PluginService } from '@pmod/document/plugin.service';
 import { XcAutocompleteDataWrapper, XcButtonComponent, XcDefinitionProxyComponent, XcFormAutocompleteComponent, XcFormInputComponent, XcFormLabelComponent, XcOptionItem, XcRichListComponent, XcRichListItem } from '@zeta/xc';
 import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 
-import { combineLatest } from 'rxjs';
-
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeExceptionMessageRequest } from '../../../xo/change-exception-message-request.model';
 import { XoExceptionMessage } from '../../../xo/exception-message.model';
 import { XoExceptionMessagesArea } from '../../../xo/exception-messages-area.model';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { ExceptionMessageRichListItemComponent, ExceptionMessageRichListItemData } from '../exception-message-rich-list-item/exception-message-rich-list-item.component';
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 
 
 export enum ExceptionMessageLanguage {
@@ -63,13 +62,13 @@ export class ExceptionMessagesAreaComponent extends ModellingObjectComponent {
     constructor() {
         super();
 
-         
+
         const antiTreeShakingInstance = new XoExceptionMessage();
 
         this.languageDataWrapper = new XcAutocompleteDataWrapper(
             () => this.language,
             (val: ExceptionMessageLanguage) => this.language = val,
-            Object.keys(ExceptionMessageLanguage).map<XcOptionItem>(key => ({name: ExceptionMessageLanguage[key], value: ExceptionMessageLanguage[key]}))
+            Object.keys(ExceptionMessageLanguage).map<XcOptionItem>(key => ({ name: ExceptionMessageLanguage[key], value: ExceptionMessageLanguage[key] }))
         );
 
         this.onclick = (item: XoExceptionMessage) => {
@@ -89,12 +88,11 @@ export class ExceptionMessagesAreaComponent extends ModellingObjectComponent {
     private updateRichListItems() {
         this.exceptionMessageRichListItems = [];
 
-        this.exceptionMessagesArea.items.data.forEach((item: XoExceptionMessage) => {
+        (this.exceptionMessagesArea.items.data as XoExceptionMessage[]).forEach(item => {
             this.exceptionMessageRichListItems.push({
                 component: ExceptionMessageRichListItemComponent,
-                data: {item, onclick: this.onclick, ondelete: this.ondelete, isReadonly: () => this.readonly}
+                data: { item, onclick: this.onclick, ondelete: this.ondelete, isReadonly: () => this.readonly },
             });
-
         });
     }
 

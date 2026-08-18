@@ -1,3 +1,5 @@
+import { BehaviorSubject, Observable } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -18,8 +20,6 @@
 import { XoPlugin } from '@yggdrasil/plugin/plugin.model';
 import { XoObjectClass, XoProperty, XoTransient } from '@zeta/api';
 
-import { BehaviorSubject, Observable } from 'rxjs';
-
 import { DeploymentState, XmomObjectType } from '../api/xmom-types';
 import { XoDataTypeTypeLabelArea } from './data-type-type-label-area.model';
 import { XoGlobalStorablePropertyArea } from './global-storable-property-area.model';
@@ -38,10 +38,10 @@ import { XoXmomItem } from './xmom-item.model';
 export class XoDataType extends XoXmomItem {
 
     static readonly GLOBAL_STORABLE_PROPERTIES_AREA = 'globalStorableProperties';
-    static readonly STORABLE_PROPERTIES_AREA        = 'storableProperties';
-    static readonly INHERITED_METHODS_AREA          = 'inheritedMethods';
-    static readonly OVERRIDDEN_METHODS_AREA         = 'overriddenMethods';
-    static readonly MEMBER_METHODS_AREA             = 'memberMethods';
+    static readonly STORABLE_PROPERTIES_AREA = 'storableProperties';
+    static readonly INHERITED_METHODS_AREA = 'inheritedMethods';
+    static readonly OVERRIDDEN_METHODS_AREA = 'overriddenMethods';
+    static readonly MEMBER_METHODS_AREA = 'memberMethods';
 
 
     @XoProperty(XoDataTypeTypeLabelArea)
@@ -91,7 +91,7 @@ export class XoDataType extends XoXmomItem {
     @XoProperty(XoPlugin)
     plugin: XoPlugin;
 
-    private readonly _revisionSubject  = new BehaviorSubject<number>(null);
+    private readonly _revisionSubject = new BehaviorSubject<number>(null);
 
     deploymentState: DeploymentState;
     saved: boolean;
@@ -109,22 +109,24 @@ export class XoDataType extends XoXmomItem {
 
         for (const area of this.areas) {
             switch (area.name) {
-                case XoModellingItem.TYPE_INFO_AREA:             this.typeInfoArea               = area as XoDataTypeTypeLabelArea; break;
-                case XoModellingItem.DOCUMENTATION_AREA_NAME:    this.documentationArea          = area as XoTextArea; break;
-                case XoXmomItem.LIBS_AREA:                       this.librariesArea              = area as XoLibrariesArea; break;
-                case XoXmomItem.SHARED_LIBS_AREA:                this.javaSharedLibrariesArea    = area as XoJavaSharedLibrariesArea; break;
-                case XoXmomItem.INHERITED_VARS_AREA:             this.inheritedVarsArea          = area as XoMemberVariableArea; break;
-                case XoXmomItem.MEMBER_VARS_AREA:                this.memberVarsArea             = area as XoMemberVariableArea; break;
-                case XoDataType.META_TAG_AREA_NAME:              this.metaTagArea                = area as XoMetaTagArea; break;
+                case XoModellingItem.TYPE_INFO_AREA: this.typeInfoArea = area as XoDataTypeTypeLabelArea; break;
+                case XoModellingItem.DOCUMENTATION_AREA_NAME: this.documentationArea = area as XoTextArea; break;
+                case XoXmomItem.LIBS_AREA: this.librariesArea = area as XoLibrariesArea; break;
+                case XoXmomItem.SHARED_LIBS_AREA: this.javaSharedLibrariesArea = area as XoJavaSharedLibrariesArea; break;
+                case XoXmomItem.INHERITED_VARS_AREA: this.inheritedVarsArea = area as XoMemberVariableArea; break;
+                case XoXmomItem.MEMBER_VARS_AREA: this.memberVarsArea = area as XoMemberVariableArea; break;
+                case XoDataType.META_TAG_AREA_NAME: this.metaTagArea = area as XoMetaTagArea; break;
                 case XoDataType.GLOBAL_STORABLE_PROPERTIES_AREA: this.globalStorablePropertyArea = area as XoGlobalStorablePropertyArea; break;
-                case XoDataType.OVERRIDDEN_METHODS_AREA:         this.overriddenMethodsArea      = area as XoMemberMethodArea; break;
-                case XoDataType.MEMBER_METHODS_AREA:             this.memberMethodsArea          = area as XoMemberMethodArea; break;
+                case XoDataType.OVERRIDDEN_METHODS_AREA: this.overriddenMethodsArea = area as XoMemberMethodArea; break;
+                case XoDataType.MEMBER_METHODS_AREA: this.memberMethodsArea = area as XoMemberMethodArea; break;
                 case XoDataType.INHERITED_METHODS_AREA:
                     this.inheritedMethodsArea = area as XoMemberMethodArea;
-                    this.inheritedMethodsArea.items.data.forEach((method: XoMethod) => {
-                        method.readonlyImplementation = true;
-                        method.isInheritedInstanceMethod = true;
-                    });
+                    this.inheritedMethodsArea.items.data
+                        .filter((item): item is XoMethod => item instanceof XoMethod)
+                        .forEach(method => {
+                            method.readonlyImplementation = true;
+                            method.isInheritedInstanceMethod = true;
+                        });
                     break;
             }
         }
