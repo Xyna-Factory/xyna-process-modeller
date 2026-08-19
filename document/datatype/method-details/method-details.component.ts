@@ -89,7 +89,7 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
     readonly implementationTabItem: XcTabBarItem<DocumentTabData<MethodTabData>> = {
         closable: false,
         component: MethodImplementationTabComponent,
-        name: this.i18nService.translate('pmod.datatype.method-details.implementation'),
+        name: this.i18nService.translateSignal('pmod.datatype.method-details.implementation'),
         data: <DocumentTabData<MethodTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),

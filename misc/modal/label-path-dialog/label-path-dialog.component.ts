@@ -17,7 +17,7 @@
  */
 import { Component, HostListener, inject, ViewChild } from '@angular/core';
 
-import { XcAutocompleteDataWrapper, XcButtonComponent, XcCheckboxComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormAutocompleteComponent, XcFormDirective, XcFormInputComponent, XcFormValidatorRequiredDirective, XcOptionItem, XcOptionItemString, XcTooltipDirective } from '@zeta/xc';
+import { resolveXcDynamicString, XcAutocompleteDataWrapper, XcButtonComponent, XcCheckboxComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormAutocompleteComponent, XcFormDirective, XcFormInputComponent, XcFormValidatorRequiredDirective, XcOptionItem, XcOptionItemString, XcTooltipDirective } from '@zeta/xc';
 
 import { Observable } from 'rxjs';
 
@@ -100,17 +100,17 @@ export class LabelPathDialogComponent extends XcDialogComponent<LabelPathDialogR
             if (this.injectedData.recentlyUsedPaths?.length > 0) {
                 const recentPaths: XcOptionItem[] = this.injectedData.recentlyUsedPaths.map(recentPath => XcOptionItemString(recentPath));
                 for (const recentPath of recentPaths) {
-                    const pathIndex = paths.indexOf(recentPath.name);
+                    const pathIndex = paths.indexOf(resolveXcDynamicString(recentPath.name));
                     paths.splice(pathIndex, 1);
                 }
                 recentPaths.unshift({
-                    name: this.i18n.translate('Recently used paths'),
+                    name: this.i18n.translateSignal('Recently used paths'),
                     value: 'Recently used paths',
                     disabled: true,
                     icon: 'arrowright'
                 });
                 recentPaths.push({
-                    name: this.i18n.translate('All paths'),
+                    name: this.i18n.translateSignal('All paths'),
                     value: 'All paths',
                     disabled: true,
                     icon: 'arrowright'
