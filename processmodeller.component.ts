@@ -21,6 +21,7 @@ import { first } from 'rxjs/operators';
 import { NgClass } from '@angular/common';
 import { ChangeDetectorRef, Component, inject, Injector, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ApiService, FullQualifiedName, RuntimeContext, RuntimeContextSelectionSettings } from '@zeta/api';
+import { ConfigService } from '@zeta/api/config.service';
 import { KeyboardEventType, KeyDistributionService, OutsideListenerService } from '@zeta/base';
 import { I18nService, LocaleService, XcI18nContextDirective } from '@zeta/i18n';
 import { RouteComponent, RuntimeContextSelectionComponent } from '@zeta/nav';
@@ -46,7 +47,7 @@ import { ErrorService } from './navigation/shared/error.service';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { XoRuntimeContext } from './xo/runtime-context.model';
 import { XoWorkflow } from './xo/workflow.model';
-import { ConfigService } from '@zeta/api/config.service';
+
 
 export let PMOD_RTC = RuntimeContext.guiHttpApplication;
 
