@@ -49,6 +49,23 @@
         overflow-y: auto;
         height: 100%;
         display: flex;
+        transition: width .3s ease-in;
+
+        &.no-transition {
+            transition: none;
+        }
+
+        &.closed {
+            width: 0;
+        }
+
+        &.opened {
+            width: 300px;
+        }
+
+        &.opened-half {
+            width: 50vw;
+        }
 
         >* {
             display: flex;

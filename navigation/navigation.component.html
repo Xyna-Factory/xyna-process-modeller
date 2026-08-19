@@ -1,4 +1,4 @@
-<div [@areaTrigger]="areaValue" class="area zeta-scrollbar">
+<div class="area zeta-scrollbar" [class.closed]="areaValue === AreaValue.Closed" [class.opened]="areaValue === AreaValue.Opened" [class.opened-half]="areaValue === AreaValue.OpenedHalf" [class.no-animation]="areaValue === AreaValue.Opened">
     <xfm-mod-nav-factory xc-i18n-context='factory' [class.hidden]="area !== NavigationbarArea.Factory"></xfm-mod-nav-factory>
     <xfm-mod-nav-search xc-i18n-context='search' [class.hidden]="area !== NavigationbarArea.Search"></xfm-mod-nav-search>
     <xfm-mod-nav-details xc-i18n-context='details' [class.hidden]="area !== NavigationbarArea.Details"></xfm-mod-nav-details>
