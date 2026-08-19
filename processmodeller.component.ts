@@ -347,7 +347,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
                     iconStyle: 'modeller',
                     component: WorkflowDocumentComponent,
                     closable: true,
-                    closeTooltip: this.i18nService.translate('pmod.toolbar.close-tooltip'),
+                    closeTooltip: this.i18nService.translateSignal('pmod.toolbar.close-tooltip'),
                     data: document
                 };
             } break;
@@ -359,7 +359,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
                     iconStyle: 'modeller',
                     component: DataTypeComponent,
                     closable: true,
-                    closeTooltip: this.i18nService.translate('pmod.toolbar.close-tooltip'),
+                    closeTooltip: this.i18nService.translateSignal('pmod.toolbar.close-tooltip'),
                     data: document
                 };
             } break;
@@ -371,7 +371,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
                     iconStyle: 'modeller',
                     component: ExceptionTypeComponent,
                     closable: true,
-                    closeTooltip: this.i18nService.translate('pmod.toolbar.close-tooltip'),
+                    closeTooltip: this.i18nService.translateSignal('pmod.toolbar.close-tooltip'),
                     data: document
                 };
             } break;
@@ -383,7 +383,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
                     iconStyle: 'modeller',
                     component: ServiceGroupComponent,
                     closable: true,
-                    closeTooltip: this.i18nService.translate('pmod.toolbar.close-tooltip'),
+                    closeTooltip: this.i18nService.translateSignal('pmod.toolbar.close-tooltip'),
                     data: document
                 };
             } break;
