@@ -60,11 +60,11 @@ export class StorablePropertiesAreaComponent extends ModellingObjectComponent {
         this.dataSource.localTableData = {
             rows: rows,
             columns: [
-                { name: this.i18n.translate(context + 'variable'), path: 'label', pre: true },
-                { name: this.i18n.translate(context + 'persistence-field-name'), path: 'fieldName' },
-                { name: this.i18n.translate(context + 'reference'), path: 'isReference' },
-                { name: this.i18n.translate(context + 'index'), path: 'isIndex' },
-                { name: this.i18n.translate(context + 'unique'), path: 'isUnique' }
+                { name: this.i18n.translateSignal(context + 'variable'), path: 'label', pre: true },
+                { name: this.i18n.translateSignal(context + 'persistence-field-name'), path: 'fieldName' },
+                { name: this.i18n.translateSignal(context + 'reference'), path: 'isReference' },
+                { name: this.i18n.translateSignal(context + 'index'), path: 'isIndex' },
+                { name: this.i18n.translateSignal(context + 'unique'), path: 'isUnique' }
             ]
         };
         this.dataSource.refresh();
