@@ -17,7 +17,7 @@
  */
 import { Component, HostListener, inject, ViewChild } from '@angular/core';
 
-import { resolveXcDynamicString, XcAutocompleteDataWrapper, XcButtonComponent, XcCheckboxComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormAutocompleteComponent, XcFormDirective, XcFormInputComponent, XcFormValidatorRequiredDirective, XcOptionItem, XcOptionItemString, XcTooltipDirective } from '@zeta/xc';
+import { XcAutocompleteDataWrapper, XcButtonComponent, XcCheckboxComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormAutocompleteComponent, XcFormDirective, XcFormInputComponent, XcFormValidatorRequiredDirective, XcOptionItem, XcOptionItemString, XcTooltipDirective } from '@zeta/xc';
 
 import { Observable } from 'rxjs';
 
@@ -100,7 +100,7 @@ export class LabelPathDialogComponent extends XcDialogComponent<LabelPathDialogR
             if (this.injectedData.recentlyUsedPaths?.length > 0) {
                 const recentPaths: XcOptionItem[] = this.injectedData.recentlyUsedPaths.map(recentPath => XcOptionItemString(recentPath));
                 for (const recentPath of recentPaths) {
-                    const pathIndex = paths.indexOf(resolveXcDynamicString(recentPath.name));
+                    const pathIndex = paths.indexOf(recentPath.name());
                     paths.splice(pathIndex, 1);
                 }
                 recentPaths.unshift({

@@ -19,6 +19,7 @@ import { XoIssueArray } from '@pmod/xo/issue.model';
 import { XoWarningArray } from '@pmod/xo/warning.model';
 import { RuntimeContext } from '@zeta/api';
 import { XcTabBarItem } from '@zeta/xc';
+import { signal } from '@angular/core';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -98,14 +99,14 @@ export abstract class DocumentModel<T extends DocumentItem = DocumentItem> {
 
     updateTabBarLabel() {
         if (this.tabBarItem && this.item) {
-            this.tabBarItem.name = '';
+            this.tabBarItem.name = signal('');
             if (this.item.modified) {
-                this.tabBarItem.name += '* ';
+                this.tabBarItem.name = signal('* ' + this.tabBarItem.name());
             }
-            this.tabBarItem.name += this.item.label;
+            this.tabBarItem.name = signal(this.tabBarItem.name() + this.item.label);
             if (this.isLocked || this.item.readonly) {
                 const uniqueKey = this.item.$rtc.runtimeContext().uniqueKey;
-                this.tabBarItem.name += ' 🔒 [' + uniqueKey.replace(RuntimeContext.SEPARATOR, ' ') + ']';
+                this.tabBarItem.name = signal(this.tabBarItem.name() + ' 🔒 [' + uniqueKey.replace(RuntimeContext.SEPARATOR, ' ') + ']');
             }
         }
     }

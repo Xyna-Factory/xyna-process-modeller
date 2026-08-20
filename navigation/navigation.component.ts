@@ -18,7 +18,7 @@
 import { merge, of, Subscription } from 'rxjs';
 
 import { NgClass } from '@angular/common';
-import { AfterViewInit, Component, inject, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, inject, OnDestroy, OnInit, QueryList, signal, ViewChild, ViewChildren } from '@angular/core';
 import { TypeDocumentModel } from '@pmod/document/model/type-document.model';
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoArray } from '@zeta/api';
@@ -124,8 +124,8 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
     buttons: NavigationItem[] = this.defaultButtons;
 
     readonly devMenuItems: XcMenuItem[] = [
-        { name: 'Workflow Constant Builder...', click: () => this.dialogService.custom(WorkflowConstantBuilderModalComponent) },
-        { name: 'Data Type Converter...', click: () => this.dialogService.info('info', 'not yet implemented') }
+        { name: signal('Workflow Constant Builder...'), click: () => this.dialogService.custom(WorkflowConstantBuilderModalComponent) },
+        { name: signal('Data Type Converter...'), click: () => this.dialogService.info('info', 'not yet implemented') }
     ];
 
     private _datatypePlugins: XoPlugin[] = [];

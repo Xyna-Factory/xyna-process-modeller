@@ -17,7 +17,7 @@
  */
 import { filter } from 'rxjs/operators';
 
-import { Component, EventEmitter, HostListener, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, inject, Input, Output, signal } from '@angular/core';
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
 import { FullQualifiedName } from '@zeta/api';
 import { coerceBoolean } from '@zeta/base';
@@ -67,13 +67,13 @@ export class XMOMListItemComponent {
     constructor() {
         this.writableMenuItems = [
             <XcMenuItem>{
-                name: 'Open',
+                name: signal('Open'),
                 icon: 'file',
                 translate: true,
                 click: () => this.selectXmomItem()
             },
             <XcMenuItem>{
-                name: 'Test Workflow...',
+                name: signal('Test Workflow...'),
                 icon: 'sp-launcher',
                 iconStyle: 'modeller',
                 translate: true,
@@ -81,20 +81,20 @@ export class XMOMListItemComponent {
                 click: () => this.testWorkflow()
             },
             <XcMenuItem>{
-                name: 'Move/Rename...',
+                name: signal('Move/Rename...'),
                 icon: 'edit',
                 translate: true,
                 click: () => this.refactorXmomItem()
             },
             <XcMenuItem>{
-                name: 'Replace...',
+                name: signal('Replace...'),
                 icon: 'edit',
                 translate: true,
                 visible: () => this.isDatatype,
                 click: () => this.replace()
             },
             <XcMenuItem>{
-                name: 'Delete from XMOM...',
+                name: signal('Delete from XMOM...'),
                 icon: 'delete',
                 translate: true,
                 click: () => this.deleteXmomItem(),

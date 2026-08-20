@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterContentInit, AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, signal, ViewChild } from '@angular/core';
 
 import { XoStructureField, XoStructureMethod, XoStructureObject } from '@zeta/api';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItem } from '@zeta/xc';
@@ -120,10 +120,10 @@ export class FormulaPartMemberComponent extends FormulaEditablePartComponent imp
             return precedingStructuredPart.getStructure().pipe(
                 map((structure: XoStructureObject) => {
                     const members = structure?.children.filter(validMember).map(field =>
-                        <XcOptionItem>{ name: field.toString(), value: field.name }
+                        <XcOptionItem>{ name: signal(field.toString()), value: field.name }
                     ) ?? [];
                     if (this.memberPart.allowAsterisk()) {
-                        members.push(<XcOptionItem>{ name: '*', value: '*' });
+                        members.push(<XcOptionItem>{ name: signal('*'), value: '*' });
                     }
                     return members;
                 })

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy, signal } from '@angular/core';
 
 import { XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 
@@ -60,7 +60,7 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
     set memberVariable(value: XoMemberVariable) {
         this.setModel(value);
         if (value) {
-            this.baseTabItem.name = this.memberVariable?.label ?? 'Base';
+            this.baseTabItem.name = signal(this.memberVariable?.label ?? 'Base');
             this.memberTabUpdate.next(this.buildMemberTabData());
             this.metaTabUpdate.next(this.buildMetaTabData());
         }
@@ -73,7 +73,7 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
     readonly baseTabItem: XcTabBarItem<DocumentTabData<VariableTabData>> = {
         closable: false,
         component: MemberVariableBaseTabComponent,
-        name: 'Base',
+        name: signal('Base'),
         data: <DocumentTabData<VariableTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
@@ -85,7 +85,7 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
     readonly metaTabItem: XcTabBarItem<DocumentTabData<MetaTabData>> = {
         closable: false,
         component: MetaTabComponent,
-        name: 'Meta',
+        name: signal('Meta'),
         data: <DocumentTabData<MetaTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
@@ -97,7 +97,7 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
     readonly storableTabItem: XcTabBarItem<DocumentTabData<VariableTabData>> = {
         closable: false,
         component: MemberVariableStorableTabComponent,
-        name: 'Storable',
+        name: signal('Storable'),
         data: <DocumentTabData<VariableTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
