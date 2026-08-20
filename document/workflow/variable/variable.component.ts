@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostBinding, inject, Input } from '@angular/core';
+import { Component, HostBinding, inject, Input, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
@@ -95,7 +95,7 @@ export class VariableComponent extends SelectableModellingObjectComponent {
             );
 
         this.constantMenuItem = <XcMenuItem>{
-            name: '',
+            name: signal(''),
             translate: true,
             visible: () => viewConstant(),
             click: () => {
@@ -129,7 +129,7 @@ export class VariableComponent extends SelectableModellingObjectComponent {
         };
         this.menuItems.unshift(
             <XcMenuItem>{
-                name: 'Open in new Tab', translate: true,
+                name: signal('Open in new Tab'), translate: true,
                 visible: () => !!this.variable.$fqn, // prototype variable does not have an fqn
                 click: () => {
                     const fqn = this.variable.toFqn();
@@ -149,19 +149,19 @@ export class VariableComponent extends SelectableModellingObjectComponent {
             },
             this.constantMenuItem,
             <XcMenuItem>{
-                name: 'Convert into List',
+                name: signal('Convert into List'),
                 translate: true,
                 visible: () => !this.variable.isList && !this.readonly,
                 click: () => this.toggleMultiplicity()
             },
             <XcMenuItem>{
-                name: 'Convert into Single',
+                name: signal('Convert into Single'),
                 translate: true,
                 visible: () => this.variable.isList && !this.readonly,
                 click: () => this.toggleMultiplicity()
             },
             <XcMenuItem>{
-                name: 'Convert into Data Type...', translate: true,
+                name: signal('Convert into Data Type...'), translate: true,
                 visible: () => this.variable.isAbstract && !this.readonly, // prototype variable
                 click: () => {
                     this.dialogService.custom(
@@ -187,7 +187,7 @@ export class VariableComponent extends SelectableModellingObjectComponent {
                 }
             },
             <XcMenuItem>{
-                name: 'Remove Dynamic Type',
+                name: signal('Remove Dynamic Type'),
                 translate: true,
                 visible: () => this.hasDynamicType && this.variable.allowCast && !this.isLocked(),
                 click: () => this.performAction({
@@ -199,9 +199,9 @@ export class VariableComponent extends SelectableModellingObjectComponent {
         );
 
         this.untilDestroyed(this.branchSelection.selectionChange).subscribe(
-            () => this.constantMenuItem.name = this.selectedBranch
+            () => this.constantMenuItem.name = signal(this.selectedBranch
                 ? 'Constant for selected Branch...'
-                : 'Constant...'
+                : 'Constant...')
         );
 
         this.untilDestroyed(this.detailLevelService.showFQNChange()).subscribe(() => this.updateShowFQN());

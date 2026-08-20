@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 
 import { ApiService, RuntimeContext } from '@zeta/api';
 import { XcAutocompleteDataWrapper, XcOptionItem } from '@zeta/xc';
@@ -72,7 +72,7 @@ export class FactoryService {
         this.apiService.getRuntimeContexts(useCache).subscribe(runtimeContexts => {
             // set new values to data wrapper
             this._runtimeContextDataWrapper.values = runtimeContexts.map(rtc => <XcOptionItem>{
-                name: rtc.toString(),
+                name: signal(rtc.toString()),
                 value: rtc.toRuntimeContext()
             });
             // trigger change to propagate update

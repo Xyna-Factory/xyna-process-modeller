@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, signal } from '@angular/core';
 
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItem } from '@zeta/xc';
 
@@ -55,8 +55,8 @@ export class RemoteDestinationAreaComponent extends ModellingObjectComponent {
         super();
         this.documentService.xmomService.getRemoteDestinations().subscribe(remoteDestinations =>
             this.dataWrapper.values = [
-                <XcOptionItem>{ name: '', value: '' },
-                ...remoteDestinations.data.map(rd => <XcOptionItem>{ name: rd.name, value: rd.name })
+                <XcOptionItem>{ name: signal(''), value: '' },
+                ...remoteDestinations.data.map(rd => <XcOptionItem>{ name: signal(rd.name), value: rd.name })
             ]
         );
     }

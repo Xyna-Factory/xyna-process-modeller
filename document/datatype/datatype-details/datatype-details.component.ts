@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy, signal } from '@angular/core';
 
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoDataType } from '@pmod/xo/data-type.model';
@@ -98,7 +98,7 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
     readonly metaTagsTabItem: XcTabBarItem<DocumentTabData<MetaTabData>> = {
         closable: false,
         component: MetaTabComponent,
-        name: 'Meta',
+        name: signal('Meta'),
         data: <DocumentTabData<MetaTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
@@ -110,7 +110,7 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
     readonly storableTabItem: XcTabBarItem<DocumentTabData<XoDataType>> = {
         closable: false,
         component: DataTypeStorableTabComponent,
-        name: 'ODS Information',
+        name: signal('ODS Information'),
         data: <DocumentTabData<XoDataType>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
@@ -190,7 +190,7 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
         return <XcTabBarItem<PluginTabData>> {
             closable: false,
             component: DataTypePluginTabComponent,
-            name: tabName || 'Plugin',
+            name: signal(tabName || 'Plugin'),
             data: <PluginTabData>{
                 documentModel: this.documentModel,
                 performAction: this.performAction.bind(this),

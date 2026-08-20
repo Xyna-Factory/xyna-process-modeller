@@ -15,16 +15,18 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
+import { merge, of, Subscription } from 'rxjs';
 
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { NgClass } from '@angular/common';
+import { AfterViewInit, Component, inject, OnDestroy, OnInit, QueryList, signal, ViewChild, ViewChildren } from '@angular/core';
 import { TypeDocumentModel } from '@pmod/document/model/type-document.model';
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoArray } from '@zeta/api';
 import { XcDialogService, XcIconButtonComponent, XcMenuComponent, XcMenuItem, XcMenuTriggerDirective, XcTooltipDirective, XoPlugin, XoPluginArray } from '@zeta/xc';
+import { XcHasRightDirective } from '@zeta/xc/shared/xc-has-right.directive';
 
-import { merge, of, Subscription } from 'rxjs';
-
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../zeta/i18n';
 import { XmomService } from '../api/xmom.service';
 import { DocumentService } from '../document/document.service';
 import { ClipboardComponent } from './clipboard/clipboard.component';
@@ -37,9 +39,6 @@ import { FactoryComponent } from './factory/factory.component';
 import { HelpComponent } from './help/help.component';
 import { NavPluginComponent } from './nav-plugin/nav-plugin.component';
 import { SearchComponent } from './search/search.component';
-import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../zeta/i18n';
-import { NgClass } from '@angular/common';
-import { XcHasRightDirective } from '@zeta/xc/shared/xc-has-right.directive';
 
 
 enum NavigationbarArea {
@@ -141,8 +140,8 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
     buttons: NavigationItem[] = this.defaultButtons;
 
     readonly devMenuItems: XcMenuItem[] = [
-        { name: 'Workflow Constant Builder...', click: () => this.dialogService.custom(WorkflowConstantBuilderModalComponent) },
-        { name: 'Data Type Converter...', click: () => this.dialogService.info('info', 'not yet implemented') }
+        { name: signal('Workflow Constant Builder...'), click: () => this.dialogService.custom(WorkflowConstantBuilderModalComponent) },
+        { name: signal('Data Type Converter...'), click: () => this.dialogService.info('info', 'not yet implemented') }
     ];
 
     private _datatypePlugins: XoPlugin[] = [];

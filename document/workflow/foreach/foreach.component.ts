@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { NgFor } from '@angular/common';
-import { Component, forwardRef, HostBinding, Input } from '@angular/core';
+import { Component, forwardRef, HostBinding, Input, signal } from '@angular/core';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoForeach } from '../../../xo/foreach.model';
@@ -45,20 +45,20 @@ export class ForeachComponent extends ModellingItemComponent {
 
         this.menuItems.push(...[
             <XcMenuItem>{
-                 name: 'pmod.workflow.foreach.parallel-execution',
+                 name: signal('pmod.workflow.foreach.parallel-execution'),
                  translate: true,
                  visible: _ => !this.foreach.parallelExecution,
                  click: _ => this.toggleExecutionType()
              },
              <XcMenuItem>{
-                 name: 'pmod.workflow.foreach.sequential-execution',
+                 name: signal('pmod.workflow.foreach.sequential-execution'),
                  translate: true,
                  visible: _ => this.foreach.parallelExecution,
                  click: _ => this.toggleExecutionType()
              }
             // TODO activate as soon as backend supports change
             // <XcMenuItem>{
-            //     name: 'split merged foreaches',
+            //     name: signal('split merged foreaches'),
             //     translate: true,
             //     visible: _ => this.foreach.isMergedForeach,
             //     click: _ => this.splitMergedForeach()

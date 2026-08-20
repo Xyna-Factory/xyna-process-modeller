@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, forwardRef, inject, Input } from '@angular/core';
+import { Component, forwardRef, inject, Input, signal } from '@angular/core';
 
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { I18nService } from '@zeta/i18n';
@@ -72,7 +72,7 @@ export class QueryComponent extends InvocationComponent {
 
         this.menuItems.unshift(
             <XcMenuItem>{
-                name: 'Show/Hide Configurations', translate: true,
+                name: signal('Show/Hide Configurations'), translate: true,
                 click: () => this.toggleCollapsed()
             }
         );
