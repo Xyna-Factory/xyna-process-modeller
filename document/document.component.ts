@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { BehaviorSubject, Observable, Observer, of, Subject } from 'rxjs';
-import { distinctUntilChanged, filter, map, switchMap, takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 
 import { ChangeDetectorRef, Component, inject, Injector, OnDestroy, OnInit } from '@angular/core';
 import { RuntimeContext } from '@zeta/api';
@@ -72,8 +72,17 @@ export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponen
 
         this.untilDestroyed(this.documentService.xmomService.runtimeContextChange).subscribe(foreignRtcObserver);
         this.untilDestroyed(this.documentService.documentChange)
-            .pipe(filter(data => data.item === this.document.item && !!data.response?.focusId))
-            .subscribe(data => this.selectObject(data.response.focusId));
+            .pipe(filter(data => data.item === this.document.item))
+            .subscribe(data => {
+                if (data.response?.focusId) {
+                    this.selectObject(data.response.focusId);
+                }
+                if (this.isVisibleSubject.value) {
+                    this.cdr.detectChanges();
+                } else {
+                    this.cdr.markForCheck();
+                }
+            });
         this.untilDestroyed(this.documentService.documentClose)
             .pipe(filter(model => model === this.document))
             .subscribe(model => this.componentMappingService.removeComponentsForRoot(model.item));
@@ -84,15 +93,15 @@ export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponen
 
     ngOnInit() {
         this.untilDestroyed(this.documentService.selectionChange).pipe(
+            startWith(this.documentService.selectedDocument),
             map(selectedDocument => selectedDocument === this.document),
             distinctUntilChanged()
         ).subscribe(change => {
             this.isVisibleSubject.next(change);
             if (change) {
-                this.cdr.reattach();
                 this.cdr.detectChanges();
             } else {
-                this.cdr.detach();
+                this.cdr.markForCheck();
             }
         });
         if (this.document.initialFocusId) {

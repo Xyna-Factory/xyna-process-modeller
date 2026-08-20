@@ -16,7 +16,7 @@ import { NgClass } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, HostBinding, inject, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, HostBinding, inject, Input, OnDestroy } from '@angular/core';
 
 import { Subscription } from 'rxjs';
 
@@ -69,33 +69,27 @@ import { TemplateComponent } from '../template/template.component';
         forwardRef(() => TypeChoiceComponent)
     ]
 })
-export class ServiceStepComponent extends SelectableModellingObjectComponent implements AfterViewChecked, OnDestroy {
+export class ServiceStepComponent extends SelectableModellingObjectComponent implements OnDestroy {
     
     protected readonly cdr = inject(ChangeDetectorRef);
     
     private _parentDirection: 'row' | 'column' = 'column';
-    private readonly subscriptions: Subscription[] = [];
-
-
-    ngAfterViewChecked() {
-        this.cdr.detectChanges();
-    }
+    private runtimeInfoSubscription: Subscription;
 
 
     ngOnDestroy() {
-        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.runtimeInfoSubscription?.unsubscribe();
     }
 
 
     @Input()
     set item(value: XoItem) {
+        this.runtimeInfoSubscription?.unsubscribe();
         this.setModel(value);
 
         if (this.item && this.item.runtimeInfo) {
-            this.subscriptions.push(
-                this.item.runtimeInfo.inactiveChange.subscribe(() =>
-                    this.cdr.detectChanges()
-                )
+            this.runtimeInfoSubscription = this.item.runtimeInfo.inactiveChange.subscribe(() =>
+                this.cdr.markForCheck()
             );
         }
     }

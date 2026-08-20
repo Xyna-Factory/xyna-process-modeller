@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { ModellingActionType } from '@pmod/api/xmom.service';
 import { DragType } from '@pmod/document/workflow/shared/drag-and-drop/mod-drag-and-drop.service';
@@ -39,8 +39,6 @@ import { XcFormTextareaComponent, XcIconButtonComponent, XcTooltipDirective } fr
     imports: [XcFormTextareaComponent, XcIconButtonComponent, XcTooltipDirective, XcI18nTranslateDirective, ModDropAreaDirective, MetaTagComponent, ModDraggableDirective]
 })
 export class MetaTagAreaComponent extends ModellingObjectComponent {
-
-    private readonly cdr: ChangeDetectorRef = inject<ChangeDetectorRef>(ChangeDetectorRef);
 
     get metaTagArea(): XoMetaTagArea {
         return this.getModel() as XoMetaTagArea;

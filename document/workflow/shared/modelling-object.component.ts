@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, EventEmitter, HostBinding, HostListener, inject, Injector, Input, OnDestroy, OnInit, Optional, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, HostBinding, HostListener, inject, Injector, Input, OnDestroy, OnInit, Optional, Output, signal } from '@angular/core';
 
 import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model';
 import { MessageBusService } from '@yggdrasil/events';
@@ -56,6 +56,7 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
 
     protected readonly componentMappingService = inject(ComponentMappingService);
     protected readonly elementRef = inject(ElementRef);
+    protected readonly cdr = inject(ChangeDetectorRef);
     protected readonly documentService = inject(DocumentService);
     protected readonly detailLevelService = inject(WorkflowDetailLevelService);
     protected readonly messageBus = inject(MessageBusService);
@@ -84,7 +85,7 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
     constructor() {
         this.menuItems.push(
             <XcMenuItem>{
-                name: 'Remove',
+                name: signal('Remove'),
                 icon: 'delete',
                 translate: true,
                 click: () => this.remove(),
@@ -159,6 +160,7 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
             this.lockedSubscription = value?.lockedChange.subscribe(locked => {
                 this._locked = locked;
                 this.lockedChanged();
+                this.cdr.markForCheck();
             });
         }
         this.afterDocumentModelSet();
@@ -266,6 +268,8 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
         } else {
             this.detailLevelService.setCollapsed(this.getCollapseId(), this.isCollapsed());
         }
+
+        this.cdr.markForCheck();
     }
 
 
@@ -317,6 +321,7 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
             this._collapsed = value;
             this.detailLevelService.setCollapsed(this.getCollapseId(), value);
             this.collapsedChanged(this._collapsed);
+            this.cdr.markForCheck();
         }
     }
 
@@ -386,6 +391,7 @@ export class ModellingItemComponent extends ModellingObjectComponent implements 
         super.setModel(value);
         this.modelChangeSubscription = this.modellingItem.replaced().subscribe(() => this.modelChanged());
         this.modelChanged();
+        this.cdr.markForCheck();
     }
 
 

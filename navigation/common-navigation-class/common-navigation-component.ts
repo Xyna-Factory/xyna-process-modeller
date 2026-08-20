@@ -42,14 +42,14 @@ export class CommonNavigationComponent {
 
 
     onShow() {
-        this.cdr.reattach();
         this.active = true;
+        this.cdr.markForCheck();
     }
 
 
     onHide() {
-        this.cdr.detach();
         this.active = false;
+        this.cdr.markForCheck();
     }
 
 

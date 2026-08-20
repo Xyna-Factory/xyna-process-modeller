@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, inject, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ModellingActionType } from '@pmod/api/xmom.service';
 import { ModellingItemComponent } from '@pmod/document/workflow/shared/modelling-object.component';
 import { XoChangeMetaTagRequest } from '@pmod/xo/change-meta-tag-request.model';
@@ -32,8 +32,6 @@ import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
     imports: [ModContentEditableDirective, XcIconButtonComponent, XcTooltipDirective, XcI18nTranslateDirective]
 })
 export class MetaTagComponent extends ModellingItemComponent {
-
-    private readonly cdr: ChangeDetectorRef = inject<ChangeDetectorRef>(ChangeDetectorRef);
 
     @Input('meta-tag')
     set metaTag(value: XoMetaTag) {

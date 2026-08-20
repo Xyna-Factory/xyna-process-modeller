@@ -148,6 +148,9 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
     ngOnInit(): void {
         super.ngOnInit();
         this.initialized = true;
+        this.untilDestroyed(this.documentService.documentChange).pipe(
+            filter(data => data.item === this.documentModel.item)
+        ).subscribe(() => this.update());
         this.update();
     }
 
@@ -255,8 +258,8 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
                             // if there are no source nodes from the tree, this is a literal assignment. Use literal as description
                             : <FlowDefinition>{ source: null, description: '<literal>', destination: expression.targetPart.node }
                     );
-                this.cdr.markForCheck();
                 this.isRefreshing = false;
+                this.cdr.detectChanges();
             }
         });
     }
