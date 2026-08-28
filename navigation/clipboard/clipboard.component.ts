@@ -1,6 +1,3 @@
-import { throwError } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
-
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -18,6 +15,10 @@ import { catchError, switchMap } from 'rxjs/operators';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+
+import { throwError } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
+
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { I18nService } from '@zeta/i18n';
 import { XcButtonComponent, XcDialogService } from '@zeta/xc';

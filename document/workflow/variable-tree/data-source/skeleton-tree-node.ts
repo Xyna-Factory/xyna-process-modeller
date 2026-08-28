@@ -1,4 +1,3 @@
-import { RecursiveStructurePart } from '@pmod/xo/expressions/RecursiveStructurePart';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2024 Xyna GmbH, Germany
@@ -16,10 +15,12 @@ import { RecursiveStructurePart } from '@pmod/xo/expressions/RecursiveStructureP
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { FullQualifiedName, Xo, XoJson, XoStructureArray, XoStructureField, XoStructureObject, XoStructurePrimitive, XoStructureType } from '@zeta/api';
-import { GraphicallyRepresented } from '@zeta/base';
 
 import { BehaviorSubject, defaultIfEmpty, filter, first, firstValueFrom, forkJoin, map, Observable, of, switchMap } from 'rxjs';
+
+import { RecursiveStructurePart } from '@pmod/xo/expressions/RecursiveStructurePart';
+import { FullQualifiedName, Xo, XoJson, XoStructureArray, XoStructureField, XoStructureObject, XoStructurePrimitive, XoStructureType } from '@zeta/api';
+import { GraphicallyRepresented } from '@zeta/base';
 
 import { Draggable } from '../../shared/drag-and-drop/mod-drag-and-drop.service';
 import { TreeNodeFactory, TreeNodeObserver } from './skeleton-tree-data-source';

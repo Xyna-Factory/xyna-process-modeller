@@ -1,6 +1,3 @@
-import { Subject } from 'rxjs';
-import { debounceTime, filter } from 'rxjs/operators';
-
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -18,6 +15,10 @@ import { debounceTime, filter } from 'rxjs/operators';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+
+import { Subject } from 'rxjs';
+import { debounceTime, filter } from 'rxjs/operators';
+
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, NgZone, ViewChild, viewChild } from '@angular/core';
 import { MessageBusService } from '@yggdrasil/events';
 import { AuthService } from '@zeta/auth';

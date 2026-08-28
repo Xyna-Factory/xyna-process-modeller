@@ -1,6 +1,3 @@
-import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
-import { Vector2 } from 'three';
-
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -18,6 +15,10 @@ import { Vector2 } from 'three';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
+import { Vector2 } from 'three';
+
 import { AfterViewInit, Component, ElementRef, inject, Input, NgZone, OnDestroy, output, viewChild } from '@angular/core';
 import { createSVGGroup, createSVGHorizontalCubicBezierPath, removeAllChildren } from '@zeta/base/draw';
 import { XcIconButtonComponent } from '@zeta/xc';

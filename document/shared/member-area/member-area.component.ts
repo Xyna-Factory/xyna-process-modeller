@@ -1,5 +1,3 @@
-import { combineLatest } from 'rxjs';
-
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -17,6 +15,9 @@ import { combineLatest } from 'rxjs';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+
+import { combineLatest } from 'rxjs';
+
 import { Component, inject, Input, output } from '@angular/core';
 import { XoPlugin } from '@yggdrasil/plugin/plugin.model';
 import { XcDefinitionProxyComponent, XcIconButtonComponent } from '@zeta/xc';

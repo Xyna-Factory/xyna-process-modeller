@@ -1,7 +1,3 @@
-import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
-import { filter, first, map, switchMap, tap } from 'rxjs/operators';
-
-import { NgFor } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -19,6 +15,10 @@ import { NgFor } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
+import { filter, first, map, switchMap, tap } from 'rxjs/operators';
+
+import { NgFor } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 import { coerceBoolean } from '@zeta/base';
 import { XcSpinnerComponent } from '@zeta/xc';

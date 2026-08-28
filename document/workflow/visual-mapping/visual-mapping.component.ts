@@ -1,5 +1,3 @@
-import { filter, first, forkJoin, of, Subscription, tap } from 'rxjs';
-
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -17,6 +15,8 @@ import { filter, first, forkJoin, of, Subscription, tap } from 'rxjs';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+import { filter, first, forkJoin, of, Subscription, tap } from 'rxjs';
+
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { ModellingActionType, XmomService } from '@pmod/api/xmom.service';
 import { XoCastExpression } from '@pmod/xo/expressions/cast-expression.model';

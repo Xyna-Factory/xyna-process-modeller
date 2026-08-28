@@ -1,5 +1,3 @@
-import { BehaviorSubject, Observable } from 'rxjs';
-
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -17,6 +15,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+
+import { BehaviorSubject, Observable } from 'rxjs';
+
 import { XoObjectClass, XoProperty, XoTransient } from '@zeta/api';
 
 import { DeploymentState, Orderable, XmomObjectType } from '../api/xmom-types';

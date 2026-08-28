@@ -1,6 +1,3 @@
-import { of, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
-
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -18,6 +15,10 @@ import { map } from 'rxjs/operators';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+
+import { of, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy } from '@angular/core';
 import { ErrorItem, XoIssueArray } from '@pmod/xo/issue.model';
 import { XoWarningArray } from '@pmod/xo/warning.model';

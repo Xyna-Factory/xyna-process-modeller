@@ -1,5 +1,3 @@
-import { catchError, EMPTY, Observable, Subject, switchMap } from 'rxjs';
-
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -17,6 +15,9 @@ import { catchError, EMPTY, Observable, Subject, switchMap } from 'rxjs';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+
+import { catchError, EMPTY, Observable, Subject, switchMap } from 'rxjs';
+
 import { Component, inject, Input } from '@angular/core';
 import { ApiService, XoManagedFileID } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
