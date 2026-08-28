@@ -17,7 +17,7 @@
  */
 import { filter, take } from 'rxjs/operators';
 
-import { Component, ElementRef, HostBinding, HostListener, inject, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, HostBinding, HostListener, inject, Input, QueryList, ViewChildren, viewChild } from '@angular/core';
 import { ApiService } from '@zeta/api';
 import { coerceBoolean } from '@zeta/base';
 
@@ -60,8 +60,7 @@ export class FormulaComponent extends ModellingItemComponent {
     protected readonly elementRef = inject(ElementRef);
     protected readonly apiService = inject(ApiService);
 
-    @ViewChild('formulaWrapper', { static: false })
-    formulaWrapper: ElementRef;
+    readonly formulaWrapper = viewChild<ElementRef>('formulaWrapper');
 
     private _partWithCaret: FormulaPart = null;     // caret is at the beginning of this part
     private _partInEditing: FormulaPart = null;     // if set, the focus is inside this part (e. g. while editing a literal)
@@ -322,7 +321,7 @@ export class FormulaComponent extends ModellingItemComponent {
 
 
     finishedEditingSubPart(_: FormulaPart) {
-        this.formulaWrapper?.nativeElement.focus();       // refocus formula-area
+        this.formulaWrapper()?.nativeElement.focus();       // refocus formula-area
 
         // if it hasn't been accepted before, leave formula
         if (this._partInEditing) {
@@ -356,7 +355,7 @@ export class FormulaComponent extends ModellingItemComponent {
     clickOnFormula() {
         if (!this.readonly && !this.selected) {
             this.select();
-            this.formulaWrapper.nativeElement.focus();   // focus formula-area instead of formula
+            this.formulaWrapper().nativeElement.focus();   // focus formula-area instead of formula
         }
     }
 
@@ -364,8 +363,9 @@ export class FormulaComponent extends ModellingItemComponent {
     @HostListener('focusout', ['$event.relatedTarget'])
     blur(relatedTarget: Element) {
         // check if a sub-element of this formula has been focused instead and stay in selected mode
-        if (this.formulaWrapper.nativeElement !== relatedTarget &&
-            !this.formulaWrapper.nativeElement.contains(relatedTarget) &&
+        const formulaWrapper = this.formulaWrapper();
+        if (formulaWrapper.nativeElement !== relatedTarget &&
+            !formulaWrapper.nativeElement.contains(relatedTarget) &&
             !this._externalChildren?.find(child => !!child.getChildren().find(externalChild => externalChild === relatedTarget))
         ) {
             this.unselect();
@@ -419,7 +419,7 @@ export class FormulaComponent extends ModellingItemComponent {
                 this.focusPart(this.partWithCaret);
             } else {
                 // ... or finish editing
-                this.formulaWrapper.nativeElement.blur();
+                this.formulaWrapper().nativeElement.blur();
             }
         } else {
 
@@ -488,7 +488,7 @@ export class FormulaComponent extends ModellingItemComponent {
 
         // finish proxy-mode and refocus formula
         this.proxyIndex = -1;
-        this.formulaWrapper.nativeElement.focus();
+        this.formulaWrapper().nativeElement.focus();
     }
 
 

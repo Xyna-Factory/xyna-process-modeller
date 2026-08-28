@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, Component, ElementRef, Input, NgZone, OnDestroy, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, NgZone, OnDestroy, inject, viewChild } from '@angular/core';
 import { GraphicallyRepresented } from '@zeta/base';
 import { createSVGCircle, createSVGGroup, createSVGHorizontalCubicBezierPath, createSVGText, createSVGVerticalCubicBezierPath } from '@zeta/base/draw';
 import { filter, forkJoin, take, tap } from 'rxjs';
@@ -193,8 +193,7 @@ export class FlowCanvasComponent implements AfterViewInit, OnDestroy {
     private readonly ngZone = inject(NgZone);
 
 
-    @ViewChild('SVG', {static: false})
-    private readonly element: ElementRef;
+    private readonly element = viewChild<ElementRef>('SVG');
     private view: SVGElement;
 
     private _flowDefinitions: FlowDefinition[];
@@ -207,7 +206,7 @@ export class FlowCanvasComponent implements AfterViewInit, OnDestroy {
 
 
     ngAfterViewInit() {
-        this.view = createSVGGroup(this.element.nativeElement);
+        this.view = createSVGGroup(this.element().nativeElement);
         this.initFlow();
     }
 
@@ -233,7 +232,7 @@ export class FlowCanvasComponent implements AfterViewInit, OnDestroy {
 
     protected initFlow() {
         const parentOffset = (): Vector2 => {
-            const parentOffsetRect = this.element.nativeElement.getBoundingClientRect();
+            const parentOffsetRect = this.element().nativeElement.getBoundingClientRect();
             const offset = new Vector2(-parentOffsetRect.left, -parentOffsetRect.top);
             return offset;
         };
@@ -256,7 +255,7 @@ export class FlowCanvasComponent implements AfterViewInit, OnDestroy {
                 const o = parentOffset();
                 this._flows.forEach(flow => flow.offset = o);
             });
-            this.resizeObserver.observe(this.element.nativeElement);
+            this.resizeObserver.observe(this.element().nativeElement);
         }
     }
 

@@ -18,7 +18,7 @@
 import { merge, of, Subscription } from 'rxjs';
 
 
-import { AfterViewInit, Component, inject, OnDestroy, OnInit, QueryList, signal, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, inject, OnDestroy, OnInit, signal, viewChild, viewChildren } from '@angular/core';
 import { TypeDocumentModel } from '@pmod/document/model/type-document.model';
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoArray } from '@zeta/api';
@@ -87,14 +87,14 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
     areaValue = AreaValue.Opened;
     AreaValue = AreaValue;
 
-    @ViewChild(FactoryComponent, { static: true }) factoryComponent: FactoryComponent;
-    @ViewChild(SearchComponent, { static: true }) searchComponent: SearchComponent;
-    @ViewChild(DetailsComponent, { static: true }) detailsComponent: DetailsComponent;
-    @ViewChild(ClipboardComponent, { static: true }) clipboardComponent: ClipboardComponent;
-    @ViewChild(ErrorsComponent, { static: true }) errorsComponent: ErrorsComponent;
-    @ViewChild(CompareComponent, { static: true }) compareComponent: CompareComponent;
-    @ViewChild(HelpComponent, { static: true }) helpComponent: HelpComponent;
-    @ViewChildren(NavPluginComponent) pluginComponents: QueryList<NavPluginComponent>;
+    readonly factoryComponent = viewChild(FactoryComponent);
+    readonly searchComponent = viewChild(SearchComponent);
+    readonly detailsComponent = viewChild(DetailsComponent);
+    readonly clipboardComponent = viewChild(ClipboardComponent);
+    readonly errorsComponent = viewChild(ErrorsComponent);
+    readonly compareComponent = viewChild(CompareComponent);
+    readonly helpComponent = viewChild(HelpComponent);
+    readonly pluginComponents = viewChildren(NavPluginComponent);
 
     private lastOpened: NavigationbarArea = null;
     private readonly viewComponentMap = new Map<NavigationbarArea, CommonNavigationComponent>();
@@ -150,13 +150,13 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngOnInit() {
         this.viewComponentMap
-            .set(NavigationbarArea.Factory, this.factoryComponent)
-            .set(NavigationbarArea.Search, this.searchComponent)
-            .set(NavigationbarArea.Details, this.detailsComponent)
-            .set(NavigationbarArea.Clipboard, this.clipboardComponent)
-            .set(NavigationbarArea.Errors, this.errorsComponent)
-            .set(NavigationbarArea.Compare, this.compareComponent)
-            .set(NavigationbarArea.Help, this.helpComponent);
+            .set(NavigationbarArea.Factory, this.factoryComponent())
+            .set(NavigationbarArea.Search, this.searchComponent())
+            .set(NavigationbarArea.Details, this.detailsComponent())
+            .set(NavigationbarArea.Clipboard, this.clipboardComponent())
+            .set(NavigationbarArea.Errors, this.errorsComponent())
+            .set(NavigationbarArea.Compare, this.compareComponent())
+            .set(NavigationbarArea.Help, this.helpComponent());
 
         this.switchArea(NavigationbarArea.Factory);
     }
@@ -262,7 +262,7 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
 
     get activeNavigationComponent(): CommonNavigationComponent {
         if (this.area === NavigationbarArea.Plugin) {
-            return this.pluginComponents.find(comp => comp.pluginNumber === this.activatedPluginNumber);
+            return this.pluginComponents().find(comp => comp.pluginNumber === this.activatedPluginNumber);
         }
         return this.viewComponentMap.get(this.area);
     }

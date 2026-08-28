@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, NgZone, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, NgZone, ViewChild, viewChild } from '@angular/core';
 
 import { MessageBusService } from '@yggdrasil/events';
 import { AuthService } from '@zeta/auth';
@@ -61,8 +61,7 @@ export class SearchComponent extends CommonNavigationComponent {
     querySubject = new Subject<string>();
     debounce = false;
 
-    @ViewChild(XMOMListComponent, { static: true })
-    xmomList: XMOMListComponent;
+    readonly xmomList = viewChild(XMOMListComponent);
 
     _inputComponent: XcFormInputComponent;
     @ViewChild('input', { static: false })
@@ -107,7 +106,7 @@ export class SearchComponent extends CommonNavigationComponent {
 
         this.querySubject.pipe(debounceTime(500)).subscribe(query => {
             this.debounce = false;
-            this.xmomList.find(query, this.filterConditions.maxCount, this.filterConditions);
+            this.xmomList().find(query, this.filterConditions.maxCount, this.filterConditions);
         });
 
         this.messageBus.xmomChange.pipe(

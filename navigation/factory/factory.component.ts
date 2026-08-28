@@ -18,7 +18,7 @@
 import { merge, of } from 'rxjs';
 import { debounceTime, filter, switchMap, tap } from 'rxjs/operators';
 
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, viewChild } from '@angular/core';
 import { MessageBusService } from '@yggdrasil/events';
 import { XcFormAutocompleteComponent } from '@zeta/xc';
 
@@ -61,8 +61,7 @@ export class FactoryComponent extends CommonNavigationComponent implements After
         xact: 'Activation'
     };
 
-    @ViewChild(XMOMListComponent, { static: true })
-    xmomList: XMOMListComponent;
+    readonly xmomList = viewChild(XMOMListComponent);
 
     xmomPaths = new Array<XmomPath>();
     flatPaths = new Set<string>();
@@ -176,7 +175,7 @@ export class FactoryComponent extends CommonNavigationComponent implements After
         const newPath = this.selectedPath !== path;
         if (forceReselect || newPath) {
             this.selectedPath = path;
-            this.xmomList.listMultiple(paths, !newPath);
+            this.xmomList().listMultiple(paths, !newPath);
         }
     }
 

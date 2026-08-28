@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterContentInit, AfterViewInit, Component, signal, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, signal, viewChild } from '@angular/core';
 
 import { XoStructureField, XoStructureMethod, XoStructureObject } from '@zeta/api';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItem } from '@zeta/xc';
@@ -37,8 +37,7 @@ import { VariableComponent } from '../../../variable/variable.component';
 })
 export class FormulaPartMemberComponent extends FormulaEditablePartComponent implements AfterViewInit, AfterContentInit, FormulaChildComponent {
 
-    @ViewChild(XcFormAutocompleteComponent, {static: false})
-    private readonly _memberInput: XcFormAutocompleteComponent;
+    private readonly _memberInput = viewChild(XcFormAutocompleteComponent);
 
     private _optionElements: HTMLElement[] = [];
 
@@ -70,12 +69,12 @@ export class FormulaPartMemberComponent extends FormulaEditablePartComponent imp
 
 
     ngAfterViewInit() {
-        this._memberInput?.setFocus();
+        this._memberInput()?.setFocus();
     }
 
 
     opened() {
-        this._optionElements = this._memberInput?.trigger?.autocomplete?.options?.map(option => option._getHostElement());
+        this._optionElements = this._memberInput()?.trigger()?.autocomplete?.options?.map(option => option._getHostElement());
     }
 
 
@@ -92,8 +91,9 @@ export class FormulaPartMemberComponent extends FormulaEditablePartComponent imp
 
 
     setFocus() {
-        if (this._memberInput) {
-            this._memberInput.setFocus();
+        const _memberInput = this._memberInput();
+        if (_memberInput) {
+            _memberInput.setFocus();
         }
     }
 

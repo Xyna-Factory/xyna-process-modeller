@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, viewChild } from '@angular/core';
 
 import { XMOMListComponent } from '@pmod/navigation/xmom/xmom-list.component';
 import { XoFactoryItemArray } from '@pmod/xo/factory-item.model';
@@ -38,8 +38,7 @@ export interface RelationGroup {
     imports: [XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective, XcIconButtonComponent, XcTooltipDirective, XMOMListComponent_1]
 })
 export class RelationTableComponent {
-    @ViewChild(XMOMListComponent, { static: true })
-    xmomList: XMOMListComponent;
+    readonly xmomList = viewChild(XMOMListComponent);
 
     @Input()
     set relations(value: any) {
