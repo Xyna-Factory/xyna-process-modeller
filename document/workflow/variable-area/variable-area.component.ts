@@ -16,12 +16,13 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { NgFor } from '@angular/common';
-import { Component, HostBinding, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input, effect, input } from '@angular/core';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoInsertModellingObjectRequest } from '../../../xo/insert-modelling-object-request.model';
 import { XoModellingItem } from '../../../xo/modelling-item.model';
 import { XoMoveModellingObjectRequest } from '../../../xo/move-modelling-object-request.model';
+import { XoVariable } from '../../../xo/variable.model';
 import { XoVariableArea } from '../../../xo/variable-area.model';
 import { DragType, ModDnDEvent } from '../shared/drag-and-drop/mod-drag-and-drop.service';
 import { ModDraggableDirective } from '../shared/drag-and-drop/mod-draggable.directive';
@@ -34,10 +35,23 @@ import { VariableComponent } from '../variable/variable.component';
     selector: 'variable-area',
     templateUrl: './variable-area.component.html',
     styleUrls: ['./variable-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [ModDropAreaDirective, NgFor, VariableComponent, ModDraggableDirective]
 })
 export class VariableAreaComponent extends ModellingObjectComponent {
+    readonly variableAreaInput = input<XoVariableArea>(null, { alias: 'variableArea' });
     private _kind: 'input-area' | 'output-area' | 'throws-area';
+    readonly trackById = (_index: number, variable: XoVariable) => variable?.id;
+
+    constructor() {
+        super();
+        effect(() => this.setModel(this.variableAreaInput()));
+        this.untilDestroyed(this.documentService.documentChange).subscribe(change => {
+            if (change.item === this.documentModel?.item) {
+                this.cdr.detectChanges();
+            }
+        });
+    }
 
     allowItem = (xoFqn: string): boolean => {
         const allowedType = !!this.variableArea.itemTypes.find(itemType => itemType.toLowerCase() === xoFqn.toLowerCase());
@@ -52,7 +66,9 @@ export class VariableAreaComponent extends ModellingObjectComponent {
         // 1. operation is MOVE and xo shall not change its position or if
         // 2. there's a position-fixed variable right to the insert position (which would change its position +1 on insert)
         const moving = !!dragEvent && !!(dragEvent.dataTransfer as DataTransfer) && (dragEvent.dataTransfer as DataTransfer).dropEffect === 'move';
-        if (moving && !xo.deletable) {
+        const mappedComponent = xo?.id ? this.componentMappingService.getComponentForId(this.documentModel?.item, xo.id) : undefined;
+        const isMappedVariable = mappedComponent instanceof VariableComponent;
+        if (moving && !xo.deletable && !isMappedVariable) {
             return false;
         }
         return !this.variableArea.variables.find((variable, index) => index >= hoverEvent.index && !variable.deletable);
@@ -65,8 +81,14 @@ export class VariableAreaComponent extends ModellingObjectComponent {
             event.index--;
         }
 
+        const previewInsert = (item: XoModellingItem) => {
+            this.variableArea.items.data.splice(event.index, 0, item);
+            this.cdr.markForCheck();
+        };
+
         // --< INSERT >--
         if (event.operation === DragType.insert) {
+            previewInsert(event.item);
             this.performAction({
                 type: ModellingActionType.insert,
                 objectId: this.variableArea.id,
@@ -79,6 +101,7 @@ export class VariableAreaComponent extends ModellingObjectComponent {
         } else if (event.operation === DragType.copy) {
 
             // --< COPY >--
+            previewInsert(event.item.clone());
             this.performAction({
                 type: ModellingActionType.copy,
                 objectId: event.item.id,
@@ -88,14 +111,25 @@ export class VariableAreaComponent extends ModellingObjectComponent {
                     this.variableArea.id
                 )
             });
-            // preview copy operation by inserting the variable before the request is done
-            const newItem = event.item.clone();
-            this.variableArea.items.data.splice(event.index, 0, newItem);
         } else if (event.operation === DragType.move) {
 
             // --< MOVE >--
             // target index must be different from source index, if inserting into the same area
             if (!event.sameArea || event.sourceIndex !== event.index) {
+                if (event.sameArea) {
+                    const movedItem = this.variableArea.items.data.splice(event.sourceIndex, 1)[0];
+                    this.variableArea.items.data.splice(event.index, 0, movedItem);
+                    this.cdr.markForCheck();
+                } else {
+                    const sourceAreaComponent = this.resolveSourceAreaComponent(event.sourceAreaId);
+                    const sourceArea = sourceAreaComponent?.variableArea ?? (event.item.parent as XoVariableArea);
+                    const sourceIndex = sourceArea?.items?.data?.findIndex(item => item.id === event.item.id);
+                    if (sourceIndex >= 0) {
+                        sourceArea.items.data.splice(sourceIndex, 1);
+                        sourceAreaComponent?.markForRefresh();
+                    }
+                    previewInsert(event.item);
+                }
                 this.performAction({
                     type: ModellingActionType.move,
                     objectId: event.item.id,
@@ -110,14 +144,19 @@ export class VariableAreaComponent extends ModellingObjectComponent {
     }
 
 
-    @Input()
-    set variableArea(value: XoVariableArea) {
-        this.setModel(value);
+    private resolveSourceAreaComponent(sourceAreaId: string): VariableAreaComponent {
+        const component = this.componentMappingService.getComponentForId(this.documentModel?.item, sourceAreaId);
+        return component instanceof VariableAreaComponent ? component : undefined;
+    }
+
+
+    markForRefresh() {
+        this.cdr.markForCheck();
     }
 
 
     get variableArea(): XoVariableArea {
-        return this.getModel() as XoVariableArea;
+        return this.variableAreaInput();
     }
 
 

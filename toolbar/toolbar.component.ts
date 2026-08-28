@@ -18,7 +18,7 @@
 import { merge, of, Subscription } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy } from '@angular/core';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcIconButtonComponent, XcIconComponent, XcMenuComponent, XcMenuItem, XcMenuTriggerDirective, XcTooltipDirective } from '@zeta/xc';
 
@@ -114,30 +114,30 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     private static readonly BUTTON_NAME_DOWNLOAD_TEMPLATE = 'Download Template';
     private static readonly BUTTON_NAME_DOWNLOAD_PYTHON_TEMPLATE = 'Download Python Template';
 
-    private static readonly WorkflowMenuItem: XcMenuItem = { name: signal('Workflow'), icon: 'mini-workflow', iconStyle: 'modeller' };
-    private static readonly DataTypeMenuItem: XcMenuItem = { name: signal('Data Type'), icon: 'mini-datatype', iconStyle: 'modeller' };
-    private static readonly ExceptionTypeMenuItem: XcMenuItem = { name: signal('Exception Type'), icon: 'mini-catch', iconStyle: 'modeller' };
-    private static readonly ServiceGroupMenuItem: XcMenuItem = { name: signal('Service Group'), icon: 'mini-workflow', iconStyle: 'modeller' };
+    private readonly WorkflowMenuItem: XcMenuItem = { name: this.i18n.translateSignal('Workflow'), icon: 'mini-workflow', iconStyle: 'modeller' };
+    private readonly DataTypeMenuItem: XcMenuItem = { name: this.i18n.translateSignal('Data Type'), icon: 'mini-datatype', iconStyle: 'modeller' };
+    private readonly ExceptionTypeMenuItem: XcMenuItem = { name: this.i18n.translateSignal('Exception Type'), icon: 'mini-catch', iconStyle: 'modeller' };
+    private readonly ServiceGroupMenuItem: XcMenuItem = { name: this.i18n.translateSignal('Service Group'), icon: 'mini-workflow', iconStyle: 'modeller' };
 
 
-    private static readonly CommonDocumentButtonDescriptions: ToolbarButtonDescription[] = [
+    private readonly CommonDocumentButtonDescriptions: ToolbarButtonDescription[] = [
         {
             name: ToolbarComponent.BUTTON_NAME_NEW,
             tooltip: 'new',
             iconName: 'tb-newfile',
             isDisabled: ds => !ds.xmomService.runtimeContext,
             menuItems: [
-                ToolbarComponent.WorkflowMenuItem,
-                ToolbarComponent.DataTypeMenuItem,
-                ToolbarComponent.ExceptionTypeMenuItem,
-                ToolbarComponent.ServiceGroupMenuItem
+                this.WorkflowMenuItem,
+                this.DataTypeMenuItem,
+                this.ExceptionTypeMenuItem,
+                this.ServiceGroupMenuItem
             ]
         }
     ];
 
 
-    private static readonly WorkflowDocumentButtonDescriptions: ToolbarButtonDescription[] = [
-        ...ToolbarComponent.CommonDocumentButtonDescriptions,
+    private readonly WorkflowDocumentButtonDescriptions: ToolbarButtonDescription[] = [
+        ...this.CommonDocumentButtonDescriptions,
         {
             name: ToolbarComponent.BUTTON_NAME_SAVE,
             tooltip: 'save',
@@ -168,8 +168,8 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     ];
 
 
-    private static readonly TypeDocumentButtonDescriptions: ToolbarButtonDescription[] = [
-        ...ToolbarComponent.CommonDocumentButtonDescriptions,
+    private readonly TypeDocumentButtonDescriptions: ToolbarButtonDescription[] = [
+        ...this.CommonDocumentButtonDescriptions,
         {
             name: ToolbarComponent.BUTTON_NAME_DEPLOY,
             tooltip: 'deploy',
@@ -210,7 +210,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     ];
 
 
-    private static readonly WorkflowButtonDescriptions: ToolbarItem[] = [
+    private readonly WorkflowButtonDescriptions: ToolbarItem[] = [
         {
             name: ToolbarComponent.BUTTON_NAME_SERVICE,
             tooltip: 'service',
@@ -344,7 +344,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     ];
 
 
-    private static readonly TypeButtonDescriptions: ToolbarButtonDescription[] = [
+    private readonly TypeButtonDescriptions: ToolbarButtonDescription[] = [
         // {
         //     name: ToolbarComponent.BUTTON_NAME_MEMBER_VARIABLE,
         //     tooltip: 'member-variable',
@@ -393,21 +393,21 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
 
     get genericButtonDescriptions(): ToolbarButtonDescription[] {
         if (this.documentService.selectedDocument instanceof WorkflowDocumentModel) {
-            return ToolbarComponent.WorkflowDocumentButtonDescriptions;
+            return this.WorkflowDocumentButtonDescriptions;
         }
         if (this.documentService.selectedDocument instanceof TypeDocumentModel) {
-            return ToolbarComponent.TypeDocumentButtonDescriptions;
+            return this.TypeDocumentButtonDescriptions;
         }
-        return ToolbarComponent.CommonDocumentButtonDescriptions;
+        return this.CommonDocumentButtonDescriptions;
     }
 
 
     get specificToolbarItems(): ToolbarItem[] {
         if (this.documentService.selectedDocument instanceof WorkflowDocumentModel) {
-            return ToolbarComponent.WorkflowButtonDescriptions;
+            return this.WorkflowButtonDescriptions;
         }
         if (this.documentService.selectedDocument instanceof TypeDocumentModel) {
-            return ToolbarComponent.TypeButtonDescriptions;
+            return this.TypeButtonDescriptions;
         }
         return [];
     }
@@ -438,10 +438,10 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
 
     selectGenericMenuItem(item: XcMenuItem) {
         switch (item) {
-            case ToolbarComponent.WorkflowMenuItem: this.documentService.newWorkflow(); break;
-            case ToolbarComponent.DataTypeMenuItem: this.documentService.newDataType(); break;
-            case ToolbarComponent.ExceptionTypeMenuItem: this.documentService.newExceptionType(); break;
-            case ToolbarComponent.ServiceGroupMenuItem: this.documentService.newServiceGroup(); break;
+            case this.WorkflowMenuItem: this.documentService.newWorkflow(); break;
+            case this.DataTypeMenuItem: this.documentService.newDataType(); break;
+            case this.ExceptionTypeMenuItem: this.documentService.newExceptionType(); break;
+            case this.ServiceGroupMenuItem: this.documentService.newServiceGroup(); break;
         }
     }
 

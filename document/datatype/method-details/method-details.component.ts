@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, Input, OnDestroy, signal } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, input, OnDestroy, signal } from '@angular/core';
 
 import { MinMaxService } from '@pmod/document/min-max.service';
 import { I18nService } from '@zeta/i18n';
@@ -43,73 +43,18 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
     protected readonly cdr = inject(ChangeDetectorRef);
     private readonly minMaxService = inject(MinMaxService);
 
-    get method(): XoMethod {
-        return this.getModel() as XoMethod;
-    }
-
-    @Input()
-    set method(value: XoMethod) {
-        this.setModel(value);
-        if (value) {
-            this.baseTabItem.name = signal(this.method?.label ?? 'Base');
-            this.methodTabUpdate.next(this.buildMethodTabData());
-            this.metaTabUpdate.next(this.buildMetaTabData());
-        }
-        this.cdr.markForCheck();
-    }
+    readonly methodInput = input<XoMethod>(null, { alias: 'method' });
 
 
-    methodTabUpdate: Subject<MethodTabData> = new BehaviorSubject(this.buildMethodTabData());
-    metaTabUpdate: Subject<MetaTabData> = new BehaviorSubject(this.buildMetaTabData());
+    methodTabUpdate: Subject<MethodTabData> = new BehaviorSubject(this.buildMethodTabData(null));
+    metaTabUpdate: Subject<MetaTabData> = new BehaviorSubject(this.buildMetaTabData(null));
 
-    readonly baseTabItem: XcTabBarItem<DocumentTabData<MethodTabData>> = {
-        closable: false,
-        component: MethodBaseTabComponent,
-        name: signal('Base'),
-        data: <DocumentTabData<MethodTabData>>{
-            documentModel: this.documentModel,
-            performAction: this.performAction.bind(this),
-            readonly: this.readonly,
-            update: this.methodTabUpdate.asObservable()
-        }
-    };
-
-    readonly metaTabItem: XcTabBarItem<DocumentTabData<MetaTabData>> = {
-        closable: false,
-        component: MetaTabComponent,
-        name: signal('Meta'),
-        data: <DocumentTabData<MetaTabData>>{
-            documentModel: this.documentModel,
-            performAction: this.performAction.bind(this),
-            readonly: this.readonly,
-            update: this.metaTabUpdate.asObservable()
-        }
-    };
-
-    readonly implementationTabItem: XcTabBarItem<DocumentTabData<MethodTabData>> = {
-        closable: false,
-        component: MethodImplementationTabComponent,
-        name: this.i18nService.translateSignal('pmod.datatype.method-details.implementation'),
-        data: <DocumentTabData<MethodTabData>>{
-            documentModel: this.documentModel,
-            performAction: this.performAction.bind(this),
-            update: this.methodTabUpdate.asObservable()
-        }
-    };
-
-    tabBarSelection: XcTabBarItem<DocumentTabData<any>>;
-    tabBarItems: XcTabBarItem<DocumentTabData<any>>[];
+    readonly tabBarSelection = signal<XcTabBarItem<DocumentTabData<any>>>(null);
+    readonly tabBarItems = signal<XcTabBarItem<DocumentTabData<any>>[]>([]);
 
     constructor() {
         super();
-
-        this.tabBarItems = [this.baseTabItem, this.metaTabItem, this.implementationTabItem];
-
-        this.tabBarSelection = this.baseTabItem;
-
-        effect(() => {
-            this.updateTabBarItemList();
-        });
+        effect(() => this.refreshTabs());
     }
 
 
@@ -122,8 +67,7 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
 
     afterDocumentModelSet() {
         super.afterDocumentModelSet();
-        if (!this.tabBarItems) return;
-        this.tabBarItems.forEach(tabitem => {
+        this.tabBarItems().forEach(tabitem => {
             tabitem.data.documentModel = this.documentModel;
             tabitem.data.readonly = this.readonly;
         });
@@ -131,40 +75,76 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
 
 
     protected lockedChanged() {
-        this.tabBarItems.forEach(tabitem => {
+        this.tabBarItems().forEach(tabitem => {
             tabitem.data.readonly = this.readonly;
         });
         this.cdr.markForCheck();
     }
 
-
-    private buildMethodTabData(): MethodTabData {
+    private buildMethodTabData(method: XoMethod = null): MethodTabData {
         return <MethodTabData>{
-            method: this.method,
+            method: method,
             readonly: this.readonly
         };
     }
 
 
-    private buildMetaTabData(): MetaTabData {
+    private buildMetaTabData(method: XoMethod = null): MetaTabData {
         return <MetaTabData>{
-            metaTagArea: this.method?.metaTagArea,
+            metaTagArea: method?.metaTagArea,
             objectIdKey: 'services',
-            objectId: this.method?.name,
+            objectId: method?.name,
             readonly: this.readonly
         };
     }
 
+    private refreshTabs() {
+        const method = this.methodInput();
+        const baseTabItem: XcTabBarItem<DocumentTabData<MethodTabData>> = {
+            closable: false,
+            component: MethodBaseTabComponent,
+            name: signal(method?.label ?? 'Base'),
+            data: <DocumentTabData<MethodTabData>>{
+                documentModel: this.documentModel,
+                performAction: this.performAction.bind(this),
+                readonly: this.readonly,
+                update: this.methodTabUpdate.asObservable()
+            }
+        };
+        const metaTabItem: XcTabBarItem<DocumentTabData<MetaTabData>> = {
+            closable: false,
+            component: MetaTabComponent,
+            name: signal('Meta'),
+            data: <DocumentTabData<MetaTabData>>{
+                documentModel: this.documentModel,
+                performAction: this.performAction.bind(this),
+                readonly: this.readonly,
+                update: this.metaTabUpdate.asObservable()
+            }
+        };
+        const implementationTabItem: XcTabBarItem<DocumentTabData<MethodTabData>> = {
+            closable: false,
+            component: MethodImplementationTabComponent,
+            name: this.i18nService.translateSignal('pmod.datatype.method-details.implementation'),
+            data: <DocumentTabData<MethodTabData>>{
+                documentModel: this.documentModel,
+                performAction: this.performAction.bind(this),
+                update: this.methodTabUpdate.asObservable()
+            }
+        };
 
-    private updateTabBarItemList() {
         if (this.minMaxService.maximizedImplementation()) {
-            this.baseTabItem.disabled = true;
-            this.metaTabItem.disabled = true;
-        } else {
-            this.baseTabItem.disabled = false;
-            this.metaTabItem.disabled = false;
+            baseTabItem.disabled = true;
+            metaTabItem.disabled = true;
         }
 
-        this.cdr.markForCheck();
+        this.tabBarItems.set([baseTabItem, metaTabItem, implementationTabItem]);
+        this.tabBarSelection.set(baseTabItem);
+
+        if (method) {
+            this.setModel(method);
+            this.methodTabUpdate.next(this.buildMethodTabData(method));
+            this.metaTabUpdate.next(this.buildMetaTabData(method));
+        }
     }
 }

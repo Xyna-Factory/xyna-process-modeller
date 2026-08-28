@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy, signal } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, input, OnDestroy, signal } from '@angular/core';
 
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoDataType } from '@pmod/xo/data-type.model';
@@ -24,7 +24,7 @@ import { I18nService } from '@zeta/i18n';
 import { XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 import { XoBaseDefinition, XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 
-import { BehaviorSubject, combineLatest, map, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Observable, of, Subject, Subscription } from 'rxjs';
 
 import { XoRuntimeContext } from '../../../xo/runtime-context.model';
 import { ModellingItemComponent } from '../../workflow/shared/modelling-object.component';
@@ -48,40 +48,14 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
     protected readonly i18nService = inject(I18nService);
     protected readonly cdr = inject(ChangeDetectorRef);
 
-    @Input()
-    dataTypeRTC: XoRuntimeContext = null;
+    readonly dataTypeRTC = input<XoRuntimeContext>(null, { alias: 'dataTypeRTC' });
+    readonly isStorable = input(false, { alias: 'isStorable' });
+    readonly dataTypeInput = input<XoDataType>(null, { alias: 'dataType' });
+    readonly detailsItem = input<XoDetailsItem>(null, { alias: 'detailsItem' });
 
-    @Input()
-    set isStorable(value: boolean) {
-        if (value !== this._isStorable) {
-            this._isStorable = value;
-        }
-    }
+    private pluginTabsSubscription?: Subscription;
 
-    get dataType(): XoDataType {
-        return this.getModel() as XoDataType;
-    }
-
-    @Input()
-    set dataType(value: XoDataType) {
-        this.setModel(value);
-        if (value) {
-            this.updateTabBarItemList();
-            this.refreshTabs();
-        }
-    }
-
-    @Input()
-    set detailsItem(value: XoDetailsItem) {
-        if (value) {
-            this.refreshTabs();
-        }
-        this.cdr.markForCheck();
-    }
-
-    private _isStorable = false;
-
-    tabUpdate: Subject<XoDataType> = new BehaviorSubject(this.dataType);
+    tabUpdate: Subject<XoDataType> = new BehaviorSubject(this.dataTypeInput());
 
     readonly documentationTabItem: XcTabBarItem<DocumentTabData<DocumentationTabData>> = {
         closable: false,
@@ -119,29 +93,30 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
         }
     };
 
-    tabBarSelection: XcTabBarItem<DocumentTabData<any>>;
-    tabBarItems: XcTabBarItem<DocumentTabData<any>>[];
+    readonly tabBarSelection = signal<XcTabBarItem<DocumentTabData<any>>>(null);
+    readonly tabBarItems = signal<XcTabBarItem<DocumentTabData<any>>[]>([]);
 
     constructor() {
         super();
-        this.tabBarSelection = this.documentationTabItem;
+        effect(() => this.refreshTabs());
     }
 
     ngOnDestroy() {
         this.tabUpdate.complete();
+        this.pluginTabsSubscription?.unsubscribe();
         super.ngOnDestroy();
     }
 
     afterDocumentModelSet() {
         super.afterDocumentModelSet();
-        this.tabBarItems.forEach(tabitem => {
+        this.tabBarItems().forEach(tabitem => {
             tabitem.data.documentModel = this.documentModel;
             tabitem.data.readonly = this.readonly;
         });
     }
 
     protected lockedChanged() {
-        this.tabBarItems.forEach(tabitem => {
+        this.tabBarItems().forEach(tabitem => {
             tabitem.data.readonly = this.readonly;
         });
         this.cdr.markForCheck();
@@ -163,27 +138,47 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
     }
 
     private updateTabBarItemList() {
-        this.tabBarItems = [this.documentationTabItem, this.metaTagsTabItem];
-        if (this._isStorable) {
-            this.tabBarItems.push(this.storableTabItem);
+        this.pluginTabsSubscription?.unsubscribe();
+        this.pluginTabsSubscription = undefined;
+
+        const tabItems: XcTabBarItem[] = [this.documentationTabItem, this.metaTagsTabItem];
+        if (this.isStorable()) {
+            tabItems.push(this.storableTabItem);
         }
-        if (this.dataType.plugin?.guiDefiningWorkflow) {
-            combineLatest(
-                this.dataType.plugin?.guiDefiningWorkflow.data.map(
+        const dataType = this.dataTypeInput();
+        this.tabBarItems.set(tabItems);
+        if (dataType?.plugin?.guiDefiningWorkflow) {
+            this.pluginTabsSubscription = combineLatest(
+                dataType.plugin.guiDefiningWorkflow.data.map(
                     value => this.pluginService.getFromCacheOrCallWorkflow(value)
                 )
             ).subscribe(bundles => {
+                const pluginItems = [...tabItems];
                 bundles.forEach(bundle => {
-                    bundle.data.push(this.dataType.plugin.context);
-                    this.tabBarItems.push(this.createPluginTabItem(bundle, (bundle.definition as XoBaseDefinition).label));
+                    bundle.data.push(dataType.plugin.context);
+                    pluginItems.push(this.createPluginTabItem(bundle, (bundle.definition as XoBaseDefinition).label));
                 });
+                this.tabBarItems.set(pluginItems);
+                this.tabBarSelection.set(this.documentationTabItem);
+                this.cdr.markForCheck();
             });
+        } else {
+            this.tabBarSelection.set(this.documentationTabItem);
         }
         this.cdr.markForCheck();
     }
 
     private refreshTabs() {
-        this.tabUpdate.next(this.dataType);
+        const dataType = this.dataTypeInput();
+        this.detailsItem();
+        this.dataTypeRTC();
+
+        if (dataType) {
+            this.setModel(dataType);
+            this.tabUpdate.next(dataType);
+        }
+        this.tabBarSelection.set(this.documentationTabItem);
+        this.updateTabBarItemList();
     }
 
     private createPluginTabItem(bundle: XoDefinitionBundle, tabName: string): XcTabBarItem<PluginTabData> {

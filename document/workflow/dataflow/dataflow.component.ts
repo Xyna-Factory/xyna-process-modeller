@@ -24,12 +24,14 @@ import { Vector2 } from 'three';
 
 import { DataConnectionType, XoConnection, XoConnectionArray } from '../../../xo/connection.model';
 import { XoSetDataflowConnectionRequest } from '../../../xo/set-dataflow-connection-request.model';
+import { XoVariable } from '../../../xo/variable.model';
 import { XoWorkflow } from '../../../xo/workflow.model';
 import { ComponentMappingService } from '../../component-mapping.service';
 import { SelectionService } from '../../selection.service';
 import { BranchSelectionService } from '../distinction/branch/branch-selection.service';
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
 import { SelectableModellingObjectComponent } from '../shared/selectable-modelling-object.component';
+import { VariableComponent } from '../variable/variable.component';
 import { XcIconButtonComponent } from '@zeta/xc';
 
 
@@ -395,6 +397,7 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
                     variables.forEach(variable => variable.inConnections.push(connection));
                 }
             }
+            this.refreshVisibleVariables();
 
             const loop = () => {
                 this.ngZone.runOutsideAngular(
@@ -413,6 +416,23 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
             }
             loop();
         }
+    }
+
+
+    private refreshVisibleVariables() {
+        const refreshedIds = new Set<string>();
+        this.workflow.getVariables()
+            .filter((variable): variable is XoVariable => variable instanceof XoVariable)
+            .forEach(variable => {
+                if (refreshedIds.has(variable.id)) {
+                    return;
+                }
+                refreshedIds.add(variable.id);
+                const mappedComponent = this.componentMappingService.getComponentForId(this.workflow, variable.id);
+                if (mappedComponent instanceof VariableComponent) {
+                    mappedComponent.refreshLinkState();
+                }
+            });
     }
 
 

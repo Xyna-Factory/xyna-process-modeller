@@ -58,11 +58,16 @@ export class SelectableModellingObjectComponent extends ModellingItemComponent i
 
     select() {
         this.selectionService.selectedObject = this;
+        if (this.selectionService.selectedObject !== this) {
+            // recover from one-shot suppressed selection updates
+            this.selectionService.selectedObject = this;
+        }
     }
 
 
     selectionChanged(selectedObject: SelectableModellingObjectComponent) {
         this._selected = (selectedObject === this);
+        this.cdr.markForCheck();
     }
 
 
@@ -73,6 +78,20 @@ export class SelectableModellingObjectComponent extends ModellingItemComponent i
 
     @HostListener('click', ['$event'])
     click(event: MouseEvent) {
+        this.select();
+        event.stopPropagation();
+    }
+
+
+    @HostListener('mousedown', ['$event'])
+    mouseDown(event: MouseEvent) {
+        this.select();
+        event.stopPropagation();
+    }
+
+
+    @HostListener('pointerdown', ['$event'])
+    pointerDown(event: PointerEvent) {
         this.select();
         event.stopPropagation();
     }

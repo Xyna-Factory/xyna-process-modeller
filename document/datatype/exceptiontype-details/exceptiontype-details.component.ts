@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, input, OnDestroy, signal } from '@angular/core';
 
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 import { XoExceptionType } from '@pmod/xo/exception-type.model';
@@ -41,48 +41,17 @@ export class ExceptionTypeDetailsComponent extends ModellingItemComponent implem
     protected readonly i18nService = inject(I18nService);
     protected readonly cdr = inject(ChangeDetectorRef);
 
-    get exceptionType(): XoExceptionType {
-        return this.getModel() as XoExceptionType;
-    }
-
-    @Input()
-    set exceptionType(value: XoExceptionType) {
-        this.setModel(value);
-        if (value) {
-            this.docTabUpdate.next(this.buildDocTabData());
-        }
-        this.cdr.markForCheck();
-    }
-
-    @Input()
-    set detailsItem(value: XoDetailsItem) {
-        if (value) {
-            this.docTabUpdate.next(this.buildDocTabData());
-        }
-        this.cdr.markForCheck();
-    }
+    readonly exceptionTypeInput = input<XoExceptionType>(null, { alias: 'exceptionType' });
+    readonly detailsItem = input<XoDetailsItem>(null, { alias: 'detailsItem' });
 
     docTabUpdate: Subject<DocumentationTabData> = new BehaviorSubject(this.buildDocTabData());
 
-    readonly documentationTabItem: XcTabBarItem<DocumentTabData<DocumentationTabData>> = {
-        closable: false,
-        component: DocumentationTabComponent,
-        name: this.i18nService.translateSignal('pmod.datatype.type-documentation-area.documentation-label'),
-        data: <DocumentTabData<DocumentationTabData>>{
-            documentModel: this.documentModel,
-            performAction: this.performAction.bind(this),
-            readonly: this.readonly,
-            update: this.docTabUpdate.asObservable()
-        }
-    };
-
-    tabBarSelection: XcTabBarItem<DocumentTabData<any>>;
-    tabBarItems: XcTabBarItem<DocumentTabData<any>>[];
+    readonly tabBarSelection = signal<XcTabBarItem<DocumentTabData<any>>>(null);
+    readonly tabBarItems = signal<XcTabBarItem<DocumentTabData<any>>[]>([]);
 
     constructor() {
         super();
-        this.tabBarSelection = this.documentationTabItem;
-        this.updateTabBarItemList();
+        effect(() => this.refreshTabs());
     }
 
     ngOnDestroy() {
@@ -92,29 +61,48 @@ export class ExceptionTypeDetailsComponent extends ModellingItemComponent implem
 
     afterDocumentModelSet() {
         super.afterDocumentModelSet();
-        this.tabBarItems.forEach(tabitem => {
+        this.tabBarItems().forEach(tabitem => {
             tabitem.data.documentModel = this.documentModel;
             tabitem.data.readonly = this.readonly;
         });
     }
 
     protected lockedChanged() {
-        this.tabBarItems.forEach(tabitem => {
+        this.tabBarItems().forEach(tabitem => {
             tabitem.data.readonly = this.readonly;
         });
         this.cdr.markForCheck();
     }
 
-
-    private buildDocTabData(): DocumentationTabData {
+    private buildDocTabData(exceptionType: XoExceptionType = null): DocumentationTabData {
         return <DocumentationTabData> {
-            documentationArea: this.exceptionType?.documentationArea,
+            documentationArea: exceptionType?.documentationArea,
             readonly: this.readonly
         };
     }
 
-    private updateTabBarItemList() {
-        this.tabBarItems = [this.documentationTabItem];
-        this.cdr.markForCheck();
+    private refreshTabs() {
+        const exceptionType = this.exceptionTypeInput();
+        this.detailsItem();
+
+        const documentationTabItem: XcTabBarItem<DocumentTabData<DocumentationTabData>> = {
+            closable: false,
+            component: DocumentationTabComponent,
+            name: this.i18nService.translateSignal('pmod.datatype.type-documentation-area.documentation-label'),
+            data: <DocumentTabData<DocumentationTabData>>{
+                documentModel: this.documentModel,
+                performAction: this.performAction.bind(this),
+                readonly: this.readonly,
+                update: this.docTabUpdate.asObservable()
+            }
+        };
+
+        this.tabBarItems.set([documentationTabItem]);
+        this.tabBarSelection.set(documentationTabItem);
+
+        if (exceptionType) {
+            this.setModel(exceptionType);
+            this.docTabUpdate.next(this.buildDocTabData(exceptionType));
+        }
     }
 }

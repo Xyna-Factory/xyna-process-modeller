@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, input } from '@angular/core';
 import { XcTooltipDirective } from '@zeta/xc';
 
 import { ModellingActionType } from '../../../api/xmom.service';
@@ -29,26 +29,25 @@ import { ModContentEditableDirective } from '../../workflow/shared/mod-content-e
     selector: 'member-service',
     templateUrl: './member-service.component.html',
     styleUrls: ['./member-service.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [XcTooltipDirective, ModContentEditableDirective]
 })
 export class MemberServiceComponent extends SelectableModellingObjectComponent {
 
-    @Input()
-    set memberService(value: XoMethod) {
-        this.setModel(value);
-    }
+    readonly memberService = input<XoMethod>(null, { alias: 'memberService' });
 
-
-    get memberService(): XoMethod {
-        return this.getModel() as XoMethod;
+    constructor() {
+        super();
+        effect(() => this.setModel(this.memberService()));
     }
 
 
     finishEditing(text: string) {
-        if (text !== this.memberService.label) {
+        const memberService = this.memberService();
+        if (memberService && text !== memberService.label) {
             this.performAction({
                 type: ModellingActionType.change,
-                objectId: this.memberService.id,
+                objectId: memberService.id,
                 request: new XoChangeLabelRequest(undefined, text)
             });
         }

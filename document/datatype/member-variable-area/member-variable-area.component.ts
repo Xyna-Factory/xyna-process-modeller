@@ -41,6 +41,9 @@ import { XcIconButtonComponent } from '@zeta/xc';
 })
 export class MemberVariableAreaComponent extends ModellingObjectComponent {
 
+    @Input()
+    selectedVariableId: string;
+
     constructor() {
         super();
          

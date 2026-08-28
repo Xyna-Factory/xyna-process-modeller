@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostBinding, inject, Input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, effect, inject, Input, input, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
@@ -29,6 +29,7 @@ import { LabelPathDialogComponent, LabelPathDialogData } from '../../../misc/mod
 import { XoChangeDynamicTypingRequest } from '../../../xo/change-dynamic-typing-request.model';
 import { XoChangeLabelRequest } from '../../../xo/change-label-request.model';
 import { XoChangeMultiplicityRequest } from '../../../xo/change-multiplicity-request.model';
+import { DataConnectionType, XoConnection } from '../../../xo/connection.model';
 import { ConversionTarget } from '../../../xo/convert-request.model';
 import { XoConvertVariableRequest } from '../../../xo/convert-variable-request.model';
 import { XoData } from '../../../xo/data.model';
@@ -52,6 +53,7 @@ import { ModContentEditableDirective } from '../shared/mod-content-editable.dire
     selector: 'variable',
     templateUrl: './variable.component.html',
     styleUrls: ['./variable.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [ModDropAreaDirective, ModContentEditableDirective, XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective, XcTooltipDirective]
 })
 export class VariableComponent extends SelectableModellingObjectComponent {
@@ -71,6 +73,7 @@ export class VariableComponent extends SelectableModellingObjectComponent {
     @HostBinding('class.placeholder')
     isPlaceholder = false;
 
+    readonly variableInput = input<XoVariable>(null, { alias: 'variable' });
     showFqn = true;
 
     private readonly constantMenuItem: XcMenuItem;
@@ -79,13 +82,21 @@ export class VariableComponent extends SelectableModellingObjectComponent {
     constructor() {
         super();
 
+        effect(() => {
+            const variable = this.variableInput();
+            if (variable) {
+                this.setModel(variable);
+                this.updateShowFQN();
+            }
+        });
+
         // get constant from selected branch, if any
         const getConstant = (): Xo =>
             this.variable.getConstant(this.selectedBranch?.id);
 
         // if variable depends on branches, one of this branches has to be selected to assign a constant for it
         const viewConstant = (): boolean =>
-            (
+            !!this.variable && (
                 // variable must allow constants
                 this.variable.allowConst === 'ALWAYS' ||
                 this.variable.allowConst === 'FOR_BRANCHES' && !!this.selectedBranch
@@ -110,12 +121,14 @@ export class VariableComponent extends SelectableModellingObjectComponent {
                 ).afterDismissResult().subscribe(result => {
                     // Because it is possible to set null as a constant there is a symbol to check if the constant should be deleted
                     if (result === CONSTANT_DIALOG_DELETE_TOKEN) {
+                        this.applyConstantPreview(undefined, this.selectedBranch?.id);
                         this.performAction({
                             request: XoSetConstantRequest.withConstantObject(null, this.selectedBranch?.id),
                             type: ModellingActionType.deleteConstant,
                             objectId: this.variable.id
                         });
                     } else if (result instanceof Xo) {
+                        this.applyConstantPreview(result, this.selectedBranch?.id);
                         this.performAction({
                             request: XoSetConstantRequest.withConstantObject(result, this.selectedBranch?.id),
                             type: ModellingActionType.setConstant,
@@ -199,12 +212,21 @@ export class VariableComponent extends SelectableModellingObjectComponent {
         );
 
         this.untilDestroyed(this.branchSelection.selectionChange).subscribe(
-            () => this.constantMenuItem.name = signal(this.selectedBranch
-                ? 'Constant for selected Branch...'
-                : 'Constant...')
+            () => {
+                this.constantMenuItem.name = signal(this.selectedBranch
+                    ? 'Constant for selected Branch...'
+                    : 'Constant...');
+                this.cdr.markForCheck();
+            }
         );
 
         this.untilDestroyed(this.detailLevelService.showFQNChange()).subscribe(() => this.updateShowFQN());
+
+        this.untilDestroyed(this.documentService.documentChange).subscribe(change => {
+            if (change.item === this.documentModel?.item) {
+                this.cdr.detectChanges();
+            }
+        });
     }
 
 
@@ -222,13 +244,21 @@ export class VariableComponent extends SelectableModellingObjectComponent {
 
     allowItem = (xoFqn: string): boolean =>
         // if casting is allowed for this variable, allow cast to Data Types and Exception Types
-        !this.isLocked() && this.variable.allowCast && (
+        !this.isLocked() && this.variable?.allowCast && (
             xoFqn === XoData.fqn.encode().toLowerCase() ||
             xoFqn === XoException.fqn.encode().toLowerCase()
         );
 
 
     dropped(event: ModDropEvent) {
+        const targetFqn = (event.item as XoVariable).castToFqn && (event.item as XoVariable).castToFqn.length > 0
+            ? (event.item as XoVariable).castToFqn
+            : (event.item as XoVariable).$fqn;
+
+        this.variable.castToFqn = targetFqn;
+        this.updateShowFQN();
+        this.cdr.markForCheck();
+
         if ((event.item as XoVariable).castToFqn && (event.item as XoVariable).castToFqn.length > 0) {
             // set dynamic type based on another dynamic type (for example self)
             this.performAction({ type: ModellingActionType.change, objectId: this.variable.id, request: XoChangeDynamicTypingRequest.castTo((event.item as XoVariable).castToFqn) });
@@ -256,15 +286,8 @@ export class VariableComponent extends SelectableModellingObjectComponent {
     }
 
 
-    @Input()
-    set variable(value: XoVariable) {
-        this.setModel(value);
-        this.updateShowFQN();
-    }
-
-
     get variable(): XoVariable {
-        return this.getModel() as XoVariable;
+        return this.variableInput();
     }
 
 
@@ -298,6 +321,45 @@ export class VariableComponent extends SelectableModellingObjectComponent {
                 request: new XoChangeLabelRequest(undefined, text)
             });
         }
+    }
+
+
+    private applyConstantPreview(constant: Xo, branchId?: string) {
+        const inConnections = this.variable.inConnections ?? [];
+        const constantConnection = inConnections.find(connection =>
+            connection.type === DataConnectionType.constant && connection.branchId === branchId
+        );
+
+        if (constant) {
+            if (constantConnection) {
+                constantConnection.constantObject = constant;
+            } else {
+                const connection = new XoConnection();
+                connection.type = DataConnectionType.constant;
+                connection.branchId = branchId;
+                connection.targetId = this.variable.id;
+                connection.constantObject = constant;
+                inConnections.push(connection);
+            }
+        } else if (constantConnection) {
+            const index = inConnections.indexOf(constantConnection);
+            if (index >= 0) {
+                inConnections.splice(index, 1);
+            }
+        }
+
+        this.cdr.markForCheck();
+    }
+
+
+    modelChanged() {
+        this.updateShowFQN();
+        this.cdr.markForCheck();
+    }
+
+
+    refreshLinkState() {
+        this.cdr.detectChanges();
     }
 
 

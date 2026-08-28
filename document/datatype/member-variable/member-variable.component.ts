@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, input } from '@angular/core';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeLabelRequest } from '../../../xo/change-label-request.model';
@@ -29,36 +29,35 @@ import { XcTooltipDirective } from '@zeta/xc';
     selector: 'member-variable',
     templateUrl: './member-variable.component.html',
     styleUrls: ['./member-variable.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [ModContentEditableDirective, XcTooltipDirective]
 })
 export class MemberVariableComponent extends SelectableModellingObjectComponent {
 
-    @Input()
-    set memberVariable(value: XoMemberVariable) {
-        this.setModel(value);
-    }
+    readonly memberVariable = input<XoMemberVariable>(null, { alias: 'memberVariable' });
 
-
-    get memberVariable(): XoMemberVariable {
-        return this.getModel() as XoMemberVariable;
+    constructor() {
+        super();
+        effect(() => this.setModel(this.memberVariable()));
     }
 
 
     get label(): string {
-        return this.memberVariable.label || '\u00A0';
+        return this.memberVariable()?.label || '\u00A0';
     }
 
 
     get type(): string {
-        return this.memberVariable.primitiveType || this.memberVariable.$fqn || '\u00A0';
+        const memberVariable = this.memberVariable();
+        return memberVariable?.primitiveType || memberVariable?.$fqn || '\u00A0';
     }
 
-
     finishEditing(text: string) {
-        if (text !== this.memberVariable.label) {
+        const memberVariable = this.memberVariable();
+        if (memberVariable && text !== memberVariable.label) {
             this.performAction({
                 type: ModellingActionType.change,
-                objectId: this.memberVariable.id,
+                objectId: memberVariable.id,
                 request: new XoChangeLabelRequest(undefined, text)
             });
         }

@@ -15,9 +15,9 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { combineLatest } from 'rxjs';
+import { combineLatest, Subscription } from 'rxjs';
 
-import { Component, inject, Input, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input, OnDestroy, signal } from '@angular/core';
 import { PluginService } from '@pmod/document/plugin.service';
 import { XcAutocompleteDataWrapper, XcButtonComponent, XcDefinitionProxyComponent, XcFormAutocompleteComponent, XcFormInputComponent, XcFormLabelComponent, XcOptionItem, XcRichListComponent, XcRichListItem } from '@zeta/xc';
 import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
@@ -43,14 +43,16 @@ export enum ExceptionMessageLanguage {
     styleUrls: ['./exception-messages-area.component.scss'],
     imports: [XcButtonComponent, XcFormAutocompleteComponent, XcFormInputComponent, XcFormLabelComponent, XcRichListComponent, XcDefinitionProxyComponent, XcI18nTranslateDirective]
 })
-export class ExceptionMessagesAreaComponent extends ModellingObjectComponent {
+export class ExceptionMessagesAreaComponent extends ModellingObjectComponent implements OnDestroy {
 
     protected readonly pluginService = inject(PluginService);
+    protected readonly cdr = inject(ChangeDetectorRef);
 
     private readonly onclick: (item: XoExceptionMessage) => void;
     private readonly ondelete: (item: XoExceptionMessage) => void;
 
     pluginBundles: XoDefinitionBundle[];
+    private pluginBundlesSubscription?: Subscription;
 
     currentMessage: string;
     language = ExceptionMessageLanguage.GERMAN;
@@ -119,16 +121,27 @@ export class ExceptionMessagesAreaComponent extends ModellingObjectComponent {
     }
 
     private updateBundles() {
+        this.pluginBundlesSubscription?.unsubscribe();
+        this.pluginBundlesSubscription = undefined;
         this.pluginBundles = [];
         if (this.exceptionMessagesArea.plugin?.guiDefiningWorkflow) {
-            combineLatest(
+            this.pluginBundlesSubscription = combineLatest(
                 this.exceptionMessagesArea.plugin.guiDefiningWorkflow.data.map(
                     value => this.pluginService.getFromCacheOrCallWorkflow(value)
                 )
             ).subscribe(bundles => {
-                bundles.forEach(bundle => bundle.data.push(this.exceptionMessagesArea.plugin.context));
-                this.pluginBundles = bundles;
+                const pluginContext = this.exceptionMessagesArea.plugin.context;
+                this.pluginBundles = bundles.map(bundle => {
+                    bundle.data.push(pluginContext);
+                    return bundle;
+                });
+                this.cdr.markForCheck();
             });
         }
+    }
+
+    ngOnDestroy() {
+        this.pluginBundlesSubscription?.unsubscribe();
+        super.ngOnDestroy();
     }
 }

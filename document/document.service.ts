@@ -402,7 +402,7 @@ export class DocumentService implements OnDestroy {
     }
 
 
-    refactorItem(xmomItem: XoXmomItem): Observable<void> {
+    refactorItem(xmomItem: XoXmomItem): Observable<XoUpdateXmomItemResponse> {
         const rtc = xmomItem.rtc ?? this.xmomService.runtimeContext;
         const data: LabelPathDialogData = {
             header: this.i18n.translate(LabelPathDialogComponent.HEADER_MOVE_RENAME, { key: '$0', value: FullQualifiedName.decode(xmomItem.$fqn).path + '.' + xmomItem.label }),
@@ -427,7 +427,7 @@ export class DocumentService implements OnDestroy {
     }
 
 
-    replace(xmomItem: XoXmomItem): Observable<void> {
+    replace(xmomItem: XoXmomItem): Observable<XoUpdateXmomItemResponse> {
         const rtc = xmomItem.rtc ?? this.xmomService.runtimeContext;
         const data: LabelPathDialogData = {
             header: this.i18n.translate(LabelPathDialogComponent.HEADER_REPLACE, { key: '$0', value: FullQualifiedName.decode(xmomItem.$fqn).path + '.' + xmomItem.label }),
@@ -455,14 +455,14 @@ export class DocumentService implements OnDestroy {
      * @param action Modelling action to perform
      * @param item XMOM Item to update with response
      */
-    performModellingAction(action: ModellingAction, item?: DocumentItem): Observable<void> {
+    performModellingAction(action: ModellingAction, item?: DocumentItem): Observable<XoUpdateXmomItemResponse> {
         /** @todo Use configured RuntimeContext */
         this.pendingModellingActionSubject.next(true);
         return this.xmomService.performModellingAction(action).pipe(
             map(updateResponse => {
                 // update document with response
-                if (item && updateResponse.updates) {
-                    this.handleXmomItemUpdate(item, updateResponse, updateResponse.updates.data);
+                if (item) {
+                    this.handleXmomItemUpdate(item, updateResponse, updateResponse.updates?.data ?? []);
                 }
                 // perform subsequent action
                 if (action.subsequentAction) {
@@ -470,6 +470,7 @@ export class DocumentService implements OnDestroy {
                 } else {
                     this.pendingModellingActionSubject.next(false);
                 }
+                return updateResponse;
             }),
             catchError(err => {
                 this.pendingModellingActionSubject.next(false);

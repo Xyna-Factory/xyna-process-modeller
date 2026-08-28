@@ -1,18 +1,23 @@
 <!-- TODO remove id -->
 <div
-  id="{{ serviceArea ? serviceArea.id : '' }}"
-  [mod-drop-area]="serviceArea.items?.data"
+  id="{{ serviceArea() ? serviceArea().id : '' }}"
+  [mod-drop-area]="serviceArea().items?.data"
   [mod-drop-area-allow-item]="allowItem"
   [mod-drop-area-can-drop]="canDrop"
   (mod-drop-area-dropped)="dropped($event)"
   [mod-drop-area-allow-parallel]="false"
   class="drop-area"
   >
-  @for (item of serviceArea.items; let i = $index; track i) {
+  @for (item of serviceArea().items; track item.id) {
     <div class ="service-row">
-      <member-service [mod-draggable]="item" [memberService]="item" (triggerAction)="performAction($event)" tabindex="0"> </member-service>
+      <member-service
+        [mod-draggable]="item"
+        [memberService]="item"
+        [class.selected]="item.id === selectedServiceId()"
+        (triggerAction)="performAction($event)"
+        tabindex="0"> </member-service>
       @if (item.deletable && !readonly) {
-        <xc-icon-button (click)="deleteService(item)" color="invert" xc-icon-name="delete"></xc-icon-button>
+        <xc-icon-button (click)="$event.stopPropagation(); deleteService(item)" color="invert" xc-icon-name="delete"></xc-icon-button>
       }
     </div>
   }

@@ -5,20 +5,21 @@
   (mod-drop-area-dropped)="dropped($event)"
   class="variable-drop-area"
   >
-  @for (variable of memberVariableArea.items; let i = $index; track i) {
+  @for (variable of memberVariableArea.items; track variable.id) {
     <div
       [mod-draggable]="variable"
       [mod-draggable-allowed-drag-type]="readonly ? 'copy' : 'move'"
       >
       <member-variable
         [memberVariable]="variable"
+        [class.selected]="variable.id === selectedVariableId"
         (triggerAction)="performAction($event)"
         [documentModel]="documentModel"
         tabindex="0"
       ></member-variable>
       @if (variable.deletable && !readonly) {
         <xc-icon-button
-          (click)="deleteVarable(variable)"
+          (click)="$event.stopPropagation(); deleteVarable(variable)"
           xc-icon-name="delete"
           color="invert"
         ></xc-icon-button>

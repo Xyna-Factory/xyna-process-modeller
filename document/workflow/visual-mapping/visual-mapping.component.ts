@@ -101,6 +101,7 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
     private initialized = false;
     private structuresLoaded = false;
     private isRefreshing = false;
+    private pendingRefresh = false;
 
     expressions: ExpressionWrapper[];
 
@@ -171,6 +172,9 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
         const outputVariables = this.mapping.outputArea.variables;
 
         if (this.needToRebuildTrees()) {
+            this.structuresLoaded = false;
+            this.isRefreshing = false;
+            this.pendingRefresh = false;
             this.inputDataSources = [];
             this.outputDataSources = [];
 
@@ -194,29 +198,27 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
         const dataSources = [...this.inputDataSources, ...this.outputDataSources];
 
         // wait for all data sources
-        forkJoin(
-            [
-                dataSources.map(ds => ds.root$.pipe(
-                    filter(value => !!value),
-                    first()
-                )),
-                xmomService.getModelledExpressions(this.documentModel.item, this.mapping).pipe(
-                    tap(expressions => {
-                        const mappingVariables = this.mapping.inputArea.variables.concat(this.mapping.outputArea.variables);
-                        this.expressions = expressions.data.map(modelledExpression => new ExpressionWrapper(modelledExpression));
-                        // assign XoVariables to ExpressionVariables
-                        this.expressions.forEach(expression => {
-                            const sourceVariable = expression.sourcePart.map(part => part.expression);
-                            sourceVariable.forEach(variable => variable.getVariable().variable = mappingVariables[variable.getVariable().varNum]);
-                            const targetVariable = expression.targetPart?.expression;
-                            if (targetVariable) {
-                                targetVariable.getVariable().variable = mappingVariables[targetVariable.getVariable().varNum];
-                            }
-                        });
-                    })
-                )
-            ]
-        ).subscribe(() => {
+        forkJoin([
+            ...dataSources.map(ds => ds.root$.pipe(
+                filter(value => !!value),
+                first()
+            )),
+            xmomService.getModelledExpressions(this.documentModel.item, this.mapping).pipe(
+                tap(expressions => {
+                    const mappingVariables = this.mapping.inputArea.variables.concat(this.mapping.outputArea.variables);
+                    this.expressions = expressions.data.map(modelledExpression => new ExpressionWrapper(modelledExpression));
+                    // assign XoVariables to ExpressionVariables
+                    this.expressions.forEach(expression => {
+                        const sourceVariable = expression.sourcePart.map(part => part.expression);
+                        sourceVariable.forEach(variable => variable.getVariable().variable = mappingVariables[variable.getVariable().varNum]);
+                        const targetVariable = expression.targetPart?.expression;
+                        if (targetVariable) {
+                            targetVariable.getVariable().variable = mappingVariables[targetVariable.getVariable().varNum];
+                        }
+                    });
+                })
+            )
+        ]).subscribe(() => {
             this.structuresLoaded = true;
             this.refreshFlow();
         });
@@ -225,6 +227,9 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
 
     refreshFlow() {
         if (!this.structuresLoaded || this.isRefreshing) {
+            if (this.isRefreshing) {
+                this.pendingRefresh = true;
+            }
             return;
         }
         this.isRefreshing = true;
@@ -260,6 +265,10 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
                     );
                 this.isRefreshing = false;
                 this.cdr.detectChanges();
+                if (this.pendingRefresh) {
+                    this.pendingRefresh = false;
+                    this.refreshFlow();
+                }
             }
         });
     }
@@ -307,9 +316,6 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
 
         if (node) {
             node.selected = true;
-
-            // 🔽 Suppress the next selection event so that the mapping is not affected by this selection
-            this.selectionService.selectedObjectSilently();
 
             this._selectionSubscription = node.selectedChange.pipe(filter(value => !value)).subscribe(() => {
                 this.selectedNode = undefined;

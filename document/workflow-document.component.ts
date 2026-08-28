@@ -102,7 +102,7 @@ export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowD
 
     private readonly menuItemUndo: XcMenuItem = {
         name: signal('pmod.workflow.undo'),
-        aside: signal(this.i18n.translate('pmod.workflow.undo-aside')),
+        aside: this.i18n.translateSignal('pmod.workflow.undo-aside'),
         translate: true,
         visible: () => !this.workflow.readonly && !this.documentService.selectedDocument.isLocked,
         click: () => this.documentService.undo().subscribe()
@@ -110,7 +110,7 @@ export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowD
 
     private readonly menuItemRedo: XcMenuItem = {
         name: signal('pmod.workflow.redo'),
-        aside: signal(this.i18n.translate('pmod.workflow.redo-aside')),
+        aside: this.i18n.translateSignal('pmod.workflow.redo-aside'),
         translate: true,
         visible: () => !this.workflow.readonly && !this.documentService.selectedDocument.isLocked,
         click: () => this.documentService.redo().subscribe()
@@ -197,7 +197,7 @@ export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowD
                                 })
                             ).subscribe(response => {
                                 copyToClipboard(response.xml);
-                                this.statusBarService.display(this.i18n.translate('pmod.workflow.copied-to-clipboard'), XcStatusBarEntryType.INFO);
+                                this.statusBarService.display(this.i18n.translateSignal('pmod.workflow.copied-to-clipboard')(), XcStatusBarEntryType.INFO);
                             });
                         });
                     }

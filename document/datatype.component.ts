@@ -76,7 +76,7 @@ export class DataTypeComponent extends TypeDocumentComponent<DataTypeDocumentMod
 
         this.detailsItem = new XoDetailsItem();
         this.detailsItem.name = 'Data Type Details';
-        this.selectedDetailsItem = this.detailsItem;
+        this.selectedDetailsItem.set(this.detailsItem);
     }
 
 

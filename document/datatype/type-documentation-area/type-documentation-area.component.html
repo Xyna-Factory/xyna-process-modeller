@@ -11,6 +11,6 @@
 <xc-form-textarea xc-i18n
   [value]="documentation"
   [readonly]="readonly"
-  [xc-form-textarea-lines]="lines"
+  [xc-form-textarea-lines]="lines()"
   (blur)="documentationFieldBlur($event)"
  />

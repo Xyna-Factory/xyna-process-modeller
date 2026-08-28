@@ -63,12 +63,13 @@ export class ServiceGroupComponent extends TypeDocumentComponent<ServiceGroupDoc
 
 
     documentationBlur(event: Event) {
-        if (!this.selectedMethod?.readonly) {
+        const selectedMethod = this.selectedMethod();
+        if (!selectedMethod?.readonly) {
             const text = (event.target as HTMLTextAreaElement).value;
-            if (this.selectedMethod.documentationArea.text !== text) {
+            if (selectedMethod.documentationArea.text !== text) {
                 this.performModellingAction({
                     type: ModellingActionType.change,
-                    objectId: this.selectedMethod.documentationArea.id,
+                    objectId: selectedMethod.documentationArea.id,
                     request: new XoChangeTextRequest(undefined, text)
                 });
             }

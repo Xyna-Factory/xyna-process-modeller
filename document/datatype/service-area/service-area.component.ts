@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, input } from '@angular/core';
 
 import { XoDeleteRequest } from '@pmod/xo/delete-request.model';
 
@@ -39,6 +39,7 @@ import { XcIconButtonComponent } from '@zeta/xc';
     selector: 'service-area',
     templateUrl: './service-area.component.html',
     styleUrls: ['./service-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [ModDropAreaDirective, MemberServiceComponent, ModDraggableDirective, XcIconButtonComponent]
 })
 export class ServiceAreaComponent extends ModellingObjectComponent {
@@ -49,10 +50,12 @@ export class ServiceAreaComponent extends ModellingObjectComponent {
         super();
 
         // instantiate specific member models such that they aren't pruned for the release build
-         
+          
         const dynamicMethod = new XoDynamicMethod();
         const staticMethod = new XoStaticMethod();
-         
+
+        effect(() => this.setModel(this.serviceArea()));
+          
     }
 
 
@@ -63,25 +66,27 @@ export class ServiceAreaComponent extends ModellingObjectComponent {
 
 
     canDrop = (xo: XoModellingItem, event?: ModDragEvent): boolean => {
+        const serviceArea = this.serviceArea();
         const serial = event.side === ModRelativeHoverSide.top || event.side === ModRelativeHoverSide.bottom;
 
         const isInheritedInstanceMethod = (xo as XoMethod).isInheritedInstanceMethod;
         this.currentlyDraggedInheritedInstanceMethod = isInheritedInstanceMethod ? xo as XoDynamicMethod : null;
 
         const xoFQN = xo.fqn.encode();
-        const allowed = this.serviceArea.itemTypes.find(allowedItemFQN => allowedItemFQN === xoFQN);
+        const allowed = serviceArea?.itemTypes.find(allowedItemFQN => allowedItemFQN === xoFQN);
         return isInheritedInstanceMethod && !!allowed && serial;
     };
 
 
     dropped(event: ModDropEvent) {
+        const serviceArea = this.serviceArea();
         this.performAction({
             objectId: this.currentlyDraggedInheritedInstanceMethod.id,
             type: ModellingActionType.move,
             request: new XoMoveModellingObjectRequest(
                 undefined,
                 -1, // add at the bottom
-                (this.serviceArea.parent as XoDataType).overriddenMethodsArea.id,
+                (serviceArea.parent as XoDataType).overriddenMethodsArea.id,
                 ModRelativeHoverSide.inside
             )
         });
@@ -101,13 +106,6 @@ export class ServiceAreaComponent extends ModellingObjectComponent {
     }
 
 
-    @Input()
-    set serviceArea(value: XoMemberMethodArea) {
-        this.setModel(value);
-    }
-
-
-    get serviceArea(): XoMemberMethodArea {
-        return this.getModel() as XoMemberMethodArea;
-    }
+    readonly serviceArea = input<XoMemberMethodArea>(null, { alias: 'serviceArea' });
+    readonly selectedServiceId = input<string>(undefined, { alias: 'selectedServiceId' });
 }

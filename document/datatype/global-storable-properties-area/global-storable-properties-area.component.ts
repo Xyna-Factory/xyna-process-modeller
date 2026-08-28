@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, input } from '@angular/core';
 
 import { XoGlobalStorablePropertyArea } from '@pmod/xo/global-storable-property-area.model';
 
@@ -35,13 +35,11 @@ export class GlobalStorablePropertiesAreaComponent extends ModellingObjectCompon
 
     protected readonly cdr = inject(ChangeDetectorRef);
 
-    @Input()
-    set propertiesArea(value: XoGlobalStorablePropertyArea) {
-        this.setModel(value);
-    }
+    readonly propertiesArea = input<XoGlobalStorablePropertyArea>(null, { alias: 'propertiesArea' });
 
-    get propertiesArea(): XoGlobalStorablePropertyArea {
-        return this.getModel() as XoGlobalStorablePropertyArea;
+    constructor() {
+        super();
+        effect(() => this.setModel(this.propertiesArea()));
     }
 
     protected lockedChanged() {

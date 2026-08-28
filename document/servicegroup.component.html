@@ -36,16 +36,17 @@
         >
         <service-area
           [serviceArea]="serviceGroup.methodsArea"
+          [selectedServiceId]="selectedMethod()?.id"
           (triggerAction)="performModellingAction($event)"
           [documentModel]="document"
         ></service-area>
       </member-area>
     </section>
-    @if (selectedMethod) {
+    @if (selectedMethod()) {
       <section class="details">
         <method-details
           xc-i18n-context="method-details"
-          [method]="selectedMethod"
+          [method]="selectedMethod()"
           (triggerAction)="performModellingAction($event)"
           [documentModel]="document"
         ></method-details>

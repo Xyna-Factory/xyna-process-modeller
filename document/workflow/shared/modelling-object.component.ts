@@ -389,7 +389,10 @@ export class ModellingItemComponent extends ModellingObjectComponent implements 
     setModel(value: XoItem) {
         this.modelChangeSubscription?.unsubscribe();
         super.setModel(value);
-        this.modelChangeSubscription = this.modellingItem.replaced().subscribe(() => this.modelChanged());
+        this.modelChangeSubscription = this.modellingItem.replaced().subscribe(() => {
+            this.modelChanged();
+            this.cdr.markForCheck();
+        });
         this.modelChanged();
         this.cdr.markForCheck();
     }

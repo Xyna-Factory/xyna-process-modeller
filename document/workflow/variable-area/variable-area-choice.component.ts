@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { VariableAreaServiceComponent } from './variable-area-service.component';
 import { ModDropAreaDirective } from '../shared/drag-and-drop/mod-drop-area.directive';
@@ -28,6 +28,7 @@ import { ModDraggableDirective } from '../shared/drag-and-drop/mod-draggable.dir
     selector: 'variable-area-choice',
     templateUrl: './variable-area.component.html',
     styleUrls: ['./variable-area.component.scss', './variable-area-service.component.scss', './variable-area-choice.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [ModDropAreaDirective, NgFor, VariableComponent, ModDraggableDirective]
 })
 export class VariableAreaChoiceComponent extends VariableAreaServiceComponent {

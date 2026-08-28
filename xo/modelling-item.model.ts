@@ -93,7 +93,7 @@ export class XoModellingItem extends XoItem implements Draggable {
 
     getVariables(): XoReferableObject[] {
         const areaVariables: XoReferableObject[] = [];
-        this.areas.data.forEach(area => areaVariables.push(...area.getVariables()));
+        (this.areas?.data ?? []).forEach(area => areaVariables.push(...area.getVariables()));
         return [...super.getVariables(), ...areaVariables];
     }
 
@@ -161,7 +161,7 @@ export class XoContainerArea extends XoArea implements Containing {
 
     getVariables(): XoReferableObject[] {
         const itemVariables: XoReferableObject[] = [];
-        this.items.data.forEach(item => itemVariables.push(...item.getVariables()));
+        (this.items?.data ?? []).forEach(item => itemVariables.push(...item.getVariables()));
         return [...super.getVariables(), ...itemVariables];
     }
 

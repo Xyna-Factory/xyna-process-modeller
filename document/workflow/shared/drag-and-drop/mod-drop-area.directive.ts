@@ -45,6 +45,7 @@ export interface ModDragEvent {
 
 export interface ModDropEvent<T = Draggable> extends ModDragEvent {
     item: T;
+    sourceAreaId: string;
     sourceIndex: number;
     operation: DragType;
     sameArea: boolean;
@@ -223,6 +224,7 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
     drop(event: Event) {
         if (this.dndService.currentArea === this.areaElement) {
             const dragEvent = ModDnDEventConvert(event);
+            event.preventDefault();
             this.areaElement.classList.remove(DRAG_CSS_CLASSES.AREA_HOVER);
             this.dndService.hideDropIndicator();
             // check, if drag source is the same
@@ -245,19 +247,24 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
                     if (operation === DragType.move && (!this.dndService.thisStartedDragging || dragEvent.ctrlKey || dragEvent.altKey)) {
                         operation = DragType.copy;
                     }
-                    this.dropped.emit({
-                        item: draggable,
-                        sourceIndex: info.fromIndex,
-                        operation: operation,
-                        sameArea: info.fromAreaId === this.areaElement.id,
-                        index: hoverInfo.index,
-                        indexUnderCursor: hoverInfo.indexUnderCursor,
-                        side: hoverInfo.side,
-                        s: hoverInfo.s,
-                        t: hoverInfo.t
+                    this.zone.run(() => {
+                        this.dropped.emit({
+                            item: draggable,
+                            sourceAreaId: info.fromAreaId,
+                            sourceIndex: info.fromIndex,
+                            operation: operation,
+                            sameArea: info.fromAreaId === this.areaElement.id,
+                            index: hoverInfo.index,
+                            indexUnderCursor: hoverInfo.indexUnderCursor,
+                            side: hoverInfo.side,
+                            s: hoverInfo.s,
+                            t: hoverInfo.t
+                        });
                     });
                 }
             }
+            this.dndService.setDraggedItem(dragEvent, null);
+            this.dndService.clearHoverState();
         }
     }
 

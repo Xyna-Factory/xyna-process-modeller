@@ -24,21 +24,21 @@
       @if (dataType.hasBaseType()) {
       <member-area xc-i18n-context="member-area" caption="Inherited Variables" [area]="dataType.inheritedVarsArea"
         (triggerAction)="performModellingAction($event)" [documentModel]="document" [allowAdd]="false">
-        <member-variable-area [memberVariableArea]="dataType.inheritedVarsArea"
+        <member-variable-area [memberVariableArea]="dataType.inheritedVarsArea" [selectedVariableId]="selectedVariable()?.id"
           (triggerAction)="performModellingAction($event)" [documentModel]="document"></member-variable-area>
       </member-area>
       }
       <!-- Member Variables -->
       <member-area xc-i18n-context="member-area" caption="Member Variables" [area]="dataType.memberVarsArea"
         (added)="addMemberVariable()" (triggerAction)="performModellingAction($event)" [documentModel]="document">
-        <member-variable-area [memberVariableArea]="dataType.memberVarsArea"
-          (triggerAction)="performModellingAction($event)" [documentModel]="document"></member-variable-area>
+        <member-variable-area [memberVariableArea]="dataType.memberVarsArea" [selectedVariableId]="selectedVariable()?.id"
+        (triggerAction)="performModellingAction($event)" [documentModel]="document"></member-variable-area>
       </member-area>
       <!-- Inherited Services -->
       @if (dataType.hasBaseType()) {
       <member-area xc-i18n-context="member-area" caption="Inherited Services" [area]="dataType.inheritedMethodsArea"
         (triggerAction)="performModellingAction($event)" [documentModel]="document" [allowAdd]="false">
-        <service-area [serviceArea]="dataType.inheritedMethodsArea" (triggerAction)="performModellingAction($event)"
+        <service-area [serviceArea]="dataType.inheritedMethodsArea" [selectedServiceId]="selectedMethod()?.id" (triggerAction)="performModellingAction($event)"
           [documentModel]="document"></service-area>
       </member-area>
       }
@@ -46,31 +46,31 @@
       @if (dataType.hasBaseType()) {
       <member-area xc-i18n-context="member-area" caption="Overridden Services" [area]="dataType.overriddenMethodsArea"
         (triggerAction)="performModellingAction($event)" [documentModel]="document" [allowAdd]="false">
-        <service-area [serviceArea]="dataType.overriddenMethodsArea" (triggerAction)="performModellingAction($event)"
+        <service-area [serviceArea]="dataType.overriddenMethodsArea" [selectedServiceId]="selectedMethod()?.id" (triggerAction)="performModellingAction($event)"
           [documentModel]="document"></service-area>
       </member-area>
       }
       <!-- Member Services -->
       <member-area xc-i18n-context="member-area" caption="Member Services" [area]="dataType.memberMethodsArea"
         (added)="addMemberService()" (triggerAction)="performModellingAction($event)" [documentModel]="document">
-        <service-area [serviceArea]="dataType.memberMethodsArea" (triggerAction)="performModellingAction($event)"
+        <service-area [serviceArea]="dataType.memberMethodsArea" [selectedServiceId]="selectedMethod()?.id" (triggerAction)="performModellingAction($event)"
           [documentModel]="document"></service-area>
       </member-area>
     </section>
 
     <section class="details">
-      @if (selectedDetailsItem) {
-      <datatype-details xc-i18n-context="datatype-details" [dataType]="dataType" [detailsItem]="selectedDetailsItem"
+      @if (selectedDetailsItem()) {
+      <datatype-details xc-i18n-context="datatype-details" [dataType]="dataType" [detailsItem]="selectedDetailsItem()"
         (triggerAction)="performModellingAction($event)" [documentModel]="document"
         [isStorable]="isStorable"></datatype-details>
       }
-      @if (selectedVariable) {
-      <member-variable-details xc-i18n-context="member-variable-details" [memberVariable]="selectedVariable"
+      @if (selectedVariable()) {
+      <member-variable-details xc-i18n-context="member-variable-details" [memberVariable]="selectedVariable()"
         (triggerAction)="performModellingAction($event)" [documentModel]="document" [dataTypeRTC]="dataType.$rtc"
         [isStorable]="isStorable"></member-variable-details>
       }
-      @if (selectedMethod) {
-      <method-details xc-i18n-context="method-details" [method]="selectedMethod"
+      @if (selectedMethod()) {
+      <method-details xc-i18n-context="method-details" [method]="selectedMethod()"
         (triggerAction)="performModellingAction($event)" [documentModel]="document"></method-details>
       }
     </section>

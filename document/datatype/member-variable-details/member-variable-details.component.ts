@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, input, OnDestroy, signal } from '@angular/core';
 
 import { XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 
@@ -37,82 +37,22 @@ import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
     imports: [XcTabBarComponent]
 })
 export class MemberVariableDetailsComponent extends ModellingItemComponent implements OnDestroy {
+    readonly memberVariable = input<XoMemberVariable>(null, { alias: 'memberVariable' });
+    readonly dataTypeRTC = input<XoRuntimeContext>(null, { alias: 'dataTypeRTC' });
+    readonly isStorable = input(false, { alias: 'isStorable' });
 
-    protected readonly cdr = inject(ChangeDetectorRef);
+    memberTabUpdate: Subject<VariableTabData> = new BehaviorSubject(this.buildMemberTabData(null, null));
+    metaTabUpdate: Subject<MetaTabData> = new BehaviorSubject(this.buildMetaTabData(null));
 
-    @Input()
-    dataTypeRTC: XoRuntimeContext = null;
-
-    @Input()
-    set isStorable(value: boolean) {
-        if (value !== this._isStorable) {
-            this._isStorable = value;
-            this.updateTabBarItemList();
-        }
-    }
-
-    private _isStorable = false;
-    get memberVariable(): XoMemberVariable {
-        return this.getModel() as XoMemberVariable;
-    }
-
-    @Input()
-    set memberVariable(value: XoMemberVariable) {
-        this.setModel(value);
-        if (value) {
-            this.baseTabItem.name = signal(this.memberVariable?.label ?? 'Base');
-            this.memberTabUpdate.next(this.buildMemberTabData());
-            this.metaTabUpdate.next(this.buildMetaTabData());
-        }
-        this.cdr.markForCheck();
-    }
-
-    memberTabUpdate: Subject<VariableTabData> = new BehaviorSubject(this.buildMemberTabData());
-    metaTabUpdate: Subject<MetaTabData> = new BehaviorSubject(this.buildMetaTabData());
-
-    readonly baseTabItem: XcTabBarItem<DocumentTabData<VariableTabData>> = {
-        closable: false,
-        component: MemberVariableBaseTabComponent,
-        name: signal('Base'),
-        data: <DocumentTabData<VariableTabData>>{
-            documentModel: this.documentModel,
-            performAction: this.performAction.bind(this),
-            readonly: this.readonly,
-            update: this.memberTabUpdate.asObservable()
-        }
-    };
-
-    readonly metaTabItem: XcTabBarItem<DocumentTabData<MetaTabData>> = {
-        closable: false,
-        component: MetaTabComponent,
-        name: signal('Meta'),
-        data: <DocumentTabData<MetaTabData>>{
-            documentModel: this.documentModel,
-            performAction: this.performAction.bind(this),
-            readonly: this.readonly,
-            update: this.metaTabUpdate.asObservable()
-        }
-    };
-
-    readonly storableTabItem: XcTabBarItem<DocumentTabData<VariableTabData>> = {
-        closable: false,
-        component: MemberVariableStorableTabComponent,
-        name: signal('Storable'),
-        data: <DocumentTabData<VariableTabData>>{
-            documentModel: this.documentModel,
-            performAction: this.performAction.bind(this),
-            readonly: this.readonly,
-            update: this.memberTabUpdate.asObservable()
-        }
-    };
-
-    tabBarSelection: XcTabBarItem<DocumentTabData<any>>;
-    tabBarItems: XcTabBarItem<DocumentTabData<any>>[];
+    readonly tabBarSelection = signal<XcTabBarItem<DocumentTabData<any>>>(null);
+    readonly tabBarItems = signal<XcTabBarItem<DocumentTabData<any>>[]>([]);
 
     constructor() {
         super();
-        this.tabBarSelection = this.baseTabItem;
-        this.updateTabBarItemList();
+        effect(() => {
+            this.setModel(this.memberVariable());
+            this.refreshTabs();
+        });
     }
 
     ngOnDestroy() {
@@ -124,7 +64,7 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
 
     afterDocumentModelSet() {
         super.afterDocumentModelSet();
-        this.tabBarItems.forEach(tabitem => {
+        this.tabBarItems().forEach(tabitem => {
             tabitem.data.documentModel = this.documentModel;
             tabitem.data.readonly = this.readonly;
         });
@@ -132,35 +72,97 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
 
 
     protected lockedChanged() {
-        this.tabBarItems.forEach(tabitem => {
+        this.tabBarItems().forEach(tabitem => {
             tabitem.data.readonly = this.readonly;
         });
-        this.cdr.markForCheck();
     }
 
-
-    private buildMemberTabData(): VariableTabData {
+    private buildMemberTabData(memberVariable: XoMemberVariable = null, dataTypeRTC: XoRuntimeContext = null): VariableTabData {
         return <VariableTabData> {
-            variable: this.memberVariable,
-            dataTypeRTC: this.dataTypeRTC,
+            variable: memberVariable,
+            dataTypeRTC: dataTypeRTC,
             readonly: this.readonly
         };
     }
 
-    private buildMetaTabData(): MetaTabData {
+    private buildMetaTabData(memberVariable: XoMemberVariable = null): MetaTabData {
         return <MetaTabData> {
-            metaTagArea: this.memberVariable?.metaTagArea,
+            metaTagArea: memberVariable?.metaTagArea,
             objectIdKey: 'members',
-            objectId: this.memberVariable?.name,
+            objectId: memberVariable?.name,
             readonly: this.readonly
         };
     }
 
-    private updateTabBarItemList() {
-        this.tabBarItems = [this.baseTabItem, this.metaTabItem];
-        if (this._isStorable) {
-            this.tabBarItems.push(this.storableTabItem);
+    private refreshMemberTabData(memberVariable: XoMemberVariable, dataTypeRTC: XoRuntimeContext) {
+        this.memberTabUpdate.next(this.buildMemberTabData(memberVariable, dataTypeRTC));
+    }
+
+    private refreshMetaTabData(memberVariable: XoMemberVariable) {
+        this.metaTabUpdate.next(this.buildMetaTabData(memberVariable));
+    }
+
+    private createBaseTabItem(memberVariable: XoMemberVariable): XcTabBarItem<DocumentTabData<VariableTabData>> {
+        return {
+            closable: false,
+            component: MemberVariableBaseTabComponent,
+            name: signal(memberVariable?.label ?? 'Base'),
+            data: <DocumentTabData<VariableTabData>>{
+                documentModel: this.documentModel,
+                performAction: this.performAction.bind(this),
+                readonly: this.readonly,
+                update: this.memberTabUpdate.asObservable()
+            }
+        };
+    }
+
+    private createMetaTabItem(): XcTabBarItem<DocumentTabData<MetaTabData>> {
+        return {
+            closable: false,
+            component: MetaTabComponent,
+            name: signal('Meta'),
+            data: <DocumentTabData<MetaTabData>>{
+                documentModel: this.documentModel,
+                performAction: this.performAction.bind(this),
+                readonly: this.readonly,
+                update: this.metaTabUpdate.asObservable()
+            }
+        };
+    }
+
+    private createStorableTabItem(): XcTabBarItem<DocumentTabData<VariableTabData>> {
+        return {
+            closable: false,
+            component: MemberVariableStorableTabComponent,
+            name: signal('Storable'),
+            data: <DocumentTabData<VariableTabData>>{
+                documentModel: this.documentModel,
+                performAction: this.performAction.bind(this),
+                readonly: this.readonly,
+                update: this.memberTabUpdate.asObservable()
+            }
+        };
+    }
+
+    private refreshTabs() {
+        const memberVariable = this.memberVariable();
+        const dataTypeRTC = this.dataTypeRTC();
+
+        if (!memberVariable) {
+            this.tabBarItems.set([]);
+            this.tabBarSelection.set(null);
+            return;
         }
-        this.cdr.markForCheck();
+
+        const baseTabItem = this.createBaseTabItem(memberVariable);
+        const metaTabItem = this.createMetaTabItem();
+        const items = [baseTabItem, metaTabItem];
+        if (this.isStorable()) {
+            items.push(this.createStorableTabItem());
+        }
+        this.tabBarItems.set(items);
+        this.tabBarSelection.set(baseTabItem);
+        this.refreshMemberTabData(memberVariable, dataTypeRTC);
+        this.refreshMetaTabData(memberVariable);
     }
 }

@@ -35,6 +35,7 @@
           >
           <member-variable-area
             [memberVariableArea]="exceptionType.inheritedVarsArea"
+            [selectedVariableId]="selectedVariable()?.id"
             (triggerAction)="performModellingAction($event)"
             [documentModel]="document"
           ></member-variable-area>
@@ -51,6 +52,7 @@
         >
         <member-variable-area
           [memberVariableArea]="exceptionType.memberVarsArea"
+          [selectedVariableId]="selectedVariable()?.id"
           (triggerAction)="performModellingAction($event)"
           [documentModel]="document"
         ></member-variable-area>
@@ -58,19 +60,19 @@
     </section>
 
     <section class="details">
-      @if (selectedDetailsItem) {
+      @if (selectedDetailsItem()) {
         <exceptiontype-details
           xc-i18n-context="exceptiontype-details"
           [exceptionType]="exceptionType"
-          [detailsItem]="selectedDetailsItem"
+          [detailsItem]="selectedDetailsItem()"
           (triggerAction)="performModellingAction($event)"
           [documentModel]="document"
         ></exceptiontype-details>
       }
-      @if (selectedVariable) {
+      @if (selectedVariable()) {
         <member-variable-details
           xc-i18n-context="member-variable-details"
-          [memberVariable]="selectedVariable"
+          [memberVariable]="selectedVariable()"
           (triggerAction)="performModellingAction($event)"
           [documentModel]="document"
         ></member-variable-details>

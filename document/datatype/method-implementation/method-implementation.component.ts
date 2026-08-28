@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input, OnDestroy } from '@angular/core';
 
 import { MinMaxService } from '@pmod/document/min-max.service';
 import { PluginService } from '@pmod/document/plugin.service';
@@ -24,7 +24,7 @@ import { I18nService } from '@zeta/i18n';
 import { XcButtonComponent, XcCheckboxComponent, XcDefinitionProxyComponent, XcDialogService, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 
-import { combineLatest } from 'rxjs';
+import { combineLatest, Subscription } from 'rxjs';
 
 import { ModellingAction, ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeAbortableRequest } from '../../../xo/change-abortable-request.model';
@@ -43,7 +43,7 @@ import { CodingComponent } from '../coding/coding.component';
     styleUrls: ['./method-implementation.component.scss'],
     imports: [VariableAreaDocumentComponent, XcButtonComponent, XcCheckboxComponent, XcIconButtonComponent, XcTooltipDirective, XcDefinitionProxyComponent, XcI18nTranslateDirective, CodingComponent]
 })
-export class MethodImplementationComponent extends ModellingItemComponent {
+export class MethodImplementationComponent extends ModellingItemComponent implements OnDestroy {
 
     protected readonly documentService = inject(DocumentService);
     protected readonly dialogService = inject(XcDialogService);
@@ -53,6 +53,7 @@ export class MethodImplementationComponent extends ModellingItemComponent {
     protected readonly cdr = inject(ChangeDetectorRef);
 
     pluginBundles: XoDefinitionBundle[];
+    private pluginBundlesSubscription?: Subscription;
 
     get isAbstractMethod() {
         return this.method
@@ -126,18 +127,28 @@ export class MethodImplementationComponent extends ModellingItemComponent {
     }
 
     private updateBundles() {
+        this.pluginBundlesSubscription?.unsubscribe();
+        this.pluginBundlesSubscription = undefined;
         this.pluginBundles = [];
         if (this.method.implementationArea.plugin?.guiDefiningWorkflow) {
-            combineLatest(
+            this.pluginBundlesSubscription = combineLatest(
                 this.method.implementationArea.plugin.guiDefiningWorkflow.data.map(
                     value => this.pluginService.getFromCacheOrCallWorkflow(value)
                 )
             ).subscribe(bundles => {
-                bundles.forEach(bundle => bundle.data.push(this.method.implementationArea.plugin.context));
-                this.pluginBundles = bundles;
+                const pluginContext = this.method.implementationArea.plugin.context;
+                this.pluginBundles = bundles.map(bundle => {
+                    bundle.data.push(pluginContext);
+                    return bundle;
+                });
                 this.cdr.markForCheck();
             });
         }
+    }
+
+    ngOnDestroy() {
+        this.pluginBundlesSubscription?.unsubscribe();
+        super.ngOnDestroy();
     }
 
     resize() {

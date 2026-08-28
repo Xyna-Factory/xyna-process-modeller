@@ -59,7 +59,7 @@ export class ExceptionTypeComponent extends TypeDocumentComponent<ExceptionTypeD
 
         this.detailsItem = new XoDetailsItem();
         this.detailsItem.name = 'Exception Type Details';
-        this.selectedDetailsItem = this.detailsItem;
+        this.selectedDetailsItem.set(this.detailsItem);
     }
 
     addMemberVariable() {

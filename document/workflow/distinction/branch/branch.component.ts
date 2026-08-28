@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, forwardRef, HostBinding, inject, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, forwardRef, HostBinding, inject, Input, OnDestroy } from '@angular/core';
 import { XcIconButtonComponent } from '@zeta/xc';
 
 import { XoConditionalBranching } from '@pmod/xo/conditional-branching.model';
@@ -36,6 +36,7 @@ import { BranchSelectionService } from './branch-selection.service';
 })
 export class BranchComponent extends SelectableModellingObjectComponent implements OnDestroy {
 
+    protected readonly cdr = inject(ChangeDetectorRef);
     private readonly branchSelectionService = inject(BranchSelectionService);
 
     private _darkMode = false;
@@ -77,6 +78,7 @@ export class BranchComponent extends SelectableModellingObjectComponent implemen
 
     branchSelectionChanged(selectedObject: SelectableModellingObjectComponent) {
         this._selected = (selectedObject === this);
+        this.cdr.markForCheck();
     }
 
 

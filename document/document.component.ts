@@ -50,6 +50,8 @@ export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponen
     private readonly destroySubject = new Subject<void>();
     private dismissing = false;
 
+    protected pendingFocusId: string;
+
 
     protected readonly actionQueue = new Array<TriggeredAction>();
     protected readonly isVisibleSubject: BehaviorSubject<boolean>;
@@ -75,7 +77,7 @@ export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponen
             .pipe(filter(data => data.item === this.document.item))
             .subscribe(data => {
                 if (data.response?.focusId) {
-                    this.selectObject(data.response.focusId);
+                    this.pendingFocusId = data.response.focusId;
                 }
                 if (this.isVisibleSubject.value) {
                     this.cdr.detectChanges();
@@ -140,9 +142,11 @@ export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponen
                     this.document.item
                 )
             ).subscribe(
-                () => {
+                response => {
                     this.document.updateTabBarLabel();
-                    this.selectionService.clearSelection();
+                    if (!response?.focusId) {
+                        this.selectionService.clearSelection();
+                    }
                 }
             );
         }
@@ -159,11 +163,13 @@ export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponen
     }
 
 
-    selectObject(id: string) {
+    selectObject(id: string): boolean {
         const objectToSelect = this.componentMappingService.getComponentForId(this.document.item, id);
         if (objectToSelect instanceof SelectableModellingObjectComponent) {
             this.selectionService.selectedObject = objectToSelect;
+            return true;
         }
+        return false;
     }
 
 
@@ -177,6 +183,7 @@ export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponen
         const title = this.i18n.translate('Close');
         const dismissSubject = new Subject<boolean>();
         const isWorkflow = this.document.item.type === XmomObjectType.Workflow;     // TODO: make it better, use polymorphism
+        const hasLocalUnsavedChanges = !this.document.item.saved || this.document.item.modified;
 
         const dismiss = (res: boolean) => {
             this.dismissing = false;
@@ -193,41 +200,48 @@ export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponen
                     }
                     dismiss(true);
                 } else {
-                    let message = this.i18n.translate('The document has unsaved changes.', { key: '$0', value: this.document.item.label });
-
-                    const saveButtonLabel = this.i18n.translate(isWorkflow ? 'Save' : 'Deploy');
-                    const dontSaveButtonLabel = isWorkflow ? this.i18n.translate('Don\'t Save') : this.i18n.translate('Don\'t Deploy');
-                    if (isWorkflow) {
-                        message += ' ' + this.i18n.translate('Do you want to save it now?');
-                    } else {
-                        message += ' ' + this.i18n.translate('Do you want to save and deploy it now?');
-                    }
-                    const data: CloseDialogData = { title, message, saveButtonLabel, dontSaveButtonLabel };
-
-                    this.dialogService.custom(CloseDialogComponent, data).afterDismissResult().subscribe(result => {
-                        if (result.useForce) {
-                            close(true);
-                        } else if (result.save) {
-                            const action = isWorkflow
-                                ? this.documentService.saveDocumentGeneric(this.document)
-                                : of(undefined).pipe(
-                                    switchMap(() => this.documentService.saveDocumentGeneric(this.document)),
-                                    switchMap(() => this.documentService.deployDocument(this.document))
-                                );
-
-                            this.untilDestroyed(action).subscribe(() => {
-                                close(false);
-                                dismiss(true);
-                            });
-                        } else {
-                            dismiss(false);
-                        }
-                    });
+                    askToSaveOrForceClose();
                 }
             });
         };
 
-        close(false);
+        const askToSaveOrForceClose = () => {
+            let message = this.i18n.translate('The document has unsaved changes.', { key: '$0', value: this.document.item.label });
+
+            const saveButtonLabel = this.i18n.translate(isWorkflow ? 'Save' : 'Deploy');
+            const dontSaveButtonLabel = isWorkflow ? this.i18n.translate('Don\'t Save') : this.i18n.translate('Don\'t Deploy');
+            if (isWorkflow) {
+                message += ' ' + this.i18n.translate('Do you want to save it now?');
+            } else {
+                message += ' ' + this.i18n.translate('Do you want to save and deploy it now?');
+            }
+            const data: CloseDialogData = { title, message, saveButtonLabel, dontSaveButtonLabel };
+
+            this.dialogService.custom(CloseDialogComponent, data).afterDismissResult().subscribe(result => {
+                if (result.useForce) {
+                    close(true);
+                } else if (result.save) {
+                    const action = isWorkflow
+                        ? this.documentService.saveDocumentGeneric(this.document)
+                        : of(undefined).pipe(
+                            switchMap(() => this.documentService.saveDocumentGeneric(this.document)),
+                            switchMap(() => this.documentService.deployDocument(this.document))
+                        );
+
+                    this.untilDestroyed(action).subscribe(() => {
+                        close(false);
+                    });
+                } else {
+                    dismiss(false);
+                }
+            });
+        };
+
+        if (hasLocalUnsavedChanges) {
+            askToSaveOrForceClose();
+        } else {
+            close(false);
+        }
         return dismissSubject.asObservable();
     }
 

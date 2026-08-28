@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, input } from '@angular/core';
 
 import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 
@@ -44,10 +44,9 @@ export class TypeDocumentationAreaComponent extends ModellingObjectComponent {
 
     pluginBundles: XoDefinitionBundle[];
 
+    readonly documentationArea = input<XoTextArea>(null, { alias: 'documentationArea' });
+    readonly lines = input<number>(null, { alias: 'lines' });
     documentation: string;
-
-    @Input()
-    lines: number;
 
 
     protected lockedChanged() {
@@ -55,16 +54,16 @@ export class TypeDocumentationAreaComponent extends ModellingObjectComponent {
     }
 
 
-    @Input()
-    set documentationArea(value: XoTextArea) {
-        this.setModel(value);
-        this.documentation = value.text;
-        this.updateBundles();
-    }
-
-
-    get documentationArea(): XoTextArea {
-        return this.getModel() as XoTextArea;
+    constructor() {
+        super();
+        effect(() => {
+            const documentationArea = this.documentationArea();
+            if (documentationArea) {
+                this.setModel(documentationArea);
+                this.documentation = documentationArea.text;
+                this.updateBundles();
+            }
+        });
     }
 
 
@@ -74,7 +73,7 @@ export class TypeDocumentationAreaComponent extends ModellingObjectComponent {
             this.documentation = text;
             this.performAction({
                 type: ModellingActionType.change,
-                objectId: this.documentationArea.id,
+                objectId: this.documentationArea().id,
                 request: new XoChangeTextRequest(undefined, text)
             });
         }
@@ -82,13 +81,14 @@ export class TypeDocumentationAreaComponent extends ModellingObjectComponent {
 
     private updateBundles() {
         this.pluginBundles = [];
-        if (this.documentationArea.plugin?.guiDefiningWorkflow) {
+        const documentationArea = this.documentationArea();
+        if (documentationArea?.plugin?.guiDefiningWorkflow) {
             combineLatest(
-                this.documentationArea.plugin.guiDefiningWorkflow.data.map(
+                documentationArea.plugin.guiDefiningWorkflow.data.map(
                     value => this.pluginService.getFromCacheOrCallWorkflow(value)
                 )
             ).subscribe(bundles => {
-                bundles.forEach(bundle => bundle.data.push(this.documentationArea.plugin.context));
+                bundles.forEach(bundle => bundle.data.push(documentationArea.plugin.context));
                 this.pluginBundles = bundles;
                 this.cdr.markForCheck();
             });
