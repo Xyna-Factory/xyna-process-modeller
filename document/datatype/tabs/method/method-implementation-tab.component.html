@@ -1,6 +1,5 @@
 <div class="row with-button">
-  <xc-form-autocomplete
-    label="implementation-type"
+  <xc-form-autocomplete label="implementation-type"
     [readonly]="readonly"
     placeholder="select-tooltip"
     [(xc-form-autocomplete-option)]="implementationTypeDataWrapper.value"
@@ -8,23 +7,21 @@
     xc-form-autocomplete-asdropdown
     xc-form-autocomplete-fulltextsearch
     xc-i18n
-  ></xc-form-autocomplete>
+   />
   @if (!isStaticMethod && isReferenceAsImplementationTypeSet) {
-    <xc-icon-button
-      class="button"
+    <xc-icon-button class="button"
       (click)="createWorkflow()"
       xc-icon
       xc-icon-name="add"
       xc-tooltip="tooltip-new-workflow"
       xc-i18n
-    ></xc-icon-button>
+     />
   }
 </div>
 
 @if (!isStaticMethod && isReferenceAsImplementationTypeSet) {
   <div class="row with-button">
-    <xc-form-autocomplete
-      #referenceAutocomplete
+    <xc-form-autocomplete #referenceAutocomplete
       label="reference"
       [readonly]="readonly"
       placeholder="select-tooltip"
@@ -33,7 +30,7 @@
       xc-form-autocomplete-fulltextsearch
       xc-form-field-suffix="clear"
       xc-i18n
-    ></xc-form-autocomplete>
+     />
     <xc-button class="button" (click)="openReferencedWorkflow()" xc-i18n>open-button</xc-button>
   </div>
 }

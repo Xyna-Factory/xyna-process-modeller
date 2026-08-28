@@ -7,12 +7,11 @@
   (mod-drop-area-dropped)="dropped($event)"
   class="variable-drop-area">
 
-  <variable
-    *ngFor="let variable of variableArea.items; trackBy: trackById"
+  <variable *ngFor="let variable of variableArea.items; trackBy: trackById"
     [mod-draggable]="variable" [mod-draggable-allowed-drag-type]="readonly ? 'copy' : 'move'"
     [variable]="variable"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
     tabindex="0"
-  ></variable>
+   />
 </div>

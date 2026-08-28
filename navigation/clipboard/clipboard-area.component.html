@@ -6,14 +6,12 @@
   class="drop-area zeta-scrollbar"
   >
   @for (item of clipboardArea.items; track item.id) {
-    <clipboard-item
-      (triggerAction)="performAction($event)"
+    <clipboard-item (triggerAction)="performAction($event)"
       [mod-draggable]="item"
       [item]="item"
       [xc-tooltip]="getTooltip(item)"
       xc-tooltip-position="left"
-      >
-    </clipboard-item>
+       />
   }
 </div>
 @if (clipboardArea.items.length === 0) {

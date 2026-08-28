@@ -1,9 +1,9 @@
 @if (memberVariable) {
     <div class="row">
         <xc-form-input label="label" [value]="memberVariable.label" [readonly]="readonly" (blur)="labelBlur($event)"
-            (keydown.enter)="labelBlur($event)" xc-form-validator-required xc-i18n></xc-form-input>
+            (keydown.enter)="labelBlur($event)" xc-form-validator-required xc-i18n />
         <div class="name">
-            <xc-form-input label="name" [value]="memberVariable.name" readonly xc-i18n></xc-form-input>
+            <xc-form-input label="name" [value]="memberVariable.name" readonly xc-i18n />
         </div>
     </div>
     <div class="row">
@@ -12,7 +12,7 @@
                 [(xc-form-autocomplete-option)]="dataTypeDataWrapper.value"
                 [xc-form-autocomplete-options]="dataTypeDataWrapper.values" [readonly]="readonly"
                 xc-form-autocomplete-fulltextsearch xc-form-validator-required xc-form-field-suffix="clear"
-                xc-i18n></xc-form-autocomplete>
+                xc-i18n />
             <div class="row settings">
                 <xc-button [disabled]="readonly" xc-tooltip="{{'toggle-multiplicity-tooltip' | xcI18n}}"
                     (click)="isList = !isList">{{multiplicity}}</xc-button>

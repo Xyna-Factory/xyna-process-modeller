@@ -4,32 +4,29 @@
 <div class="formula-list" xc-i18n-context="formula-area">
   @for (formula of formulas; let i = $index; track formula) {
     <div class="formula-row">
-      <formula
-        [formula]="formula"
+      <formula [formula]="formula"
         [documentModel]="documentModel"
         variable-menu-disabled
         (triggerAction)="performAction($event)"
         tabindex="0"
-      ></formula>
+       />
       @if (!readonly) {
-        <xc-icon-button
-          xc-icon-name="copy"
+        <xc-icon-button xc-icon-name="copy"
           xc-icon-size="small"
           color="black"
           (click)="duplicateFormula(formula, i + 1)"
           xc-tooltip="duplicate-formula"
           xc-i18n
-        ></xc-icon-button>
+         />
       }
       @if (!readonly) {
-        <xc-icon-button
-          xc-icon-name="delete"
+        <xc-icon-button xc-icon-name="delete"
           xc-icon-size="small"
           color="black"
           (click)="removeFormula(formula)"
           xc-tooltip="delete-formula"
           xc-i18n
-        ></xc-icon-button>
+         />
       }
     </div>
   }

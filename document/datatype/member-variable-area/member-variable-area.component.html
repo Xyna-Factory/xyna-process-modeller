@@ -10,19 +10,17 @@
       [mod-draggable]="variable"
       [mod-draggable-allowed-drag-type]="readonly ? 'copy' : 'move'"
       >
-      <member-variable
-        [memberVariable]="variable"
+      <member-variable [memberVariable]="variable"
         [class.selected]="variable.id === selectedVariableId"
         (triggerAction)="performAction($event)"
         [documentModel]="documentModel"
         tabindex="0"
-      ></member-variable>
+       />
       @if (variable.deletable && !readonly) {
-        <xc-icon-button
-          (click)="$event.stopPropagation(); deleteVarable(variable)"
+        <xc-icon-button (click)="$event.stopPropagation(); deleteVarable(variable)"
           xc-icon-name="delete"
           color="invert"
-        ></xc-icon-button>
+         />
       }
     </div>
   }

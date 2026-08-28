@@ -1,23 +1,20 @@
 <div class="area zeta-scrollbar" [class.closed]="areaValue === AreaValue.Closed" [class.opened]="areaValue === AreaValue.Opened" [class.opened-half]="areaValue === AreaValue.OpenedHalf" [class.no-animation]="areaValue === AreaValue.Opened">
-    <xfm-mod-nav-factory xc-i18n-context='factory' [class.hidden]="area !== NavigationbarArea.Factory"></xfm-mod-nav-factory>
-    <xfm-mod-nav-search xc-i18n-context='search' [class.hidden]="area !== NavigationbarArea.Search"></xfm-mod-nav-search>
-    <xfm-mod-nav-details xc-i18n-context='details' [class.hidden]="area !== NavigationbarArea.Details"></xfm-mod-nav-details>
-    <xfm-mod-nav-clipboard xc-i18n-context='clipboard' [class.hidden]="area !== NavigationbarArea.Clipboard"></xfm-mod-nav-clipboard>
-    <xfm-mod-nav-errors xc-i18n-context='errors' [class.hidden]="area !== NavigationbarArea.Errors"></xfm-mod-nav-errors>
-    <xfm-mod-nav-compare xc-i18n-context='compare' [class.hidden]="area !== NavigationbarArea.Compare"></xfm-mod-nav-compare>
-    <xfm-mod-nav-help xc-i18n-context='help' [class.hidden]="area !== NavigationbarArea.Help"></xfm-mod-nav-help>
+    <xfm-mod-nav-factory xc-i18n-context='factory' [class.hidden]="area !== NavigationbarArea.Factory" />
+    <xfm-mod-nav-search xc-i18n-context='search' [class.hidden]="area !== NavigationbarArea.Search" />
+    <xfm-mod-nav-details xc-i18n-context='details' [class.hidden]="area !== NavigationbarArea.Details" />
+    <xfm-mod-nav-clipboard xc-i18n-context='clipboard' [class.hidden]="area !== NavigationbarArea.Clipboard" />
+    <xfm-mod-nav-errors xc-i18n-context='errors' [class.hidden]="area !== NavigationbarArea.Errors" />
+    <xfm-mod-nav-compare xc-i18n-context='compare' [class.hidden]="area !== NavigationbarArea.Compare" />
+    <xfm-mod-nav-help xc-i18n-context='help' [class.hidden]="area !== NavigationbarArea.Help" />
     @for(plugin of datatypePlugins; track plugin; let i = $index) {
-        <xfm-mod-nav-plugin 
-            [plugin-number]="i" [plugin]="plugin" [class.hidden]="!isActive(NavigationbarArea.Plugin, i)">
-        </xfm-mod-nav-plugin>
+        <xfm-mod-nav-plugin [plugin-number]="i" [plugin]="plugin" [class.hidden]="!isActive(NavigationbarArea.Plugin, i)" />
     }
 </div>
 <div class="iconbar">
-    <xc-icon-button xc-i18n class="toggle" xc-icon-name="misc-collapse" xc-icon-style="modeller" [class.rotated]="area" (click)="toogle()"></xc-icon-button>
+    <xc-icon-button xc-i18n class="toggle" xc-icon-name="misc-collapse" xc-icon-style="modeller" [class.rotated]="area" (click)="toogle()" />
     @for(button of buttons; track button) {
         <div class="icons">
-            <xc-icon-button
-                xc-i18n
+            <xc-icon-button xc-i18n
                 [xc-icon-name]="button.iconName"
                 [xc-icon-style]="button.iconStyle"
                 [xc-icon-material]="button.iconStyle === 'material'"
@@ -25,21 +22,20 @@
                 xc-tooltip-position="left"
                 [class.active]="isActive(button.areaType, button.pluginNumber)"
                 (click)="switchArea(button.areaType, button.pluginNumber)"
-            ></xc-icon-button>
+             />
             @if(button.badge) {
                 <span class="badge">{{button.badge}}</span>
             }
         </div>
     }
     <ng-container *xc-has-right="'xmcp.xfm.processmodeller.devmenu'">
-        <xc-icon-button
-            xc-i18n
+        <xc-icon-button xc-i18n
             [xc-menu-trigger]="devMenu"
             xc-icon-name="build"
             xc-icon-material
             xc-tooltip="icon-dev-tools"
             xc-tooltip-position="left"
-        ></xc-icon-button>
+         />
         <xc-menu #devMenu
             [xc-menu-items]="devMenuItems"
             [xc-menu-y-offset]="6"
@@ -47,6 +43,6 @@
             xc-menu-x-position="before"
             xc-menu-with-arrow
             xc-menu-x-nextto-trigger
-        ></xc-menu>
+         />
     </ng-container>
 </div>

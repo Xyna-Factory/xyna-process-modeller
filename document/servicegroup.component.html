@@ -1,26 +1,23 @@
 <div class="area-wrapper" xc-i18n-context="datatype">
   <div class="servicegroup-header" [class.minimized]="maximizedImplementation()">
     <div class="type-info-area">
-      <type-info-area
-        xc-i18n-context="type-info-area"
+      <type-info-area xc-i18n-context="type-info-area"
         [typeInfoArea]="serviceGroup.typeInfoArea"
         (triggerAction)="performModellingAction($event)"
         [documentModel]="document"
-      ></type-info-area>
+       />
     </div>
     <div class="lib-area">
-      <lib-area
-        xc-i18n-context="lib-area"
+      <lib-area xc-i18n-context="lib-area"
         [libArea]="serviceGroup.librariesArea"
         (triggerAction)="performModellingAction($event)"
         [documentModel]="document"
-      ></lib-area>
-      <java-shared-lib-area
-        xc-i18n-context="java-shared-lib-area"
+       />
+      <java-shared-lib-area xc-i18n-context="java-shared-lib-area"
         [javaSharedLibArea]="serviceGroup.javaSharedLibrariesArea"
         (triggerAction)="performModellingAction($event)"
         [documentModel]="document"
-      ></java-shared-lib-area>
+       />
     </div>
   </div>
 
@@ -34,26 +31,24 @@
         (triggerAction)="performModellingAction($event)"
         [documentModel]="document"
         >
-        <service-area
-          [serviceArea]="serviceGroup.methodsArea"
+        <service-area [serviceArea]="serviceGroup.methodsArea"
           [selectedServiceId]="selectedMethod()?.id"
           (triggerAction)="performModellingAction($event)"
           [documentModel]="document"
-        ></service-area>
+         />
       </member-area>
     </section>
     @if (selectedMethod()) {
       <section class="details">
-        <method-details
-          xc-i18n-context="method-details"
+        <method-details xc-i18n-context="method-details"
           [method]="selectedMethod()"
           (triggerAction)="performModellingAction($event)"
           [documentModel]="document"
-        ></method-details>
+         />
       </section>
     }
   </div>
 
   <!-- enforce loading style sheet of drop-indicator-->
-  <drop-indicator></drop-indicator>
+  <drop-indicator />
 </div>

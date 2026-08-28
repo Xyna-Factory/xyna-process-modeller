@@ -13,45 +13,44 @@
       <formula-proxy #externalChild
         [formula]="formula"
         (selectionChange)="finishProxy($event)"
-      ></formula-proxy>
+       />
     }
     @if (part.isVariable()) {
-      <variable
-        [variable]="part.variable"
+      <variable [variable]="part.variable"
         [documentModel]="documentModel"
         [mod-draggable]="part.variable" mod-draggable-allowed-drag-type="copy"
         (click)="clickOnPart(part)"
         [hasMenu]="!variableMenuDisabled"
         (triggerAction)="performAction($event)"
-      ></variable>
+       />
     }
     @if (part.isMember()) {
       <formula-part-member #editablePart #externalChild [formula-part]="part"
         (click)="clickOnPart(part)"
         (startedEditing)="startedEditingSubPart($event)" (acceptedEditing)="acceptedEditingSubPart($event)" (finishedEditing)="finishedEditingSubPart($event)"
         class="member"
-      ></formula-part-member>
+       />
     }
     @if (part.isFunction()) {
       <formula-part-function [formula-part]="part"
         (click)="clickOnPart(part)"
-      ></formula-part-function>
+       />
     }
     @if (part.isOperation()) {
       <formula-part-operation [formula-part]="part"
         (click)="clickOnPart(part)"
-      ></formula-part-operation>
+       />
     }
     @if (part.isSpecial()) {
       <formula-part-special [formula-part]="part"
         (click)="clickOnPart(part)"
-      ></formula-part-special>
+       />
     }
     @if (part.isLiteral()) {
       <formula-part-literal #editablePart [formula-part]="part"
         (click)="clickOnPart(part)"
         (startedEditing)="startedEditingSubPart($event)" (acceptedEditing)="acceptedEditingSubPart($event)" (finishedEditing)="finishedEditingSubPart($event)"
-      ></formula-part-literal>
+       />
     }
   }
   @if (showCaret && !partWithCaret) {
@@ -62,6 +61,6 @@
       <formula-proxy #externalChild
         [formula]="formula"
         (selectionChange)="finishProxy($event)"
-      ></formula-proxy>
+       />
     }
   </div>

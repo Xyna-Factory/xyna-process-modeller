@@ -1,21 +1,19 @@
 <div>
   @if (dataWrapper.values?.length > 0) {
-    <xc-form-autocomplete
-      label="label-remote-destination"
+    <xc-form-autocomplete label="label-remote-destination"
       xc-i18n
       [(xc-form-autocomplete-option)]="dataWrapper.value" [xc-form-autocomplete-options]="dataWrapper.values"
       xc-form-field-compact
       xc-form-autocomplete-fulltextsearch
       xc-form-field-suffix="clear"
-    ></xc-form-autocomplete>
+     />
   }
   @if (remoteDestinationArea.usedDestination && remoteDestinationArea.usedDestination.variableArea) {
-    <variable-area
-      [variableArea]="remoteDestinationArea.usedDestination.variableArea"
+    <variable-area [variableArea]="remoteDestinationArea.usedDestination.variableArea"
       [documentModel]="documentModel"
       xc-variable-area-kind="input-area"
       (triggerAction)="performAction($event)"
-    ></variable-area>
+     />
   }
   @if (remoteDestinationArea.usedDestination) {
     <label>{{remoteDestinationArea.usedDestination.description}}</label>

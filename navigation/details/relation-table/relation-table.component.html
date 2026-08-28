@@ -1,7 +1,7 @@
 <div class="info-table">
   <div class="header">
     <label xc-i18n>header</label>
-    <xc-icon-button xc-i18n xc-icon-name="reload" (click)="refresh.emit()" xc-icon-size="small" xc-tooltip="refresh"></xc-icon-button>
+    <xc-icon-button xc-i18n xc-icon-name="reload" (click)="refresh.emit()" xc-icon-size="small" xc-tooltip="refresh" />
   </div>
   <div class="content zeta-scrollbar">
     @for (group of groupedRelationList; let i = $index; track i) {
@@ -14,7 +14,7 @@
           <small>{{ group.relations.length }}</small>
         </div>
         @if (group.visible) {
-          <xfm-mod-nav-xmomlist xc-i18n-context='xfm-mod-nav-xmomlist' [presetXmoms]="group.relations" show-fqn></xfm-mod-nav-xmomlist>
+          <xfm-mod-nav-xmomlist xc-i18n-context='xfm-mod-nav-xmomlist' [presetXmoms]="group.relations" show-fqn />
         }
       </div>
     }

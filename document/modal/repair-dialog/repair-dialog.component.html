@@ -1,7 +1,7 @@
 <xc-dialog-wrapper xc-i18n-context="pmod.repair-dialog">
   <ng-container header>
     <div class="header">
-      <xc-icon xc-icon-name="settings"></xc-icon>
+      <xc-icon xc-icon-name="settings" />
       <div xc-i18n>header</div>
     </div>
   </ng-container>
@@ -14,7 +14,7 @@
     }
     <div class="repair-details">
       @for (entry of entries; let i = $index; track i) {
-        <repair-entry [entry]="entry" xc-i18n-context="repair-entry"></repair-entry>
+        <repair-entry [entry]="entry" xc-i18n-context="repair-entry" />
       }
     </div>
   </section>

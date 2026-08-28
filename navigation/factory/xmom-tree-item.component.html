@@ -1,24 +1,22 @@
 <div class="header" (click)="select($event.ctrlKey)">
   @if (children.length) {
-    <xc-icon-button
-      xc-icon-name="accordion"
+    <xc-icon-button xc-icon-name="accordion"
       xc-icon-size="small"
       [class.expanded]="expanded"
       [color]="root ? 'normal' : 'invert'"
       (click)="toggle()"
-    ></xc-icon-button>
+     />
   }
   <label>{{name}}</label>
 </div>
 @if (expanded) {
   <div class="content">
     @for (child of children; track child.path) {
-      <xfm-mod-nav-xmomtreeitem
-        [xmomPath]="child"
+      <xfm-mod-nav-xmomtreeitem [xmomPath]="child"
         [selectedXmomPaths]="selectedXmomPaths"
         [expandedXmomPaths]="expandedXmomPaths"
         (stateChange)="change($event)"
-      ></xfm-mod-nav-xmomtreeitem>
+       />
     }
   </div>
 }

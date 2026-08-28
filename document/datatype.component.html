@@ -3,14 +3,14 @@
     <div class="type-info-area">
       <type-info-area xc-i18n-context="type-info-area" [typeInfoArea]="dataType.typeInfoArea"
         (triggerAction)="performModellingAction($event)" [documentModel]="document" [showConverterButton]="true"
-        [showBaseTypeAutocomplete]="true" [showAbstractCheckbox]="true"></type-info-area>
+        [showBaseTypeAutocomplete]="true" [showAbstractCheckbox]="true" />
     </div>
     <div class="lib-area">
       <lib-area xc-i18n-context="lib-area" [libArea]="dataType.librariesArea"
-        (triggerAction)="performModellingAction($event)" [documentModel]="document"></lib-area>
+        (triggerAction)="performModellingAction($event)" [documentModel]="document" />
       <java-shared-lib-area xc-i18n-context="java-shared-lib-area"
         [javaSharedLibArea]="dataType.javaSharedLibrariesArea" (triggerAction)="performModellingAction($event)"
-        [documentModel]="document"></java-shared-lib-area>
+        [documentModel]="document" />
     </div>
   </div>
 
@@ -18,28 +18,28 @@
     <section class="members" [class.minimized]="maximizedImplementation()">
       <!-- Datatype Details -->
       <div class="detail-items">
-        <details-item icon="mini-datatype" [detailsItem]="detailsItem"></details-item>
+        <details-item icon="mini-datatype" [detailsItem]="detailsItem" />
       </div>
       <!-- Inherited Variables -->
       @if (dataType.hasBaseType()) {
       <member-area xc-i18n-context="member-area" caption="Inherited Variables" [area]="dataType.inheritedVarsArea"
         (triggerAction)="performModellingAction($event)" [documentModel]="document" [allowAdd]="false">
         <member-variable-area [memberVariableArea]="dataType.inheritedVarsArea" [selectedVariableId]="selectedVariable()?.id"
-          (triggerAction)="performModellingAction($event)" [documentModel]="document"></member-variable-area>
+          (triggerAction)="performModellingAction($event)" [documentModel]="document" />
       </member-area>
       }
       <!-- Member Variables -->
       <member-area xc-i18n-context="member-area" caption="Member Variables" [area]="dataType.memberVarsArea"
         (added)="addMemberVariable()" (triggerAction)="performModellingAction($event)" [documentModel]="document">
         <member-variable-area [memberVariableArea]="dataType.memberVarsArea" [selectedVariableId]="selectedVariable()?.id"
-        (triggerAction)="performModellingAction($event)" [documentModel]="document"></member-variable-area>
+        (triggerAction)="performModellingAction($event)" [documentModel]="document" />
       </member-area>
       <!-- Inherited Services -->
       @if (dataType.hasBaseType()) {
       <member-area xc-i18n-context="member-area" caption="Inherited Services" [area]="dataType.inheritedMethodsArea"
         (triggerAction)="performModellingAction($event)" [documentModel]="document" [allowAdd]="false">
         <service-area [serviceArea]="dataType.inheritedMethodsArea" [selectedServiceId]="selectedMethod()?.id" (triggerAction)="performModellingAction($event)"
-          [documentModel]="document"></service-area>
+          [documentModel]="document" />
       </member-area>
       }
       <!-- Overridden Services -->
@@ -47,14 +47,14 @@
       <member-area xc-i18n-context="member-area" caption="Overridden Services" [area]="dataType.overriddenMethodsArea"
         (triggerAction)="performModellingAction($event)" [documentModel]="document" [allowAdd]="false">
         <service-area [serviceArea]="dataType.overriddenMethodsArea" [selectedServiceId]="selectedMethod()?.id" (triggerAction)="performModellingAction($event)"
-          [documentModel]="document"></service-area>
+          [documentModel]="document" />
       </member-area>
       }
       <!-- Member Services -->
       <member-area xc-i18n-context="member-area" caption="Member Services" [area]="dataType.memberMethodsArea"
         (added)="addMemberService()" (triggerAction)="performModellingAction($event)" [documentModel]="document">
         <service-area [serviceArea]="dataType.memberMethodsArea" [selectedServiceId]="selectedMethod()?.id" (triggerAction)="performModellingAction($event)"
-          [documentModel]="document"></service-area>
+          [documentModel]="document" />
       </member-area>
     </section>
 
@@ -62,20 +62,20 @@
       @if (selectedDetailsItem()) {
       <datatype-details xc-i18n-context="datatype-details" [dataType]="dataType" [detailsItem]="selectedDetailsItem()"
         (triggerAction)="performModellingAction($event)" [documentModel]="document"
-        [isStorable]="isStorable"></datatype-details>
+        [isStorable]="isStorable" />
       }
       @if (selectedVariable()) {
       <member-variable-details xc-i18n-context="member-variable-details" [memberVariable]="selectedVariable()"
         (triggerAction)="performModellingAction($event)" [documentModel]="document" [dataTypeRTC]="dataType.$rtc"
-        [isStorable]="isStorable"></member-variable-details>
+        [isStorable]="isStorable" />
       }
       @if (selectedMethod()) {
       <method-details xc-i18n-context="method-details" [method]="selectedMethod()"
-        (triggerAction)="performModellingAction($event)" [documentModel]="document"></method-details>
+        (triggerAction)="performModellingAction($event)" [documentModel]="document" />
       }
     </section>
   </div>
 
   <!-- enforce loading style sheet of drop-indicator-->
-  <drop-indicator></drop-indicator>
+  <drop-indicator />
 </div>

@@ -4,16 +4,15 @@
 <div class="formula-list">
   @for (sortingCriterion of sortingCriteria; let i = $index; track i) {
     <div class="formula-row">
-      <xc-icon-button xc-icon-name="accordion" color="black" (click)="toggleSorting(sortingCriterion)" class="sort-button" [class.ascending]="sortingCriterion.ascending"></xc-icon-button>
-      <formula
-        [formula]="sortingCriterion"
+      <xc-icon-button xc-icon-name="accordion" color="black" (click)="toggleSorting(sortingCriterion)" class="sort-button" [class.ascending]="sortingCriterion.ascending" />
+      <formula [formula]="sortingCriterion"
         [documentModel]="documentModel"
         variable-menu-disabled
         drop-disabled
         (triggerAction)="performAction($event)"
         tabindex="0"
-      ></formula>
-      <xc-icon-button xc-icon-name="delete" color="black" (click)="removeFormula(sortingCriterion)"></xc-icon-button>
+       />
+      <xc-icon-button xc-icon-name="delete" color="black" (click)="removeFormula(sortingCriterion)" />
     </div>
   }
 </div>

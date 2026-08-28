@@ -1,27 +1,25 @@
 <div class="area-wrapper" xc-i18n-context="datatype">
   <div class="exceptiontype-header">
-    <type-info-area
-      xc-i18n-context="type-info-area"
+    <type-info-area xc-i18n-context="type-info-area"
       [typeInfoArea]="exceptionType.typeInfoArea"
       (triggerAction)="performModellingAction($event)"
       [documentModel]="document"
       [showConverterButton]="true"
       [showBaseTypeAutocomplete]="true"
       [showAbstractCheckbox]="true"
-    ></type-info-area>
-    <exception-messages-area
-      xc-i18n-context="exception-messages-area"
+     />
+    <exception-messages-area xc-i18n-context="exception-messages-area"
       [exceptionMessagesArea]="exceptionType.exceptionMessageArea"
       (triggerAction)="performModellingAction($event)"
       [documentModel]="document"
-    ></exception-messages-area>
+     />
   </div>
 
   <div class="exceptiontype-body">
     <section class="members">
       <!-- Datatype Details -->
       <div class="detail-items">
-        <details-item icon="tb-exception" [detailsItem]="detailsItem"></details-item>
+        <details-item icon="tb-exception" [detailsItem]="detailsItem" />
       </div>
       <!-- Inherited Variables -->
       @if (exceptionType.hasBaseType()) {
@@ -33,12 +31,11 @@
           [documentModel]="document"
           [allowAdd]="false"
           >
-          <member-variable-area
-            [memberVariableArea]="exceptionType.inheritedVarsArea"
+          <member-variable-area [memberVariableArea]="exceptionType.inheritedVarsArea"
             [selectedVariableId]="selectedVariable()?.id"
             (triggerAction)="performModellingAction($event)"
             [documentModel]="document"
-          ></member-variable-area>
+           />
         </member-area>
       }
       <!-- Member Variables -->
@@ -50,36 +47,33 @@
         (triggerAction)="performModellingAction($event)"
         [documentModel]="document"
         >
-        <member-variable-area
-          [memberVariableArea]="exceptionType.memberVarsArea"
+        <member-variable-area [memberVariableArea]="exceptionType.memberVarsArea"
           [selectedVariableId]="selectedVariable()?.id"
           (triggerAction)="performModellingAction($event)"
           [documentModel]="document"
-        ></member-variable-area>
+         />
       </member-area>
     </section>
 
     <section class="details">
       @if (selectedDetailsItem()) {
-        <exceptiontype-details
-          xc-i18n-context="exceptiontype-details"
+        <exceptiontype-details xc-i18n-context="exceptiontype-details"
           [exceptionType]="exceptionType"
           [detailsItem]="selectedDetailsItem()"
           (triggerAction)="performModellingAction($event)"
           [documentModel]="document"
-        ></exceptiontype-details>
+         />
       }
       @if (selectedVariable()) {
-        <member-variable-details
-          xc-i18n-context="member-variable-details"
+        <member-variable-details xc-i18n-context="member-variable-details"
           [memberVariable]="selectedVariable()"
           (triggerAction)="performModellingAction($event)"
           [documentModel]="document"
-        ></member-variable-details>
+         />
       }
     </section>
   </div>
 
   <!-- enforce loading style sheet of drop-indicator-->
-  <drop-indicator></drop-indicator>
+  <drop-indicator />
 </div>

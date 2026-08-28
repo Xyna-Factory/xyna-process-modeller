@@ -5,15 +5,15 @@
         <xc-panel class="compact">
             <div class="items-row grid-12">
                 <xc-form-input class="col-6" xc-i18n label="label-const-name" xc-form-field-suffix="clear"
-                    [(value)]="constName"></xc-form-input>
+                    [(value)]="constName" />
                 <xc-form-autocomplete class="col-6" label="label-runtime-context" xc-i18n
                     placeholder="placeholder-select" [(xc-form-autocomplete-option)]="rtcDataWrapper.value"
                     [xc-form-autocomplete-options]="rtcDataWrapper.values" xc-form-autocomplete-fulltextsearch
-                    xc-form-field-suffix="clear"></xc-form-autocomplete>
+                    xc-form-field-suffix="clear" />
             </div>
         </xc-panel>
 
-        <xc-checkbox xc-i18n label="label-with-signature" [(checked)]="withSignature"></xc-checkbox>
+        <xc-checkbox xc-i18n label="label-with-signature" [(checked)]="withSignature" />
 
         <xc-panel class="compact">
             <header>
@@ -21,7 +21,7 @@
             </header>
             <section>
                 <xc-form-textarea label="label-criteria" xc-i18n [(value)]="searchCriteria"
-                    xc-form-textarea-lines="5"></xc-form-textarea>
+                    xc-form-textarea-lines="5" />
             </section>
         </xc-panel>
 

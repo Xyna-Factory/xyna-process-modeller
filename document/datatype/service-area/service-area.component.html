@@ -10,14 +10,13 @@
   >
   @for (item of serviceArea().items; track item.id) {
     <div class ="service-row">
-      <member-service
-        [mod-draggable]="item"
+      <member-service [mod-draggable]="item"
         [memberService]="item"
         [class.selected]="item.id === selectedServiceId()"
         (triggerAction)="performAction($event)"
-        tabindex="0"> </member-service>
+        tabindex="0" />
       @if (item.deletable && !readonly) {
-        <xc-icon-button (click)="$event.stopPropagation(); deleteService(item)" color="invert" xc-icon-name="delete"></xc-icon-button>
+        <xc-icon-button (click)="$event.stopPropagation(); deleteService(item)" color="invert" xc-icon-name="delete" />
       }
     </div>
   }
