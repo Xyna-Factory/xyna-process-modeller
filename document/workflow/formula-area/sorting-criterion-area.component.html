@@ -4,7 +4,7 @@
 <div class="formula-list">
   @for (sortingCriterion of sortingCriteria; let i = $index; track i) {
     <div class="formula-row">
-      <xc-icon-button xc-icon-name="accordion" color="black" (click)="toggleSorting(sortingCriterion)" class="sort-button" [ngClass]="{'ascending': sortingCriterion.ascending}"></xc-icon-button>
+      <xc-icon-button xc-icon-name="accordion" color="black" (click)="toggleSorting(sortingCriterion)" class="sort-button" [class.ascending]="sortingCriterion.ascending"></xc-icon-button>
       <formula
         [formula]="sortingCriterion"
         [documentModel]="documentModel"

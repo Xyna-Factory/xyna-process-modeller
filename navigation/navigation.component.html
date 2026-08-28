@@ -13,7 +13,7 @@
     }
 </div>
 <div class="iconbar">
-    <xc-icon-button xc-i18n class="toggle" xc-icon-name="misc-collapse" xc-icon-style="modeller" [ngClass]="{'rotated': area}" (click)="toogle()"></xc-icon-button>
+    <xc-icon-button xc-i18n class="toggle" xc-icon-name="misc-collapse" xc-icon-style="modeller" [class.rotated]="area" (click)="toogle()"></xc-icon-button>
     @for(button of buttons; track button) {
         <div class="icons">
             <xc-icon-button

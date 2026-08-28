@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -53,21 +53,20 @@ import { TemplateComponent } from '../template/template.component';
     templateUrl: './service-step.component.html',
     styleUrls: ['./service-step.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [    
-        NgClass,    
-        forwardRef(() => BranchComponent),
-        forwardRef(() => ConditionalBranchingComponent),
-        forwardRef(() => ConditionalChoiceComponent),
-        forwardRef(() => ForeachComponent),
-        forwardRef(() => InvocationComponent),
-        forwardRef(() => MappingComponent),
-        forwardRef(() => ParallelismComponent),
-        forwardRef(() => QueryComponent),
-        forwardRef(() => RetryComponent),
-        forwardRef(() => TemplateComponent),
-        forwardRef(() => ThrowComponent),
-        forwardRef(() => TypeChoiceComponent)
-    ]
+    imports: [
+    forwardRef(() => BranchComponent),
+    forwardRef(() => ConditionalBranchingComponent),
+    forwardRef(() => ConditionalChoiceComponent),
+    forwardRef(() => ForeachComponent),
+    forwardRef(() => InvocationComponent),
+    forwardRef(() => MappingComponent),
+    forwardRef(() => ParallelismComponent),
+    forwardRef(() => QueryComponent),
+    forwardRef(() => RetryComponent),
+    forwardRef(() => TemplateComponent),
+    forwardRef(() => ThrowComponent),
+    forwardRef(() => TypeChoiceComponent)
+]
 })
 export class ServiceStepComponent extends SelectableModellingObjectComponent implements OnDestroy {
     

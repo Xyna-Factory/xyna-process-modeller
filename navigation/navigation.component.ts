@@ -17,7 +17,7 @@
  */
 import { merge, of, Subscription } from 'rxjs';
 
-import { NgClass } from '@angular/common';
+
 import { AfterViewInit, Component, inject, OnDestroy, OnInit, QueryList, signal, ViewChild, ViewChildren } from '@angular/core';
 import { TypeDocumentModel } from '@pmod/document/model/type-document.model';
 import { PluginService } from '@pmod/document/plugin.service';
@@ -70,7 +70,7 @@ export enum AreaValue {
     selector: 'xfm-mod-nav',
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.scss'],
-    imports: [FactoryComponent, XcI18nContextDirective, XcI18nTranslateDirective, SearchComponent, DetailsComponent, ClipboardComponent, ErrorsComponent, CompareComponent, HelpComponent, NavPluginComponent, XcHasRightDirective, XcIconButtonComponent, XcMenuComponent, XcMenuTriggerDirective, XcTooltipDirective, NgClass]
+    imports: [FactoryComponent, XcI18nContextDirective, XcI18nTranslateDirective, SearchComponent, DetailsComponent, ClipboardComponent, ErrorsComponent, CompareComponent, HelpComponent, NavPluginComponent, XcHasRightDirective, XcIconButtonComponent, XcMenuComponent, XcMenuTriggerDirective, XcTooltipDirective]
 })
 export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
     private readonly documentService = inject(DocumentService);
