@@ -1,5 +1,3 @@
-import { BehaviorSubject, Subject } from 'rxjs';
-
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -17,6 +15,9 @@ import { BehaviorSubject, Subject } from 'rxjs';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+
+import { BehaviorSubject, Subject } from 'rxjs';
+
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, input, OnDestroy, signal } from '@angular/core';
 import { MinMaxService } from '@pmod/document/min-max.service';
 import { I18nService } from '@zeta/i18n';

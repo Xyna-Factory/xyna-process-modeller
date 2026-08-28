@@ -1,5 +1,3 @@
-import { BehaviorSubject, combineLatest, map, Observable, of, Subject, Subscription } from 'rxjs';
-
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2024 Xyna GmbH, Germany
@@ -17,6 +15,9 @@ import { BehaviorSubject, combineLatest, map, Observable, of, Subject, Subscript
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+
+import { BehaviorSubject, combineLatest, map, Observable, of, Subject, Subscription } from 'rxjs';
+
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, input, OnDestroy, signal } from '@angular/core';
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoDataType } from '@pmod/xo/data-type.model';

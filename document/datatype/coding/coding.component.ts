@@ -1,6 +1,3 @@
-import * as monaco from 'monaco-editor';
-import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
-
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -18,6 +15,10 @@ import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+
+import * as monaco from 'monaco-editor';
+import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
+
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject, Input, OnDestroy, output } from '@angular/core';
 import { XoMethod } from '@pmod/xo/method.model';
 

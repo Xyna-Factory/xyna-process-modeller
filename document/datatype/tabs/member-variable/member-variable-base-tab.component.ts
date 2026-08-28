@@ -1,5 +1,3 @@
-import { filter, Observable } from 'rxjs';
-
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2024 Xyna GmbH, Germany
@@ -17,6 +15,9 @@ import { filter, Observable } from 'rxjs';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+
+import { filter, Observable } from 'rxjs';
+
 import { ChangeDetectionStrategy, Component, inject, ViewChild } from '@angular/core';
 import { DataTypeService } from '@pmod/document/datatype.service';
 import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';

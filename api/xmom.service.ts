@@ -1,6 +1,3 @@
-import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
-import { catchError, finalize, map, tap } from 'rxjs/operators';
-
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -18,6 +15,10 @@ import { catchError, finalize, map, tap } from 'rxjs/operators';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+
+import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
+import { catchError, finalize, map, tap } from 'rxjs/operators';
+
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { TriggeredAction } from '@pmod/document/workflow/shared/modelling-object.component';

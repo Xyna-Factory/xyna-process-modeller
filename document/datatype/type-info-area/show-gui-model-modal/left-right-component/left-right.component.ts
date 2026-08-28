@@ -1,4 +1,3 @@
-import { NgClass } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,6 +15,7 @@ import { NgClass } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+import { NgClass } from '@angular/common';
 import { Component, ElementRef, HostListener, inject, Input, OnInit, output, viewChild } from '@angular/core';
 
 

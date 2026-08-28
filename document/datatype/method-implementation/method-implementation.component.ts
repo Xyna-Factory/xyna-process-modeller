@@ -1,5 +1,3 @@
-import { combineLatest, Subscription } from 'rxjs';
-
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -17,6 +15,9 @@ import { combineLatest, Subscription } from 'rxjs';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+
+import { combineLatest, Subscription } from 'rxjs';
+
 import { ChangeDetectorRef, Component, inject, Input, OnDestroy } from '@angular/core';
 import { MinMaxService } from '@pmod/document/min-max.service';
 import { PluginService } from '@pmod/document/plugin.service';
