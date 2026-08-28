@@ -47,6 +47,9 @@ export class XoWorkflow extends XoService implements Orderable {
     /** ID of run order in case this Workflow represents an Audit. Otherwise it's null */
     orderId: string;
 
+    /** ID of run order to use for resolving audit-sensitive structures */
+    structureOrderId?: string;
+
     /**
      * Map contains all variables occurring inside of this Workflow by their ID
      * Remark: There can be more than one variable for an ID, e. g. in a mapping input and its formula

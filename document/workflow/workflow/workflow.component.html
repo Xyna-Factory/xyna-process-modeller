@@ -1,4 +1,10 @@
 @if (hasWorkflowData) {
+  @if (onlyParentRuntimeInfo) {
+    <label xc-i18n class="no-runtime-info-available">
+      label-no-runtime-info
+    </label>
+  }
+
   <div class="scroll-content">
     <div class="content-wrapper">
       <content-area

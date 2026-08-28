@@ -21,12 +21,12 @@ import { OutsideListenerService } from '@zeta/base';
 
 import { filter } from 'rxjs/operators';
 
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { XoWorkflow, XoWorkflowStub } from '../../../xo/workflow.model';
 import { DocumentService } from '../../document.service';
 import { SelectionService } from '../../selection.service';
-import { ModellingItemComponent } from '../shared/modelling-object.component';
 import { ContentAreaComponent } from '../content-area/content-area.component';
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { ModellingItemComponent } from '../shared/modelling-object.component';
 
 
 @Component({
@@ -69,6 +69,9 @@ export class WorkflowComponent extends ModellingItemComponent implements AfterVi
     set workflow(value: XoWorkflow) {
         this.setModel(value);
     }
+
+    @Input()
+    onlyParentRuntimeInfo = false;
 
     get workflow(): XoWorkflow {
         return this.getModel() as XoWorkflow;
