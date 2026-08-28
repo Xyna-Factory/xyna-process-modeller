@@ -16,7 +16,6 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component } from '@angular/core';
-
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 
 import { XcI18nContextDirective } from '../../../zeta/i18n';

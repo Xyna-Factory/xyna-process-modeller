@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, output } from '@angular/core';
 
 import { TextItem } from '../../../../xo/formula.model';
 import { XoItem } from '../../../../xo/item.model';
@@ -50,8 +50,7 @@ export class TemplatePartComponent extends ModellingItemComponent {
     }
 
 
-    @Output()
-    readonly switchFocus = new EventEmitter<TemplatePartSwitchFocusEvent>();
+    readonly switchFocus = output<TemplatePartSwitchFocusEvent>();
 
 
     /**

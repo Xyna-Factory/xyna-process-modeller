@@ -17,6 +17,9 @@
  */
 import { NgFor } from '@angular/common';
 import { Component, forwardRef, HostBinding, Input, signal } from '@angular/core';
+import { XoChangeParallelExecutionRequest } from '@pmod/xo/change-parallel-execution-request';
+import { XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective } from '@zeta/xc';
+import { XcMenuItem } from '@zeta/xc/xc-menu/xc-menu.types';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoForeach } from '../../../xo/foreach.model';
@@ -25,9 +28,6 @@ import { ContentAreaComponent } from '../content-area/content-area.component';
 import { ModellingItemComponent } from '../shared/modelling-object.component';
 import { VariableAreaServiceComponent } from '../variable-area/variable-area-service.component';
 import { VariableComponent } from '../variable/variable.component';
-import { XcMenuItem } from '@zeta/xc/xc-menu/xc-menu.types';
-import { XoChangeParallelExecutionRequest } from '@pmod/xo/change-parallel-execution-request';
-import { XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective } from '@zeta/xc';
 
 
 @Component({

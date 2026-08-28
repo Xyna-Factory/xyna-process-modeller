@@ -1,3 +1,5 @@
+import { filter, Subscription } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,24 +18,21 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, inject, Input, OnDestroy, signal } from '@angular/core';
-
 import { SelectionService } from '@pmod/document/selection.service';
 import { MappingMode, WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { ApiService, StartOrderOptionsBuilder } from '@zeta/api';
 import { XcDialogService, XcIconButtonComponent, XcIconComponent, XcMenuItem, XcMenuServiceDirective, XcMenuTriggerDirective } from '@zeta/xc';
-
-import { filter, Subscription } from 'rxjs';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoMapping } from '../../../xo/mapping.model';
 import { XoRequest } from '../../../xo/request.model';
 import { XoTextArea } from '../../../xo/text-area.model';
 import { XoVariable } from '../../../xo/variable.model';
-import { ModellingItemComponent } from '../shared/modelling-object.component';
-import { VariableAreaServiceComponent } from '../variable-area/variable-area-service.component';
-import { LabelAreaComponent } from '../label-area/label-area.component';
 import { DocumentationAreaComponent } from '../documentation-area/documentation-area.component';
 import { FormulaAreaComponent } from '../formula-area/formula-area.component';
+import { LabelAreaComponent } from '../label-area/label-area.component';
+import { ModellingItemComponent } from '../shared/modelling-object.component';
+import { VariableAreaServiceComponent } from '../variable-area/variable-area-service.component';
 import { VisualMappingComponent } from '../visual-mapping/visual-mapping.component';
 
 

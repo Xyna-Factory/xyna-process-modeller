@@ -17,7 +17,7 @@
  */
 import { filter, take } from 'rxjs/operators';
 
-import { Component, ElementRef, HostBinding, HostListener, inject, Input, QueryList, ViewChildren, viewChild } from '@angular/core';
+import { Component, ElementRef, HostBinding, HostListener, inject, Input, QueryList, viewChild, ViewChildren } from '@angular/core';
 import { ApiService } from '@zeta/api';
 import { coerceBoolean } from '@zeta/base';
 

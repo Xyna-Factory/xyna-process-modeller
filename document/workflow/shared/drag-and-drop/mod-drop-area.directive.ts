@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Directive, ElementRef, EventEmitter, HostListener, Input, NgZone, OnDestroy, OnInit, Output, inject } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, NgZone, OnDestroy, OnInit, inject, output } from '@angular/core';
 
 import { coerceBoolean } from '@zeta/base';
 import { I18nService } from '@zeta/i18n';
@@ -110,8 +110,7 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
         return this._hideIndicator;
     }
 
-    @Output('mod-drop-area-dropped')
-    readonly dropped = new EventEmitter<ModDropEvent>();
+    readonly dropped = output<ModDropEvent>({ alias: 'mod-drop-area-dropped' });
 
     private dragOverHandler: (event: Event) => void;
     private dragEnterHandler: (event: Event) => void;

@@ -16,9 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, inject } from '@angular/core';
-import { XcButtonComponent, XcCheckboxComponent, XcDialogWrapperComponent, XcFormDirective, XcFormInputComponent, XcFormTextareaComponent, XcMasterDetailComponent, XcPanelComponent } from '@zeta/xc';
-
-import { XcDialogComponent } from '@zeta/xc';
+import { XcButtonComponent, XcCheckboxComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormDirective, XcFormInputComponent, XcFormTextareaComponent, XcMasterDetailComponent, XcPanelComponent } from '@zeta/xc';
 
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { XoDataType } from '../../../../xo/data-type.model';

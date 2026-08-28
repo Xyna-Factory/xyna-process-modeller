@@ -16,6 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, forwardRef } from '@angular/core';
+import { XcIconButtonComponent } from '@zeta/xc';
 
 import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoInsertBranchRequest } from '../../../../xo/insert-branch-request.model';
@@ -23,7 +24,6 @@ import { ContentAreaComponent } from '../../content-area/content-area.component'
 import { FormulaInputAreaComponent } from '../../formula-input-area/formula-input-area.component';
 import { VariableAreaChoiceComponent } from '../../variable-area/variable-area-choice.component';
 import { ChoiceComponent } from '../choice.component';
-import { XcIconButtonComponent } from '@zeta/xc';
 
 
 @Component({

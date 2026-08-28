@@ -16,17 +16,16 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component } from '@angular/core';
+import { XcFormLabelComponent, XcIconButtonComponent } from '@zeta/xc';
 
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeSortingRequest } from '../../../xo/change-sorting-request.model';
 import { XoInsertRequest } from '../../../xo/insert-request.model';
 import { XoInsertSortingCriterionRequest } from '../../../xo/insert-sort-criterion-request.model';
 import { XoSortingCriterion } from '../../../xo/sorting-criterion.model';
-import { FormulaAreaComponent } from './formula-area.component';
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
-
 import { FormulaComponent } from '../formula/formula.component';
-import { XcFormLabelComponent, XcIconButtonComponent } from '@zeta/xc';
+import { FormulaAreaComponent } from './formula-area.component';
 
 
 @Component({

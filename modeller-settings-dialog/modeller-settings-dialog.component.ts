@@ -16,7 +16,6 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, inject } from '@angular/core';
-
 import { WorkflowDetailSettingsService } from '@pmod/workflow-detail-settings.service';
 import { XcButtonComponent, XcCheckboxComponent, XcDialogComponent, XcDialogWrapperComponent, XcIconComponent, XcLanguageSelectorComponent, XcPanelComponent, XDSIconName } from '@zeta/xc';
 

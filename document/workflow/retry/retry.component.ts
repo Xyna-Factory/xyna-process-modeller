@@ -16,14 +16,14 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, Input } from '@angular/core';
+import { XcIconComponent } from '@zeta/xc';
 
 import { XoRetry } from '../../../xo/retry.model';
 import { XoTextArea } from '../../../xo/text-area.model';
+import { DocumentationAreaComponent } from '../documentation-area/documentation-area.component';
+import { LabelAreaComponent } from '../label-area/label-area.component';
 import { ModellingItemComponent } from '../shared/modelling-object.component';
 import { VariableAreaServiceComponent } from '../variable-area/variable-area-service.component';
-import { LabelAreaComponent } from '../label-area/label-area.component';
-import { DocumentationAreaComponent } from '../documentation-area/documentation-area.component';
-import { XcIconComponent } from '@zeta/xc';
 
 
 @Component({

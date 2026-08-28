@@ -15,8 +15,9 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, inject, signal, ViewChild } from '@angular/core';
+import { filter, Observable } from 'rxjs';
 
+import { ChangeDetectionStrategy, Component, inject, signal, ViewChild } from '@angular/core';
 import { DataTypeService } from '@pmod/document/datatype.service';
 import { XoChangeMemberMethodImplementationTypeRequest } from '@pmod/xo/change-member-method-implementation-type-request.model';
 import { XoChangeMemberMethodReferenceRequest } from '@pmod/xo/change-member-method-reference-request.model';
@@ -24,8 +25,6 @@ import { XoDynamicMethod } from '@pmod/xo/dynamic-method.model';
 import { XoMethod } from '@pmod/xo/method.model';
 import { I18nService } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcButtonComponent, XcFormAutocompleteComponent, XcIconButtonComponent, XcOptionItem, XcOptionItemStringOrUndefined, XcOptionItemTranslate, XcTooltipDirective } from '@zeta/xc';
-
-import { filter } from 'rxjs';
 
 import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { MethodImplementationComponent } from '../../method-implementation/method-implementation.component';
@@ -120,6 +119,11 @@ export class MethodImplementationTabComponent extends DatatypeMethodTabComponent
 
     @ViewChild('referenceAutocomplete', {static: false, read: XcFormAutocompleteComponent})
     set pathAutocomplete(value: XcFormAutocompleteComponent) {
-        this.untilDestroyed(value?.focus)?.pipe(filter(() => !value.disabled)).subscribe(() => this.refreshReferenceAutocomplete());
+        const focus = value?.focus;
+        if (focus) {
+            this.untilDestroyed(new Observable(subscriber => focus.subscribe(event => subscriber.next(event))))
+                .pipe(filter(() => !value.disabled))
+                .subscribe(() => this.refreshReferenceAutocomplete());
+        }
     }
 }

@@ -1,3 +1,4 @@
+import { AsyncPipe } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -15,12 +16,12 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, output } from '@angular/core';
 import { coerceBoolean } from '@zeta/base';
-import { SkeletonTreeDataSource } from './data-source/skeleton-tree-data-source';
+
 import { CreateAssignmentEvent, VariableTreeNodeComponent } from '../variable-tree-node/variable-tree-node.component';
+import { SkeletonTreeDataSource } from './data-source/skeleton-tree-data-source';
 import { SkeletonTreeNode } from './data-source/skeleton-tree-node';
-import { AsyncPipe } from '@angular/common';
 
 
 @Component({
@@ -34,8 +35,7 @@ export class VariableTreeComponent {
     private _dataSource: SkeletonTreeDataSource;
     private _highlightMarkedNodes = false;
 
-    @Output()
-    readonly createdAssignment = new EventEmitter<CreateAssignmentEvent>();
+    readonly createdAssignment = output<CreateAssignmentEvent>();
 
     @Input('tree-datasource')
     set dataSource(value: SkeletonTreeDataSource) {
@@ -58,8 +58,7 @@ export class VariableTreeComponent {
     }
 
 
-    @Output()
-    readonly selectionChange = new EventEmitter<SkeletonTreeNode>();
+    readonly selectionChange = output<SkeletonTreeNode>();
 
 
     select(node: SkeletonTreeNode) {

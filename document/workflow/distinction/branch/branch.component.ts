@@ -16,10 +16,9 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectorRef, Component, forwardRef, HostBinding, inject, Input, OnDestroy } from '@angular/core';
-import { XcIconButtonComponent } from '@zeta/xc';
-
 import { XoConditionalBranching } from '@pmod/xo/conditional-branching.model';
 import { coerceBoolean } from '@zeta/base';
+import { XcIconButtonComponent } from '@zeta/xc';
 
 import { XoBranch } from '../../../../xo/branch.model';
 import { ContentAreaComponent } from '../../content-area/content-area.component';

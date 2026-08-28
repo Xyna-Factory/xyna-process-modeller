@@ -15,9 +15,8 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, HostBinding, effect, inject, Input, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, HostBinding, inject, Input, input, signal } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { RuntimeContext, Xo } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
@@ -44,9 +43,9 @@ import { DocumentService } from '../../document.service';
 import { CONSTANT_DIALOG_DELETE_TOKEN, ConstantDialogComponent, ConstantDialogData } from '../../modal/constant-dialog/constant-dialog.component';
 import { SelectionService } from '../../selection.service';
 import { BranchSelectionService } from '../distinction/branch/branch-selection.service';
-import { ModDropEvent, ModDropAreaDirective } from '../shared/drag-and-drop/mod-drop-area.directive';
-import { SelectableModellingObjectComponent } from '../shared/selectable-modelling-object.component';
+import { ModDropAreaDirective, ModDropEvent } from '../shared/drag-and-drop/mod-drop-area.directive';
 import { ModContentEditableDirective } from '../shared/mod-content-editable.directive';
+import { SelectableModellingObjectComponent } from '../shared/selectable-modelling-object.component';
 
 
 @Component({

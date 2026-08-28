@@ -16,12 +16,11 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, input } from '@angular/core';
-
 import { XoGlobalStorablePropertyArea } from '@pmod/xo/global-storable-property-area.model';
-
-import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { XcCheckboxComponent, XcFormLabelComponent } from '@zeta/xc';
+
 import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 
 
 @Component({

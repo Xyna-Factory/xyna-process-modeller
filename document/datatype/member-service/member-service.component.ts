@@ -21,8 +21,8 @@ import { XcTooltipDirective } from '@zeta/xc';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeLabelRequest } from '../../../xo/change-label-request.model';
 import { XoMethod } from '../../../xo/method.model';
-import { SelectableModellingObjectComponent } from '../../workflow/shared/selectable-modelling-object.component';
 import { ModContentEditableDirective } from '../../workflow/shared/mod-content-editable.directive';
+import { SelectableModellingObjectComponent } from '../../workflow/shared/selectable-modelling-object.component';
 
 
 @Component({

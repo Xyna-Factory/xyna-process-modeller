@@ -15,10 +15,10 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
+import { Component, HostBinding, Input, output } from '@angular/core';
+import { XcIconButtonComponent } from '@zeta/xc';
 
 import { XmomPath } from '../../api/xmom.service';
-import { XcIconButtonComponent } from '@zeta/xc';
 
 
 export interface XMOMTreeItemState {
@@ -47,8 +47,7 @@ export class XMOMTreeItemComponent {
     private _selectedXmomPaths: XmomPath[];
     private _expandedXmomPaths: XmomPath[];
 
-    @Output()
-    readonly stateChange = new EventEmitter<XMOMTreeItemState>();
+    readonly stateChange = output<XMOMTreeItemState>();
 
 
     @Input()

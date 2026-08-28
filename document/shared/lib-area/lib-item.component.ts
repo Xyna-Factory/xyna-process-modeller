@@ -1,3 +1,5 @@
+import { Subject } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2024 Xyna GmbH, Germany
@@ -15,12 +17,10 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostBinding, Injector, inject } from '@angular/core';
-
+import { Component, HostBinding, inject, Injector } from '@angular/core';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcIconButtonComponent, XcRichListItemComponent, XcTooltipDirective } from '@zeta/xc';
 
-import { Subject } from 'rxjs';
 
 export interface LibItemData {
     libraryName: string;

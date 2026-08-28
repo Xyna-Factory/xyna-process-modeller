@@ -16,6 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, forwardRef } from '@angular/core';
+import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { ModellingActionType } from '../../../../api/xmom.service';
@@ -25,7 +26,6 @@ import { ContentAreaComponent } from '../../content-area/content-area.component'
 import { FormulaInputAreaComponent } from '../../formula-input-area/formula-input-area.component';
 import { VariableAreaChoiceComponent } from '../../variable-area/variable-area-choice.component';
 import { ChoiceComponent } from '../choice.component';
-import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({

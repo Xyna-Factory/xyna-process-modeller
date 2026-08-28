@@ -1,3 +1,6 @@
+import { Subject } from 'rxjs';
+import { debounceTime, filter } from 'rxjs/operators';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,13 +19,9 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, NgZone, ViewChild, viewChild } from '@angular/core';
-
 import { MessageBusService } from '@yggdrasil/events';
 import { AuthService } from '@zeta/auth';
 import { XcCheckboxComponent, XcFormAutocompleteComponent, XcFormInputComponent } from '@zeta/xc';
-
-import { Subject } from 'rxjs';
-import { debounceTime, filter } from 'rxjs/operators';
 
 import { XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';

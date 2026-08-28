@@ -16,7 +16,6 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, inject, Input } from '@angular/core';
-
 import { ModellingActionType } from '@pmod/api/xmom.service';
 import { ConflictDialogComponent, ConflictDialogData } from '@pmod/document/modal/conflict-dialog/conflict-dialog.component';
 import { XoCase } from '@pmod/xo/case.model';
@@ -27,10 +26,10 @@ import { XcDialogService } from '@zeta/xc';
 
 import { XoCaseArea } from '../../../../xo/case-area.model';
 import { ModDnDEvent } from '../../shared/drag-and-drop/mod-drag-and-drop.service';
-import { ModDragEvent, ModDropEvent, ModDropAreaDirective } from '../../shared/drag-and-drop/mod-drop-area.directive';
+import { ModDraggableDirective } from '../../shared/drag-and-drop/mod-draggable.directive';
+import { ModDragEvent, ModDropAreaDirective, ModDropEvent } from '../../shared/drag-and-drop/mod-drop-area.directive';
 import { ModellingObjectComponent, TriggeredAction } from '../../shared/modelling-object.component';
 import { CaseComponent } from '../case/case.component';
-import { ModDraggableDirective } from '../../shared/drag-and-drop/mod-draggable.directive';
 
 
 @Component({

@@ -16,6 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, forwardRef, HostBinding, inject, Input } from '@angular/core';
+import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { XoExceptionHandlingArea } from '../../../../xo/exception-handling-area.model';
@@ -23,7 +24,6 @@ import { WorkflowDetailLevelService } from '../../../workflow-detail-level.servi
 import { ModellingObjectComponent } from '../../shared/modelling-object.component';
 import { CompensationComponent } from '../compensation/compensation.component';
 import { ExceptionHandlingComponent } from '../exception-handling/exception-handling.component';
-import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({

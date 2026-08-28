@@ -1,3 +1,5 @@
+import { catchError, EMPTY, Observable, Subject, switchMap } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,18 +18,15 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, inject, Input } from '@angular/core';
-
 import { ApiService, XoManagedFileID } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
 import { XcFormLabelComponent, XcIconButtonComponent, XcRichListComponent, XcRichListItem } from '@zeta/xc';
 
-import { catchError, EMPTY, Observable, Subject, switchMap } from 'rxjs';
-
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { HttpMethod, ModellingActionType } from '../../../api/xmom.service';
 import { XoLibrariesArea } from '../../../xo/libraries-area.model';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { LibItemComponent, LibItemData } from './lib-item.component';
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 
 
 @Component({

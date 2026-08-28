@@ -15,15 +15,14 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, EventEmitter, Input, Output, inject } from '@angular/core';
-
-import { DocumentService } from '../../../document/document.service';
+import { Component, ElementRef, inject, Input, output } from '@angular/core';
 import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model';
 import { ErrorItem } from '@pmod/xo/issue.model';
-
-import { ErrorService } from '../error.service';
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { XcIconButtonComponent, XcIconComponent, XcTooltipDirective } from '@zeta/xc';
+
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { DocumentService } from '../../../document/document.service';
+import { ErrorService } from '../error.service';
 
 
 @Component({
@@ -42,11 +41,9 @@ export class ErrorItemComponent {
     @Input()
     checkable: boolean;
 
-    @Output()
-    readonly errorSelectionChanged = new EventEmitter<ErrorItem>();
+    readonly errorSelectionChanged = output<ErrorItem>();
 
-    @Output()
-    readonly errorCheckedChanged = new EventEmitter<ErrorItem>();
+    readonly errorCheckedChanged = output<ErrorItem>();
 
     tmpElementRef: ElementRef;
 

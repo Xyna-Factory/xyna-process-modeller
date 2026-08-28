@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, HostListener, Output } from '@angular/core';
+import { Component, HostListener, output } from '@angular/core';
 
 import { FormulaPart } from '../../../../xo/util/formula-parts/formula-part';
 import { FormulaPartComponent } from './formula-part.component';
@@ -27,20 +27,17 @@ export class FormulaEditablePartComponent extends FormulaPartComponent {
     /**
      * Called always at the beginning of editing this part
      */
-    @Output('startedEditing')
-    readonly startedEditing = new EventEmitter<FormulaPart>();
+    readonly startedEditing = output<FormulaPart>({ alias: 'startedEditing' });
 
     /**
      * Called only if the editing was accepted (e. g. via ENTER key)
      */
-    @Output('acceptedEditing')
-    readonly acceptedEditing = new EventEmitter<FormulaPart>();
+    readonly acceptedEditing = output<FormulaPart>({ alias: 'acceptedEditing' });
 
     /**
      * Called always at the end of editing this part
      */
-    @Output('finishedEditing')
-    readonly finishedEditing = new EventEmitter<FormulaPart>();
+    readonly finishedEditing = output<FormulaPart>({ alias: 'finishedEditing' });
 
 
     startEditing() {

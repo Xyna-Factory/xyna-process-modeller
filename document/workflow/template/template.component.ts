@@ -15,8 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, HostBinding, inject, Input, OnDestroy, QueryList, ViewChildren, signal } from '@angular/core';
-
+import { Component, ElementRef, HostBinding, inject, Input, OnDestroy, QueryList, signal, ViewChildren } from '@angular/core';
 import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
 import { ApiService } from '@zeta/api';
 import { XcIconButtonComponent, XcMenuItem, XcMenuServiceDirective, XcMenuTriggerDirective } from '@zeta/xc';
@@ -29,11 +28,11 @@ import { XoFormula } from '../../../xo/formula.model';
 import { XoTemplate } from '../../../xo/template.model';
 import { FormulaPart } from '../../../xo/util/formula-parts/formula-part';
 import { FormulaPartLiteral } from '../../../xo/util/formula-parts/formula-part-literal';
+import { NonDraggableTextAreaComponent } from '../non-draggable-text-area/non-draggable-text-area.component';
 import { ModellingItemComponent, TriggeredAction } from '../shared/modelling-object.component';
 import { TemplateRow } from './model/template-row.model';
 import { TemplateText } from './model/template-text.model';
 import { SplitTemplateRowEvent, SwitchTemplateRowFocusEvent, TemplateRowComponent } from './template-row/template-row.component';
-import { NonDraggableTextAreaComponent } from '../non-draggable-text-area/non-draggable-text-area.component';
 
 
 enum ConcatParameterType {

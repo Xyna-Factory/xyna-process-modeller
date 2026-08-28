@@ -1,3 +1,6 @@
+import { merge, Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,14 +19,12 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit, ViewChild, viewChild } from '@angular/core';
-
 import { FullQualifiedName, XoStructureType } from '@zeta/api';
 import { isString } from '@zeta/base';
 import { XcAutocompleteDataWrapper, XcButtonComponent, XcCheckboxComponent, XcDialogService, XcFormAutocompleteComponent, XcFormInputComponent, XcFormLabelComponent, XcFormValidatorRequiredDirective, XcOptionItemString, XcOptionItemStringOrUndefined, XcTooltipDirective } from '@zeta/xc';
+import { XcHasRightDirective } from '@zeta/xc/shared/xc-has-right.directive';
 
-import { merge, Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
-
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeAbstractRequest } from '../../../xo/change-abstract-request.model';
 import { XoChangeBaseTypeRequest } from '../../../xo/change-base-type-request.model';
@@ -38,11 +39,9 @@ import { DataTypeDocumentModel } from '../../model/data-type-document.model';
 import { ExceptionTypeDocumentModel } from '../../model/exception-type-document.model';
 import { ServiceGroupDocumentModel } from '../../model/service-group-document.model';
 import { TypeDocumentModel } from '../../model/type-document.model';
-import { ModDropEvent, ModDropAreaDirective } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
+import { ModDropAreaDirective, ModDropEvent } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { ShowGuiModelModalComponent } from './show-gui-model-modal/show-gui-model-modal.component';
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
-import { XcHasRightDirective } from '@zeta/xc/shared/xc-has-right.directive';
 
 
 @Component({
@@ -117,13 +116,23 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
 
     @ViewChild('pathAutocomplete', {static: false, read: XcFormAutocompleteComponent})
     set pathAutocomplete(value: XcFormAutocompleteComponent) {
-        this.untilDestroyed(value?.focus)?.pipe(filter(() => !value.disabled)).subscribe(() => this.refreshPathAutocomplete());
+        const focus = value?.focus;
+        if (focus) {
+            this.untilDestroyed(new Observable(subscriber => focus.subscribe(event => subscriber.next(event))))
+                .pipe(filter(() => !value.disabled))
+                .subscribe(() => this.refreshPathAutocomplete());
+        }
     }
 
 
     @ViewChild('baseTypeAutocomplete', {static: false, read: XcFormAutocompleteComponent})
     set baseTypeAutocomplete(value: XcFormAutocompleteComponent) {
-        this.untilDestroyed(value?.focus)?.pipe(filter(() => !value.disabled)).subscribe(() => this.refreshBaseTypeAutocomplete());
+        const focus = value?.focus;
+        if (focus) {
+            this.untilDestroyed(new Observable(subscriber => focus.subscribe(event => subscriber.next(event))))
+                .pipe(filter(() => !value.disabled))
+                .subscribe(() => this.refreshBaseTypeAutocomplete());
+        }
     }
 
 

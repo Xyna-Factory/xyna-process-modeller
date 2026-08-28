@@ -1,3 +1,5 @@
+import { Subject, Subscription } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,15 +18,12 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, Input, OnDestroy } from '@angular/core';
-
 import { XcFormLabelComponent, XcIconButtonComponent, XcRichListComponent, XcRichListItem } from '@zeta/xc';
 
-import { Subject, Subscription } from 'rxjs';
-
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { XoJavaSharedLibrariesArea } from '../../../xo/java-shared-libraries-area.model';
 import { ModellingObjectComponent, TriggeredAction } from '../../workflow/shared/modelling-object.component';
 import { JavaSharedLibItemComponent, JavaSharedLibItemData } from './java-shared-lib-item.component';
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 
 
 @Component({

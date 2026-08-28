@@ -16,12 +16,11 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-
 import { XoMetaTagArea } from '@pmod/xo/meta-tag-area.model';
 
-import { DatatypeTabComponent, MetaTabData } from '../datatype-tab.component';
-import { MetaTagAreaComponent } from '../../../shared/meta-tag-area/meta-tag-area.component';
 import { XcI18nContextDirective } from '../../../../../../zeta/i18n';
+import { MetaTagAreaComponent } from '../../../shared/meta-tag-area/meta-tag-area.component';
+import { DatatypeTabComponent, MetaTabData } from '../datatype-tab.component';
 
 
 @Component({

@@ -16,8 +16,8 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, Component, effect, input } from '@angular/core';
-
 import { XoDeleteRequest } from '@pmod/xo/delete-request.model';
+import { XcIconButtonComponent } from '@zeta/xc';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoDataType } from '../../../xo/data-type.model';
@@ -28,11 +28,10 @@ import { XoModellingItem } from '../../../xo/modelling-item.model';
 import { XoMoveModellingObjectRequest } from '../../../xo/move-modelling-object-request.model';
 import { XoStaticMethod } from '../../../xo/static-method.model';
 import { ModRelativeHoverSide } from '../../workflow/shared/drag-and-drop/mod-drag-and-drop.service';
-import { ModDragEvent, ModDropEvent, ModDropAreaDirective } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
+import { ModDraggableDirective } from '../../workflow/shared/drag-and-drop/mod-draggable.directive';
+import { ModDragEvent, ModDropAreaDirective, ModDropEvent } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { MemberServiceComponent } from '../member-service/member-service.component';
-import { ModDraggableDirective } from '../../workflow/shared/drag-and-drop/mod-draggable.directive';
-import { XcIconButtonComponent } from '@zeta/xc';
 
 
 @Component({

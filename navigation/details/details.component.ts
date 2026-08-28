@@ -23,12 +23,14 @@ import { DEPLOYMENT_ITEMS_ISWP } from '@fman/deployment-items/restorable-deploym
 import { XoDeploymentItemId } from '@fman/deployment-items/xo/xo-deployment-item-id.model';
 import { XoDeploymentItem } from '@fman/deployment-items/xo/xo-deployment-item.model';
 import { XmomService } from '@pmod/api/xmom.service';
+import { PMOD_RTC } from '@pmod/processmodeller.component';
 import { XoGetXmomRelationsResponse } from '@pmod/xo/get-xmom-relations-response.model';
 import { MessageBusService } from '@yggdrasil/events';
 import { ApiService, FullQualifiedName, XoApplication as XoApplicationZeta, XoRuntimeContext, XoWorkspace as XoWorkspaceZeta } from '@zeta/api';
 import { AuthService } from '@zeta/auth';
 import { I18nService } from '@zeta/i18n';
 import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcPanelComponent, XcTooltipDirective } from '@zeta/xc';
+import { XcHasRightDirective } from '@zeta/xc/shared/xc-has-right.directive';
 
 import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { DeploymentStateDetailComponent } from '../../../factorymanager/deployment-items/components/deployment-state-detail/deployment-state-detail.component';
@@ -39,8 +41,6 @@ import { XoApplication, XoWorkspace } from '../../xo/runtime-context.model';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 import { RelationTableComponent } from './relation-table/relation-table.component';
 import { ShowXmlModalComponent, ShowXmlModalData } from './show-xml-modal/show-xml-modal.component';
-import { XcHasRightDirective } from '@zeta/xc/shared/xc-has-right.directive';
-import { PMOD_RTC } from '@pmod/processmodeller.component';
 
 
 @Component({

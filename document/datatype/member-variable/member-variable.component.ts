@@ -16,13 +16,13 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, Component, effect, input } from '@angular/core';
+import { XcTooltipDirective } from '@zeta/xc';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeLabelRequest } from '../../../xo/change-label-request.model';
 import { XoMemberVariable } from '../../../xo/member-variable.model';
-import { SelectableModellingObjectComponent } from '../../workflow/shared/selectable-modelling-object.component';
 import { ModContentEditableDirective } from '../../workflow/shared/mod-content-editable.directive';
-import { XcTooltipDirective } from '@zeta/xc';
+import { SelectableModellingObjectComponent } from '../../workflow/shared/selectable-modelling-object.component';
 
 
 @Component({

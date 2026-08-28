@@ -16,14 +16,14 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { NgFor } from '@angular/common';
-import { ChangeDetectionStrategy, Component, HostBinding, Input, effect, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, HostBinding, Input, input } from '@angular/core';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoInsertModellingObjectRequest } from '../../../xo/insert-modelling-object-request.model';
 import { XoModellingItem } from '../../../xo/modelling-item.model';
 import { XoMoveModellingObjectRequest } from '../../../xo/move-modelling-object-request.model';
-import { XoVariable } from '../../../xo/variable.model';
 import { XoVariableArea } from '../../../xo/variable-area.model';
+import { XoVariable } from '../../../xo/variable.model';
 import { DragType, ModDnDEvent } from '../shared/drag-and-drop/mod-drag-and-drop.service';
 import { ModDraggableDirective } from '../shared/drag-and-drop/mod-draggable.directive';
 import { ModDragEvent, ModDropAreaDirective, ModDropEvent } from '../shared/drag-and-drop/mod-drop-area.directive';

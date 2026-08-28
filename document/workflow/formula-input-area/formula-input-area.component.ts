@@ -16,7 +16,6 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, Input } from '@angular/core';
-
 import { coerceBoolean } from '@zeta/base';
 
 import { ModellingActionType } from '../../../api/xmom.service';
@@ -26,9 +25,9 @@ import { XoInsertFormulaRequest } from '../../../xo/insert-formula-request.model
 import { XoModellingItem } from '../../../xo/modelling-item.model';
 import { XoVariable, XoVariableArray } from '../../../xo/variable.model';
 import { XoXmomItem } from '../../../xo/xmom-item.model';
-import { ModDropEvent, ModDropAreaDirective } from '../shared/drag-and-drop/mod-drop-area.directive';
-import { ModellingObjectComponent } from '../shared/modelling-object.component';
 import { FormulaComponent } from '../formula/formula.component';
+import { ModDropAreaDirective, ModDropEvent } from '../shared/drag-and-drop/mod-drop-area.directive';
+import { ModellingObjectComponent } from '../shared/modelling-object.component';
 
 
 @Component({

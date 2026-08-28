@@ -16,13 +16,12 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-
 import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
+import { XcButtonComponent, XcFormInputComponent, XcFormValidatorRequiredDirective } from '@zeta/xc';
 
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { TypeDocumentationAreaComponent } from '../../type-documentation-area/type-documentation-area.component';
 import { DatatypeMethodTabComponent } from '../datatype-tab.component';
-import { XcButtonComponent, XcFormInputComponent, XcFormValidatorRequiredDirective } from '@zeta/xc';
 
 
 @Component({

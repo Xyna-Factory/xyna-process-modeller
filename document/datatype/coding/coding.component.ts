@@ -1,3 +1,6 @@
+import * as monaco from 'monaco-editor';
+import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -15,11 +18,9 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, inject, Input, OnDestroy, Output } from '@angular/core';
-
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject, Input, OnDestroy, output } from '@angular/core';
 import { XoMethod } from '@pmod/xo/method.model';
-import * as monaco from 'monaco-editor';
-import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
+
 
 @Component({
     selector: 'coding',
@@ -71,7 +72,7 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
 
     @Input() readonly = false;
 
-    @Output() readonly implementationChange = new EventEmitter<string>();
+    readonly implementationChange = output<string>();
 
     get implementation(): string {
         return this.method ? this.method.implementationArea.text : '';

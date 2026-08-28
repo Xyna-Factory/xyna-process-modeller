@@ -16,15 +16,14 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, inject, Input, signal } from '@angular/core';
-
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItem } from '@zeta/xc';
 
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeRemoteDestinationRequest } from '../../../xo/change-remote-destination-request.model';
 import { XoRemoteDestinationArea } from '../../../xo/remote-destination-area.model';
 import { DocumentService } from '../../document.service';
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { VariableAreaComponent } from '../variable-area/variable-area.component';
 
 

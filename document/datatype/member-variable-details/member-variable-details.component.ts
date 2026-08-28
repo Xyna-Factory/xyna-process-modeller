@@ -1,3 +1,5 @@
+import { BehaviorSubject, Subject } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,10 +18,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, Component, effect, inject, input, OnDestroy, signal } from '@angular/core';
-
 import { XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
-
-import { BehaviorSubject, Subject } from 'rxjs';
 
 import { XoMemberVariable } from '../../../xo/member-variable.model';
 import { XoRuntimeContext } from '../../../xo/runtime-context.model';
@@ -28,6 +27,7 @@ import { DocumentTabData, MetaTabData, VariableTabData } from '../tabs/datatype-
 import { MemberVariableBaseTabComponent } from '../tabs/member-variable/member-variable-base-tab.component';
 import { MemberVariableStorableTabComponent } from '../tabs/member-variable/member-variable-storable-tab.component';
 import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
+
 
 @Component({
     selector: 'member-variable-details',

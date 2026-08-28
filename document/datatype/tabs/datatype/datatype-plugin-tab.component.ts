@@ -16,15 +16,14 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-
 import { XoDataType } from '@pmod/xo/data-type.model';
+import { XcStackComponent } from '@zeta/xc';
 import { DefinitionStackItemComponentData, XcDefinitionStackItemComponent } from '@zeta/xc/xc-form/definitions/xc-definition-stack/xc-definition-stack-item/xc-definition-stack-item.component';
 import { XcStackDataSource } from '@zeta/xc/xc-stack/xc-stack-data-source';
 import { XcStackItem } from '@zeta/xc/xc-stack/xc-stack-item/xc-stack-item';
 import { XcComponentTemplate } from '@zeta/xc/xc-template/xc-template';
 
 import { DatatypeTabComponent, PluginTabData } from '../datatype-tab.component';
-import { XcStackComponent } from '@zeta/xc';
 
 
 @Component({

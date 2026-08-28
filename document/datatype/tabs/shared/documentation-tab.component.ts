@@ -16,12 +16,11 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-
 import { XoTextArea } from '@pmod/xo/text-area.model';
 
-import { DatatypeTabComponent, DocumentationTabData } from '../datatype-tab.component';
-import { TypeDocumentationAreaComponent } from '../../type-documentation-area/type-documentation-area.component';
 import { XcI18nContextDirective } from '../../../../../../zeta/i18n';
+import { TypeDocumentationAreaComponent } from '../../type-documentation-area/type-documentation-area.component';
+import { DatatypeTabComponent, DocumentationTabData } from '../datatype-tab.component';
 
 
 @Component({

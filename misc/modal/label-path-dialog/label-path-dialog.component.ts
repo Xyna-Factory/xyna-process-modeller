@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,10 +18,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, HostListener, inject, viewChild } from '@angular/core';
-
 import { XcAutocompleteDataWrapper, XcButtonComponent, XcCheckboxComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormAutocompleteComponent, XcFormDirective, XcFormInputComponent, XcFormValidatorRequiredDirective, XcOptionItem, XcOptionItemString, XcTooltipDirective } from '@zeta/xc';
-
-import { Observable } from 'rxjs';
 
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { labelPathDialog_translations_de_DE } from './locale/label-path-dialog-translations.de-DE';

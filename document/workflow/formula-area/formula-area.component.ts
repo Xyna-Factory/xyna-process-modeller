@@ -16,17 +16,17 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, Input } from '@angular/core';
+import { XcFormLabelComponent, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoFormulaArea } from '../../../xo/formula-area.model';
 import { XoFormula } from '../../../xo/formula.model';
 import { XoInsertFormulaRequest } from '../../../xo/insert-formula-request.model';
 import { XoInsertRequest } from '../../../xo/insert-request.model';
 import { XoRequest } from '../../../xo/request.model';
-import { ModellingObjectComponent } from '../shared/modelling-object.component';
-import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { FormulaComponent } from '../formula/formula.component';
-import { XcFormLabelComponent, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
+import { ModellingObjectComponent } from '../shared/modelling-object.component';
 
 
 @Component({

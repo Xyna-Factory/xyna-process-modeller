@@ -15,15 +15,14 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, inject, OnDestroy, signal } from '@angular/core';
+import { Subscription, throwError } from 'rxjs';
+import { catchError, filter, map } from 'rxjs/operators';
 
+import { Component, ElementRef, inject, OnDestroy, signal } from '@angular/core';
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
 import { FullQualifiedName } from '@zeta/api';
 import { copyToClipboard, KeyboardEventType, KeyDistributionService, pasteFromClipboard } from '@zeta/base';
 import { XcContentEditableDirective, XcIconButtonComponent, XcMenuItem, XcMenuServiceDirective, XcMenuTriggerDirective, XcStatusBarEntryType, XcStatusBarService } from '@zeta/xc';
-
-import { Subscription, throwError } from 'rxjs';
-import { catchError, filter, map } from 'rxjs/operators';
 
 import { XcI18nContextDirective } from '../../../zeta/i18n';
 import { DeploymentState } from '../api/xmom-types';

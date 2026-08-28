@@ -1,4 +1,6 @@
 
+import { Subscription } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -17,8 +19,6 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, HostBinding, inject, Input, OnDestroy } from '@angular/core';
-
-import { Subscription } from 'rxjs';
 
 import { XoBranch } from '../../../xo/branch.model';
 import { XoConditionalBranching } from '../../../xo/conditional-branching.model';

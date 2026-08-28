@@ -1,3 +1,4 @@
+import { NgFor } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -17,11 +18,10 @@
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { VariableAreaComponent } from './variable-area.component';
-import { ModDropAreaDirective } from '../shared/drag-and-drop/mod-drop-area.directive';
-import { NgFor } from '@angular/common';
-import { VariableComponent } from '../variable/variable.component';
 import { ModDraggableDirective } from '../shared/drag-and-drop/mod-draggable.directive';
+import { ModDropAreaDirective } from '../shared/drag-and-drop/mod-drop-area.directive';
+import { VariableComponent } from '../variable/variable.component';
+import { VariableAreaComponent } from './variable-area.component';
 
 
 @Component({

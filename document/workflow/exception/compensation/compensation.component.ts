@@ -16,6 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, forwardRef, Input } from '@angular/core';
+import { XcButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { ModellingActionType } from '../../../../api/xmom.service';
@@ -23,7 +24,6 @@ import { XoChangeCompensationRequest } from '../../../../xo/change-compensation-
 import { XoCompensation } from '../../../../xo/compensation.model';
 import { ContentAreaComponent } from '../../content-area/content-area.component';
 import { ModellingItemComponent } from '../../shared/modelling-object.component';
-import { XcButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({

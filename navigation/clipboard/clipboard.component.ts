@@ -1,3 +1,6 @@
+import { throwError } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,20 +19,16 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
-
 import { I18nService } from '@zeta/i18n';
 import { XcButtonComponent, XcDialogService } from '@zeta/xc';
 
-import { throwError } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
-
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { DocumentService } from '../../document/document.service';
 import { TriggeredAction } from '../../document/workflow/shared/modelling-object.component';
 import { XoError } from '../../xo/error.model';
 import { XoGetClipboardResponse } from '../../xo/get-clipboard-response.model';
 import { XoContainerArea } from '../../xo/modelling-item.model';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
-import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { ClipboardAreaComponent } from './clipboard-area.component';
 
 

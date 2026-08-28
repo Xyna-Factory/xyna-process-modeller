@@ -16,7 +16,6 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-
 import { XoChangeMemberVariableStorableRoleRequest } from '@pmod/xo/change-member-variable-storable-role-request.model';
 import { I18nService } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcFormLabelComponent, XcOptionItemString, XcOptionItemTranslate } from '@zeta/xc';

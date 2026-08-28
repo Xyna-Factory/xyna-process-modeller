@@ -16,7 +16,6 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
-
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoGuiDefiningWorkflow } from '@yggdrasil/plugin/gui-defining-workflow.model';
 import { XcDefinitionProxyComponent, XoPlugin } from '@zeta/xc';

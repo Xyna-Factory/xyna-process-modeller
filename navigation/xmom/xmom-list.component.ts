@@ -1,3 +1,7 @@
+import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
+import { filter, first, map, switchMap, tap } from 'rxjs/operators';
+
+import { NgFor } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -15,21 +19,16 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, inject } from '@angular/core';
-
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 import { coerceBoolean } from '@zeta/base';
-
-import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
-import { filter, first, map, switchMap, tap } from 'rxjs/operators';
+import { XcSpinnerComponent } from '@zeta/xc';
 
 import { XmomService } from '../../api/xmom.service';
+import { ModDraggableDirective } from '../../document/workflow/shared/drag-and-drop/mod-draggable.directive';
 import { XoXmomItem, XoXmomItemArray } from '../../xo/xmom-item.model';
 import { FactoryService } from '../factory.service';
 import { FilterConditionData } from '../search/search.component';
 import { XMOMListItemComponent } from './xmom-list-item.component';
-import { ModDraggableDirective } from '../../document/workflow/shared/drag-and-drop/mod-draggable.directive';
-import { NgFor } from '@angular/common';
-import { XcSpinnerComponent } from '@zeta/xc';
 
 
 @Component({

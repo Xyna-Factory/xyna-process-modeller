@@ -1,3 +1,6 @@
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,17 +19,13 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { AfterContentInit, AfterViewInit, Component, signal, viewChild } from '@angular/core';
-
 import { XoStructureField, XoStructureMethod, XoStructureObject } from '@zeta/api';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItem } from '@zeta/xc';
 
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
-
 import { FormulaPartMember } from '../../../../../xo/util/formula-parts/formula-part-member';
+import { VariableComponent } from '../../../variable/variable.component';
 import { FormulaEditablePartComponent } from '../formula-editable-part.component';
 import { FormulaChildComponent } from '../formula-part.component';
-import { VariableComponent } from '../../../variable/variable.component';
 
 
 @Component({

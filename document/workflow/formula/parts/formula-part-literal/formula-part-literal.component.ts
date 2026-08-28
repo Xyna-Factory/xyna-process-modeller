@@ -18,8 +18,8 @@
 import { Component, ElementRef, viewChild } from '@angular/core';
 
 import { FormulaPartLiteral } from '../../../../../xo/util/formula-parts/formula-part-literal';
-import { FormulaEditablePartComponent } from '../formula-editable-part.component';
 import { ModDnDContentEditableDirective } from '../../../shared/drag-and-drop/mod-dnd-content-editable.directive';
+import { FormulaEditablePartComponent } from '../formula-editable-part.component';
 
 
 @Component({

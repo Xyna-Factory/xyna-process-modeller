@@ -16,7 +16,6 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, ElementRef, HostBinding, inject, Injector, OnDestroy, OnInit } from '@angular/core';
-
 import { OutsideListenerService } from '@zeta/base';
 import { XcIconButtonComponent, XcRichListItemComponent, XcTooltipDirective } from '@zeta/xc';
 

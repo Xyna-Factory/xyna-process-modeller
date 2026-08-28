@@ -15,10 +15,10 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, output } from '@angular/core';
 
 import { XmomPath } from '../../api/xmom.service';
-import { XMOMTreeItemState, XMOMTreeItemComponent } from './xmom-tree-item.component';
+import { XMOMTreeItemComponent, XMOMTreeItemState } from './xmom-tree-item.component';
 
 
 @Component({
@@ -38,8 +38,7 @@ export class XMOMTreeComponent {
     @Input()
     xmomPaths: XmomPath[];
 
-    @Output()
-    readonly stateChange = new EventEmitter<XMOMTreeItemState>();
+    readonly stateChange = output<XMOMTreeItemState>();
 
 
     change(state: XMOMTreeItemState) {

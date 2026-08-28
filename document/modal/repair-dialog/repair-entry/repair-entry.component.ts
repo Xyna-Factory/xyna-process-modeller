@@ -17,8 +17,8 @@
  */
 import { Component, Input } from '@angular/core';
 
-import { XoRepairEntry } from '../../../../xo/repair-entry.model';
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n/';
+import { XoRepairEntry } from '../../../../xo/repair-entry.model';
 
 
 @Component({

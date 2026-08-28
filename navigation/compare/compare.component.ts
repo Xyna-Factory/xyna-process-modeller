@@ -1,3 +1,5 @@
+import { catchError, of } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,7 +18,6 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
-
 import { XmomState } from '@pmod/api/xmom.service';
 import { DocumentService } from '@pmod/document/document.service';
 import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model';
@@ -28,15 +29,13 @@ import { FullQualifiedName } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
 import { XcButtonComponent, XcDialogService } from '@zeta/xc';
 
-import { catchError, of } from 'rxjs';
-
-import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { DataflowComponent } from '../../document/workflow/dataflow/dataflow.component';
-import { VariableAreaDocumentComponent } from '../../document/workflow/variable-area/variable-area-document.component';
-import { TypeLabelAreaComponent } from '../../document/workflow/type-label-area/type-label-area.component';
-import { WorkflowComponent } from '../../document/workflow/workflow/workflow.component';
 import { ExceptionHandlingAreaComponent } from '../../document/workflow/exception/exception-handling-area/exception-handling-area.component';
+import { TypeLabelAreaComponent } from '../../document/workflow/type-label-area/type-label-area.component';
+import { VariableAreaDocumentComponent } from '../../document/workflow/variable-area/variable-area-document.component';
+import { WorkflowComponent } from '../../document/workflow/workflow/workflow.component';
+import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 
 
 @Component({

@@ -1,3 +1,6 @@
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
+import { Vector2 } from 'three';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -15,12 +18,9 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, Component, ElementRef, EventEmitter, inject, Input, NgZone, OnDestroy, Output, viewChild } from '@angular/core';
-
+import { AfterViewInit, Component, ElementRef, inject, Input, NgZone, OnDestroy, output, viewChild } from '@angular/core';
 import { createSVGGroup, createSVGHorizontalCubicBezierPath, removeAllChildren } from '@zeta/base/draw';
-
-import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
-import { Vector2 } from 'three';
+import { XcIconButtonComponent } from '@zeta/xc';
 
 import { DataConnectionType, XoConnection, XoConnectionArray } from '../../../xo/connection.model';
 import { XoSetDataflowConnectionRequest } from '../../../xo/set-dataflow-connection-request.model';
@@ -32,7 +32,6 @@ import { BranchSelectionService } from '../distinction/branch/branch-selection.s
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
 import { SelectableModellingObjectComponent } from '../shared/selectable-modelling-object.component';
 import { VariableComponent } from '../variable/variable.component';
-import { XcIconButtonComponent } from '@zeta/xc';
 
 
 class Flow {
@@ -330,8 +329,7 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
     @Input()
     insideForeignRtc = false;
 
-    @Output()
-    readonly dataflowChange = new EventEmitter<XoSetDataflowConnectionRequest>();
+    readonly dataflowChange = output<XoSetDataflowConnectionRequest>();
 
 
     ngAfterViewInit() {

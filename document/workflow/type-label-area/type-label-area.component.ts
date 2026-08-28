@@ -16,13 +16,12 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, HostBinding, inject, Input, TemplateRef } from '@angular/core';
-
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
+import { XcTooltipDirective } from '@zeta/xc';
 
 import { XoTypeLabelArea } from '../../../xo/type-label-area.model';
-import { ModellingObjectComponent } from '../shared/modelling-object.component';
 import { LabelAreaComponent } from '../label-area/label-area.component';
-import { XcTooltipDirective } from '@zeta/xc';
+import { ModellingObjectComponent } from '../shared/modelling-object.component';
 
 
 @Component({

@@ -1,3 +1,5 @@
+import { filter } from 'rxjs/operators';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -15,18 +17,15 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, inject, Input, OnDestroy, Output } from '@angular/core';
-
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, inject, Input, OnDestroy, output } from '@angular/core';
 import { OutsideListenerService } from '@zeta/base';
 
-import { filter } from 'rxjs/operators';
-
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { XoWorkflow, XoWorkflowStub } from '../../../xo/workflow.model';
 import { DocumentService } from '../../document.service';
 import { SelectionService } from '../../selection.service';
-import { ModellingItemComponent } from '../shared/modelling-object.component';
 import { ContentAreaComponent } from '../content-area/content-area.component';
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { ModellingItemComponent } from '../shared/modelling-object.component';
 
 
 @Component({
@@ -48,8 +47,7 @@ export class WorkflowComponent extends ModellingItemComponent implements AfterVi
     private currentScrollTop = 0;
     private currentScrollLeft = 0;
 
-    @Output()
-    readonly initialized = new EventEmitter<XoWorkflow>();
+    readonly initialized = output<XoWorkflow>();
 
 
     constructor() {

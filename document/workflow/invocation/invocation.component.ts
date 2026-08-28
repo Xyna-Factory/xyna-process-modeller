@@ -15,9 +15,8 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, forwardRef, inject, Input, Output, signal } from '@angular/core';
+import { Component, forwardRef, inject, Input, output, signal } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { FullQualifiedName } from '@zeta/api';
@@ -59,8 +58,7 @@ export class InvocationComponent extends ModellingItemComponent {
     protected readonly detailLevelService = inject(WorkflowDetailLevelService);
     protected readonly i18n = inject(I18nService);
     protected readonly dialogService = inject(XcDialogService);
-    @Output()
-    readonly doubleClickProxy = new EventEmitter<void>();
+    readonly doubleClickProxy = output<void>();
 
 
     constructor() {

@@ -17,12 +17,11 @@
  */
 
 import { Component, input, Input, OnInit } from '@angular/core';
-
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
-
-import { SelectableModellingObjectComponent } from '../../workflow/shared/selectable-modelling-object.component';
-import { XcI18nPipe } from '../../../../../zeta/i18n';
 import { XcIconComponent } from '@zeta/xc';
+
+import { XcI18nPipe } from '../../../../../zeta/i18n';
+import { SelectableModellingObjectComponent } from '../../workflow/shared/selectable-modelling-object.component';
 
 
 @Component({

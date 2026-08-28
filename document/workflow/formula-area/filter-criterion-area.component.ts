@@ -16,13 +16,13 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component } from '@angular/core';
+import { XcFormLabelComponent, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { XoInsertFilterCriterionRequest } from '../../../xo/insert-filter-criterion-request.model';
 import { XoInsertRequest } from '../../../xo/insert-request.model';
-import { FormulaAreaComponent } from './formula-area.component';
-import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { FormulaComponent } from '../formula/formula.component';
-import { XcFormLabelComponent, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
+import { FormulaAreaComponent } from './formula-area.component';
 
 
 @Component({

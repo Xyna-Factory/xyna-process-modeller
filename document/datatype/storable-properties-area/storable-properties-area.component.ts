@@ -16,7 +16,6 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
-
 import { I18nService } from '@zeta/i18n';
 import { XcLocalTableDataSource, XcTableComponent } from '@zeta/xc';
 

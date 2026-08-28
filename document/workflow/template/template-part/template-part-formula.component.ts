@@ -16,8 +16,8 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, viewChild } from '@angular/core';
-import { FormulaComponent } from '../../formula/formula.component';
 
+import { FormulaComponent } from '../../formula/formula.component';
 import { TemplatePartComponent } from './template-part.component';
 
 

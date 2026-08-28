@@ -1,3 +1,5 @@
+import { Subject } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -15,11 +17,8 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostBinding, Injector, inject } from '@angular/core';
-
+import { Component, HostBinding, inject, Injector } from '@angular/core';
 import { XcCheckboxComponent, XcRichListItemComponent, XcTooltipDirective } from '@zeta/xc';
-
-import { Subject } from 'rxjs';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoUsedRequest } from '../../../xo/change-used-request.model';

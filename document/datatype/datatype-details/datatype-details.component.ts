@@ -1,3 +1,5 @@
+import { BehaviorSubject, combineLatest, map, Observable, of, Subject, Subscription } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2024 Xyna GmbH, Germany
@@ -16,15 +18,12 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, input, OnDestroy, signal } from '@angular/core';
-
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoDataType } from '@pmod/xo/data-type.model';
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 import { I18nService } from '@zeta/i18n';
 import { XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 import { XoBaseDefinition, XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
-
-import { BehaviorSubject, combineLatest, map, Observable, of, Subject, Subscription } from 'rxjs';
 
 import { XoRuntimeContext } from '../../../xo/runtime-context.model';
 import { ModellingItemComponent } from '../../workflow/shared/modelling-object.component';

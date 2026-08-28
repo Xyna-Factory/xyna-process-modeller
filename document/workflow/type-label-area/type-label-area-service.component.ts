@@ -16,10 +16,10 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component } from '@angular/core';
-
-import { TypeLabelAreaComponent } from './type-label-area.component';
-import { LabelAreaComponent } from '../label-area/label-area.component';
 import { XcTooltipDirective } from '@zeta/xc';
+
+import { LabelAreaComponent } from '../label-area/label-area.component';
+import { TypeLabelAreaComponent } from './type-label-area.component';
 
 
 @Component({

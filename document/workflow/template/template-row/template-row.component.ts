@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, EventEmitter, HostListener, Input, Output, QueryList, ViewChildren, viewChild, viewChildren } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, output, QueryList, viewChild, ViewChildren, viewChildren } from '@angular/core';
 
 import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoData } from '../../../../xo/data.model';
@@ -30,9 +30,9 @@ import { ModDragEvent, ModDropAreaDirective, ModDropEvent } from '../../shared/d
 import { ModellingObjectComponent, TriggeredAction } from '../../shared/modelling-object.component';
 import { TemplateRow } from '../model/template-row.model';
 import { TemplateText } from '../model/template-text.model';
+import { TemplatePartFormulaComponent } from '../template-part/template-part-formula.component';
 import { TemplatePartModifyEvent, TemplatePartTextComponent } from '../template-part/template-part-text.component';
 import { NavigationDirection, TemplatePartComponent, TemplatePartSwitchFocusEvent } from '../template-part/template-part.component';
-import { TemplatePartFormulaComponent } from '../template-part/template-part-formula.component';
 
 
 export interface SplitTemplateRowEvent {
@@ -67,14 +67,11 @@ export class TemplateRowComponent extends ModellingObjectComponent {
     @Input()
     lineNumber = 0;
 
-    @Output()
-    readonly split = new EventEmitter<SplitTemplateRowEvent>();
+    readonly split = output<SplitTemplateRowEvent>();
 
-    @Output()
-    readonly merge = new EventEmitter<TemplateRow>(false);
+    readonly merge = output<TemplateRow>();
 
-    @Output()
-    readonly switchRow = new EventEmitter<SwitchTemplateRowFocusEvent>(false);
+    readonly switchRow = output<SwitchTemplateRowFocusEvent>();
 
     @Input()
     set row(value: TemplateRow) {

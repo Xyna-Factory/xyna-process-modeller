@@ -16,16 +16,15 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, inject, Input, OnInit } from '@angular/core';
-
 import { DocumentService } from '@pmod/document/document.service';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItemString } from '@zeta/xc';
 
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeOrderInputSourceRequest } from '../../../xo/change-orderinputsource-request.model';
 import { XoInvocation } from '../../../xo/invocation.model';
 import { XoOrderInputSourceArea } from '../../../xo/order-input-source-area.model';
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 
 
 @Component({

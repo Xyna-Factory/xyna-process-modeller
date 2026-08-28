@@ -1,3 +1,5 @@
+import { combineLatest, Subscription } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,7 +18,6 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectorRef, Component, inject, Input, OnDestroy } from '@angular/core';
-
 import { MinMaxService } from '@pmod/document/min-max.service';
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoLibraryCallRequest } from '@pmod/xo/library-call-request.model';
@@ -24,8 +25,7 @@ import { I18nService } from '@zeta/i18n';
 import { XcButtonComponent, XcCheckboxComponent, XcDefinitionProxyComponent, XcDialogService, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 
-import { combineLatest, Subscription } from 'rxjs';
-
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { ModellingAction, ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeAbortableRequest } from '../../../xo/change-abortable-request.model';
 import { XoChangeMemberMethodImplementationRequest } from '../../../xo/change-member-method-implementation-request.model';
@@ -33,7 +33,6 @@ import { XoMethod } from '../../../xo/method.model';
 import { DocumentService } from '../../document.service';
 import { ModellingItemComponent, TriggeredAction } from '../../workflow/shared/modelling-object.component';
 import { VariableAreaDocumentComponent } from '../../workflow/variable-area/variable-area-document.component';
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { CodingComponent } from '../coding/coding.component';
 
 

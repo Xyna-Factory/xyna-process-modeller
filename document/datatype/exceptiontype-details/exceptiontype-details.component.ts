@@ -1,3 +1,5 @@
+import { BehaviorSubject, Subject } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2024 Xyna GmbH, Germany
@@ -16,13 +18,10 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, input, OnDestroy, signal } from '@angular/core';
-
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 import { XoExceptionType } from '@pmod/xo/exception-type.model';
 import { I18nService } from '@zeta/i18n';
 import { XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
-
-import { BehaviorSubject, Subject } from 'rxjs';
 
 import { ModellingItemComponent } from '../../workflow/shared/modelling-object.component';
 import { DocumentationTabData, DocumentTabData } from '../tabs/datatype-tab.component';

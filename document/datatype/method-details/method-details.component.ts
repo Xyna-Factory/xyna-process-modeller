@@ -1,3 +1,5 @@
+import { BehaviorSubject, Subject } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,12 +18,9 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, input, OnDestroy, signal } from '@angular/core';
-
 import { MinMaxService } from '@pmod/document/min-max.service';
 import { I18nService } from '@zeta/i18n';
 import { XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
-
-import { BehaviorSubject, Subject } from 'rxjs';
 
 import { XoMethod } from '../../../xo/method.model';
 import { ModellingItemComponent } from '../../workflow/shared/modelling-object.component';
@@ -29,6 +28,7 @@ import { DocumentTabData, MetaTabData, MethodTabData } from '../tabs/datatype-ta
 import { MethodBaseTabComponent } from '../tabs/method/method-base-tab.component';
 import { MethodImplementationTabComponent } from '../tabs/method/method-implementation-tab.component';
 import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
+
 
 @Component({
     selector: 'method-details',

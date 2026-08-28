@@ -1,3 +1,4 @@
+import { NgTemplateOutlet } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -18,9 +19,8 @@
 import { Component, Input, TemplateRef } from '@angular/core';
 
 import { XoLabelArea } from '../../../xo/label-area.model';
-import { TextAreaModellingObjectComponent } from '../shared/text-area-modelling-object.component';
 import { ModContentEditableDirective } from '../shared/mod-content-editable.directive';
-import { NgTemplateOutlet } from '@angular/common';
+import { TextAreaModellingObjectComponent } from '../shared/text-area-modelling-object.component';
 
 
 @Component({

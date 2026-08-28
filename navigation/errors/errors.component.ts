@@ -1,3 +1,6 @@
+import { of, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,12 +19,8 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy } from '@angular/core';
-
 import { ErrorItem, XoIssueArray } from '@pmod/xo/issue.model';
 import { XoWarningArray } from '@pmod/xo/warning.model';
-
-import { of, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { DocumentService } from '../../document/document.service';

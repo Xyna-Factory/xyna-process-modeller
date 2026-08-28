@@ -17,7 +17,6 @@
  */
 import { merge, of, Subscription } from 'rxjs';
 
-
 import { AfterViewInit, Component, inject, OnDestroy, OnInit, signal, viewChild, viewChildren } from '@angular/core';
 import { TypeDocumentModel } from '@pmod/document/model/type-document.model';
 import { PluginService } from '@pmod/document/plugin.service';

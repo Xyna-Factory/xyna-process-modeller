@@ -1,3 +1,4 @@
+import { NgFor } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,7 +17,9 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, Input } from '@angular/core';
+import { XcButtonComponent } from '@zeta/xc';
 
+import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoContentArea } from '../../../../xo/content-area.model';
 import { XoInsertBranchRequest } from '../../../../xo/insert-branch-request.model';
@@ -24,10 +27,7 @@ import { XoItemBarArea } from '../../../../xo/item-bar-area.model';
 import { XoRequest } from '../../../../xo/request.model';
 import { XoVariable } from '../../../../xo/variable.model';
 import { ModellingObjectComponent } from '../../shared/modelling-object.component';
-import { NgFor } from '@angular/common';
 import { VariableComponent } from '../../variable/variable.component';
-import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
-import { XcButtonComponent } from '@zeta/xc';
 
 
 @Component({

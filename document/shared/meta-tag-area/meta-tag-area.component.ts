@@ -16,7 +16,6 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, Input } from '@angular/core';
-
 import { ModellingActionType } from '@pmod/api/xmom.service';
 import { DragType } from '@pmod/document/workflow/shared/drag-and-drop/mod-drag-and-drop.service';
 import { ModDropEvent } from '@pmod/document/workflow/shared/drag-and-drop/mod-drop-area.directive';
@@ -25,11 +24,12 @@ import { XoInsertModellingObjectRequest } from '@pmod/xo/insert-modelling-object
 import { XoMetaTagArea } from '@pmod/xo/meta-tag-area.model';
 import { XoMetaTag } from '@pmod/xo/meta-tag.model';
 import { XoMoveModellingObjectRequest } from '@pmod/xo/move-modelling-object-request.model';
+import { XcFormTextareaComponent, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
+
 import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { ModDraggableDirective } from '../../workflow/shared/drag-and-drop/mod-draggable.directive';
 import { ModDropAreaDirective } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
 import { MetaTagComponent } from '../meta-tag/meta-tag.component';
-import { ModDraggableDirective } from '../../workflow/shared/drag-and-drop/mod-draggable.directive';
-import { XcFormTextareaComponent, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({

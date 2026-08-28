@@ -1,3 +1,5 @@
+import { combineLatest } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -15,20 +17,17 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-
+import { Component, inject, Input, output } from '@angular/core';
 import { XoPlugin } from '@yggdrasil/plugin/plugin.model';
+import { XcDefinitionProxyComponent, XcIconButtonComponent } from '@zeta/xc';
 import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 
-import { combineLatest } from 'rxjs';
-
+import { XcI18nPipe } from '../../../../../zeta/i18n';
 import { XoArea } from '../../../xo/area.model';
 import { XoMemberMethodArea } from '../../../xo/member-method-area.model';
 import { XoMemberVariableArea } from '../../../xo/member-variable-area.model';
 import { PluginService } from '../../plugin.service';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
-import { XcI18nPipe } from '../../../../../zeta/i18n';
-import { XcIconButtonComponent, XcDefinitionProxyComponent } from '@zeta/xc';
 
 
 @Component({
@@ -52,8 +51,7 @@ export class MemberAreaComponent extends ModellingObjectComponent {
     @Input()
     allowAdd = true;
 
-    @Output('added')
-    readonly addEmitter = new EventEmitter<void>();
+    readonly addEmitter = output<void>({ alias: 'added' });
 
     get hasContent(): boolean {
         return ((this.area as any).items) ? (this.area as any).items.length : false;

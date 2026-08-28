@@ -16,10 +16,10 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
-
-import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
-import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { XcTooltipDirective } from '@zeta/xc';
+
+import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
+import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 
 
 @Component({

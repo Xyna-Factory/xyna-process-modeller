@@ -1,3 +1,5 @@
+import { combineLatest } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2024 Xyna GmbH, Germany
@@ -16,18 +18,15 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, input } from '@angular/core';
-
+import { XcDefinitionProxyComponent, XcFormLabelComponent, XcFormTextareaComponent } from '@zeta/xc';
 import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 
-import { combineLatest } from 'rxjs';
-
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeTextRequest } from '../../../xo/change-text-request.model';
 import { XoTextArea } from '../../../xo/text-area.model';
 import { PluginService } from '../../plugin.service';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
-import { XcFormLabelComponent, XcFormTextareaComponent, XcDefinitionProxyComponent } from '@zeta/xc';
 
 
 @Component({

@@ -16,9 +16,10 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, Input } from '@angular/core';
+
 import { XoTextArea } from '../../../xo/text-area.model';
-import { TextAreaModellingObjectComponent } from '../shared/text-area-modelling-object.component';
 import { ModContentEditableDirective } from '../shared/mod-content-editable.directive';
+import { TextAreaModellingObjectComponent } from '../shared/text-area-modelling-object.component';
 
 
 @Component({

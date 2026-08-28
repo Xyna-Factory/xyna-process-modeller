@@ -15,11 +15,14 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, output } from '@angular/core';
+import { XcTooltipDirective } from '@zeta/xc';
 
+import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { ModellingActionType } from '../../api/xmom.service';
 import { ModRelativeHoverSide } from '../../document/workflow/shared/drag-and-drop/mod-drag-and-drop.service';
-import { ModDragEvent, ModDropEvent, ModDropAreaDirective } from '../../document/workflow/shared/drag-and-drop/mod-drop-area.directive';
+import { ModDraggableDirective } from '../../document/workflow/shared/drag-and-drop/mod-draggable.directive';
+import { ModDragEvent, ModDropAreaDirective, ModDropEvent } from '../../document/workflow/shared/drag-and-drop/mod-drop-area.directive';
 import { TriggeredAction } from '../../document/workflow/shared/modelling-object.component';
 import { XoBranch } from '../../xo/branch.model';
 import { XoClipboardEntryData } from '../../xo/clipboard-entry.model';
@@ -27,9 +30,6 @@ import { XoCopyToClipboardRequest } from '../../xo/copy-to-clipboard-request.mod
 import { XoFormula } from '../../xo/formula.model';
 import { XoContainerArea, XoModellingItem } from '../../xo/modelling-item.model';
 import { ClipboardItemComponent } from './clipboard-item.component';
-import { ModDraggableDirective } from '../../document/workflow/shared/drag-and-drop/mod-draggable.directive';
-import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
-import { XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({
@@ -43,8 +43,7 @@ export class ClipboardAreaComponent {
     @Input()
     clipboardArea: XoContainerArea;
 
-    @Output()
-    readonly triggerAction = new EventEmitter<TriggeredAction>();
+    readonly triggerAction = output<TriggeredAction>();
 
     allowItem = (xoFqn: string, xoId?: string): boolean => true;
 

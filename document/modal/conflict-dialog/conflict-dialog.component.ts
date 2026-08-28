@@ -16,7 +16,6 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, inject } from '@angular/core';
-
 import { XcButtonComponent, XcCheckboxComponent, XcDialogComponent, XcDialogWrapperComponent } from '@zeta/xc';
 
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';

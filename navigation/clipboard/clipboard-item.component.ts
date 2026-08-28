@@ -16,6 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
+import { XcIconComponent } from '@zeta/xc';
 
 import { XoChoice } from '../../xo/choice.model';
 import { XoConditionalBranching } from '../../xo/conditional-branching.model';
@@ -31,7 +32,6 @@ import { XoThrow } from '../../xo/throw.model';
 import { XoTypeChoice } from '../../xo/type-choice.model';
 import { XoVariable } from '../../xo/variable.model';
 import { XoXmomItem } from '../../xo/xmom-item.model';
-import { XcIconComponent } from '@zeta/xc';
 
 
 @Component({

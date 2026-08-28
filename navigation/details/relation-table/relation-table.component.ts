@@ -15,14 +15,14 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, Input, Output, viewChild } from '@angular/core';
-
+import { Component, Input, output, viewChild } from '@angular/core';
 import { XMOMListComponent } from '@pmod/navigation/xmom/xmom-list.component';
 import { XoFactoryItemArray } from '@pmod/xo/factory-item.model';
 import { RelationTypeEnum, XoGetXmomRelationsResponse } from '@pmod/xo/get-xmom-relations-response.model';
+import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
+
 import { XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { XMOMListComponent as XMOMListComponent_1 } from '../../xmom/xmom-list.component';
-import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 
 export interface RelationGroup {
@@ -46,8 +46,7 @@ export class RelationTableComponent {
         this.groupRelations(value);
     }
 
-    @Output()
-    readonly refresh = new EventEmitter<void>();
+    readonly refresh = output<void>();
 
     private readonly defaultExpand = true;
     groupedRelationList: RelationGroup[] = [];

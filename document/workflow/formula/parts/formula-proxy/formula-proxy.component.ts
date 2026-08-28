@@ -15,13 +15,12 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, inject, signal, viewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, Input, output, signal, viewChild } from '@angular/core';
 import { XoFormula } from '@pmod/xo/formula.model';
 import { FormulaFunctionGroup, FormulaPartFunction } from '@pmod/xo/util/formula-parts/formula-part-function';
-
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent } from '@zeta/xc';
-import { FormulaChildComponent } from '../formula-part.component';
 
+import { FormulaChildComponent } from '../formula-part.component';
 
 
 @Component({
@@ -41,8 +40,7 @@ export class FormulaProxyComponent implements AfterViewInit, FormulaChildCompone
     @Input()
     formula: XoFormula;
 
-    @Output()
-    readonly selectionChange = new EventEmitter<string>();
+    readonly selectionChange = output<string>();
 
     proxyDataWrapper = new XcAutocompleteDataWrapper<string>(
         () => null,

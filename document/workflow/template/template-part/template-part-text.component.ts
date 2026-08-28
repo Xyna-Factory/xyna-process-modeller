@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, Input, ViewChild, output } from '@angular/core';
 
 import { XcContentEditableDirective } from '@zeta/xc';
 
@@ -54,11 +54,9 @@ export class TemplatePartTextComponent extends TemplatePartComponent {
         return this._inputElement;
     }
 
-    @Output()
-    readonly newline = new EventEmitter<TemplatePartModifyEvent>();
+    readonly newline = output<TemplatePartModifyEvent>();
 
-    @Output()
-    readonly deletePart = new EventEmitter<TemplatePartModifyEvent>();
+    readonly deletePart = output<TemplatePartModifyEvent>();
 
     readonly contentEditableValue = XcContentEditableDirective.getContentEditableValue();
 
