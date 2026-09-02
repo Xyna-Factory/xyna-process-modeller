@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, HostBinding, inject, Injector, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostBinding, inject, OnDestroy, OnInit } from '@angular/core';
 import { OutsideListenerService } from '@zeta/base';
 import { XcIconButtonComponent, XcRichListItemComponent, XcTooltipDirective } from '@zeta/xc';
 
@@ -52,12 +52,6 @@ export class ExceptionMessageRichListItemComponent extends XcRichListItemCompone
 
     get readonly(): boolean {
         return this.injectedData.isReadonly();
-    }
-
-    constructor() {
-        const injector = inject(Injector);
-
-        super(injector);
     }
 
     ngOnInit() {

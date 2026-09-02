@@ -18,7 +18,7 @@
 
 import { Subject } from 'rxjs';
 
-import { Component, HostBinding, inject, Injector } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { XcCheckboxComponent, XcRichListItemComponent, XcTooltipDirective } from '@zeta/xc';
 
 import { ModellingActionType } from '../../../api/xmom.service';
@@ -44,13 +44,6 @@ export class JavaSharedLibItemComponent extends XcRichListItemComponent<void, Ja
     // class as css selector
     @HostBinding('class')
     readonly clazz = 'java-shared-lib-item';
-
-
-    constructor() {
-        const injector = inject(Injector);
-
-        super(injector);
-    }
 
 
     get name(): string {
