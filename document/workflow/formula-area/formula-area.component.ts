@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 import { XcFormLabelComponent, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
@@ -44,8 +44,7 @@ export class FormulaAreaComponent extends ModellingObjectComponent {
     @Input()
     areaLabel: string = null;
 
-    @Input()
-    newFormulaExpression = '';
+    readonly newFormulaExpression = input('');
 
     @Input()
     set formulaArea(value: XoFormulaArea) {
@@ -91,7 +90,7 @@ export class FormulaAreaComponent extends ModellingObjectComponent {
 
 
     addFormula(expression?: string, index?: number) {
-        this.performAction({ type: ModellingActionType.insert, objectId: this.formulaArea.id, request: FormulaAreaComponent.getInsertRequest(expression ?? this.newFormulaExpression, index) });
+        this.performAction({ type: ModellingActionType.insert, objectId: this.formulaArea.id, request: FormulaAreaComponent.getInsertRequest(expression ?? this.newFormulaExpression(), index) });
     }
 
 

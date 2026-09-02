@@ -17,7 +17,7 @@
  */
 
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, output } from '@angular/core';
+import { Component, Input, output } from '@angular/core';
 import { coerceBoolean } from '@zeta/base';
 
 import { CreateAssignmentEvent, VariableTreeNodeComponent } from '../variable-tree-node/variable-tree-node.component';
@@ -29,7 +29,6 @@ import { SkeletonTreeNode } from './data-source/skeleton-tree-node';
     selector: 'variable-tree',
     templateUrl: './variable-tree.component.html',
     styleUrls: ['./variable-tree.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [VariableTreeNodeComponent, AsyncPipe]
 })
 export class VariableTreeComponent {

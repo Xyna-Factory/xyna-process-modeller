@@ -19,7 +19,7 @@
 import { Subject } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, NgZone, ViewChild, viewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, NgZone, ViewChild, viewChild } from '@angular/core';
 import { MessageBusService } from '@yggdrasil/events';
 import { AuthService } from '@zeta/auth';
 import { XcCheckboxComponent, XcFormAutocompleteComponent, XcFormInputComponent } from '@zeta/xc';
@@ -49,7 +49,6 @@ export interface FilterConditionData {
     selector: 'xfm-mod-nav-search',
     templateUrl: './search.component.html',
     styleUrls: ['./search.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective, XcCheckboxComponent, XcFormAutocompleteComponent, XcFormInputComponent, XMOMListComponent]
 })
 export class SearchComponent extends CommonNavigationComponent {

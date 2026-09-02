@@ -18,7 +18,7 @@
 import { merge } from 'rxjs';
 import { filter, finalize, switchMap } from 'rxjs/operators';
 
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { DEPLOYMENT_ITEMS_ISWP } from '@fman/deployment-items/restorable-deployment-items.component';
 import { XoDeploymentItemId } from '@fman/deployment-items/xo/xo-deployment-item-id.model';
 import { XoDeploymentItem } from '@fman/deployment-items/xo/xo-deployment-item.model';
@@ -47,7 +47,6 @@ import { ShowXmlModalComponent, ShowXmlModalData } from './show-xml-modal/show-x
     selector: 'xfm-mod-nav-details',
     templateUrl: './details.component.html',
     styleUrls: ['./details.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [XcI18nContextDirective, XcI18nTranslateDirective, XcButtonComponent, XcHasRightDirective, XcIconButtonComponent, XcPanelComponent, XcTooltipDirective, DeploymentStateDetailComponent, RelationTableComponent]
 })
 export class DetailsComponent extends CommonNavigationComponent implements AfterViewInit {

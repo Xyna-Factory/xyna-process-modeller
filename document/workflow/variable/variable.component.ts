@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, effect, HostBinding, inject, Input, input, signal } from '@angular/core';
+import { Component, effect, HostBinding, inject, Input, input, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { RuntimeContext, Xo } from '@zeta/api';
@@ -52,7 +52,6 @@ import { SelectableModellingObjectComponent } from '../shared/selectable-modelli
     selector: 'variable',
     templateUrl: './variable.component.html',
     styleUrls: ['./variable.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [ModDropAreaDirective, ModContentEditableDirective, XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective, XcTooltipDirective]
 })
 export class VariableComponent extends SelectableModellingObjectComponent {
@@ -65,8 +64,7 @@ export class VariableComponent extends SelectableModellingObjectComponent {
     protected readonly dialogService = inject(XcDialogService);
     protected readonly branchSelection = inject(BranchSelectionService);
 
-    @Input()
-    hasMenu = true;
+    readonly hasMenu = input(true);
 
     @Input()
     @HostBinding('class.placeholder')
@@ -392,7 +390,7 @@ export class VariableComponent extends SelectableModellingObjectComponent {
 
 
     get showMenu(): boolean {
-        return this.hasMenu && this.menuItems.some(menuItem => menuItem.visible?.(menuItem));
+        return this.hasMenu() && this.menuItems.some(menuItem => menuItem.visible?.(menuItem));
     }
 
 

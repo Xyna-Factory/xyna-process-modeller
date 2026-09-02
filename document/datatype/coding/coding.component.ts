@@ -19,7 +19,7 @@
 import * as monaco from 'monaco-editor';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject, Input, OnDestroy, output } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, inject, Input, input, OnDestroy, output } from '@angular/core';
 import { XoMethod } from '@pmod/xo/method.model';
 
 
@@ -27,8 +27,7 @@ import { XoMethod } from '@pmod/xo/method.model';
     selector: 'coding',
     templateUrl: './coding.component.html',
     styleUrls: ['./coding.component.scss'],
-    imports: [MonacoEditorModule],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    imports: [MonacoEditorModule]
 })
 export class CodingComponent implements AfterViewInit, OnDestroy {
 
@@ -71,7 +70,7 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
         return this._method;
     }
 
-    @Input() readonly = false;
+    readonly readonly = input(false);
 
     readonly implementationChange = output<string>();
 
@@ -135,6 +134,7 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
         if (!this.method) return;
 
         // PYTHON
+        const readonly = this.readonly();
         if (this.isPython && this.pythonEditor) {
             const code = this.implementation;
 
@@ -143,7 +143,7 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
                 this.pythonEditor.setValue(code);
             }
 
-            this.pythonEditor.updateOptions({ readOnly: this.readonly });
+            this.pythonEditor.updateOptions({ readOnly: readonly });
         }
 
         // JAVA
@@ -157,7 +157,7 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
                 this.javaEditor.setValue(code);
             }
 
-            this.javaEditor.updateOptions({ readOnly: this.readonly });
+            this.javaEditor.updateOptions({ readOnly: readonly });
         }
 
         setTimeout(() => this.layoutEditor(), 0);
@@ -176,7 +176,7 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
     private handleBlur() {
         const editor = this.isPython ? this.pythonEditor : this.javaEditor;
         const value = editor?.getValue();
-        if (!this.readonly && value !== this.implementation) {
+        if (!this.readonly() && value !== this.implementation) {
             this.implementation = value ?? '';
         }
     }

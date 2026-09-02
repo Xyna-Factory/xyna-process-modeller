@@ -261,7 +261,7 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
 
     get activeNavigationComponent(): CommonNavigationComponent {
         if (this.area === NavigationbarArea.Plugin) {
-            return this.pluginComponents().find(comp => comp.pluginNumber === this.activatedPluginNumber);
+            return this.pluginComponents().find(comp => comp.pluginNumber() === this.activatedPluginNumber);
         }
         return this.viewComponentMap.get(this.area);
     }

@@ -18,7 +18,7 @@
 
 import { BehaviorSubject, Subject } from 'rxjs';
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, input, OnDestroy, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, effect, inject, input, OnDestroy, signal } from '@angular/core';
 import { MinMaxService } from '@pmod/document/min-max.service';
 import { I18nService } from '@zeta/i18n';
 import { XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
@@ -35,7 +35,6 @@ import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
     selector: 'method-details',
     templateUrl: './method-details.component.html',
     styleUrls: ['./method-details.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [XcTabBarComponent]
 })
 export class MethodDetailsComponent extends ModellingItemComponent implements OnDestroy {

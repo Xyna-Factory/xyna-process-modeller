@@ -17,7 +17,7 @@
  */
 import { filter, Observable } from 'rxjs';
 
-import { ChangeDetectionStrategy, Component, inject, signal, ViewChild } from '@angular/core';
+import { Component, inject, signal, ViewChild } from '@angular/core';
 import { DataTypeService } from '@pmod/document/datatype.service';
 import { XoChangeMemberMethodImplementationTypeRequest } from '@pmod/xo/change-member-method-implementation-type-request.model';
 import { XoChangeMemberMethodReferenceRequest } from '@pmod/xo/change-member-method-reference-request.model';
@@ -34,7 +34,6 @@ import { DatatypeMethodTabComponent } from '../datatype-tab.component';
 @Component({
     templateUrl: './method-implementation-tab.component.html',
     styleUrls: ['./method-implementation-tab.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [XcButtonComponent, XcFormAutocompleteComponent, XcIconButtonComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, MethodImplementationComponent]
 })
 export class MethodImplementationTabComponent extends DatatypeMethodTabComponent {

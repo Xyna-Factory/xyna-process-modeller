@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
 import { XcButtonComponent, XcFormInputComponent, XcFormValidatorRequiredDirective } from '@zeta/xc';
 
@@ -27,7 +27,6 @@ import { DatatypeMethodTabComponent } from '../datatype-tab.component';
 @Component({
     templateUrl: './method-base-tab.component.html',
     styleUrls: ['./method-base-tab.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [XcButtonComponent, XcFormInputComponent, XcFormValidatorRequiredDirective, XcI18nTranslateDirective, TypeDocumentationAreaComponent]
 })
 export class MethodBaseTabComponent extends DatatypeMethodTabComponent {

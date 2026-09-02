@@ -18,7 +18,7 @@
 
 import { filter, Observable } from 'rxjs';
 
-import { ChangeDetectionStrategy, Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { DataTypeService } from '@pmod/document/datatype.service';
 import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
 import { XoChangeMemberVariableFqnRequest } from '@pmod/xo/change-member-variable-fqn-request.model';
@@ -36,7 +36,6 @@ import { DatatypeVariableTabComponent } from '../datatype-tab.component';
 @Component({
     templateUrl: './member-variable-base-tab.component.html',
     styleUrls: ['./member-variable-base-tab.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [XcButtonComponent, XcFormAutocompleteComponent, XcFormInputComponent, XcFormValidatorRequiredDirective, XcTooltipDirective, XcI18nTranslateDirective, XcI18nPipe, TypeDocumentationAreaComponent]
 })
 export class MemberVariableBaseTabComponent extends DatatypeVariableTabComponent {

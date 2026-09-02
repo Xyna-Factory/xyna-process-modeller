@@ -18,7 +18,7 @@
 
 import { catchError, of } from 'rxjs';
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { XmomState } from '@pmod/api/xmom.service';
 import { DocumentService } from '@pmod/document/document.service';
 import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model';
@@ -43,7 +43,6 @@ import { CommonNavigationComponent } from '../common-navigation-class/common-nav
     selector: 'xfm-mod-nav-compare',
     templateUrl: './compare.component.html',
     styleUrls: ['./compare.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [XcI18nTranslateDirective, XcButtonComponent, DataflowComponent, VariableAreaDocumentComponent, TypeLabelAreaComponent, WorkflowComponent, ExceptionHandlingAreaComponent]
 })
 export class CompareComponent extends CommonNavigationComponent {

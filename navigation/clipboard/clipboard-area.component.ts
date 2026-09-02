@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input, output } from '@angular/core';
+import { Component, output, input } from '@angular/core';
 import { XcTooltipDirective } from '@zeta/xc';
 
 import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
@@ -40,8 +40,7 @@ import { ClipboardItemComponent } from './clipboard-item.component';
 })
 export class ClipboardAreaComponent {
 
-    @Input()
-    clipboardArea: XoContainerArea;
+    readonly clipboardArea = input<XoContainerArea>(undefined);
 
     readonly triggerAction = output<TriggeredAction>();
 

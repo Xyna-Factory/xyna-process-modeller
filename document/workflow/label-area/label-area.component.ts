@@ -17,7 +17,7 @@
  */
 
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, Input, TemplateRef } from '@angular/core';
+import { Component, Input, TemplateRef, input } from '@angular/core';
 
 import { XoLabelArea } from '../../../xo/label-area.model';
 import { ModContentEditableDirective } from '../shared/mod-content-editable.directive';
@@ -32,8 +32,7 @@ import { TextAreaModellingObjectComponent } from '../shared/text-area-modelling-
 })
 export class LabelAreaComponent extends TextAreaModellingObjectComponent {
 
-    @Input()
-    menuTemplateRef: TemplateRef<any>;
+    readonly menuTemplateRef = input<TemplateRef<any>>(undefined);
 
 
     @Input()

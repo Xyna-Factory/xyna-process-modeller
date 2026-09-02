@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 import { I18nService } from '@zeta/i18n';
 import { XcLocalTableDataSource, XcTableComponent } from '@zeta/xc';
 
@@ -27,7 +27,6 @@ import { ModellingObjectComponent } from '../../workflow/shared/modelling-object
     selector: 'storable-properties-area',
     templateUrl: './storable-properties-area.component.html',
     styleUrls: ['./storable-properties-area.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [XcTableComponent]
 })
 export class StorablePropertiesAreaComponent extends ModellingObjectComponent {

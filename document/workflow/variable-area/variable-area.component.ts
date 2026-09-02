@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { NgFor } from '@angular/common';
-import { ChangeDetectionStrategy, Component, effect, HostBinding, Input, input } from '@angular/core';
+import { Component, effect, HostBinding, Input, input } from '@angular/core';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoInsertModellingObjectRequest } from '../../../xo/insert-modelling-object-request.model';
@@ -35,7 +35,6 @@ import { VariableComponent } from '../variable/variable.component';
     selector: 'variable-area',
     templateUrl: './variable-area.component.html',
     styleUrls: ['./variable-area.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [ModDropAreaDirective, NgFor, VariableComponent, ModDraggableDirective]
 })
 export class VariableAreaComponent extends ModellingObjectComponent {

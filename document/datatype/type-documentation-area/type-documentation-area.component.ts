@@ -18,7 +18,7 @@
 
 import { combineLatest } from 'rxjs';
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, input } from '@angular/core';
+import { ChangeDetectorRef, Component, effect, inject, input } from '@angular/core';
 import { XcDefinitionProxyComponent, XcFormLabelComponent, XcFormTextareaComponent } from '@zeta/xc';
 import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 
@@ -34,7 +34,6 @@ import { ModellingObjectComponent } from '../../workflow/shared/modelling-object
     selector: 'type-documentation-area',
     templateUrl: './type-documentation-area.component.html',
     styleUrls: ['./type-documentation-area.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [XcFormLabelComponent, XcFormTextareaComponent, XcDefinitionProxyComponent, XcI18nTranslateDirective]
 })
 export class TypeDocumentationAreaComponent extends ModellingObjectComponent {

@@ -17,7 +17,7 @@
  */
 import { filter, first, forkJoin, of, Subscription, tap } from 'rxjs';
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { ModellingActionType, XmomService } from '@pmod/api/xmom.service';
 import { XoCastExpression } from '@pmod/xo/expressions/cast-expression.model';
 import { XoExpression2Args } from '@pmod/xo/expressions/expression2-args.model';
@@ -87,7 +87,6 @@ class ExpressionWrapper {
     selector: 'visual-mapping',
     templateUrl: './visual-mapping.component.html',
     styleUrls: ['./visual-mapping.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [FlowCanvasComponent, VariableTreeComponent, FormulaAreaComponent]
 })
 export class VisualMappingComponent extends ModellingObjectComponent implements OnInit, OnDestroy, SkeletonTreeDataSourceObserver {

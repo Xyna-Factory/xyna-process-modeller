@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Directive, ElementRef, HostListener, inject, Input, OnInit } from '@angular/core';
+import { Directive, ElementRef, HostListener, inject, OnInit, input } from '@angular/core';
 
 import { DRAG_CSS_CLASSES, Draggable, DragType, ModDnDEventConvert, ModDragAndDropService, ModDragDataInfo, ModDragDataTransferKey } from './mod-drag-and-drop.service';
 
@@ -26,11 +26,9 @@ export class ModDraggableDirective implements OnInit {
     private readonly dndService = inject(ModDragAndDropService);
 
 
-    @Input('mod-draggable')
-    data: Draggable;
+    readonly data = input<Draggable>(undefined, { alias: "mod-draggable" });
 
-    @Input('mod-draggable-allowed-drag-type')
-    allowedDragType = DragType.move;
+    readonly allowedDragType = input(DragType.move, { alias: "mod-draggable-allowed-drag-type" });
 
 
     ngOnInit(): void {
@@ -49,7 +47,7 @@ export class ModDraggableDirective implements OnInit {
         const dragEvent = ModDnDEventConvert(event);
         dragEvent.stopPropagation();
 
-        dragEvent.dataTransfer.effectAllowed = this.allowedDragType === DragType.move ? 'copyMove' : 'copy';
+        dragEvent.dataTransfer.effectAllowed = this.allowedDragType() === DragType.move ? 'copyMove' : 'copy';
         this.elementRef.nativeElement.classList.add(DRAG_CSS_CLASSES.PLACEHOLDER_SOURCE);
 
 
@@ -63,19 +61,20 @@ export class ModDraggableDirective implements OnInit {
         }
 
         // attach drag data
-        if (this.data) {
+        const data = this.data();
+        if (data) {
             const jsonData: ModDragDataInfo = {
                 fromAreaId: parent.id,
                 fromIndex: index,
-                allowedDragType: this.allowedDragType
+                allowedDragType: this.allowedDragType()
             };
             this.dndService.setTransferredData(dragEvent, ModDragDataTransferKey.info, JSON.stringify(jsonData));
-            this.dndService.setTransferredData(dragEvent, ModDragDataTransferKey.fqn, this.data.fqn.encode());
-            this.dndService.setTransferredData(dragEvent, ModDragDataTransferKey.id, (this.data.id ? this.data.id : ''));
+            this.dndService.setTransferredData(dragEvent, ModDragDataTransferKey.fqn, data.fqn.encode());
+            this.dndService.setTransferredData(dragEvent, ModDragDataTransferKey.id, (data.id ? data.id : ''));
             this.dndService.setTransferredData(dragEvent, ModDragDataTransferKey.serverId, this.dndService.serverId);
             this.dndService.setTransferredData(dragEvent, ModDragDataTransferKey.clientId, this.dndService.clientId);
 
-            this.dndService.setDraggedItem(dragEvent, this.data);
+            this.dndService.setDraggedItem(dragEvent, data);
         }
     }
 

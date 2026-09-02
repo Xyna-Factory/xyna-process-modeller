@@ -18,7 +18,7 @@
 
 import { BehaviorSubject, Subject } from 'rxjs';
 
-import { ChangeDetectionStrategy, Component, effect, inject, input, OnDestroy, signal } from '@angular/core';
+import { Component, effect, inject, input, OnDestroy, signal } from '@angular/core';
 import { XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 
 import { XoMemberVariable } from '../../../xo/member-variable.model';
@@ -34,7 +34,6 @@ import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
     selector: 'member-variable-details',
     templateUrl: './member-variable-details.component.html',
     styleUrls: ['./member-variable-details.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [XcTabBarComponent]
 })
 export class MemberVariableDetailsComponent extends ModellingItemComponent implements OnDestroy {

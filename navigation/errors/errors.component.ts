@@ -19,7 +19,7 @@
 import { of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy } from '@angular/core';
 import { ErrorItem, XoIssueArray } from '@pmod/xo/issue.model';
 import { XoWarningArray } from '@pmod/xo/warning.model';
 
@@ -34,7 +34,6 @@ import { ErrorService } from '../shared/error.service';
     selector: 'xfm-mod-nav-errors',
     templateUrl: './errors.component.html',
     styleUrls: ['./errors.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [XcI18nTranslateDirective, ErrorItemComponent]
 })
 export class ErrorsComponent extends CommonNavigationComponent implements OnDestroy {

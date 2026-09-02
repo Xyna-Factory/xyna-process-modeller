@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostListener, Input } from '@angular/core';
+import { Component, HostListener, Input, input } from '@angular/core';
 import { XoRequest } from '@pmod/xo/request.model';
 import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
@@ -35,8 +35,7 @@ import { ModellingItemComponent } from '../../shared/modelling-object.component'
 })
 export class CaseComponent extends ModellingItemComponent {
 
-    @Input()
-    detachable: boolean;
+    readonly detachable = input<boolean>(undefined);
 
 
     @Input()

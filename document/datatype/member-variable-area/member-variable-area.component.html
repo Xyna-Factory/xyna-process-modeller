@@ -11,7 +11,7 @@
       [mod-draggable-allowed-drag-type]="readonly ? 'copy' : 'move'"
       >
       <member-variable [memberVariable]="variable"
-        [class.selected]="variable.id === selectedVariableId"
+        [class.selected]="variable.id === selectedVariableId()"
         (triggerAction)="performAction($event)"
         [documentModel]="documentModel"
         tabindex="0"

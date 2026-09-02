@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n/';
 import { XoRepairEntry } from '../../../../xo/repair-entry.model';
@@ -29,6 +29,5 @@ import { XoRepairEntry } from '../../../../xo/repair-entry.model';
 })
 export class RepairEntryComponent {
 
-    @Input()
-    entry: XoRepairEntry;
+    readonly entry = input<XoRepairEntry>(undefined);
 }

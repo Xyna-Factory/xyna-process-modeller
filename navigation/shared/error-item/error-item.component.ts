@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, inject, Input, output } from '@angular/core';
+import { Component, ElementRef, inject, output, input } from '@angular/core';
 import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model';
 import { ErrorItem } from '@pmod/xo/issue.model';
 import { XcIconButtonComponent, XcIconComponent, XcTooltipDirective } from '@zeta/xc';
@@ -35,11 +35,9 @@ export class ErrorItemComponent {
     private readonly documentService = inject(DocumentService);
     private readonly errorService = inject(ErrorService);
 
-    @Input()
-    error: ErrorItem;
+    readonly error = input<ErrorItem>(undefined);
 
-    @Input()
-    checkable: boolean;
+    readonly checkable = input<boolean>(undefined);
 
     readonly errorSelectionChanged = output<ErrorItem>();
 

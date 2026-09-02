@@ -18,7 +18,7 @@
 
 import { filter } from 'rxjs/operators';
 
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, inject, Input, OnDestroy, output } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, Input, OnDestroy, output } from '@angular/core';
 import { OutsideListenerService } from '@zeta/base';
 
 import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
@@ -33,7 +33,6 @@ import { ModellingItemComponent } from '../shared/modelling-object.component';
     selector: 'workflow',
     templateUrl: './workflow.component.html',
     styleUrls: ['./workflow.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Default,
     imports: [ContentAreaComponent, XcI18nTranslateDirective]
 })
 export class WorkflowComponent extends ModellingItemComponent implements AfterViewInit, OnDestroy {

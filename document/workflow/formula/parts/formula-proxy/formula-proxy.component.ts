@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, Component, ElementRef, inject, Input, output, signal, viewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, output, signal, viewChild, input } from '@angular/core';
 import { XoFormula } from '@pmod/xo/formula.model';
 import { FormulaFunctionGroup, FormulaPartFunction } from '@pmod/xo/util/formula-parts/formula-part-function';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent } from '@zeta/xc';
@@ -37,8 +37,7 @@ export class FormulaProxyComponent implements AfterViewInit, FormulaChildCompone
     private _optionElements: HTMLElement[] = [];
     private _selection: string;
 
-    @Input()
-    formula: XoFormula;
+    readonly formula = input<XoFormula>(undefined);
 
     readonly selectionChange = output<string>();
 
@@ -63,7 +62,7 @@ export class FormulaProxyComponent implements AfterViewInit, FormulaChildCompone
 
 
     ngAfterViewInit() {
-        const functions = FormulaPartFunction.functionsForGroup(this.formula?.allowedFunctions ?? FormulaFunctionGroup.none);
+        const functions = FormulaPartFunction.functionsForGroup(this.formula()?.allowedFunctions ?? FormulaFunctionGroup.none);
         this.proxyDataWrapper.values = functions.map(f => ({ name: signal(f.label), value: f.xfl }));
         this._proxyInput().setFocus();
     }

@@ -18,7 +18,7 @@
 
 import { BehaviorSubject, Subject } from 'rxjs';
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, input, OnDestroy, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, effect, inject, input, OnDestroy, signal } from '@angular/core';
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 import { XoExceptionType } from '@pmod/xo/exception-type.model';
 import { I18nService } from '@zeta/i18n';
@@ -33,7 +33,6 @@ import { DocumentationTabComponent } from '../tabs/shared/documentation-tab.comp
     selector: 'exceptiontype-details',
     templateUrl: './exceptiontype-details.component.html',
     styleUrls: ['./exceptiontype-details.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [XcTabBarComponent]
 })
 export class ExceptionTypeDetailsComponent extends ModellingItemComponent implements OnDestroy {

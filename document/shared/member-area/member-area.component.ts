@@ -18,7 +18,7 @@
 
 import { combineLatest } from 'rxjs';
 
-import { Component, inject, Input, output } from '@angular/core';
+import { Component, inject, Input, output, input } from '@angular/core';
 import { XoPlugin } from '@yggdrasil/plugin/plugin.model';
 import { XcDefinitionProxyComponent, XcIconButtonComponent } from '@zeta/xc';
 import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
@@ -43,14 +43,12 @@ export class MemberAreaComponent extends ModellingObjectComponent {
 
     pluginBundles: XoDefinitionBundle[];
 
-    @Input()
-    caption: string;
+    readonly caption = input<string>(undefined);
 
     @Input()
     collapsed = false;
 
-    @Input()
-    allowAdd = true;
+    readonly allowAdd = input(true);
 
     readonly addEmitter = output<void>({ alias: 'added' });
 

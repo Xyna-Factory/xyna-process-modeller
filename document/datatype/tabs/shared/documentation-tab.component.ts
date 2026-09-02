@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { XoTextArea } from '@pmod/xo/text-area.model';
 
 import { XcI18nContextDirective } from '../../../../../../zeta/i18n';
@@ -26,7 +26,6 @@ import { DatatypeTabComponent, DocumentationTabData } from '../datatype-tab.comp
 @Component({
     templateUrl: './documentation-tab.component.html',
     styleUrls: ['./documentation-tab.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [TypeDocumentationAreaComponent, XcI18nContextDirective]
 })
 export class DocumentationTabComponent extends DatatypeTabComponent<DocumentationTabData> {

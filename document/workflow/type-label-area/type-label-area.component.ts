@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostBinding, inject, Input, TemplateRef } from '@angular/core';
+import { Component, HostBinding, inject, Input, TemplateRef, input } from '@angular/core';
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { XcTooltipDirective } from '@zeta/xc';
 
@@ -34,8 +34,7 @@ export class TypeLabelAreaComponent extends ModellingObjectComponent {
 
     protected readonly detailLevelService = inject(WorkflowDetailLevelService);
 
-    @Input()
-    menuTemplateRef: TemplateRef<any> = null;
+    readonly menuTemplateRef = input<TemplateRef<any>>(null);
 
     @HostBinding('class.show-fqn')
     showFqn: boolean;

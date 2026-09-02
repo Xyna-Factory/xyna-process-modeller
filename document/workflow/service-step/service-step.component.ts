@@ -19,7 +19,7 @@
 
 import { Subscription } from 'rxjs';
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, HostBinding, inject, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, forwardRef, HostBinding, inject, Input, OnDestroy } from '@angular/core';
 
 import { XoBranch } from '../../../xo/branch.model';
 import { XoConditionalBranching } from '../../../xo/conditional-branching.model';
@@ -53,7 +53,6 @@ import { TemplateComponent } from '../template/template.component';
     selector: 'service-step',
     templateUrl: './service-step.component.html',
     styleUrls: ['./service-step.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
     forwardRef(() => BranchComponent),
     forwardRef(() => ConditionalBranchingComponent),

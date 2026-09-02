@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 import { ModellingActionType } from '@pmod/api/xmom.service';
 import { DragType } from '@pmod/document/workflow/shared/drag-and-drop/mod-drag-and-drop.service';
 import { ModDropEvent } from '@pmod/document/workflow/shared/drag-and-drop/mod-drop-area.directive';
@@ -49,11 +49,9 @@ export class MetaTagAreaComponent extends ModellingObjectComponent {
         this.setModel(value);
     }
 
-    @Input()
-    objectIdKey = '';
+    readonly objectIdKey = input('');
 
-    @Input()
-    objectId = '';
+    readonly objectId = input('');
 
     newTag: string;
 

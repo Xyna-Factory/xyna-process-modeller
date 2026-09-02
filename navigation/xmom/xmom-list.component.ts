@@ -19,7 +19,7 @@ import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { filter, first, map, switchMap, tap } from 'rxjs/operators';
 
 import { NgFor } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 import { coerceBoolean } from '@zeta/base';
 import { XcSpinnerComponent } from '@zeta/xc';
 
@@ -35,7 +35,6 @@ import { XMOMListItemComponent } from './xmom-list-item.component';
     selector: 'xfm-mod-nav-xmomlist',
     templateUrl: './xmom-list.component.html',
     styleUrls: ['./xmom-list.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [NgFor, XMOMListItemComponent, ModDraggableDirective, XcSpinnerComponent]
 })
 export class XMOMListComponent {

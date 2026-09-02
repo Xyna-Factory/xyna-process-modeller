@@ -18,7 +18,7 @@
 import { merge, of } from 'rxjs';
 import { debounceTime, filter, switchMap, tap } from 'rxjs/operators';
 
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, viewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, inject, viewChild } from '@angular/core';
 import { MessageBusService } from '@yggdrasil/events';
 import { XcFormAutocompleteComponent } from '@zeta/xc';
 
@@ -36,7 +36,6 @@ import { XMOMTreeComponent } from './xmom-tree.component';
     selector: 'xfm-mod-nav-factory',
     templateUrl: './factory.component.html',
     styleUrls: ['./factory.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [XcI18nContextDirective, XcI18nTranslateDirective, XcFormAutocompleteComponent, XMOMTreeComponent, XMOMListComponent]
 })
 export class FactoryComponent extends CommonNavigationComponent implements AfterViewInit {

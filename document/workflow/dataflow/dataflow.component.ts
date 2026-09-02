@@ -19,7 +19,7 @@
 import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { Vector2 } from 'three';
 
-import { AfterViewInit, Component, ElementRef, inject, Input, NgZone, OnDestroy, output, viewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, Input, NgZone, OnDestroy, output, viewChild, input } from '@angular/core';
 import { createSVGGroup, createSVGHorizontalCubicBezierPath, removeAllChildren } from '@zeta/base/draw';
 import { XcIconButtonComponent } from '@zeta/xc';
 
@@ -327,8 +327,7 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
     private readonly removeButtonTo = viewChild<ElementRef>('removeTo');
     private readonly tooltip = viewChild<ElementRef>('tooltip');
 
-    @Input()
-    insideForeignRtc = false;
+    readonly insideForeignRtc = input(false);
 
     readonly dataflowChange = output<XoSetDataflowConnectionRequest>();
 
@@ -430,7 +429,7 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
 
 
     get readonly(): boolean {
-        return !!this.workflow && this.workflow.readonly || this.insideForeignRtc;
+        return !!this.workflow && this.workflow.readonly || this.insideForeignRtc();
     }
 
 

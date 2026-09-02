@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { XoDataType } from '@pmod/xo/data-type.model';
 import { XcStackComponent } from '@zeta/xc';
 import { DefinitionStackItemComponentData, XcDefinitionStackItemComponent } from '@zeta/xc/xc-form/definitions/xc-definition-stack/xc-definition-stack-item/xc-definition-stack-item.component';
@@ -29,7 +29,6 @@ import { DatatypeTabComponent, PluginTabData } from '../datatype-tab.component';
 @Component({
     templateUrl: './datatype-plugin-tab.component.html',
     styleUrls: ['./datatype-plugin-tab.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [XcStackComponent]
 })
 export class DataTypePluginTabComponent extends DatatypeTabComponent<XoDataType, PluginTabData> {

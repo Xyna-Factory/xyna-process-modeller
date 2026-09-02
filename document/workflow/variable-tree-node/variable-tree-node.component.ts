@@ -17,7 +17,7 @@
  */
 
 import { AsyncPipe } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject, Input, output, viewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, inject, Input, output, viewChild } from '@angular/core';
 import { coerceBoolean } from '@zeta/base';
 import { XcIconButtonComponent } from '@zeta/xc';
 
@@ -38,7 +38,6 @@ export interface CreateAssignmentEvent {
     selector: 'variable-tree-node',
     templateUrl: './variable-tree-node.component.html',
     styleUrls: ['./variable-tree-node.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [ModDraggableDirective, ModDropAreaDirective, XcIconButtonComponent, AsyncPipe]
 })
 export class VariableTreeNodeComponent implements AfterViewInit, TreeNodeObserver {

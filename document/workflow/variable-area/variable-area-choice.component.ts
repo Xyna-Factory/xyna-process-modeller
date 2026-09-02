@@ -17,7 +17,7 @@
  */
 
 import { NgFor } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { ModDraggableDirective } from '../shared/drag-and-drop/mod-draggable.directive';
 import { ModDropAreaDirective } from '../shared/drag-and-drop/mod-drop-area.directive';
@@ -29,7 +29,6 @@ import { VariableAreaServiceComponent } from './variable-area-service.component'
     selector: 'variable-area-choice',
     templateUrl: './variable-area.component.html',
     styleUrls: ['./variable-area.component.scss', './variable-area-service.component.scss', './variable-area-choice.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [ModDropAreaDirective, NgFor, VariableComponent, ModDraggableDirective]
 })
 export class VariableAreaChoiceComponent extends VariableAreaServiceComponent {

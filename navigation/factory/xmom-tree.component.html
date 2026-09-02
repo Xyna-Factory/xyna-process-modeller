@@ -1,8 +1,8 @@
-@for (xmomPath of xmomPaths; track xmomPath.path) {
+@for (xmomPath of xmomPaths(); track xmomPath.path) {
   <xfm-mod-nav-xmomtreeitem [root]="true"
     [xmomPath]="xmomPath"
-    [selectedXmomPaths]="selectedXmomPaths"
-    [expandedXmomPaths]="expandedXmomPaths"
+    [selectedXmomPaths]="selectedXmomPaths()"
+    [expandedXmomPaths]="expandedXmomPaths()"
     (stateChange)="change($event)"
    />
 }

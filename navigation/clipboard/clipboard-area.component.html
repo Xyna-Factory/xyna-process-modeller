@@ -1,11 +1,11 @@
 <div
-  [mod-drop-area]="clipboardArea.items?.data"
+  [mod-drop-area]="clipboardArea().items?.data"
   [mod-drop-area-allow-item]="allowItem"
   [mod-drop-area-can-drop]="canDrop"
   (mod-drop-area-dropped)="dropped($event)"
   class="drop-area zeta-scrollbar"
   >
-  @for (item of clipboardArea.items; track item.id) {
+  @for (item of clipboardArea().items; track item.id) {
     <clipboard-item (triggerAction)="performAction($event)"
       [mod-draggable]="item"
       [item]="item"
@@ -14,6 +14,6 @@
        />
   }
 </div>
-@if (clipboardArea.items.length === 0) {
+@if (clipboardArea().items.length === 0) {
   <span xc-i18n class="hint">hint</span>
 }

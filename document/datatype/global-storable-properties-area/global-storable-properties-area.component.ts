@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, input } from '@angular/core';
+import { ChangeDetectorRef, Component, effect, inject, input } from '@angular/core';
 import { XoGlobalStorablePropertyArea } from '@pmod/xo/global-storable-property-area.model';
 import { XcCheckboxComponent, XcFormLabelComponent } from '@zeta/xc';
 
@@ -27,7 +27,6 @@ import { ModellingObjectComponent } from '../../workflow/shared/modelling-object
     selector: 'global-storable-properties-area',
     templateUrl: './global-storable-properties-area.component.html',
     styleUrls: ['./global-storable-properties-area.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [XcCheckboxComponent, XcFormLabelComponent, XcI18nTranslateDirective]
 })
 export class GlobalStorablePropertiesAreaComponent extends ModellingObjectComponent {

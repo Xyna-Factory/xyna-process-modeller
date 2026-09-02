@@ -17,7 +17,7 @@
  */
 
 import { NgFor } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 import { XcButtonComponent } from '@zeta/xc';
 
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
@@ -39,8 +39,7 @@ import { VariableComponent } from '../../variable/variable.component';
 })
 export class ItemBarAreaComponent extends ModellingObjectComponent {
 
-    @Input()
-    branchArea: XoContentArea;
+    readonly branchArea = input<XoContentArea>(undefined);
 
 
     @Input()
@@ -54,15 +53,17 @@ export class ItemBarAreaComponent extends ModellingObjectComponent {
 
 
     addBranch(item: XoVariable) {
-        if (this.branchArea && item && !this.readonly) {
-            this.performAction({ type: ModellingActionType.insert, objectId: this.branchArea.id, request: new XoInsertBranchRequest('', -1, item.$fqn) });
+        const branchArea = this.branchArea();
+        if (branchArea && item && !this.readonly) {
+            this.performAction({ type: ModellingActionType.insert, objectId: branchArea.id, request: new XoInsertBranchRequest('', -1, item.$fqn) });
         }
     }
 
 
     completeBranches() {
-        if (this.branchArea && !this.readonly) {
-            this.performAction({ type: ModellingActionType.complete, objectId: this.branchArea.id, request: new XoRequest() });
+        const branchArea = this.branchArea();
+        if (branchArea && !this.readonly) {
+            this.performAction({ type: ModellingActionType.complete, objectId: branchArea.id, request: new XoRequest() });
         }
     }
 }

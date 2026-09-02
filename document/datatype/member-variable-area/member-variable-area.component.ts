@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 import { XoModellingItem } from '@pmod/xo/modelling-item.model';
 import { XcIconButtonComponent } from '@zeta/xc';
 
@@ -40,8 +40,7 @@ import { MemberVariableComponent } from '../member-variable/member-variable.comp
 })
 export class MemberVariableAreaComponent extends ModellingObjectComponent {
 
-    @Input()
-    selectedVariableId: string;
+    readonly selectedVariableId = input<string>(undefined);
 
     constructor() {
         super();

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
+import { Component, HostBinding, input } from '@angular/core';
 import { XcIconComponent } from '@zeta/xc';
 
 import { XoChoice } from '../../xo/choice.model';
@@ -38,61 +38,64 @@ import { XoXmomItem } from '../../xo/xmom-item.model';
     selector: 'clipboard-item',
     templateUrl: './clipboard-item.component.html',
     styleUrls: ['./clipboard-item.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [XcIconComponent]
 })
 export class ClipboardItemComponent {
 
-    @Input()
-    item: XoItem;
+    readonly item = input<XoItem>(undefined);
 
 
     get content(): XoItem[] {
-        if (this.item instanceof XoParallelism || this.item instanceof XoChoice) {
-            return this.item.contentArea?.items.data ?? [];
+        const item = this.item();
+        if (item instanceof XoParallelism || item instanceof XoChoice) {
+            return item.contentArea?.items.data ?? [];
         }
         return [];
     }
 
 
     get inputs(): XoItem[] {
-        if (this.item instanceof XoInvocation || this.item instanceof XoMapping) {
-            return this.item.inputArea?.items.data ?? [];
+        const item = this.item();
+        if (item instanceof XoInvocation || item instanceof XoMapping) {
+            return item.inputArea?.items.data ?? [];
         }
-        if (this.item instanceof XoThrow) {
-            return this.item.exceptionArea?.items.data ?? [];
+        if (item instanceof XoThrow) {
+            return item.exceptionArea?.items.data ?? [];
         }
         return [];
     }
 
 
     get outputs(): XoItem[] {
-        if (this.item instanceof XoInvocation || this.item instanceof XoMapping) {
-            return this.item.outputArea?.items.data ?? [];
+        const item = this.item();
+        if (item instanceof XoInvocation || item instanceof XoMapping) {
+            return item.outputArea?.items.data ?? [];
         }
         return [];
     }
 
 
     get label(): string {
-        if (this.item instanceof XoInvocation) {
-            return this.item.typeLabelArea?.text;
+        const item = this.item();
+        if (item instanceof XoInvocation) {
+            return item.typeLabelArea?.text;
         }
-        if (this.item instanceof XoModellingItem) {
-            return this.item.label;
+        if (item instanceof XoModellingItem) {
+            return item.label;
         }
         return '';
     }
 
 
     get icon(): string {
-        if (this.item instanceof XoMapping) {
+        const item = this.item();
+        if (item instanceof XoMapping) {
             return 'tb-mapping';
         }
-        if (this.item instanceof XoQuery) {
+        if (item instanceof XoQuery) {
             return 'tb-database';
         }
-        if (this.item instanceof XoThrow) {
+        if (item instanceof XoThrow) {
             return 'tb-exception';
         }
         return '';
@@ -100,8 +103,9 @@ export class ClipboardItemComponent {
 
 
     get isList(): boolean {
-        if (this.item instanceof XoVariable) {
-            return this.item.isList;
+        const item = this.item();
+        if (item instanceof XoVariable) {
+            return item.isList;
         }
         return false;
     }
@@ -109,60 +113,62 @@ export class ClipboardItemComponent {
 
     @HostBinding('class.prototype')
     get isPrototype(): boolean {
-        return this.item instanceof XoXmomItem && this.item.isAbstract;
+        const item = this.item();
+        return item instanceof XoXmomItem && item.isAbstract;
     }
 
 
     @HostBinding('class.branching')
     get isBranching(): boolean {
-        return this.item instanceof XoConditionalBranching;
+        return this.item() instanceof XoConditionalBranching;
     }
 
 
     @HostBinding('class.choice')
     get isChoice(): boolean {
-        return this.item instanceof XoConditionalChoice || this.item instanceof XoTypeChoice;
+        const item = this.item();
+        return item instanceof XoConditionalChoice || item instanceof XoTypeChoice;
     }
 
 
     @HostBinding('class.invocation')
     get isInvocation(): boolean {
-        return this.item instanceof XoInvocation && !this.isQuery;
+        return this.item() instanceof XoInvocation && !this.isQuery;
     }
 
 
     @HostBinding('class.mapping')
     get isMapping(): boolean {
-        return this.item instanceof XoMapping;
+        return this.item() instanceof XoMapping;
     }
 
 
     @HostBinding('class.parallelism')
     get isParallelism(): boolean {
-        return this.item instanceof XoParallelism;
+        return this.item() instanceof XoParallelism;
     }
 
 
     @HostBinding('class.query')
     get isQuery(): boolean {
-        return this.item instanceof XoQuery;
+        return this.item() instanceof XoQuery;
     }
 
 
     @HostBinding('class.template')
     get isTemplate(): boolean {
-        return this.item instanceof XoTemplate;
+        return this.item() instanceof XoTemplate;
     }
 
 
     @HostBinding('class.throw')
     get isThrow(): boolean {
-        return this.item instanceof XoThrow;
+        return this.item() instanceof XoThrow;
     }
 
 
     @HostBinding('class.variable')
     get isVariable(): boolean {
-        return this.item instanceof XoVariable;
+        return this.item() instanceof XoVariable;
     }
 }

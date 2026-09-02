@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { XcTooltipDirective } from '@zeta/xc';
 
 import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
@@ -26,7 +26,6 @@ import { CommonNavigationComponent } from '../common-navigation-class/common-nav
     selector: 'xfm-mod-nav-help',
     templateUrl: './help.component.html',
     styleUrls: ['./help.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [XcI18nTranslateDirective, XcTooltipDirective]
 })
 export class HelpComponent extends CommonNavigationComponent {

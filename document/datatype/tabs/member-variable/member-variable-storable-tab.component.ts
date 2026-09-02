@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { XoChangeMemberVariableStorableRoleRequest } from '@pmod/xo/change-member-variable-storable-role-request.model';
 import { I18nService } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcFormLabelComponent, XcOptionItemString, XcOptionItemTranslate } from '@zeta/xc';
@@ -28,7 +28,6 @@ import { DatatypeVariableTabComponent } from '../datatype-tab.component';
 @Component({
     templateUrl: './member-variable-storable-tab.component.html',
     styleUrls: ['./member-variable-storable-tab.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [XcFormAutocompleteComponent, XcFormLabelComponent, XcI18nTranslateDirective, StorablePropertiesAreaComponent]
 })
 export class MemberVariableStorableTabComponent extends DatatypeVariableTabComponent {
