@@ -99,11 +99,9 @@ export class LeftRightComponent implements OnInit {
 
     // ---------------------------------------------------------------- MEMBERS, GETTERS, SETTERS
 
-    @Input()
-    leftTitle = 'Left';
+    readonly leftTitle = input('Left');
 
-    @Input()
-    rightTitle = 'Right';
+    readonly rightTitle = input('Right');
 
     readonly leftItems = input<any[]>(undefined);
 

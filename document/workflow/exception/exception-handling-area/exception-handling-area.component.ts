@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, forwardRef, HostBinding, inject, Input } from '@angular/core';
+import { Component, forwardRef, HostBinding, inject, Input, input } from '@angular/core';
 import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
@@ -36,9 +36,8 @@ export class ExceptionHandlingAreaComponent extends ModellingObjectComponent {
 
     protected readonly detailLevelService = inject(WorkflowDetailLevelService);
 
-    @Input()
     @HostBinding('class.inline')
-    inline = false;
+readonly inline = input(false);
 
     @HostBinding('class.empty')
     empty = true;

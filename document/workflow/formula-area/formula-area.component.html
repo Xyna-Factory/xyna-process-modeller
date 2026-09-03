@@ -1,5 +1,5 @@
-@if (!!areaLabel) {
-  <xc-form-label xc-i18n>{{areaLabel}}</xc-form-label>
+@if (!!areaLabel()) {
+  <xc-form-label xc-i18n>{{areaLabel()}}</xc-form-label>
 }
 <div class="formula-list" xc-i18n-context="formula-area">
   @for (formula of formulas; let i = $index; track formula) {

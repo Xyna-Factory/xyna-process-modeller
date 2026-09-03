@@ -1,5 +1,5 @@
-@if (!!areaLabel) {
-  <xc-form-label xc-i18n>{{areaLabel}}</xc-form-label>
+@if (!!areaLabel()) {
+  <xc-form-label xc-i18n>{{areaLabel()}}</xc-form-label>
 }
 <div class="formula-list">
   @for (sortingCriterion of sortingCriteria; let i = $index; track i) {

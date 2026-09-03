@@ -3,7 +3,7 @@
     <xc-icon-button xc-icon-name="accordion"
       xc-icon-size="small"
       [class.expanded]="expanded"
-      [color]="root ? 'normal' : 'invert'"
+      [color]="root() ? 'normal' : 'invert'"
       (click)="toggle()"
      />
   }

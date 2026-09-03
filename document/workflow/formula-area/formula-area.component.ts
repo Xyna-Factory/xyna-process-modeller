@@ -41,8 +41,7 @@ export class FormulaAreaComponent extends ModellingObjectComponent {
     private _visibleFormulas: XoFormula[] = [];
 
 
-    @Input()
-    areaLabel: string = null;
+    readonly areaLabel = input<string>(null);
 
     readonly newFormulaExpression = input('');
 

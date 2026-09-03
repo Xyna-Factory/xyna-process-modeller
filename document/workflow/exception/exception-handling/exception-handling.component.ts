@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, forwardRef, HostBinding, Input } from '@angular/core';
+import { Component, forwardRef, HostBinding, Input, input } from '@angular/core';
 
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { XoExceptionHandling } from '../../../../xo/exception-handling.model';
@@ -32,9 +32,8 @@ import { ItemBarAreaComponent } from '../item-bar-area/item-bar-area.component';
 })
 export class ExceptionHandlingComponent extends ModellingItemComponent {
 
-    @Input()
     @HostBinding('class.inline')
-    inline = false;
+readonly inline = input(false);
 
 
     @Input()

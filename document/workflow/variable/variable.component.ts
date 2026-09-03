@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, effect, HostBinding, inject, Input, input, signal } from '@angular/core';
+import { Component, effect, HostBinding, inject, input, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { RuntimeContext, Xo } from '@zeta/api';
@@ -66,9 +66,8 @@ export class VariableComponent extends SelectableModellingObjectComponent {
 
     readonly hasMenu = input(true);
 
-    @Input()
     @HostBinding('class.placeholder')
-    isPlaceholder = false;
+readonly isPlaceholder = input(false);
 
     readonly variableInput = input<XoVariable>(null, { alias: 'variable' });
     showFqn = true;
