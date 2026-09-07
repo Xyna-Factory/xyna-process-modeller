@@ -66,10 +66,15 @@ export class VariableComponent extends SelectableModellingObjectComponent {
 
     readonly hasMenu = input(true);
 
+    readonly isPlaceholder = input(false);
+
     @HostBinding('class.placeholder')
-readonly isPlaceholder = input(false);
+    get placeholderClass(): boolean {
+        return this.isPlaceholder();
+    }
 
     readonly variableInput = input<XoVariable>(null, { alias: 'variable' });
+    private readonly linkStateInState = signal<string>(DataConnectionType.auto);
     showFqn = true;
 
     private readonly constantMenuItem: XcMenuItem;
@@ -83,6 +88,7 @@ readonly isPlaceholder = input(false);
             if (variable) {
                 this.setModel(variable);
                 this.updateShowFQN();
+                this.updateLinkState();
             }
         });
 
@@ -298,9 +304,14 @@ readonly isPlaceholder = input(false);
 
 
     get linkStateIn(): string {
+        return this.linkStateInState();
+    }
+
+
+    private updateLinkState() {
         const branch = this.selectedBranch;
         const branchId = branch ? branch.id : null;
-        return this.variable.getLinkStateIn(branchId);
+        this.linkStateInState.set(this.variable.getLinkStateIn(branchId));
     }
 
 
@@ -355,7 +366,8 @@ readonly isPlaceholder = input(false);
 
 
     refreshLinkState() {
-        this.cdr.detectChanges();
+        this.updateLinkState();
+        this.cdr.markForCheck();
     }
 
 

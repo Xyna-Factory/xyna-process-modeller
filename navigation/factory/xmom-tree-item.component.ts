@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostBinding, Input, output, input } from '@angular/core';
+import { Component, HostBinding, Input, input, output } from '@angular/core';
 import { XcIconButtonComponent } from '@zeta/xc';
 
 import { XmomPath } from '../../api/xmom.service';
@@ -138,8 +138,12 @@ export class XMOMTreeItemComponent {
     }
 
 
+    readonly root = input<boolean>(undefined);
+
     @HostBinding('class.root')
-readonly root = input<boolean>(undefined);
+    get rootClass(): boolean {
+        return this.root();
+    }
 
 
     get children(): XmomPath[] {

@@ -32,8 +32,12 @@ import { ItemBarAreaComponent } from '../item-bar-area/item-bar-area.component';
 })
 export class ExceptionHandlingComponent extends ModellingItemComponent {
 
+    readonly inline = input(false);
+
     @HostBinding('class.inline')
-readonly inline = input(false);
+    get inlineClass(): boolean {
+        return this.inline();
+    }
 
 
     @Input()

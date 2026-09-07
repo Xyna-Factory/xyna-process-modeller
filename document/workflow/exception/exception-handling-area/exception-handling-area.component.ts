@@ -36,8 +36,12 @@ export class ExceptionHandlingAreaComponent extends ModellingObjectComponent {
 
     protected readonly detailLevelService = inject(WorkflowDetailLevelService);
 
+    readonly inline = input(false);
+
     @HostBinding('class.inline')
-readonly inline = input(false);
+    get inlineClass(): boolean {
+        return this.inline();
+    }
 
     @HostBinding('class.empty')
     empty = true;

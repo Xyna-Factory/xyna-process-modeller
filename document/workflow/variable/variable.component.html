@@ -6,7 +6,12 @@
   (mod-drop-area-dropped)="dropped($event)"
   >
   <div [mod-content-editable]="!readonly" (mod-content-editable-after-edit)="finishEditing($event)"
-    class="label-area link-state-{{linkStateIn}}"
+    class="label-area"
+    [class.link-state-auto]="linkStateIn === 'auto'"
+    [class.link-state-ambigue]="linkStateIn === 'ambigue'"
+    [class.link-state-user]="linkStateIn === 'user'"
+    [class.link-state-constant]="linkStateIn === 'constant'"
+    [class.link-state-none]="linkStateIn === 'none'"
     [class.exception]="isException()"
     [class.show-fqn]="showFqn && !variable?.isAbstract"
   >{{variable?.label ? variable.label : ' '}}</div>
