@@ -22,6 +22,7 @@ import { XoObjectClass, XoProperty, XoTransient } from '@zeta/api';
 
 import { DeploymentState, Orderable, XmomObjectType } from '../api/xmom-types';
 import { XoContentArea } from './content-area.model';
+import { XoConnection } from './connection.model';
 import { XoItem } from './item.model';
 import { XoModellingItem } from './modelling-item.model';
 import { XoService } from './service.model';
@@ -116,7 +117,24 @@ export class XoWorkflow extends XoService implements Orderable {
 
     clearVariableConnections() {
         this._variables.forEach(variables =>
-            variables.forEach(variable => variable.inConnections.splice(0))
+            variables.forEach(variable => variable.setInConnections([]))
+        );
+    }
+
+
+    setVariableConnections(connections: Iterable<XoConnection>) {
+        const connectionMap = new Map<string, XoConnection[]>();
+        for (const connection of connections) {
+            const variableId = connection.targetId?.replace(/-in\d+$/, '');
+            const mappedConnections = connectionMap.get(variableId) ?? [];
+            mappedConnections.push(connection);
+            connectionMap.set(variableId, mappedConnections);
+        }
+
+        this._variables.forEach(variables =>
+            variables.forEach(variable => variable.setInConnections(
+                connectionMap.get(variable.id) ?? []
+            ))
         );
     }
 

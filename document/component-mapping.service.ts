@@ -16,6 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 
 import { XoReferableObject } from '../xo/referable-object.model';
 import { DocumentItem } from './model/document.model';
@@ -26,6 +27,11 @@ import { ModellingObjectComponent } from './workflow/shared/modelling-object.com
     providedIn: 'root'
 })
 export class ComponentMappingService {
+    private readonly componentMappingChangeSubject = new Subject<DocumentItem>();
+
+    get componentMappingChange(): Observable<DocumentItem> {
+        return this.componentMappingChangeSubject.asObservable();
+    }
     /**
      * (DocumentItem, string) -> ModellingObject
      *
@@ -50,6 +56,7 @@ export class ComponentMappingService {
             } else {
                 this._componentMap.set(documentItem, new Map<string, ModellingObjectComponent>([[id, component]]));
             }
+            this.componentMappingChangeSubject.next(documentItem);
         }
     }
 

@@ -16,6 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { FullQualifiedName, Xo, XoArray, XoArrayClass, XoObjectClass, XoProperty, XoTransient } from '@zeta/api';
+import { Observable, Subject } from 'rxjs';
 
 import { ConnectionTypeSeverity, DataConnectionType, XoConnection } from './connection.model';
 import { XoInsertRequestContent } from './insert-request-content.model';
@@ -67,6 +68,24 @@ export class XoVariable extends XoXmomItem {
     @XoProperty()
     @XoTransient()
     inConnections: XoConnection[] = [];
+    private readonly inConnectionsChangeSubject = new Subject<void>();
+
+    get inConnectionsChange(): Observable<void> {
+        return this.inConnectionsChangeSubject.asObservable();
+    }
+
+    setInConnections(connections: XoConnection[]) {
+        this.inConnections = connections;
+        this.inConnectionsChangeSubject.next();
+    }
+
+    addInConnection(connection: XoConnection) {
+        this.setInConnections([...this.inConnections, connection]);
+    }
+
+    removeInConnection(connection: XoConnection) {
+        this.setInConnections(this.inConnections.filter(item => item !== connection));
+    }
 
 
     toFqn(): FullQualifiedName {
@@ -92,7 +111,7 @@ export class XoVariable extends XoXmomItem {
      *   - most erroneous link state over all connections (matching branchId) otherwise
      */
     getLinkStateIn(branchId?: string): string {
-        let type: DataConnectionType;
+        let type = DataConnectionType.auto;
         this.inConnections
             .filter (c => (!branchId || c.branchId === branchId))
             .forEach(c => {

@@ -83,12 +83,17 @@ export class VariableComponent extends SelectableModellingObjectComponent {
     constructor() {
         super();
 
-        effect(() => {
+        effect(onCleanup => {
             const variable = this.variableInput();
             if (variable) {
                 this.setModel(variable);
                 this.updateShowFQN();
                 this.updateLinkState();
+                const subscription = variable.inConnectionsChange.subscribe(() => {
+                    this.updateLinkState();
+                    this.cdr.markForCheck();
+                });
+                onCleanup(() => subscription.unsubscribe());
             }
         });
 
@@ -346,12 +351,12 @@ export class VariableComponent extends SelectableModellingObjectComponent {
                 connection.branchId = branchId;
                 connection.targetId = this.variable.id;
                 connection.constantObject = constant;
-                inConnections.push(connection);
+                this.variable.addInConnection(connection);
             }
         } else if (constantConnection) {
             const index = inConnections.indexOf(constantConnection);
             if (index >= 0) {
-                inConnections.splice(index, 1);
+                this.variable.removeInConnection(constantConnection);
             }
         }
 

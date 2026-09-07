@@ -81,7 +81,11 @@ export class VariableAreaComponent extends ModellingObjectComponent {
         }
 
         const previewInsert = (item: XoModellingItem) => {
-            this.variableArea.items.data.splice(event.index, 0, item);
+            this.variableArea.items.setItems([
+                ...this.variableArea.items.data.slice(0, event.index),
+                item,
+                ...this.variableArea.items.data.slice(event.index)
+            ]);
             this.cdr.markForCheck();
         };
 
@@ -116,15 +120,17 @@ export class VariableAreaComponent extends ModellingObjectComponent {
             // target index must be different from source index, if inserting into the same area
             if (!event.sameArea || event.sourceIndex !== event.index) {
                 if (event.sameArea) {
-                    const movedItem = this.variableArea.items.data.splice(event.sourceIndex, 1)[0];
-                    this.variableArea.items.data.splice(event.index, 0, movedItem);
+                    const items = [...this.variableArea.items.data];
+                    const movedItem = items.splice(event.sourceIndex, 1)[0];
+                    items.splice(event.index, 0, movedItem);
+                    this.variableArea.items.setItems(items);
                     this.cdr.markForCheck();
                 } else {
                     const sourceAreaComponent = this.resolveSourceAreaComponent(event.sourceAreaId);
                     const sourceArea = sourceAreaComponent?.variableArea ?? (event.item.parent as XoVariableArea);
                     const sourceIndex = sourceArea?.items?.data?.findIndex(item => item.id === event.item.id);
                     if (sourceIndex >= 0) {
-                        sourceArea.items.data.splice(sourceIndex, 1);
+                        sourceArea.items.setItems(sourceArea.items.data.filter((_, index) => index !== sourceIndex));
                         sourceAreaComponent?.markForRefresh();
                     }
                     previewInsert(event.item);

@@ -78,7 +78,11 @@ export class MemberVariableAreaComponent extends ModellingObjectComponent {
 
         if (event.operation === DragType.move || event.operation === DragType.copy) {
             if (!(event.operation === DragType.move && event.sameArea && event.sourceIndex === event.index)) {         // only move if something changed
-                this.memberVariableArea.items.data.splice(event.index, 0, event.item);
+                this.memberVariableArea.items.setItems([
+                    ...this.memberVariableArea.items.data.slice(0, event.index),
+                    event.item,
+                    ...this.memberVariableArea.items.data.slice(event.index)
+                ]);
                 this.performAction({
                     objectId: event.item.id,
                     type: event.operation === 'move' ? ModellingActionType.move : ModellingActionType.copy,

@@ -309,6 +309,8 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
     private _selectedVariable: SelectableModellingObjectComponent = null;
     private selectedFlow: Flow = null;
     private animationFrameHandle: number;
+    private mappingSubscription: Subscription;
+    private initQueued = false;
 
     private readonly incomingAutoConnections = new Map<ModellingObjectComponent, Array<ConnectionObject>>();
     private readonly incomingAmbigueConnections = new Map<ModellingObjectComponent, Array<ConnectionObject>>();
@@ -331,6 +333,14 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
 
     readonly dataflowChange = output<XoSetDataflowConnectionRequest>();
 
+    constructor() {
+        this.mappingSubscription = this.componentMappingService.componentMappingChange.subscribe(root => {
+            if (root === this.workflow) {
+                this.queueDataflowInitialization();
+            }
+        });
+    }
+
 
     ngAfterViewInit() {
         this.view = createSVGGroup(this.element().nativeElement);
@@ -339,6 +349,7 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
 
     ngOnDestroy() {
         this.selectionSubscription?.unsubscribe();
+        this.mappingSubscription?.unsubscribe();
         if (this.animationFrameHandle) {
             cancelAnimationFrame(this.animationFrameHandle);
         }
@@ -347,7 +358,8 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
 
     private initDataflow() {
         if (this.workflow && this.dataflow) {
-            this.workflow.clearVariableConnections();
+            this.workflow.updateVariableMap();
+            this.workflow.setVariableConnections(this.dataflow);
             this.incomingAutoConnections.clear();
             this.incomingAmbigueConnections.clear();
             this.incomingUserConnections.clear();
@@ -383,11 +395,6 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
                             break;
                     }
                 }
-                // add connection to its target variables
-                const variables = this.workflow.getVariablesById(connection.targetId);
-                if (variables) {
-                    variables.forEach(variable => variable.inConnections.push(connection));
-                }
             }
             this.refreshVisibleVariables();
 
@@ -408,6 +415,18 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
             }
             loop();
         }
+    }
+
+
+    private queueDataflowInitialization() {
+        if (this.initQueued) {
+            return;
+        }
+        this.initQueued = true;
+        Promise.resolve().then(() => {
+            this.initQueued = false;
+            this.initDataflow();
+        });
     }
 
 
