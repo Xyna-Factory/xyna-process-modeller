@@ -68,6 +68,9 @@ export class WorkflowComponent extends ModellingItemComponent implements AfterVi
         this.setModel(value);
     }
 
+    @Input()
+    onlyParentRuntimeInfo = false;
+
     get workflow(): XoWorkflow {
         return this.getModel() as XoWorkflow;
     }

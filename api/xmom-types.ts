@@ -41,6 +41,7 @@ export enum XmomObjectType {
 
 export interface Orderable {
     orderId: string;
+    structureOrderId?: string;
 }
 
 

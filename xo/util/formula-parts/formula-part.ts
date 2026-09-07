@@ -242,7 +242,8 @@ export class FormulaPart {
             const describer = {fqn: FullQualifiedName.decode(fqn)};
 
             // in case of an Audit, fetch structure for distinct Order-ID
-            const orderId = isOrderable(root) ? (<unknown>root as Orderable).orderId : undefined;
+            const orderable = isOrderable(root) ? <unknown>root as Orderable : undefined;
+            const orderId = orderable?.structureOrderId ?? orderable?.orderId;
             const structure = apiService.getStructure(rtc, [describer], FormulaPart.structureCache, orderId);
             return structure.get(describer);
         }
