@@ -17,7 +17,7 @@
  */
 
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, Input, TemplateRef, input } from '@angular/core';
+import { Component, Input, input, TemplateRef } from '@angular/core';
 
 import { XoLabelArea } from '../../../xo/label-area.model';
 import { ModContentEditableDirective } from '../shared/mod-content-editable.directive';
