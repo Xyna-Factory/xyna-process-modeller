@@ -18,7 +18,7 @@
 import { BehaviorSubject, Observable, Observer, of, Subject } from 'rxjs';
 import { distinctUntilChanged, filter, map, switchMap, takeUntil } from 'rxjs/operators';
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Injector, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { RuntimeContext } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcTabComponent } from '@zeta/xc';
@@ -59,9 +59,7 @@ export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponen
 
 
     constructor() {
-        const injector = inject(Injector, { optional: true });
-
-        super(injector);
+        super();
 
         const foreignRtcObserver: Observer<RuntimeContext> = {
             next: () => this.insideForeignRtc = this.documentService.selectedDocument && !this.documentService.selectedDocument.originRuntimeContext?.equals(this.documentService.xmomService.runtimeContext),

@@ -16,12 +16,13 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 
-import { ChangeDetectorRef } from '@angular/core';
-
 import { filter } from 'rxjs/operators';
+
+import { ChangeDetectorRef, inject } from '@angular/core';
 
 
 export class CommonNavigationComponent {
+    private readonly cdr = inject(ChangeDetectorRef);
 
     /** true when the component is visible */
     active: boolean;
@@ -36,7 +37,7 @@ export class CommonNavigationComponent {
     protected whileActive = filter(() => this.active);
 
 
-    constructor(private readonly cdr: ChangeDetectorRef) {
+    constructor() {
         this.onHide();
     }
 

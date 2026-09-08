@@ -1,3 +1,6 @@
+import { Subject } from 'rxjs';
+import { debounceTime, filter } from 'rxjs/operators';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -15,14 +18,10 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, NgZone, ViewChild, viewChild } from '@angular/core';
-
+import { ChangeDetectionStrategy, Component, inject, NgZone, ViewChild, viewChild } from '@angular/core';
 import { MessageBusService } from '@yggdrasil/events';
 import { AuthService } from '@zeta/auth';
 import { XcCheckboxComponent, XcFormAutocompleteComponent, XcFormInputComponent } from '@zeta/xc';
-
-import { Subject } from 'rxjs';
-import { debounceTime, filter } from 'rxjs/operators';
 
 import { XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
@@ -100,9 +99,7 @@ export class SearchComponent extends CommonNavigationComponent {
     filterConditions: FilterConditionData;
 
     constructor() {
-        const cdr = inject(ChangeDetectorRef);
-
-        super(cdr);
+        super();
 
         this.querySubject.pipe(debounceTime(500)).subscribe(query => {
             this.debounce = false;

@@ -1,3 +1,5 @@
+import { Subject } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2024 Xyna GmbH, Germany
@@ -15,12 +17,10 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, HostBinding, Injector, inject } from '@angular/core';
-
+import { ChangeDetectionStrategy, Component, HostBinding, inject } from '@angular/core';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcIconButtonComponent, XcRichListItemComponent, XcTooltipDirective } from '@zeta/xc';
 
-import { Subject } from 'rxjs';
 
 export interface LibItemData {
     libraryName: string;
@@ -44,11 +44,6 @@ export class LibItemComponent extends XcRichListItemComponent<void, LibItemData>
         return this.injectedData.libraryName;
     }
 
-    constructor() {
-        const injector = inject(Injector);
-
-        super(injector);
-    }
 
     delete() {
         const title = this.injectedData.i18nService.translate('Confirm');

@@ -16,7 +16,6 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, input } from '@angular/core';
-
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoGuiDefiningWorkflow } from '@yggdrasil/plugin/gui-defining-workflow.model';
 import { XcDefinitionProxyComponent, XoPlugin } from '@zeta/xc';
@@ -50,12 +49,6 @@ export class NavPluginComponent extends CommonNavigationComponent {
     }
 
     readonly pluginNumber = input<number>(undefined, { alias: "plugin-number" });
-
-    constructor() {
-        const cdr = inject(ChangeDetectorRef);
-
-        super(cdr);
-    }
 
     private requestBundle() {
         const definingWorkflow: XoGuiDefiningWorkflow = new XoGuiDefiningWorkflow();

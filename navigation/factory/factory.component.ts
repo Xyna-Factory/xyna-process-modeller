@@ -18,7 +18,7 @@
 import { merge, of } from 'rxjs';
 import { debounceTime, filter, switchMap, tap } from 'rxjs/operators';
 
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, viewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, inject, viewChild } from '@angular/core';
 import { MessageBusService } from '@yggdrasil/events';
 import { XcFormAutocompleteComponent } from '@zeta/xc';
 
@@ -72,13 +72,6 @@ export class FactoryComponent extends CommonNavigationComponent implements After
     expandedPaths = new Set<string>();
     selectedXmomPaths = new Array<XmomPath>();
     expandedXmomPaths = new Array<XmomPath>();
-
-
-    constructor() {
-        const cdr = inject(ChangeDetectorRef);
-
-        super(cdr);
-    }
 
 
     ngAfterViewInit() {
