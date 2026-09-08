@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, forwardRef, HostBinding, inject, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, forwardRef, HostBinding, inject, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { XoConditionalBranching } from '@pmod/xo/conditional-branching.model';
 import { coerceBoolean } from '@zeta/base';
 import { XcIconButtonComponent } from '@zeta/xc';
@@ -31,6 +31,7 @@ import { BranchSelectionService } from './branch-selection.service';
     selector: 'branch',
     templateUrl: './branch.component.html',
     styleUrls: ['./branch.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcIconButtonComponent, CaseAreaComponent, forwardRef(() => ContentAreaComponent)]
 })
 export class BranchComponent extends SelectableModellingObjectComponent implements OnDestroy {
@@ -81,6 +82,8 @@ export class BranchComponent extends SelectableModellingObjectComponent implemen
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set branch(value: XoBranch) {
         this.setModel(value);
@@ -97,6 +100,8 @@ export class BranchComponent extends SelectableModellingObjectComponent implemen
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input('dark-mode')
     @HostBinding('class.dark')
     set darkMode(value: boolean) {

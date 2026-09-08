@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 
 import { XcI18nContextDirective } from '../../../zeta/i18n';
@@ -41,6 +41,7 @@ import { DropIndicatorComponent } from './workflow/drop-indicator/drop-indicator
     styleUrls: ['./exceptiontype.component.scss'],
     // single service instances per document
     providers: [SelectionService],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcI18nContextDirective, TypeInfoAreaComponent, ExceptionMessagesAreaComponent, DetailsItemComponent, MemberAreaComponent, MemberVariableAreaComponent, ExceptionTypeDetailsComponent, MemberVariableDetailsComponent, DropIndicatorComponent]
 })
 export class ExceptionTypeComponent extends TypeDocumentComponent<ExceptionTypeDocumentModel> {

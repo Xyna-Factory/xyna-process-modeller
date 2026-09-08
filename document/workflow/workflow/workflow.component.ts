@@ -18,7 +18,7 @@
 
 import { filter } from 'rxjs/operators';
 
-import { AfterViewInit, Component, ElementRef, inject, Input, OnDestroy, output } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, Input, OnDestroy, output, ChangeDetectionStrategy, input } from '@angular/core';
 import { OutsideListenerService } from '@zeta/base';
 
 import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
@@ -33,6 +33,7 @@ import { ModellingItemComponent } from '../shared/modelling-object.component';
     selector: 'workflow',
     templateUrl: './workflow.component.html',
     styleUrls: ['./workflow.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ContentAreaComponent, XcI18nTranslateDirective]
 })
 export class WorkflowComponent extends ModellingItemComponent implements AfterViewInit, OnDestroy {
@@ -63,13 +64,14 @@ export class WorkflowComponent extends ModellingItemComponent implements AfterVi
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set workflow(value: XoWorkflow) {
         this.setModel(value);
     }
 
-    @Input()
-    onlyParentRuntimeInfo = false;
+    readonly onlyParentRuntimeInfo = input(false);
 
     get workflow(): XoWorkflow {
         return this.getModel() as XoWorkflow;

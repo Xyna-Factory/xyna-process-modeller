@@ -43,6 +43,8 @@ export class ModDnDContentEditableDirective implements OnInit, OnDestroy {
     private readonly draggableElementsSet = new Set<HTMLElement>();
     private _contentEditable = false;
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input('mod-dnd-contenteditable')
     set contentEditable(value: boolean) {
         this._contentEditable = coerceBoolean(value);

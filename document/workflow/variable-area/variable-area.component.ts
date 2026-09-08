@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { NgFor } from '@angular/common';
-import { Component, effect, HostBinding, Input, input } from '@angular/core';
+import { Component, effect, HostBinding, Input, input, ChangeDetectionStrategy } from '@angular/core';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoInsertModellingObjectRequest } from '../../../xo/insert-modelling-object-request.model';
@@ -35,6 +35,7 @@ import { VariableComponent } from '../variable/variable.component';
     selector: 'variable-area',
     templateUrl: './variable-area.component.html',
     styleUrls: ['./variable-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ModDropAreaDirective, NgFor, VariableComponent, ModDraggableDirective]
 })
 export class VariableAreaComponent extends ModellingObjectComponent {
@@ -165,6 +166,8 @@ export class VariableAreaComponent extends ModellingObjectComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @HostBinding('attr.kind')
     @Input('xc-variable-area-kind')
     set kind(value: 'input-area' | 'output-area' | 'throws-area') {

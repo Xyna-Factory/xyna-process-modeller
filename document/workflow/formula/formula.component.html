@@ -1,7 +1,7 @@
 <div
   id="{{formula ? formula.id : ''}}"
   #formulaWrapper
-  [mod-drop-area]="formula.variables?.data" [mod-drop-area-allow-item]="allowItem" mod-drop-area-direction="horizontal" (mod-drop-area-dropped)="dropped($event)"
+  [mod-drop-area]="$safeNavigationMigration(formula.variables?.data)" [mod-drop-area-allow-item]="allowItem" mod-drop-area-direction="horizontal" (mod-drop-area-dropped)="dropped($event)"
   class="formula-wrapper"
   tabindex="0"
   >

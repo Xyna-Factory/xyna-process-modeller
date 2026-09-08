@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, ElementRef, HostBinding, HostListener, inject, Injector, Input, OnDestroy, OnInit, Optional, signal, output } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostBinding, HostListener, inject, Injector, Input, OnDestroy, OnInit, Optional, signal, output, ChangeDetectionStrategy } from '@angular/core';
 
 import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model';
 import { MessageBusService } from '@yggdrasil/events';
@@ -51,7 +51,8 @@ export interface TriggeredAction {
 /**
  * Base class for all components, modelling-actions can be done on
  */
-@Component({ template: '' })
+@Component({ changeDetection: ChangeDetectionStrategy.Eager,
+ template: '' })
 export class ModellingObjectComponent implements OnInit, OnDestroy {
 
     protected readonly componentMappingService = inject(ComponentMappingService);
@@ -151,6 +152,8 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set documentModel(value: DocumentModel<DocumentItem>) {
         if (this.documentModel !== value) {
@@ -184,6 +187,8 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
     /**
      * Externally set menu-items override internally set menu-items
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set menuItems(items: XcMenuItem[]) {
         this._menuItems = items;
@@ -368,7 +373,8 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
 /**
  * Base class for all components, that represent an XoItem
  */
-@Component({ template: '' })
+@Component({ changeDetection: ChangeDetectionStrategy.Eager,
+ template: '' })
 export class ModellingItemComponent extends ModellingObjectComponent implements OnDestroy {
 
     private modelChangeSubscription: Subscription;

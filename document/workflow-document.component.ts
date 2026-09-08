@@ -18,7 +18,7 @@
 import { Subscription, throwError } from 'rxjs';
 import { catchError, filter, map } from 'rxjs/operators';
 
-import { Component, ElementRef, inject, OnDestroy, signal } from '@angular/core';
+import { Component, ElementRef, inject, OnDestroy, signal, ChangeDetectionStrategy } from '@angular/core';
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
 import { FullQualifiedName } from '@zeta/api';
 import { copyToClipboard, KeyboardEventType, KeyDistributionService, pasteFromClipboard } from '@zeta/base';
@@ -54,6 +54,7 @@ import { WorkflowComponent } from './workflow/workflow/workflow.component';
     styleUrls: ['./workflow-document.component.scss'],
     // single service instances per document
     providers: [SelectionService, BranchSelectionService, WorkflowDetailLevelService],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcI18nContextDirective, DataflowComponent, VariableAreaDocumentComponent, TypeLabelAreaComponent, DocumentationAreaComponent, WorkflowComponent, ExceptionHandlingAreaComponent, XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective, DropIndicatorComponent]
 })
 export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowDocumentModel> implements OnDestroy {

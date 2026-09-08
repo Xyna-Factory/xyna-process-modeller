@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { WorkflowDetailSettingsService } from '@pmod/workflow-detail-settings.service';
 import { XcButtonComponent, XcCheckboxComponent, XcDialogComponent, XcDialogWrapperComponent, XcIconComponent, XcLanguageSelectorComponent, XcPanelComponent, XDSIconName } from '@zeta/xc';
 
@@ -27,6 +27,7 @@ import { modellerSettingsDialog_translations_en_US } from './locale/modeller-set
 @Component({
     templateUrl: './modeller-settings-dialog.component.html',
     styleUrls: ['./modeller-settings-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcButtonComponent, XcCheckboxComponent, XcDialogWrapperComponent, XcIconComponent, XcLanguageSelectorComponent, XcPanelComponent, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class ModellerSettingsDialogComponent extends XcDialogComponent<void, void> {

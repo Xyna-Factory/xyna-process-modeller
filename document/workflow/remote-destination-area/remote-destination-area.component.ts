@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, Input, signal } from '@angular/core';
+import { Component, inject, Input, signal, ChangeDetectionStrategy } from '@angular/core';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItem } from '@zeta/xc';
 
 import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
@@ -31,6 +31,7 @@ import { VariableAreaComponent } from '../variable-area/variable-area.component'
     selector: 'remote-destination-area',
     templateUrl: './remote-destination-area.component.html',
     styleUrls: ['./remote-destination-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcFormAutocompleteComponent, XcI18nTranslateDirective, VariableAreaComponent]
 })
 export class RemoteDestinationAreaComponent extends ModellingObjectComponent {
@@ -61,6 +62,8 @@ export class RemoteDestinationAreaComponent extends ModellingObjectComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set remoteDestinationArea(value: XoRemoteDestinationArea) {
         this.setModel(value);

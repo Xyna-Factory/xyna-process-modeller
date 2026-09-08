@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { NgFor } from '@angular/common';
-import { Component, forwardRef, HostBinding, Input, signal } from '@angular/core';
+import { Component, forwardRef, HostBinding, Input, signal, ChangeDetectionStrategy } from '@angular/core';
 import { XoChangeParallelExecutionRequest } from '@pmod/xo/change-parallel-execution-request';
 import { XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective } from '@zeta/xc';
 import { XcMenuItem } from '@zeta/xc/xc-menu/xc-menu.types';
@@ -34,6 +34,7 @@ import { VariableComponent } from '../variable/variable.component';
     selector: 'foreach',
     templateUrl: './foreach.component.html',
     styleUrls: ['./foreach.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [NgFor, VariableComponent, XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective, forwardRef(() => ContentAreaComponent), VariableAreaServiceComponent]
 })
 export class ForeachComponent extends ModellingItemComponent {
@@ -67,6 +68,8 @@ export class ForeachComponent extends ModellingItemComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set foreach(value: XoForeach) {
         this.setModel(value);

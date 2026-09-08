@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, forwardRef, HostBinding, Input, input } from '@angular/core';
+import { Component, forwardRef, HostBinding, Input, input, ChangeDetectionStrategy } from '@angular/core';
 
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { XoExceptionHandling } from '../../../../xo/exception-handling.model';
@@ -28,6 +28,7 @@ import { ItemBarAreaComponent } from '../item-bar-area/item-bar-area.component';
     selector: 'exception-handling',
     templateUrl: './exception-handling.component.html',
     styleUrls: ['./exception-handling.component.scss', '../../common.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcI18nTranslateDirective, forwardRef(() => ContentAreaComponent), forwardRef(() => ItemBarAreaComponent)]
 })
 export class ExceptionHandlingComponent extends ModellingItemComponent {
@@ -40,6 +41,8 @@ export class ExceptionHandlingComponent extends ModellingItemComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set exceptionHandling(value: XoExceptionHandling) {
         this.setModel(value);

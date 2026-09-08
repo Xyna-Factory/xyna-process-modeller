@@ -18,7 +18,7 @@
 
 import { catchError, EMPTY, Observable, Subject, switchMap } from 'rxjs';
 
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ApiService, XoManagedFileID } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
 import { XcFormLabelComponent, XcIconButtonComponent, XcRichListComponent, XcRichListItem } from '@zeta/xc';
@@ -34,6 +34,7 @@ import { LibItemComponent, LibItemData } from './lib-item.component';
     selector: 'lib-area',
     templateUrl: './lib-area.component.html',
     styleUrls: ['./lib-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcFormLabelComponent, XcIconButtonComponent, XcRichListComponent, XcI18nTranslateDirective]
 })
 export class LibAreaComponent extends ModellingObjectComponent {
@@ -45,6 +46,8 @@ export class LibAreaComponent extends ModellingObjectComponent {
         return this.getModel() as XoLibrariesArea;
     }
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set libArea(value: XoLibrariesArea) {
         this.setModel(value);

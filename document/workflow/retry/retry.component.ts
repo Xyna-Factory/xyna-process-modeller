@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { XcIconComponent } from '@zeta/xc';
 
 import { XoRetry } from '../../../xo/retry.model';
@@ -30,10 +30,13 @@ import { VariableAreaServiceComponent } from '../variable-area/variable-area-ser
     selector: 'retry',
     templateUrl: './retry.component.html',
     styleUrls: ['./retry.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [VariableAreaServiceComponent, LabelAreaComponent, XcIconComponent, DocumentationAreaComponent]
 })
 export class RetryComponent extends ModellingItemComponent {
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set retry(value: XoRetry) {
         this.setModel(value);

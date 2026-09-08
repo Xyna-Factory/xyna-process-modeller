@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, inject, Input, ViewChild, output } from '@angular/core';
+import { Component, ElementRef, inject, Input, ViewChild, output, ChangeDetectionStrategy } from '@angular/core';
 
 import { XcContentEditableDirective } from '@zeta/xc';
 
@@ -33,6 +33,7 @@ export interface TemplatePartModifyEvent {
 @Component({
     selector: 'template-part-text',
     templateUrl: './template-part-text.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./template-part.component.scss', './template-part-text.component.scss']
 })
 export class TemplatePartTextComponent extends TemplatePartComponent {
@@ -42,6 +43,8 @@ export class TemplatePartTextComponent extends TemplatePartComponent {
 
     private _inputElement: ElementRef;
 
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
     @ViewChild('textInput', { static: false })
     set inputElement(value: ElementRef) {
         this._inputElement = value;
@@ -60,6 +63,8 @@ export class TemplatePartTextComponent extends TemplatePartComponent {
 
     readonly contentEditableValue = XcContentEditableDirective.getContentEditableValue();
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set part(value: TemplateText) {
         this.setModel(value);

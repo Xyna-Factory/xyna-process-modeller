@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input, output } from '@angular/core';
+import { Component, Input, output, ChangeDetectionStrategy } from '@angular/core';
 
 import { TextItem } from '../../../../xo/formula.model';
 import { XoItem } from '../../../../xo/item.model';
@@ -36,10 +36,13 @@ export interface TemplatePartSwitchFocusEvent {
 @Component({
     selector: 'template-part',
     template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./template-part.component.scss']
 })
 export class TemplatePartComponent extends ModellingItemComponent {
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set part(value: XoItem & TextItem) {
         this.setModel(value);

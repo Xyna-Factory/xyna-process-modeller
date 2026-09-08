@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent, XcIconComponent } from '@zeta/xc';
 
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
@@ -35,6 +35,7 @@ export interface RepairDialogData {
 @Component({
     templateUrl: './repair-dialog.component.html',
     styleUrls: ['./repair-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcButtonComponent, XcDialogWrapperComponent, XcIconComponent, XcI18nContextDirective, XcI18nTranslateDirective, RepairEntryComponent]
 })
 export class RepairDialogComponent extends XcDialogComponent<boolean, RepairDialogData> {

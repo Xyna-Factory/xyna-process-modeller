@@ -97,6 +97,8 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
     /**
      * Defines if default drop indicator shall be hidden
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input('mod-drop-area-hide-indicator')
     set hideIndicator(value: boolean) {
         this._hideIndicator = coerceBoolean(value);

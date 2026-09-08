@@ -18,7 +18,7 @@
 
 import { BehaviorSubject, combineLatest, map, Observable, of, Subject, Subscription } from 'rxjs';
 
-import { ChangeDetectorRef, Component, effect, inject, input, OnDestroy, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, effect, inject, input, OnDestroy, signal, ChangeDetectionStrategy } from '@angular/core';
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoDataType } from '@pmod/xo/data-type.model';
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
@@ -39,6 +39,7 @@ import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
     selector: 'datatype-details',
     templateUrl: './datatype-details.component.html',
     styleUrls: ['./datatype-details.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcTabBarComponent]
 })
 export class DataTypeDetailsComponent extends ModellingItemComponent implements OnDestroy {

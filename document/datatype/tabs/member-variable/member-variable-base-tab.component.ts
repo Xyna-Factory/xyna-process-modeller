@@ -18,7 +18,7 @@
 
 import { filter, Observable } from 'rxjs';
 
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { DataTypeService } from '@pmod/document/datatype.service';
 import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
 import { XoChangeMemberVariableFqnRequest } from '@pmod/xo/change-member-variable-fqn-request.model';
@@ -36,6 +36,7 @@ import { DatatypeVariableTabComponent } from '../datatype-tab.component';
 @Component({
     templateUrl: './member-variable-base-tab.component.html',
     styleUrls: ['./member-variable-base-tab.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcButtonComponent, XcFormAutocompleteComponent, XcFormInputComponent, XcFormValidatorRequiredDirective, XcTooltipDirective, XcI18nTranslateDirective, XcI18nPipe, TypeDocumentationAreaComponent]
 })
 export class MemberVariableBaseTabComponent extends DatatypeVariableTabComponent {
@@ -99,6 +100,8 @@ export class MemberVariableBaseTabComponent extends DatatypeVariableTabComponent
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
     @ViewChild('dataTypeAutocomplete', {static: false, read: XcFormAutocompleteComponent})
     set dataTypeAutocomplete(value: XcFormAutocompleteComponent) {
         const focus = value?.focus;

@@ -24,21 +24,21 @@
       @if (dataType.hasBaseType()) {
       <member-area xc-i18n-context="member-area" caption="Inherited Variables" [area]="dataType.inheritedVarsArea"
         (triggerAction)="performModellingAction($event)" [documentModel]="document" [allowAdd]="false">
-        <member-variable-area [memberVariableArea]="dataType.inheritedVarsArea" [selectedVariableId]="selectedVariable()?.id"
+        <member-variable-area [memberVariableArea]="dataType.inheritedVarsArea" [selectedVariableId]="$safeNavigationMigration(selectedVariable()?.id)"
           (triggerAction)="performModellingAction($event)" [documentModel]="document" />
       </member-area>
       }
       <!-- Member Variables -->
       <member-area xc-i18n-context="member-area" caption="Member Variables" [area]="dataType.memberVarsArea"
         (added)="addMemberVariable()" (triggerAction)="performModellingAction($event)" [documentModel]="document">
-        <member-variable-area [memberVariableArea]="dataType.memberVarsArea" [selectedVariableId]="selectedVariable()?.id"
+        <member-variable-area [memberVariableArea]="dataType.memberVarsArea" [selectedVariableId]="$safeNavigationMigration(selectedVariable()?.id)"
         (triggerAction)="performModellingAction($event)" [documentModel]="document" />
       </member-area>
       <!-- Inherited Services -->
       @if (dataType.hasBaseType()) {
       <member-area xc-i18n-context="member-area" caption="Inherited Services" [area]="dataType.inheritedMethodsArea"
         (triggerAction)="performModellingAction($event)" [documentModel]="document" [allowAdd]="false">
-        <service-area [serviceArea]="dataType.inheritedMethodsArea" [selectedServiceId]="selectedMethod()?.id" (triggerAction)="performModellingAction($event)"
+        <service-area [serviceArea]="dataType.inheritedMethodsArea" [selectedServiceId]="$safeNavigationMigration(selectedMethod()?.id)" (triggerAction)="performModellingAction($event)"
           [documentModel]="document" />
       </member-area>
       }
@@ -46,14 +46,14 @@
       @if (dataType.hasBaseType()) {
       <member-area xc-i18n-context="member-area" caption="Overridden Services" [area]="dataType.overriddenMethodsArea"
         (triggerAction)="performModellingAction($event)" [documentModel]="document" [allowAdd]="false">
-        <service-area [serviceArea]="dataType.overriddenMethodsArea" [selectedServiceId]="selectedMethod()?.id" (triggerAction)="performModellingAction($event)"
+        <service-area [serviceArea]="dataType.overriddenMethodsArea" [selectedServiceId]="$safeNavigationMigration(selectedMethod()?.id)" (triggerAction)="performModellingAction($event)"
           [documentModel]="document" />
       </member-area>
       }
       <!-- Member Services -->
       <member-area xc-i18n-context="member-area" caption="Member Services" [area]="dataType.memberMethodsArea"
         (added)="addMemberService()" (triggerAction)="performModellingAction($event)" [documentModel]="document">
-        <service-area [serviceArea]="dataType.memberMethodsArea" [selectedServiceId]="selectedMethod()?.id" (triggerAction)="performModellingAction($event)"
+        <service-area [serviceArea]="dataType.memberMethodsArea" [selectedServiceId]="$safeNavigationMigration(selectedMethod()?.id)" (triggerAction)="performModellingAction($event)"
           [documentModel]="document" />
       </member-area>
     </section>

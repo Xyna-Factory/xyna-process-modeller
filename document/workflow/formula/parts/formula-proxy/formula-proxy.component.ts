@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, Component, ElementRef, inject, output, signal, viewChild, input } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, output, signal, viewChild, input, ChangeDetectionStrategy } from '@angular/core';
 import { XoFormula } from '@pmod/xo/formula.model';
 import { FormulaFunctionGroup, FormulaPartFunction } from '@pmod/xo/util/formula-parts/formula-part-function';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent } from '@zeta/xc';
@@ -27,6 +27,7 @@ import { FormulaChildComponent } from '../formula-part.component';
     selector: 'formula-proxy',
     templateUrl: './formula-proxy.component.html',
     styleUrls: ['./formula-proxy.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcFormAutocompleteComponent]
 })
 export class FormulaProxyComponent implements AfterViewInit, FormulaChildComponent {

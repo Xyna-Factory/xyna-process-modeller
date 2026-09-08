@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, HostBinding, inject, Input, OnDestroy, QueryList, signal, ViewChildren } from '@angular/core';
+import { Component, ElementRef, HostBinding, inject, Input, OnDestroy, QueryList, signal, ViewChildren, ChangeDetectionStrategy } from '@angular/core';
 import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
 import { ApiService } from '@zeta/api';
 import { XcIconButtonComponent, XcMenuItem, XcMenuServiceDirective, XcMenuTriggerDirective } from '@zeta/xc';
@@ -51,6 +51,7 @@ interface ConcatParameter {
     selector: 'template-block',
     templateUrl: './template.component.html',
     styleUrls: ['./template.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [TemplateRowComponent, NonDraggableTextAreaComponent, XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective]
 })
 export class TemplateComponent extends ModellingItemComponent implements OnDestroy {
@@ -97,6 +98,8 @@ export class TemplateComponent extends ModellingItemComponent implements OnDestr
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set template(value: XoTemplate) {
         this.setModel(value);
@@ -336,6 +339,8 @@ export class TemplateComponent extends ModellingItemComponent implements OnDestr
     /**
      * Set focus to row
      */
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
     @ViewChildren('templateRow')
     private set templateRows(rows: QueryList<TemplateRowComponent>) {
         this.rowComponents = rows;

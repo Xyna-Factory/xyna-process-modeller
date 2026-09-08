@@ -19,7 +19,7 @@
 import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { Vector2 } from 'three';
 
-import { AfterViewInit, Component, ElementRef, inject, Input, input, NgZone, OnDestroy, output, viewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, Input, input, NgZone, OnDestroy, output, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { createSVGGroup, createSVGHorizontalCubicBezierPath, removeAllChildren } from '@zeta/base/draw';
 import { XcIconButtonComponent } from '@zeta/xc';
 
@@ -294,6 +294,7 @@ interface ConnectionObject {
     selector: 'dataflow',
     templateUrl: './dataflow.component.html',
     styleUrls: ['./dataflow.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcIconButtonComponent]
 })
 export class DataflowComponent implements AfterViewInit, OnDestroy {
@@ -580,6 +581,8 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set dataflow(dataflow: XoConnectionArray) {
         if (dataflow !== this._dataflow) {
@@ -620,6 +623,8 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set workflow(value: XoWorkflow) {
         if (value && value !== this._workflow) {

@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 
-import { Component, input, Input, OnInit } from '@angular/core';
+import { Component, input, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 import { XcIconComponent } from '@zeta/xc';
 
@@ -28,10 +28,13 @@ import { SelectableModellingObjectComponent } from '../../workflow/shared/select
     selector: 'details-item',
     templateUrl: './details-item.component.html',
     styleUrls: ['./details-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcIconComponent, XcI18nPipe]
 })
 export class DetailsItemComponent extends SelectableModellingObjectComponent implements OnInit {
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set detailsItem(value: XoDetailsItem) {
         this.setModel(value);

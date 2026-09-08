@@ -18,7 +18,7 @@
 import { merge, of, Subscription } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 
-import { AfterViewInit, ChangeDetectorRef, Component, inject, OnDestroy } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, inject, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcIconButtonComponent, XcIconComponent, XcMenuComponent, XcMenuItem, XcMenuTriggerDirective, XcTooltipDirective } from '@zeta/xc';
 
@@ -68,6 +68,7 @@ export type ToolbarItem = ToolbarButtonDescription | ToolbarButtonDescriptionGro
     selector: 'xfm-mod-toolbar',
     templateUrl: './toolbar.component.html',
     styleUrls: ['./toolbar.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcIconButtonComponent, XcIconComponent, XcMenuComponent, XcMenuTriggerDirective, XcTooltipDirective, XcI18nTranslateDirective, ModDraggableDirective]
 })
 export class ToolbarComponent implements AfterViewInit, OnDestroy {

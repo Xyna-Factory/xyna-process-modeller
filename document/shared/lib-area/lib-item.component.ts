@@ -18,7 +18,7 @@
 
 import { Subject } from 'rxjs';
 
-import { Component, HostBinding, inject } from '@angular/core';
+import { Component, HostBinding, inject, ChangeDetectionStrategy } from '@angular/core';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcIconButtonComponent, XcRichListItemComponent, XcTooltipDirective } from '@zeta/xc';
 
@@ -34,6 +34,7 @@ export interface LibItemData {
 @Component({
     templateUrl: './lib-item.component.html',
     styleUrls: ['./lib-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcIconButtonComponent, XcTooltipDirective]
 })
 export class LibItemComponent extends XcRichListItemComponent<void, LibItemData> {

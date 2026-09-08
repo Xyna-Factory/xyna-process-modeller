@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ApiService, RuntimeContext } from '@zeta/api';
 import { downloadFile } from '@zeta/base';
 import { XcAutocompleteDataWrapper, XcButtonComponent, XcCheckboxComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormAutocompleteComponent, XcFormInputComponent, XcFormTextareaComponent, XcPanelComponent } from '@zeta/xc';
@@ -31,6 +31,7 @@ import { workflowConstantBuilderModal_translations_en_US } from './locale/workfl
 @Component({
     templateUrl: './workflow-constant-builder-modal.component.html',
     styleUrls: ['./workflow-constant-builder-modal.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcButtonComponent, XcCheckboxComponent, XcDialogWrapperComponent, XcFormAutocompleteComponent, XcFormInputComponent, XcFormTextareaComponent, XcPanelComponent, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class WorkflowConstantBuilderModalComponent extends XcDialogComponent<void, void> {

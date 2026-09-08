@@ -18,7 +18,7 @@
 import { BehaviorSubject, Observable, Observer, of, Subject } from 'rxjs';
 import { distinctUntilChanged, filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 
-import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { RuntimeContext } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcTabComponent } from '@zeta/xc';
@@ -35,6 +35,7 @@ import { SelectableModellingObjectComponent } from './workflow/shared/selectable
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ''
 })
 export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponent<R, D> implements OnInit, OnDestroy {

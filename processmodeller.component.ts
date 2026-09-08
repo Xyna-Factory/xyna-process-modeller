@@ -18,7 +18,7 @@
 import { ReplaySubject, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
-import { ChangeDetectorRef, Component, inject, Injector, OnDestroy, OnInit, signal, ViewChild, viewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Injector, OnDestroy, OnInit, signal, ViewChild, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ApiService, FullQualifiedName, RuntimeContext, RuntimeContextSelectionSettings } from '@zeta/api';
 import { ConfigService } from '@zeta/api/config.service';
 import { KeyboardEventType, KeyDistributionService, OutsideListenerService } from '@zeta/base';
@@ -54,6 +54,7 @@ export let PMOD_RTC = RuntimeContext.guiHttpApplication;
 @Component({
     templateUrl: './processmodeller.component.html',
     styleUrls: ['./processmodeller.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ToolbarComponent, XcI18nContextDirective, XcTabBarComponent, NavigationComponent]
 })
 export class ProcessmodellerComponent extends RouteComponent implements OnInit, OnDestroy {
@@ -88,6 +89,8 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
         return this.document ? this.document.item : null;
     }
 
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
     @ViewChild(XcTabBarComponent, { static: false })
     set tabBar(value: XcTabBarComponent) {
         this._tabBar = value;

@@ -17,7 +17,7 @@
  */
 
 import { NgFor } from '@angular/common';
-import { Component, Input, input } from '@angular/core';
+import { Component, Input, input, ChangeDetectionStrategy } from '@angular/core';
 import { XcButtonComponent } from '@zeta/xc';
 
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
@@ -35,6 +35,7 @@ import { VariableComponent } from '../../variable/variable.component';
     selector: 'item-bar-area',
     templateUrl: './item-bar-area.component.html',
     styleUrls: ['./item-bar-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [NgFor, VariableComponent, XcButtonComponent, XcI18nTranslateDirective]
 })
 export class ItemBarAreaComponent extends ModellingObjectComponent {
@@ -42,6 +43,8 @@ export class ItemBarAreaComponent extends ModellingObjectComponent {
     readonly branchArea = input<XoContentArea>(undefined);
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set itemBarArea(value: XoItemBarArea) {
         this.setModel(value);

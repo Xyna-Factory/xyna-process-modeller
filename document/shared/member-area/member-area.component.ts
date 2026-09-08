@@ -18,7 +18,7 @@
 
 import { combineLatest } from 'rxjs';
 
-import { Component, inject, Input, output, input } from '@angular/core';
+import { Component, inject, Input, output, input, ChangeDetectionStrategy } from '@angular/core';
 import { XoPlugin } from '@yggdrasil/plugin/plugin.model';
 import { XcDefinitionProxyComponent, XcIconButtonComponent } from '@zeta/xc';
 import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
@@ -35,6 +35,7 @@ import { ModellingObjectComponent } from '../../workflow/shared/modelling-object
     selector: 'member-area',
     templateUrl: './member-area.component.html',
     styleUrls: ['./member-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcIconButtonComponent, XcDefinitionProxyComponent, XcI18nPipe]
 })
 export class MemberAreaComponent extends ModellingObjectComponent {
@@ -56,6 +57,8 @@ export class MemberAreaComponent extends ModellingObjectComponent {
         return ((this.area as any).items) ? (this.area as any).items.length : false;
     }
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set area(area: XoArea) {
         this.setModel(area);

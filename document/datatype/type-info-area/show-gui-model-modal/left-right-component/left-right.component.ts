@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { NgClass } from '@angular/common';
-import { Component, ElementRef, HostListener, inject, Input, OnInit, output, viewChild, input } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, Input, OnInit, output, viewChild, input, ChangeDetectionStrategy } from '@angular/core';
 
 
 /** @deprecated */
@@ -24,6 +24,7 @@ import { Component, ElementRef, HostListener, inject, Input, OnInit, output, vie
     selector: 'left-right-component',
     templateUrl: './left-right.component.html',
     styleUrls: ['./left-right.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [NgClass]
 })
 export class LeftRightComponent implements OnInit {
@@ -113,6 +114,8 @@ export class LeftRightComponent implements OnInit {
         return this._rightItems;
     }
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set rightItems(value: any[]) {
         this._rightItems = value;

@@ -19,7 +19,7 @@
 
 import { Subscription } from 'rxjs';
 
-import { ChangeDetectorRef, Component, forwardRef, HostBinding, inject, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, forwardRef, HostBinding, inject, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 
 import { XoBranch } from '../../../xo/branch.model';
 import { XoConditionalBranching } from '../../../xo/conditional-branching.model';
@@ -53,6 +53,7 @@ import { TemplateComponent } from '../template/template.component';
     selector: 'service-step',
     templateUrl: './service-step.component.html',
     styleUrls: ['./service-step.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
     forwardRef(() => BranchComponent),
     forwardRef(() => ConditionalBranchingComponent),
@@ -81,6 +82,8 @@ export class ServiceStepComponent extends SelectableModellingObjectComponent imp
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set item(value: XoItem) {
         this.runtimeInfoSubscription?.unsubscribe();
@@ -171,6 +174,8 @@ export class ServiceStepComponent extends SelectableModellingObjectComponent imp
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @HostBinding('attr.parent-direction')
     @Input('parent-direction')
     set parentDirection(value: 'row' | 'column') {

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input, output, viewChild } from '@angular/core';
+import { Component, Input, output, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { XMOMListComponent } from '@pmod/navigation/xmom/xmom-list.component';
 import { XoFactoryItemArray } from '@pmod/xo/factory-item.model';
 import { RelationTypeEnum, XoGetXmomRelationsResponse } from '@pmod/xo/get-xmom-relations-response.model';
@@ -35,11 +35,14 @@ export interface RelationGroup {
     selector: 'relation-table',
     templateUrl: './relation-table.component.html',
     styleUrls: ['./relation-table.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective, XcIconButtonComponent, XcTooltipDirective, XMOMListComponent_1]
 })
 export class RelationTableComponent {
     readonly xmomList = viewChild(XMOMListComponent);
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set relations(value: any) {
         this.groupedRelationList = [];

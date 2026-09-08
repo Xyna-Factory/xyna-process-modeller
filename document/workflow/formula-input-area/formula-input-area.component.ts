@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { coerceBoolean } from '@zeta/base';
 
 import { ModellingActionType } from '../../../api/xmom.service';
@@ -34,6 +34,7 @@ import { ModellingObjectComponent } from '../shared/modelling-object.component';
     selector: 'formula-input-area',
     templateUrl: './formula-input-area.component.html',
     styleUrls: ['./formula-input-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ModDropAreaDirective, FormulaComponent]
 })
 export class FormulaInputAreaComponent extends ModellingObjectComponent {
@@ -70,6 +71,8 @@ export class FormulaInputAreaComponent extends ModellingObjectComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set formulaArea(value: XoFormulaArea) {
         this.setModel(value);
@@ -80,6 +83,8 @@ export class FormulaInputAreaComponent extends ModellingObjectComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set questionmarkEditable(value: boolean) {
         this._questionmarkEditable = coerceBoolean(value);

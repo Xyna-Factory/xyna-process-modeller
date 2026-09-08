@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DocumentService } from '@pmod/document/document.service';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItemString } from '@zeta/xc';
 
@@ -31,6 +31,7 @@ import { ModellingObjectComponent } from '../shared/modelling-object.component';
     selector: 'order-input-source-area',
     templateUrl: './order-input-source-area.component.html',
     styleUrls: ['./order-input-source-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcFormAutocompleteComponent, XcI18nTranslateDirective]
 })
 export class OrderInputSourceAreaComponent extends ModellingObjectComponent implements OnInit {
@@ -85,6 +86,8 @@ export class OrderInputSourceAreaComponent extends ModellingObjectComponent impl
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set orderInputSourceArea(value: XoOrderInputSourceArea) {
         this.setModel(value);
@@ -107,6 +110,8 @@ export class OrderInputSourceAreaComponent extends ModellingObjectComponent impl
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set invocation(value: XoInvocation) {
         this._invocation = value;

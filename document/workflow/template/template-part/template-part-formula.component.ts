@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, viewChild } from '@angular/core';
+import { Component, viewChild, ChangeDetectionStrategy } from '@angular/core';
 
 import { FormulaComponent } from '../../formula/formula.component';
 import { TemplatePartComponent } from './template-part.component';
@@ -25,6 +25,7 @@ import { TemplatePartComponent } from './template-part.component';
     selector: 'template-part-formula',
     templateUrl: './template-part-formula.component.html',
     styleUrls: ['./template-part.component.scss', './template-part-formula.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FormulaComponent]
 })
 export class TemplatePartFormulaComponent extends TemplatePartComponent {

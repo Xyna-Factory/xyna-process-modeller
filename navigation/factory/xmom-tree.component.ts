@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, output, input } from '@angular/core';
+import { Component, output, input, ChangeDetectionStrategy } from '@angular/core';
 
 import { XmomPath } from '../../api/xmom.service';
 import { XMOMTreeItemComponent, XMOMTreeItemState } from './xmom-tree-item.component';
@@ -25,6 +25,7 @@ import { XMOMTreeItemComponent, XMOMTreeItemState } from './xmom-tree-item.compo
     selector: 'xfm-mod-nav-xmomtree',
     templateUrl: './xmom-tree.component.html',
     styleUrls: ['./xmom-tree.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XMOMTreeItemComponent]
 })
 export class XMOMTreeComponent {

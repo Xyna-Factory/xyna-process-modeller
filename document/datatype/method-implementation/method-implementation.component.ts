@@ -18,7 +18,7 @@
 
 import { combineLatest, Subscription } from 'rxjs';
 
-import { ChangeDetectorRef, Component, inject, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { MinMaxService } from '@pmod/document/min-max.service';
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoLibraryCallRequest } from '@pmod/xo/library-call-request.model';
@@ -41,6 +41,7 @@ import { CodingComponent } from '../coding/coding.component';
     selector: 'method-implementation',
     templateUrl: './method-implementation.component.html',
     styleUrls: ['./method-implementation.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [VariableAreaDocumentComponent, XcButtonComponent, XcCheckboxComponent, XcIconButtonComponent, XcTooltipDirective, XcDefinitionProxyComponent, XcI18nTranslateDirective, CodingComponent]
 })
 export class MethodImplementationComponent extends ModellingItemComponent implements OnDestroy {
@@ -80,6 +81,8 @@ export class MethodImplementationComponent extends ModellingItemComponent implem
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set method(value: XoMethod) {
         this.setModel(value);

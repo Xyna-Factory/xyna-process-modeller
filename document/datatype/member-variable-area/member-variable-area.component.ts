@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input, input } from '@angular/core';
+import { Component, Input, input, ChangeDetectionStrategy } from '@angular/core';
 import { XoModellingItem } from '@pmod/xo/modelling-item.model';
 import { XcIconButtonComponent } from '@zeta/xc';
 
@@ -36,6 +36,7 @@ import { MemberVariableComponent } from '../member-variable/member-variable.comp
     selector: 'member-variable-area',
     templateUrl: './member-variable-area.component.html',
     styleUrls: ['./member-variable-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ModDropAreaDirective, ModDraggableDirective, MemberVariableComponent, XcIconButtonComponent]
 })
 export class MemberVariableAreaComponent extends ModellingObjectComponent {
@@ -98,6 +99,8 @@ export class MemberVariableAreaComponent extends ModellingObjectComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set memberVariableArea(value: XoMemberVariableArea) {
         this.setModel(value);

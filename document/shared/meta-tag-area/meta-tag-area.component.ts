@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input, input } from '@angular/core';
+import { Component, Input, input, ChangeDetectionStrategy } from '@angular/core';
 import { ModellingActionType } from '@pmod/api/xmom.service';
 import { DragType } from '@pmod/document/workflow/shared/drag-and-drop/mod-drag-and-drop.service';
 import { ModDropEvent } from '@pmod/document/workflow/shared/drag-and-drop/mod-drop-area.directive';
@@ -36,6 +36,7 @@ import { MetaTagComponent } from '../meta-tag/meta-tag.component';
     selector: 'meta-tag-area',
     templateUrl: './meta-tag-area.component.html',
     styleUrl: './meta-tag-area.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcFormTextareaComponent, XcIconButtonComponent, XcTooltipDirective, XcI18nTranslateDirective, ModDropAreaDirective, MetaTagComponent, ModDraggableDirective]
 })
 export class MetaTagAreaComponent extends ModellingObjectComponent {
@@ -44,6 +45,8 @@ export class MetaTagAreaComponent extends ModellingObjectComponent {
         return this.getModel() as XoMetaTagArea;
     }
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set metaTagArea(value: XoMetaTagArea) {
         this.setModel(value);

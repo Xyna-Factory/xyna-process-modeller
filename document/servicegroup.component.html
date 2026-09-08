@@ -32,7 +32,7 @@
         [documentModel]="document"
         >
         <service-area [serviceArea]="serviceGroup.methodsArea"
-          [selectedServiceId]="selectedMethod()?.id"
+          [selectedServiceId]="$safeNavigationMigration(selectedMethod()?.id)"
           (triggerAction)="performModellingAction($event)"
           [documentModel]="document"
          />

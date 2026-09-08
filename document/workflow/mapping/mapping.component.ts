@@ -18,7 +18,7 @@
 
 import { filter, Subscription } from 'rxjs';
 
-import { Component, inject, Input, OnDestroy, signal } from '@angular/core';
+import { Component, inject, Input, OnDestroy, signal, ChangeDetectionStrategy } from '@angular/core';
 import { SelectionService } from '@pmod/document/selection.service';
 import { MappingMode, WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { ApiService, StartOrderOptionsBuilder } from '@zeta/api';
@@ -41,6 +41,7 @@ import { VisualMappingComponent } from '../visual-mapping/visual-mapping.compone
     selector: 'mapping',
     templateUrl: './mapping.component.html',
     styleUrls: ['./mapping.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [VariableAreaServiceComponent, LabelAreaComponent, XcIconButtonComponent, XcIconComponent, XcMenuServiceDirective, XcMenuTriggerDirective, DocumentationAreaComponent, FormulaAreaComponent, VisualMappingComponent]
 })
 export class MappingComponent extends ModellingItemComponent implements OnDestroy {
@@ -133,6 +134,8 @@ export class MappingComponent extends ModellingItemComponent implements OnDestro
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set mapping(value: XoMapping) {
         this.setModel(value);

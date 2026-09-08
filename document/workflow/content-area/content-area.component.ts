@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, forwardRef, HostBinding, Input } from '@angular/core';
+import { Component, forwardRef, HostBinding, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoContentArea } from '../../../xo/content-area.model';
@@ -33,6 +33,7 @@ import { ModellingObjectComponent } from '../shared/modelling-object.component';
     selector: 'content-area',
     templateUrl: './content-area.component.html',
     styleUrls: ['./content-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ModDropAreaDirective, forwardRef(() => ServiceStepComponent), ModDraggableDirective]
 })
 export class ContentAreaComponent extends ModellingObjectComponent {
@@ -111,6 +112,8 @@ export class ContentAreaComponent extends ModellingObjectComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set contentArea(value: XoContentArea) {
         this.setModel(value);
@@ -122,6 +125,8 @@ export class ContentAreaComponent extends ModellingObjectComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @HostBinding('attr.direction')
     @Input('xc-content-area-direction')
     set direction(value: 'row' | 'column') {

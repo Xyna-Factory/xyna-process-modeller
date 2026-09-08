@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 
 import { XcI18nContextDirective } from '../../../zeta/i18n';
 import { ModellingActionType } from '../api/xmom.service';
@@ -40,6 +40,7 @@ import { DropIndicatorComponent } from './workflow/drop-indicator/drop-indicator
     templateUrl: './servicegroup.component.html',
     styleUrls: ['./servicegroup.component.scss'],
     providers: [SelectionService, MinMaxService],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcI18nContextDirective, TypeInfoAreaComponent, LibAreaComponent, JavaSharedLibAreaComponent, MemberAreaComponent, ServiceAreaComponent, MethodDetailsComponent, DropIndicatorComponent]
 })
 export class ServiceGroupComponent extends TypeDocumentComponent<ServiceGroupDocumentModel> {

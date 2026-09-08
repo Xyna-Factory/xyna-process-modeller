@@ -17,7 +17,7 @@
  */
 import { combineLatest, Subscription } from 'rxjs';
 
-import { ChangeDetectorRef, Component, inject, Input, OnDestroy, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input, OnDestroy, signal, ChangeDetectionStrategy } from '@angular/core';
 import { PluginService } from '@pmod/document/plugin.service';
 import { XcAutocompleteDataWrapper, XcButtonComponent, XcDefinitionProxyComponent, XcFormAutocompleteComponent, XcFormInputComponent, XcFormLabelComponent, XcOptionItem, XcRichListComponent, XcRichListItem } from '@zeta/xc';
 import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
@@ -41,6 +41,7 @@ export enum ExceptionMessageLanguage {
     selector: 'exception-messages-area',
     templateUrl: './exception-messages-area.component.html',
     styleUrls: ['./exception-messages-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcButtonComponent, XcFormAutocompleteComponent, XcFormInputComponent, XcFormLabelComponent, XcRichListComponent, XcDefinitionProxyComponent, XcI18nTranslateDirective]
 })
 export class ExceptionMessagesAreaComponent extends ModellingObjectComponent implements OnDestroy {
@@ -99,6 +100,8 @@ export class ExceptionMessagesAreaComponent extends ModellingObjectComponent imp
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set exceptionMessagesArea(value: XoExceptionMessagesArea) {
         this.setModel(value);

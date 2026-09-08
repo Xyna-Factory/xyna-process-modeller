@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, effect, input } from '@angular/core';
+import { Component, effect, input, ChangeDetectionStrategy } from '@angular/core';
 import { XcTooltipDirective } from '@zeta/xc';
 
 import { ModellingActionType } from '../../../api/xmom.service';
@@ -29,6 +29,7 @@ import { SelectableModellingObjectComponent } from '../../workflow/shared/select
     selector: 'member-service',
     templateUrl: './member-service.component.html',
     styleUrls: ['./member-service.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcTooltipDirective, ModContentEditableDirective]
 })
 export class MemberServiceComponent extends SelectableModellingObjectComponent {

@@ -17,7 +17,7 @@
  */
 
 import { AsyncPipe } from '@angular/common';
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, inject, Input, output, viewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, inject, Input, output, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { coerceBoolean } from '@zeta/base';
 import { XcIconButtonComponent } from '@zeta/xc';
 
@@ -38,6 +38,7 @@ export interface CreateAssignmentEvent {
     selector: 'variable-tree-node',
     templateUrl: './variable-tree-node.component.html',
     styleUrls: ['./variable-tree-node.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ModDraggableDirective, ModDropAreaDirective, XcIconButtonComponent, AsyncPipe]
 })
 export class VariableTreeNodeComponent implements AfterViewInit, TreeNodeObserver {
@@ -52,6 +53,8 @@ export class VariableTreeNodeComponent implements AfterViewInit, TreeNodeObserve
 
     readonly assignedVariable = output<CreateAssignmentEvent>();
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set node(value: SkeletonTreeNode) {
         this.node?.removeObserver(this);
@@ -68,6 +71,8 @@ export class VariableTreeNodeComponent implements AfterViewInit, TreeNodeObserve
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set highlightMarks(value: boolean) {
         this._highlightMarks = coerceBoolean(value);

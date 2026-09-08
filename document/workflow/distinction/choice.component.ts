@@ -15,15 +15,18 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { XoChoice } from '../../../xo/choice.model';
 import { ModellingItemComponent } from '../shared/modelling-object.component';
 
 
-@Component({ template: '' })
+@Component({ changeDetection: ChangeDetectionStrategy.Eager,
+ template: '' })
 export class ChoiceComponent extends ModellingItemComponent {
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set choice(value: XoChoice) {
         this.setModel(value);

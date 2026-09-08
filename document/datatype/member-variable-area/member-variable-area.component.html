@@ -1,6 +1,6 @@
 <div
   id="{{ memberVariableArea ? memberVariableArea.id : '' }}"
-  [mod-drop-area]="memberVariableArea.items?.data"
+  [mod-drop-area]="$safeNavigationMigration(memberVariableArea.items?.data)"
   [mod-drop-area-allow-item]="allowItem"
   (mod-drop-area-dropped)="dropped($event)"
   class="variable-drop-area"

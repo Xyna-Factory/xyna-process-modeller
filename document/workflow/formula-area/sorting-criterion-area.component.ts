@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { XcFormLabelComponent, XcIconButtonComponent } from '@zeta/xc';
 
 import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
@@ -32,6 +32,7 @@ import { FormulaAreaComponent } from './formula-area.component';
     selector: 'sorting-criterion-area',
     templateUrl: './sorting-criterion-area.component.html',
     styleUrls: ['./sorting-criterion-area.component.scss', './formula-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcFormLabelComponent, XcIconButtonComponent, XcI18nTranslateDirective, FormulaComponent]
 })
 export class SortingCriterionAreaComponent extends FormulaAreaComponent {

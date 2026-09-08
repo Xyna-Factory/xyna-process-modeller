@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, Component, ElementRef, Input, NgZone, OnDestroy, inject, viewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, NgZone, OnDestroy, inject, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { GraphicallyRepresented } from '@zeta/base';
 import { createSVGCircle, createSVGGroup, createSVGHorizontalCubicBezierPath, createSVGText, createSVGVerticalCubicBezierPath } from '@zeta/base/draw';
 import { filter, forkJoin, take, tap } from 'rxjs';
@@ -187,6 +187,7 @@ export class Flow {
 @Component({
     selector: 'flow-canvas',
     templateUrl: './flow-canvas.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./flow-canvas.component.scss']
 })
 export class FlowCanvasComponent implements AfterViewInit, OnDestroy {
@@ -220,6 +221,8 @@ export class FlowCanvasComponent implements AfterViewInit, OnDestroy {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set flowDefinitions(definitions: FlowDefinition[]) {
         this._flows.forEach(flow => flow.destroy());

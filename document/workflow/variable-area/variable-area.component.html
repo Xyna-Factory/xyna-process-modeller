@@ -1,6 +1,6 @@
 <div
   id="{{variableArea ? variableArea.id : ''}}"
-  [mod-drop-area]="variableArea.items?.data"
+  [mod-drop-area]="$safeNavigationMigration($safeNavigationMigration($safeNavigationMigration($safeNavigationMigration(variableArea.items?.data))))"
   [mod-drop-area-allow-item]="allowItem"
   [mod-drop-area-can-drop]="canDrop"
   mod-drop-area-direction="horizontal"

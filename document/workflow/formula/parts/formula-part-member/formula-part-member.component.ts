@@ -19,7 +19,7 @@
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { AfterContentInit, AfterViewInit, Component, signal, viewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { XoStructureField, XoStructureMethod, XoStructureObject } from '@zeta/api';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItem } from '@zeta/xc';
 
@@ -33,6 +33,7 @@ import { FormulaChildComponent } from '../formula-part.component';
     selector: 'formula-part-member',
     templateUrl: './formula-part-member.component.html',
     styleUrls: ['./formula-part-member.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcFormAutocompleteComponent, VariableComponent]
 })
 export class FormulaPartMemberComponent extends FormulaEditablePartComponent implements AfterViewInit, AfterContentInit, FormulaChildComponent {

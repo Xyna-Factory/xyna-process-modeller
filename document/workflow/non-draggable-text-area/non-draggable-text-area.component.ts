@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, Component, HostListener, Input } from '@angular/core';
+import { AfterViewInit, Component, HostListener, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
 
@@ -23,6 +23,7 @@ import { ModellingObjectComponent } from '../shared/modelling-object.component';
 @Component({
     selector: 'non-draggable-text-area',
     templateUrl: './non-draggable-text-area.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./non-draggable-text-area.component.scss']
 })
 export class NonDraggableTextAreaComponent extends ModellingObjectComponent implements AfterViewInit {
@@ -37,6 +38,8 @@ export class NonDraggableTextAreaComponent extends ModellingObjectComponent impl
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set text(value: string) {
         this._text = value;

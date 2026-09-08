@@ -18,7 +18,7 @@
 
 import { Subject, Subscription } from 'rxjs';
 
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { XcFormLabelComponent, XcIconButtonComponent, XcRichListComponent, XcRichListItem } from '@zeta/xc';
 
 import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
@@ -31,6 +31,7 @@ import { JavaSharedLibItemComponent, JavaSharedLibItemData } from './java-shared
     selector: 'java-shared-lib-area',
     templateUrl: './java-shared-lib-area.component.html',
     styleUrls: ['./java-shared-lib-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcFormLabelComponent, XcIconButtonComponent, XcRichListComponent, XcI18nTranslateDirective]
 })
 export class JavaSharedLibAreaComponent extends ModellingObjectComponent implements OnDestroy {
@@ -39,6 +40,8 @@ export class JavaSharedLibAreaComponent extends ModellingObjectComponent impleme
         return this.getModel() as XoJavaSharedLibrariesArea;
     }
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set javaSharedLibArea(value: XoJavaSharedLibrariesArea) {
         this.setModel(value);

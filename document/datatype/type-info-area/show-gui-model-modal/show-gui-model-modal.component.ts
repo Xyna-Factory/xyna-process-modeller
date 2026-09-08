@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { XcButtonComponent, XcCheckboxComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormDirective, XcFormInputComponent, XcFormTextareaComponent, XcMasterDetailComponent, XcPanelComponent } from '@zeta/xc';
 
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
@@ -34,6 +34,7 @@ export interface ShowGuiModelModalComponentData {
 @Component({
     templateUrl: './show-gui-model-modal.component.html',
     styleUrls: ['./show-gui-model-modal.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcButtonComponent, XcCheckboxComponent, XcDialogWrapperComponent, XcFormDirective, XcFormInputComponent, XcFormTextareaComponent, XcMasterDetailComponent, XcPanelComponent, XcI18nContextDirective, XcI18nTranslateDirective, LeftRightComponent]
 })
 export class ShowGuiModelModalComponent extends XcDialogComponent<void, ShowGuiModelModalComponentData> {

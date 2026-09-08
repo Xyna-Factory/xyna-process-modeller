@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, inject, Input, input } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input, input, ChangeDetectionStrategy } from '@angular/core';
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoGuiDefiningWorkflow } from '@yggdrasil/plugin/gui-defining-workflow.model';
 import { XcDefinitionProxyComponent, XoPlugin } from '@zeta/xc';
@@ -28,6 +28,7 @@ import { CommonNavigationComponent } from '../common-navigation-class/common-nav
     selector: 'xfm-mod-nav-plugin',
     templateUrl: './nav-plugin.component.html',
     styleUrls: ['./nav-plugin.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcDefinitionProxyComponent]
 })
 export class NavPluginComponent extends CommonNavigationComponent {
@@ -41,6 +42,8 @@ export class NavPluginComponent extends CommonNavigationComponent {
         return this._bundle;
     }
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input('plugin')
     set plugin(value: XoPlugin) {
         this._plugin = value;

@@ -18,7 +18,7 @@
 
 import { Observable } from 'rxjs';
 
-import { Component, HostListener, inject, viewChild } from '@angular/core';
+import { Component, HostListener, inject, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { XcAutocompleteDataWrapper, XcButtonComponent, XcCheckboxComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormAutocompleteComponent, XcFormDirective, XcFormInputComponent, XcFormValidatorRequiredDirective, XcOptionItem, XcOptionItemString, XcTooltipDirective } from '@zeta/xc';
 
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
@@ -47,6 +47,7 @@ export interface LabelPathDialogData {
 @Component({
     templateUrl: './label-path-dialog.component.html',
     styleUrls: ['./label-path-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcButtonComponent, XcCheckboxComponent, XcDialogWrapperComponent, XcFormAutocompleteComponent, XcFormDirective, XcFormInputComponent, XcFormValidatorRequiredDirective, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class LabelPathDialogComponent extends XcDialogComponent<LabelPathDialogResult, LabelPathDialogData> {

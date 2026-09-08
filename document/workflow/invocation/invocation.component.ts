@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, forwardRef, inject, Input, output, signal } from '@angular/core';
+import { Component, forwardRef, inject, Input, output, signal, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
@@ -49,6 +49,7 @@ import { VariableAreaServiceComponent } from '../variable-area/variable-area-ser
     selector: 'invocation',
     templateUrl: './invocation.component.html',
     styleUrls: ['./invocation.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective, XcTooltipDirective, OrderInputSourceAreaComponent, RemoteDestinationAreaComponent, VariableAreaServiceComponent, TypeLabelAreaServiceComponent, DocumentationAreaComponent, forwardRef(() => ExceptionHandlingAreaComponent)]
 })
 export class InvocationComponent extends ModellingItemComponent {
@@ -182,6 +183,8 @@ export class InvocationComponent extends ModellingItemComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set invocation(value: XoInvocation) {
         this.setModel(value);

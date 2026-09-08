@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input, ChangeDetectionStrategy } from '@angular/core';
 import { I18nService } from '@zeta/i18n';
 import { XcLocalTableDataSource, XcTableComponent } from '@zeta/xc';
 
@@ -27,6 +27,7 @@ import { ModellingObjectComponent } from '../../workflow/shared/modelling-object
     selector: 'storable-properties-area',
     templateUrl: './storable-properties-area.component.html',
     styleUrls: ['./storable-properties-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcTableComponent]
 })
 export class StorablePropertiesAreaComponent extends ModellingObjectComponent {
@@ -41,6 +42,8 @@ export class StorablePropertiesAreaComponent extends ModellingObjectComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set storablePropertyArea(value: XoStorablePropertyArea) {
         this.setModel(value);

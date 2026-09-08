@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { XcI18nContextDirective } from '../../../../../../zeta/i18n';
 import { GlobalStorablePropertiesAreaComponent } from '../../global-storable-properties-area/global-storable-properties-area.component';
@@ -25,6 +25,7 @@ import { DatatypeDetailsTabComponent } from '../datatype-tab.component';
 @Component({
     templateUrl: './datatype-storable-tab.component.html',
     styleUrls: ['./datatype-storable-tab.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [GlobalStorablePropertiesAreaComponent, XcI18nContextDirective]
 })
 export class DataTypeStorableTabComponent extends DatatypeDetailsTabComponent {

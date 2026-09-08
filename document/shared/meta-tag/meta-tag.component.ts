@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ModellingActionType } from '@pmod/api/xmom.service';
 import { ModellingItemComponent } from '@pmod/document/workflow/shared/modelling-object.component';
 import { XoChangeMetaTagRequest } from '@pmod/xo/change-meta-tag-request.model';
@@ -31,10 +31,13 @@ import { ModContentEditableDirective } from '../../workflow/shared/mod-content-e
     selector: 'meta-tag',
     templateUrl: './meta-tag.component.html',
     styleUrls: ['./meta-tag.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ModContentEditableDirective, XcIconButtonComponent, XcTooltipDirective, XcI18nTranslateDirective]
 })
 export class MetaTagComponent extends ModellingItemComponent {
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input('meta-tag')
     set metaTag(value: XoMetaTag) {
         this.setModel(value);

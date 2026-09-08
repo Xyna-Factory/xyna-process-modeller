@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ModellingActionType } from '@pmod/api/xmom.service';
 import { ConflictDialogComponent, ConflictDialogData } from '@pmod/document/modal/conflict-dialog/conflict-dialog.component';
 import { XoCase } from '@pmod/xo/case.model';
@@ -36,6 +36,7 @@ import { CaseComponent } from '../case/case.component';
     selector: 'case-area',
     templateUrl: './case-area.component.html',
     styleUrls: ['./case-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ModDropAreaDirective, CaseComponent, ModDraggableDirective]
 })
 export class CaseAreaComponent extends ModellingObjectComponent {
@@ -104,6 +105,8 @@ export class CaseAreaComponent extends ModellingObjectComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set caseArea(value: XoCaseArea) {
         this.setModel(value);

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostBinding, input } from '@angular/core';
+import { Component, HostBinding, input, ChangeDetectionStrategy } from '@angular/core';
 import { XcIconComponent } from '@zeta/xc';
 
 import { XoChoice } from '../../xo/choice.model';
@@ -38,6 +38,7 @@ import { XoXmomItem } from '../../xo/xmom-item.model';
     selector: 'clipboard-item',
     templateUrl: './clipboard-item.component.html',
     styleUrls: ['./clipboard-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcIconComponent]
 })
 export class ClipboardItemComponent {

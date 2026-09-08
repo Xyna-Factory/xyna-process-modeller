@@ -17,7 +17,7 @@
  */
 
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, Input, input, TemplateRef } from '@angular/core';
+import { Component, Input, input, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 
 import { XoLabelArea } from '../../../xo/label-area.model';
 import { ModContentEditableDirective } from '../shared/mod-content-editable.directive';
@@ -28,6 +28,7 @@ import { TextAreaModellingObjectComponent } from '../shared/text-area-modelling-
     selector: 'label-area',
     templateUrl: './label-area.component.html',
     styleUrls: ['./label-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ModContentEditableDirective, NgTemplateOutlet]
 })
 export class LabelAreaComponent extends TextAreaModellingObjectComponent {
@@ -35,6 +36,8 @@ export class LabelAreaComponent extends TextAreaModellingObjectComponent {
     readonly menuTemplateRef = input<TemplateRef<any>>(undefined);
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set labelArea(value: XoLabelArea) {
         this.setTextArea(value);

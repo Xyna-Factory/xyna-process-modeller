@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostListener, Input, input } from '@angular/core';
+import { Component, HostListener, Input, input, ChangeDetectionStrategy } from '@angular/core';
 import { XoRequest } from '@pmod/xo/request.model';
 import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
@@ -31,6 +31,7 @@ import { ModellingItemComponent } from '../../shared/modelling-object.component'
     selector: 'case',
     templateUrl: './case.component.html',
     styleUrls: ['./case.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcIconButtonComponent, XcTooltipDirective, XcI18nTranslateDirective, FormulaComponent]
 })
 export class CaseComponent extends ModellingItemComponent {
@@ -38,6 +39,8 @@ export class CaseComponent extends ModellingItemComponent {
     readonly detachable = input<boolean>(undefined);
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set case(value: XoCase) {
         this.setModel(value);

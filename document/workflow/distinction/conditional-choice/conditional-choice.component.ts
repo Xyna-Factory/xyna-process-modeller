@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, forwardRef } from '@angular/core';
+import { Component, forwardRef, ChangeDetectionStrategy } from '@angular/core';
 
 import { ContentAreaComponent } from '../../content-area/content-area.component';
 import { FormulaInputAreaComponent } from '../../formula-input-area/formula-input-area.component';
@@ -27,6 +27,7 @@ import { ChoiceComponent } from '../choice.component';
     selector: 'conditional-choice',
     templateUrl: './conditional-choice.component.html',
     styleUrls: ['../choice.component.scss', './conditional-choice.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FormulaInputAreaComponent, forwardRef(() => ContentAreaComponent), VariableAreaChoiceComponent]
 })
 export class ConditionalChoiceComponent extends ChoiceComponent {

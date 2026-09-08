@@ -19,7 +19,7 @@ import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { filter, first, map, switchMap, tap } from 'rxjs/operators';
 
 import { NgFor } from '@angular/common';
-import { ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input, ChangeDetectionStrategy } from '@angular/core';
 import { coerceBoolean } from '@zeta/base';
 import { XcSpinnerComponent } from '@zeta/xc';
 
@@ -35,6 +35,7 @@ import { XMOMListItemComponent } from './xmom-list-item.component';
     selector: 'xfm-mod-nav-xmomlist',
     templateUrl: './xmom-list.component.html',
     styleUrls: ['./xmom-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [NgFor, XMOMListItemComponent, ModDraggableDirective, XcSpinnerComponent]
 })
 export class XMOMListComponent {
@@ -50,6 +51,8 @@ export class XMOMListComponent {
     readonly openMenusSubject = new BehaviorSubject<number>(0);
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set presetXmoms(value: XoXmomItemArray) {
         this._xmomItems = value;
@@ -122,6 +125,8 @@ export class XMOMListComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input('show-fqn')
     set showFQN(value: boolean) {
         this._showFQN = coerceBoolean(value);

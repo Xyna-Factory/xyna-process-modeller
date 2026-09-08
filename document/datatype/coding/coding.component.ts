@@ -19,7 +19,7 @@
 import * as monaco from 'monaco-editor';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, inject, Input, input, OnDestroy, output } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, inject, Input, input, OnDestroy, output, ChangeDetectionStrategy } from '@angular/core';
 import { XoMethod } from '@pmod/xo/method.model';
 
 
@@ -27,6 +27,7 @@ import { XoMethod } from '@pmod/xo/method.model';
     selector: 'coding',
     templateUrl: './coding.component.html',
     styleUrls: ['./coding.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MonacoEditorModule]
 })
 export class CodingComponent implements AfterViewInit, OnDestroy {
@@ -60,6 +61,8 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
 
     private _method: XoMethod | null = null;
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set method(value: XoMethod | null) {
         this._method = value;

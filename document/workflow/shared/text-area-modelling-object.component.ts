@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, ChangeDetectionStrategy } from '@angular/core';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeTextRequest } from '../../../xo/change-text-request.model';
@@ -26,7 +26,8 @@ import { ModellingObjectComponent } from './modelling-object.component';
 /**
  * Base class for all components, text-actions can be done on
  */
-@Component({ template: '' })
+@Component({ changeDetection: ChangeDetectionStrategy.Eager,
+ template: '' })
 export class TextAreaModellingObjectComponent extends ModellingObjectComponent {
 
     getTextArea(): XoTextArea {

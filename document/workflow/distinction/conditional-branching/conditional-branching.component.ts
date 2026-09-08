@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, forwardRef } from '@angular/core';
+import { Component, forwardRef, ChangeDetectionStrategy } from '@angular/core';
 import { XcIconButtonComponent } from '@zeta/xc';
 
 import { ModellingActionType } from '../../../../api/xmom.service';
@@ -30,6 +30,7 @@ import { ChoiceComponent } from '../choice.component';
     selector: 'conditional-branching',
     templateUrl: './conditional-branching.component.html',
     styleUrls: ['../choice.component.scss', './conditional-branching.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FormulaInputAreaComponent, forwardRef(() => ContentAreaComponent), XcIconButtonComponent, VariableAreaChoiceComponent]
 })
 export class ConditionalBranchingComponent extends ChoiceComponent {

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostBinding, Input, input, output } from '@angular/core';
+import { Component, HostBinding, Input, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { XcIconButtonComponent } from '@zeta/xc';
 
 import { XmomPath } from '../../api/xmom.service';
@@ -35,6 +35,7 @@ export interface XMOMTreeItemState {
     selector: 'xfm-mod-nav-xmomtreeitem',
     templateUrl: './xmom-tree-item.component.html',
     styleUrls: ['./xmom-tree-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcIconButtonComponent]
 })
 export class XMOMTreeItemComponent {
@@ -50,6 +51,8 @@ export class XMOMTreeItemComponent {
     readonly stateChange = output<XMOMTreeItemState>();
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set xmomPath(value: XmomPath) {
         this._xmomPath = value;
@@ -64,6 +67,8 @@ export class XMOMTreeItemComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set selectedXmomPaths(value: XmomPath[]) {
         this._selectedXmomPaths = value || [];
@@ -76,6 +81,8 @@ export class XMOMTreeItemComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set expandedXmomPaths(value: XmomPath[]) {
         this._expandedXmomPaths = value || [];

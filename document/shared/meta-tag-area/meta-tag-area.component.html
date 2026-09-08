@@ -16,7 +16,7 @@
 }
 
 <div
-  [mod-drop-area]="metaTagArea.items?.data"
+  [mod-drop-area]="$safeNavigationMigration(metaTagArea.items?.data)"
   [mod-drop-area-allow-item]="allowItem"
   (mod-drop-area-dropped)="dropped($event)"
   class="drop-area"

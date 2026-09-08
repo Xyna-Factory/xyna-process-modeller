@@ -19,7 +19,7 @@
 import { merge, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { ChangeDetectorRef, Component, inject, Input, input, OnInit, ViewChild, viewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input, input, OnInit, ViewChild, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { FullQualifiedName, XoStructureType } from '@zeta/api';
 import { isString } from '@zeta/base';
 import { XcAutocompleteDataWrapper, XcButtonComponent, XcCheckboxComponent, XcDialogService, XcFormAutocompleteComponent, XcFormInputComponent, XcFormLabelComponent, XcFormValidatorRequiredDirective, XcOptionItemString, XcOptionItemStringOrUndefined, XcTooltipDirective } from '@zeta/xc';
@@ -49,6 +49,7 @@ import { ShowGuiModelModalComponent } from './show-gui-model-modal/show-gui-mode
     selector: 'type-info-area',
     templateUrl: './type-info-area.component.html',
     styleUrls: ['./type-info-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcButtonComponent, XcCheckboxComponent, XcFormAutocompleteComponent, XcFormInputComponent, XcFormLabelComponent, XcFormValidatorRequiredDirective, XcHasRightDirective, XcTooltipDirective, XcI18nTranslateDirective, ModDropAreaDirective]
 })
 export class TypeInfoAreaComponent extends ModellingObjectComponent implements OnInit {
@@ -110,6 +111,8 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
     @ViewChild('pathAutocomplete', {static: false, read: XcFormAutocompleteComponent})
     set pathAutocomplete(value: XcFormAutocompleteComponent) {
         const focus = value?.focus;
@@ -121,6 +124,8 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
     @ViewChild('baseTypeAutocomplete', {static: false, read: XcFormAutocompleteComponent})
     set baseTypeAutocomplete(value: XcFormAutocompleteComponent) {
         const focus = value?.focus;
@@ -142,6 +147,8 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set typeInfoArea(value: XoDataTypeTypeLabelArea & XoServiceGroupTypeLabelArea) {
         this.setModel(value);

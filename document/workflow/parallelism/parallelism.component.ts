@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, forwardRef, Input } from '@angular/core';
+import { Component, forwardRef, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { XoParallelism } from '../../../xo/parallelism.model';
 import { ContentAreaComponent } from '../content-area/content-area.component';
@@ -26,10 +26,13 @@ import { ModellingItemComponent } from '../shared/modelling-object.component';
     selector: 'parallelism',
     templateUrl: './parallelism.component.html',
     styleUrls: ['./parallelism.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [forwardRef(() => ContentAreaComponent)]
 })
 export class ParallelismComponent extends ModellingItemComponent {
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set parallelism(value: XoParallelism) {
         this.setModel(value);

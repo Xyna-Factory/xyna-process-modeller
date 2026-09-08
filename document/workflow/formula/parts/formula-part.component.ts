@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { FormulaPart } from '../../../../xo/util/formula-parts/formula-part';
 
@@ -25,12 +25,15 @@ export interface FormulaChildComponent {
 }
 
 
-@Component({ template: '' })
+@Component({ changeDetection: ChangeDetectionStrategy.Eager,
+ template: '' })
 export class FormulaPartComponent {
 
     private _formulaPart: FormulaPart;
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input('formula-part')
     set formulaPart(value: FormulaPart) {
         this._formulaPart = value;

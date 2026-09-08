@@ -1,5 +1,5 @@
 <div
-  [mod-drop-area]="caseArea.items?.data"
+  [mod-drop-area]="$safeNavigationMigration(caseArea.items?.data)"
   [mod-drop-area-allow-item]="allowItem"
   [mod-drop-area-can-drop]="canDrop"
   (mod-drop-area-dropped)="dropped($event)"

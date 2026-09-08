@@ -15,13 +15,14 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostListener, output } from '@angular/core';
+import { Component, HostListener, output, ChangeDetectionStrategy } from '@angular/core';
 
 import { FormulaPart } from '../../../../xo/util/formula-parts/formula-part';
 import { FormulaPartComponent } from './formula-part.component';
 
 
-@Component({ template: '' })
+@Component({ changeDetection: ChangeDetectionStrategy.Eager,
+ template: '' })
 export class FormulaEditablePartComponent extends FormulaPartComponent {
 
     /**

@@ -19,7 +19,7 @@
 import { Subject } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 
-import { ChangeDetectorRef, Component, inject, NgZone, ViewChild, viewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, NgZone, ViewChild, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MessageBusService } from '@yggdrasil/events';
 import { AuthService } from '@zeta/auth';
 import { XcCheckboxComponent, XcFormAutocompleteComponent, XcFormInputComponent } from '@zeta/xc';
@@ -49,6 +49,7 @@ export interface FilterConditionData {
     selector: 'xfm-mod-nav-search',
     templateUrl: './search.component.html',
     styleUrls: ['./search.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective, XcCheckboxComponent, XcFormAutocompleteComponent, XcFormInputComponent, XMOMListComponent]
 })
 export class SearchComponent extends CommonNavigationComponent {
@@ -63,6 +64,8 @@ export class SearchComponent extends CommonNavigationComponent {
     readonly xmomList = viewChild(XMOMListComponent);
 
     _inputComponent: XcFormInputComponent;
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
     @ViewChild('input', { static: false })
     set inputComponent(value: XcFormInputComponent) {
         if (this.zone) {

@@ -17,7 +17,7 @@
  */
 import { merge, of, Subscription } from 'rxjs';
 
-import { AfterViewInit, Component, inject, OnDestroy, OnInit, signal, viewChild, viewChildren } from '@angular/core';
+import { AfterViewInit, Component, inject, OnDestroy, OnInit, signal, viewChild, viewChildren, ChangeDetectionStrategy } from '@angular/core';
 import { TypeDocumentModel } from '@pmod/document/model/type-document.model';
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoArray } from '@zeta/api';
@@ -69,6 +69,7 @@ export enum AreaValue {
     selector: 'xfm-mod-nav',
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FactoryComponent, XcI18nContextDirective, XcI18nTranslateDirective, SearchComponent, DetailsComponent, ClipboardComponent, ErrorsComponent, CompareComponent, HelpComponent, NavPluginComponent, XcHasRightDirective, XcIconButtonComponent, XcMenuComponent, XcMenuTriggerDirective, XcTooltipDirective]
 })
 export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { XoTextArea } from '../../../xo/text-area.model';
 import { ModContentEditableDirective } from '../shared/mod-content-editable.directive';
@@ -26,10 +26,13 @@ import { TextAreaModellingObjectComponent } from '../shared/text-area-modelling-
     selector: 'documentation-area',
     templateUrl: './documentation-area.component.html',
     styleUrls: ['./documentation-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ModContentEditableDirective]
 })
 export class DocumentationAreaComponent extends TextAreaModellingObjectComponent {
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set documentationArea(value: XoTextArea) {
         this.setTextArea(value);

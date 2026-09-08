@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 
 import { XcI18nContextDirective } from '../../../zeta/i18n';
@@ -48,6 +48,7 @@ import { DropIndicatorComponent } from './workflow/drop-indicator/drop-indicator
     templateUrl: './datatype.component.html',
     styleUrls: ['./datatype.component.scss'],
     providers: [SelectionService, MinMaxService],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcI18nContextDirective, TypeInfoAreaComponent, LibAreaComponent, JavaSharedLibAreaComponent, DetailsItemComponent, MemberAreaComponent, MemberVariableAreaComponent, ServiceAreaComponent, DataTypeDetailsComponent, MemberVariableDetailsComponent, MethodDetailsComponent, DropIndicatorComponent]
 })
 export class DataTypeComponent extends TypeDocumentComponent<DataTypeDocumentModel> {

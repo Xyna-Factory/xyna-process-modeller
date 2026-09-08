@@ -32,7 +32,7 @@
           [allowAdd]="false"
           >
           <member-variable-area [memberVariableArea]="exceptionType.inheritedVarsArea"
-            [selectedVariableId]="selectedVariable()?.id"
+            [selectedVariableId]="$safeNavigationMigration(selectedVariable()?.id)"
             (triggerAction)="performModellingAction($event)"
             [documentModel]="document"
            />
@@ -48,7 +48,7 @@
         [documentModel]="document"
         >
         <member-variable-area [memberVariableArea]="exceptionType.memberVarsArea"
-          [selectedVariableId]="selectedVariable()?.id"
+          [selectedVariableId]="$safeNavigationMigration(selectedVariable()?.id)"
           (triggerAction)="performModellingAction($event)"
           [documentModel]="document"
          />

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { XcIconComponent } from '@zeta/xc';
 
 import { XoTextArea } from '../../../../xo/text-area.model';
@@ -30,10 +30,13 @@ import { VariableAreaServiceComponent } from '../../variable-area/variable-area-
     selector: 'throw',
     templateUrl: './throw.component.html',
     styleUrls: ['./throw.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [VariableAreaServiceComponent, LabelAreaComponent, XcIconComponent, DocumentationAreaComponent]
 })
 export class ThrowComponent extends ModellingItemComponent {
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set throw(value: XoThrow) {
         this.setModel(value);

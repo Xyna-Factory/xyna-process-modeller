@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, effect, HostBinding, inject, input, signal } from '@angular/core';
+import { Component, effect, HostBinding, inject, input, signal, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { RuntimeContext, Xo } from '@zeta/api';
@@ -52,6 +52,7 @@ import { SelectableModellingObjectComponent } from '../shared/selectable-modelli
     selector: 'variable',
     templateUrl: './variable.component.html',
     styleUrls: ['./variable.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ModDropAreaDirective, ModContentEditableDirective, XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective, XcTooltipDirective]
 })
 export class VariableComponent extends SelectableModellingObjectComponent {

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, HostListener, Input, output, QueryList, viewChild, ViewChildren, viewChildren, input } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, output, QueryList, viewChild, ViewChildren, viewChildren, input, ChangeDetectionStrategy } from '@angular/core';
 
 import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoData } from '../../../../xo/data.model';
@@ -51,6 +51,7 @@ export interface SwitchTemplateRowFocusEvent {
     selector: 'template-row',
     templateUrl: './template-row.component.html',
     styleUrls: ['./template-row.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ModDropAreaDirective, TemplatePartFormulaComponent, TemplatePartTextComponent]
 })
 export class TemplateRowComponent extends ModellingObjectComponent {
@@ -72,6 +73,8 @@ export class TemplateRowComponent extends ModellingObjectComponent {
 
     readonly switchRow = output<SwitchTemplateRowFocusEvent>();
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set row(value: TemplateRow) {
         this.setModel(value);
@@ -255,6 +258,8 @@ export class TemplateRowComponent extends ModellingObjectComponent {
     /**
      * Set focus to text part
      */
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
     @ViewChildren('textPart')
     private set textParts(parts: QueryList<TemplatePartTextComponent>) {
         this._textParts = parts;

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, effect, input } from '@angular/core';
+import { Component, effect, input, ChangeDetectionStrategy } from '@angular/core';
 import { XoDeleteRequest } from '@pmod/xo/delete-request.model';
 import { XcIconButtonComponent } from '@zeta/xc';
 
@@ -38,6 +38,7 @@ import { MemberServiceComponent } from '../member-service/member-service.compone
     selector: 'service-area',
     templateUrl: './service-area.component.html',
     styleUrls: ['./service-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ModDropAreaDirective, MemberServiceComponent, ModDraggableDirective, XcIconButtonComponent]
 })
 export class ServiceAreaComponent extends ModellingObjectComponent {

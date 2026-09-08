@@ -18,7 +18,7 @@
 
 import { Subject } from 'rxjs';
 
-import { Component, HostBinding } from '@angular/core';
+import { Component, HostBinding, ChangeDetectionStrategy } from '@angular/core';
 import { XcCheckboxComponent, XcRichListItemComponent, XcTooltipDirective } from '@zeta/xc';
 
 import { ModellingActionType } from '../../../api/xmom.service';
@@ -37,6 +37,7 @@ export interface JavaSharedLibItemData {
 @Component({
     templateUrl: './java-shared-lib-item.component.html',
     styleUrls: ['./java-shared-lib-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcCheckboxComponent, XcTooltipDirective]
 })
 export class JavaSharedLibItemComponent extends XcRichListItemComponent<void, JavaSharedLibItemData> {

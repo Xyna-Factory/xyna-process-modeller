@@ -19,7 +19,7 @@
 import { throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { I18nService } from '@zeta/i18n';
 import { XcButtonComponent, XcDialogService } from '@zeta/xc';
 
@@ -37,6 +37,7 @@ import { ClipboardAreaComponent } from './clipboard-area.component';
     selector: 'xfm-mod-nav-clipboard',
     templateUrl: './clipboard.component.html',
     styleUrls: ['./clipboard.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcI18nContextDirective, XcI18nTranslateDirective, XcButtonComponent, ClipboardAreaComponent]
 })
 export class ClipboardComponent extends CommonNavigationComponent {

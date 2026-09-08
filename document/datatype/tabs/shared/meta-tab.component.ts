@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { XoMetaTagArea } from '@pmod/xo/meta-tag-area.model';
 
 import { XcI18nContextDirective } from '../../../../../../zeta/i18n';
@@ -26,6 +26,7 @@ import { DatatypeTabComponent, MetaTabData } from '../datatype-tab.component';
 @Component({
     templateUrl: './meta-tab.component.html',
     styleUrls: ['./meta-tab.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MetaTagAreaComponent, XcI18nContextDirective]
 })
 export class MetaTabComponent extends DatatypeTabComponent<MetaTabData> {

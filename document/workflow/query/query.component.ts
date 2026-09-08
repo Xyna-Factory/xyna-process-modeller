@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, forwardRef, inject, Input, signal } from '@angular/core';
+import { Component, forwardRef, inject, Input, signal, ChangeDetectionStrategy } from '@angular/core';
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { I18nService } from '@zeta/i18n';
 import { XcCheckboxComponent, XcDialogService, XcFormInputComponent, XcFormValidatorNumberDirective, XcIconButtonComponent, XcIconComponent, XcIdentityDataWrapper, XcMenuItem, XcMenuServiceDirective, XcMenuTriggerDirective, XcStringIntegerDataWrapper } from '@zeta/xc';
@@ -39,6 +39,7 @@ import { VariableAreaServiceComponent } from '../variable-area/variable-area-ser
     selector: 'query',
     templateUrl: './query.component.html',
     styleUrls: ['./query.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [LabelAreaComponent, XcCheckboxComponent, XcFormInputComponent, XcFormValidatorNumberDirective, XcIconButtonComponent, XcIconComponent, XcMenuServiceDirective, XcMenuTriggerDirective, DocumentationAreaComponent, FilterCriterionAreaComponent, SelectionMaskCriterionAreaComponent, SortingCriterionAreaComponent, XcI18nTranslateDirective, forwardRef(() => ExceptionHandlingAreaComponent), VariableAreaServiceComponent]
 })
 export class QueryComponent extends InvocationComponent {
@@ -78,6 +79,8 @@ export class QueryComponent extends InvocationComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set query(value: XoQuery) {
         this.invocation = value;

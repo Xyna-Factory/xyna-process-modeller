@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, forwardRef } from '@angular/core';
+import { Component, forwardRef, ChangeDetectionStrategy } from '@angular/core';
 import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
@@ -32,6 +32,7 @@ import { ChoiceComponent } from '../choice.component';
     selector: 'type-choice',
     templateUrl: './type-choice.component.html',
     styleUrls: ['../choice.component.scss', './type-choice.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcIconButtonComponent, XcTooltipDirective, XcI18nTranslateDirective, FormulaInputAreaComponent, forwardRef(() => ContentAreaComponent), VariableAreaChoiceComponent]
 })
 export class TypeChoiceComponent extends ChoiceComponent {

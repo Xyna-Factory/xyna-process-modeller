@@ -17,7 +17,7 @@
  */
 
 import { AsyncPipe } from '@angular/common';
-import { Component, Input, output } from '@angular/core';
+import { Component, Input, output, ChangeDetectionStrategy } from '@angular/core';
 import { coerceBoolean } from '@zeta/base';
 
 import { CreateAssignmentEvent, VariableTreeNodeComponent } from '../variable-tree-node/variable-tree-node.component';
@@ -29,6 +29,7 @@ import { SkeletonTreeNode } from './data-source/skeleton-tree-node';
     selector: 'variable-tree',
     templateUrl: './variable-tree.component.html',
     styleUrls: ['./variable-tree.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [VariableTreeNodeComponent, AsyncPipe]
 })
 export class VariableTreeComponent {
@@ -37,6 +38,8 @@ export class VariableTreeComponent {
 
     readonly createdAssignment = output<CreateAssignmentEvent>();
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input('tree-datasource')
     set dataSource(value: SkeletonTreeDataSource) {
         this._dataSource = value;
@@ -48,6 +51,8 @@ export class VariableTreeComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set highlightMarkedNodes(value: boolean) {
         this._highlightMarkedNodes = coerceBoolean(value);

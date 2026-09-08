@@ -17,7 +17,7 @@
  */
 import { filter } from 'rxjs/operators';
 
-import { Component, HostListener, inject, Input, output, signal } from '@angular/core';
+import { Component, HostListener, inject, Input, output, signal, ChangeDetectionStrategy } from '@angular/core';
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
 import { FullQualifiedName } from '@zeta/api';
 import { coerceBoolean } from '@zeta/base';
@@ -42,6 +42,7 @@ import { XoXmomItem } from '../../xo/xmom-item.model';
     selector: 'xfm-mod-nav-xmomlistitem',
     templateUrl: './xmom-list-item.component.html',
     styleUrls: ['./xmom-list-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcIconButtonComponent, XcIconComponent, XcMenuServiceDirective, XcMenuTriggerDirective, XcTooltipDirective, XcI18nTranslateDirective]
 })
 export class XMOMListItemComponent {
@@ -150,6 +151,8 @@ export class XMOMListItemComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input('xmom-item')
     set xmomItem(value: XoXmomItem | XoFactoryItem) {
         this._xmomItem = value;
@@ -165,6 +168,8 @@ export class XMOMListItemComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input('show-fqn')
     set showFQN(value: boolean) {
         this._showFQN = coerceBoolean(value);

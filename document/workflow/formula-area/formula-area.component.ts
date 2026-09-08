@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input, input } from '@angular/core';
+import { Component, Input, input, ChangeDetectionStrategy } from '@angular/core';
 import { XcFormLabelComponent, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
@@ -33,6 +33,7 @@ import { ModellingObjectComponent } from '../shared/modelling-object.component';
     selector: 'formula-area',
     templateUrl: './formula-area.component.html',
     styleUrls: ['./formula-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcFormLabelComponent, XcIconButtonComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, FormulaComponent]
 })
 export class FormulaAreaComponent extends ModellingObjectComponent {
@@ -45,6 +46,8 @@ export class FormulaAreaComponent extends ModellingObjectComponent {
 
     readonly newFormulaExpression = input('');
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set formulaArea(value: XoFormulaArea) {
         this.setModel(value);
@@ -57,6 +60,8 @@ export class FormulaAreaComponent extends ModellingObjectComponent {
 
 
     // filters formulas including expression filter as xfl
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set expressionFilter(filter: string) {
         this._expressionFilter = filter;

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { XoInsertSelectionMaskRequest } from '@pmod/xo/insert-selection-mask-request.model';
 import { XcFormLabelComponent, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
@@ -29,6 +29,7 @@ import { FormulaAreaComponent } from './formula-area.component';
     selector: 'selection-mask-criterion-area',
     templateUrl: './formula-area.component.html',
     styleUrls: ['./formula-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcFormLabelComponent, XcIconButtonComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, FormulaComponent]
 })
 export class SelectionMaskCriterionAreaComponent extends FormulaAreaComponent {

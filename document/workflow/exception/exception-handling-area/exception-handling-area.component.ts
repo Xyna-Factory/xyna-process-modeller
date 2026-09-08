@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, forwardRef, HostBinding, inject, Input, input } from '@angular/core';
+import { Component, forwardRef, HostBinding, inject, Input, input, ChangeDetectionStrategy } from '@angular/core';
 import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
@@ -30,6 +30,7 @@ import { ExceptionHandlingComponent } from '../exception-handling/exception-hand
     selector: 'exception-handling-area',
     templateUrl: './exception-handling-area.component.html',
     styleUrls: ['./exception-handling-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [forwardRef(() => ExceptionHandlingComponent), forwardRef(() => CompensationComponent), XcIconButtonComponent, XcTooltipDirective, XcI18nTranslateDirective]
 })
 export class ExceptionHandlingAreaComponent extends ModellingObjectComponent {
@@ -49,6 +50,8 @@ export class ExceptionHandlingAreaComponent extends ModellingObjectComponent {
     private readonly childIds = [];
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set exceptionHandlingArea(value: XoExceptionHandlingArea) {
         this.setModel(value);

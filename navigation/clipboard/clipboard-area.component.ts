@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, output, input } from '@angular/core';
+import { Component, output, input, ChangeDetectionStrategy } from '@angular/core';
 import { XcTooltipDirective } from '@zeta/xc';
 
 import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
@@ -36,6 +36,7 @@ import { ClipboardItemComponent } from './clipboard-item.component';
     selector: 'clipboard-area',
     templateUrl: './clipboard-area.component.html',
     styleUrls: ['./clipboard-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ModDropAreaDirective, ClipboardItemComponent, ModDraggableDirective, XcTooltipDirective, XcI18nTranslateDirective]
 })
 export class ClipboardAreaComponent {

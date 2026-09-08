@@ -1,7 +1,7 @@
 <!-- TODO remove id -->
 <div
   id="{{contentArea ? contentArea.id : ''}}"
-  [mod-drop-area]="contentArea.items?.data"
+  [mod-drop-area]="$safeNavigationMigration(contentArea.items?.data)"
   [mod-drop-area-allow-item]="allowItem"
   [mod-drop-area-can-drop]="canDrop"
   (mod-drop-area-dropped)="dropped($event)"

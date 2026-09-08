@@ -35,6 +35,8 @@ export class ModContentEditableDirective {
     readonly afterEdit = output<string>({ alias: 'mod-content-editable-after-edit' });
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input('mod-content-editable')
     set enabled(value: boolean) {
         this._enabled = coerceBoolean(value);
@@ -46,12 +48,16 @@ export class ModContentEditableDirective {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input('mod-content-editable-value')
     set value(value: string) {
         this.elementRef.nativeElement.innerText = value ? value : '';
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input('mod-content-editable-should-finish-on-enter')
     set finishOnEnter(value: boolean) {
         this._finishOnEnter = coerceBoolean(value);

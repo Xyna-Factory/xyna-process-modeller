@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, forwardRef, Input } from '@angular/core';
+import { Component, forwardRef, Input, ChangeDetectionStrategy } from '@angular/core';
 import { XcButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
@@ -30,10 +30,13 @@ import { ModellingItemComponent } from '../../shared/modelling-object.component'
     selector: 'compensation',
     templateUrl: './compensation.component.html',
     styleUrls: ['./compensation.component.scss', '../../common.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcI18nTranslateDirective, forwardRef(() => ContentAreaComponent), XcButtonComponent, XcTooltipDirective]
 })
 export class CompensationComponent extends ModellingItemComponent {
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set compensation(value: XoCompensation) {
         this.setModel(value);

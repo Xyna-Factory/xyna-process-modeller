@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { XcButtonComponent, XcCheckboxComponent, XcDialogComponent, XcDialogWrapperComponent } from '@zeta/xc';
 
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
@@ -40,6 +40,7 @@ export interface ConflictDialogData {
 @Component({
     templateUrl: './conflict-dialog.component.html',
     styleUrls: ['./conflict-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcButtonComponent, XcCheckboxComponent, XcDialogWrapperComponent, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class ConflictDialogComponent extends XcDialogComponent<string, ConflictDialogData> {

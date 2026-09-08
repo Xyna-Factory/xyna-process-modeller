@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostBinding, inject, Input, TemplateRef, input } from '@angular/core';
+import { Component, HostBinding, inject, Input, TemplateRef, input, ChangeDetectionStrategy } from '@angular/core';
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { XcTooltipDirective } from '@zeta/xc';
 
@@ -28,6 +28,7 @@ import { ModellingObjectComponent } from '../shared/modelling-object.component';
     selector: 'type-label-area',
     templateUrl: './type-label-area.component.html',
     styleUrls: ['./type-label-area.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [LabelAreaComponent, XcTooltipDirective]
 })
 export class TypeLabelAreaComponent extends ModellingObjectComponent {
@@ -40,6 +41,8 @@ export class TypeLabelAreaComponent extends ModellingObjectComponent {
     showFqn: boolean;
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set typeLabelArea(value: XoTypeLabelArea) {
         this.setModel(value);

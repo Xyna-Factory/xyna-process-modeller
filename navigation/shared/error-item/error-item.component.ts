@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, inject, output, input } from '@angular/core';
+import { Component, ElementRef, inject, output, input, ChangeDetectionStrategy } from '@angular/core';
 import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model';
 import { ErrorItem } from '@pmod/xo/issue.model';
 import { XcIconButtonComponent, XcIconComponent, XcTooltipDirective } from '@zeta/xc';
@@ -29,6 +29,7 @@ import { ErrorService } from '../error.service';
     selector: 'xfm-mod-nav-error',
     templateUrl: './error-item.component.html',
     styleUrls: ['./error-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcI18nTranslateDirective, XcIconButtonComponent, XcIconComponent, XcTooltipDirective]
 })
 export class ErrorItemComponent {

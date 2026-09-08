@@ -1,7 +1,7 @@
 <!-- TODO remove id -->
 <div
   id="{{ serviceArea() ? serviceArea().id : '' }}"
-  [mod-drop-area]="serviceArea().items?.data"
+  [mod-drop-area]="$safeNavigationMigration(serviceArea().items?.data)"
   [mod-drop-area-allow-item]="allowItem"
   [mod-drop-area-can-drop]="canDrop"
   (mod-drop-area-dropped)="dropped($event)"

@@ -17,7 +17,7 @@
  */
 import { filter, take } from 'rxjs/operators';
 
-import { Component, ElementRef, HostBinding, HostListener, inject, Input, QueryList, viewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, HostBinding, HostListener, inject, Input, QueryList, viewChild, ViewChildren, ChangeDetectionStrategy } from '@angular/core';
 import { ApiService } from '@zeta/api';
 import { coerceBoolean } from '@zeta/base';
 
@@ -53,6 +53,7 @@ import { FormulaProxyComponent } from './parts/formula-proxy/formula-proxy.compo
     selector: 'formula',
     templateUrl: './formula.component.html',
     styleUrls: ['./formula.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ModDropAreaDirective, FormulaProxyComponent, VariableComponent, ModDraggableDirective, FormulaPartMemberComponent, FormulaPartFunctionComponent, FormulaPartOperationComponent, FormulaPartSpecialComponent, FormulaPartLiteralComponent]
 })
 export class FormulaComponent extends ModellingItemComponent {
@@ -149,6 +150,8 @@ export class FormulaComponent extends ModellingItemComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set formula(value: XoFormula) {
         this.setModel(value);
@@ -167,6 +170,8 @@ export class FormulaComponent extends ModellingItemComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input({transform: coerceBoolean})
     set hideQuestionmark(value: boolean) {
         this.formula.isQuestionmarkHidden = value;
@@ -178,6 +183,8 @@ export class FormulaComponent extends ModellingItemComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input({alias: 'drop-disabled', transform: coerceBoolean})
     set dropDisabled(value: boolean) {
         this._dropDisabled = value;
@@ -189,6 +196,8 @@ export class FormulaComponent extends ModellingItemComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input({alias: 'variable-menu-disabled', transform: coerceBoolean})
     set variableMenuDisabled(value: boolean) {
         this._variableMenuDisabled = value;
@@ -501,6 +510,8 @@ export class FormulaComponent extends ModellingItemComponent {
     /**
      * Set focus to editable parts
      */
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
     @ViewChildren('editablePart')
     private set editableParts_setOnly(parts: QueryList<FormulaEditablePartComponent>) {
         this._editableParts = parts;
@@ -516,6 +527,8 @@ export class FormulaComponent extends ModellingItemComponent {
     /**
      * Gather children which are no children inside the DOM hierarchy
      */
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
     @ViewChildren('externalChild')
     private set externalChildren_setOnly(children: QueryList<FormulaChildComponent>) {
         this._externalChildren = children;

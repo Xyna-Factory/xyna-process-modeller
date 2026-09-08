@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent } from '@zeta/xc';
 
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
@@ -34,6 +34,7 @@ export interface ErrorDialogData {
     selector: 'error-dialog',
     templateUrl: './error-dialog.component.html',
     styleUrls: ['./error-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcButtonComponent, XcDialogWrapperComponent, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class ErrorDialogComponent extends XcDialogComponent<void, ErrorDialogData> {
