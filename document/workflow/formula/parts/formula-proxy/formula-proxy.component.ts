@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, inject, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, AfterViewInit, Component, ElementRef, EventEmitter, Output, inject, viewChild, input } from '@angular/core';
 import { XoFormula } from '@pmod/xo/formula.model';
 import { FormulaFunctionGroup, FormulaPartFunction } from '@pmod/xo/util/formula-parts/formula-part-function';
 
@@ -39,8 +39,7 @@ export class FormulaProxyComponent implements AfterViewInit, FormulaChildCompone
     private _optionElements: HTMLElement[] = [];
     private _selection: string;
 
-    @Input()
-    formula: XoFormula;
+    readonly formula = input<XoFormula>(undefined);
 
     @Output()
     readonly selectionChange = new EventEmitter<string>();
@@ -66,7 +65,7 @@ export class FormulaProxyComponent implements AfterViewInit, FormulaChildCompone
 
 
     ngAfterViewInit() {
-        const functions = FormulaPartFunction.functionsForGroup(this.formula?.allowedFunctions ?? FormulaFunctionGroup.none);
+        const functions = FormulaPartFunction.functionsForGroup(this.formula()?.allowedFunctions ?? FormulaFunctionGroup.none);
         this.proxyDataWrapper.values = functions.map(f => ({ name: f.label, value: f.xfl }));
         this._proxyInput().setFocus();
     }

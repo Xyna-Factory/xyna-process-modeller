@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Directive, ElementRef, EventEmitter, HostListener, inject, Input, Output } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, HostListener, inject, Input, Output, input } from '@angular/core';
 
 import { coerceBoolean } from '@zeta/base';
 
@@ -28,8 +28,7 @@ export class ModContentEditableDirective {
     private _enabled = true;
     private _finishOnEnter = true;
 
-    @Input('mod-content-editable-trigger')
-    triggerType: 'mousedown' | 'dblclick' = 'dblclick';
+    readonly triggerType = input<'mousedown' | 'dblclick'>('dblclick', { alias: "mod-content-editable-trigger" });
 
     @Output('mod-content-editable-start-edit')
     readonly startEdit = new EventEmitter<string>();
@@ -68,7 +67,7 @@ export class ModContentEditableDirective {
 
     @HostListener('mousedown', ['$event'])
     mousedown(event: MouseEvent) {
-        if (this.enabled && this.triggerType === 'mousedown') {
+        if (this.enabled && this.triggerType() === 'mousedown') {
             this.startEditing();
             event.stopPropagation();
         }
@@ -77,7 +76,7 @@ export class ModContentEditableDirective {
 
     @HostListener('dblclick', ['$event'])
     dblclick(event: MouseEvent) {
-        if (this.enabled && this.triggerType === 'dblclick') {
+        if (this.enabled && this.triggerType() === 'dblclick') {
             this.startEditing();
             event.stopPropagation();
         }

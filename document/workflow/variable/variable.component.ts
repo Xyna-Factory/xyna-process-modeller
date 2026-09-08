@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, HostBinding, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, inject, Input, input } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
@@ -65,8 +65,7 @@ export class VariableComponent extends SelectableModellingObjectComponent {
     protected readonly dialogService = inject(XcDialogService);
     protected readonly branchSelection = inject(BranchSelectionService);
 
-    @Input()
-    hasMenu = true;
+    readonly hasMenu = input(true);
 
     @Input()
     @HostBinding('class.placeholder')
@@ -332,7 +331,7 @@ export class VariableComponent extends SelectableModellingObjectComponent {
 
 
     get showMenu(): boolean {
-        return this.hasMenu && this.menuItems.some(menuItem => menuItem.visible?.(menuItem));
+        return this.hasMenu() && this.menuItems.some(menuItem => menuItem.visible?.(menuItem));
     }
 
 

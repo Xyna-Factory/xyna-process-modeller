@@ -4,14 +4,14 @@
     [xc-icon-name]="collapsed ? 'arrowright' : 'arrowdown'"
     xc-icon-size="small"
    />
-  <h2 class="caption">{{caption | xcI18n}}</h2>
+  <h2 class="caption">{{caption() | xcI18n}}</h2>
   @for (bundle of pluginBundles; let i = $index; track i) {
     <xc-definition-proxy [xc-base-definition]="bundle.definition"
       [xc-base-definition-data]="bundle.data"
       [xc-definition-observer]="pluginService"
      />
   }
-  @if (allowAdd) {
+  @if (allowAdd()) {
     <xc-icon-button [disabled]="readonly"
       (click)="addEmitter.emit()"
       xc-icon-name="add"

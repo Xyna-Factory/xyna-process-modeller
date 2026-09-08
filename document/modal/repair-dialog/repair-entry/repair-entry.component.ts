@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 import { XoRepairEntry } from '../../../../xo/repair-entry.model';
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n/';
@@ -30,6 +30,5 @@ import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n/';
 })
 export class RepairEntryComponent {
 
-    @Input()
-    entry: XoRepairEntry;
+    readonly entry = input<XoRepairEntry>(undefined);
 }

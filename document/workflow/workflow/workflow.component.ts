@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, inject, Input, OnDestroy, Output } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, inject, Input, OnDestroy, Output, input } from '@angular/core';
 
 import { OutsideListenerService } from '@zeta/base';
 
@@ -70,8 +70,7 @@ export class WorkflowComponent extends ModellingItemComponent implements AfterVi
         this.setModel(value);
     }
 
-    @Input()
-    onlyParentRuntimeInfo = false;
+    readonly onlyParentRuntimeInfo = input(false);
 
     get workflow(): XoWorkflow {
         return this.getModel() as XoWorkflow;

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output, input } from '@angular/core';
 
 import { XoPlugin } from '@yggdrasil/plugin/plugin.model';
 import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
@@ -44,14 +44,12 @@ export class MemberAreaComponent extends ModellingObjectComponent {
 
     pluginBundles: XoDefinitionBundle[];
 
-    @Input()
-    caption: string;
+    readonly caption = input<string>(undefined);
 
     @Input()
     collapsed = false;
 
-    @Input()
-    allowAdd = true;
+    readonly allowAdd = input(true);
 
     @Output('added')
     readonly addEmitter = new EventEmitter<void>();

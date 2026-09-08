@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostListener, Input, Output, QueryList, ViewChildren, viewChild, viewChildren } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostListener, Input, Output, QueryList, ViewChildren, viewChild, viewChildren, input } from '@angular/core';
 
 import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoData } from '../../../../xo/data.model';
@@ -65,8 +65,7 @@ export class TemplateRowComponent extends ModellingObjectComponent {
 
     readonly dropArea = viewChild(ModDropAreaDirective);
 
-    @Input()
-    lineNumber = 0;
+    readonly lineNumber = input(0);
 
     @Output()
     readonly split = new EventEmitter<SplitTemplateRowEvent>();

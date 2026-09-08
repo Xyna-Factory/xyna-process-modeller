@@ -15,7 +15,7 @@
     (drop)="dropzoneDrop($event)"
     data-side="left"
     >
-    @for (item of leftItems; track item; let i = $index) {
+    @for (item of leftItems(); track item; let i = $index) {
       <div
         role="option"
         [ngClass]="getItemsClasses(item)"

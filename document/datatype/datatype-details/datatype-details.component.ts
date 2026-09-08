@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy, input } from '@angular/core';
 
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoDataType } from '@pmod/xo/data-type.model';
@@ -48,8 +48,7 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
     protected readonly i18nService = inject(I18nService);
     protected readonly cdr = inject(ChangeDetectorRef);
 
-    @Input()
-    dataTypeRTC: XoRuntimeContext = null;
+    readonly dataTypeRTC = input<XoRuntimeContext>(null);
 
     @Input()
     set isStorable(value: boolean) {

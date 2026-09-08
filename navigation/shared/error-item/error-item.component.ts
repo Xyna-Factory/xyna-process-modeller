@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Output, inject, input } from '@angular/core';
 
 import { DocumentService } from '../../../document/document.service';
 import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model';
@@ -37,11 +37,9 @@ export class ErrorItemComponent {
     private readonly documentService = inject(DocumentService);
     private readonly errorService = inject(ErrorService);
 
-    @Input()
-    error: ErrorItem;
+    readonly error = input<ErrorItem>(undefined);
 
-    @Input()
-    checkable: boolean;
+    readonly checkable = input<boolean>(undefined);
 
     @Output()
     readonly errorSelectionChanged = new EventEmitter<ErrorItem>();

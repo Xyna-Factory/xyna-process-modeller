@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, input } from '@angular/core';
 
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoGuiDefiningWorkflow } from '@yggdrasil/plugin/gui-defining-workflow.model';
@@ -49,8 +49,7 @@ export class NavPluginComponent extends CommonNavigationComponent {
         this.requestBundle();
     }
 
-    @Input('plugin-number')
-    pluginNumber: number;
+    readonly pluginNumber = input<number>(undefined, { alias: "plugin-number" });
 
     constructor() {
         const cdr = inject(ChangeDetectorRef);

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, input } from '@angular/core';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoFormulaArea } from '../../../xo/formula-area.model';
@@ -45,8 +45,7 @@ export class FormulaAreaComponent extends ModellingObjectComponent {
     @Input()
     areaLabel: string = null;
 
-    @Input()
-    newFormulaExpression = '';
+    readonly newFormulaExpression = input('');
 
     @Input()
     set formulaArea(value: XoFormulaArea) {
@@ -92,7 +91,7 @@ export class FormulaAreaComponent extends ModellingObjectComponent {
 
 
     addFormula(expression?: string, index?: number) {
-        this.performAction({ type: ModellingActionType.insert, objectId: this.formulaArea.id, request: FormulaAreaComponent.getInsertRequest(expression ?? this.newFormulaExpression, index) });
+        this.performAction({ type: ModellingActionType.insert, objectId: this.formulaArea.id, request: FormulaAreaComponent.getInsertRequest(expression ?? this.newFormulaExpression(), index) });
     }
 
 

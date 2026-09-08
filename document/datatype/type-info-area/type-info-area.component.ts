@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit, ViewChild, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit, ViewChild, viewChild, input } from '@angular/core';
 
 import { FullQualifiedName, XoStructureType } from '@zeta/api';
 import { isString } from '@zeta/base';
@@ -64,17 +64,13 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
     pathDataWrapper: XcAutocompleteDataWrapper;
     baseTypeDataWrapper: XcAutocompleteDataWrapper;
 
-    @Input()
-    showConverterButton = false;
+    readonly showConverterButton = input(false);
 
-    @Input()
-    showRefactorButton = false;
+    readonly showRefactorButton = input(false);
 
-    @Input()
-    showBaseTypeAutocomplete = false;
+    readonly showBaseTypeAutocomplete = input(false);
 
-    @Input()
-    showAbstractCheckbox = false;
+    readonly showAbstractCheckbox = input(false);
 
     readonly isStorableCheckbox = viewChild('isStorableCheckbox', { read: XcCheckboxComponent });
 
@@ -314,7 +310,7 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
 
 
     private refreshBaseTypeAutocomplete() {
-        if (this.showBaseTypeAutocomplete) {
+        if (this.showBaseTypeAutocomplete()) {
             const fqn = this.typeDocument.item.$fqn;
             const rtc = this.typeDocument.item.toRtc();
             let observable: Observable<XoStructureType[]>;

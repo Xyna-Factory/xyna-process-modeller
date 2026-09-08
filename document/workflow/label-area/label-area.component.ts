@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, Input, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, TemplateRef, input } from '@angular/core';
 
 import { XoLabelArea } from '../../../xo/label-area.model';
 import { TextAreaModellingObjectComponent } from '../shared/text-area-modelling-object.component';
@@ -32,8 +32,7 @@ import { NgTemplateOutlet } from '@angular/common';
 })
 export class LabelAreaComponent extends TextAreaModellingObjectComponent {
 
-    @Input()
-    menuTemplateRef: TemplateRef<any>;
+    readonly menuTemplateRef = input<TemplateRef<any>>(undefined);
 
 
     @Input()

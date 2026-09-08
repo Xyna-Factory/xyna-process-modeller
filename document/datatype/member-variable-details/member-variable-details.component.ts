@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy, input } from '@angular/core';
 
 import { XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 
@@ -40,8 +40,7 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
 
     protected readonly cdr = inject(ChangeDetectorRef);
 
-    @Input()
-    dataTypeRTC: XoRuntimeContext = null;
+    readonly dataTypeRTC = input<XoRuntimeContext>(null);
 
     @Input()
     set isStorable(value: boolean) {
@@ -142,7 +141,7 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
     private buildMemberTabData(): VariableTabData {
         return <VariableTabData> {
             variable: this.memberVariable,
-            dataTypeRTC: this.dataTypeRTC,
+            dataTypeRTC: this.dataTypeRTC(),
             readonly: this.readonly
         };
     }

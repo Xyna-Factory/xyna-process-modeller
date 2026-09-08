@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, inject, Input, OnDestroy, Output } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, inject, Input, OnDestroy, Output, input } from '@angular/core';
 
 import { XoMethod } from '@pmod/xo/method.model';
 import * as monaco from 'monaco-editor';
@@ -69,7 +69,7 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
         return this._method;
     }
 
-    @Input() readonly = false;
+    readonly readonly = input(false);
 
     @Output() readonly implementationChange = new EventEmitter<string>();
 
@@ -133,6 +133,7 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
         if (!this.method) return;
 
         // PYTHON
+        const readonly = this.readonly();
         if (this.isPython && this.pythonEditor) {
             const code = this.implementation;
 
@@ -141,7 +142,7 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
                 this.pythonEditor.setValue(code);
             }
 
-            this.pythonEditor.updateOptions({ readOnly: this.readonly });
+            this.pythonEditor.updateOptions({ readOnly: readonly });
         }
 
         // JAVA
@@ -155,7 +156,7 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
                 this.javaEditor.setValue(code);
             }
 
-            this.javaEditor.updateOptions({ readOnly: this.readonly });
+            this.javaEditor.updateOptions({ readOnly: readonly });
         }
 
         setTimeout(() => this.layoutEditor(), 0);
@@ -174,7 +175,7 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
     private handleBlur() {
         const editor = this.isPython ? this.pythonEditor : this.javaEditor;
         const value = editor?.getValue();
-        if (!this.readonly && value !== this.implementation) {
+        if (!this.readonly() && value !== this.implementation) {
             this.implementation = value ?? '';
         }
     }

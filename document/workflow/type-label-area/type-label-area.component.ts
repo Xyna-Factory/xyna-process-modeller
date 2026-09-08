@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, HostBinding, inject, Input, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, inject, Input, TemplateRef, input } from '@angular/core';
 
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 
@@ -36,8 +36,7 @@ export class TypeLabelAreaComponent extends ModellingObjectComponent {
 
     protected readonly detailLevelService = inject(WorkflowDetailLevelService);
 
-    @Input()
-    menuTemplateRef: TemplateRef<any> = null;
+    readonly menuTemplateRef = input<TemplateRef<any>>(null);
 
     @HostBinding('class.show-fqn')
     showFqn: boolean;

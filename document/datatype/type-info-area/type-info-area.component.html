@@ -1,7 +1,7 @@
 <div class="row">
   <xc-form-label [class.readonly]="readonly" class="badge" xc-i18n>{{title}}</xc-form-label>
   <div class="checkboxes">
-    @if (showAbstractCheckbox) {
+    @if (showAbstractCheckbox()) {
     <xc-checkbox label="abstract-label" [(checked)]="isAbstract" [readonly]="readonly" xc-i18n />
     }
     @if (isDataTypeDocument) {
@@ -17,12 +17,12 @@
     <div class="label">{{typeInfoArea.text}}</div>
     <div class="fqn">{{typeInfoArea.$fqn}}</div>
   </div>
-  @if (showConverterButton) {
+  @if (showConverterButton()) {
   <ng-container *xc-has-right="'xmcp.xfm.processmodeller.datatype.converter'">
     <xc-button class="converter-button" (click)="showConverter()" xc-i18n>open-in-converter-button</xc-button>
   </ng-container>
   }
-  @if (showRefactorButton) {
+  @if (showRefactorButton()) {
   <xc-button class="converter-button" (click)="refactor()" xc-i18n>refactor-button</xc-button>
   }
   }
@@ -45,7 +45,7 @@
   }
 </div>
 
-@if (showBaseTypeAutocomplete) {
+@if (showBaseTypeAutocomplete()) {
 <dl>
   <dt><xc-form-label xc-i18n>base-type-label</xc-form-label></dt>
   <dd>

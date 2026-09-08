@@ -16,7 +16,7 @@ import { NgClass } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostListener, inject, Input, OnInit, Output, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostListener, inject, Input, OnInit, Output, viewChild, input } from '@angular/core';
 
 
 /** @deprecated */
@@ -46,8 +46,8 @@ export class LeftRightComponent implements OnInit {
     }
     private set draggingArrayItem(value: any) {
         this._draggingArrayItem = value;
-        this.draggingSide = this.leftItems.includes(value) ? 'left' : 'right';
-        this.draggingIndex = (this.draggingSide === 'left' ? this.leftItems : this.rightItems).indexOf(value);
+        this.draggingSide = this.leftItems().includes(value) ? 'left' : 'right';
+        this.draggingIndex = (this.draggingSide === 'left' ? this.leftItems() : this.rightItems).indexOf(value);
     }
     private draggingSide: string;
     private draggingIndex: number;
@@ -63,7 +63,7 @@ export class LeftRightComponent implements OnInit {
     }
     private set focusedItemLeft(value: any) {
         this._focusedItemLeft = value;
-        this.focusedIndexLeft = this.leftItems.indexOf(value);
+        this.focusedIndexLeft = this.leftItems().indexOf(value);
         if (this.focusedIndexLeft >= 0) {
             const container: HTMLElement = this.leftDropzone().nativeElement;
             const focusedNode = (<HTMLElement>container.children[this.focusedIndexLeft]);
@@ -91,8 +91,8 @@ export class LeftRightComponent implements OnInit {
     }
     private set targetedArrayItem(value: any) {
         this._targetedArrayItem = value;
-        this.targetedSide = this.leftItems.includes(value) ? 'left' : 'right';
-        this.targetedIndex = (this.targetedSide === 'left' ? this.leftItems : this.rightItems).indexOf(value);
+        this.targetedSide = this.leftItems().includes(value) ? 'left' : 'right';
+        this.targetedIndex = (this.targetedSide === 'left' ? this.leftItems() : this.rightItems).indexOf(value);
     }
     private targetedSide: string;
     private targetedIndex: number;
@@ -108,8 +108,7 @@ export class LeftRightComponent implements OnInit {
     @Input()
     rightTitle = 'Right';
 
-    @Input()
-    leftItems: any[];
+    readonly leftItems = input<any[]>(undefined);
 
     @Output()
     readonly leftItemsChange = new EventEmitter<any[]>();
@@ -136,7 +135,7 @@ export class LeftRightComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._sideArrayMap.set('left', this.leftItems).set('right', this.rightItems);
+        this._sideArrayMap.set('left', this.leftItems()).set('right', this.rightItems);
         this._sideEmitterMap.set('left', this.leftItemsChange).set('right', this.rightItemsChange);
     }
 
@@ -149,7 +148,7 @@ export class LeftRightComponent implements OnInit {
 
         this.focusedItemLeft = null;
         this.focusedItemRight = null;
-        this.change.emit([this.leftItems, this.rightItems]);
+        this.change.emit([this.leftItems(), this.rightItems]);
 
     }
 
@@ -171,7 +170,7 @@ export class LeftRightComponent implements OnInit {
 
         this.focusedItemLeft = null;
         this.focusedItemRight = null;
-        this.change.emit([this.leftItems, this.rightItems]);
+        this.change.emit([this.leftItems(), this.rightItems]);
     }
 
     getItemsClasses(item: any): string[] {
@@ -241,7 +240,7 @@ export class LeftRightComponent implements OnInit {
             }
 
             this.rightItemsChange.emit(this.rightItems);
-            this.leftItemsChange.emit(this.leftItems);
+            this.leftItemsChange.emit(this.leftItems());
         }
 
         this.targetedArrayItem = null;
@@ -268,18 +267,19 @@ export class LeftRightComponent implements OnInit {
     }
 
     onkeyupLeft(e: KeyboardEvent) {
-        if ([38, 40].includes(e.keyCode) && !this.focusedItemLeft && this.leftItems.length) {
-            this.focusedItemLeft = this.leftItems[0];
+        const leftItems = this.leftItems();
+        if ([38, 40].includes(e.keyCode) && !this.focusedItemLeft && leftItems.length) {
+            this.focusedItemLeft = leftItems[0];
             return false;
         }
-        if ([13].includes(e.keyCode) && this.focusedItemLeft && this.leftItems.length) {
-            this.leftItems.splice(this.focusedIndexLeft, 1);
+        if ([13].includes(e.keyCode) && this.focusedItemLeft && leftItems.length) {
+            leftItems.splice(this.focusedIndexLeft, 1);
             this.rightItems.splice(this.focusedIndexLeft, 0, this.focusedItemLeft);
-            const nextIndex = this.leftItems.length && this.focusedIndexLeft === this.leftItems.length
+            const nextIndex = leftItems.length && this.focusedIndexLeft === leftItems.length
                 ? this.focusedIndexLeft - 1
                 : this.focusedIndexLeft;
-            this.focusedItemLeft = this.leftItems[nextIndex];
-            this.change.emit([this.leftItems, this.rightItems]);
+            this.focusedItemLeft = leftItems[nextIndex];
+            this.change.emit([leftItems, this.rightItems]);
             return false;
         }
         if (e.ctrlKey) {
@@ -297,12 +297,12 @@ export class LeftRightComponent implements OnInit {
         }
         if ([13].includes(e.keyCode) && this.focusedItemRight && this.rightItems.length) {
             this.rightItems.splice(this.focusedIndexRight, 1);
-            this.leftItems.splice(this.focusedIndexRight, 0, this.focusedItemRight);
+            this.leftItems().splice(this.focusedIndexRight, 0, this.focusedItemRight);
             const nextIndex = this.rightItems.length && this.focusedIndexRight === this.rightItems.length
                 ? this.focusedIndexRight - 1
                 : this.focusedIndexRight;
             this.focusedItemRight = this.rightItems[nextIndex];
-            this.change.emit([this.leftItems, this.rightItems]);
+            this.change.emit([this.leftItems(), this.rightItems]);
             return false;
         }
         if (e.ctrlKey) {
@@ -318,14 +318,14 @@ export class LeftRightComponent implements OnInit {
         switch (keyCode) {
             // key: arrow up
             case 38: {
-                if (this.leftItems[this.focusedIndexLeft - 1]) {
-                    this.focusedItemLeft = this.leftItems[this.focusedIndexLeft - 1];
+                if (this.leftItems()[this.focusedIndexLeft - 1]) {
+                    this.focusedItemLeft = this.leftItems()[this.focusedIndexLeft - 1];
                 }
             } break;
             // key: arrow down
             case 40: {
-                if (this.leftItems[this.focusedIndexLeft + 1]) {
-                    this.focusedItemLeft = this.leftItems[this.focusedIndexLeft + 1];
+                if (this.leftItems()[this.focusedIndexLeft + 1]) {
+                    this.focusedItemLeft = this.leftItems()[this.focusedIndexLeft + 1];
                 }
             } break;
         }
@@ -353,25 +353,26 @@ export class LeftRightComponent implements OnInit {
         switch (keyCode) {
             // key: arrow up
             case 38: {
-                if (this.leftItems[this.focusedIndexLeft - 1]) {
-                    tmp = this.leftItems[this.focusedIndexLeft - 1];
-                    this.leftItems[this.focusedIndexLeft - 1] = this.leftItems[this.focusedIndexLeft];
-                    this.leftItems[this.focusedIndexLeft] = tmp;
+                if (this.leftItems()[this.focusedIndexLeft - 1]) {
+                    tmp = this.leftItems()[this.focusedIndexLeft - 1];
+                    this.leftItems()[this.focusedIndexLeft - 1] = this.leftItems()[this.focusedIndexLeft];
+                    this.leftItems()[this.focusedIndexLeft] = tmp;
                     this.focusedItemLeft = this._focusedItemLeft;
                 }
             } break;
             // key: arrow down
             case 40: {
-                if (this.leftItems[this.focusedIndexLeft + 1]) {
-                    tmp = this.leftItems[this.focusedIndexLeft + 1];
-                    this.leftItems[this.focusedIndexLeft + 1] = this.leftItems[this.focusedIndexLeft];
-                    this.leftItems[this.focusedIndexLeft] = tmp;
+                if (this.leftItems()[this.focusedIndexLeft + 1]) {
+                    tmp = this.leftItems()[this.focusedIndexLeft + 1];
+                    this.leftItems()[this.focusedIndexLeft + 1] = this.leftItems()[this.focusedIndexLeft];
+                    this.leftItems()[this.focusedIndexLeft] = tmp;
                     this.focusedItemLeft = this._focusedItemLeft;
                 }
             } break;
         }
-        this.leftItemsChange.emit(this.leftItems);
-        this.change.emit([this.leftItems, this.rightItems]);
+        const leftItems = this.leftItems();
+        this.leftItemsChange.emit(leftItems);
+        this.change.emit([leftItems, this.rightItems]);
     }
 
     private _pushFocusedItemRight(keyCode) {
@@ -397,7 +398,7 @@ export class LeftRightComponent implements OnInit {
             } break;
         }
         this.rightItemsChange.emit(this.rightItems);
-        this.change.emit([this.leftItems, this.rightItems]);
+        this.change.emit([this.leftItems(), this.rightItems]);
     }
 
     onfocusLeft() {
