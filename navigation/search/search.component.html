@@ -26,7 +26,7 @@
     }
   </div>
   <div class="factory-objects zeta-scrollbar">
-    @if (input.value && !debounce && !xmomList.pending && !xmomList.xmomItems.length) {
+    @if (input.value && !debounce && !xmomList().pending && !xmomList().xmomItems.length) {
       <label>{{'no-entries' | xcI18n}}</label>
     }
     <xfm-mod-nav-xmomlist xc-i18n-context='xfm-mod-nav-xmomlist' show-fqn />

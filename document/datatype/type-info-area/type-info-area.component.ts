@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit, ViewChild, viewChild } from '@angular/core';
 
 import { FullQualifiedName, XoStructureType } from '@zeta/api';
 import { isString } from '@zeta/base';
@@ -76,8 +76,7 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
     @Input()
     showAbstractCheckbox = false;
 
-    @ViewChild('isStorableCheckbox', {static: false, read: XcCheckboxComponent})
-    isStorableCheckbox: XcCheckboxComponent;
+    readonly isStorableCheckbox = viewChild('isStorableCheckbox', { read: XcCheckboxComponent });
 
 
     constructor() {
@@ -266,7 +265,7 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
     */
     private preventStorableCheckboxChange(value: boolean) {
         this._isStorable = value;
-        this.isStorableCheckbox.checked = value;
+        this.isStorableCheckbox().checked = value;
         this.cdr.detectChanges();
     }
 

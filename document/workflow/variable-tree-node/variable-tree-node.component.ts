@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, inject, viewChild } from '@angular/core';
 import { TreeNodeObserver } from '../variable-tree/data-source/skeleton-tree-data-source';
 import { coerceBoolean } from '@zeta/base';
 import { ModDragEvent, ModDropEvent, ModDropAreaDirective } from '../shared/drag-and-drop/mod-drop-area.directive';
@@ -47,7 +47,7 @@ export class VariableTreeNodeComponent implements AfterViewInit, TreeNodeObserve
 
     expanded = true;
 
-    @ViewChild('noderow') nodeElement: ElementRef<Element>;
+    readonly nodeElement = viewChild<ElementRef<Element>>('noderow');
 
     @Output()
     readonly assignedVariable = new EventEmitter<CreateAssignmentEvent>();
@@ -56,8 +56,9 @@ export class VariableTreeNodeComponent implements AfterViewInit, TreeNodeObserve
     set node(value: SkeletonTreeNode) {
         this.node?.removeObserver(this);
         this._node = value;
-        if (this._node && this.nodeElement) {
-            this._node.graphicalRepresentation = this.nodeElement.nativeElement;
+        const nodeElement = this.nodeElement();
+        if (this._node && nodeElement) {
+            this._node.graphicalRepresentation = nodeElement.nativeElement;
         }
         this.node?.addObserver(this);
     }
@@ -86,7 +87,7 @@ export class VariableTreeNodeComponent implements AfterViewInit, TreeNodeObserve
 
 
     ngAfterViewInit(): void {
-        this.node.graphicalRepresentation = this.nodeElement.nativeElement;
+        this.node.graphicalRepresentation = this.nodeElement().nativeElement;
     }
 
 

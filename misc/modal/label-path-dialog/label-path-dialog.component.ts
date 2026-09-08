@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, HostListener, inject, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, inject, viewChild } from '@angular/core';
 
 import { XcAutocompleteDataWrapper, XcButtonComponent, XcCheckboxComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormAutocompleteComponent, XcFormDirective, XcFormInputComponent, XcFormValidatorRequiredDirective, XcOptionItem, XcOptionItemString, XcTooltipDirective } from '@zeta/xc';
 
@@ -70,8 +70,7 @@ export class LabelPathDialogComponent extends XcDialogComponent<LabelPathDialogR
     static readonly FORCE_MOVE_RENAME = 'Ignore Incompatible Storables';
     static readonly FORCE_MOVE_RENAME_TOOLTIP = 'When enabled, new columns/tables are created and no migration is performed, if refactoring affects existing storable Data Types.';
 
-    @ViewChild(XcFormDirective, { static: true })
-    form: XcFormDirective;
+    readonly form = viewChild(XcFormDirective);
 
     force = false;
     label: string;
@@ -136,7 +135,7 @@ export class LabelPathDialogComponent extends XcDialogComponent<LabelPathDialogR
 
     @HostListener('keydown.Enter')
     finish() {
-        if (this.form.valid) {
+        if (this.form().valid) {
             this.save();
         }
     }

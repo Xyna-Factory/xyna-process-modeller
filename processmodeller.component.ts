@@ -19,7 +19,7 @@ import { ReplaySubject, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Injector, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Injector, OnDestroy, OnInit, ViewChild, viewChild } from '@angular/core';
 import { ApiService, FullQualifiedName, RuntimeContext, RuntimeContextSelectionSettings } from '@zeta/api';
 import { KeyboardEventType, KeyDistributionService, OutsideListenerService } from '@zeta/base';
 import { I18nService, LocaleService, XcI18nContextDirective } from '@zeta/i18n';
@@ -72,8 +72,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
 
     private runtimeContextChangeSubscription: Subscription;
 
-    @ViewChild(ToolbarComponent, { static: false })
-    toolBar: ToolbarComponent;
+    readonly toolBar = viewChild(ToolbarComponent);
 
     private urlProcessed = false;
 

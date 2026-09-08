@@ -16,7 +16,7 @@ import { NgClass } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostListener, inject, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostListener, inject, Input, OnInit, Output, viewChild } from '@angular/core';
 
 
 /** @deprecated */
@@ -36,11 +36,9 @@ export class LeftRightComponent implements OnInit {
      
     readonly change = new EventEmitter<any[]>();
 
-    @ViewChild('leftDropzone', {static: false})
-    leftDropzone: ElementRef;
+    readonly leftDropzone = viewChild<ElementRef>('leftDropzone');
 
-    @ViewChild('rightDropzone', {static: false})
-    rightDropzone: ElementRef;
+    readonly rightDropzone = viewChild<ElementRef>('rightDropzone');
 
     private _draggingArrayItem: any;
     private get draggingArrayItem(): any {
@@ -67,7 +65,7 @@ export class LeftRightComponent implements OnInit {
         this._focusedItemLeft = value;
         this.focusedIndexLeft = this.leftItems.indexOf(value);
         if (this.focusedIndexLeft >= 0) {
-            const container: HTMLElement = this.leftDropzone.nativeElement;
+            const container: HTMLElement = this.leftDropzone().nativeElement;
             const focusedNode = (<HTMLElement>container.children[this.focusedIndexLeft]);
             this._scrollFocusedNodeIntoView(focusedNode, container);
         }
@@ -79,7 +77,7 @@ export class LeftRightComponent implements OnInit {
         this._focusedItemRight = value;
         this.focusedIndexRight = this.rightItems.indexOf(value);
         if (this.focusedIndexRight >= 0) {
-            const container: HTMLElement = this.rightDropzone.nativeElement;
+            const container: HTMLElement = this.rightDropzone().nativeElement;
             const focusedNode = (<HTMLElement>container.children[this.focusedIndexRight]);
             this._scrollFocusedNodeIntoView(focusedNode, container);
         }

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { FormulaComponent } from '../../formula/formula.component';
 
 import { TemplatePartComponent } from './template-part.component';
@@ -30,15 +30,14 @@ import { TemplatePartComponent } from './template-part.component';
 })
 export class TemplatePartFormulaComponent extends TemplatePartComponent {
 
-    @ViewChild(FormulaComponent, { static: false })
-    formula: FormulaComponent;
+    readonly formula = viewChild(FormulaComponent);
 
 
     /**
      * @param caretIndex Index of letter to set caret at
      */
     setFocus(caretIndex?: number) {
-        this.formula.clickOnFormula();
+        this.formula().clickOnFormula();
 
         // TODO estimate part from caret index (which is the index of the character inside the XFL expression)
         // const partIndex = ??;
