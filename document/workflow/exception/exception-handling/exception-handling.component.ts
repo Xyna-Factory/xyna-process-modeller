@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, forwardRef, HostBinding, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, HostBinding, Input } from '@angular/core';
 
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { XoExceptionHandling } from '../../../../xo/exception-handling.model';
@@ -25,6 +25,7 @@ import { ItemBarAreaComponent } from '../item-bar-area/item-bar-area.component';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'exception-handling',
     templateUrl: './exception-handling.component.html',
     styleUrls: ['./exception-handling.component.scss', '../../common.scss'],

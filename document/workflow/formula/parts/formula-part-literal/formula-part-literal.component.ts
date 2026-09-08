@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
 
 import { FormulaPartLiteral } from '../../../../../xo/util/formula-parts/formula-part-literal';
 import { FormulaEditablePartComponent } from '../formula-editable-part.component';
@@ -23,6 +23,7 @@ import { ModDnDContentEditableDirective } from '../../../shared/drag-and-drop/mo
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'formula-part-literal',
     templateUrl: './formula-part-literal.component.html',
     styleUrls: ['./formula-part-literal.component.scss'],

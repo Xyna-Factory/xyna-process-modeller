@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, forwardRef, inject, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, forwardRef, inject, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
@@ -47,6 +47,7 @@ import { VariableAreaServiceComponent } from '../variable-area/variable-area-ser
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'invocation',
     templateUrl: './invocation.component.html',
     styleUrls: ['./invocation.component.scss'],

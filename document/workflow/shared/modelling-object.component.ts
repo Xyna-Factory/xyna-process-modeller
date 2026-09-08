@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, EventEmitter, HostBinding, HostListener, inject, Injector, Input, OnDestroy, OnInit, Optional, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostBinding, HostListener, inject, Injector, Input, OnDestroy, OnInit, Optional, Output } from '@angular/core';
 
 import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model';
 import { MessageBusService } from '@yggdrasil/events';
@@ -51,7 +51,8 @@ export interface TriggeredAction {
 /**
  * Base class for all components, modelling-actions can be done on
  */
-@Component({ template: '' })
+@Component({
+    changeDetection: ChangeDetectionStrategy.Eager, template: '' })
 export class ModellingObjectComponent implements OnInit, OnDestroy {
 
     protected readonly componentMappingService = inject(ComponentMappingService);
@@ -364,7 +365,8 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
 /**
  * Base class for all components, that represent an XoItem
  */
-@Component({ template: '' })
+@Component({
+    changeDetection: ChangeDetectionStrategy.Eager, template: '' })
 export class ModellingItemComponent extends ModellingObjectComponent implements OnDestroy {
 
     private modelChangeSubscription: Subscription;

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostListener, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, Input } from '@angular/core';
 
 import { XoRequest } from '@pmod/xo/request.model';
 
@@ -29,6 +29,7 @@ import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'case',
     templateUrl: './case.component.html',
     styleUrls: ['./case.component.scss'],

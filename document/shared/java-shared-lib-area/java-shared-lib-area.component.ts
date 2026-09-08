@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy } from '@angular/core';
 
 import { XcFormLabelComponent, XcIconButtonComponent, XcRichListComponent, XcRichListItem } from '@zeta/xc';
 
@@ -28,6 +28,7 @@ import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'java-shared-lib-area',
     templateUrl: './java-shared-lib-area.component.html',
     styleUrls: ['./java-shared-lib-area.component.scss'],

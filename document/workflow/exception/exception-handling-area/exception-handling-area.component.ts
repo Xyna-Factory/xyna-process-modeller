@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, forwardRef, HostBinding, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, HostBinding, inject, Input } from '@angular/core';
 
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { XoExceptionHandlingArea } from '../../../../xo/exception-handling-area.model';
@@ -27,6 +27,7 @@ import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'exception-handling-area',
     templateUrl: './exception-handling-area.component.html',
     styleUrls: ['./exception-handling-area.component.scss'],

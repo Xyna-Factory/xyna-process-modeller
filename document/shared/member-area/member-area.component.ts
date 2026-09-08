@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 
 import { XoPlugin } from '@yggdrasil/plugin/plugin.model';
 import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
@@ -32,6 +32,7 @@ import { XcIconButtonComponent, XcDefinitionProxyComponent } from '@zeta/xc';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'member-area',
     templateUrl: './member-area.component.html',
     styleUrls: ['./member-area.component.scss'],

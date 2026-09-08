@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, forwardRef, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, Input } from '@angular/core';
 
 import { XoParallelism } from '../../../xo/parallelism.model';
 import { ContentAreaComponent } from '../content-area/content-area.component';
@@ -23,6 +23,7 @@ import { ModellingItemComponent } from '../shared/modelling-object.component';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'parallelism',
     templateUrl: './parallelism.component.html',
     styleUrls: ['./parallelism.component.scss'],

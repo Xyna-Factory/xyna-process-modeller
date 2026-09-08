@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 
 import { ModellingActionType } from '@pmod/api/xmom.service';
 import { DragType } from '@pmod/document/workflow/shared/drag-and-drop/mod-drag-and-drop.service';
@@ -33,6 +33,7 @@ import { XcFormTextareaComponent, XcIconButtonComponent, XcTooltipDirective } fr
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'meta-tag-area',
     templateUrl: './meta-tag-area.component.html',
     styleUrl: './meta-tag-area.component.scss',

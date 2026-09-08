@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { NgFor } from '@angular/common';
-import { Component, forwardRef, HostBinding, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, HostBinding, Input } from '@angular/core';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoForeach } from '../../../xo/foreach.model';
@@ -31,6 +31,7 @@ import { XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective }
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'foreach',
     templateUrl: './foreach.component.html',
     styleUrls: ['./foreach.component.scss'],

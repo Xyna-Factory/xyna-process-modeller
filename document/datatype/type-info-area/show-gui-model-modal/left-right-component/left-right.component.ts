@@ -16,11 +16,12 @@ import { NgClass } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, EventEmitter, HostListener, inject, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostListener, inject, Input, OnInit, Output, ViewChild } from '@angular/core';
 
 
 /** @deprecated */
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'left-right-component',
     templateUrl: './left-right.component.html',
     styleUrls: ['./left-right.component.scss'],

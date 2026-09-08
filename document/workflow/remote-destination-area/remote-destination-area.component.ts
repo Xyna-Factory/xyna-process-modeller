@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItem } from '@zeta/xc';
 
@@ -29,6 +29,7 @@ import { VariableAreaComponent } from '../variable-area/variable-area.component'
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'remote-destination-area',
     templateUrl: './remote-destination-area.component.html',
     styleUrls: ['./remote-destination-area.component.scss'],

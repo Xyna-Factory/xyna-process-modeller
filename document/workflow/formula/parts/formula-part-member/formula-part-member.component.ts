@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterContentInit, AfterViewInit, Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, AfterContentInit, AfterViewInit, Component, ViewChild } from '@angular/core';
 
 import { XoStructureField, XoStructureMethod, XoStructureObject } from '@zeta/api';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItem } from '@zeta/xc';
@@ -30,6 +30,7 @@ import { VariableComponent } from '../../../variable/variable.component';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'formula-part-member',
     templateUrl: './formula-part-member.component.html',
     styleUrls: ['./formula-part-member.component.scss'],

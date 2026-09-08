@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
 
 import { XcContentEditableDirective } from '@zeta/xc';
 
@@ -31,6 +31,7 @@ export interface TemplatePartModifyEvent {
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'template-part-text',
     templateUrl: './template-part-text.component.html',
     styleUrls: ['./template-part.component.scss', './template-part-text.component.scss']

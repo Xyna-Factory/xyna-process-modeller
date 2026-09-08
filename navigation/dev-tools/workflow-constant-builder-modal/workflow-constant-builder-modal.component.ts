@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { ApiService, RuntimeContext } from '@zeta/api';
 import { downloadFile } from '@zeta/base';
@@ -30,6 +30,7 @@ import { workflowConstantBuilderModal_translations_en_US } from './locale/workfl
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './workflow-constant-builder-modal.component.html',
     styleUrls: ['./workflow-constant-builder-modal.component.scss'],
     imports: [XcButtonComponent, XcCheckboxComponent, XcDialogWrapperComponent, XcFormAutocompleteComponent, XcFormInputComponent, XcFormTextareaComponent, XcPanelComponent, XcI18nContextDirective, XcI18nTranslateDirective]

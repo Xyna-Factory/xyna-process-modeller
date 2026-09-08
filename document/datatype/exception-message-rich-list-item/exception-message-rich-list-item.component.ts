@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, HostBinding, inject, Injector, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, inject, Injector, OnDestroy, OnInit } from '@angular/core';
 
 import { OutsideListenerService } from '@zeta/base';
 import { XcIconButtonComponent, XcRichListItemComponent, XcTooltipDirective } from '@zeta/xc';
@@ -32,6 +32,7 @@ export interface ExceptionMessageRichListItemData {
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './exception-message-rich-list-item.component.html',
     styleUrls: ['./exception-message-rich-list-item.component.scss'],
     imports: [XcIconButtonComponent, XcTooltipDirective]

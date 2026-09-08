@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, TemplateRef } from '@angular/core';
 
 import { XoLabelArea } from '../../../xo/label-area.model';
 import { TextAreaModellingObjectComponent } from '../shared/text-area-modelling-object.component';
@@ -24,6 +24,7 @@ import { NgTemplateOutlet } from '@angular/common';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'label-area',
     templateUrl: './label-area.component.html',
     styleUrls: ['./label-area.component.scss'],

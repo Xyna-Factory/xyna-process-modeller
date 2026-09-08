@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { XoArea } from '@pmod/xo/area.model';
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
@@ -29,7 +29,8 @@ import { DocumentComponent } from './document.component';
 import { DocumentModel } from './model/document.model';
 
 
-@Component({ template: '' })
+@Component({
+    changeDetection: ChangeDetectionStrategy.Eager, template: '' })
 export class TypeDocumentComponent<D extends DocumentModel> extends DocumentComponent<void, D> {
 
     selectedVariable: XoMemberVariable;

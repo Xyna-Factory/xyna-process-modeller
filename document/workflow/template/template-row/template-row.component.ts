@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, EventEmitter, HostListener, Input, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostListener, Input, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
 
 import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoData } from '../../../../xo/data.model';
@@ -48,6 +48,7 @@ export interface SwitchTemplateRowFocusEvent {
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'template-row',
     templateUrl: './template-row.component.html',
     styleUrls: ['./template-row.component.scss'],

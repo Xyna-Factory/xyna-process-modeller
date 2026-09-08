@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, EventEmitter, Input, Output, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, inject } from '@angular/core';
 
 import { DocumentService } from '../../../document/document.service';
 import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model';
@@ -27,6 +27,7 @@ import { XcIconButtonComponent, XcIconComponent, XcTooltipDirective } from '@zet
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'xfm-mod-nav-error',
     templateUrl: './error-item.component.html',
     styleUrls: ['./error-item.component.scss'],

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostBinding, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
@@ -49,6 +49,7 @@ import { ModContentEditableDirective } from '../shared/mod-content-editable.dire
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'variable',
     templateUrl: './variable.component.html',
     styleUrls: ['./variable.component.scss'],

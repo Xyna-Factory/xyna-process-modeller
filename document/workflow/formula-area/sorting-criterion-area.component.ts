@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeSortingRequest } from '../../../xo/change-sorting-request.model';
@@ -30,6 +30,7 @@ import { XcFormLabelComponent, XcIconButtonComponent } from '@zeta/xc';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'sorting-criterion-area',
     templateUrl: './sorting-criterion-area.component.html',
     styleUrls: ['./sorting-criterion-area.component.scss', './formula-area.component.scss'],

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { XoModellingItem } from '@pmod/xo/modelling-item.model';
 
@@ -34,6 +34,7 @@ import { XcIconButtonComponent } from '@zeta/xc';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'member-variable-area',
     templateUrl: './member-variable-area.component.html',
     styleUrls: ['./member-variable-area.component.scss'],

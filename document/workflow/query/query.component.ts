@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, forwardRef, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, inject, Input } from '@angular/core';
 
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { I18nService } from '@zeta/i18n';
@@ -37,6 +37,7 @@ import { VariableAreaServiceComponent } from '../variable-area/variable-area-ser
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'query',
     templateUrl: './query.component.html',
     styleUrls: ['./query.component.scss'],

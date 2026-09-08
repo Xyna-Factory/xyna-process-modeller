@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 
 import { ApiService, XoManagedFileID } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
@@ -31,6 +31,7 @@ import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'lib-area',
     templateUrl: './lib-area.component.html',
     styleUrls: ['./lib-area.component.scss'],

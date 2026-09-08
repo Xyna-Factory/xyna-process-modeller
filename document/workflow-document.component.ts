@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, inject, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, OnDestroy } from '@angular/core';
 
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
 import { FullQualifiedName } from '@zeta/api';
@@ -51,6 +51,7 @@ import { WorkflowComponent } from './workflow/workflow/workflow.component';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './workflow-document.component.html',
     styleUrls: ['./workflow-document.component.scss'],
     // single service instances per document

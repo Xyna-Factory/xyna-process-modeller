@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 
 import { XMOMListComponent } from '@pmod/navigation/xmom/xmom-list.component';
 import { XoFactoryItemArray } from '@pmod/xo/factory-item.model';
@@ -32,6 +32,7 @@ export interface RelationGroup {
 }
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'relation-table',
     templateUrl: './relation-table.component.html',
     styleUrls: ['./relation-table.component.scss'],

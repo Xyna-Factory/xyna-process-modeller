@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, Component, ElementRef, Input, NgZone, OnDestroy, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, AfterViewInit, Component, ElementRef, Input, NgZone, OnDestroy, ViewChild, inject } from '@angular/core';
 import { GraphicallyRepresented } from '@zeta/base';
 import { createSVGCircle, createSVGGroup, createSVGHorizontalCubicBezierPath, createSVGText, createSVGVerticalCubicBezierPath } from '@zeta/base/draw';
 import { filter, forkJoin, take, tap } from 'rxjs';
@@ -185,6 +185,7 @@ export class Flow {
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'flow-canvas',
     templateUrl: './flow-canvas.component.html',
     styleUrls: ['./flow-canvas.component.scss']

@@ -15,12 +15,13 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { FormulaPartComponent } from '../formula-part.component';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'formula-part-function',
     templateUrl: './formula-part-function.component.html',
     styleUrls: ['./formula-part-function.component.scss']

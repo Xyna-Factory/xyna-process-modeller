@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, Component, ElementRef, EventEmitter, inject, Input, NgZone, OnDestroy, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, AfterViewInit, Component, ElementRef, EventEmitter, inject, Input, NgZone, OnDestroy, Output, ViewChild } from '@angular/core';
 
 import { createSVGGroup, createSVGHorizontalCubicBezierPath, removeAllChildren } from '@zeta/base/draw';
 
@@ -289,6 +289,7 @@ interface ConnectionObject {
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'dataflow',
     templateUrl: './dataflow.component.html',
     styleUrls: ['./dataflow.component.scss'],

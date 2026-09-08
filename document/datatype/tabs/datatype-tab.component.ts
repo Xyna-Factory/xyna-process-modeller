@@ -15,7 +15,7 @@
 * limitations under the License.
 * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 */
-import { ChangeDetectorRef, Component, Injector, OnDestroy, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, OnDestroy, inject } from '@angular/core';
 
 import { ModellingActionType } from '@pmod/api/xmom.service';
 import { DocumentService } from '@pmod/document/document.service';
@@ -79,6 +79,7 @@ export interface MethodTabData {
  * Base class for tabs in Datatype view
  */
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ''
 })
 export abstract class DatatypeTabComponent<D, E extends DocumentTabData<D> = DocumentTabData<D>> extends XcTabComponent<void, E> implements OnDestroy {
@@ -125,6 +126,7 @@ export abstract class DatatypeTabComponent<D, E extends DocumentTabData<D> = Doc
 }
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ''
 })
 export abstract class DatatypeDetailsTabComponent extends DatatypeTabComponent<XoDataType> {
@@ -137,6 +139,7 @@ export abstract class DatatypeDetailsTabComponent extends DatatypeTabComponent<X
 }
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ''
 })
 export abstract class DatatypeVariableTabComponent extends DatatypeTabComponent<VariableTabData> {
@@ -187,6 +190,7 @@ export abstract class DatatypeVariableTabComponent extends DatatypeTabComponent<
 }
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ''
 })
 export abstract class DatatypeMethodTabComponent extends DatatypeTabComponent<MethodTabData> {

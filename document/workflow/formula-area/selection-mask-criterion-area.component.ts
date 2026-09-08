@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { XoInsertSelectionMaskRequest } from '@pmod/xo/insert-selection-mask-request.model';
 
@@ -27,6 +27,7 @@ import { XcFormLabelComponent, XcIconButtonComponent, XcTooltipDirective } from 
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'selection-mask-criterion-area',
     templateUrl: './formula-area.component.html',
     styleUrls: ['./formula-area.component.scss'],

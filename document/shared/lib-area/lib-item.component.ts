@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostBinding, Injector, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Injector, inject } from '@angular/core';
 
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcIconButtonComponent, XcRichListItemComponent, XcTooltipDirective } from '@zeta/xc';
@@ -31,6 +31,7 @@ export interface LibItemData {
 }
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './lib-item.component.html',
     styleUrls: ['./lib-item.component.scss'],
     imports: [XcIconButtonComponent, XcTooltipDirective]

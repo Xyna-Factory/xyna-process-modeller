@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 
 import { PluginService } from '@pmod/document/plugin.service';
 import { XcAutocompleteDataWrapper, XcButtonComponent, XcDefinitionProxyComponent, XcFormAutocompleteComponent, XcFormInputComponent, XcFormLabelComponent, XcOptionItem, XcRichListComponent, XcRichListItem } from '@zeta/xc';
@@ -39,6 +39,7 @@ export enum ExceptionMessageLanguage {
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'exception-messages-area',
     templateUrl: './exception-messages-area.component.html',
     styleUrls: ['./exception-messages-area.component.scss'],

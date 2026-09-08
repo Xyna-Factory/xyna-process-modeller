@@ -17,7 +17,7 @@
  */
 import { filter, take } from 'rxjs/operators';
 
-import { Component, ElementRef, HostBinding, HostListener, inject, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, HostListener, inject, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ApiService } from '@zeta/api';
 import { coerceBoolean } from '@zeta/base';
 
@@ -50,6 +50,7 @@ import { FormulaProxyComponent } from './parts/formula-proxy/formula-proxy.compo
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'formula',
     templateUrl: './formula.component.html',
     styleUrls: ['./formula.component.scss'],

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { XoDeleteRequest } from '@pmod/xo/delete-request.model';
 
@@ -36,6 +36,7 @@ import { XcIconButtonComponent } from '@zeta/xc';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'service-area',
     templateUrl: './service-area.component.html',
     styleUrls: ['./service-area.component.scss'],

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { TypeLabelAreaComponent } from './type-label-area.component';
 import { LabelAreaComponent } from '../label-area/label-area.component';
@@ -23,6 +23,7 @@ import { XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'type-label-area-service',
     templateUrl: './type-label-area.component.html',
     styleUrls: ['./type-label-area.component.scss', './type-label-area-service.component.scss'],

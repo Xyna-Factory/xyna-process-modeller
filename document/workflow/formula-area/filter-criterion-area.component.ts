@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { XoInsertFilterCriterionRequest } from '../../../xo/insert-filter-criterion-request.model';
 import { XoInsertRequest } from '../../../xo/insert-request.model';
@@ -26,6 +26,7 @@ import { XcFormLabelComponent, XcIconButtonComponent, XcTooltipDirective } from 
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'filter-criterion-area',
     templateUrl: './formula-area.component.html',
     styleUrls: ['./formula-area.component.scss'],

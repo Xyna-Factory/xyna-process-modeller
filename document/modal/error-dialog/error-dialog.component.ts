@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent } from '@zeta/xc';
 
@@ -32,6 +32,7 @@ export interface ErrorDialogData {
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'error-dialog',
     templateUrl: './error-dialog.component.html',
     styleUrls: ['./error-dialog.component.scss'],

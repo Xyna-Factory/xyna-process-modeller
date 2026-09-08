@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy } from '@angular/core';
 
 import { SelectionService } from '@pmod/document/selection.service';
 import { MappingMode, WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
@@ -38,6 +38,7 @@ import { VisualMappingComponent } from '../visual-mapping/visual-mapping.compone
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'mapping',
     templateUrl: './mapping.component.html',
     styleUrls: ['./mapping.component.scss'],

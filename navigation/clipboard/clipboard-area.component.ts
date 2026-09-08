@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { ModellingActionType } from '../../api/xmom.service';
 import { ModRelativeHoverSide } from '../../document/workflow/shared/drag-and-drop/mod-drag-and-drop.service';
@@ -33,6 +33,7 @@ import { XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'clipboard-area',
     templateUrl: './clipboard-area.component.html',
     styleUrls: ['./clipboard-area.component.scss'],

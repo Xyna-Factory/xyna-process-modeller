@@ -15,13 +15,14 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { XoChoice } from '../../../xo/choice.model';
 import { ModellingItemComponent } from '../shared/modelling-object.component';
 
 
-@Component({ template: '' })
+@Component({
+    changeDetection: ChangeDetectionStrategy.Eager, template: '' })
 export class ChoiceComponent extends ModellingItemComponent {
 
     @Input()

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostBinding, Injector, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Injector, inject } from '@angular/core';
 
 import { XcCheckboxComponent, XcRichListItemComponent, XcTooltipDirective } from '@zeta/xc';
 
@@ -35,6 +35,7 @@ export interface JavaSharedLibItemData {
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './java-shared-lib-item.component.html',
     styleUrls: ['./java-shared-lib-item.component.scss'],
     imports: [XcCheckboxComponent, XcTooltipDirective]

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { coerceBoolean } from '@zeta/base';
 
@@ -32,6 +32,7 @@ import { FormulaComponent } from '../formula/formula.component';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'formula-input-area',
     templateUrl: './formula-input-area.component.html',
     styleUrls: ['./formula-input-area.component.scss'],

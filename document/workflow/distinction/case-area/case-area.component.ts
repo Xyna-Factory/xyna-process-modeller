@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 
 import { ModellingActionType } from '@pmod/api/xmom.service';
 import { ConflictDialogComponent, ConflictDialogData } from '@pmod/document/modal/conflict-dialog/conflict-dialog.component';
@@ -34,6 +34,7 @@ import { ModDraggableDirective } from '../../shared/drag-and-drop/mod-draggable.
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'case-area',
     templateUrl: './case-area.component.html',
     styleUrls: ['./case-area.component.scss'],

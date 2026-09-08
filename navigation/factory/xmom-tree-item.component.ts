@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
 
 import { XmomPath } from '../../api/xmom.service';
 import { XcIconButtonComponent } from '@zeta/xc';
@@ -32,6 +32,7 @@ export interface XMOMTreeItemState {
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'xfm-mod-nav-xmomtreeitem',
     templateUrl: './xmom-tree-item.component.html',
     styleUrls: ['./xmom-tree-item.component.scss'],

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoContentArea } from '../../../../xo/content-area.model';
@@ -31,6 +31,7 @@ import { XcButtonComponent } from '@zeta/xc';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'item-bar-area',
     templateUrl: './item-bar-area.component.html',
     styleUrls: ['./item-bar-area.component.scss'],

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, forwardRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef } from '@angular/core';
 
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { ModellingActionType } from '../../../../api/xmom.service';
@@ -29,6 +29,7 @@ import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'type-choice',
     templateUrl: './type-choice.component.html',
     styleUrls: ['../choice.component.scss', './type-choice.component.scss'],

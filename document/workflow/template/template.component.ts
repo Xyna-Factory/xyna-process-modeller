@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, HostBinding, inject, Input, OnDestroy, QueryList, ViewChildren } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, inject, Input, OnDestroy, QueryList, ViewChildren } from '@angular/core';
 
 import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
 import { ApiService } from '@zeta/api';
@@ -49,6 +49,7 @@ interface ConcatParameter {
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'template-block',
     templateUrl: './template.component.html',
     styleUrls: ['./template.component.scss'],

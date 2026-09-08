@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoFormulaArea } from '../../../xo/formula-area.model';
@@ -30,6 +30,7 @@ import { XcFormLabelComponent, XcIconButtonComponent, XcTooltipDirective } from 
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'formula-area',
     templateUrl: './formula-area.component.html',
     styleUrls: ['./formula-area.component.scss'],

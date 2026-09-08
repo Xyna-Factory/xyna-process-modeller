@@ -17,7 +17,7 @@
  */
 import { filter } from 'rxjs/operators';
 
-import { Component, EventEmitter, HostListener, inject, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, inject, Input, Output } from '@angular/core';
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
 import { FullQualifiedName } from '@zeta/api';
 import { coerceBoolean } from '@zeta/base';
@@ -39,6 +39,7 @@ import { XoXmomItem } from '../../xo/xmom-item.model';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'xfm-mod-nav-xmomlistitem',
     templateUrl: './xmom-list-item.component.html',
     styleUrls: ['./xmom-list-item.component.scss'],
