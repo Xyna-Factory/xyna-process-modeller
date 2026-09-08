@@ -21,7 +21,7 @@ import { coerceBoolean } from '@zeta/base';
 import { ModDragEvent, ModDropEvent, ModDropAreaDirective } from '../shared/drag-and-drop/mod-drop-area.directive';
 import { Draggable, ModDnDEvent } from '../shared/drag-and-drop/mod-drag-and-drop.service';
 import { SkeletonTreeNode } from '../variable-tree/data-source/skeleton-tree-node';
-import { NgClass, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { ModDraggableDirective } from '../shared/drag-and-drop/mod-draggable.directive';
 import { XcIconButtonComponent } from '@zeta/xc';
 
@@ -37,7 +37,7 @@ export interface CreateAssignmentEvent {
     templateUrl: './variable-tree-node.component.html',
     styleUrls: ['./variable-tree-node.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, ModDraggableDirective, ModDropAreaDirective, XcIconButtonComponent, AsyncPipe]
+    imports: [ModDraggableDirective, ModDropAreaDirective, XcIconButtonComponent, AsyncPipe]
 })
 export class VariableTreeNodeComponent implements AfterViewInit, TreeNodeObserver {
     protected readonly cdr = inject(ChangeDetectorRef);

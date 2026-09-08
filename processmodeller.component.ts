@@ -18,7 +18,7 @@
 import { ReplaySubject, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
-import { NgClass } from '@angular/common';
+
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Injector, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ApiService, FullQualifiedName, RuntimeContext, RuntimeContextSelectionSettings } from '@zeta/api';
 import { KeyboardEventType, KeyDistributionService, OutsideListenerService } from '@zeta/base';
@@ -55,7 +55,7 @@ export let PMOD_RTC = RuntimeContext.guiHttpApplication;
     changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './processmodeller.component.html',
     styleUrls: ['./processmodeller.component.scss'],
-    imports: [ToolbarComponent, XcI18nContextDirective, XcTabBarComponent, NavigationComponent, NgClass]
+    imports: [ToolbarComponent, XcI18nContextDirective, XcTabBarComponent, NavigationComponent]
 })
 export class ProcessmodellerComponent extends RouteComponent implements OnInit, OnDestroy {
     documentService = inject(DocumentService);
