@@ -7,12 +7,11 @@
   class="case-drop-area"
   >
   @for (case of caseArea.items; let i = $index; track i) {
-    <case
-      [mod-draggable]="case"
+    <case [mod-draggable]="case"
       [documentModel]="documentModel"
       [case]="case"
       [detachable]="caseArea.items.length > 1"
       (triggerAction)="performAction($event)"
-    ></case>
+     />
   }
 </div>

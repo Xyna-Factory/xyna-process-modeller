@@ -7,11 +7,10 @@
 
   <div class="scroll-content">
     <div class="content-wrapper">
-      <content-area
-        [contentArea]="workflow.contentArea"
+      <content-area [contentArea]="workflow.contentArea"
         [documentModel]="documentModel"
         (triggerAction)="performAction($event)"
-      ></content-area>
+       />
     </div>
   </div>
 } @else {

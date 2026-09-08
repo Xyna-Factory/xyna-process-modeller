@@ -13,7 +13,7 @@
         [documentModel]="documentModel"
         (switchFocus)="switchFocus($event)"
         (triggerAction)="performAction($event)"
-      ></template-part-formula>
+       />
     }
     @if (!isFormula(part)) {
       <template-part-text #templatePart #textPart
@@ -23,7 +23,7 @@
         (deletePart)="deletePart($event)"
         (switchFocus)="switchFocus($event)"
         (triggerAction)="performAction($event)"
-      ></template-part-text>
+       />
     }
   }
 </div>

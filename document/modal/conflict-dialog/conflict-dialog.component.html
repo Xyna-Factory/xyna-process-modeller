@@ -3,12 +3,11 @@
   <section content class="content">
     <div class="message">{{injectedData.message}}</div>
     @for (handling of injectedData.handlings; let i = $index; track i) {
-      <xc-checkbox
-        class="value"
+      <xc-checkbox class="value"
         [label]="handling.value"
         [checked]="isChecked(handling.key)"
         (checkedChange)="check(handling.key, $event)"
-      ></xc-checkbox>
+       />
       <div class="description">{{handling.description}}</div>
     }
   </section>

@@ -45,19 +45,17 @@
         <section
           class="deployment-state"
           >
-          <deployment-state-detail
-            xc-i18n-context="deployment-state-detail"
+          <deployment-state-detail xc-i18n-context="deployment-state-detail"
             [deploymentItem]="deploymentItem"
-          ></deployment-state-detail>
-          <xc-icon-button
-            xc-icon-name="reload"
+           />
+          <xc-icon-button xc-icon-name="reload"
             class="deployment-state-refresh"
             [disabled]="pendingDeploymentItem"
             [busy]="pendingDeploymentItem"
             (click)="getDeploymentItem()"
             xc-tooltip="tooltip-refresh"
             xc-i18n
-          ></xc-icon-button>
+           />
         </section>
       }
       <ng-container *xc-has-right="'xmcp.xfm.processmodeller.stealLock'">
@@ -69,11 +67,10 @@
         }
       </ng-container>
       @if (hasRelations && relations) {
-        <relation-table
-          xc-i18n-context="relation-table"
+        <relation-table xc-i18n-context="relation-table"
           [relations]="relations"
           (refresh)="getRelations()"
-        ></relation-table>
+         />
       }
       <ng-container *xc-has-right="'xmcp.xfm.processmodeller.debug.showxml'">
         <xc-button
