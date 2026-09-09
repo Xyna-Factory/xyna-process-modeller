@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, inject, viewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, inject, viewChild, output } from '@angular/core';
 import { TreeNodeObserver } from '../variable-tree/data-source/skeleton-tree-data-source';
 import { coerceBoolean } from '@zeta/base';
 import { ModDragEvent, ModDropEvent, ModDropAreaDirective } from '../shared/drag-and-drop/mod-drop-area.directive';
@@ -49,8 +49,7 @@ export class VariableTreeNodeComponent implements AfterViewInit, TreeNodeObserve
 
     readonly nodeElement = viewChild<ElementRef<Element>>('noderow');
 
-    @Output()
-    readonly assignedVariable = new EventEmitter<CreateAssignmentEvent>();
+    readonly assignedVariable = output<CreateAssignmentEvent>();
 
     @Input()
     set node(value: SkeletonTreeNode) {
@@ -77,8 +76,7 @@ export class VariableTreeNodeComponent implements AfterViewInit, TreeNodeObserve
         return this._highlightMarks;
     }
 
-    @Output()
-    readonly selectionChange = new EventEmitter<SkeletonTreeNode>();
+    readonly selectionChange = output<SkeletonTreeNode>();
 
 
     select(node: SkeletonTreeNode) {

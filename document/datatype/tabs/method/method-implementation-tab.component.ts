@@ -16,6 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, Component, inject, ViewChild } from '@angular/core';
+import { outputToObservable } from '@angular/core/rxjs-interop';
 
 import { DataTypeService } from '@pmod/document/datatype.service';
 import { XoChangeMemberMethodImplementationTypeRequest } from '@pmod/xo/change-member-method-implementation-type-request.model';
@@ -120,6 +121,6 @@ export class MethodImplementationTabComponent extends DatatypeMethodTabComponent
 
     @ViewChild('referenceAutocomplete', {static: false, read: XcFormAutocompleteComponent})
     set pathAutocomplete(value: XcFormAutocompleteComponent) {
-        this.untilDestroyed(value?.focus)?.pipe(filter(() => !value.disabled)).subscribe(() => this.refreshReferenceAutocomplete());
+        this.untilDestroyed(value ? outputToObservable(value.focus) : undefined)?.pipe(filter(() => !value.disabled)).subscribe(() => this.refreshReferenceAutocomplete());
     }
 }

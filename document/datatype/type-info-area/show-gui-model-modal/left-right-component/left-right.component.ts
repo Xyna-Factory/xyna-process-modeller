@@ -16,7 +16,7 @@ import { NgClass } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostListener, inject, Input, OnInit, Output, viewChild, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, Input, OnInit, OutputEmitterRef, viewChild, input, output } from '@angular/core';
 
 
 /** @deprecated */
@@ -32,9 +32,7 @@ export class LeftRightComponent implements OnInit {
     leftId: string;
     rightId: string;
 
-    @Output()
-     
-    readonly change = new EventEmitter<any[]>();
+    readonly change = output<any[]>();
 
     readonly leftDropzone = viewChild<ElementRef>('leftDropzone');
 
@@ -98,7 +96,7 @@ export class LeftRightComponent implements OnInit {
     private targetedIndex: number;
 
     private readonly _sideArrayMap = new Map<string, any[]>();
-    private readonly _sideEmitterMap = new Map<string, EventEmitter<any[]>>();
+    private readonly _sideEmitterMap = new Map<string, OutputEmitterRef<any[]>>();
 
     // ---------------------------------------------------------------- MEMBERS, GETTERS, SETTERS
 
@@ -108,8 +106,7 @@ export class LeftRightComponent implements OnInit {
 
     readonly leftItems = input<any[]>(undefined);
 
-    @Output()
-    readonly leftItemsChange = new EventEmitter<any[]>();
+    readonly leftItemsChange = output<any[]>();
 
     private _rightItems: any[] = [];
 
@@ -122,8 +119,7 @@ export class LeftRightComponent implements OnInit {
         this._rightItems = value;
     }
 
-    @Output()
-    readonly rightItemsChange = new EventEmitter<any[]>();
+    readonly rightItemsChange = output<any[]>();
 
     // ---------------------------------------------------------------- METHODS
 

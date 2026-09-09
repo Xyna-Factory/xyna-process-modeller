@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, inject, Input, OnDestroy, Output, input } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject, Input, OnDestroy, input, output } from '@angular/core';
 
 import { XoMethod } from '@pmod/xo/method.model';
 import * as monaco from 'monaco-editor';
@@ -71,7 +71,7 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
 
     readonly readonly = input(false);
 
-    @Output() readonly implementationChange = new EventEmitter<string>();
+    readonly implementationChange = output<string>();
 
     get implementation(): string {
         return this.method ? this.method.implementationArea.text : '';

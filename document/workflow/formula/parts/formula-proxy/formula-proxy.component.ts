@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, AfterViewInit, Component, ElementRef, EventEmitter, Output, inject, viewChild, input } from '@angular/core';
+import { ChangeDetectionStrategy, AfterViewInit, Component, ElementRef, inject, viewChild, input, output } from '@angular/core';
 import { XoFormula } from '@pmod/xo/formula.model';
 import { FormulaFunctionGroup, FormulaPartFunction } from '@pmod/xo/util/formula-parts/formula-part-function';
 
@@ -41,8 +41,7 @@ export class FormulaProxyComponent implements AfterViewInit, FormulaChildCompone
 
     readonly formula = input<XoFormula>(undefined);
 
-    @Output()
-    readonly selectionChange = new EventEmitter<string>();
+    readonly selectionChange = output<string>();
 
     proxyDataWrapper = new XcAutocompleteDataWrapper<string>(
         () => null,

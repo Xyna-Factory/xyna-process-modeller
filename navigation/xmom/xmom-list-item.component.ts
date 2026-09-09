@@ -17,7 +17,7 @@
  */
 import { filter } from 'rxjs/operators';
 
-import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, inject, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, inject, Input, output } from '@angular/core';
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
 import { FullQualifiedName } from '@zeta/api';
 import { coerceBoolean } from '@zeta/base';
@@ -58,11 +58,9 @@ export class XMOMListItemComponent {
     readonly writableMenuItems: XcMenuItem[] = [];
     readonly readonlyMenuItems: XcMenuItem[] = [];
 
-    @Output()
-    readonly menuOpened = new EventEmitter<XoXmomItem>();
+    readonly menuOpened = output<XoXmomItem>();
 
-    @Output()
-    readonly menuClosed = new EventEmitter<XoXmomItem>();
+    readonly menuClosed = output<XoXmomItem>();
 
 
     constructor() {

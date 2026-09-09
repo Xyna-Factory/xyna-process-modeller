@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, EventEmitter, Output, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
 import { XmomPath } from '../../api/xmom.service';
 import { XMOMTreeItemState, XMOMTreeItemComponent } from './xmom-tree-item.component';
@@ -36,8 +36,7 @@ export class XMOMTreeComponent {
 
     readonly xmomPaths = input<XmomPath[]>(undefined);
 
-    @Output()
-    readonly stateChange = new EventEmitter<XMOMTreeItemState>();
+    readonly stateChange = output<XMOMTreeItemState>();
 
 
     change(state: XMOMTreeItemState) {

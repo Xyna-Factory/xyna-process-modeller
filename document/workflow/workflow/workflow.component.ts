@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, inject, Input, OnDestroy, Output, input } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, inject, Input, OnDestroy, input, output } from '@angular/core';
 
 import { OutsideListenerService } from '@zeta/base';
 
@@ -48,8 +48,7 @@ export class WorkflowComponent extends ModellingItemComponent implements AfterVi
     private currentScrollTop = 0;
     private currentScrollLeft = 0;
 
-    @Output()
-    readonly initialized = new EventEmitter<XoWorkflow>();
+    readonly initialized = output<XoWorkflow>();
 
 
     constructor() {

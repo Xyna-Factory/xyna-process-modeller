@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostBinding, HostListener, inject, Injector, Input, OnDestroy, OnInit, Optional, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, HostListener, inject, Injector, Input, OnDestroy, OnInit, Optional, output } from '@angular/core';
 
 import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model';
 import { MessageBusService } from '@yggdrasil/events';
@@ -79,8 +79,7 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
     private _documentModel: DocumentModel<DocumentItem>;
     private lockedSubscription: Subscription;
 
-    @Output()
-    readonly triggerAction = new EventEmitter<TriggeredAction>();
+    readonly triggerAction = output<TriggeredAction>();
 
     constructor() {
         this.menuItems.push(

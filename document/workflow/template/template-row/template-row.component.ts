@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostListener, Input, Output, QueryList, ViewChildren, viewChild, viewChildren, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, QueryList, ViewChildren, viewChild, viewChildren, input, output } from '@angular/core';
 
 import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoData } from '../../../../xo/data.model';
@@ -67,14 +67,11 @@ export class TemplateRowComponent extends ModellingObjectComponent {
 
     readonly lineNumber = input(0);
 
-    @Output()
-    readonly split = new EventEmitter<SplitTemplateRowEvent>();
+    readonly split = output<SplitTemplateRowEvent>();
 
-    @Output()
-    readonly merge = new EventEmitter<TemplateRow>(false);
+    readonly merge = output<TemplateRow>();
 
-    @Output()
-    readonly switchRow = new EventEmitter<SwitchTemplateRowFocusEvent>(false);
+    readonly switchRow = output<SwitchTemplateRowFocusEvent>();
 
     @Input()
     set row(value: TemplateRow) {

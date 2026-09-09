@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, EventEmitter, forwardRef, inject, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, inject, Input, output } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
@@ -60,8 +60,7 @@ export class InvocationComponent extends ModellingItemComponent {
     protected readonly detailLevelService = inject(WorkflowDetailLevelService);
     protected readonly i18n = inject(I18nService);
     protected readonly dialogService = inject(XcDialogService);
-    @Output()
-    readonly doubleClickProxy = new EventEmitter<void>();
+    readonly doubleClickProxy = output<void>();
 
 
     constructor() {

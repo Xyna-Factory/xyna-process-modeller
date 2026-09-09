@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Directive, ElementRef, EventEmitter, HostListener, inject, Input, Output, input } from '@angular/core';
+import { Directive, ElementRef, HostListener, inject, Input, input, output } from '@angular/core';
 
 import { coerceBoolean } from '@zeta/base';
 
@@ -30,11 +30,9 @@ export class ModContentEditableDirective {
 
     readonly triggerType = input<'mousedown' | 'dblclick'>('dblclick', { alias: "mod-content-editable-trigger" });
 
-    @Output('mod-content-editable-start-edit')
-    readonly startEdit = new EventEmitter<string>();
+    readonly startEdit = output<string>({ alias: 'mod-content-editable-start-edit' });
 
-    @Output('mod-content-editable-after-edit')
-    readonly afterEdit = new EventEmitter<string>();
+    readonly afterEdit = output<string>({ alias: 'mod-content-editable-after-edit' });
 
 
     @Input('mod-content-editable')

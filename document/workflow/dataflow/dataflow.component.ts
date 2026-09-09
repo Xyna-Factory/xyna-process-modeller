@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, AfterViewInit, Component, ElementRef, EventEmitter, inject, Input, NgZone, OnDestroy, Output, viewChild, input } from '@angular/core';
+import { ChangeDetectionStrategy, AfterViewInit, Component, ElementRef, inject, Input, NgZone, OnDestroy, viewChild, input, output } from '@angular/core';
 
 import { createSVGGroup, createSVGHorizontalCubicBezierPath, removeAllChildren } from '@zeta/base/draw';
 
@@ -328,8 +328,7 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
 
     readonly insideForeignRtc = input(false);
 
-    @Output()
-    readonly dataflowChange = new EventEmitter<XoSetDataflowConnectionRequest>();
+    readonly dataflowChange = output<XoSetDataflowConnectionRequest>();
 
 
     ngAfterViewInit() {
