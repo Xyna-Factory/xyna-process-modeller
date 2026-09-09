@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, forwardRef, HostBinding, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, HostBinding, inject, Input, input } from '@angular/core';
 
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { XoExceptionHandlingArea } from '../../../../xo/exception-handling-area.model';
@@ -37,9 +37,12 @@ export class ExceptionHandlingAreaComponent extends ModellingObjectComponent {
 
     protected readonly detailLevelService = inject(WorkflowDetailLevelService);
 
-    @Input()
+    readonly inline = input(false);
+
     @HostBinding('class.inline')
-    inline = false;
+    get hostInline(): boolean {
+        return this.inline();
+    }
 
     @HostBinding('class.empty')
     empty = true;

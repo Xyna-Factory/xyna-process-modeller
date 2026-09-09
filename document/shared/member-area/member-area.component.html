@@ -1,7 +1,7 @@
 <header>
   <xc-icon-button [disabled]="!hasContent"
-    (click)="collapsed = !collapsed"
-    [xc-icon-name]="collapsed ? 'arrowright' : 'arrowdown'"
+    (click)="collapsed.set(!collapsed())"
+    [xc-icon-name]="collapsed() ? 'arrowright' : 'arrowdown'"
     xc-icon-size="small"
    />
   <h2 class="caption">{{caption() | xcI18n}}</h2>
@@ -19,6 +19,6 @@
      />
   }
 </header>
-@if (!collapsed) {
+@if (!collapsed()) {
   <ng-content />
 }

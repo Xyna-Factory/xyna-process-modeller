@@ -1,7 +1,7 @@
 
 <div class="left half">
-  @if (leftTitle) {
-    <div class="title">{{leftTitle}}</div>
+  @if (leftTitle()) {
+    <div class="title">{{leftTitle()}}</div>
   }
   <div class="dropzone"
     #leftDropzone
@@ -9,7 +9,7 @@
     (blur)="onblurLeft()"
     tabindex="0"
     role="listbox"
-    [attr.aria-label]="leftTitle"
+    [attr.aria-label]="leftTitle()"
     [attr.aria-activedescendant]="leftId + '_' + focusedIndexLeft"
     (dragover)="dropzoneDragOver($event)"
     (drop)="dropzoneDrop($event)"
@@ -31,8 +31,8 @@
   </div>
 </div>
 <div class="right half">
-  @if (rightTitle) {
-    <div class="title">{{rightTitle}}</div>
+  @if (rightTitle()) {
+    <div class="title">{{rightTitle()}}</div>
   }
   <div class="dropzone"
     #rightDropzone
@@ -40,7 +40,7 @@
     (blur)="onblurRight()"
     tabindex="0"
     role="listbox"
-    [attr.aria-label]="rightTitle"
+    [attr.aria-label]="rightTitle()"
     [attr.aria-activedescendant]="rightId + '_' + focusedIndexRight"
     (dragover)="dropzoneDragOver($event)"
     (drop)="dropzoneDrop($event)"

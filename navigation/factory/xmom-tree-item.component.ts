@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, Output, input } from '@angular/core';
 
 import { XmomPath } from '../../api/xmom.service';
 import { XcIconButtonComponent } from '@zeta/xc';
@@ -140,9 +140,12 @@ export class XMOMTreeItemComponent {
     }
 
 
+    readonly root = input<boolean>(undefined);
+
     @HostBinding('class.root')
-    @Input()
-    root: boolean;
+    get hostRoot(): boolean {
+        return this.root();
+    }
 
 
     get children(): XmomPath[] {

@@ -67,9 +67,12 @@ export class VariableComponent extends SelectableModellingObjectComponent {
 
     readonly hasMenu = input(true);
 
-    @Input()
+    readonly isPlaceholder = input(false);
+
     @HostBinding('class.placeholder')
-    isPlaceholder = false;
+    get hostIsPlaceholder(): boolean {
+        return this.isPlaceholder();
+    }
 
     showFqn = true;
 

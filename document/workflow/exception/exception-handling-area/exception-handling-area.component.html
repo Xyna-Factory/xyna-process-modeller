@@ -2,7 +2,7 @@
 @for (handling of exceptionHandlingArea?.exceptionHandlings; let i = $index; track i) {
   <exception-handling [exceptionHandling]="handling"
     [documentModel]="documentModel"
-    [inline]="inline"
+    [inline]="inline()"
     (triggerAction)="performAction($event)"
     class="handling"
    />
@@ -25,7 +25,7 @@
     xc-i18n
     xc-tooltip="tooltip-open-close-exception-area"
    />
-  @if (inline) {
+  @if (inline()) {
     <xc-icon-button class="compensation button" xc-icon-style="modeller" xc-icon-name="mini-compensation" xc-icon-size="small"
       [color]="exceptionHandlingArea?.hasCompensations() ? 'color-white' : 'color-black'"
       [class.empty]="!exceptionHandlingArea?.hasCompensations()"
