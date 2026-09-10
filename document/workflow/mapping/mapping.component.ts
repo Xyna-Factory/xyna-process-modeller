@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy , signal} from '@angular/core';
 
 import { SelectionService } from '@pmod/document/selection.service';
 import { MappingMode, WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
@@ -77,12 +77,12 @@ export class MappingComponent extends ModellingItemComponent implements OnDestro
 
         this.defaultMenuItems = [
             <XcMenuItem>{
-                name: this.language.showHideDocumentation, translate: true,
+                name: signal(this.language.showHideDocumentation), translate: true,
                 visible: () => !!this.mapping.documentationArea,
                 click: () => this.detailLevelService.toggleCollapsed(this.mapping.documentationArea.id)
             },
             <XcMenuItem>{
-                name: this.language.sortAssignments, translate: true,
+                name: signal(this.language.sortAssignments), translate: true,
                 click: () => this.performAction({
                     type: ModellingActionType.sort,
                     objectId: this.mapping.formulaArea.id,
@@ -90,15 +90,15 @@ export class MappingComponent extends ModellingItemComponent implements OnDestro
                 })
             },
             <XcMenuItem>{
-                name: this.language.showHideFormulas, translate: true,
+                name: signal(this.language.showHideFormulas), translate: true,
                 click: () => this.toggleCollapsed()
             },
             <XcMenuItem>{
-                name: this.visualMode ? this.language.programmaticMode : this.language.visualMode, translate: true,
+                name: signal(this.visualMode ? this.language.programmaticMode : this.language.visualMode), translate: true,
                 click: item => {
                     this.detailLevelService.setMappingMode(
                         this.mapping.id, this.visualMode ? MappingMode.PROGRAMMATIC : MappingMode.VISUAL);
-                    item.name = this.visualMode ? this.language.programmaticMode : this.language.visualMode;
+                    item.name = signal(this.visualMode ? this.language.programmaticMode : this.language.visualMode);
                 }
             },
             ...this.menuItems
@@ -183,7 +183,7 @@ export class MappingComponent extends ModellingItemComponent implements OnDestro
         this.menuItems.push(
             ...this.mapping.plugin.menuEntry.data.map(entry =>
                 <XcMenuItem>{
-                    name: entry.navigationEntryLabel,
+                    name: signal(entry.navigationEntryLabel),
                     click: () => this.apiService.startOrder(
                         entry.runtimeContext.toRuntimeContext(),
                         entry.fQN,

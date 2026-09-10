@@ -15,15 +15,14 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, ElementRef, inject, OnDestroy } from '@angular/core';
+import { Subscription, throwError } from 'rxjs';
+import { catchError, filter, map } from 'rxjs/operators';
 
+import { ChangeDetectionStrategy, Component, ElementRef, inject, OnDestroy, signal } from '@angular/core';
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
 import { FullQualifiedName } from '@zeta/api';
 import { copyToClipboard, KeyboardEventType, KeyDistributionService, pasteFromClipboard } from '@zeta/base';
 import { XcContentEditableDirective, XcIconButtonComponent, XcMenuItem, XcMenuServiceDirective, XcMenuTriggerDirective, XcStatusBarEntryType, XcStatusBarService } from '@zeta/xc';
-
-import { Subscription, throwError } from 'rxjs';
-import { catchError, filter, map } from 'rxjs/operators';
 
 import { XcI18nContextDirective } from '../../../zeta/i18n';
 import { DeploymentState } from '../api/xmom-types';
@@ -65,7 +64,7 @@ export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowD
     private readonly detailLevelService = inject(WorkflowDetailLevelService);
 
     private readonly menuItemTestWorkflow: XcMenuItem = {
-        name: 'pmod.workflow.test-workflow...',
+        name: signal('pmod.workflow.test-workflow...'),
         translate: true,
         visible: () => this.workflow.deploymentState === DeploymentState.deployed || this.workflow.deploymentState === DeploymentState.changed,
         click: () => {
@@ -83,26 +82,26 @@ export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowD
     };
 
     private readonly menuItemToggleDocumentation: XcMenuItem = {
-        name: 'pmod.workflow.show-hide-documentation',
+        name: signal('pmod.workflow.show-hide-documentation'),
         translate: true,
         visible: () => !!this.workflow.documentationArea,
         click: () => this.detailLevelService.toggleCollapsed(this.workflow.documentationArea.id)
     };
 
     private readonly menuItemTogglePaths: XcMenuItem = {
-        name: 'pmod.workflow.show-hide-paths-inside-workflow',
+        name: signal('pmod.workflow.show-hide-paths-inside-workflow'),
         translate: true,
         click: () => this.detailLevelService.setShowFQN(!this.detailLevelService.showFQN)
     };
 
     private readonly menuItemToggleMappings: XcMenuItem = {
-        name: 'pmod.workflow.collapse-all',
+        name: signal('pmod.workflow.collapse-all'),
         translate: true,
         click: () => this.detailLevelService.setAllCollapsed()
     };
 
     private readonly menuItemUndo: XcMenuItem = {
-        name: 'pmod.workflow.undo',
+        name: signal('pmod.workflow.undo'),
         aside: this.i18n.translateSignal('pmod.workflow.undo-aside'),
         translate: true,
         visible: () => !this.workflow.readonly && !this.documentService.selectedDocument.isLocked,
@@ -110,7 +109,7 @@ export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowD
     };
 
     private readonly menuItemRedo: XcMenuItem = {
-        name: 'pmod.workflow.redo',
+        name: signal('pmod.workflow.redo'),
         aside: this.i18n.translateSignal('pmod.workflow.redo-aside'),
         translate: true,
         visible: () => !this.workflow.readonly && !this.documentService.selectedDocument.isLocked,
@@ -118,7 +117,7 @@ export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowD
     };
 
     private readonly menuItemCompare: XcMenuItem = {
-        name: 'pmod.workflow.compare',
+        name: signal('pmod.workflow.compare'),
         translate: true,
         visible: () => this.workflow.deploymentState === DeploymentState.deployed || this.workflow.deploymentState === DeploymentState.changed,
         click: () => this.documentService.loadXmomObject(

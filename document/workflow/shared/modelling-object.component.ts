@@ -1,3 +1,7 @@
+import { Observable, Subject, Subscription } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
+import { Vector2 } from 'three';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -15,15 +19,10 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, HostListener, inject, Injector, Input, OnDestroy, OnInit, Optional, output } from '@angular/core';
-
+import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, HostListener, inject, Injector, Input, OnDestroy, OnInit, Optional, output, signal } from '@angular/core';
 import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model';
 import { MessageBusService } from '@yggdrasil/events';
 import { XcMenuItem } from '@zeta/xc';
-
-import { Observable, Subject, Subscription } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
-import { Vector2 } from 'three';
 
 import { HttpMethod, ModellingActionType } from '../../../api/xmom.service';
 import { WorkflowDetailSettingsService } from '../../../workflow-detail-settings.service';
@@ -52,7 +51,8 @@ export interface TriggeredAction {
  * Base class for all components, modelling-actions can be done on
  */
 @Component({
-    changeDetection: ChangeDetectionStrategy.Eager, template: '' })
+    changeDetection: ChangeDetectionStrategy.Eager, template: ''
+})
 export class ModellingObjectComponent implements OnInit, OnDestroy {
 
     protected readonly componentMappingService = inject(ComponentMappingService);
@@ -84,7 +84,7 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
     constructor() {
         this.menuItems.push(
             <XcMenuItem>{
-                name: 'Remove',
+                name: signal('Remove'),
                 icon: 'delete',
                 translate: true,
                 click: () => this.remove(),
@@ -270,14 +270,13 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
 
 
     @HostListener('keyup.delete', ['$event'])
-    absorbKeyupDelete(event?: KeyboardEvent) {
-        // FIXME Find a better way to fix PMOD-192
-        event.stopPropagation();
+    absorbKeyupDelete(event?: Event) {
+        event?.stopPropagation();
     }
 
 
     @HostListener('keydown.delete', ['$event'])
-    remove(event?: KeyboardEvent) {
+    remove(event?: Event) {
         if (this.allowRemoveWithDeleteKey() && this.allowRemove() && !this.readonly) {
             this.performAction({
                 type: ModellingActionType.delete,
@@ -365,7 +364,9 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
  * Base class for all components, that represent an XoItem
  */
 @Component({
-    changeDetection: ChangeDetectionStrategy.Eager, template: '' })
+    template: '',
+    changeDetection: ChangeDetectionStrategy.Eager
+})
 export class ModellingItemComponent extends ModellingObjectComponent implements OnDestroy {
 
     private modelChangeSubscription: Subscription;

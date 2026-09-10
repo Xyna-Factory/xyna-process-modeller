@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, inject, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, ViewChild , signal} from '@angular/core';
 import { outputToObservable } from '@angular/core/rxjs-interop';
 
 import { DataTypeService } from '@pmod/document/datatype.service';
@@ -113,7 +113,7 @@ export class MethodImplementationTabComponent extends DatatypeMethodTabComponent
                 item.toRtc(),
                 this.method.id
             ).subscribe(items =>
-                this.referenceDataWrapper.values = items.candidates.data.map(ref => ({name: ref.$fqn, value: ref.$fqn}))
+                this.referenceDataWrapper.values = items.candidates.data.map(ref => ({name: signal(ref.$fqn), value: ref.$fqn}))
             );
         }
     }

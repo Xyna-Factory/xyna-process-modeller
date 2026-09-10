@@ -15,18 +15,17 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, AfterContentInit, AfterViewInit, Component, viewChild } from '@angular/core';
-
-import { XoStructureField, XoStructureMethod, XoStructureObject } from '@zeta/api';
-import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItem } from '@zeta/xc';
-
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { AfterContentInit, AfterViewInit, ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { XoStructureField, XoStructureMethod, XoStructureObject } from '@zeta/api';
+import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItem } from '@zeta/xc';
+
 import { FormulaPartMember } from '../../../../../xo/util/formula-parts/formula-part-member';
+import { VariableComponent } from '../../../variable/variable.component';
 import { FormulaEditablePartComponent } from '../formula-editable-part.component';
 import { FormulaChildComponent } from '../formula-part.component';
-import { VariableComponent } from '../../../variable/variable.component';
 
 
 @Component({
@@ -121,10 +120,10 @@ export class FormulaPartMemberComponent extends FormulaEditablePartComponent imp
             return precedingStructuredPart.getStructure().pipe(
                 map((structure: XoStructureObject) => {
                     const members = structure?.children.filter(validMember).map(field =>
-                        <XcOptionItem>{ name: field.toString(), value: field.name }
+                        <XcOptionItem>{ name: signal(field.toString)(), value: field.name }
                     ) ?? [];
                     if (this.memberPart.allowAsterisk()) {
-                        members.push(<XcOptionItem>{ name: '*', value: '*' });
+                        members.push(<XcOptionItem>{ name: signal('*'), value: '*' });
                     }
                     return members;
                 })

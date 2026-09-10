@@ -19,7 +19,7 @@ import { ReplaySubject, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Injector, OnDestroy, OnInit, ViewChild, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Injector, OnDestroy, OnInit, ViewChild, viewChild , signal} from '@angular/core';
 import { ApiService, FullQualifiedName, RuntimeContext, RuntimeContextSelectionSettings } from '@zeta/api';
 import { KeyboardEventType, KeyDistributionService, OutsideListenerService } from '@zeta/base';
 import { I18nService, LocaleService, XcI18nContextDirective } from '@zeta/i18n';
@@ -342,7 +342,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
         switch (true) {
             case document instanceof WorkflowDocumentModel: {
                 item = {
-                    name: document.name,
+                    name: signal(document.name),
                     icon: 'tb-workflow',
                     iconStyle: 'modeller',
                     component: WorkflowDocumentComponent,
@@ -354,7 +354,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
 
             case document instanceof DataTypeDocumentModel: {
                 item = {
-                    name: document.name,
+                    name: signal(document.name),
                     icon: 'tb-datatype',
                     iconStyle: 'modeller',
                     component: DataTypeComponent,
@@ -366,7 +366,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
 
             case document instanceof ExceptionTypeDocumentModel: {
                 item = {
-                    name: document.name,
+                    name: signal(document.name),
                     icon: 'tb-exception',
                     iconStyle: 'modeller',
                     component: ExceptionTypeComponent,
@@ -378,7 +378,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
 
             case document instanceof ServiceGroupDocumentModel: {
                 item = {
-                    name: document.name,
+                    name: signal(document.name),
                     icon: 'tb-workflow',
                     iconStyle: 'modeller',
                     component: ServiceGroupComponent,

@@ -124,8 +124,8 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
     buttons: NavigationItem[] = this.defaultButtons;
 
     readonly devMenuItems: XcMenuItem[] = [
-        { name: 'Workflow Constant Builder...', click: () => this.dialogService.custom(WorkflowConstantBuilderModalComponent) },
-        { name: 'Data Type Converter...', click: () => this.dialogService.info('info', 'not yet implemented') }
+        { name: signal('Workflow Constant Builder...'), click: () => this.dialogService.custom(WorkflowConstantBuilderModalComponent) },
+        { name: signal('Data Type Converter...'), click: () => this.dialogService.info('info', 'not yet implemented') }
     ];  
 
     private _datatypePlugins: XoPlugin[] = [];
