@@ -16,11 +16,10 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-
 import { WorkflowDetailSettingsService } from '@pmod/workflow-detail-settings.service';
 import { XcButtonComponent, XcCheckboxComponent, XcDialogComponent, XcDialogWrapperComponent, XcIconComponent, XcLanguageSelectorComponent, XcPanelComponent, XDSIconName } from '@zeta/xc';
 
-import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../zeta/i18n';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '../../../zeta/i18n';
 import { modellerSettingsDialog_translations_de_DE } from './locale/modeller-settings-dialog-translations.de-DE';
 import { modellerSettingsDialog_translations_en_US } from './locale/modeller-settings-dialog-translations.en-US';
 
@@ -29,7 +28,7 @@ import { modellerSettingsDialog_translations_en_US } from './locale/modeller-set
     changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './modeller-settings-dialog.component.html',
     styleUrls: ['./modeller-settings-dialog.component.scss'],
-    imports: [XcButtonComponent, XcCheckboxComponent, XcDialogWrapperComponent, XcIconComponent, XcLanguageSelectorComponent, XcPanelComponent, XcI18nContextDirective, XcI18nTranslateDirective]
+    imports: [XcButtonComponent, XcCheckboxComponent, XcDialogWrapperComponent, XcIconComponent, XcLanguageSelectorComponent, XcPanelComponent, XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe]
 })
 export class ModellerSettingsDialogComponent extends XcDialogComponent<void, void> {
     readonly workflowSettings = inject(WorkflowDetailSettingsService);

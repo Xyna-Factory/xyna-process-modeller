@@ -103,7 +103,7 @@ export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowD
 
     private readonly menuItemUndo: XcMenuItem = {
         name: 'pmod.workflow.undo',
-        aside: this.i18n.translate('pmod.workflow.undo-aside'),
+        aside: this.i18n.translateSignal('pmod.workflow.undo-aside'),
         translate: true,
         visible: () => !this.workflow.readonly && !this.documentService.selectedDocument.isLocked,
         click: () => this.documentService.undo().subscribe()
@@ -111,7 +111,7 @@ export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowD
 
     private readonly menuItemRedo: XcMenuItem = {
         name: 'pmod.workflow.redo',
-        aside: this.i18n.translate('pmod.workflow.redo-aside'),
+        aside: this.i18n.translateSignal('pmod.workflow.redo-aside'),
         translate: true,
         visible: () => !this.workflow.readonly && !this.documentService.selectedDocument.isLocked,
         click: () => this.documentService.redo().subscribe()
