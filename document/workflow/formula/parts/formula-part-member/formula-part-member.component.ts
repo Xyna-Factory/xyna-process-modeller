@@ -120,7 +120,7 @@ export class FormulaPartMemberComponent extends FormulaEditablePartComponent imp
             return precedingStructuredPart.getStructure().pipe(
                 map((structure: XoStructureObject) => {
                     const members = structure?.children.filter(validMember).map(field =>
-                        <XcOptionItem>{ name: signal(field.toString)(), value: field.name }
+                        <XcOptionItem>{ name: signal(field.toString()), value: field.name }
                     ) ?? [];
                     if (this.memberPart.allowAsterisk()) {
                         members.push(<XcOptionItem>{ name: signal('*'), value: '*' });
