@@ -197,7 +197,7 @@ export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowD
                                 })
                             ).subscribe(response => {
                                 copyToClipboard(response.xml);
-                                this.statusBarService.display(this.i18n.translate('pmod.workflow.copied-to-clipboard'), XcStatusBarEntryType.INFO);
+                                this.statusBarService.display(this.i18n.translateInstant('pmod.workflow.copied-to-clipboard'), XcStatusBarEntryType.INFO);
                             });
                         });
                     }

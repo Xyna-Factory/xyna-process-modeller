@@ -110,7 +110,7 @@ export class MethodImplementationComponent extends ModellingItemComponent {
 
     useTemplateCall() {
         const document = this.documentService.selectedDocument;
-        this.dialogService.confirm(this.i18nService.translate('pmod.datatype.method-details.method-implementation.title'), this.i18nService.translate('pmod.datatype.method-details.method-implementation.message'))
+        this.dialogService.confirm(this.i18nService.translateInstant('pmod.datatype.method-details.method-implementation.title'), this.i18nService.translateInstant('pmod.datatype.method-details.method-implementation.message'))
             .afterDismissResult().subscribe(result => {
                 if (result) {
                     const request = new XoLibraryCallRequest();

@@ -46,8 +46,8 @@ export class LibItemComponent extends XcRichListItemComponent<void, LibItemData>
 
 
     delete() {
-        const title = this.injectedData.i18nService.translate('Confirm');
-        const message = this.injectedData.i18nService.translate('Would you like to delete the %name% Library?', { key: '%name%', value: this.name });
+        const title = this.injectedData.i18nService.translateInstant('Confirm');
+        const message = this.injectedData.i18nService.translateInstant('Would you like to delete the %name% Library?', { key: '%name%', value: this.name });
         this.dialogService.confirm(title, message).afterDismiss().subscribe(res => {
             if (res) {
                 this.injectedData.deleteItemSubject.next(this.injectedData.index);

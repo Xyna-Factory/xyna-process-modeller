@@ -170,8 +170,8 @@ export class VariableComponent extends SelectableModellingObjectComponent {
                     this.dialogService.custom(
                         LabelPathDialogComponent,
                         <LabelPathDialogData>{
-                            header: this.i18n.translate(LabelPathDialogComponent.HEADER_CONVERT_TO_DATA_TYPE),
-                            confirm: this.i18n.translate(LabelPathDialogComponent.CONFIRM_CREATE),
+                            header: this.i18n.translateInstant(LabelPathDialogComponent.HEADER_CONVERT_TO_DATA_TYPE),
+                            confirm: this.i18n.translateInstant(LabelPathDialogComponent.CONFIRM_CREATE),
                             presetLabel: this.variable?.label ?? '',
                             presetPath: '',
                             pathsObservable: this.documentService.getPaths()

@@ -276,8 +276,8 @@ export class XMOMListItemComponent {
 
 
     deleteXmomItem() {
-        const title = this.i18n.translate('pmod.delete-xmom-header', {key: '$0', value: this.xmomPath + '.' + this.xmomItem.label});
-        const message = this.i18n.translate('Really delete $0 from XMOM?', {key: '$0', value: this.xmomPath + '.' + this.xmomItem.label});
+        const title = this.i18n.translateInstant('pmod.delete-xmom-header', {key: '$0', value: this.xmomPath + '.' + this.xmomItem.label});
+        const message = this.i18n.translateInstant('Really delete $0 from XMOM?', {key: '$0', value: this.xmomPath + '.' + this.xmomItem.label});
         this.dialogService.confirm(title, message)
             .afterDismiss()
             .pipe(filter(result => result))

@@ -67,7 +67,7 @@ export class CompareComponent extends CommonNavigationComponent {
                 savedWorkflow.type, false, XmomState.DEPLOYED
             ).pipe(
                 catchError(() => {
-                    this.dialogs.error(this.i18n.translate('pmod.nav.compare.load-error', { key: '$0', value: savedWorkflow.$fqn }));
+                    this.dialogs.error(this.i18n.translateInstant('pmod.nav.compare.load-error', { key: '$0', value: savedWorkflow.$fqn }));
                     return of(new XoGetXmomItemResponse());
                 })
             ).subscribe(response => {

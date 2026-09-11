@@ -94,8 +94,8 @@ export class ClipboardComponent extends CommonNavigationComponent {
 
     clearClipboard() {
         this.dialogService.confirm(
-            this.i18n.translate('pmod.nav.clipboard.clear-confirm-title'),
-            this.i18n.translate('pmod.nav.clipboard.clear-confirm-message')
+            this.i18n.translateInstant('pmod.nav.clipboard.clear-confirm-title'),
+            this.i18n.translateInstant('pmod.nav.clipboard.clear-confirm-message')
         ).afterDismissResult(true).pipe(
             switchMap(() => this.documentService.xmomService.clearClipboard())
         ).subscribe(

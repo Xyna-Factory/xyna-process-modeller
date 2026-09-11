@@ -151,8 +151,8 @@ export class DetailsComponent extends CommonNavigationComponent implements After
 
     stealLock() {
         this.dialogService.confirm(
-            this.i18n.translate('pmod.nav.details.steal-lock'),
-            this.i18n.translate('pmod.nav.details.steal-lock-confirm')
+            this.i18n.translateInstant('pmod.nav.details.steal-lock'),
+            this.i18n.translateInstant('pmod.nav.details.steal-lock-confirm')
         ).afterDismissResult().pipe(
             filter(result => result),
             switchMap(() => this.xmomService.unlockXmomObject(this.item))

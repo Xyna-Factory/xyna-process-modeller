@@ -75,23 +75,23 @@ export class CaseAreaComponent extends ModellingObjectComponent {
             this.dialogService.custom(
                 ConflictDialogComponent,
                 <ConflictDialogData>{
-                    title: this.i18n.translate('pmod.workflow.case.merge-title'),
-                    message: this.i18n.translate('pmod.workflow.case.merge-message'),
+                    title: this.i18n.translateInstant('pmod.workflow.case.merge-title'),
+                    message: this.i18n.translateInstant('pmod.workflow.case.merge-message'),
                     handlings: [
                         {
                             key:         'USE_DESTINATION',
-                            value:       this.i18n.translate('pmod.workflow.case.merge-use-destination'),
-                            description: this.i18n.translate('pmod.workflow.case.merge-use-destination-description')
+                            value:       this.i18n.translateInstant('pmod.workflow.case.merge-use-destination'),
+                            description: this.i18n.translateInstant('pmod.workflow.case.merge-use-destination-description')
                         },
                         {
                             key:         'USE_SOURCE',
-                            value:       this.i18n.translate('pmod.workflow.case.merge-use-source'),
-                            description: this.i18n.translate('pmod.workflow.case.merge-use-source-description')
+                            value:       this.i18n.translateInstant('pmod.workflow.case.merge-use-source'),
+                            description: this.i18n.translateInstant('pmod.workflow.case.merge-use-source-description')
                         },
                         {
                             key:         'APPEND',
-                            value:       this.i18n.translate('pmod.workflow.case.merge-append'),
-                            description: this.i18n.translate('pmod.workflow.case.merge-append-description')
+                            value:       this.i18n.translateInstant('pmod.workflow.case.merge-append'),
+                            description: this.i18n.translateInstant('pmod.workflow.case.merge-append-description')
                         }
                     ]
                 }

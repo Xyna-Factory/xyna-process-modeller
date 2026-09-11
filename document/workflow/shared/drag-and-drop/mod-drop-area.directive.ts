@@ -226,11 +226,11 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
             const clientId = this.dndService.getTransferredData(dragEvent, ModDragDataTransferKey.clientId);
             if (clientId !== this.dndService.clientId) {
                 const serverId = this.dndService.getTransferredData(dragEvent, ModDragDataTransferKey.serverId);
-                const title = this.i18n.translate('pmod.workflow.dnd.unsupported-title');
+                const title = this.i18n.translateInstant('pmod.workflow.dnd.unsupported-title');
                 if (serverId !== this.dndService.serverId) {
-                    this.dialogService.info(title, this.i18n.translate('pmod.workflow.dnd.unsupported-server-message'));
+                    this.dialogService.info(title, this.i18n.translateInstant('pmod.workflow.dnd.unsupported-server-message'));
                 } else {
-                    this.dialogService.info(title, this.i18n.translate('pmod.workflow.dnd.unsupported-client-message'));
+                    this.dialogService.info(title, this.i18n.translateInstant('pmod.workflow.dnd.unsupported-client-message'));
                 }
             } else {
                 const hoverInfo = this.evaluateHoverInfo(dragEvent);

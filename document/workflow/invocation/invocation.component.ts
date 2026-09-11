@@ -121,8 +121,8 @@ export class InvocationComponent extends ModellingItemComponent {
                     {
                         name: signal('into Workflow...'), translate: true, click: item => {
                             const data: LabelPathDialogData = {
-                                header: this.i18n.translate(LabelPathDialogComponent.HEADER_CONVERT_TO_WORKFLOW),
-                                confirm: this.i18n.translate(LabelPathDialogComponent.CONFIRM_CREATE),
+                                header: this.i18n.translateInstant(LabelPathDialogComponent.HEADER_CONVERT_TO_WORKFLOW),
+                                confirm: this.i18n.translateInstant(LabelPathDialogComponent.CONFIRM_CREATE),
                                 presetLabel: this.invocation?.typeLabelArea?.text ?? '',
                                 presetPath: FullQualifiedName.decode(this.documentModel.item.$fqn).path,
                                 pathsObservable: this.documentService.getPaths()
