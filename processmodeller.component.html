@@ -9,5 +9,5 @@
 <xfm-mod-nav xc-i18n-context="pmod.nav" />
 <div
     class="lock-screen"
-    [ngClass]="{ locked: documentService.pendingModellingAction }"
+    [class.locked]="documentService.pendingModellingAction"
 ></div>

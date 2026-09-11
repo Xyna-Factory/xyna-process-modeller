@@ -1,3 +1,5 @@
+import { Subject } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2024 Xyna GmbH, Germany
@@ -15,12 +17,10 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostBinding, Injector, inject } from '@angular/core';
-
+import { ChangeDetectionStrategy, Component, HostBinding, inject } from '@angular/core';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcIconButtonComponent, XcRichListItemComponent, XcTooltipDirective } from '@zeta/xc';
 
-import { Subject } from 'rxjs';
 
 export interface LibItemData {
     libraryName: string;
@@ -31,6 +31,7 @@ export interface LibItemData {
 }
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './lib-item.component.html',
     styleUrls: ['./lib-item.component.scss'],
     imports: [XcIconButtonComponent, XcTooltipDirective]
@@ -43,15 +44,10 @@ export class LibItemComponent extends XcRichListItemComponent<void, LibItemData>
         return this.injectedData.libraryName;
     }
 
-    constructor() {
-        const injector = inject(Injector);
-
-        super(injector);
-    }
 
     delete() {
-        const title = this.injectedData.i18nService.translate('Confirm');
-        const message = this.injectedData.i18nService.translate('Would you like to delete the %name% Library?', { key: '%name%', value: this.name });
+        const title = this.injectedData.i18nService.translateInstant('Confirm');
+        const message = this.injectedData.i18nService.translateInstant('Would you like to delete the %name% Library?', { key: '%name%', value: this.name });
         this.dialogService.confirm(title, message).afterDismiss().subscribe(res => {
             if (res) {
                 this.injectedData.deleteItemSubject.next(this.injectedData.index);

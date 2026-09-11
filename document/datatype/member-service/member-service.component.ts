@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { XcTooltipDirective } from '@zeta/xc';
 
 import { ModellingActionType } from '../../../api/xmom.service';
@@ -26,6 +26,7 @@ import { ModContentEditableDirective } from '../../workflow/shared/mod-content-e
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'member-service',
     templateUrl: './member-service.component.html',
     styleUrls: ['./member-service.component.scss'],

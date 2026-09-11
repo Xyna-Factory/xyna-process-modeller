@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
 
 import { DocumentService } from '@pmod/document/document.service';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItemString } from '@zeta/xc';
@@ -29,6 +29,7 @@ import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'order-input-source-area',
     templateUrl: './order-input-source-area.component.html',
     styleUrls: ['./order-input-source-area.component.scss'],

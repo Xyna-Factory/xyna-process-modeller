@@ -18,8 +18,8 @@
 import { ReplaySubject, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
-import { NgClass } from '@angular/common';
-import { ChangeDetectorRef, Component, inject, Injector, OnDestroy, OnInit, ViewChild } from '@angular/core';
+
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Injector, OnDestroy, OnInit, ViewChild, viewChild , signal} from '@angular/core';
 import { ApiService, FullQualifiedName, RuntimeContext, RuntimeContextSelectionSettings } from '@zeta/api';
 import { KeyboardEventType, KeyDistributionService, OutsideListenerService } from '@zeta/base';
 import { I18nService, LocaleService, XcI18nContextDirective } from '@zeta/i18n';
@@ -52,9 +52,10 @@ export let PMOD_RTC = RuntimeContext.guiHttpApplication;
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './processmodeller.component.html',
     styleUrls: ['./processmodeller.component.scss'],
-    imports: [ToolbarComponent, XcI18nContextDirective, XcTabBarComponent, NavigationComponent, NgClass]
+    imports: [ToolbarComponent, XcI18nContextDirective, XcTabBarComponent, NavigationComponent]
 })
 export class ProcessmodellerComponent extends RouteComponent implements OnInit, OnDestroy {
     documentService = inject(DocumentService);
@@ -71,8 +72,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
 
     private runtimeContextChangeSubscription: Subscription;
 
-    @ViewChild(ToolbarComponent, { static: false })
-    toolBar: ToolbarComponent;
+    readonly toolBar = viewChild(ToolbarComponent);
 
     private urlProcessed = false;
 
@@ -342,48 +342,48 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
         switch (true) {
             case document instanceof WorkflowDocumentModel: {
                 item = {
-                    name: document.name,
+                    name: signal(document.name),
                     icon: 'tb-workflow',
                     iconStyle: 'modeller',
                     component: WorkflowDocumentComponent,
                     closable: true,
-                    closeTooltip: this.i18nService.translate('pmod.toolbar.close-tooltip'),
+                    closeTooltip: this.i18nService.translateSignal('pmod.toolbar.close-tooltip'),
                     data: document
                 };
             } break;
 
             case document instanceof DataTypeDocumentModel: {
                 item = {
-                    name: document.name,
+                    name: signal(document.name),
                     icon: 'tb-datatype',
                     iconStyle: 'modeller',
                     component: DataTypeComponent,
                     closable: true,
-                    closeTooltip: this.i18nService.translate('pmod.toolbar.close-tooltip'),
+                    closeTooltip: this.i18nService.translateSignal('pmod.toolbar.close-tooltip'),
                     data: document
                 };
             } break;
 
             case document instanceof ExceptionTypeDocumentModel: {
                 item = {
-                    name: document.name,
+                    name: signal(document.name),
                     icon: 'tb-exception',
                     iconStyle: 'modeller',
                     component: ExceptionTypeComponent,
                     closable: true,
-                    closeTooltip: this.i18nService.translate('pmod.toolbar.close-tooltip'),
+                    closeTooltip: this.i18nService.translateSignal('pmod.toolbar.close-tooltip'),
                     data: document
                 };
             } break;
 
             case document instanceof ServiceGroupDocumentModel: {
                 item = {
-                    name: document.name,
+                    name: signal(document.name),
                     icon: 'tb-workflow',
                     iconStyle: 'modeller',
                     component: ServiceGroupComponent,
                     closable: true,
-                    closeTooltip: this.i18nService.translate('pmod.toolbar.close-tooltip'),
+                    closeTooltip: this.i18nService.translateSignal('pmod.toolbar.close-tooltip'),
                     data: document
                 };
             } break;

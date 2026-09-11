@@ -15,12 +15,13 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, OnInit } from '@angular/core';
 
 import { ModDragAndDropService } from '../shared/drag-and-drop/mod-drag-and-drop.service';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'drop-indicator',
     templateUrl: './drop-indicator.component.html',
     styleUrls: ['./drop-indicator.component.scss']

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Directive, ElementRef, EventEmitter, HostListener, Input, NgZone, OnDestroy, OnInit, Output, inject } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, NgZone, OnDestroy, OnInit, inject, input, output } from '@angular/core';
 
 import { coerceBoolean } from '@zeta/base';
 import { I18nService } from '@zeta/i18n';
@@ -60,22 +60,21 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
     private readonly zone = inject(NgZone);
 
 
-    @Input('mod-drop-area')
-    items: { id: string }[];
+    readonly items = input<{
+    id: string;
+}[]>(undefined, { alias: "mod-drop-area" });
 
     private areaElement: Element;
 
     /**
      * Is called once when entering the area
      */
-    @Input('mod-drop-area-allow-item')
-    allowItem?: (xoFqn: string, xoId?: string) => boolean;
+    readonly allowItem = input<(xoFqn: string, xoId?: string) => boolean>(undefined, { alias: "mod-drop-area-allow-item" });
 
     /**
      * Is called on dragover to decide, if an item can be dropped at a specific position. So don't do expensive operations here
      */
-    @Input('mod-drop-area-can-drop')
-    canDrop?: (draggable: Draggable, hoverEvent?: ModDragEvent, dragEvent?: ModDnDEvent) => boolean;
+    readonly canDrop = input<(draggable: Draggable, hoverEvent?: ModDragEvent, dragEvent?: ModDnDEvent) => boolean>(undefined, { alias: "mod-drop-area-can-drop" });
 
     /**
      * Is called every time before the drop indicator is rendered
@@ -84,17 +83,14 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
      *
      * @returns Indentation of indicator in pixels. Modifying the passed event will also affect the indicator's behavior
      */
-    @Input('mod-drop-area-update-indicator')
-    updateIndicator?: (dragEvent: ModDragEvent) => Distance;
+    readonly updateIndicator = input<(dragEvent: ModDragEvent) => Distance>(undefined, { alias: "mod-drop-area-update-indicator" });
 
-    @Input('mod-drop-area-direction')
-    direction: 'horizontal' | 'vertical' = 'vertical';
+    readonly direction = input<'horizontal' | 'vertical'>('vertical', { alias: "mod-drop-area-direction" });
 
     /**
      * Defines if parallel (locationally) inserts are allowed
      */
-    @Input('mod-drop-area-allow-parallel')
-    parallel = false;
+    readonly parallel = input(false, { alias: "mod-drop-area-allow-parallel", transform: coerceBoolean });
 
     private _hideIndicator = false;
     /**
@@ -109,8 +105,7 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
         return this._hideIndicator;
     }
 
-    @Output('mod-drop-area-dropped')
-    readonly dropped = new EventEmitter<ModDropEvent>();
+    readonly dropped = output<ModDropEvent>({ alias: 'mod-drop-area-dropped' });
 
     private dragOverHandler: (event: Event) => void;
     private dragEnterHandler: (event: Event) => void;
@@ -165,7 +160,7 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
         const dragEvent = ModDnDEventConvert(event);
         const xoFqn = this.dndService.getTransferredData(dragEvent, ModDragDataTransferKey.fqn);
         const xoId = this.dndService.getTransferredData(dragEvent, ModDragDataTransferKey.id);
-        if (this.allowItem?.(xoFqn, xoId)) {
+        if (this.allowItem()?.(xoFqn, xoId)) {
             this.dndService.enterArea(this.areaElement);
         }
     }
@@ -190,7 +185,8 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
             // render drop indicator
             const hoverInfo = this.evaluateHoverInfo(dragEvent);
             if (hoverInfo.index !== undefined) {
-                if (!this.canDrop || this.canDrop(this.dndService.getDraggedItem(dragEvent), hoverInfo, dragEvent)) {
+                const canDrop = this.canDrop();
+                if (!canDrop || canDrop(this.dndService.getDraggedItem(dragEvent), hoverInfo, dragEvent)) {
                     if (hoverInfo.index >= this.areaElement.children.length) {
                         // take previous child and flip side
                         hoverInfo.index--;
@@ -198,11 +194,12 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
                     }
 
                     // retrieve specific indentation of drop indicator for hovered element
-                    const indentation = this.updateIndicator?.(hoverInfo);
+                    const indentation = this.updateIndicator()?.(hoverInfo);
 
                     const areaChild = this.areaElement.children[hoverInfo.index];
                     const draggedId = this.dndService.getTransferredData(dragEvent, ModDragDataTransferKey.id);
-                    const hoveredChild = this.items && this.items.length > hoverInfo.index ? this.items[hoverInfo.index] : null;
+                    const items = this.items();
+                    const hoveredChild = items && items.length > hoverInfo.index ? items[hoverInfo.index] : null;
                     const hoveredId = hoveredChild ? hoveredChild.id : null;
 
                     if (!this.hideIndicator && areaChild && (draggedId !== hoveredId || dragEvent.dataTransfer.dropEffect !== 'move')) {
@@ -229,18 +226,19 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
             const clientId = this.dndService.getTransferredData(dragEvent, ModDragDataTransferKey.clientId);
             if (clientId !== this.dndService.clientId) {
                 const serverId = this.dndService.getTransferredData(dragEvent, ModDragDataTransferKey.serverId);
-                const title = this.i18n.translate('pmod.workflow.dnd.unsupported-title');
+                const title = this.i18n.translateInstant('pmod.workflow.dnd.unsupported-title');
                 if (serverId !== this.dndService.serverId) {
-                    this.dialogService.info(title, this.i18n.translate('pmod.workflow.dnd.unsupported-server-message'));
+                    this.dialogService.info(title, this.i18n.translateInstant('pmod.workflow.dnd.unsupported-server-message'));
                 } else {
-                    this.dialogService.info(title, this.i18n.translate('pmod.workflow.dnd.unsupported-client-message'));
+                    this.dialogService.info(title, this.i18n.translateInstant('pmod.workflow.dnd.unsupported-client-message'));
                 }
             } else {
                 const hoverInfo = this.evaluateHoverInfo(dragEvent);
                 const infoJSON = this.dndService.getTransferredData(dragEvent, ModDragDataTransferKey.info);
                 const info: ModDragDataInfo = JSON.parse(infoJSON);
                 const draggable = this.dndService.getDraggedItem(dragEvent);
-                if (info && draggable && (!this.canDrop || this.canDrop && this.canDrop(draggable, hoverInfo, dragEvent))) {
+                const canDrop = this.canDrop();
+                if (info && draggable && (!canDrop || canDrop && canDrop(draggable, hoverInfo, dragEvent))) {
                     let operation = info.allowedDragType;
                     if (operation === DragType.move && (!this.dndService.thisStartedDragging || dragEvent.ctrlKey || dragEvent.altKey)) {
                         operation = DragType.copy;
@@ -297,7 +295,7 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
                 const child = this.areaElement.children[i];
                 const childRect = child.getBoundingClientRect();
                 const distance = this.getDistance(event.clientX, event.clientY, childRect);
-                const dimensionDistance = this.direction === 'vertical' ? distance.dy : distance.dx;
+                const dimensionDistance = this.direction() === 'vertical' ? distance.dy : distance.dx;
                 if (dimensionDistance < minDistance) {
                     minDistance = dimensionDistance;
                     rect = childRect;
@@ -316,8 +314,9 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
          */
         const localX = event.clientX - rect.left;
         const localY = event.clientY - rect.top;
-        if (this.direction === 'horizontal') {
-            const hoverSide = ModRelativeHoverSideCalculate(localX, localY, rect, true, this.parallel);
+        const direction = this.direction();
+        if (direction === 'horizontal') {
+            const hoverSide = ModRelativeHoverSideCalculate(localX, localY, rect, true, this.parallel());
             if (hoverSide === ModRelativeHoverSide.right) {
                 dropIndex = childIndex + 1;
                 side = ModRelativeHoverSide.left;
@@ -325,8 +324,8 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
                 dropIndex = childIndex;
                 side = hoverSide;
             }
-        } else if (this.direction === 'vertical') {
-            const hoverSide = ModRelativeHoverSideCalculate(localX, localY, rect, this.parallel, true);
+        } else if (direction === 'vertical') {
+            const hoverSide = ModRelativeHoverSideCalculate(localX, localY, rect, this.parallel(), true);
             if (hoverSide === ModRelativeHoverSide.bottom) {
                 dropIndex = childIndex + 1;
                 side = ModRelativeHoverSide.top;

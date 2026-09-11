@@ -1,3 +1,5 @@
+import { Subject } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -15,11 +17,8 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostBinding, Injector, inject } from '@angular/core';
-
+import { ChangeDetectionStrategy, Component, HostBinding } from '@angular/core';
 import { XcCheckboxComponent, XcRichListItemComponent, XcTooltipDirective } from '@zeta/xc';
-
-import { Subject } from 'rxjs';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoUsedRequest } from '../../../xo/change-used-request.model';
@@ -35,6 +34,7 @@ export interface JavaSharedLibItemData {
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './java-shared-lib-item.component.html',
     styleUrls: ['./java-shared-lib-item.component.scss'],
     imports: [XcCheckboxComponent, XcTooltipDirective]
@@ -44,13 +44,6 @@ export class JavaSharedLibItemComponent extends XcRichListItemComponent<void, Ja
     // class as css selector
     @HostBinding('class')
     readonly clazz = 'java-shared-lib-item';
-
-
-    constructor() {
-        const injector = inject(Injector);
-
-        super(injector);
-    }
 
 
     get name(): string {

@@ -1,8 +1,8 @@
 <div class="row">
   <xc-form-input label="label" [value]="method.label" [readonly]="readonly || method.isLabelReadonly"
-    (blur)="labelBlur($event)" (keydown.enter)="labelBlur($event)" xc-form-validator-required xc-i18n></xc-form-input>
+    (blur)="labelBlur($event)" (keydown.enter)="labelBlur($event)" xc-form-validator-required xc-i18n />
   <div class="name">
-    <xc-form-input label="name" [value]="method.name" readonly xc-i18n></xc-form-input>
+    <xc-form-input label="name" [value]="method.name" readonly xc-i18n />
   </div>
   @if (method.isInheritedInstanceMethod) {
   <xc-button class="button" (click)="overrideInstanceMethod()" xc-i18n>override</xc-button>

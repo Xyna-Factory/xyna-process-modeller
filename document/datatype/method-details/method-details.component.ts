@@ -15,13 +15,12 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, Input, OnDestroy } from '@angular/core';
+import { BehaviorSubject, Subject } from 'rxjs';
 
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, Input, OnDestroy, signal } from '@angular/core';
 import { MinMaxService } from '@pmod/document/min-max.service';
 import { I18nService } from '@zeta/i18n';
 import { XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
-
-import { BehaviorSubject, Subject } from 'rxjs';
 
 import { XoMethod } from '../../../xo/method.model';
 import { ModellingItemComponent } from '../../workflow/shared/modelling-object.component';
@@ -29,6 +28,7 @@ import { DocumentTabData, MetaTabData, MethodTabData } from '../tabs/datatype-ta
 import { MethodBaseTabComponent } from '../tabs/method/method-base-tab.component';
 import { MethodImplementationTabComponent } from '../tabs/method/method-implementation-tab.component';
 import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
+
 
 @Component({
     selector: 'method-details',
@@ -51,7 +51,7 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
     set method(value: XoMethod) {
         this.setModel(value);
         if (value) {
-            this.baseTabItem.name = this.method?.label ?? 'Base';
+            this.baseTabItem.name = signal(this.method?.label ?? 'Base');
             this.methodTabUpdate.next(this.buildMethodTabData());
             this.metaTabUpdate.next(this.buildMetaTabData());
         }
@@ -65,7 +65,7 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
     readonly baseTabItem: XcTabBarItem<DocumentTabData<MethodTabData>> = {
         closable: false,
         component: MethodBaseTabComponent,
-        name: 'Base',
+        name: signal('Base'),
         data: <DocumentTabData<MethodTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
@@ -77,7 +77,7 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
     readonly metaTabItem: XcTabBarItem<DocumentTabData<MetaTabData>> = {
         closable: false,
         component: MetaTabComponent,
-        name: 'Meta',
+        name: signal('Meta'),
         data: <DocumentTabData<MetaTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
@@ -89,7 +89,7 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
     readonly implementationTabItem: XcTabBarItem<DocumentTabData<MethodTabData>> = {
         closable: false,
         component: MethodImplementationTabComponent,
-        name: this.i18nService.translate('pmod.datatype.method-details.implementation'),
+        name: this.i18nService.translateSignal('pmod.datatype.method-details.implementation'),
         data: <DocumentTabData<MethodTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),

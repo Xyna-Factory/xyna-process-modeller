@@ -16,6 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, Component, inject, ViewChild } from '@angular/core';
+import { outputToObservable } from '@angular/core/rxjs-interop';
 import { XcButtonComponent, XcFormInputComponent, XcFormValidatorRequiredDirective, XcTooltipDirective } from '@zeta/xc';
 
 import { DataTypeService } from '@pmod/document/datatype.service';
@@ -103,7 +104,7 @@ export class MemberVariableBaseTabComponent extends DatatypeVariableTabComponent
 
     @ViewChild('dataTypeAutocomplete', {static: false, read: XcFormAutocompleteComponent})
     set dataTypeAutocomplete(value: XcFormAutocompleteComponent) {
-        this.untilDestroyed(value?.focus)?.pipe(filter(() => !value.disabled)).subscribe(() => this.refreshDataTypeAutocomplete());
+        this.untilDestroyed(value ? outputToObservable(value.focus) : undefined)?.pipe(filter(() => !value.disabled)).subscribe(() => this.refreshDataTypeAutocomplete());
     }
 
 

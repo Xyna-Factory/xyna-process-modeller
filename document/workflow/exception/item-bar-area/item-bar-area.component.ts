@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, input } from '@angular/core';
 
 import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoContentArea } from '../../../../xo/content-area.model';
@@ -31,6 +31,7 @@ import { XcButtonComponent } from '@zeta/xc';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'item-bar-area',
     templateUrl: './item-bar-area.component.html',
     styleUrls: ['./item-bar-area.component.scss'],
@@ -38,8 +39,7 @@ import { XcButtonComponent } from '@zeta/xc';
 })
 export class ItemBarAreaComponent extends ModellingObjectComponent {
 
-    @Input()
-    branchArea: XoContentArea;
+    readonly branchArea = input<XoContentArea>(undefined);
 
 
     @Input()
@@ -53,15 +53,17 @@ export class ItemBarAreaComponent extends ModellingObjectComponent {
 
 
     addBranch(item: XoVariable) {
-        if (this.branchArea && item && !this.readonly) {
-            this.performAction({ type: ModellingActionType.insert, objectId: this.branchArea.id, request: new XoInsertBranchRequest('', -1, item.$fqn) });
+        const branchArea = this.branchArea();
+        if (branchArea && item && !this.readonly) {
+            this.performAction({ type: ModellingActionType.insert, objectId: branchArea.id, request: new XoInsertBranchRequest('', -1, item.$fqn) });
         }
     }
 
 
     completeBranches() {
-        if (this.branchArea && !this.readonly) {
-            this.performAction({ type: ModellingActionType.complete, objectId: this.branchArea.id, request: new XoRequest() });
+        const branchArea = this.branchArea();
+        if (branchArea && !this.readonly) {
+            this.performAction({ type: ModellingActionType.complete, objectId: branchArea.id, request: new XoRequest() });
         }
     }
 }

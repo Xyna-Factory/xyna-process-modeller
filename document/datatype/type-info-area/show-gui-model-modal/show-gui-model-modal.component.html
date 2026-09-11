@@ -13,11 +13,10 @@
       <!-- MASTER -->
       <xc-panel master>
         <section class="stretch scroll">
-          <xc-form-textarea
-            [(value)]="modelStr"
+          <xc-form-textarea [(value)]="modelStr"
             xc-form-textarea-lines="30"
             xc-form-field-compact
-          ></xc-form-textarea>
+           />
         </section>
       </xc-panel>
 
@@ -29,35 +28,34 @@
           </header>
           <section xc-form class="stretch scroll">
             <!-- DATATYPE DETAILS-->
-            <xc-checkbox [(checked)]="convertable.options.convertInheritance" label="label-use-inheritance" xc-i18n></xc-checkbox>
-            <xc-checkbox [(checked)]="convertable.options.convertDocumentation" label="label-write-documentation" xc-i18n></xc-checkbox>
-            <xc-checkbox [(checked)]="convertable.options.createConstructor" label="label-create-constructor-husk" xc-i18n></xc-checkbox>
+            <xc-checkbox [(checked)]="convertable.options.convertInheritance" label="label-use-inheritance" xc-i18n />
+            <xc-checkbox [(checked)]="convertable.options.convertDocumentation" label="label-write-documentation" xc-i18n />
+            <xc-checkbox [(checked)]="convertable.options.createConstructor" label="label-create-constructor-husk" xc-i18n />
             @if (convertable.isChild) {
-              <xc-checkbox [(checked)]="convertable.options.convertChildProperties" label="label-include-inherited-members" xc-i18n></xc-checkbox>
+              <xc-checkbox [(checked)]="convertable.options.convertChildProperties" label="label-include-inherited-members" xc-i18n />
             }
             <!-- PROPERTY DETAILS -->
             @for (property of convertableProperties; track property; let i = $index) {
               <xc-panel class="compact" xc-panel-collapsable="true" xc-panel-collapsed="true">
                 <header><h3 class="items-left">{{property.label}} - <span>{{property.name}}</span></h3></header>
                 <section>
-                  <xc-checkbox [(checked)]="property.options.convertDocumentation" label="label-write-documentation" xc-i18n></xc-checkbox>
-                  <xc-checkbox [(checked)]="property.options.preinitilize" label="label-preinitialize" xc-i18n></xc-checkbox>
+                  <xc-checkbox [(checked)]="property.options.convertDocumentation" label="label-write-documentation" xc-i18n />
+                  <xc-checkbox [(checked)]="property.options.preinitilize" label="label-preinitialize" xc-i18n />
                   @if (property.options.preinitilize) {
-                    <xc-form-input label="label-preinitialize-value" [(value)]="property.options.value" xc-form-field-compact xc-i18n></xc-form-input>
+                    <xc-form-input label="label-preinitialize-value" [(value)]="property.options.value" xc-form-field-compact xc-i18n />
                   }
-                  <left-right-component
-                    [(leftItems)]="property.options.decoratorPool"
+                  <left-right-component [(leftItems)]="property.options.decoratorPool"
                     [(rightItems)]="property.options.decorators"
                     [leftTitle]="'Inactive Decorators (' + property.options.decoratorPool.length + ')'"
                     [rightTitle]="'Active Decorators (' + property.options.decorators.length + ')'"
                     (change)="guiUpdate()"
-                  ></left-right-component>
+                   />
                 </section>
               </xc-panel>
             }
             <!-- DISTRIBUTE OPTIONS -->
             <div class="download-model items-row" >
-              <xc-form-input label="label-filename" [(value)]="convertable.filename" xc-form-field-compact xc-i18n></xc-form-input>
+              <xc-form-input label="label-filename" [(value)]="convertable.filename" xc-form-field-compact xc-i18n />
               <xc-button (click)="downloadModel()" xc-i18n>button-download</xc-button>
             </div>
             @if (copyAble) {

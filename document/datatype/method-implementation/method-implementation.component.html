@@ -2,16 +2,16 @@
   (triggerAction)="performAction($event)" xc-variable-area-kind="input-area" class="input-area" />
 <div class="service-label">
   <xc-icon-button [xc-tooltip]="getTooltip()" [xc-icon-name]="getIcon()" c-icon-size="small" xc-button-aria-label=" "
-    (click)="resize()"></xc-icon-button>
+    (click)="resize()" />
   <div>{{method.label}}</div>
   <div class="align-right">
     <xc-checkbox [(checked)]="isAbortable" label="is-abortable-label" [disabled]="readonly || isAbstractMethod"
-      xc-i18n></xc-checkbox>
+      xc-i18n />
     <xc-button xc-i18n color="normal" (click)="useTemplateCall()" [disabled]="readonly || isAbstractMethod"
       xc-tooltip="use-generated-template-library-tooltip">template-call-button</xc-button>
     @for (bundle of pluginBundles; let i = $index; track i) {
     <xc-definition-proxy [xc-base-definition]="bundle.definition" [xc-base-definition-data]="bundle.data"
-      [xc-definition-observer]="pluginService"></xc-definition-proxy>
+      [xc-definition-observer]="pluginService" />
     }
   </div>
 </div>

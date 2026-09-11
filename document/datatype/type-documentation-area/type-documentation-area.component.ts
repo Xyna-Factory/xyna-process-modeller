@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, input } from '@angular/core';
 
 import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 
@@ -46,8 +46,7 @@ export class TypeDocumentationAreaComponent extends ModellingObjectComponent {
 
     documentation: string;
 
-    @Input()
-    lines: number;
+    readonly lines = input<number>(undefined);
 
 
     protected lockedChanged() {

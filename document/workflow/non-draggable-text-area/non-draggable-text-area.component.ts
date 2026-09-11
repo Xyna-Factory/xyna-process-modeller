@@ -15,12 +15,13 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, Component, HostListener, Input } from '@angular/core';
+import { ChangeDetectionStrategy, AfterViewInit, Component, HostListener, Input } from '@angular/core';
 
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'non-draggable-text-area',
     templateUrl: './non-draggable-text-area.component.html',
     styleUrls: ['./non-draggable-text-area.component.scss']

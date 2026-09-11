@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormTextareaComponent } from '@zeta/xc';
 
@@ -35,6 +35,7 @@ export interface ShowXmlModalData {
 type XMLState = 'current' | 'saved' | 'deployed';
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './show-xml-modal.component.html',
     styleUrls: ['./show-xml-modal.component.scss'],
     imports: [XcButtonComponent, XcDialogWrapperComponent, XcFormTextareaComponent, XcI18nContextDirective, XcI18nTranslateDirective]

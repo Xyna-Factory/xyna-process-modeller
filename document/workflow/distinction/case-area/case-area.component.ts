@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 
 import { ModellingActionType } from '@pmod/api/xmom.service';
 import { ConflictDialogComponent, ConflictDialogData } from '@pmod/document/modal/conflict-dialog/conflict-dialog.component';
@@ -34,6 +34,7 @@ import { ModDraggableDirective } from '../../shared/drag-and-drop/mod-draggable.
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'case-area',
     templateUrl: './case-area.component.html',
     styleUrls: ['./case-area.component.scss'],
@@ -74,23 +75,23 @@ export class CaseAreaComponent extends ModellingObjectComponent {
             this.dialogService.custom(
                 ConflictDialogComponent,
                 <ConflictDialogData>{
-                    title: this.i18n.translate('pmod.workflow.case.merge-title'),
-                    message: this.i18n.translate('pmod.workflow.case.merge-message'),
+                    title: this.i18n.translateInstant('pmod.workflow.case.merge-title'),
+                    message: this.i18n.translateInstant('pmod.workflow.case.merge-message'),
                     handlings: [
                         {
                             key:         'USE_DESTINATION',
-                            value:       this.i18n.translate('pmod.workflow.case.merge-use-destination'),
-                            description: this.i18n.translate('pmod.workflow.case.merge-use-destination-description')
+                            value:       this.i18n.translateInstant('pmod.workflow.case.merge-use-destination'),
+                            description: this.i18n.translateInstant('pmod.workflow.case.merge-use-destination-description')
                         },
                         {
                             key:         'USE_SOURCE',
-                            value:       this.i18n.translate('pmod.workflow.case.merge-use-source'),
-                            description: this.i18n.translate('pmod.workflow.case.merge-use-source-description')
+                            value:       this.i18n.translateInstant('pmod.workflow.case.merge-use-source'),
+                            description: this.i18n.translateInstant('pmod.workflow.case.merge-use-source-description')
                         },
                         {
                             key:         'APPEND',
-                            value:       this.i18n.translate('pmod.workflow.case.merge-append'),
-                            description: this.i18n.translate('pmod.workflow.case.merge-append-description')
+                            value:       this.i18n.translateInstant('pmod.workflow.case.merge-append'),
+                            description: this.i18n.translateInstant('pmod.workflow.case.merge-append-description')
                         }
                     ]
                 }

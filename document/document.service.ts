@@ -204,7 +204,7 @@ export class DocumentService implements OnDestroy {
         const errorCode: string = error.error && isString(error.error.errorCode) ? error.error.errorCode : null;
         const exceptionMessage: string = error.error && isString(error.error.exceptionMessage) ? error.error.exceptionMessage : null;
         const errorMessage: string = errorCode && this.i18n.hasTranslation(errorCode)
-            ? this.i18n.translate(errorCode)
+            ? this.i18n.translateInstant(errorCode)
             : error && error.error && isString(error.error.message)
                 ? error.error.message
                 : (exceptionMessage || null);
@@ -224,7 +224,7 @@ export class DocumentService implements OnDestroy {
         this.dialogService.custom(
             ErrorDialogComponent,
             <ErrorDialogData>{
-                errorMessage: this.i18n.translate('This action did not work') + (error.message ? '\n"' + error.message + '"' : ''),
+                errorMessage: this.i18n.translateInstant('This action did not work') + (error.message ? '\n"' + error.message + '"' : ''),
                 stackTrace: error.stacktrace
             },
             undefined,
@@ -377,15 +377,15 @@ export class DocumentService implements OnDestroy {
         const errorHandler = (err: any) => {
             // delete failed with invalid xml?
             if (!force && (<XoError>err.error)?.errorCode === 'XYNA-01437') {
-                const title = this.i18n.translate('Delete and Undeploy');
-                const msg = this.i18n.translate('The XMOM Item %0 could not be parsed. Do you want to delete it anyway?', { key: '%0', value: xmomItem.$fqn });
+                const title = this.i18n.translateInstant('Delete and Undeploy');
+                const msg = this.i18n.translateInstant('The XMOM Item %0 could not be parsed. Do you want to delete it anyway?', { key: '%0', value: xmomItem.$fqn });
                 // ask, whether to delete with force
                 this.dialogService.confirm(title, msg)
                     .afterDismissResult(true)
                     .subscribe(() => this.deleteItem(xmomItem, true));
                 return;
             }
-            this.showError(this.i18n.translate('Could not delete document'), err);
+            this.showError(this.i18n.translateInstant('Could not delete document'), err);
         };
 
         const rtc = xmomItem.rtc ?? this.xmomService.runtimeContext;
@@ -405,10 +405,10 @@ export class DocumentService implements OnDestroy {
     refactorItem(xmomItem: XoXmomItem): Observable<void> {
         const rtc = xmomItem.rtc ?? this.xmomService.runtimeContext;
         const data: LabelPathDialogData = {
-            header: this.i18n.translate(LabelPathDialogComponent.HEADER_MOVE_RENAME, { key: '$0', value: FullQualifiedName.decode(xmomItem.$fqn).path + '.' + xmomItem.label }),
-            confirm: this.i18n.translate(LabelPathDialogComponent.CONFIRM_MOVE_RENAME),
-            force: this.i18n.translate(LabelPathDialogComponent.FORCE_MOVE_RENAME),
-            forceTooltip: this.i18n.translate(LabelPathDialogComponent.FORCE_MOVE_RENAME_TOOLTIP),
+            header: this.i18n.translateInstant(LabelPathDialogComponent.HEADER_MOVE_RENAME, { key: '$0', value: FullQualifiedName.decode(xmomItem.$fqn).path + '.' + xmomItem.label }),
+            confirm: this.i18n.translateInstant(LabelPathDialogComponent.CONFIRM_MOVE_RENAME),
+            force: this.i18n.translateInstant(LabelPathDialogComponent.FORCE_MOVE_RENAME),
+            forceTooltip: this.i18n.translateInstant(LabelPathDialogComponent.FORCE_MOVE_RENAME_TOOLTIP),
             presetLabel: xmomItem.label,
             presetPath: FullQualifiedName.decode(xmomItem.$fqn).path,
             pathsObservable: this.getPaths()
@@ -430,8 +430,8 @@ export class DocumentService implements OnDestroy {
     replace(xmomItem: XoXmomItem): Observable<void> {
         const rtc = xmomItem.rtc ?? this.xmomService.runtimeContext;
         const data: LabelPathDialogData = {
-            header: this.i18n.translate(LabelPathDialogComponent.HEADER_REPLACE, { key: '$0', value: FullQualifiedName.decode(xmomItem.$fqn).path + '.' + xmomItem.label }),
-            confirm: this.i18n.translate(LabelPathDialogComponent.CONFIRM_REPLACE),
+            header: this.i18n.translateInstant(LabelPathDialogComponent.HEADER_REPLACE, { key: '$0', value: FullQualifiedName.decode(xmomItem.$fqn).path + '.' + xmomItem.label }),
+            confirm: this.i18n.translateInstant(LabelPathDialogComponent.CONFIRM_REPLACE),
             presetLabel: xmomItem.label,
             presetPath: FullQualifiedName.decode(xmomItem.$fqn).path,
             pathsObservable: this.getPaths()
@@ -496,7 +496,7 @@ export class DocumentService implements OnDestroy {
         documentModel.updateLock(DocumentModel.UNLOCKED);
         // show status bar message
         this.statusBarService.display(
-            documentModel.item.$fqn + ' ' + this.i18n.translate('pmod.' + action),
+            documentModel.item.$fqn + ' ' + this.i18n.translateInstant('pmod.' + action),
             XcStatusBarEntryType.SUCCESS
         );
     }
@@ -532,7 +532,7 @@ export class DocumentService implements OnDestroy {
                 const document = this.getOpenDocument(item.toRtc(), item.toFqn());
                 document?.updateTabBarLabel();
             },
-            error: error => this.showError(this.i18n.translate('This XMOM Item could not be refreshed.'), error)
+            error: error => this.showError(this.i18n.translateInstant('This XMOM Item could not be refreshed.'), error)
         });
     }
 
@@ -607,7 +607,7 @@ export class DocumentService implements OnDestroy {
                     this.selectedDocument.updateTabBarLabel();
                 }, error => {
                     if (error && (error as { status: number }).status !== 404) {
-                        this.showError(this.i18n.translate('Could not undo last action'), error);
+                        this.showError(this.i18n.translateInstant('Could not undo last action'), error);
                     }
                 })
             );
@@ -626,7 +626,7 @@ export class DocumentService implements OnDestroy {
                     this.selectedDocument.updateTabBarLabel();
                 }, error => {
                     if (error && (error as { status: number }).status !== 404) {
-                        this.showError(this.i18n.translate('Could not redo previous action'), error);
+                        this.showError(this.i18n.translateInstant('Could not redo previous action'), error);
                     }
                 })
             );
@@ -647,10 +647,10 @@ export class DocumentService implements OnDestroy {
                     case XmomObjectType.DataType: this.addDocument(new DataTypeDocumentModel(item as XoDataType, originRuntimeContext, getItemResponse.focusId)); break;
                     case XmomObjectType.ExceptionType: this.addDocument(new ExceptionTypeDocumentModel(item as XoExceptionType, originRuntimeContext, getItemResponse.focusId)); break;
                     case XmomObjectType.ServiceGroup: this.addDocument(new ServiceGroupDocumentModel(item as XoServiceGroup, originRuntimeContext, getItemResponse.focusId)); break;
-                    default: console.error(item.type + ' ' + this.i18n.translate('could not be identified as a document type'));
+                    default: console.error(item.type + ' ' + this.i18n.translateInstant('could not be identified as a document type'));
                 }
             },
-            error: error => this.showError(this.i18n.translate(errorMessage ?? 'This XmomItem could not be loaded.'), error)
+            error: error => this.showError(this.i18n.translateInstant(errorMessage ?? 'This XmomItem could not be loaded.'), error)
         });
     }
 
@@ -675,7 +675,7 @@ export class DocumentService implements OnDestroy {
                 this.handleXmomItemResponse(workflow, workflowResponse);
                 this.addDocument(new WorkflowDocumentModel(workflow, this.xmomService.runtimeContext, workflowResponse.focusId));
             },
-            error: error => this.showError(this.i18n.translate('A new Workflow could not be created.'), error)
+            error: error => this.showError(this.i18n.translateInstant('A new Workflow could not be created.'), error)
         });
     }
 
@@ -709,7 +709,7 @@ export class DocumentService implements OnDestroy {
                 this.handleXmomItemResponse(dataType, dataTypeResponse);
                 this.addDocument(new DataTypeDocumentModel(dataType, this.xmomService.runtimeContext, dataTypeResponse.focusId));
             },
-            error: error => this.showError(this.i18n.translate('A new Data Type could not be created.'), error)
+            error: error => this.showError(this.i18n.translateInstant('A new Data Type could not be created.'), error)
         });
     }
 
@@ -736,7 +736,7 @@ export class DocumentService implements OnDestroy {
                 this.handleXmomItemResponse(exceptionType, exceptionTypeResponse);
                 this.addDocument(new ExceptionTypeDocumentModel(exceptionType, this.xmomService.runtimeContext, exceptionTypeResponse.focusId));
             },
-            error: error => this.showError(this.i18n.translate('A new Exception Type could not be created.'), error)
+            error: error => this.showError(this.i18n.translateInstant('A new Exception Type could not be created.'), error)
         });
     }
 
@@ -763,7 +763,7 @@ export class DocumentService implements OnDestroy {
                 this.handleXmomItemResponse(serviceGroup, response);
                 this.addDocument(new ServiceGroupDocumentModel(serviceGroup, this.xmomService.runtimeContext, response.focusId));
             },
-            error: error => this.showError(this.i18n.translate('A new Service Group could not be created.'), error)
+            error: error => this.showError(this.i18n.translateInstant('A new Service Group could not be created.'), error)
         });
     }
 
@@ -830,11 +830,11 @@ export class DocumentService implements OnDestroy {
         }
         // create dialog data
         const header = documentModel instanceof TypeDocumentModel
-            ? this.i18n.translate(LabelPathDialogComponent.HEADER_DEPLOY_TYPE_AS)
-            : this.i18n.translate(LabelPathDialogComponent.HEADER_SAVE_WORKFLOW_AS);
+            ? this.i18n.translateInstant(LabelPathDialogComponent.HEADER_DEPLOY_TYPE_AS)
+            : this.i18n.translateInstant(LabelPathDialogComponent.HEADER_SAVE_WORKFLOW_AS);
         const confirm = documentModel instanceof TypeDocumentModel
-            ? this.i18n.translate(LabelPathDialogComponent.CONFIRM_DEPLOY)
-            : this.i18n.translate(LabelPathDialogComponent.CONFIRM_SAVE);
+            ? this.i18n.translateInstant(LabelPathDialogComponent.CONFIRM_DEPLOY)
+            : this.i18n.translateInstant(LabelPathDialogComponent.CONFIRM_SAVE);
         const data: LabelPathDialogData = {
             header,
             confirm,
@@ -854,7 +854,7 @@ export class DocumentService implements OnDestroy {
 
     saveDocument(documentModel: DocumentModel, label?: string, path?: string, force = false, forceEmptyLabelAndPath = false): Observable<XoUpdateXmomItemResponse> {
         return (documentModel.warnings?.length > 0 && !force
-            ? this.errorConfirmation(this.i18n.translate('pmod.errors-confirmation.warnings'))
+            ? this.errorConfirmation(this.i18n.translateInstant('pmod.errors-confirmation.warnings'))
             : of(true)
         ).pipe(
             filter(save => save),
@@ -886,15 +886,15 @@ export class DocumentService implements OnDestroy {
                     catchError(err => {
                         // document already exists
                         if (err && err.status === 409) {
-                            const title = this.i18n.translate('Confirm');
-                            const message = this.i18n.translate('The document "%0" already exists. Would you like to overwrite it?', { key: '%0', value: path + '.' + label });
+                            const title = this.i18n.translateInstant('Confirm');
+                            const message = this.i18n.translateInstant('The document "%0" already exists. Would you like to overwrite it?', { key: '%0', value: path + '.' + label });
                             return this.dialogService.confirm(title, message).afterDismissResult().pipe(
                                 filter(result => !!result),
                                 switchMap(() => this.saveDocument(documentModel, label, path, true))
                             );
                         }
                         // unknown error occured
-                        this.showError(this.i18n.translate('The document could not be saved.'), err);
+                        this.showError(this.i18n.translateInstant('The document could not be saved.'), err);
                         return throwError(err);
                     }),
                     tap(updateResponse => this.handleDocumentUpdate(documentModel, updateResponse, 'saved'))
@@ -923,10 +923,10 @@ export class DocumentService implements OnDestroy {
     deployDocumentGeneric(documentModel: DocumentModel): Observable<XoUpdateXmomItemResponse> {
         // document must be saved before deployment
         if (documentModel.item.modified || !documentModel.item.saved) {
-            const title = this.i18n.translate('Warning');
+            const title = this.i18n.translateInstant('Warning');
             const message = documentModel.item.modified
-                ? this.i18n.translate('The currently opened document has been changed. Save it now?')
-                : this.i18n.translate('The currently opened document has not been saved before. Save it now?');
+                ? this.i18n.translateInstant('The currently opened document has been changed. Save it now?')
+                : this.i18n.translateInstant('The currently opened document has not been saved before. Save it now?');
             // confirm saving
             return this.dialogService.confirm(title, message).afterDismissResult().pipe(
                 filter(result => result),
@@ -949,7 +949,7 @@ export class DocumentService implements OnDestroy {
 
     deployDocument(documentModel: DocumentModel): Observable<XoUpdateXmomItemResponse> {
         return (documentModel.issues?.length > 0
-            ? this.errorConfirmation(this.i18n.translate('pmod.errors-confirmation.issues'))
+            ? this.errorConfirmation(this.i18n.translateInstant('pmod.errors-confirmation.issues'))
             : of(true)
         ).pipe(
             filter(deploy => deploy),
@@ -979,8 +979,8 @@ export class DocumentService implements OnDestroy {
         // TODO jvs default drag options?
 
         return this.dialogService.confirm(
-            this.i18n.translate('pmod.errors-confirmation.header', { key: '$0', value: errorLabel }),
-            this.i18n.translate('pmod.errors-confirmation.message', { key: '$0', value: errorLabel })
+            this.i18n.translateInstant('pmod.errors-confirmation.header', { key: '$0', value: errorLabel }),
+            this.i18n.translateInstant('pmod.errors-confirmation.message', { key: '$0', value: errorLabel })
         ).afterDismissResult(true);
     }
 
@@ -1010,8 +1010,8 @@ export class DocumentService implements OnDestroy {
 
         (documentModel.item.modified
             ? this.dialogService.confirm(
-                this.i18n.translate('Confirm'),
-                this.i18n.translate('This service group contains unsaved changes and needs to be deployed in order to generate the Template.\nDo you want to deploy it now?')
+                this.i18n.translateInstant('Confirm'),
+                this.i18n.translateInstant('This service group contains unsaved changes and needs to be deployed in order to generate the Template.\nDo you want to deploy it now?')
             ).afterDismissResult().pipe(
                 filter(result => result),
                 switchMap(() => this.deployDocument(documentModel))

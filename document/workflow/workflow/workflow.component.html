@@ -1,5 +1,5 @@
 @if (hasWorkflowData) {
-  @if (onlyParentRuntimeInfo) {
+  @if (onlyParentRuntimeInfo()) {
     <label xc-i18n class="no-runtime-info-available">
       label-no-runtime-info
     </label>
@@ -7,11 +7,10 @@
 
   <div class="scroll-content">
     <div class="content-wrapper">
-      <content-area
-        [contentArea]="workflow.contentArea"
+      <content-area [contentArea]="workflow.contentArea"
         [documentModel]="documentModel"
         (triggerAction)="performAction($event)"
-      ></content-area>
+       />
     </div>
   </div>
 } @else {

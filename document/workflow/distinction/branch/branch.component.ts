@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, forwardRef, HostBinding, inject, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, HostBinding, inject, Input, OnDestroy } from '@angular/core';
 import { XcIconButtonComponent } from '@zeta/xc';
 
 import { XoConditionalBranching } from '@pmod/xo/conditional-branching.model';
@@ -29,6 +29,7 @@ import { BranchSelectionService } from './branch-selection.service';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'branch',
     templateUrl: './branch.component.html',
     styleUrls: ['./branch.component.scss'],

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 
 import { MinMaxService } from '@pmod/document/min-max.service';
 import { PluginService } from '@pmod/document/plugin.service';
@@ -38,6 +38,7 @@ import { CodingComponent } from '../coding/coding.component';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'method-implementation',
     templateUrl: './method-implementation.component.html',
     styleUrls: ['./method-implementation.component.scss'],
@@ -109,7 +110,7 @@ export class MethodImplementationComponent extends ModellingItemComponent {
 
     useTemplateCall() {
         const document = this.documentService.selectedDocument;
-        this.dialogService.confirm(this.i18nService.translate('pmod.datatype.method-details.method-implementation.title'), this.i18nService.translate('pmod.datatype.method-details.method-implementation.message'))
+        this.dialogService.confirm(this.i18nService.translateInstant('pmod.datatype.method-details.method-implementation.title'), this.i18nService.translateInstant('pmod.datatype.method-details.method-implementation.message'))
             .afterDismissResult().subscribe(result => {
                 if (result) {
                     const request = new XoLibraryCallRequest();

@@ -67,7 +67,7 @@ export class ExceptionTypeDetailsComponent extends ModellingItemComponent implem
     readonly documentationTabItem: XcTabBarItem<DocumentTabData<DocumentationTabData>> = {
         closable: false,
         component: DocumentationTabComponent,
-        name: this.i18nService.translate('pmod.datatype.type-documentation-area.documentation-label'),
+        name: this.i18nService.translateSignal('pmod.datatype.type-documentation-area.documentation-label'),
         data: <DocumentTabData<DocumentationTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),

@@ -15,16 +15,15 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy } from '@angular/core';
+import { BehaviorSubject, combineLatest, map, Observable, of, Subject } from 'rxjs';
 
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, input, OnDestroy, signal } from '@angular/core';
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoDataType } from '@pmod/xo/data-type.model';
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 import { I18nService } from '@zeta/i18n';
 import { XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 import { XoBaseDefinition, XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
-
-import { BehaviorSubject, combineLatest, map, Observable, of, Subject } from 'rxjs';
 
 import { XoRuntimeContext } from '../../../xo/runtime-context.model';
 import { ModellingItemComponent } from '../../workflow/shared/modelling-object.component';
@@ -48,8 +47,7 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
     protected readonly i18nService = inject(I18nService);
     protected readonly cdr = inject(ChangeDetectorRef);
 
-    @Input()
-    dataTypeRTC: XoRuntimeContext = null;
+    readonly dataTypeRTC = input<XoRuntimeContext>(null);
 
     @Input()
     set isStorable(value: boolean) {
@@ -86,7 +84,7 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
     readonly documentationTabItem: XcTabBarItem<DocumentTabData<DocumentationTabData>> = {
         closable: false,
         component: DocumentationTabComponent,
-        name: this.i18nService.translate('pmod.datatype.type-documentation-area.documentation-label'),
+        name: this.i18nService.translateSignal('pmod.datatype.type-documentation-area.documentation-label'),
         data: <DocumentTabData<DocumentationTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
@@ -98,7 +96,7 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
     readonly metaTagsTabItem: XcTabBarItem<DocumentTabData<MetaTabData>> = {
         closable: false,
         component: MetaTabComponent,
-        name: 'Meta',
+        name: signal('Meta'),
         data: <DocumentTabData<MetaTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
@@ -110,7 +108,7 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
     readonly storableTabItem: XcTabBarItem<DocumentTabData<XoDataType>> = {
         closable: false,
         component: DataTypeStorableTabComponent,
-        name: 'ODS Information',
+        name: signal('ODS Information'),
         data: <DocumentTabData<XoDataType>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
@@ -190,7 +188,7 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
         return <XcTabBarItem<PluginTabData>> {
             closable: false,
             component: DataTypePluginTabComponent,
-            name: tabName || 'Plugin',
+            name: signal(tabName || 'Plugin'),
             data: <PluginTabData>{
                 documentModel: this.documentModel,
                 performAction: this.performAction.bind(this),

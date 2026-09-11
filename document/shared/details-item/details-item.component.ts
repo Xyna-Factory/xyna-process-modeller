@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 
-import { Component, input, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, Input, OnInit } from '@angular/core';
 
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 
@@ -26,6 +26,7 @@ import { XcIconComponent } from '@zeta/xc';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'details-item',
     templateUrl: './details-item.component.html',
     styleUrls: ['./details-item.component.scss'],

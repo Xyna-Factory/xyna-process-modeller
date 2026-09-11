@@ -3,16 +3,15 @@
   [mod-drop-area-allow-item]="allowItem"
   [mod-drop-area-can-drop]="canDrop"
   (mod-drop-area-dropped)="dropped($event)"
-  mod-drop-area-hide-indicator
+  [mod-drop-area-hide-indicator]="true"
   class="case-drop-area"
   >
   @for (case of caseArea.items; let i = $index; track i) {
-    <case
-      [mod-draggable]="case"
+    <case [mod-draggable]="case"
       [documentModel]="documentModel"
       [case]="case"
       [detachable]="caseArea.items.length > 1"
       (triggerAction)="performAction($event)"
-    ></case>
+     />
   }
 </div>

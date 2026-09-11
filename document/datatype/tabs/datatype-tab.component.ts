@@ -1,3 +1,5 @@
+import { Observable, Subject, takeUntil } from 'rxjs';
+
 /*
 * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 * Copyright 2024 Xyna GmbH, Germany
@@ -15,8 +17,7 @@
 * limitations under the License.
 * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 */
-import { ChangeDetectorRef, Component, Injector, OnDestroy, inject } from '@angular/core';
-
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy } from '@angular/core';
 import { ModellingActionType } from '@pmod/api/xmom.service';
 import { DocumentService } from '@pmod/document/document.service';
 import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model';
@@ -38,8 +39,6 @@ import { XoTextArea } from '@pmod/xo/text-area.model';
 import { FullQualifiedName } from '@zeta/api';
 import { XcTabComponent } from '@zeta/xc';
 import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
-
-import { Observable, Subject, takeUntil } from 'rxjs';
 
 
 export interface DocumentTabData<D> {
@@ -79,6 +78,7 @@ export interface MethodTabData {
  * Base class for tabs in Datatype view
  */
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ''
 })
 export abstract class DatatypeTabComponent<D, E extends DocumentTabData<D> = DocumentTabData<D>> extends XcTabComponent<void, E> implements OnDestroy {
@@ -98,9 +98,7 @@ export abstract class DatatypeTabComponent<D, E extends DocumentTabData<D> = Doc
     }
 
     constructor() {
-        const injector = inject(Injector, { optional: true });
-
-        super(injector);
+        super();
 
         this.untilDestroyed(this.injectedData.update).subscribe(data => {
             this.tabData = data;
@@ -125,6 +123,7 @@ export abstract class DatatypeTabComponent<D, E extends DocumentTabData<D> = Doc
 }
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ''
 })
 export abstract class DatatypeDetailsTabComponent extends DatatypeTabComponent<XoDataType> {
@@ -137,6 +136,7 @@ export abstract class DatatypeDetailsTabComponent extends DatatypeTabComponent<X
 }
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ''
 })
 export abstract class DatatypeVariableTabComponent extends DatatypeTabComponent<VariableTabData> {
@@ -187,6 +187,7 @@ export abstract class DatatypeVariableTabComponent extends DatatypeTabComponent<
 }
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ''
 })
 export abstract class DatatypeMethodTabComponent extends DatatypeTabComponent<MethodTabData> {

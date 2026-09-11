@@ -15,10 +15,11 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit, ViewChild, viewChild, input } from '@angular/core';
+import { outputToObservable } from '@angular/core/rxjs-interop';
 
 import { FullQualifiedName, XoStructureType } from '@zeta/api';
-import { isString } from '@zeta/base';
+import { coerceBoolean, isString } from '@zeta/base';
 import { XcAutocompleteDataWrapper, XcButtonComponent, XcCheckboxComponent, XcDialogService, XcFormAutocompleteComponent, XcFormInputComponent, XcFormLabelComponent, XcFormValidatorRequiredDirective, XcOptionItemString, XcOptionItemStringOrUndefined, XcTooltipDirective } from '@zeta/xc';
 
 import { merge, Observable } from 'rxjs';
@@ -64,20 +65,15 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
     pathDataWrapper: XcAutocompleteDataWrapper;
     baseTypeDataWrapper: XcAutocompleteDataWrapper;
 
-    @Input()
-    showConverterButton = false;
+    readonly showConverterButton = input(false, { transform: coerceBoolean });
 
-    @Input()
-    showRefactorButton = false;
+    readonly showRefactorButton = input(false, { transform: coerceBoolean });
 
-    @Input()
-    showBaseTypeAutocomplete = false;
+    readonly showBaseTypeAutocomplete = input(false, { transform: coerceBoolean });
 
-    @Input()
-    showAbstractCheckbox = false;
+    readonly showAbstractCheckbox = input(false, { transform: coerceBoolean });
 
-    @ViewChild('isStorableCheckbox', {static: false, read: XcCheckboxComponent})
-    isStorableCheckbox: XcCheckboxComponent;
+    readonly isStorableCheckbox = viewChild('isStorableCheckbox', { read: XcCheckboxComponent });
 
 
     constructor() {
@@ -118,13 +114,13 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
 
     @ViewChild('pathAutocomplete', {static: false, read: XcFormAutocompleteComponent})
     set pathAutocomplete(value: XcFormAutocompleteComponent) {
-        this.untilDestroyed(value?.focus)?.pipe(filter(() => !value.disabled)).subscribe(() => this.refreshPathAutocomplete());
+        this.untilDestroyed(value ? outputToObservable(value.focus) : undefined)?.pipe(filter(() => !value.disabled)).subscribe(() => this.refreshPathAutocomplete());
     }
 
 
     @ViewChild('baseTypeAutocomplete', {static: false, read: XcFormAutocompleteComponent})
     set baseTypeAutocomplete(value: XcFormAutocompleteComponent) {
-        this.untilDestroyed(value?.focus)?.pipe(filter(() => !value.disabled)).subscribe(() => this.refreshBaseTypeAutocomplete());
+        this.untilDestroyed(value ? outputToObservable(value.focus) : undefined)?.pipe(filter(() => !value.disabled)).subscribe(() => this.refreshBaseTypeAutocomplete());
     }
 
 
@@ -266,7 +262,7 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
     */
     private preventStorableCheckboxChange(value: boolean) {
         this._isStorable = value;
-        this.isStorableCheckbox.checked = value;
+        this.isStorableCheckbox().checked = value;
         this.cdr.detectChanges();
     }
 
@@ -315,7 +311,7 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
 
 
     private refreshBaseTypeAutocomplete() {
-        if (this.showBaseTypeAutocomplete) {
+        if (this.showBaseTypeAutocomplete()) {
             const fqn = this.typeDocument.item.$fqn;
             const rtc = this.typeDocument.item.toRtc();
             let observable: Observable<XoStructureType[]>;

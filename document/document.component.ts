@@ -18,7 +18,7 @@
 import { BehaviorSubject, Observable, Observer, of, Subject } from 'rxjs';
 import { distinctUntilChanged, filter, map, switchMap, takeUntil } from 'rxjs/operators';
 
-import { ChangeDetectorRef, Component, inject, Injector, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { RuntimeContext } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcTabComponent } from '@zeta/xc';
@@ -35,6 +35,7 @@ import { SelectableModellingObjectComponent } from './workflow/shared/selectable
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ''
 })
 export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponent<R, D> implements OnInit, OnDestroy {
@@ -58,9 +59,7 @@ export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponen
 
 
     constructor() {
-        const injector = inject(Injector, { optional: true });
-
-        super(injector);
+        super();
 
         const foreignRtcObserver: Observer<RuntimeContext> = {
             next: () => this.insideForeignRtc = this.documentService.selectedDocument && !this.documentService.selectedDocument.originRuntimeContext?.equals(this.documentService.xmomService.runtimeContext),
@@ -165,7 +164,7 @@ export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponen
         }
 
         this.dismissing = true;
-        const title = this.i18n.translate('Close');
+        const title = this.i18n.translateInstant('Close');
         const dismissSubject = new Subject<boolean>();
         const isWorkflow = this.document.item.type === XmomObjectType.Workflow;     // TODO: make it better, use polymorphism
 
@@ -180,18 +179,18 @@ export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponen
                 if (closeResult.state === DocumentState.closed || closeResult.state === DocumentState.unknown) {
                     // assume that document has been closed on the server side if closed with force or if there is an unknown close-error
                     if (closeResult.state === DocumentState.unknown && !!closeResult.unknownError) {
-                        this.dialogService.error(this.i18n.translate('An error occurred while closing the document') + ': ' + this.i18n.translate(closeResult.unknownError));
+                        this.dialogService.error(this.i18n.translateInstant('An error occurred while closing the document') + ': ' + this.i18n.translateInstant(closeResult.unknownError));
                     }
                     dismiss(true);
                 } else {
-                    let message = this.i18n.translate('The document has unsaved changes.', { key: '$0', value: this.document.item.label });
+                    let message = this.i18n.translateInstant('The document has unsaved changes.', { key: '$0', value: this.document.item.label });
 
-                    const saveButtonLabel = this.i18n.translate(isWorkflow ? 'Save' : 'Deploy');
-                    const dontSaveButtonLabel = isWorkflow ? this.i18n.translate('Don\'t Save') : this.i18n.translate('Don\'t Deploy');
+                    const saveButtonLabel = this.i18n.translateInstant(isWorkflow ? 'Save' : 'Deploy');
+                    const dontSaveButtonLabel = isWorkflow ? this.i18n.translateInstant('Don\'t Save') : this.i18n.translateInstant('Don\'t Deploy');
                     if (isWorkflow) {
-                        message += ' ' + this.i18n.translate('Do you want to save it now?');
+                        message += ' ' + this.i18n.translateInstant('Do you want to save it now?');
                     } else {
-                        message += ' ' + this.i18n.translate('Do you want to save and deploy it now?');
+                        message += ' ' + this.i18n.translateInstant('Do you want to save and deploy it now?');
                     }
                     const data: CloseDialogData = { title, message, saveButtonLabel, dontSaveButtonLabel };
 

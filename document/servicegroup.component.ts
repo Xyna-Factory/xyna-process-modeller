@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { ModellingActionType } from '../api/xmom.service';
 import { XoChangeTextRequest } from '../xo/change-text-request.model';
@@ -37,6 +37,7 @@ import { DropIndicatorComponent } from './workflow/drop-indicator/drop-indicator
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './servicegroup.component.html',
     styleUrls: ['./servicegroup.component.scss'],
     providers: [SelectionService, MinMaxService],

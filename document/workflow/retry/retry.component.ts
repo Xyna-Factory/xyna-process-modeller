@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { XoRetry } from '../../../xo/retry.model';
 import { XoTextArea } from '../../../xo/text-area.model';
@@ -27,6 +27,7 @@ import { XcIconComponent } from '@zeta/xc';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'retry',
     templateUrl: './retry.component.html',
     styleUrls: ['./retry.component.scss'],

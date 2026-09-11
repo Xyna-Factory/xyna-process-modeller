@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostBinding, HostListener, inject, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, HostListener, inject, OnDestroy } from '@angular/core';
 
 import { SelectionService } from '../../selection.service';
 import { ModellingItemComponent } from './modelling-object.component';
@@ -24,7 +24,8 @@ import { ModellingItemComponent } from './modelling-object.component';
 /**
  * Base class for all selectable modelling object components
  */
-@Component({ template: '' })
+@Component({
+    changeDetection: ChangeDetectionStrategy.Eager, template: '' })
 export class SelectableModellingObjectComponent extends ModellingItemComponent implements OnDestroy {
 
     protected readonly selectionService = inject(SelectionService);

@@ -21,7 +21,7 @@ import { XynaRoutes } from '@zeta/nav';
 import { rightGuardCanActivate } from '@zeta/nav/right.guard';
 
 import { RIGHT_PROCESS_MODELLER } from './const';
-import { ProcessmodellerComponent } from './processmodeller.component';
+
 
 
 const root = 'Process-Modeller';
@@ -34,7 +34,7 @@ export const ProcessmodellerRoutes: XynaRoutes = [
     },
     {
         path: root,
-        component: ProcessmodellerComponent,
+        loadComponent: () => import('./processmodeller.component').then(m => m.ProcessmodellerComponent),
         canActivate: [rightGuardCanActivate],
         data: {
             right: RIGHT_PROCESS_MODELLER,
