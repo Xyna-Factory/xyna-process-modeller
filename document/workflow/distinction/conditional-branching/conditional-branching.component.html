@@ -1,7 +1,7 @@
 @if (choice.formulaArea) {
   <formula-input-area [formulaArea]="choice.formulaArea"
     [documentModel]="documentModel"
-    questionmarkEditable="true"
+    [questionmarkEditable]="true"
     (triggerAction)="performAction($event)"
    />
 }

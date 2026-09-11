@@ -9,7 +9,7 @@
     mod-drop-area
     [mod-drop-area-allow-item]="allowItem"
     [mod-drop-area-can-drop]="canDrop"
-    mod-drop-area-hide-indicator
+    [mod-drop-area-hide-indicator]="true"
     (mod-drop-area-dropped)="dropped($event)"
     >
     @if (node.collapsible) {

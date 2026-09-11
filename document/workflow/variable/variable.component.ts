@@ -20,6 +20,7 @@ import { Router } from '@angular/router';
 
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { RuntimeContext, Xo } from '@zeta/api';
+import { coerceBoolean } from '@zeta/base';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcIconButtonComponent, XcMenuItem, XcMenuServiceDirective, XcMenuTriggerDirective, XcTooltipDirective } from '@zeta/xc';
 
@@ -65,9 +66,9 @@ export class VariableComponent extends SelectableModellingObjectComponent {
     protected readonly dialogService = inject(XcDialogService);
     protected readonly branchSelection = inject(BranchSelectionService);
 
-    readonly hasMenu = input(true);
+    readonly hasMenu = input(true, { transform: coerceBoolean });
 
-    readonly isPlaceholder = input(false);
+    readonly isPlaceholder = input(false, { transform: coerceBoolean });
 
     @HostBinding('class.placeholder')
     get hostIsPlaceholder(): boolean {

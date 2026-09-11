@@ -19,7 +19,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, O
 import { outputToObservable } from '@angular/core/rxjs-interop';
 
 import { FullQualifiedName, XoStructureType } from '@zeta/api';
-import { isString } from '@zeta/base';
+import { coerceBoolean, isString } from '@zeta/base';
 import { XcAutocompleteDataWrapper, XcButtonComponent, XcCheckboxComponent, XcDialogService, XcFormAutocompleteComponent, XcFormInputComponent, XcFormLabelComponent, XcFormValidatorRequiredDirective, XcOptionItemString, XcOptionItemStringOrUndefined, XcTooltipDirective } from '@zeta/xc';
 
 import { merge, Observable } from 'rxjs';
@@ -65,13 +65,13 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
     pathDataWrapper: XcAutocompleteDataWrapper;
     baseTypeDataWrapper: XcAutocompleteDataWrapper;
 
-    readonly showConverterButton = input(false);
+    readonly showConverterButton = input(false, { transform: coerceBoolean });
 
-    readonly showRefactorButton = input(false);
+    readonly showRefactorButton = input(false, { transform: coerceBoolean });
 
-    readonly showBaseTypeAutocomplete = input(false);
+    readonly showBaseTypeAutocomplete = input(false, { transform: coerceBoolean });
 
-    readonly showAbstractCheckbox = input(false);
+    readonly showAbstractCheckbox = input(false, { transform: coerceBoolean });
 
     readonly isStorableCheckbox = viewChild('isStorableCheckbox', { read: XcCheckboxComponent });
 

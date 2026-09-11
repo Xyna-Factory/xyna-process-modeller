@@ -17,7 +17,7 @@
  */
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, inject, Input, OnDestroy, input, output } from '@angular/core';
 
-import { OutsideListenerService } from '@zeta/base';
+import { coerceBoolean, OutsideListenerService } from '@zeta/base';
 
 import { filter } from 'rxjs/operators';
 
@@ -69,7 +69,7 @@ export class WorkflowComponent extends ModellingItemComponent implements AfterVi
         this.setModel(value);
     }
 
-    readonly onlyParentRuntimeInfo = input(false);
+    readonly onlyParentRuntimeInfo = input(false, { transform: coerceBoolean });
 
     get workflow(): XoWorkflow {
         return this.getModel() as XoWorkflow;

@@ -17,6 +17,8 @@
  */
 import { ChangeDetectionStrategy, Component, forwardRef, HostBinding, inject, Input, input } from '@angular/core';
 
+import { coerceBoolean } from '@zeta/base';
+
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { XoExceptionHandlingArea } from '../../../../xo/exception-handling-area.model';
 import { WorkflowDetailLevelService } from '../../../workflow-detail-level.service';
@@ -37,7 +39,7 @@ export class ExceptionHandlingAreaComponent extends ModellingObjectComponent {
 
     protected readonly detailLevelService = inject(WorkflowDetailLevelService);
 
-    readonly inline = input(false);
+    readonly inline = input(false, { transform: coerceBoolean });
 
     @HostBinding('class.inline')
     get hostInline(): boolean {

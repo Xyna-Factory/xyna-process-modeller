@@ -18,6 +18,7 @@
 import { ChangeDetectionStrategy, Component, inject, Input, input, signal, output } from '@angular/core';
 
 import { XoPlugin } from '@yggdrasil/plugin/plugin.model';
+import { coerceBoolean } from '@zeta/base';
 import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 
 import { combineLatest } from 'rxjs';
@@ -48,7 +49,7 @@ export class MemberAreaComponent extends ModellingObjectComponent {
 
     readonly collapsed = signal(false);
 
-    readonly allowAdd = input(true);
+    readonly allowAdd = input(true, { transform: coerceBoolean });
 
     readonly addEmitter = output<void>({ alias: 'added' });
 

@@ -17,6 +17,7 @@
  */
 import { ChangeDetectionStrategy, AfterViewInit, Component, ElementRef, inject, Input, NgZone, OnDestroy, viewChild, input, output } from '@angular/core';
 
+import { coerceBoolean } from '@zeta/base';
 import { createSVGGroup, createSVGHorizontalCubicBezierPath, removeAllChildren } from '@zeta/base/draw';
 
 import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
@@ -326,7 +327,7 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
     private readonly removeButtonTo = viewChild<ElementRef>('removeTo');
     private readonly tooltip = viewChild<ElementRef>('tooltip');
 
-    readonly insideForeignRtc = input(false);
+    readonly insideForeignRtc = input(false, { transform: coerceBoolean });
 
     readonly dataflowChange = output<XoSetDataflowConnectionRequest>();
 

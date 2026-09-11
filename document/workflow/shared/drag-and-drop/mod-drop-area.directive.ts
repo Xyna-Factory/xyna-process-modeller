@@ -90,7 +90,7 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
     /**
      * Defines if parallel (locationally) inserts are allowed
      */
-    readonly parallel = input(false, { alias: "mod-drop-area-allow-parallel" });
+    readonly parallel = input(false, { alias: "mod-drop-area-allow-parallel", transform: coerceBoolean });
 
     private _hideIndicator = false;
     /**

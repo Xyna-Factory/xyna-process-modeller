@@ -18,6 +18,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject, Input, OnDestroy, input, output } from '@angular/core';
 
 import { XoMethod } from '@pmod/xo/method.model';
+import { coerceBoolean } from '@zeta/base';
 import * as monaco from 'monaco-editor';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 
@@ -69,7 +70,7 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
         return this._method;
     }
 
-    readonly readonly = input(false);
+    readonly readonly = input(false, { transform: coerceBoolean });
 
     readonly implementationChange = output<string>();
 
