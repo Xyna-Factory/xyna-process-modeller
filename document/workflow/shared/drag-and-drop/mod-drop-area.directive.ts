@@ -15,18 +15,15 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Directive, ElementRef, HostListener, Input, NgZone, OnDestroy, OnInit, inject, input, output } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
+import { Directive, ElementRef, HostListener, inject, Input, input, NgZone, OnDestroy, OnInit, output } from '@angular/core';
 import { coerceBoolean } from '@zeta/base';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService } from '@zeta/xc';
 
-import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
-
-import { DRAG_CSS_CLASSES, DragType, ModDnDEvent, ModDnDEventConvert, ModDragAndDropService, ModDragDataInfo, ModDragDataTransferKey, ModRelativeHoverSide, ModRelativeHoverSideCalculate, ModRelativeHoverSideFlip, Distance, Draggable } from './mod-drag-and-drop.service';
-
-
+import { Distance, DRAG_CSS_CLASSES, Draggable, DragType, ModDnDEvent, ModDnDEventConvert, ModDragAndDropService, ModDragDataInfo, ModDragDataTransferKey, ModRelativeHoverSide, ModRelativeHoverSideCalculate, ModRelativeHoverSideFlip } from './mod-drag-and-drop.service';
 
 
 export interface ModDragEvent {
@@ -60,9 +57,7 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
     private readonly zone = inject(NgZone);
 
 
-    readonly items = input<{
-    id: string;
-}[]>(undefined, { alias: "mod-drop-area" });
+    readonly items = input<{ id: string; }[]>(undefined, { alias: "mod-drop-area" });
 
     private areaElement: Element;
 
@@ -96,9 +91,9 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
     /**
      * Defines if default drop indicator shall be hidden
      */
-    @Input('mod-drop-area-hide-indicator')
+    @Input({ alias: 'mod-drop-area-hide-indicator', transform: coerceBoolean })
     set hideIndicator(value: boolean) {
-        this._hideIndicator = coerceBoolean(value);
+        this._hideIndicator = value;
     }
 
     get hideIndicator(): boolean {

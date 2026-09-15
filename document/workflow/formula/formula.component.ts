@@ -17,7 +17,7 @@
  */
 import { filter, take } from 'rxjs/operators';
 
-import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, HostListener, inject, Input, QueryList, ViewChildren, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, HostListener, inject, Input, QueryList, viewChild, ViewChildren } from '@angular/core';
 import { ApiService } from '@zeta/api';
 import { coerceBoolean } from '@zeta/base';
 
@@ -35,6 +35,7 @@ import { FormulaPartOperation } from '../../../xo/util/formula-parts/formula-par
 import { FormulaPartSpecial } from '../../../xo/util/formula-parts/formula-part-special';
 import { FormulaPartVariable } from '../../../xo/util/formula-parts/formula-part-variable';
 import { XoVariable } from '../../../xo/variable.model';
+import { DragType } from '../shared/drag-and-drop/mod-drag-and-drop.service';
 import { ModDraggableDirective } from '../shared/drag-and-drop/mod-draggable.directive';
 import { ModDropAreaDirective, ModDropEvent } from '../shared/drag-and-drop/mod-drop-area.directive';
 import { ModellingItemComponent, TriggeredAction } from '../shared/modelling-object.component';
@@ -62,6 +63,8 @@ export class FormulaComponent extends ModellingItemComponent {
     protected readonly apiService = inject(ApiService);
 
     readonly formulaWrapper = viewChild<ElementRef>('formulaWrapper');
+
+    readonly DragType = DragType;
 
     private _partWithCaret: FormulaPart = null;     // caret is at the beginning of this part
     private _partInEditing: FormulaPart = null;     // if set, the focus is inside this part (e. g. while editing a literal)
@@ -168,7 +171,7 @@ export class FormulaComponent extends ModellingItemComponent {
     }
 
 
-    @Input({transform: coerceBoolean})
+    @Input({ transform: coerceBoolean })
     set hideQuestionmark(value: boolean) {
         this.formula.isQuestionmarkHidden = value;
     }
@@ -179,7 +182,7 @@ export class FormulaComponent extends ModellingItemComponent {
     }
 
 
-    @Input({alias: 'drop-disabled', transform: coerceBoolean})
+    @Input({ alias: 'drop-disabled', transform: coerceBoolean })
     set dropDisabled(value: boolean) {
         this._dropDisabled = value;
     }
@@ -190,7 +193,7 @@ export class FormulaComponent extends ModellingItemComponent {
     }
 
 
-    @Input({alias: 'variable-menu-disabled', transform: coerceBoolean})
+    @Input({ alias: 'variable-menu-disabled', transform: coerceBoolean })
     set variableMenuDisabled(value: boolean) {
         this._variableMenuDisabled = value;
     }
@@ -361,13 +364,18 @@ export class FormulaComponent extends ModellingItemComponent {
     }
 
 
-    @HostListener('focusout', ['$event.relatedTarget'])
-    blur(relatedTarget: Element) {
-        // check if a sub-element of this formula has been focused instead and stay in selected mode
+    @HostListener('focusout', ['$event'])
+    blur(event: FocusEvent) {
+        const relatedTarget = event.relatedTarget as Element | null;
+
         const formulaWrapper = this.formulaWrapper();
-        if (formulaWrapper.nativeElement !== relatedTarget &&
+
+        if (
+            formulaWrapper.nativeElement !== relatedTarget &&
             !formulaWrapper.nativeElement.contains(relatedTarget) &&
-            !this._externalChildren?.find(child => !!child.getChildren().find(externalChild => externalChild === relatedTarget))
+            !this._externalChildren?.find(child =>
+                !!child.getChildren().find(externalChild => externalChild === relatedTarget)
+            )
         ) {
             this.unselect();
         }

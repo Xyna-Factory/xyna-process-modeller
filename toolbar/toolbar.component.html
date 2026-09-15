@@ -36,7 +36,7 @@
               [mod-draggable]="group.activeButton ? group.activeButton.xmomItem : group.buttons[0].xmomItem"
               [xc-icon-name]="group.activeButton ? group.activeButton.iconName : group.buttons[0].iconName"
               [xc-tooltip]="group.activeButton ? group.activeButton.tooltip : group.buttons[0].tooltip"
-              mod-draggable-allowed-drag-type="insert"
+              [mod-draggable-allowed-drag-type]="DragType.insert"
               xc-tooltip-position="below"
               class="menu-point draggable-icon"
              />
@@ -50,7 +50,7 @@
                   [xc-tooltip]="description.tooltip"
                   (dragstart)="group.activeButton = description"
                   (click)="group.activeButton = description"
-                  mod-draggable-allowed-drag-type="insert"
+                  [mod-draggable-allowed-drag-type]="DragType.insert"
                   xc-tooltip-position="below"
                   class="draggable-icon"
                  />
@@ -62,7 +62,7 @@
         @for (description of [castToDescription(item)]; let idx = $index; track idx) {
           <xc-icon xc-i18n
             [mod-draggable]="description.xmomItem"
-            mod-draggable-allowed-drag-type="insert"
+            [mod-draggable-allowed-drag-type]="DragType.insert"
             [xc-icon-style]="description.iconStyle ? description.iconStyle : 'modeller'"
             [class.inactive]="!description.xmomItem"
             [xc-icon-name]="description.iconName"

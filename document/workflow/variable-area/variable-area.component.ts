@@ -40,6 +40,8 @@ import { VariableComponent } from '../variable/variable.component';
 export class VariableAreaComponent extends ModellingObjectComponent {
     private _kind: 'input-area' | 'output-area' | 'throws-area';
 
+    readonly DragType = DragType;
+
     allowItem = (xoFqn: string): boolean => {
         const allowedType = !!this.variableArea.itemTypes.find(itemType => itemType.toLowerCase() === xoFqn.toLowerCase());
         return allowedType && !this.readonly;

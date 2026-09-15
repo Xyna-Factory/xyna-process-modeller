@@ -1,7 +1,7 @@
 <div id="xmom-list"
   class="zeta-scrollbar">
     <xfm-mod-nav-xmomlistitem *ngFor="let xmomItem of xmomItems"
-      [mod-draggable]="xmomItem" mod-draggable-allowed-drag-type="insert"
+      [mod-draggable]="xmomItem" [mod-draggable-allowed-drag-type]="DragType.insert"
       [xmom-item]="xmomItem"
       [show-fqn]="showFQN"
       class="item"

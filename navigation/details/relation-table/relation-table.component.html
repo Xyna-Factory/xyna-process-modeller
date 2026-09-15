@@ -14,7 +14,7 @@
           <small>{{ group.relations.length }}</small>
         </div>
         @if (group.visible) {
-          <xfm-mod-nav-xmomlist xc-i18n-context='xfm-mod-nav-xmomlist' [presetXmoms]="group.relations" show-fqn />
+          <xfm-mod-nav-xmomlist xc-i18n-context='xfm-mod-nav-xmomlist' [presetXmoms]="group.relations" [show-fqn]="true" />
         }
       </div>
     }

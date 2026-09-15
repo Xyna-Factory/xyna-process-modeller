@@ -17,7 +17,7 @@
  */
 import { filter } from 'rxjs/operators';
 
-import { ChangeDetectionStrategy, Component, HostListener, inject, Input, output , signal} from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, inject, Input, output, signal } from '@angular/core';
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
 import { FullQualifiedName } from '@zeta/api';
 import { coerceBoolean } from '@zeta/base';
@@ -166,9 +166,9 @@ export class XMOMListItemComponent {
     }
 
 
-    @Input('show-fqn')
+    @Input({ alias: 'show-fqn', transform: coerceBoolean })
     set showFQN(value: boolean) {
-        this._showFQN = coerceBoolean(value);
+        this._showFQN = value;
     }
 
 

@@ -15,10 +15,10 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+import { filter } from 'rxjs';
+
 import { ChangeDetectionStrategy, Component, inject, ViewChild } from '@angular/core';
 import { outputToObservable } from '@angular/core/rxjs-interop';
-import { XcButtonComponent, XcFormInputComponent, XcFormValidatorRequiredDirective, XcTooltipDirective } from '@zeta/xc';
-
 import { DataTypeService } from '@pmod/document/datatype.service';
 import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
 import { XoChangeMemberVariableFqnRequest } from '@pmod/xo/change-member-variable-fqn-request.model';
@@ -26,9 +26,7 @@ import { XoChangeMemberVariablePrimitiveTypeRequest } from '@pmod/xo/change-memb
 import { XoChangeTextRequest } from '@pmod/xo/change-text-request.model';
 import { FullQualifiedName } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
-import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItemString, XcOptionItemStringOrUndefined, XcOptionItemTranslate } from '@zeta/xc';
-
-import { filter } from 'rxjs';
+import { XcAutocompleteDataWrapper, XcButtonComponent, XcFormAutocompleteComponent, XcFormInputComponent, XcFormValidatorRequiredDirective, XcOptionItemString, XcOptionItemStringOrUndefined, XcOptionItemTranslate, XcTooltipDirective } from '@zeta/xc';
 
 import { XcI18nPipe, XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { TypeDocumentationAreaComponent } from '../../type-documentation-area/type-documentation-area.component';
@@ -108,7 +106,7 @@ export class MemberVariableBaseTabComponent extends DatatypeVariableTabComponent
     }
 
 
-    labelBlur(event: FocusEvent) {
+    labelBlur(event: Event) {
         if (!this.readonly) {
             const value = (event.target as HTMLInputElement).value;
             if (this.memberVariable.label !== value) {

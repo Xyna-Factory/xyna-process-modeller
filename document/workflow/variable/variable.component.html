@@ -1,6 +1,6 @@
 <div class="left-rim" (dblclick)="doubleClickRim($event)">{{variable.isList ? 'n' : '1'}}</div>
 <div class="content-area"
-  mod-drop-area
+  [mod-drop-area]="[]"
   [mod-drop-area-allow-item]="allowItem"
   [mod-drop-area-hide-indicator]="true"
   (mod-drop-area-dropped)="dropped($event)"

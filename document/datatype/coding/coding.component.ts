@@ -15,18 +15,20 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject, Input, OnDestroy, input, output } from '@angular/core';
-
-import { XoMethod } from '@pmod/xo/method.model';
-import { coerceBoolean } from '@zeta/base';
 import * as monaco from 'monaco-editor';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
+
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject, Input, input, OnDestroy, output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { XoMethod } from '@pmod/xo/method.model';
+import { coerceBoolean } from '@zeta/base';
+
 
 @Component({
     selector: 'coding',
     templateUrl: './coding.component.html',
     styleUrls: ['./coding.component.scss'],
-    imports: [MonacoEditorModule],
+    imports: [MonacoEditorModule, FormsModule],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CodingComponent implements AfterViewInit, OnDestroy {

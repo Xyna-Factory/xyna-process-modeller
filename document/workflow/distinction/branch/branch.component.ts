@@ -16,10 +16,9 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, Component, forwardRef, HostBinding, inject, Input, OnDestroy } from '@angular/core';
-import { XcIconButtonComponent } from '@zeta/xc';
-
 import { XoConditionalBranching } from '@pmod/xo/conditional-branching.model';
 import { coerceBoolean } from '@zeta/base';
+import { XcIconButtonComponent } from '@zeta/xc';
 
 import { XoBranch } from '../../../../xo/branch.model';
 import { ContentAreaComponent } from '../../content-area/content-area.component';
@@ -97,10 +96,10 @@ export class BranchComponent extends SelectableModellingObjectComponent implemen
     }
 
 
-    @Input('dark-mode')
+    @Input({ alias: 'dark-mode', transform: coerceBoolean })
     @HostBinding('class.dark')
     set darkMode(value: boolean) {
-        this._darkMode = coerceBoolean(value);
+        this._darkMode = value;
     }
 
 

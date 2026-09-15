@@ -8,7 +8,7 @@
   class="variable-drop-area">
 
   <variable *ngFor="let variable of variableArea.items"
-    [mod-draggable]="variable" [mod-draggable-allowed-drag-type]="readonly ? 'copy' : 'move'"
+    [mod-draggable]="variable" [mod-draggable-allowed-drag-type]="readonly ? DragType.copy : DragType.move"
     [variable]="variable"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"

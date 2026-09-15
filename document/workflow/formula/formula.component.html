@@ -18,7 +18,7 @@
     @if (part.isVariable()) {
       <variable [variable]="part.variable"
         [documentModel]="documentModel"
-        [mod-draggable]="part.variable" mod-draggable-allowed-drag-type="copy"
+        [mod-draggable]="part.variable" [mod-draggable-allowed-drag-type]="DragType.copy"
         (click)="clickOnPart(part)"
         [hasMenu]="!variableMenuDisabled"
         (triggerAction)="performAction($event)"

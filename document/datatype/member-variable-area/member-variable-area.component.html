@@ -8,7 +8,7 @@
   @for (variable of memberVariableArea.items; let i = $index; track i) {
     <div
       [mod-draggable]="variable"
-      [mod-draggable-allowed-drag-type]="readonly ? 'copy' : 'move'"
+      [mod-draggable-allowed-drag-type]="readonly ? DragType.copy : DragType.move"
       >
       <member-variable [memberVariable]="variable"
         (triggerAction)="performAction($event)"

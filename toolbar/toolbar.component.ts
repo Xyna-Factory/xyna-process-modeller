@@ -19,6 +19,7 @@ import { merge, of, Subscription } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy, signal } from '@angular/core';
+import { DragType } from '@pmod/document/workflow/shared/drag-and-drop/mod-drag-and-drop.service';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcIconButtonComponent, XcIconComponent, XcMenuComponent, XcMenuItem, XcMenuTriggerDirective, XcTooltipDirective } from '@zeta/xc';
 
@@ -78,6 +79,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     private readonly cdr = inject(ChangeDetectorRef);
     protected readonly i18n = inject(I18nService);
 
+    readonly DragType = DragType;
 
     private static readonly BUTTON_NAME_NEW = 'new';
     private static readonly BUTTON_NAME_SAVE = 'save';

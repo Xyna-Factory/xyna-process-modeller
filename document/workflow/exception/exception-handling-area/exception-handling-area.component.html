@@ -19,7 +19,7 @@
 
 <div class="toggle-buttons">
   <xc-icon-button class="exception button" xc-icon-style="modeller" xc-icon-name="tb-exception" xc-icon-size="small"
-    [color]="exceptionHandlingArea?.hasHandledExceptions() ? 'color-white' : 'color-black'"
+    [color]="exceptionHandlingArea?.hasHandledExceptions() ? 'white' : 'black'"
     [class.empty]="!exceptionHandlingArea?.hasHandledExceptions()"
     (click)="toggleExceptionArea()"
     xc-i18n
@@ -27,7 +27,7 @@
    />
   @if (inline()) {
     <xc-icon-button class="compensation button" xc-icon-style="modeller" xc-icon-name="mini-compensation" xc-icon-size="small"
-      [color]="exceptionHandlingArea?.hasCompensations() ? 'color-white' : 'color-black'"
+      [color]="exceptionHandlingArea?.hasCompensations() ? 'white' : 'black'"
       [class.empty]="!exceptionHandlingArea?.hasCompensations()"
       (click)="toggleCompensationArea()"
       xc-i18n

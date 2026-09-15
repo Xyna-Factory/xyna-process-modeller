@@ -6,7 +6,7 @@
   [mod-draggable]="node"
   >
   <div class="drop-zone"
-    mod-drop-area
+    [mod-drop-area]="node.children"
     [mod-drop-area-allow-item]="allowItem"
     [mod-drop-area-can-drop]="canDrop"
     [mod-drop-area-hide-indicator]="true"

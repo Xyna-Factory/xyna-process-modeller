@@ -16,7 +16,6 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Directive, ElementRef, HostListener, inject, Input, input, output } from '@angular/core';
-
 import { coerceBoolean } from '@zeta/base';
 
 
@@ -35,9 +34,9 @@ export class ModContentEditableDirective {
     readonly afterEdit = output<string>({ alias: 'mod-content-editable-after-edit' });
 
 
-    @Input('mod-content-editable')
+    @Input({ alias: 'mod-content-editable', transform: coerceBoolean })
     set enabled(value: boolean) {
-        this._enabled = coerceBoolean(value);
+        this._enabled = value;
     }
 
 
@@ -52,9 +51,9 @@ export class ModContentEditableDirective {
     }
 
 
-    @Input('mod-content-editable-should-finish-on-enter')
+    @Input({ alias: 'mod-content-editable-should-finish-on-enter', transform: coerceBoolean })
     set finishOnEnter(value: boolean) {
-        this._finishOnEnter = coerceBoolean(value);
+        this._finishOnEnter = value;
     }
 
 
