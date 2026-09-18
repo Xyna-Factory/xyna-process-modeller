@@ -31,7 +31,9 @@
             fill: none;
 
             &.background-path {
-                pointer-events: all;
+                // only react to clicks/hover on the actually painted stroke area (following the curve),
+                // not on the whole quadrilateral enclosed by the (open) path geometry (which "all" would use)
+                pointer-events: visiblePainted;
                 stroke: $color-gray-1;
                 stroke-width: 12;
 
