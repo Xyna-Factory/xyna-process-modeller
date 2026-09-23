@@ -15,16 +15,17 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit, ViewChild, viewChild, input } from '@angular/core';
-import { outputToObservable } from '@angular/core/rxjs-interop';
-
-import { FullQualifiedName, XoStructureType } from '@zeta/api';
-import { coerceBoolean, isString } from '@zeta/base';
-import { XcAutocompleteDataWrapper, XcButtonComponent, XcCheckboxComponent, XcDialogService, XcFormAutocompleteComponent, XcFormInputComponent, XcFormLabelComponent, XcFormValidatorRequiredDirective, XcOptionItemString, XcOptionItemStringOrUndefined, XcTooltipDirective } from '@zeta/xc';
-
 import { merge, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, input, OnInit, ViewChild, viewChild } from '@angular/core';
+import { outputToObservable } from '@angular/core/rxjs-interop';
+import { FullQualifiedName, XoStructureType } from '@zeta/api';
+import { coerceBoolean, isString } from '@zeta/base';
+import { XcAutocompleteDataWrapper, XcButtonComponent, XcCheckboxComponent, XcDialogService, XcFormAutocompleteComponent, XcFormInputComponent, XcFormLabelComponent, XcFormValidatorRequiredDirective, XcOptionItemString, XcOptionItemStringOrUndefined, XcTooltipDirective } from '@zeta/xc';
+import { XcHasRightDirective } from '@zeta/xc/shared/xc-has-right.directive';
+
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeAbstractRequest } from '../../../xo/change-abstract-request.model';
 import { XoChangeBaseTypeRequest } from '../../../xo/change-base-type-request.model';
@@ -39,11 +40,9 @@ import { DataTypeDocumentModel } from '../../model/data-type-document.model';
 import { ExceptionTypeDocumentModel } from '../../model/exception-type-document.model';
 import { ServiceGroupDocumentModel } from '../../model/service-group-document.model';
 import { TypeDocumentModel } from '../../model/type-document.model';
-import { ModDropEvent, ModDropAreaDirective } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
+import { ModDropAreaDirective, ModDropEvent } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { ShowGuiModelModalComponent } from './show-gui-model-modal/show-gui-model-modal.component';
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
-import { XcHasRightDirective } from '@zeta/xc/shared/xc-has-right.directive';
 
 
 @Component({
@@ -73,19 +72,17 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
 
     readonly showAbstractCheckbox = input(false, { transform: coerceBoolean });
 
-    readonly isStorableCheckbox = viewChild('isStorableCheckbox', { read: XcCheckboxComponent });
-
 
     constructor() {
         super();
 
         this.pathDataWrapper = new XcAutocompleteDataWrapper(
-            ()    => this.typeDocument.newTypePath,
+            () => this.typeDocument.newTypePath,
             value => this.typeDocument.newTypePath = value
         );
 
         this.baseTypeDataWrapper = new XcAutocompleteDataWrapper(
-            ()    => this.typeInfoArea.baseType,
+            () => this.typeInfoArea.baseType,
             value => {
                 if (this.typeInfoArea.baseType !== value) {
                     this.setBaseType(value);
@@ -112,13 +109,17 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
     }
 
 
-    @ViewChild('pathAutocomplete', {static: false, read: XcFormAutocompleteComponent})
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
+    @ViewChild('pathAutocomplete', { static: false, read: XcFormAutocompleteComponent })
     set pathAutocomplete(value: XcFormAutocompleteComponent) {
         this.untilDestroyed(value ? outputToObservable(value.focus) : undefined)?.pipe(filter(() => !value.disabled)).subscribe(() => this.refreshPathAutocomplete());
     }
 
 
-    @ViewChild('baseTypeAutocomplete', {static: false, read: XcFormAutocompleteComponent})
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
+    @ViewChild('baseTypeAutocomplete', { static: false, read: XcFormAutocompleteComponent })
     set baseTypeAutocomplete(value: XcFormAutocompleteComponent) {
         this.untilDestroyed(value ? outputToObservable(value.focus) : undefined)?.pipe(filter(() => !value.disabled)).subscribe(() => this.refreshBaseTypeAutocomplete());
     }
@@ -199,8 +200,8 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
             this.typeInfoArea.isAbstract = value;
 
             this.performAction({
-                type:     ModellingActionType.change,
-                request:  XoChangeAbstractRequest.changeTo(this.typeInfoArea.isAbstract),
+                type: ModellingActionType.change,
+                request: XoChangeAbstractRequest.changeTo(this.typeInfoArea.isAbstract),
                 objectId: this.typeInfoArea.id
             });
         }
@@ -262,7 +263,6 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
     */
     private preventStorableCheckboxChange(value: boolean) {
         this._isStorable = value;
-        this.isStorableCheckbox().checked = value;
         this.cdr.detectChanges();
     }
 
@@ -272,8 +272,8 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
 
         if (!this.isExceptionTypeDocument || this.typeInfoArea.baseType) {
             this.performAction({
-                type:     ModellingActionType.change,
-                request:  XoChangeBaseTypeRequest.changeTo(this.typeInfoArea.baseType ?? ''),
+                type: ModellingActionType.change,
+                request: XoChangeBaseTypeRequest.changeTo(this.typeInfoArea.baseType ?? ''),
                 objectId: this.typeInfoArea.id
             });
         }
@@ -375,6 +375,6 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
 
 
     showConverter() {
-        this.dialogService.custom(ShowGuiModelModalComponent, {datatype: this.typeDocument.item});
+        this.dialogService.custom(ShowGuiModelModalComponent, { datatype: this.typeDocument.item });
     }
 }
