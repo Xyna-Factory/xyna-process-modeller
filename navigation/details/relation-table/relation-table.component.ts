@@ -15,14 +15,13 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-
+import { ChangeDetectionStrategy, Component, Input, output, viewChild } from '@angular/core';
 import { XMOMListComponent } from '@pmod/navigation/xmom/xmom-list.component';
 import { XoFactoryItemArray } from '@pmod/xo/factory-item.model';
 import { RelationTypeEnum, XoGetXmomRelationsResponse } from '@pmod/xo/get-xmom-relations-response.model';
-import { XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
-import { XMOMListComponent as XMOMListComponent_1 } from '../../xmom/xmom-list.component';
 import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
+
+import { XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 
 
 export interface RelationGroup {
@@ -32,14 +31,14 @@ export interface RelationGroup {
 }
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'relation-table',
     templateUrl: './relation-table.component.html',
     styleUrls: ['./relation-table.component.scss'],
-    imports: [XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective, XcIconButtonComponent, XcTooltipDirective, XMOMListComponent_1]
+    imports: [XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective, XcIconButtonComponent, XcTooltipDirective, XMOMListComponent]
 })
 export class RelationTableComponent {
-    @ViewChild(XMOMListComponent, { static: true })
-    xmomList: XMOMListComponent;
+    readonly xmomList = viewChild(XMOMListComponent);
 
     @Input()
     set relations(value: any) {
@@ -47,8 +46,7 @@ export class RelationTableComponent {
         this.groupRelations(value);
     }
 
-    @Output()
-    readonly refresh = new EventEmitter<void>();
+    readonly refresh = output<void>();
 
     private readonly defaultExpand = true;
     groupedRelationList: RelationGroup[] = [];

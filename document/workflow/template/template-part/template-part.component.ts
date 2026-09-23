@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, output } from '@angular/core';
 
 import { TextItem } from '../../../../xo/formula.model';
 import { XoItem } from '../../../../xo/item.model';
@@ -34,6 +34,7 @@ export interface TemplatePartSwitchFocusEvent {
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'template-part',
     template: '',
     styleUrls: ['./template-part.component.scss']
@@ -50,8 +51,7 @@ export class TemplatePartComponent extends ModellingItemComponent {
     }
 
 
-    @Output()
-    readonly switchFocus = new EventEmitter<TemplatePartSwitchFocusEvent>();
+    readonly switchFocus = output<TemplatePartSwitchFocusEvent>();
 
 
     /**

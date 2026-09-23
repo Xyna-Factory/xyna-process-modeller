@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent } from '@zeta/xc';
 
@@ -38,6 +38,7 @@ export interface CloseDialogResult {
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './close-dialog.component.html',
     styleUrls: ['./close-dialog.component.scss'],
     imports: [XcButtonComponent, XcDialogWrapperComponent, XcI18nContextDirective, XcI18nTranslateDirective]

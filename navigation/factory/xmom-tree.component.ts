@@ -15,13 +15,14 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
 import { XmomPath } from '../../api/xmom.service';
 import { XMOMTreeItemState, XMOMTreeItemComponent } from './xmom-tree-item.component';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'xfm-mod-nav-xmomtree',
     templateUrl: './xmom-tree.component.html',
     styleUrls: ['./xmom-tree.component.scss'],
@@ -29,17 +30,13 @@ import { XMOMTreeItemState, XMOMTreeItemComponent } from './xmom-tree-item.compo
 })
 export class XMOMTreeComponent {
 
-    @Input()
-    selectedXmomPaths: XmomPath[];
+    readonly selectedXmomPaths = input<XmomPath[]>(undefined);
 
-    @Input()
-    expandedXmomPaths: XmomPath[];
+    readonly expandedXmomPaths = input<XmomPath[]>(undefined);
 
-    @Input()
-    xmomPaths: XmomPath[];
+    readonly xmomPaths = input<XmomPath[]>(undefined);
 
-    @Output()
-    readonly stateChange = new EventEmitter<XMOMTreeItemState>();
+    readonly stateChange = output<XMOMTreeItemState>();
 
 
     change(state: XMOMTreeItemState) {

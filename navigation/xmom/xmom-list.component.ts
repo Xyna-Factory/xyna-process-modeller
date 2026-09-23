@@ -15,21 +15,21 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, inject } from '@angular/core';
-
-import { coerceBoolean } from '@zeta/base';
-
 import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { filter, first, map, switchMap, tap } from 'rxjs/operators';
 
+import { NgFor } from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+import { DragType } from '@pmod/document/workflow/shared/drag-and-drop/mod-drag-and-drop.service';
+import { coerceBoolean } from '@zeta/base';
+import { XcSpinnerComponent } from '@zeta/xc';
+
 import { XmomService } from '../../api/xmom.service';
+import { ModDraggableDirective } from '../../document/workflow/shared/drag-and-drop/mod-draggable.directive';
 import { XoXmomItem, XoXmomItemArray } from '../../xo/xmom-item.model';
 import { FactoryService } from '../factory.service';
 import { FilterConditionData } from '../search/search.component';
 import { XMOMListItemComponent } from './xmom-list-item.component';
-import { ModDraggableDirective } from '../../document/workflow/shared/drag-and-drop/mod-draggable.directive';
-import { NgFor } from '@angular/common';
-import { XcSpinnerComponent } from '@zeta/xc';
 
 
 @Component({
@@ -44,6 +44,7 @@ export class XMOMListComponent {
     private readonly factoryService = inject(FactoryService);
     private readonly cdr = inject(ChangeDetectorRef);
 
+    readonly DragType = DragType;
 
     private _xmomItems = new XoXmomItemArray();
     private _pending = false;
@@ -124,9 +125,9 @@ export class XMOMListComponent {
     }
 
 
-    @Input('show-fqn')
+    @Input({ alias: 'show-fqn', transform: coerceBoolean })
     set showFQN(value: boolean) {
-        this._showFQN = coerceBoolean(value);
+        this._showFQN = value;
     }
 
 

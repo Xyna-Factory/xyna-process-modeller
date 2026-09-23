@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
 import { ModellingActionType } from '../../api/xmom.service';
 import { ModRelativeHoverSide } from '../../document/workflow/shared/drag-and-drop/mod-drag-and-drop.service';
@@ -33,6 +33,7 @@ import { XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'clipboard-area',
     templateUrl: './clipboard-area.component.html',
     styleUrls: ['./clipboard-area.component.scss'],
@@ -40,11 +41,9 @@ import { XcTooltipDirective } from '@zeta/xc';
 })
 export class ClipboardAreaComponent {
 
-    @Input()
-    clipboardArea: XoContainerArea;
+    readonly clipboardArea = input<XoContainerArea>(undefined);
 
-    @Output()
-    readonly triggerAction = new EventEmitter<TriggeredAction>();
+    readonly triggerAction = output<TriggeredAction>();
 
     allowItem = (xoFqn: string, xoId?: string): boolean => true;
 

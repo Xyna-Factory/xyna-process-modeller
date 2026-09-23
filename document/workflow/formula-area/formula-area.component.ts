@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, input } from '@angular/core';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoFormulaArea } from '../../../xo/formula-area.model';
@@ -30,6 +30,7 @@ import { XcFormLabelComponent, XcIconButtonComponent, XcTooltipDirective } from 
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'formula-area',
     templateUrl: './formula-area.component.html',
     styleUrls: ['./formula-area.component.scss'],
@@ -41,11 +42,9 @@ export class FormulaAreaComponent extends ModellingObjectComponent {
     private _visibleFormulas: XoFormula[] = [];
 
 
-    @Input()
-    areaLabel: string = null;
+    readonly areaLabel = input<string>(null);
 
-    @Input()
-    newFormulaExpression = '';
+    readonly newFormulaExpression = input('');
 
     @Input()
     set formulaArea(value: XoFormulaArea) {
@@ -91,7 +90,7 @@ export class FormulaAreaComponent extends ModellingObjectComponent {
 
 
     addFormula(expression?: string, index?: number) {
-        this.performAction({ type: ModellingActionType.insert, objectId: this.formulaArea.id, request: FormulaAreaComponent.getInsertRequest(expression ?? this.newFormulaExpression, index) });
+        this.performAction({ type: ModellingActionType.insert, objectId: this.formulaArea.id, request: FormulaAreaComponent.getInsertRequest(expression ?? this.newFormulaExpression(), index) });
     }
 
 

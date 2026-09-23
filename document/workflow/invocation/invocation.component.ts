@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, forwardRef, inject, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, inject, Input, output , signal} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
@@ -47,6 +47,7 @@ import { VariableAreaServiceComponent } from '../variable-area/variable-area-ser
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'invocation',
     templateUrl: './invocation.component.html',
     styleUrls: ['./invocation.component.scss'],
@@ -59,8 +60,7 @@ export class InvocationComponent extends ModellingItemComponent {
     protected readonly detailLevelService = inject(WorkflowDetailLevelService);
     protected readonly i18n = inject(I18nService);
     protected readonly dialogService = inject(XcDialogService);
-    @Output()
-    readonly doubleClickProxy = new EventEmitter<void>();
+    readonly doubleClickProxy = output<void>();
 
 
     constructor() {
@@ -68,7 +68,7 @@ export class InvocationComponent extends ModellingItemComponent {
 
         this.menuItems.unshift(
             <XcMenuItem>{
-                name: 'Open in new Tab', translate: true,
+                name: signal('Open in new Tab'), translate: true,
                 visible: () => !!this.invocation.$fqn, // prototype step does not have an fqn
                 click: () => {
                     if (this.invocation.type) {
@@ -80,7 +80,7 @@ export class InvocationComponent extends ModellingItemComponent {
                 }
             },
             <XcMenuItem>{
-                name: 'Test Workflow...', translate: true,
+                name: signal('Test Workflow...'), translate: true,
                 visible: () => this.invocation instanceof XoWorkflowInvocation && !this.invocation.isAbstract,
                 click: () => {
                     const fqn = this.invocation.toFqn();
@@ -96,33 +96,33 @@ export class InvocationComponent extends ModellingItemComponent {
                 }
             },
             <XcMenuItem>{
-                name: 'Show/Hide Order Input Source Area', translate: true,
+                name: signal('Show/Hide Order Input Source Area'), translate: true,
                 visible: () => !!this.orderInputSourceArea && this.invocation.allowsOrderInputSource,
                 click: () => this.detailLevelService.toggleCollapsed(this.orderInputSourceArea.id)
             },
             <XcMenuItem>{
-                name: 'Show/Hide Remote Destination Area', translate: true,
+                name: signal('Show/Hide Remote Destination Area'), translate: true,
                 visible: () => !!this.remoteDestinationArea,
                 click: () => this.detailLevelService.toggleCollapsed(this.remoteDestinationArea.id)
             },
             <XcMenuItem>{
-                name: 'Show/Hide Documentation Area', translate: true,
+                name: signal('Show/Hide Documentation Area'), translate: true,
                 visible: () => !!this.documentationArea,
                 click: () => this.detailLevelService.toggleCollapsed(this.documentationArea.id)
             },
             <XcMenuItem>{
-                name: 'Convert', translate: true,
+                name: signal('Convert'), translate: true,
                 visible: () => this.invocation && this.invocation.isAbstract && !this.readonly,
                 children: [
-                    // { name: 'to Service', translate: true, click: item => {
+                    // { name: signal('to Service'), translate: true, click: item => {
                     //     // TODO: implement! PMOD-808
                     //     console.log('Convert to Service: ' + item.name);
                     // }},
                     {
-                        name: 'into Workflow...', translate: true, click: item => {
+                        name: signal('into Workflow...'), translate: true, click: item => {
                             const data: LabelPathDialogData = {
-                                header: this.i18n.translate(LabelPathDialogComponent.HEADER_CONVERT_TO_WORKFLOW),
-                                confirm: this.i18n.translate(LabelPathDialogComponent.CONFIRM_CREATE),
+                                header: this.i18n.translateInstant(LabelPathDialogComponent.HEADER_CONVERT_TO_WORKFLOW),
+                                confirm: this.i18n.translateInstant(LabelPathDialogComponent.CONFIRM_CREATE),
                                 presetLabel: this.invocation?.typeLabelArea?.text ?? '',
                                 presetPath: FullQualifiedName.decode(this.documentModel.item.$fqn).path,
                                 pathsObservable: this.documentService.getPaths()
@@ -139,7 +139,7 @@ export class InvocationComponent extends ModellingItemComponent {
                         }
                     },
                     {
-                        name: 'into Mapping', translate: true, click: item => {
+                        name: signal('into Mapping'), translate: true, click: item => {
                             this.performAction({
                                 type: ModellingActionType.convert,
                                 objectId: this.invocation.id,
@@ -150,7 +150,7 @@ export class InvocationComponent extends ModellingItemComponent {
                 ]
             },
             <XcMenuItem>{
-                name: 'Add/Remove Detached Operator', translate: true,
+                name: signal('Add/Remove Detached Operator'), translate: true,
                 visible: () => this.invocation.detachedTaggable && !this.readonly && !this.exceptionHandlingArea.hasCompensations(),
                 click: () => {
                     this.performAction({
@@ -161,7 +161,7 @@ export class InvocationComponent extends ModellingItemComponent {
                 }
             },
             <XcMenuItem>{
-                name: 'Add/Remove Free Capacities Operator', translate: true,
+                name: signal('Add/Remove Free Capacities Operator'), translate: true,
                 visible: () => this.invocation.freeCapacitiesTaggable && !this.readonly,
                 click: () => {
                     this.performAction({

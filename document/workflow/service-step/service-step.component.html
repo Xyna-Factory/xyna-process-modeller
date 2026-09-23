@@ -2,35 +2,35 @@
   <branch [branch]="item" [dark-mode]="parentDirection === 'column'"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
-    [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
+    [class.no-runtime-info]="missingRuntimeInfo"
    />
 }
 @if (isConditionalBranching()) {
   <conditional-branching [choice]="item"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
-    [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
+    [class.no-runtime-info]="missingRuntimeInfo"
    />
 }
 @if (isConditionalChoice()) {
   <conditional-choice [choice]="item"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
-    [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
+    [class.no-runtime-info]="missingRuntimeInfo"
    />
 }
 @if (isForeach()) {
   <foreach [foreach]="item"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
-    [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
+    [class.no-runtime-info]="missingRuntimeInfo"
    />
 }
 @if (isInvocation()) {
   <invocation [invocation]="item"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
-    [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
+    [class.no-runtime-info]="missingRuntimeInfo"
     (doubleClickProxy)="doubleClick()"
    />
 }
@@ -38,48 +38,48 @@
   <mapping [mapping]="item"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
-    [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
+    [class.no-runtime-info]="missingRuntimeInfo"
    />
 }
 @if (isParallelism()) {
   <parallelism [parallelism]="item"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
-    [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
+    [class.no-runtime-info]="missingRuntimeInfo"
    />
 }
 @if (isQuery()) {
   <query [query]="item"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
-    [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
+    [class.no-runtime-info]="missingRuntimeInfo"
    />
 }
 @if (isRetry()) {
   <retry [retry]="item"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
-    [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
+    [class.no-runtime-info]="missingRuntimeInfo"
    />
 }
 @if (isTemplate()) {
   <template-block [template]="item"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
-    [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
+    [class.no-runtime-info]="missingRuntimeInfo"
    />
 }
 @if (isThrow()) {
   <throw [throw]="item"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
-    [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
+    [class.no-runtime-info]="missingRuntimeInfo"
    />
 }
 @if (isTypeChoice()) {
   <type-choice [choice]="item"
     [documentModel]="documentModel"
     (triggerAction)="performAction($event)"
-    [ngClass]="{'no-runtime-info': missingRuntimeInfo}"
+    [class.no-runtime-info]="missingRuntimeInfo"
    />
 }

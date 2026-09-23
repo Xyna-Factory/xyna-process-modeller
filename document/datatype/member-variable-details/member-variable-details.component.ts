@@ -15,11 +15,10 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy } from '@angular/core';
-
-import { XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
-
 import { BehaviorSubject, Subject } from 'rxjs';
+
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, input, OnDestroy, signal } from '@angular/core';
+import { XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 
 import { XoMemberVariable } from '../../../xo/member-variable.model';
 import { XoRuntimeContext } from '../../../xo/runtime-context.model';
@@ -28,6 +27,7 @@ import { DocumentTabData, MetaTabData, VariableTabData } from '../tabs/datatype-
 import { MemberVariableBaseTabComponent } from '../tabs/member-variable/member-variable-base-tab.component';
 import { MemberVariableStorableTabComponent } from '../tabs/member-variable/member-variable-storable-tab.component';
 import { MetaTabComponent } from '../tabs/shared/meta-tab.component';
+
 
 @Component({
     selector: 'member-variable-details',
@@ -40,8 +40,7 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
 
     protected readonly cdr = inject(ChangeDetectorRef);
 
-    @Input()
-    dataTypeRTC: XoRuntimeContext = null;
+    readonly dataTypeRTC = input<XoRuntimeContext>(null);
 
     @Input()
     set isStorable(value: boolean) {
@@ -60,7 +59,7 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
     set memberVariable(value: XoMemberVariable) {
         this.setModel(value);
         if (value) {
-            this.baseTabItem.name = this.memberVariable?.label ?? 'Base';
+            this.baseTabItem.name = signal(this.memberVariable?.label ?? 'Base');
             this.memberTabUpdate.next(this.buildMemberTabData());
             this.metaTabUpdate.next(this.buildMetaTabData());
         }
@@ -73,7 +72,7 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
     readonly baseTabItem: XcTabBarItem<DocumentTabData<VariableTabData>> = {
         closable: false,
         component: MemberVariableBaseTabComponent,
-        name: 'Base',
+        name: signal('Base'),
         data: <DocumentTabData<VariableTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
@@ -85,7 +84,7 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
     readonly metaTabItem: XcTabBarItem<DocumentTabData<MetaTabData>> = {
         closable: false,
         component: MetaTabComponent,
-        name: 'Meta',
+        name: signal('Meta'),
         data: <DocumentTabData<MetaTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
@@ -97,7 +96,7 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
     readonly storableTabItem: XcTabBarItem<DocumentTabData<VariableTabData>> = {
         closable: false,
         component: MemberVariableStorableTabComponent,
-        name: 'Storable',
+        name: signal('Storable'),
         data: <DocumentTabData<VariableTabData>>{
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
@@ -142,7 +141,7 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
     private buildMemberTabData(): VariableTabData {
         return <VariableTabData> {
             variable: this.memberVariable,
-            dataTypeRTC: this.dataTypeRTC,
+            dataTypeRTC: this.dataTypeRTC(),
             readonly: this.readonly
         };
     }

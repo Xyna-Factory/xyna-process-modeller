@@ -15,9 +15,9 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
-
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { XoModellingItem } from '@pmod/xo/modelling-item.model';
+import { XcIconButtonComponent } from '@zeta/xc';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoDataMemberVariable } from '../../../xo/data-member-variable.model';
@@ -26,20 +26,22 @@ import { XoInsertModellingObjectRequest } from '../../../xo/insert-modelling-obj
 import { XoMemberVariableArea } from '../../../xo/member-variable-area.model';
 import { XoMoveModellingObjectRequest } from '../../../xo/move-modelling-object-request.model';
 import { DragType } from '../../workflow/shared/drag-and-drop/mod-drag-and-drop.service';
-import { ModDropEvent, ModDropAreaDirective } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
-import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { ModDraggableDirective } from '../../workflow/shared/drag-and-drop/mod-draggable.directive';
+import { ModDropAreaDirective, ModDropEvent } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
+import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { MemberVariableComponent } from '../member-variable/member-variable.component';
-import { XcIconButtonComponent } from '@zeta/xc';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'member-variable-area',
     templateUrl: './member-variable-area.component.html',
     styleUrls: ['./member-variable-area.component.scss'],
     imports: [ModDropAreaDirective, ModDraggableDirective, MemberVariableComponent, XcIconButtonComponent]
 })
 export class MemberVariableAreaComponent extends ModellingObjectComponent {
+
+    readonly DragType = DragType;
 
     constructor() {
         super();

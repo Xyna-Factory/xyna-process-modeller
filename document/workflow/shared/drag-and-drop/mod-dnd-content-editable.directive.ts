@@ -16,7 +16,6 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Directive, ElementRef, inject, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
-
 import { coerceBoolean } from '@zeta/base';
 
 
@@ -43,9 +42,9 @@ export class ModDnDContentEditableDirective implements OnInit, OnDestroy {
     private readonly draggableElementsSet = new Set<HTMLElement>();
     private _contentEditable = false;
 
-    @Input('mod-dnd-contenteditable')
+    @Input({ alias: 'mod-dnd-contenteditable', transform: coerceBoolean })
     set contentEditable(value: boolean) {
-        this._contentEditable = coerceBoolean(value);
+        this._contentEditable = value;
         if (this.elementRef.nativeElement as HTMLElement) {
             (this.elementRef.nativeElement as HTMLElement).contentEditable = '' + this.contentEditable;
         }

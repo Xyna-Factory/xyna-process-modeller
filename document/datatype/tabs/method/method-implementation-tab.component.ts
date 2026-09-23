@@ -15,7 +15,8 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, inject, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, ViewChild , signal} from '@angular/core';
+import { outputToObservable } from '@angular/core/rxjs-interop';
 
 import { DataTypeService } from '@pmod/document/datatype.service';
 import { XoChangeMemberMethodImplementationTypeRequest } from '@pmod/xo/change-member-method-implementation-type-request.model';
@@ -112,7 +113,7 @@ export class MethodImplementationTabComponent extends DatatypeMethodTabComponent
                 item.toRtc(),
                 this.method.id
             ).subscribe(items =>
-                this.referenceDataWrapper.values = items.candidates.data.map(ref => ({name: ref.$fqn, value: ref.$fqn}))
+                this.referenceDataWrapper.values = items.candidates.data.map(ref => ({name: signal(ref.$fqn), value: ref.$fqn}))
             );
         }
     }
@@ -120,6 +121,6 @@ export class MethodImplementationTabComponent extends DatatypeMethodTabComponent
 
     @ViewChild('referenceAutocomplete', {static: false, read: XcFormAutocompleteComponent})
     set pathAutocomplete(value: XcFormAutocompleteComponent) {
-        this.untilDestroyed(value?.focus)?.pipe(filter(() => !value.disabled)).subscribe(() => this.refreshReferenceAutocomplete());
+        this.untilDestroyed(value ? outputToObservable(value.focus) : undefined)?.pipe(filter(() => !value.disabled)).subscribe(() => this.refreshReferenceAutocomplete());
     }
 }

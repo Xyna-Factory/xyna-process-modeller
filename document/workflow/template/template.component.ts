@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, HostBinding, inject, Input, OnDestroy, QueryList, ViewChildren } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, inject, Input, OnDestroy, QueryList, ViewChildren , signal} from '@angular/core';
 
 import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
 import { ApiService } from '@zeta/api';
@@ -49,6 +49,7 @@ interface ConcatParameter {
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'template-block',
     templateUrl: './template.component.html',
     styleUrls: ['./template.component.scss'],
@@ -78,11 +79,11 @@ export class TemplateComponent extends ModellingItemComponent implements OnDestr
         super();
 
         this.readonlyMenuItem = <XcMenuItem>{
-            name: TemplateComponent.LOCALE_READONLY_MODE,
+            name: signal(TemplateComponent.LOCALE_READONLY_MODE),
             translate: true,
             click: item => {
                 this.readonlyMode = !this.readonlyMode;
-                item.name = this.readonlyMode ? TemplateComponent.LOCALE_EDIT_MODE : TemplateComponent.LOCALE_READONLY_MODE;
+                item.name = signal(this.readonlyMode ? TemplateComponent.LOCALE_EDIT_MODE : TemplateComponent.LOCALE_READONLY_MODE);
             }
         };
         this.menuItems.push(...[

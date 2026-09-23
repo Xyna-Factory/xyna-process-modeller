@@ -15,9 +15,10 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input, input, signal, output } from '@angular/core';
 
 import { XoPlugin } from '@yggdrasil/plugin/plugin.model';
+import { coerceBoolean } from '@zeta/base';
 import { XoDefinitionBundle } from '@zeta/xc/xc-form/definitions/xo/base-definition.model';
 
 import { combineLatest } from 'rxjs';
@@ -32,6 +33,7 @@ import { XcIconButtonComponent, XcDefinitionProxyComponent } from '@zeta/xc';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'member-area',
     templateUrl: './member-area.component.html',
     styleUrls: ['./member-area.component.scss'],
@@ -43,17 +45,13 @@ export class MemberAreaComponent extends ModellingObjectComponent {
 
     pluginBundles: XoDefinitionBundle[];
 
-    @Input()
-    caption: string;
+    readonly caption = input<string>(undefined);
 
-    @Input()
-    collapsed = false;
+    readonly collapsed = signal(false);
 
-    @Input()
-    allowAdd = true;
+    readonly allowAdd = input(true, { transform: coerceBoolean });
 
-    @Output('added')
-    readonly addEmitter = new EventEmitter<void>();
+    readonly addEmitter = output<void>({ alias: 'added' });
 
     get hasContent(): boolean {
         return ((this.area as any).items) ? (this.area as any).items.length : false;

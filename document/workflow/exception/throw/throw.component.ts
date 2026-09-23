@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { XoTextArea } from '../../../../xo/text-area.model';
 import { XoThrow } from '../../../../xo/throw.model';
@@ -27,6 +27,7 @@ import { XcIconComponent } from '@zeta/xc';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'throw',
     templateUrl: './throw.component.html',
     styleUrls: ['./throw.component.scss'],

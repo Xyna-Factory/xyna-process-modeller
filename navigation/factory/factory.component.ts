@@ -18,8 +18,9 @@
 import { merge, of } from 'rxjs';
 import { debounceTime, filter, switchMap, tap } from 'rxjs/operators';
 
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, inject, viewChild } from '@angular/core';
 import { MessageBusService } from '@yggdrasil/events';
+import { XcFormAutocompleteComponent } from '@zeta/xc';
 
 import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { XmomPath } from '../../api/xmom.service';
@@ -29,7 +30,6 @@ import { FactoryService } from '../factory.service';
 import { XMOMListComponent } from '../xmom/xmom-list.component';
 import { XMOMTreeItemState } from './xmom-tree-item.component';
 import { XMOMTreeComponent } from './xmom-tree.component';
-import { XcFormAutocompleteComponent } from '@zeta/xc';
 
 
 @Component({
@@ -61,8 +61,7 @@ export class FactoryComponent extends CommonNavigationComponent implements After
         xact: 'Activation'
     };
 
-    @ViewChild(XMOMListComponent, { static: true })
-    xmomList: XMOMListComponent;
+    readonly xmomList = viewChild(XMOMListComponent);
 
     xmomPaths = new Array<XmomPath>();
     flatPaths = new Set<string>();
@@ -73,13 +72,6 @@ export class FactoryComponent extends CommonNavigationComponent implements After
     expandedPaths = new Set<string>();
     selectedXmomPaths = new Array<XmomPath>();
     expandedXmomPaths = new Array<XmomPath>();
-
-
-    constructor() {
-        const cdr = inject(ChangeDetectorRef);
-
-        super(cdr);
-    }
 
 
     ngAfterViewInit() {
@@ -176,7 +168,7 @@ export class FactoryComponent extends CommonNavigationComponent implements After
         const newPath = this.selectedPath !== path;
         if (forceReselect || newPath) {
             this.selectedPath = path;
-            this.xmomList.listMultiple(paths, !newPath);
+            this.xmomList().listMultiple(paths, !newPath);
         }
     }
 
@@ -186,9 +178,17 @@ export class FactoryComponent extends CommonNavigationComponent implements After
             this.selectedPaths.clear();
         }
 
-
-        (state.selected ? (Set.prototype.add) : Set.prototype.delete).call(this.selectedPaths, state.path);
-        (state.expanded ? (Set.prototype.add) : Set.prototype.delete).call(this.expandedPaths, state.path);
+        if (state.selected) {
+            this.selectedPaths.add(state.path);
+        } else {
+            this.selectedPaths.delete(state.path);
+        }
+        
+        if (state.expanded) {
+            this.expandedPaths.add(state.path);
+        } else {
+            this.expandedPaths.delete(state.path);
+        }
 
         this.restore();
     }

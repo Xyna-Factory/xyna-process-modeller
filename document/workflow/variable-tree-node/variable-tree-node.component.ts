@@ -15,13 +15,13 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, inject, viewChild, output } from '@angular/core';
 import { TreeNodeObserver } from '../variable-tree/data-source/skeleton-tree-data-source';
 import { coerceBoolean } from '@zeta/base';
 import { ModDragEvent, ModDropEvent, ModDropAreaDirective } from '../shared/drag-and-drop/mod-drop-area.directive';
 import { Draggable, ModDnDEvent } from '../shared/drag-and-drop/mod-drag-and-drop.service';
 import { SkeletonTreeNode } from '../variable-tree/data-source/skeleton-tree-node';
-import { NgClass, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { ModDraggableDirective } from '../shared/drag-and-drop/mod-draggable.directive';
 import { XcIconButtonComponent } from '@zeta/xc';
 
@@ -37,7 +37,7 @@ export interface CreateAssignmentEvent {
     templateUrl: './variable-tree-node.component.html',
     styleUrls: ['./variable-tree-node.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, ModDraggableDirective, ModDropAreaDirective, XcIconButtonComponent, AsyncPipe]
+    imports: [ModDraggableDirective, ModDropAreaDirective, XcIconButtonComponent, AsyncPipe]
 })
 export class VariableTreeNodeComponent implements AfterViewInit, TreeNodeObserver {
     protected readonly cdr = inject(ChangeDetectorRef);
@@ -47,17 +47,17 @@ export class VariableTreeNodeComponent implements AfterViewInit, TreeNodeObserve
 
     expanded = true;
 
-    @ViewChild('noderow') nodeElement: ElementRef<Element>;
+    readonly nodeElement = viewChild<ElementRef<Element>>('noderow');
 
-    @Output()
-    readonly assignedVariable = new EventEmitter<CreateAssignmentEvent>();
+    readonly assignedVariable = output<CreateAssignmentEvent>();
 
     @Input()
     set node(value: SkeletonTreeNode) {
         this.node?.removeObserver(this);
         this._node = value;
-        if (this._node && this.nodeElement) {
-            this._node.graphicalRepresentation = this.nodeElement.nativeElement;
+        const nodeElement = this.nodeElement();
+        if (this._node && nodeElement) {
+            this._node.graphicalRepresentation = nodeElement.nativeElement;
         }
         this.node?.addObserver(this);
     }
@@ -76,8 +76,7 @@ export class VariableTreeNodeComponent implements AfterViewInit, TreeNodeObserve
         return this._highlightMarks;
     }
 
-    @Output()
-    readonly selectionChange = new EventEmitter<SkeletonTreeNode>();
+    readonly selectionChange = output<SkeletonTreeNode>();
 
 
     select(node: SkeletonTreeNode) {
@@ -86,7 +85,7 @@ export class VariableTreeNodeComponent implements AfterViewInit, TreeNodeObserve
 
 
     ngAfterViewInit(): void {
-        this.node.graphicalRepresentation = this.nodeElement.nativeElement;
+        this.node.graphicalRepresentation = this.nodeElement().nativeElement;
     }
 
 

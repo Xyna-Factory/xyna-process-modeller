@@ -3,15 +3,13 @@
     <!-- Java -->
     @if(!isPython) {
     <ngx-monaco-editor [(ngModel)]="javaCode" [options]="javaOptions"
-        (onInit)="onJavaInit($event)">
-    </ngx-monaco-editor>
+        (onInit)="onJavaInit($event)" />
     }
 
     <!-- Python -->
     @if(isPython) {
     <ngx-monaco-editor [(ngModel)]="pythonCode" [options]="pythonOptions"
-        (onInit)="onPythonInit($event)">
-    </ngx-monaco-editor>
+        (onInit)="onPythonInit($event)" />
     }
 
 </div>

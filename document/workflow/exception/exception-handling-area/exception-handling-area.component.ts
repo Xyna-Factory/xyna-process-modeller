@@ -15,7 +15,9 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, forwardRef, HostBinding, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, HostBinding, inject, Input, input } from '@angular/core';
+
+import { coerceBoolean } from '@zeta/base';
 
 import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { XoExceptionHandlingArea } from '../../../../xo/exception-handling-area.model';
@@ -27,6 +29,7 @@ import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'exception-handling-area',
     templateUrl: './exception-handling-area.component.html',
     styleUrls: ['./exception-handling-area.component.scss'],
@@ -36,9 +39,12 @@ export class ExceptionHandlingAreaComponent extends ModellingObjectComponent {
 
     protected readonly detailLevelService = inject(WorkflowDetailLevelService);
 
-    @Input()
+    readonly inline = input(false, { transform: coerceBoolean });
+
     @HostBinding('class.inline')
-    inline = false;
+    get hostInline(): boolean {
+        return this.inline();
+    }
 
     @HostBinding('class.empty')
     empty = true;

@@ -15,13 +15,14 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { XoTextArea } from '../../../xo/text-area.model';
 import { TextAreaModellingObjectComponent } from '../shared/text-area-modelling-object.component';
 import { ModContentEditableDirective } from '../shared/mod-content-editable.directive';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'documentation-area',
     templateUrl: './documentation-area.component.html',
     styleUrls: ['./documentation-area.component.scss'],

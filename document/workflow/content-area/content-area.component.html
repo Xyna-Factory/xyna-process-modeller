@@ -10,14 +10,12 @@
   class="drop-area"
   >
   @for (serviceStep of contentArea.items; track serviceStep) {
-    <service-step
-      [mod-draggable]="serviceStep"
+    <service-step [mod-draggable]="serviceStep"
       [item]="serviceStep"
       [documentModel]="documentModel"
       [parent-direction]="direction"
       (triggerAction)="performAction($event)"
       tabindex="0"
-      >
-    </service-step>
+       />
   }
 </div>

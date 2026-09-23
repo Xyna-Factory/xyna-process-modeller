@@ -1,7 +1,7 @@
 <label-area [labelArea]="typeLabelArea"
   [documentModel]="documentModel"
   [menuItems]="menuItems"
-  [menuTemplateRef]="menuTemplateRef"
+  [menuTemplateRef]="menuTemplateRef()"
   (triggerAction)="performAction($event)" />
 @if (showFqn) {
   <div class="fqn-area">

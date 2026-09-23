@@ -15,16 +15,16 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
+import { merge, of, Subscription } from 'rxjs';
 
+import { AfterViewInit, ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal, viewChild, viewChildren } from '@angular/core';
 import { TypeDocumentModel } from '@pmod/document/model/type-document.model';
 import { PluginService } from '@pmod/document/plugin.service';
 import { XoArray } from '@zeta/api';
 import { XcDialogService, XcIconButtonComponent, XcMenuComponent, XcMenuItem, XcMenuTriggerDirective, XcTooltipDirective, XoPlugin, XoPluginArray } from '@zeta/xc';
+import { XcHasRightDirective } from '@zeta/xc/shared/xc-has-right.directive';
 
-import { merge, of, Subscription } from 'rxjs';
-
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../zeta/i18n';
 import { XmomService } from '../api/xmom.service';
 import { DocumentService } from '../document/document.service';
 import { ClipboardComponent } from './clipboard/clipboard.component';
@@ -37,9 +37,6 @@ import { FactoryComponent } from './factory/factory.component';
 import { HelpComponent } from './help/help.component';
 import { NavPluginComponent } from './nav-plugin/nav-plugin.component';
 import { SearchComponent } from './search/search.component';
-import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../zeta/i18n';
-import { NgClass } from '@angular/common';
-import { XcHasRightDirective } from '@zeta/xc/shared/xc-has-right.directive';
 
 
 enum NavigationbarArea {
@@ -72,24 +69,8 @@ export enum AreaValue {
     selector: 'xfm-mod-nav',
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.scss'],
-    animations: [
-        trigger('areaTrigger', [
-            state('closed', style({
-                width: '0'
-            })),
-            state('opened', style({
-                width: '300px'
-            })),
-            state('opened_half', style({
-                width: '50vw'
-            })),
-            transition('closed <=> opened', animate('.3s ease-in')),
-            transition('closed <=> opened_half', animate('.3s ease-in')),
-            transition('opened_half => opened', animate('0s ease-in')),
-            transition('opened => opened_half', animate('.3s ease-in'))
-        ])
-    ],
-    imports: [FactoryComponent, XcI18nContextDirective, XcI18nTranslateDirective, SearchComponent, DetailsComponent, ClipboardComponent, ErrorsComponent, CompareComponent, HelpComponent, NavPluginComponent, XcHasRightDirective, XcIconButtonComponent, XcMenuComponent, XcMenuTriggerDirective, XcTooltipDirective, NgClass]
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [FactoryComponent, XcI18nContextDirective, XcI18nTranslateDirective, SearchComponent, DetailsComponent, ClipboardComponent, ErrorsComponent, CompareComponent, HelpComponent, NavPluginComponent, XcHasRightDirective, XcIconButtonComponent, XcMenuComponent, XcMenuTriggerDirective, XcTooltipDirective]
 })
 export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
     private readonly documentService = inject(DocumentService);
@@ -97,21 +78,23 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
     private readonly xmomService = inject(XmomService);
     private readonly pluginService = inject(PluginService);
 
-
     readonly NavigationbarArea = NavigationbarArea;
+
+    disableWidthTransition = false;
 
     area = NavigationbarArea.Factory;
     activatedPluginNumber: number;
     areaValue = AreaValue.Opened;
+    AreaValue = AreaValue;
 
-    @ViewChild(FactoryComponent, { static: true }) factoryComponent: FactoryComponent;
-    @ViewChild(SearchComponent, { static: true }) searchComponent: SearchComponent;
-    @ViewChild(DetailsComponent, { static: true }) detailsComponent: DetailsComponent;
-    @ViewChild(ClipboardComponent, { static: true }) clipboardComponent: ClipboardComponent;
-    @ViewChild(ErrorsComponent, { static: true }) errorsComponent: ErrorsComponent;
-    @ViewChild(CompareComponent, { static: true }) compareComponent: CompareComponent;
-    @ViewChild(HelpComponent, { static: true }) helpComponent: HelpComponent;
-    @ViewChildren(NavPluginComponent) pluginComponents: QueryList<NavPluginComponent>;
+    readonly factoryComponent = viewChild(FactoryComponent);
+    readonly searchComponent = viewChild(SearchComponent);
+    readonly detailsComponent = viewChild(DetailsComponent);
+    readonly clipboardComponent = viewChild(ClipboardComponent);
+    readonly errorsComponent = viewChild(ErrorsComponent);
+    readonly compareComponent = viewChild(CompareComponent);
+    readonly helpComponent = viewChild(HelpComponent);
+    readonly pluginComponents = viewChildren(NavPluginComponent);
 
     private lastOpened: NavigationbarArea = null;
     private readonly viewComponentMap = new Map<NavigationbarArea, CommonNavigationComponent>();
@@ -141,9 +124,9 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
     buttons: NavigationItem[] = this.defaultButtons;
 
     readonly devMenuItems: XcMenuItem[] = [
-        { name: 'Workflow Constant Builder...', click: () => this.dialogService.custom(WorkflowConstantBuilderModalComponent) },
-        { name: 'Data Type Converter...', click: () => this.dialogService.info('info', 'not yet implemented') }
-    ];
+        { name: signal('Workflow Constant Builder...'), click: () => this.dialogService.custom(WorkflowConstantBuilderModalComponent) },
+        { name: signal('Data Type Converter...'), click: () => this.dialogService.info('info', 'not yet implemented') }
+    ];  
 
     private _datatypePlugins: XoPlugin[] = [];
 
@@ -167,13 +150,13 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngOnInit() {
         this.viewComponentMap
-            .set(NavigationbarArea.Factory, this.factoryComponent)
-            .set(NavigationbarArea.Search, this.searchComponent)
-            .set(NavigationbarArea.Details, this.detailsComponent)
-            .set(NavigationbarArea.Clipboard, this.clipboardComponent)
-            .set(NavigationbarArea.Errors, this.errorsComponent)
-            .set(NavigationbarArea.Compare, this.compareComponent)
-            .set(NavigationbarArea.Help, this.helpComponent);
+            .set(NavigationbarArea.Factory, this.factoryComponent())
+            .set(NavigationbarArea.Search, this.searchComponent())
+            .set(NavigationbarArea.Details, this.detailsComponent())
+            .set(NavigationbarArea.Clipboard, this.clipboardComponent())
+            .set(NavigationbarArea.Errors, this.errorsComponent())
+            .set(NavigationbarArea.Compare, this.compareComponent())
+            .set(NavigationbarArea.Help, this.helpComponent());
 
         this.switchArea(NavigationbarArea.Factory);
     }
@@ -221,23 +204,32 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     switchArea(area: NavigationbarArea, pluginNumber?: number) {
-        // trigger onHide() of the switched off nav component
+
+        const previousAreaValue = this.areaValue;
+
         if (this.activeNavigationComponent) {
             this.activeNavigationComponent.onHide();
         }
 
-        // change activeNavigationComponent
         this.area = area;
         this.activatedPluginNumber = pluginNumber;
 
-        // use a special animation for the compare area
         if (this.area === NavigationbarArea.Compare) {
             this.areaValue = AreaValue.OpenedHalf;
         } else {
             this.areaValue = AreaValue.Opened;
         }
 
-        // trigger onShow() for the switched in nav component
+        this.disableWidthTransition =
+            previousAreaValue === AreaValue.OpenedHalf &&
+            this.areaValue === AreaValue.Opened;
+
+        if (this.disableWidthTransition) {
+            requestAnimationFrame(() => {
+                this.disableWidthTransition = false;
+            });
+        }
+
         if (this.activeNavigationComponent) {
             this.activeNavigationComponent.onShow();
             this.activeNavigationComponent.updateView();
@@ -268,9 +260,9 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
 
-    get activeNavigationComponent(): CommonNavigationComponent {
+get activeNavigationComponent(): CommonNavigationComponent {
         if (this.area === NavigationbarArea.Plugin) {
-            return this.pluginComponents.find(comp => comp.pluginNumber === this.activatedPluginNumber);
+            return this.pluginComponents().find(comp => comp.pluginNumber() === this.activatedPluginNumber);
         }
         return this.viewComponentMap.get(this.area);
     }

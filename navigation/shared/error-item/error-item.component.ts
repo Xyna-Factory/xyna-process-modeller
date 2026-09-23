@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, EventEmitter, Input, Output, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, input, output } from '@angular/core';
 
 import { DocumentService } from '../../../document/document.service';
 import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model';
@@ -27,6 +27,7 @@ import { XcIconButtonComponent, XcIconComponent, XcTooltipDirective } from '@zet
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'xfm-mod-nav-error',
     templateUrl: './error-item.component.html',
     styleUrls: ['./error-item.component.scss'],
@@ -36,17 +37,13 @@ export class ErrorItemComponent {
     private readonly documentService = inject(DocumentService);
     private readonly errorService = inject(ErrorService);
 
-    @Input()
-    error: ErrorItem;
+    readonly error = input<ErrorItem>(undefined);
 
-    @Input()
-    checkable: boolean;
+    readonly checkable = input<boolean>(undefined);
 
-    @Output()
-    readonly errorSelectionChanged = new EventEmitter<ErrorItem>();
+    readonly errorSelectionChanged = output<ErrorItem>();
 
-    @Output()
-    readonly errorCheckedChanged = new EventEmitter<ErrorItem>();
+    readonly errorCheckedChanged = output<ErrorItem>();
 
     tmpElementRef: ElementRef;
 

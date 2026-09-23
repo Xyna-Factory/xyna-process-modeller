@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { NgFor } from '@angular/common';
-import { Component, HostBinding, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoInsertModellingObjectRequest } from '../../../xo/insert-modelling-object-request.model';
@@ -31,6 +31,7 @@ import { VariableComponent } from '../variable/variable.component';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'variable-area',
     templateUrl: './variable-area.component.html',
     styleUrls: ['./variable-area.component.scss'],
@@ -38,6 +39,8 @@ import { VariableComponent } from '../variable/variable.component';
 })
 export class VariableAreaComponent extends ModellingObjectComponent {
     private _kind: 'input-area' | 'output-area' | 'throws-area';
+
+    readonly DragType = DragType;
 
     allowItem = (xoFqn: string): boolean => {
         const allowedType = !!this.variableArea.itemTypes.find(itemType => itemType.toLowerCase() === xoFqn.toLowerCase());

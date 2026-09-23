@@ -15,11 +15,12 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, HostBinding, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, inject, Input, input , signal} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
 import { RuntimeContext, Xo } from '@zeta/api';
+import { coerceBoolean } from '@zeta/base';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcIconButtonComponent, XcMenuItem, XcMenuServiceDirective, XcMenuTriggerDirective, XcTooltipDirective } from '@zeta/xc';
 
@@ -49,6 +50,7 @@ import { ModContentEditableDirective } from '../shared/mod-content-editable.dire
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'variable',
     templateUrl: './variable.component.html',
     styleUrls: ['./variable.component.scss'],
@@ -64,12 +66,14 @@ export class VariableComponent extends SelectableModellingObjectComponent {
     protected readonly dialogService = inject(XcDialogService);
     protected readonly branchSelection = inject(BranchSelectionService);
 
-    @Input()
-    hasMenu = true;
+    readonly hasMenu = input(true, { transform: coerceBoolean });
 
-    @Input()
+    readonly isPlaceholder = input(false, { transform: coerceBoolean });
+
     @HostBinding('class.placeholder')
-    isPlaceholder = false;
+    get hostIsPlaceholder(): boolean {
+        return this.isPlaceholder();
+    }
 
     showFqn = true;
 
@@ -95,7 +99,7 @@ export class VariableComponent extends SelectableModellingObjectComponent {
             );
 
         this.constantMenuItem = <XcMenuItem>{
-            name: '',
+            name: signal(''),
             translate: true,
             visible: () => viewConstant(),
             click: () => {
@@ -129,7 +133,7 @@ export class VariableComponent extends SelectableModellingObjectComponent {
         };
         this.menuItems.unshift(
             <XcMenuItem>{
-                name: 'Open in new Tab', translate: true,
+                name: signal('Open in new Tab'), translate: true,
                 visible: () => !!this.variable.$fqn, // prototype variable does not have an fqn
                 click: () => {
                     const fqn = this.variable.toFqn();
@@ -149,26 +153,26 @@ export class VariableComponent extends SelectableModellingObjectComponent {
             },
             this.constantMenuItem,
             <XcMenuItem>{
-                name: 'Convert into List',
+                name: signal('Convert into List'),
                 translate: true,
                 visible: () => !this.variable.isList && !this.readonly,
                 click: () => this.toggleMultiplicity()
             },
             <XcMenuItem>{
-                name: 'Convert into Single',
+                name: signal('Convert into Single'),
                 translate: true,
                 visible: () => this.variable.isList && !this.readonly,
                 click: () => this.toggleMultiplicity()
             },
             <XcMenuItem>{
-                name: 'Convert into Data Type...', translate: true,
+                name: signal('Convert into Data Type...'), translate: true,
                 visible: () => this.variable.isAbstract && !this.readonly, // prototype variable
                 click: () => {
                     this.dialogService.custom(
                         LabelPathDialogComponent,
                         <LabelPathDialogData>{
-                            header: this.i18n.translate(LabelPathDialogComponent.HEADER_CONVERT_TO_DATA_TYPE),
-                            confirm: this.i18n.translate(LabelPathDialogComponent.CONFIRM_CREATE),
+                            header: this.i18n.translateInstant(LabelPathDialogComponent.HEADER_CONVERT_TO_DATA_TYPE),
+                            confirm: this.i18n.translateInstant(LabelPathDialogComponent.CONFIRM_CREATE),
                             presetLabel: this.variable?.label ?? '',
                             presetPath: '',
                             pathsObservable: this.documentService.getPaths()
@@ -187,7 +191,7 @@ export class VariableComponent extends SelectableModellingObjectComponent {
                 }
             },
             <XcMenuItem>{
-                name: 'Remove Dynamic Type',
+                name: signal('Remove Dynamic Type'),
                 translate: true,
                 visible: () => this.hasDynamicType && this.variable.allowCast && !this.isLocked(),
                 click: () => this.performAction({
@@ -199,9 +203,9 @@ export class VariableComponent extends SelectableModellingObjectComponent {
         );
 
         this.untilDestroyed(this.branchSelection.selectionChange).subscribe(
-            () => this.constantMenuItem.name = this.selectedBranch
+            () => this.constantMenuItem.name = signal(this.selectedBranch
                 ? 'Constant for selected Branch...'
-                : 'Constant...'
+                : 'Constant...')
         );
 
         this.untilDestroyed(this.detailLevelService.showFQNChange()).subscribe(() => this.updateShowFQN());
@@ -331,7 +335,7 @@ export class VariableComponent extends SelectableModellingObjectComponent {
 
 
     get showMenu(): boolean {
-        return this.hasMenu && this.menuItems.some(menuItem => menuItem.visible?.(menuItem));
+        return this.hasMenu() && this.menuItems.some(menuItem => menuItem.visible?.(menuItem));
     }
 
 

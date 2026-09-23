@@ -32,14 +32,13 @@
 }
 <div class="type-label-area-service-wrapper" (dblclick)="doubleClickProxy.emit()">
   @if (invocation.typeLabelArea) {
-    <type-label-area-service
-      [typeLabelArea]="invocation.typeLabelArea"
+    <type-label-area-service [typeLabelArea]="invocation.typeLabelArea"
       [documentModel]="documentModel"
       [class.prototype]="invocation.isAbstract"
       [menuItems]="menuItems"
       [menuTemplateRef]="menuTemplateRef"
       (triggerAction)="performAction($event)"
-    ></type-label-area-service>
+     />
   }
   @if (suffixSymbol) {
     <div class="suffix-symbol" [xc-tooltip]="suffixTooltip">

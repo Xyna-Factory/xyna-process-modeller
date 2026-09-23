@@ -15,11 +15,11 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
-
-import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
-import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { XcTooltipDirective } from '@zeta/xc';
+
+import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
+import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 
 
 @Component({
@@ -33,10 +33,4 @@ export class HelpComponent extends CommonNavigationComponent {
 
     assignmentTooltip = 'Simply typed "=" is assignment (:=)';
     comparisonTooltip = 'Twice typed "=" is comparison (=)';
-
-    constructor() {
-        const cdr = inject(ChangeDetectorRef);
-
-        super(cdr);
-    }
 }

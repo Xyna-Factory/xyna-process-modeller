@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, forwardRef, HostBinding, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, HostBinding, Input } from '@angular/core';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoContentArea } from '../../../xo/content-area.model';
@@ -30,6 +30,7 @@ import { ModellingObjectComponent } from '../shared/modelling-object.component';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'content-area',
     templateUrl: './content-area.component.html',
     styleUrls: ['./content-area.component.scss'],

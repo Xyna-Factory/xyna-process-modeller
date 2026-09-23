@@ -15,8 +15,9 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, Component, ElementRef, EventEmitter, inject, Input, NgZone, OnDestroy, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, AfterViewInit, Component, ElementRef, inject, Input, NgZone, OnDestroy, viewChild, input, output } from '@angular/core';
 
+import { coerceBoolean } from '@zeta/base';
 import { createSVGGroup, createSVGHorizontalCubicBezierPath, removeAllChildren } from '@zeta/base/draw';
 
 import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
@@ -289,6 +290,7 @@ interface ConnectionObject {
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'dataflow',
     templateUrl: './dataflow.component.html',
     styleUrls: ['./dataflow.component.scss'],
@@ -315,31 +317,23 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
     private readonly outgoingAmbigueConnections = new Map<ModellingObjectComponent, Array<ConnectionObject>>();
     private readonly outgoingUserConnections = new Map<ModellingObjectComponent, Array<ConnectionObject>>();
 
-    @ViewChild('SVG', { static: false })
-    private readonly element: ElementRef;
+    private readonly element = viewChild<ElementRef>('SVG');
     private view: SVGElement;
     private flows: Flow[] = [];
 
-    @ViewChild('addFrom', { static: false })
-    private readonly addButtonFrom: ElementRef;
-    @ViewChild('addTo', { static: false })
-    private readonly addButtonTo: ElementRef;
-    @ViewChild('removeFrom', { static: false })
-    private readonly removeButtonFrom: ElementRef;
-    @ViewChild('removeTo', { static: false })
-    private readonly removeButtonTo: ElementRef;
-    @ViewChild('tooltip', { static: false })
-    private readonly tooltip: ElementRef;
+    private readonly addButtonFrom = viewChild<ElementRef>('addFrom');
+    private readonly addButtonTo = viewChild<ElementRef>('addTo');
+    private readonly removeButtonFrom = viewChild<ElementRef>('removeFrom');
+    private readonly removeButtonTo = viewChild<ElementRef>('removeTo');
+    private readonly tooltip = viewChild<ElementRef>('tooltip');
 
-    @Input()
-    insideForeignRtc = false;
+    readonly insideForeignRtc = input(false, { transform: coerceBoolean });
 
-    @Output()
-    readonly dataflowChange = new EventEmitter<XoSetDataflowConnectionRequest>();
+    readonly dataflowChange = output<XoSetDataflowConnectionRequest>();
 
 
     ngAfterViewInit() {
-        this.view = createSVGGroup(this.element.nativeElement);
+        this.view = createSVGGroup(this.element().nativeElement);
     }
 
 
@@ -417,7 +411,7 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
 
 
     get readonly(): boolean {
-        return !!this.workflow && this.workflow.readonly || this.insideForeignRtc;
+        return !!this.workflow && this.workflow.readonly || this.insideForeignRtc();
     }
 
 
@@ -452,11 +446,11 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
                     let flow: Flow;
                     if (directionIn) {
                         const offsetTo = currentFlowIn - (numFlowsIn - 1) / 2;
-                        flow = new Flow(this.view, item.modellingObject, this.selectedVariable, type, 0, offsetTo, [this.addButtonFrom, this.addButtonTo], [this.removeButtonFrom, this.removeButtonTo], this.tooltip, item.connection, this.readonly);
+                        flow = new Flow(this.view, item.modellingObject, this.selectedVariable, type, 0, offsetTo, [this.addButtonFrom(), this.addButtonTo()], [this.removeButtonFrom(), this.removeButtonTo()], this.tooltip(), item.connection, this.readonly);
                         currentFlowIn++;
                     } else {
                         const offsetFrom = currentFlowOut - (numFlowsOut - 1) / 2;
-                        flow = new Flow(this.view, this.selectedVariable, item.modellingObject, type, offsetFrom, 0, [this.addButtonFrom, this.addButtonTo], [this.removeButtonFrom, this.removeButtonTo], this.tooltip, item.connection, this.readonly);
+                        flow = new Flow(this.view, this.selectedVariable, item.modellingObject, type, offsetFrom, 0, [this.addButtonFrom(), this.addButtonTo()], [this.removeButtonFrom(), this.removeButtonTo()], this.tooltip(), item.connection, this.readonly);
                         currentFlowOut++;
                     }
                     this.flows.push(flow);
@@ -564,7 +558,8 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
 
 
     dataflowsVisible(): boolean {
-        const svg = this.element && this.element.nativeElement;
+        const element = this.element();
+        const svg = element && element.nativeElement;
         return !!svg && !!svg.childNodes[0] && svg.childNodes[0].childNodes.length > 0;
     }
 

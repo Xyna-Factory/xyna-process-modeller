@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { ApiService, FullQualifiedName, RuntimeContext, Xo, XoDescriber, XoStructureArray } from '@zeta/api';
 import { XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent, XcIconComponent, XcStructureTreeDataSource, XcTreeComponent } from '@zeta/xc';
@@ -37,6 +37,7 @@ export const CONSTANT_DIALOG_DELETE_TOKEN = Symbol();
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'constant-dialog',
     templateUrl: './constant-dialog.component.html',
     styleUrls: ['./constant-dialog.component.scss'],

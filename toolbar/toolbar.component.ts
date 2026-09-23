@@ -18,7 +18,8 @@
 import { merge, of, Subscription } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy, signal } from '@angular/core';
+import { DragType } from '@pmod/document/workflow/shared/drag-and-drop/mod-drag-and-drop.service';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcIconButtonComponent, XcIconComponent, XcMenuComponent, XcMenuItem, XcMenuTriggerDirective, XcTooltipDirective } from '@zeta/xc';
 
@@ -78,6 +79,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     private readonly cdr = inject(ChangeDetectorRef);
     protected readonly i18n = inject(I18nService);
 
+    readonly DragType = DragType;
 
     private static readonly BUTTON_NAME_NEW = 'new';
     private static readonly BUTTON_NAME_SAVE = 'save';
@@ -114,10 +116,10 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     private static readonly BUTTON_NAME_DOWNLOAD_TEMPLATE = 'Download Template';
     private static readonly BUTTON_NAME_DOWNLOAD_PYTHON_TEMPLATE = 'Download Python Template';
 
-    private static readonly WorkflowMenuItem: XcMenuItem = { name: 'Workflow', icon: 'mini-workflow', iconStyle: 'modeller' };
-    private static readonly DataTypeMenuItem: XcMenuItem = { name: 'Data Type', icon: 'mini-datatype', iconStyle: 'modeller' };
-    private static readonly ExceptionTypeMenuItem: XcMenuItem = { name: 'Exception Type', icon: 'mini-catch', iconStyle: 'modeller' };
-    private static readonly ServiceGroupMenuItem: XcMenuItem = { name: 'Service Group', icon: 'mini-workflow', iconStyle: 'modeller' };
+    private static readonly WorkflowMenuItem: XcMenuItem = { name: signal('Workflow'), icon: 'mini-workflow', iconStyle: 'modeller' };
+    private static readonly DataTypeMenuItem: XcMenuItem = { name: signal('Data Type'), icon: 'mini-datatype', iconStyle: 'modeller' };
+    private static readonly ExceptionTypeMenuItem: XcMenuItem = { name: signal('Exception Type'), icon: 'mini-catch', iconStyle: 'modeller' };
+    private static readonly ServiceGroupMenuItem: XcMenuItem = { name: signal('Service Group'), icon: 'mini-workflow', iconStyle: 'modeller' };
 
 
     private static readonly CommonDocumentButtonDescriptions: ToolbarButtonDescription[] = [

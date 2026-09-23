@@ -1,26 +1,24 @@
 <h2 class="navigationbar-title" xc-i18n>header</h2>
 <div class="area-content">
-  <xc-form-autocomplete
-    xc-form-field-compact
+  <xc-form-autocomplete xc-form-field-compact
     xc-form-field-suffix="clear"
     xc-form-autocomplete-fulltextsearch
     [(xc-form-autocomplete-option)]="factoryService.runtimeContextDataWrapper.value"
     [xc-form-autocomplete-options]="factoryService.runtimeContextDataWrapper.values"
     (xc-form-autocomplete-optionsOpened)="factoryService.refresh()"
     (xc-form-autocomplete-optionsClosed)="!factoryService.runtimeContextDataWrapper.value && factoryService.resetToActiveWorkspace()"
-  ></xc-form-autocomplete>
+   />
   <div #factoryPaths class="factory-paths zeta-scrollbar">
-    <xfm-mod-nav-xmomtree
-      [xmomPaths]="xmomPaths"
+    <xfm-mod-nav-xmomtree [xmomPaths]="xmomPaths"
       [selectedXmomPaths]="selectedXmomPaths"
       [expandedXmomPaths]="expandedXmomPaths"
       (stateChange)="change($event)"
-    ></xfm-mod-nav-xmomtree>
+     />
   </div>
   <div #factoryObjects class="factory-objects zeta-scrollbar">
     @if (selectedPath) {
       <label>{{selectedPath}}</label>
     }
-    <xfm-mod-nav-xmomlist xc-i18n-context='xfm-mod-nav-xmomlist'></xfm-mod-nav-xmomlist>
+    <xfm-mod-nav-xmomlist xc-i18n-context='xfm-mod-nav-xmomlist' />
   </div>
 </div>

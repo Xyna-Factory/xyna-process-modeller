@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, viewChild } from '@angular/core';
 
 import { FormulaPartLiteral } from '../../../../../xo/util/formula-parts/formula-part-literal';
 import { FormulaEditablePartComponent } from '../formula-editable-part.component';
@@ -23,6 +23,7 @@ import { ModDnDContentEditableDirective } from '../../../shared/drag-and-drop/mo
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'formula-part-literal',
     templateUrl: './formula-part-literal.component.html',
     styleUrls: ['./formula-part-literal.component.scss'],
@@ -32,8 +33,7 @@ export class FormulaPartLiteralComponent extends FormulaEditablePartComponent {
 
     private _editing = false;
 
-    @ViewChild('literal', {static: false})
-    private readonly _literal: ElementRef;
+    private readonly _literal = viewChild<ElementRef>('literal');
 
 
     startEditing() {
@@ -57,8 +57,9 @@ export class FormulaPartLiteralComponent extends FormulaEditablePartComponent {
 
 
     setFocus() {
-        if (this._literal && this._literal.nativeElement) {
-            this._literal.nativeElement.focus();
+        const _literal = this._literal();
+        if (_literal && _literal.nativeElement) {
+            _literal.nativeElement.focus();
         }
     }
 

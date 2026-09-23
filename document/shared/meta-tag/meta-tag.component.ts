@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, inject, Input} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input} from '@angular/core';
 import { ModellingActionType } from '@pmod/api/xmom.service';
 import { ModellingItemComponent } from '@pmod/document/workflow/shared/modelling-object.component';
 import { XoChangeMetaTagRequest } from '@pmod/xo/change-meta-tag-request.model';
@@ -26,6 +26,7 @@ import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'meta-tag',
     templateUrl: './meta-tag.component.html',
     styleUrls: ['./meta-tag.component.scss'],

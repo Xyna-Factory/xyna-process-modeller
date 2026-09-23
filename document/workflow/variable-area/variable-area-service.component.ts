@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { VariableAreaComponent } from './variable-area.component';
 import { ModDropAreaDirective } from '../shared/drag-and-drop/mod-drop-area.directive';
@@ -25,6 +25,7 @@ import { ModDraggableDirective } from '../shared/drag-and-drop/mod-draggable.dir
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'variable-area-service',
     templateUrl: './variable-area.component.html',
     styleUrls: ['./variable-area.component.scss', './variable-area-service.component.scss'],

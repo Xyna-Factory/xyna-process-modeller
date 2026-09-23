@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 
@@ -46,6 +46,7 @@ import { DropIndicatorComponent } from './workflow/drop-indicator/drop-indicator
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './datatype.component.html',
     styleUrls: ['./datatype.component.scss'],
     providers: [SelectionService, MinMaxService],
