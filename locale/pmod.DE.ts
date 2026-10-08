@@ -239,7 +239,7 @@ export const PMOD_DE: I18nTranslation[] = [
     },
     {
         key: 'pmod.nav.errors.AMBIGUE_VARIABLE.tooltip',
-        value: ''
+        value: 'Mehrere Verbindungsmöglichkeiten wurden gefunden. Bitte wählen Sie eine aus.'
     },
     {
         key: 'pmod.nav.errors.UNASSIGNED_VARIABLE',
@@ -247,7 +247,7 @@ export const PMOD_DE: I18nTranslation[] = [
     },
     {
         key: 'pmod.nav.errors.UNASSIGNED_VARIABLE.tooltip',
-        value: ''
+        value: 'Die Variable wurde nicht zugewiesen. Bitte weisen Sie eine Quelle zu.'
     },
     {
         key: 'pmod.nav.errors.UNASSIGNED_VARIABLE_BRANCH',
@@ -255,7 +255,7 @@ export const PMOD_DE: I18nTranslation[] = [
     },
     {
         key: 'pmod.nav.errors.UNASSIGNED_VARIABLE_BRANCH.tooltip',
-        value: ''
+        value: 'Die Variable in diesem Branch wurde nicht zugewiesen. Bitte weisen Sie eine Quelle zu.'
     },
     {
         key: 'pmod.nav.errors.ABSTRACT_CONSTANT',
@@ -287,7 +287,7 @@ export const PMOD_DE: I18nTranslation[] = [
     },
     {
         key: 'pmod.nav.errors.OBJECTS_AFTER_BLOCKER.tooltip',
-        value: ''
+        value: 'Es gibt Schritte, die hinter einem blockierenden Schritt liegen. Bitte überprüfen Sie die Reihenfolge.'
     },
     {
         key: 'pmod.nav.errors.RETRY_AT_INVALID_POSITION',
@@ -295,7 +295,7 @@ export const PMOD_DE: I18nTranslation[] = [
     },
     {
         key: 'pmod.nav.errors.RETRY_AT_INVALID_POSITION.tooltip',
-        value: ''
+        value: 'Der Retry-Schritt befindet sich an einer ungültigen Position. Bitte korrigieren Sie die Position.'
     },
     {
         key: 'pmod.nav.errors.INVALID_FORMULA',
@@ -303,7 +303,7 @@ export const PMOD_DE: I18nTranslation[] = [
     },
     {
         key: 'pmod.nav.errors.INVALID_FORMULA.tooltip',
-        value: ''
+        value: 'Die Formel ist ungültig. Bitte überprüfen Sie die Syntax.'
     },
     {
         key: 'pmod.nav.errors.INVALID_ORDER_INPUT_SOURCE',
@@ -311,7 +311,7 @@ export const PMOD_DE: I18nTranslation[] = [
     },
     {
         key: 'pmod.nav.errors.INVALID_ORDER_INPUT_SOURCE.tooltip',
-        value: ''
+        value: 'Die Auftragseingabequelle ist ungültig. Bitte wählen Sie eine gültige Quelle aus.'
     },
     {
         key: 'pmod.nav.errors.check',
