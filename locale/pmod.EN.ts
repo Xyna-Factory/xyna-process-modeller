@@ -237,7 +237,7 @@ export const PMOD_EN: I18nTranslation[] = [
     },
     {
         key: 'pmod.nav.errors.AMBIGUE_VARIABLE.tooltip',
-        value: ''
+        value: 'Multiple connection options were found. Please select one.'
     },
     {
         key: 'pmod.nav.errors.UNASSIGNED_VARIABLE',
@@ -245,7 +245,7 @@ export const PMOD_EN: I18nTranslation[] = [
     },
     {
         key: 'pmod.nav.errors.UNASSIGNED_VARIABLE.tooltip',
-        value: ''
+        value: 'The variable has not been assigned. Please assign a source.'
     },
     {
         key: 'pmod.nav.errors.UNASSIGNED_VARIABLE_BRANCH',
@@ -253,7 +253,7 @@ export const PMOD_EN: I18nTranslation[] = [
     },
     {
         key: 'pmod.nav.errors.UNASSIGNED_VARIABLE_BRANCH.tooltip',
-        value: ''
+        value: 'The variable in this branch has not been assigned. Please assign a source.'
     },
     {
         key: 'pmod.nav.errors.ABSTRACT_CONSTANT',
@@ -261,7 +261,7 @@ export const PMOD_EN: I18nTranslation[] = [
     },
     {
         key: 'pmod.nav.errors.ABSTRACT_CONSTANT.tooltip',
-        value: ''
+        value: 'Abstract types cannot be assigned a constant.'
     },
     {
         key: 'pmod.nav.errors.PROTOTYPE_VARIABLE',
@@ -269,7 +269,7 @@ export const PMOD_EN: I18nTranslation[] = [
     },
     {
         key: 'pmod.nav.errors.PROTOTYPE_VARIABLE.tooltip',
-        value: ''
+        value: 'Prototype variables must be replaced with concrete ones for deployment.'
     },
     {
         key: 'pmod.nav.errors.PROTOTYPE_STEP',
@@ -277,7 +277,7 @@ export const PMOD_EN: I18nTranslation[] = [
     },
     {
         key: 'pmod.nav.errors.PROTOTYPE_STEP.tooltip',
-        value: ''
+        value: 'Prototype steps must be replaced with concrete ones for deployment.'
     },
     {
         key: 'pmod.nav.errors.OBJECTS_AFTER_BLOCKER',
@@ -285,7 +285,7 @@ export const PMOD_EN: I18nTranslation[] = [
     },
     {
         key: 'pmod.nav.errors.OBJECTS_AFTER_BLOCKER.tooltip',
-        value: ''
+        value: 'There are steps that are located after a blocking step. Please check the order.'
     },
     {
         key: 'pmod.nav.errors.RETRY_AT_INVALID_POSITION',
@@ -293,7 +293,7 @@ export const PMOD_EN: I18nTranslation[] = [
     },
     {
         key: 'pmod.nav.errors.RETRY_AT_INVALID_POSITION.tooltip',
-        value: ''
+        value: 'The retry step is at an invalid position. Please correct the position.'
     },
     {
         key: 'pmod.nav.errors.INVALID_FORMULA',
@@ -301,7 +301,7 @@ export const PMOD_EN: I18nTranslation[] = [
     },
     {
         key: 'pmod.nav.errors.INVALID_FORMULA.tooltip',
-        value: ''
+        value: 'The formula is invalid. Please check the syntax.'
     },
     {
         key: 'pmod.nav.errors.INVALID_ORDER_INPUT_SOURCE',
@@ -309,7 +309,7 @@ export const PMOD_EN: I18nTranslation[] = [
     },
     {
         key: 'pmod.nav.errors.INVALID_ORDER_INPUT_SOURCE.tooltip',
-        value: ''
+        value: 'The order input source is invalid. Please select a valid source.'
     },
     {
         key: 'pmod.nav.errors.check',
