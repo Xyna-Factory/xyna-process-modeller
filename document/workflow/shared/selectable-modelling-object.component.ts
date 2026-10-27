@@ -34,7 +34,7 @@ export class SelectableModellingObjectComponent extends ModellingItemComponent i
     protected _selected = false;
 
 
-    constructor( ) {
+    constructor() {
         super();
 
         this.untilDestroyed(this.selectionService.selectionChange).subscribe(

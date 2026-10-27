@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, forwardRef, inject, Input, output , signal} from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, inject, Input, output, signal} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
@@ -67,7 +67,7 @@ export class InvocationComponent extends ModellingItemComponent {
         super();
 
         this.menuItems.unshift(
-            <XcMenuItem>{
+            {
                 name: signal('Open in new Tab'), translate: true,
                 visible: () => !!this.invocation.$fqn, // prototype step does not have an fqn
                 click: () => {
@@ -79,15 +79,16 @@ export class InvocationComponent extends ModellingItemComponent {
                     }
                 }
             },
-            <XcMenuItem>{
+            {
                 name: signal('Test Workflow...'), translate: true,
                 visible: () => this.invocation instanceof XoWorkflowInvocation && !this.invocation.isAbstract,
                 click: () => {
                     const fqn = this.invocation.toFqn();
                     const rtc = (this.invocation.$rtc ?? this.invocation.evaluatedRtc).runtimeContext();
                     this.dialogService.custom(
+                        // @ts-expect-error(TODO:)
                         WorkflowTesterDialogComponent,
-                        <WorkflowTesterData>{
+                        {
                             runtimeContext: rtc,
                             orderType: fqn.encode(),
                             input: this.invocation.runtimeInfo?.getInput()
@@ -95,22 +96,22 @@ export class InvocationComponent extends ModellingItemComponent {
                     ).afterDismiss().subscribe();
                 }
             },
-            <XcMenuItem>{
+            {
                 name: signal('Show/Hide Order Input Source Area'), translate: true,
                 visible: () => !!this.orderInputSourceArea && this.invocation.allowsOrderInputSource,
                 click: () => this.detailLevelService.toggleCollapsed(this.orderInputSourceArea.id)
             },
-            <XcMenuItem>{
+            {
                 name: signal('Show/Hide Remote Destination Area'), translate: true,
                 visible: () => !!this.remoteDestinationArea,
                 click: () => this.detailLevelService.toggleCollapsed(this.remoteDestinationArea.id)
             },
-            <XcMenuItem>{
+            {
                 name: signal('Show/Hide Documentation Area'), translate: true,
                 visible: () => !!this.documentationArea,
                 click: () => this.detailLevelService.toggleCollapsed(this.documentationArea.id)
             },
-            <XcMenuItem>{
+            {
                 name: signal('Convert'), translate: true,
                 visible: () => this.invocation && this.invocation.isAbstract && !this.readonly,
                 children: [
@@ -149,7 +150,7 @@ export class InvocationComponent extends ModellingItemComponent {
                     }
                 ]
             },
-            <XcMenuItem>{
+            {
                 name: signal('Add/Remove Detached Operator'), translate: true,
                 visible: () => this.invocation.detachedTaggable && !this.readonly && !this.exceptionHandlingArea.hasCompensations(),
                 click: () => {
@@ -160,7 +161,7 @@ export class InvocationComponent extends ModellingItemComponent {
                     });
                 }
             },
-            <XcMenuItem>{
+            {
                 name: signal('Add/Remove Free Capacities Operator'), translate: true,
                 visible: () => this.invocation.freeCapacitiesTaggable && !this.readonly,
                 click: () => {

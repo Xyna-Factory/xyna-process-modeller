@@ -27,7 +27,7 @@ export class ModContentEditableDirective {
     private _enabled = true;
     private _finishOnEnter = true;
 
-    readonly triggerType = input<'mousedown' | 'dblclick'>('dblclick', { alias: "mod-content-editable-trigger" });
+    readonly triggerType = input<'mousedown' | 'dblclick'>('dblclick', { alias: 'mod-content-editable-trigger' });
 
     readonly startEdit = output<string>({ alias: 'mod-content-editable-start-edit' });
 

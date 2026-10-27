@@ -15,13 +15,12 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, forwardRef, inject, Input , signal} from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, inject, Input, signal} from '@angular/core';
 
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, XcI18nTranslateDirective  } from '@zeta/i18n';
 import { XcCheckboxComponent, XcDialogService, XcFormInputComponent, XcFormValidatorNumberDirective, XcIconButtonComponent, XcIconComponent, XcIdentityDataWrapper, XcMenuItem, XcMenuServiceDirective, XcMenuTriggerDirective, XcStringIntegerDataWrapper } from '@zeta/xc';
 
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeQueryConfigurationRequest } from '../../../xo/change-query-configuration-request.model';
 import { XoQuery } from '../../../xo/query.model';
@@ -72,7 +71,7 @@ export class QueryComponent extends InvocationComponent {
         super();
 
         this.menuItems.unshift(
-            <XcMenuItem>{
+            {
                 name: signal('Show/Hide Configurations'), translate: true,
                 click: () => this.toggleCollapsed()
             }

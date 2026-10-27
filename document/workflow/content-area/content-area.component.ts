@@ -47,10 +47,12 @@ export class ContentAreaComponent extends ModellingObjectComponent {
 
 
     canDrop = (xo: XoModellingItem, event?: ModDragEvent): boolean => {
+        // @ts-expect-error(TODO:)
         const serial = event.side === ModRelativeHoverSide.top || event.side === ModRelativeHoverSide.bottom;
         /** @todo also check predecessor-step */
 
         // check if xo allows a successor
+        // @ts-expect-error(TODO:)
         if (serial && xo && !xo.isSuccessorAllowed() && event.index < this.contentArea.items.length) {
             // if xo does not allow a successor, xo has to be the last item
             return false;
@@ -58,6 +60,7 @@ export class ContentAreaComponent extends ModellingObjectComponent {
 
         // check step before allows successor
         if (serial && this.contentArea.items.length > 0) {
+            // @ts-expect-error(TODO:)
             const stepBefore = event.index > 0 ? this.contentArea.items.data[event.index - 1] as XoModellingItem : null;
             if (stepBefore && !stepBefore.isSuccessorAllowed()) {
                 return false;
@@ -89,7 +92,9 @@ export class ContentAreaComponent extends ModellingObjectComponent {
                 }
                 const request = new XoMoveModellingObjectRequest();
                 if (parallel) {
+                    // @ts-expect-error(TODO:)
                     request.targetId = hoveredStepId;
+                    // @ts-expect-error(TODO:)
                     request.relativePosition = relativePosition;
                 } else {
                     request.targetId = this.contentArea.id;
@@ -101,12 +106,14 @@ export class ContentAreaComponent extends ModellingObjectComponent {
         } else if (event.operation === DragType.insert) {
             const request = new XoInsertModellingObjectRequest();
             if (parallel) {
+                // @ts-expect-error(TODO:)
                 request.relativePosition = relativePosition;
             } else {
                 request.index = event.index >= newContainerSize - 1 ? -1 : event.index;
                 request.relativePosition = ModRelativeHoverSide.inside;
             }
             request.content = event.item.createInsertRequestContent();
+            // @ts-expect-error(TODO:)
             this.performAction({ type: ModellingActionType.insert, objectId: parallel ? hoveredStepId : this.contentArea.id, request: request });
         }
     }

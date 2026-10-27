@@ -26,9 +26,9 @@ export class ModDraggableDirective implements OnInit {
     private readonly dndService = inject(ModDragAndDropService);
 
 
-    readonly data = input<Draggable>(undefined, { alias: "mod-draggable" });
+    readonly data = input<Draggable>(undefined, { alias: 'mod-draggable' });
 
-    readonly allowedDragType = input(DragType.move, { alias: "mod-draggable-allowed-drag-type" });
+    readonly allowedDragType = input(DragType.move, { alias: 'mod-draggable-allowed-drag-type' });
 
 
     ngOnInit(): void {
@@ -85,6 +85,7 @@ export class ModDraggableDirective implements OnInit {
         dragEvent.preventDefault();
         this.elementRef.nativeElement.classList.remove(DRAG_CSS_CLASSES.PLACEHOLDER_SOURCE);
         this.dndService.clearHoverState();
+        // @ts-expect-error(TODO:)
         this.dndService.setDraggedItem(dragEvent, null);
     }
 }

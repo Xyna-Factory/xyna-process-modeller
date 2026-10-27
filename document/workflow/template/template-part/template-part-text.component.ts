@@ -41,6 +41,7 @@ export class TemplatePartTextComponent extends TemplatePartComponent {
     protected readonly elementRef = inject(ElementRef);
     protected readonly dnd = inject(ModDragAndDropService);
 
+    // @ts-expect-error(TODO:)
     private _inputElement: ElementRef;
 
     @ViewChild('textInput', { static: false })
@@ -80,7 +81,9 @@ export class TemplatePartTextComponent extends TemplatePartComponent {
 
 
     remove(event?: KeyboardEvent) {
+        // @ts-expect-error(TODO:)
         if (event.key === 'Delete') {
+            // @ts-expect-error(TODO:)
             event.stopPropagation();
         } else {
             super.remove(event);
@@ -94,6 +97,7 @@ export class TemplatePartTextComponent extends TemplatePartComponent {
 
 
     enterKey() {
+        // @ts-expect-error(TODO:)
         const index = window.getSelection().getRangeAt(0).startOffset;
         let text = '';
         if (this.inputElement && this.inputElement.nativeElement) {
@@ -109,6 +113,7 @@ export class TemplatePartTextComponent extends TemplatePartComponent {
 
     backspaceKey(event: KeyboardEvent) {
         // pressed backspace at the beginning of a part
+        // @ts-expect-error(TODO:)
         if (window.getSelection().getRangeAt(0).startOffset === 0) {
             event.preventDefault();
             let text = '';
@@ -128,6 +133,7 @@ export class TemplatePartTextComponent extends TemplatePartComponent {
             this.inputElement.nativeElement.focus();
 
             // place caret (at the end by default)
+            // @ts-expect-error(TODO:)
             this.setCaret(isNaN(caretIndex) ? this.part.getText().length : caretIndex);
         }
     }
@@ -141,7 +147,9 @@ export class TemplatePartTextComponent extends TemplatePartComponent {
                 range.setStart(this.inputElement.nativeElement.childNodes[0], index);
                 range.collapse(true);
                 const selection = window.getSelection();
+                // @ts-expect-error(TODO:)
                 selection.removeAllRanges();
+                // @ts-expect-error(TODO:)
                 selection.addRange(range);
             }, 0);
         }

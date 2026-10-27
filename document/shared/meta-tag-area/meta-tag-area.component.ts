@@ -25,7 +25,7 @@ import { XoInsertModellingObjectRequest } from '@pmod/xo/insert-modelling-object
 import { XoMetaTagArea } from '@pmod/xo/meta-tag-area.model';
 import { XoMetaTag } from '@pmod/xo/meta-tag.model';
 import { XoMoveModellingObjectRequest } from '@pmod/xo/move-modelling-object-request.model';
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { XcI18nTranslateDirective } from '@zeta/i18n';
 import { ModDropAreaDirective } from '../../workflow/shared/drag-and-drop/mod-drop-area.directive';
 import { MetaTagComponent } from '../meta-tag/meta-tag.component';
 import { ModDraggableDirective } from '../../workflow/shared/drag-and-drop/mod-draggable.directive';
@@ -56,6 +56,7 @@ export class MetaTagAreaComponent extends ModellingObjectComponent {
 
     readonly objectId = input('');
 
+    // @ts-expect-error(TODO:)
     newTag: string;
 
     protected lockedChanged() {
@@ -89,7 +90,7 @@ export class MetaTagAreaComponent extends ModellingObjectComponent {
     allowItem = (xoFqn: string, xoId?: string): boolean => {
         const allowedType = !!this.metaTagArea.itemTypes.find((itemType: string) => itemType.toLowerCase() === xoFqn.toLowerCase());
         return allowedType && !this.readonly;
-    }
+    };
 
     dropped(event: ModDropEvent<XoMetaTag>) {
         if (event.operation === DragType.move || event.operation === DragType.copy) {

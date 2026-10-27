@@ -85,6 +85,7 @@ export class ModDnDContentEditableDirective implements OnInit, OnDestroy {
                 el.draggable = false;
                 this.draggableElementsSet.add(el);
             }
+            // @ts-expect-error(TODO:)
             el = el.parentElement;
         }
     };

@@ -26,7 +26,7 @@ import { MinMaxService } from './min-max.service';
 import { ServiceGroupDocumentModel } from './model/service-group-document.model';
 import { SelectionService } from './selection.service';
 import { TypeDocumentComponent } from './type-document.component';
-import { XcI18nContextDirective } from '../../../zeta/i18n';
+import { XcI18nContextDirective } from '@zeta/i18n';
 import { TypeInfoAreaComponent } from './datatype/type-info-area/type-info-area.component';
 import { LibAreaComponent } from './shared/lib-area/lib-area.component';
 import { JavaSharedLibAreaComponent } from './shared/java-shared-lib-area/java-shared-lib-area.component';

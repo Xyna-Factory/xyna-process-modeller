@@ -36,9 +36,11 @@ export class TypeLabelAreaComponent extends ModellingObjectComponent {
 
     protected readonly detailLevelService = inject(WorkflowDetailLevelService);
 
+    // @ts-expect-error(TODO:)
     readonly menuTemplateRef = input<TemplateRef<any>>(null);
 
     @HostBinding('class.show-fqn')
+    // @ts-expect-error(TODO:)
     showFqn: boolean;
 
 

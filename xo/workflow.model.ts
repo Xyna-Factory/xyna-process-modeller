@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -141,7 +143,7 @@ export class XoWorkflowStub extends XoWorkflow {
 
    constructor(_ident?: string) {
         super(_ident);
-        this.id = 'wf'
+        this.id = 'wf';
     }
 
 }

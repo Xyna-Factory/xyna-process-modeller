@@ -25,7 +25,7 @@ import { XoChangeOrderInputSourceRequest } from '../../../xo/change-orderinputso
 import { XoInvocation } from '../../../xo/invocation.model';
 import { XoOrderInputSourceArea } from '../../../xo/order-input-source-area.model';
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { XcI18nTranslateDirective } from '@zeta/i18n';
 
 
 @Component({
@@ -39,6 +39,7 @@ export class OrderInputSourceAreaComponent extends ModellingObjectComponent impl
 
     protected readonly documentService = inject(DocumentService);
 
+    // @ts-expect-error(TODO:)
     private _invocation: XoInvocation;
     private invalidated = true;
 

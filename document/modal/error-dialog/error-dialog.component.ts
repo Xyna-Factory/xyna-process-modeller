@@ -19,7 +19,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent } from '@zeta/xc';
 
-import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { errorDialog_translations_de_DE } from './locale/error-dialog-translations.de-DE';
 import { errorDialog_translations_en_US } from './locale/error-dialog-translations.en-US';
 
@@ -59,6 +59,7 @@ export class ErrorDialogComponent extends XcDialogComponent<void, ErrorDialogDat
 
 
     get stackTrace(): string {
+        // @ts-expect-error(TODO:)
         return this.injectedData.stackTrace;
     }
 }

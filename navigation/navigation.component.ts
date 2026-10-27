@@ -24,7 +24,7 @@ import { XoArray } from '@zeta/api';
 import { XcDialogService, XcIconButtonComponent, XcMenuComponent, XcMenuItem, XcMenuTriggerDirective, XcTooltipDirective, XoPlugin, XoPluginArray } from '@zeta/xc';
 import { XcHasRightDirective } from '@zeta/xc/shared/xc-has-right.directive';
 
-import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../zeta/i18n';
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XmomService } from '../api/xmom.service';
 import { DocumentService } from '../document/document.service';
 import { ClipboardComponent } from './clipboard/clipboard.component';
@@ -83,6 +83,7 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
     disableWidthTransition = false;
 
     area = NavigationbarArea.Factory;
+    // @ts-expect-error(TODO:)
     activatedPluginNumber: number;
     areaValue = AreaValue.Opened;
     AreaValue = AreaValue;
@@ -96,10 +97,12 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
     readonly helpComponent = viewChild(HelpComponent);
     readonly pluginComponents = viewChildren(NavPluginComponent);
 
+    // @ts-expect-error(TODO:)
     private lastOpened: NavigationbarArea = null;
     private readonly viewComponentMap = new Map<NavigationbarArea, CommonNavigationComponent>();
 
     private readonly subscriptions: Subscription[] = [];
+    // @ts-expect-error(TODO:)
     private errorsChangeSubscription: Subscription;
 
     private readonly factoryButton: NavigationItem = { label: 'icon-factory', iconName: 'sp-xynanavigation', iconStyle: 'modeller', areaType: NavigationbarArea.Factory };
@@ -126,7 +129,7 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
     readonly devMenuItems: XcMenuItem[] = [
         { name: signal('Workflow Constant Builder...'), click: () => this.dialogService.custom(WorkflowConstantBuilderModalComponent) },
         { name: signal('Data Type Converter...'), click: () => this.dialogService.info('info', 'not yet implemented') }
-    ];  
+    ];
 
     private _datatypePlugins: XoPlugin[] = [];
 
@@ -150,12 +153,19 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngOnInit() {
         this.viewComponentMap
+            // @ts-expect-error(TODO:)
             .set(NavigationbarArea.Factory, this.factoryComponent())
+            // @ts-expect-error(TODO:)
             .set(NavigationbarArea.Search, this.searchComponent())
+            // @ts-expect-error(TODO:)
             .set(NavigationbarArea.Details, this.detailsComponent())
+            // @ts-expect-error(TODO:)
             .set(NavigationbarArea.Clipboard, this.clipboardComponent())
+            // @ts-expect-error(TODO:)
             .set(NavigationbarArea.Errors, this.errorsComponent())
+            // @ts-expect-error(TODO:)
             .set(NavigationbarArea.Compare, this.compareComponent())
+            // @ts-expect-error(TODO:)
             .set(NavigationbarArea.Help, this.helpComponent());
 
         this.switchArea(NavigationbarArea.Factory);
@@ -212,6 +222,7 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
         this.area = area;
+        // @ts-expect-error(TODO:)
         this.activatedPluginNumber = pluginNumber;
 
         if (this.area === NavigationbarArea.Compare) {
@@ -251,19 +262,23 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
     toogle() {
         if (this.area) {
             this.lastOpened = this.area;
+            // @ts-expect-error(TODO:)
             this.area = null;
             this.areaValue = AreaValue.Closed;
         } else {
             this.switchArea(this.lastOpened);
+            // @ts-expect-error(TODO:)
             this.lastOpened = null;
         }
     }
 
 
-get activeNavigationComponent(): CommonNavigationComponent {
+    get activeNavigationComponent(): CommonNavigationComponent {
         if (this.area === NavigationbarArea.Plugin) {
+            // @ts-expect-error(TODO:)
             return this.pluginComponents().find(comp => comp.pluginNumber() === this.activatedPluginNumber);
         }
+        // @ts-expect-error(TODO:)
         return this.viewComponentMap.get(this.area);
     }
 

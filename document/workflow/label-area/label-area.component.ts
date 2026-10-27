@@ -32,6 +32,7 @@ import { NgTemplateOutlet } from '@angular/common';
 })
 export class LabelAreaComponent extends TextAreaModellingObjectComponent {
 
+    // @ts-expect-error(TODO:)
     readonly menuTemplateRef = input<TemplateRef<any>>(undefined);
 
 
@@ -42,6 +43,6 @@ export class LabelAreaComponent extends TextAreaModellingObjectComponent {
 
 
     get labelArea(): XoLabelArea {
-        return this.getTextArea() as XoLabelArea;
+        return this.getTextArea();
     }
 }

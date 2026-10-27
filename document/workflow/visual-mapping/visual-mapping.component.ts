@@ -47,6 +47,7 @@ import { VariableTreeComponent } from '../variable-tree/variable-tree.component'
  * Used to store a Skeleton node that matches the expression.
  */
 class ExpressionPart {
+    // @ts-expect-error(TODO:)
     private _node: SkeletonTreeNode;
 
     constructor(public expression: RecursiveStructure) {
@@ -74,6 +75,7 @@ class ExpressionWrapper {
         const rightExpression = expression.sourceExpression.extractInvolvedVariable();
         const leftExpression = expression.targetExpression.extractInvolvedVariable();
         this.sourcePart = [...leftExpression.slice(1), ...rightExpression].map(exp => new ExpressionPart(exp));
+        // @ts-expect-error(TODO:)
         this.targetPart = leftExpression.length > 0 ? new ExpressionPart(leftExpression[0]) : undefined;
     }
 
@@ -96,12 +98,15 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
     protected readonly selectionService = inject(SelectionService);
     protected readonly cdr = inject(ChangeDetectorRef);
 
+    // @ts-expect-error(TODO:)
     private _replacedSubscription: Subscription;
+    // @ts-expect-error(TODO:)
     private _selectionSubscription: Subscription;
     private initialized = false;
     private structuresLoaded = false;
     private isRefreshing = false;
 
+    // @ts-expect-error(TODO:)
     expressions: ExpressionWrapper[];
 
     private readonly structureCache = new XoDescriberCache<XoStructureObject>(1000);
@@ -110,6 +115,7 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
 
     flows: FlowDefinition[] = [];
 
+    // @ts-expect-error(TODO:)
     selectedNode: SkeletonTreeNode;
 
     @Input()
@@ -250,9 +256,11 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
                 this.flows = this.expressions
                     .filter(expression => !!expression.targetPart)
                     .flatMap(expression =>
+                        // @ts-expect-error(TODO:)
                         expression.sourcePart.length > 0
-                            ? expression.sourcePart.map(part => <FlowDefinition>{ source: part.node, destination: expression.targetPart.node })
+                            ? expression.sourcePart.map(part => ({ source: part.node, destination: expression.targetPart.node }))
                             // if there are no source nodes from the tree, this is a literal assignment. Use literal as description
+                            // @ts-expect-error(TODO:)
                             : <FlowDefinition>{ source: null, description: '<literal>', destination: expression.targetPart.node }
                     );
                 this.cdr.markForCheck();
@@ -309,6 +317,7 @@ export class VisualMappingComponent extends ModellingObjectComponent implements 
             this.selectionService.selectedObjectSilently();
 
             this._selectionSubscription = node.selectedChange.pipe(filter(value => !value)).subscribe(() => {
+                // @ts-expect-error(TODO:)
                 this.selectedNode = undefined;
                 this._selectionSubscription?.unsubscribe();
             });

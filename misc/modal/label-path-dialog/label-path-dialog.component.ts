@@ -20,7 +20,7 @@ import { Observable } from 'rxjs';
 import { ChangeDetectionStrategy, Component, HostListener, inject, signal, viewChild } from '@angular/core';
 import { XcAutocompleteDataWrapper, XcButtonComponent, XcCheckboxComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormAutocompleteComponent, XcFormDirective, XcFormInputComponent, XcFormValidatorRequiredDirective, XcOptionItem, XcOptionItemString, XcTooltipDirective } from '@zeta/xc';
 
-import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { labelPathDialog_translations_de_DE } from './locale/label-path-dialog-translations.de-DE';
 import { labelPathDialog_translations_en_US } from './locale/label-path-dialog-translations.en-US';
 
@@ -69,7 +69,7 @@ export class LabelPathDialogComponent extends XcDialogComponent<LabelPathDialogR
     static readonly FORCE_MOVE_RENAME = 'Ignore Incompatible Storables';
     static readonly FORCE_MOVE_RENAME_TOOLTIP = 'When enabled, new columns/tables are created and no migration is performed, if refactoring affects existing storable Data Types.';
 
-    readonly form = viewChild(XcFormDirective);
+    readonly form = viewChild.required(XcFormDirective);
 
     force = false;
     label: string;
@@ -96,9 +96,12 @@ export class LabelPathDialogComponent extends XcDialogComponent<LabelPathDialogR
 
     fillPathAutocomplete() {
         this.injectedData.pathsObservable.subscribe(paths => {
+            // @ts-expect-error(TODO:)
             if (this.injectedData.recentlyUsedPaths?.length > 0) {
+                // @ts-expect-error(TODO:)
                 const recentPaths: XcOptionItem[] = this.injectedData.recentlyUsedPaths.map(recentPath => XcOptionItemString(recentPath));
                 for (const recentPath of recentPaths) {
+                    // @ts-expect-error(TODO:)
                     const pathIndex = paths.indexOf(recentPath.name());
                     paths.splice(pathIndex, 1);
                 }

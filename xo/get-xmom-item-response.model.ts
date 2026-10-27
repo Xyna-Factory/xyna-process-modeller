@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -36,7 +38,7 @@ export class XoGetXmomItemResponse extends XoXmomItemResponse {
         super(_ident);
 
         // Xo has to be instantiated such that class will not be not pruned on build
-         
+
         const entry = new XoRepairEntry();
     }
 }

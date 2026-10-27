@@ -41,6 +41,7 @@ export class ExceptionMessageRichListItemComponent extends XcRichListItemCompone
     private readonly outsideListenerService = inject(OutsideListenerService);
 
 
+    // @ts-expect-error(TODO:)
     private outsideClickHandlerNumber: number;
 
     get language(): string {
@@ -62,7 +63,7 @@ export class ExceptionMessageRichListItemComponent extends XcRichListItemCompone
             this.injectedData.onclick(this.injectedData.item);
         };
         this.outsideClickHandlerNumber =
-        this.outsideListenerService.addOutsideListener(el, 'click', clickListener);
+            this.outsideListenerService.addOutsideListener(el, 'click', clickListener);
     }
 
     ngOnDestroy() {

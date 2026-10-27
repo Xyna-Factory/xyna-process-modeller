@@ -19,7 +19,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { DatatypeDetailsTabComponent } from '../datatype-tab.component';
 import { GlobalStorablePropertiesAreaComponent } from '../../global-storable-properties-area/global-storable-properties-area.component';
-import { XcI18nContextDirective } from '../../../../../../zeta/i18n';
+import { XcI18nContextDirective } from '@zeta/i18n';
 
 
 @Component({

@@ -37,6 +37,7 @@ export class TemplatePartFormulaComponent extends TemplatePartComponent {
      * @param caretIndex Index of letter to set caret at
      */
     setFocus(caretIndex?: number) {
+        // @ts-expect-error(TODO:)
         this.formula().clickOnFormula();
 
         // TODO estimate part from caret index (which is the index of the character inside the XFL expression)

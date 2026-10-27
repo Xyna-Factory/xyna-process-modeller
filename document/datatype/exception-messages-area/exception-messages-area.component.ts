@@ -29,7 +29,7 @@ import { XoExceptionMessage } from '../../../xo/exception-message.model';
 import { XoExceptionMessagesArea } from '../../../xo/exception-messages-area.model';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { ExceptionMessageRichListItemComponent, ExceptionMessageRichListItemData } from '../exception-message-rich-list-item/exception-message-rich-list-item.component';
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { XcI18nTranslateDirective } from '@zeta/i18n';
 
 
 export enum ExceptionMessageLanguage {
@@ -52,8 +52,10 @@ export class ExceptionMessagesAreaComponent extends ModellingObjectComponent {
     private readonly onclick: (item: XoExceptionMessage) => void;
     private readonly ondelete: (item: XoExceptionMessage) => void;
 
+    // @ts-expect-error(TODO:)
     pluginBundles: XoDefinitionBundle[];
 
+    // @ts-expect-error(TODO:)
     currentMessage: string;
     language = ExceptionMessageLanguage.GERMAN;
     readonly languageDataWrapper: XcAutocompleteDataWrapper;
@@ -64,7 +66,7 @@ export class ExceptionMessagesAreaComponent extends ModellingObjectComponent {
     constructor() {
         super();
 
-         
+
         const antiTreeShakingInstance = new XoExceptionMessage();
 
         this.languageDataWrapper = new XcAutocompleteDataWrapper(

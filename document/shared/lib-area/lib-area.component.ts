@@ -18,7 +18,7 @@
 import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 
 import { ApiService, XoManagedFileID } from '@zeta/api';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, XcI18nTranslateDirective  } from '@zeta/i18n';
 import { XcFormLabelComponent, XcIconButtonComponent, XcRichListComponent, XcRichListItem } from '@zeta/xc';
 
 import { catchError, EMPTY, Observable, Subject, switchMap } from 'rxjs';
@@ -27,7 +27,6 @@ import { HttpMethod, ModellingActionType } from '../../../api/xmom.service';
 import { XoLibrariesArea } from '../../../xo/libraries-area.model';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { LibItemComponent, LibItemData } from './lib-item.component';
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 
 
 @Component({
@@ -66,7 +65,9 @@ export class LibAreaComponent extends ModellingObjectComponent {
         this.untilDestroyed(this.deleteJavaItemSubject).subscribe(index => {
             this.performAction({
                 type: ModellingActionType.javaLibrary,
+                // @ts-expect-error(TODO:)
                 objectId: null,
+                // @ts-expect-error(TODO:)
                 request: null,
                 method: HttpMethod.DELETE,
                 paramSet: { index: index.toString() }
@@ -75,7 +76,9 @@ export class LibAreaComponent extends ModellingObjectComponent {
         this.untilDestroyed(this.deletePythonItemSubject).subscribe(index => {
             this.performAction({
                 type: ModellingActionType.pythonLibrary,
+                // @ts-expect-error(TODO:)
                 objectId: null,
+                // @ts-expect-error(TODO:)
                 request: null,
                 method: HttpMethod.DELETE,
                 paramSet: { index: index.toString() }
@@ -127,7 +130,9 @@ export class LibAreaComponent extends ModellingObjectComponent {
         this.fileBrowserObservable().subscribe(manFileId =>
             this.performAction({
                 type: ModellingActionType.javaLibrary,
+                // @ts-expect-error(TODO:)
                 objectId: null,
+                // @ts-expect-error(TODO:)
                 request: null,
                 method: HttpMethod.PUT,
                 paramSet: { fileId: manFileId.iD }
@@ -139,7 +144,9 @@ export class LibAreaComponent extends ModellingObjectComponent {
         this.fileBrowserObservable().subscribe(manFileId =>
             this.performAction({
                 type: ModellingActionType.pythonLibrary,
+                // @ts-expect-error(TODO:)
                 objectId: null,
+                // @ts-expect-error(TODO:)
                 request: null,
                 method: HttpMethod.PUT,
                 paramSet: { fileId: manFileId.iD }

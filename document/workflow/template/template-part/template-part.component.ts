@@ -67,6 +67,7 @@ export class TemplatePartComponent extends ModellingItemComponent {
      * @param t fraction [0..1] in y direction relative to this element
      */
     getLetterPositionFromFraction(s: number, t: number): Distance {
+        // @ts-expect-error(TODO:)
         return null;
     }
 
@@ -76,12 +77,14 @@ export class TemplatePartComponent extends ModellingItemComponent {
      * @param index Index of letter
      */
     getLetterPositionFromIndex(index: number): Distance {
+        // @ts-expect-error(TODO:)
         return null;
     }
 
 
     keydown(event: KeyboardEvent) {
         // navigation
+        // @ts-expect-error(TODO:)
         const caretPosition = window.getSelection().getRangeAt(0).startOffset;
         const text = this.part.getText();
         let direction: NavigationDirection;
@@ -95,6 +98,7 @@ export class TemplatePartComponent extends ModellingItemComponent {
             direction = 'DOWN';
         }
 
+        // @ts-expect-error(TODO:)
         if (direction) {
             this.switchFocus.emit({ part: this.part, direction, srcCaretPosition: caretPosition });
         }

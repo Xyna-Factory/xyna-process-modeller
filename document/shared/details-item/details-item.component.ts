@@ -21,7 +21,7 @@ import { ChangeDetectionStrategy, Component, input, Input, OnInit } from '@angul
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 
 import { SelectableModellingObjectComponent } from '../../workflow/shared/selectable-modelling-object.component';
-import { XcI18nPipe } from '../../../../../zeta/i18n';
+import { XcI18nPipe } from '@zeta/i18n';
 import { XcIconComponent } from '@zeta/xc';
 
 
@@ -43,7 +43,7 @@ export class DetailsItemComponent extends SelectableModellingObjectComponent imp
         return this.getModel() as XoDetailsItem;
     }
 
-    icon = input.required<string>()
+    icon = input.required<string>();
 
     ngOnInit(): void {
         this.select();

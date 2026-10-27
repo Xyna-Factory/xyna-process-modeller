@@ -69,21 +69,24 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
      * Collapsed state of this modelling object (concerns both, item (e. g. variable) and area)
      */
     @HostBinding('class.collapsed')
-    public _collapsed = false;
+    _collapsed = false;
 
     @HostBinding('class.locked')
-    public _locked = false;
+    _locked = false;
 
+    // @ts-expect-error(TODO:)
     private _model: XoReferableObject;
     private _menuItems: XcMenuItem[] = [];
+    // @ts-expect-error(TODO:)
     private _documentModel: DocumentModel<DocumentItem>;
+    // @ts-expect-error(TODO:)
     private lockedSubscription: Subscription;
 
     readonly triggerAction = output<TriggeredAction>();
 
     constructor() {
         this.menuItems.push(
-            <XcMenuItem>{
+            {
                 name: signal('Remove'),
                 icon: 'delete',
                 translate: true,
@@ -99,6 +102,7 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
         this.untilDestroyed(this.detailLevelService.collapsedChange()).pipe(
             filter(id => this.getCollapseId() === id)
         ).subscribe(id => {
+            // @ts-expect-error(TODO:)
             this.setCollapsed(this.detailLevelService.isCollapsed(id));
         });
 
@@ -217,6 +221,7 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
             position = ModellingObjectComponent.getGlobalPosition(this.elementRef.nativeElement);
             position.x += this.elementRef.nativeElement.clientWidth / 2;
         }
+        // @ts-expect-error(TODO:)
         return position;
     }
 
@@ -225,6 +230,7 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
         if (this.isElementVisible()) {
             return this.inletPosition().add(new Vector2(0, this.elementRef.nativeElement.clientHeight - 1));
         }
+        // @ts-expect-error(TODO:)
         return null;
     }
 
@@ -301,6 +307,7 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
 
     private static getGlobalPosition(element: HTMLElement): Vector2 {
         const root = document.querySelector('[dataflow-container]');
+        // @ts-expect-error(TODO:)
         const rootRect = root.getBoundingClientRect();
         const elementRect = element.getBoundingClientRect();
         return new Vector2(elementRect.left - rootRect.left, elementRect.top - rootRect.top);
@@ -354,6 +361,7 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
      */
     getWidth(): number {
         const widthStyle = window.getComputedStyle(this.elementRef.nativeElement, null).getPropertyValue('width');
+        // @ts-expect-error(TODO:)
         const width = /^(\d+(\.\d+)?)px$/.exec(widthStyle)[1];
         return parseFloat(width);
     }
@@ -369,6 +377,7 @@ export class ModellingObjectComponent implements OnInit, OnDestroy {
 })
 export class ModellingItemComponent extends ModellingObjectComponent implements OnDestroy {
 
+    // @ts-expect-error(TODO:)
     private modelChangeSubscription: Subscription;
 
 

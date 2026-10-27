@@ -84,6 +84,7 @@ export class FormulaInputAreaComponent extends ModellingObjectComponent {
 
     @Input()
     set questionmarkEditable(value: boolean) {
+        // @ts-expect-error(TODO:)
         this._questionmarkEditable = coerceBoolean(value);
     }
 
@@ -93,6 +94,7 @@ export class FormulaInputAreaComponent extends ModellingObjectComponent {
 
 
     get formula(): XoFormula {
+        // @ts-expect-error(TODO:)
         return this.formulaArea.items.length > 0 ? this.formulaArea.items.data[0] as XoFormula : null;
     }
 }

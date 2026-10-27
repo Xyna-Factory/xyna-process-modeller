@@ -29,6 +29,7 @@ export interface FormulaChildComponent {
     changeDetection: ChangeDetectionStrategy.Eager, template: '' })
 export class FormulaPartComponent {
 
+    // @ts-expect-error(TODO:)
     private _formulaPart: FormulaPart;
 
 

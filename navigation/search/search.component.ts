@@ -23,7 +23,7 @@ import { MessageBusService } from '@yggdrasil/events';
 import { AuthService } from '@zeta/auth';
 import { XcCheckboxComponent, XcFormAutocompleteComponent, XcFormInputComponent } from '@zeta/xc';
 
-import { XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '../../../../zeta/i18n';
+import { XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '@zeta/i18n';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 import { FactoryService } from '../factory.service';
 import { XMOMListComponent } from '../xmom/xmom-list.component';
@@ -60,8 +60,9 @@ export class SearchComponent extends CommonNavigationComponent {
     querySubject = new Subject<string>();
     debounce = false;
 
-    readonly xmomList = viewChild(XMOMListComponent);
+    readonly xmomList = viewChild.required(XMOMListComponent);
 
+    // @ts-expect-error(TODO:)
     _inputComponent: XcFormInputComponent;
     @ViewChild('input', { static: false })
     set inputComponent(value: XcFormInputComponent) {
@@ -96,6 +97,7 @@ export class SearchComponent extends CommonNavigationComponent {
         { label: 'service', checked: true, type: 'service' }
     ];
 
+    // @ts-expect-error(TODO:)
     filterConditions: FilterConditionData;
 
     constructor() {
@@ -103,6 +105,7 @@ export class SearchComponent extends CommonNavigationComponent {
 
         this.querySubject.pipe(debounceTime(500)).subscribe(query => {
             this.debounce = false;
+            // @ts-expect-error(TODO:)
             this.xmomList().find(query, this.filterConditions.maxCount, this.filterConditions);
         });
 

@@ -38,13 +38,18 @@ class Flow {
     private readonly parent: SVGElement;
     private readonly _from: ModellingObjectComponent;
     private readonly _to: ModellingObjectComponent;
+    // @ts-expect-error(TODO:)
     private outlet: Vector2;
+    // @ts-expect-error(TODO:)
     private inlet: Vector2;
+    // @ts-expect-error(TODO:)
     private bgElement: SVGElement;
+    // @ts-expect-error(TODO:)
     private fgElement: SVGElement;
     private readonly _type: DataConnectionType;
     private readonly connection: XoConnection;
     private readonly readonly: boolean;
+    // @ts-expect-error(TODO:)
     private hasEventListeners: boolean;
 
     private readonly _offsetFrom: number;
@@ -196,6 +201,7 @@ class Flow {
             /** @todo make it better and differentiate on model-side if a variable is input or output of the workflow */
             const position = variable.inletPosition();
             if (!!position && position.y === 0 && variable.getModel().id && variable.getModel().id.startsWith('var-out')) {
+                // @ts-expect-error(TODO:)
                 position.y += this.parent.parentElement.clientHeight;       // add height of SVG-element
                 variable.inletPosition();
             }
@@ -276,6 +282,7 @@ class Flow {
 
 
     get branchId(): string {
+        // @ts-expect-error(TODO:)
         return this.connection ? this.connection.branchId : null;
     }
 }
@@ -303,11 +310,17 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
     private readonly branchSelection = inject(BranchSelectionService);
     private readonly ngZone = inject(NgZone);
 
+    // @ts-expect-error(TODO:)
     private _workflow: XoWorkflow;
+    // @ts-expect-error(TODO:)
     private _dataflow: XoConnectionArray;
+    // @ts-expect-error(TODO:)
     private selectionSubscription: Subscription;
+    // @ts-expect-error(TODO:)
     private _selectedVariable: SelectableModellingObjectComponent = null;
+    // @ts-expect-error(TODO:)
     private selectedFlow: Flow = null;
+    // @ts-expect-error(TODO:)
     private animationFrameHandle: number;
 
     private readonly incomingAutoConnections = new Map<ModellingObjectComponent, Array<ConnectionObject>>();
@@ -318,6 +331,7 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
     private readonly outgoingUserConnections = new Map<ModellingObjectComponent, Array<ConnectionObject>>();
 
     private readonly element = viewChild<ElementRef>('SVG');
+    // @ts-expect-error(TODO:)
     private view: SVGElement;
     private flows: Flow[] = [];
 
@@ -333,6 +347,7 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
 
 
     ngAfterViewInit() {
+        // @ts-expect-error(TODO:)
         this.view = createSVGGroup(this.element().nativeElement);
     }
 
@@ -411,6 +426,7 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
 
 
     get readonly(): boolean {
+        // @ts-expect-error(TODO:)
         return !!this.workflow && this.workflow.readonly || this.insideForeignRtc();
     }
 
@@ -425,6 +441,7 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
         if (this.selectedFlow) {
             this.selectedFlow.unselect();
         }
+        // @ts-expect-error(TODO:)
         this.selectedFlow = null;
         this._selectedVariable = value;
 
@@ -446,10 +463,12 @@ export class DataflowComponent implements AfterViewInit, OnDestroy {
                     let flow: Flow;
                     if (directionIn) {
                         const offsetTo = currentFlowIn - (numFlowsIn - 1) / 2;
+                        // @ts-expect-error(TODO:)
                         flow = new Flow(this.view, item.modellingObject, this.selectedVariable, type, 0, offsetTo, [this.addButtonFrom(), this.addButtonTo()], [this.removeButtonFrom(), this.removeButtonTo()], this.tooltip(), item.connection, this.readonly);
                         currentFlowIn++;
                     } else {
                         const offsetFrom = currentFlowOut - (numFlowsOut - 1) / 2;
+                        // @ts-expect-error(TODO:)
                         flow = new Flow(this.view, this.selectedVariable, item.modellingObject, type, offsetFrom, 0, [this.addButtonFrom(), this.addButtonTo()], [this.removeButtonFrom(), this.removeButtonTo()], this.tooltip(), item.connection, this.readonly);
                         currentFlowOut++;
                     }

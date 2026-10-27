@@ -40,12 +40,17 @@ export interface XMOMTreeItemState {
 })
 export class XMOMTreeItemComponent {
 
+    // @ts-expect-error(TODO:)
     private _xmomPath: XmomPath;
 
+    // @ts-expect-error(TODO:)
     private _expanded: boolean;
+    // @ts-expect-error(TODO:)
     private _selected: boolean;
 
+    // @ts-expect-error(TODO:)
     private _selectedXmomPaths: XmomPath[];
+    // @ts-expect-error(TODO:)
     private _expandedXmomPaths: XmomPath[];
 
     readonly stateChange = output<XMOMTreeItemState>();
@@ -139,6 +144,7 @@ export class XMOMTreeItemComponent {
     }
 
 
+    // @ts-expect-error(TODO:)
     readonly root = input<boolean>(undefined);
 
     @HostBinding('class.root')
@@ -165,6 +171,7 @@ export class XMOMTreeItemComponent {
 
 
     get label(): string {
+        // @ts-expect-error(TODO:)
         return this.xmomPath.label;
     }
 }

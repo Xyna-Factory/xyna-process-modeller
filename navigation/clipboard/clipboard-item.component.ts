@@ -43,6 +43,7 @@ import { XcIconComponent } from '@zeta/xc';
 })
 export class ClipboardItemComponent {
 
+    // @ts-expect-error(TODO:)
     readonly item = input<XoItem>(undefined);
 
 

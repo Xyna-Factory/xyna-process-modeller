@@ -19,7 +19,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 
-import { XcI18nContextDirective } from '../../../zeta/i18n';
+import { XcI18nContextDirective } from '@zeta/i18n';
 import { ModellingActionType } from '../api/xmom.service';
 import { XoExceptionType } from '../xo/exception-type.model';
 import { XoInsertModellingObjectRequest } from '../xo/insert-modelling-object-request.model';

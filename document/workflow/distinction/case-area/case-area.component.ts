@@ -54,6 +54,7 @@ export class CaseAreaComponent extends ModellingObjectComponent {
         if (xo instanceof XoCase) {
             const sameMergeGroup = xo.mergeGroup && this.caseArea.cases.every(c => c.mergeGroup === xo.mergeGroup);
             const sameBranch     = this.caseArea.cases.includes(xo);
+            // @ts-expect-error(TODO:)
             return sameMergeGroup && !sameBranch;
         }
         return false;
@@ -74,7 +75,7 @@ export class CaseAreaComponent extends ModellingObjectComponent {
             // show dialog to resolve conflict
             this.dialogService.custom(
                 ConflictDialogComponent,
-                <ConflictDialogData>{
+                {
                     title: this.i18n.translateInstant('pmod.workflow.case.merge-title'),
                     message: this.i18n.translateInstant('pmod.workflow.case.merge-message'),
                     handlings: [

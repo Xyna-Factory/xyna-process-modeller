@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -63,11 +65,11 @@ export class XoQuery extends XoInvocation {
         super(_ident);
 
         // instantiate specific member models such that they aren't pruned for the release build
-         
+
         const f = new XoFilterCriterion();
         const s = new XoSortingCriterion();
         const m = new XoSelectionMaskCriterion();
-         
+
     }
 
 

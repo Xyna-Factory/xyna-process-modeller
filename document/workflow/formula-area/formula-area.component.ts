@@ -24,7 +24,7 @@ import { XoInsertFormulaRequest } from '../../../xo/insert-formula-request.model
 import { XoInsertRequest } from '../../../xo/insert-request.model';
 import { XoRequest } from '../../../xo/request.model';
 import { ModellingObjectComponent } from '../shared/modelling-object.component';
-import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { FormulaComponent } from '../formula/formula.component';
 import { XcFormLabelComponent, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
@@ -42,6 +42,7 @@ export class FormulaAreaComponent extends ModellingObjectComponent {
     private _visibleFormulas: XoFormula[] = [];
 
 
+    // @ts-expect-error(TODO:)
     readonly areaLabel = input<string>(null);
 
     readonly newFormulaExpression = input('');

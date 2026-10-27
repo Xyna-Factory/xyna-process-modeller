@@ -38,6 +38,7 @@ export class ComponentMappingService {
 
     getComponentForId(documentItem: DocumentItem, id: string): ModellingObjectComponent {
         const documentMap = this._componentMap.get(documentItem);
+        // @ts-expect-error(TODO:)
         return documentMap ? documentMap.get(id) : null;
     }
 

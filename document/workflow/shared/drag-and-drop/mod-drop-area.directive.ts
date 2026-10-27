@@ -57,19 +57,20 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
     private readonly zone = inject(NgZone);
 
 
-    readonly items = input<{ id: string; }[]>(undefined, { alias: "mod-drop-area" });
+    readonly items = input<{ id: string }[]>(undefined, { alias: 'mod-drop-area' });
 
+    // @ts-expect-error(TODO:)
     private areaElement: Element;
 
     /**
      * Is called once when entering the area
      */
-    readonly allowItem = input<(xoFqn: string, xoId?: string) => boolean>(undefined, { alias: "mod-drop-area-allow-item" });
+    readonly allowItem = input<(xoFqn: string, xoId?: string) => boolean>(undefined, { alias: 'mod-drop-area-allow-item' });
 
     /**
      * Is called on dragover to decide, if an item can be dropped at a specific position. So don't do expensive operations here
      */
-    readonly canDrop = input<(draggable: Draggable, hoverEvent?: ModDragEvent, dragEvent?: ModDnDEvent) => boolean>(undefined, { alias: "mod-drop-area-can-drop" });
+    readonly canDrop = input<(draggable: Draggable, hoverEvent?: ModDragEvent, dragEvent?: ModDnDEvent) => boolean>(undefined, { alias: 'mod-drop-area-can-drop' });
 
     /**
      * Is called every time before the drop indicator is rendered
@@ -78,14 +79,14 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
      *
      * @returns Indentation of indicator in pixels. Modifying the passed event will also affect the indicator's behavior
      */
-    readonly updateIndicator = input<(dragEvent: ModDragEvent) => Distance>(undefined, { alias: "mod-drop-area-update-indicator" });
+    readonly updateIndicator = input<(dragEvent: ModDragEvent) => Distance>(undefined, { alias: 'mod-drop-area-update-indicator' });
 
-    readonly direction = input<'horizontal' | 'vertical'>('vertical', { alias: "mod-drop-area-direction" });
+    readonly direction = input<'horizontal' | 'vertical'>('vertical', { alias: 'mod-drop-area-direction' });
 
     /**
      * Defines if parallel (locationally) inserts are allowed
      */
-    readonly parallel = input(false, { alias: "mod-drop-area-allow-parallel", transform: coerceBoolean });
+    readonly parallel = input(false, { alias: 'mod-drop-area-allow-parallel', transform: coerceBoolean });
 
     private _hideIndicator = false;
     /**
@@ -102,8 +103,11 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
 
     readonly dropped = output<ModDropEvent>({ alias: 'mod-drop-area-dropped' });
 
+    // @ts-expect-error(TODO:)
     private dragOverHandler: (event: Event) => void;
+    // @ts-expect-error(TODO:)
     private dragEnterHandler: (event: Event) => void;
+    // @ts-expect-error(TODO:)
     private dragLeaveHandler: (event: Event) => void;
 
     private readonly subscriptions = new Array<Subscription>();
@@ -297,6 +301,7 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
                     childIndex = i;
                 }
             }
+            // @ts-expect-error(TODO:)
             if (!rect) {
                 // for empty areas
                 rect = new DOMRect(0, 0, 0, 0);
@@ -311,6 +316,7 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
         const localY = event.clientY - rect.top;
         const direction = this.direction();
         if (direction === 'horizontal') {
+            // @ts-expect-error(TODO:)
             const hoverSide = ModRelativeHoverSideCalculate(localX, localY, rect, true, this.parallel());
             if (hoverSide === ModRelativeHoverSide.right) {
                 dropIndex = childIndex + 1;
@@ -320,6 +326,7 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
                 side = hoverSide;
             }
         } else if (direction === 'vertical') {
+            // @ts-expect-error(TODO:)
             const hoverSide = ModRelativeHoverSideCalculate(localX, localY, rect, this.parallel(), true);
             if (hoverSide === ModRelativeHoverSide.bottom) {
                 dropIndex = childIndex + 1;
@@ -337,9 +344,13 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
         */
         return {
             index: dropIndex,
+            // @ts-expect-error(TODO:)
             indexUnderCursor: areaChild ? childIndex : -1,
+            // @ts-expect-error(TODO:)
             side: side,
+            // @ts-expect-error(TODO:)
             s: (((event as DragEvent).offsetX ?? 0) - (areaChild?.clientLeft ?? 0)) / (areaChild?.clientWidth ?? 1),
+            // @ts-expect-error(TODO:)
             t: (((event as DragEvent).offsetY ?? 0) - (areaChild?.clientTop ?? 0)) / (areaChild?.clientHeight ?? 1)
         };
     }
@@ -351,6 +362,7 @@ export class ModDropAreaDirective implements OnInit, OnDestroy {
     private getChildOfArea(deepChild: Element, area: Element): Element {
         let areaChild = deepChild;
         while (areaChild && areaChild.parentElement !== area) {
+            // @ts-expect-error(TODO:)
             areaChild = areaChild.parentElement;
         }
         return areaChild;

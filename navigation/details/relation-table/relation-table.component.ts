@@ -21,7 +21,7 @@ import { XoFactoryItemArray } from '@pmod/xo/factory-item.model';
 import { RelationTypeEnum, XoGetXmomRelationsResponse } from '@pmod/xo/get-xmom-relations-response.model';
 import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
-import { XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '@zeta/i18n';
 
 
 export interface RelationGroup {

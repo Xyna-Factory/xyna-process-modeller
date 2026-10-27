@@ -70,7 +70,7 @@ export interface VariableTabData {
 
 export interface MethodTabData {
     method: XoMethod;
-    
+
 }
 
 
@@ -87,6 +87,7 @@ export abstract class DatatypeTabComponent<D, E extends DocumentTabData<D> = Doc
 
 
     private readonly destroySubject = new Subject<void>();
+    // @ts-expect-error(TODO:)
     protected tabData: D;
 
     get readonly(): boolean {

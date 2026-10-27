@@ -81,17 +81,20 @@ export interface SkeletonTreeDataSourceObserver {
  * only represents the data type's skeleton itself
  */
 export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver {
+    // @ts-expect-error(TODO:)
     private readonly _root$ = new BehaviorSubject<SkeletonTreeNode>(null);
     private initializing = true;
 
     /**
      * @param rootIndex Index of root variable in outer context
      */
+    // @ts-expect-error(TODO:)
     constructor(protected describer: VariableDescriber, protected api: ApiService, protected rtc: RuntimeContext, protected observer: SkeletonTreeDataSourceObserver, protected rootIndex: number = undefined, private readonly structureCache?: XoDescriberCache<XoStructureObject>) {
     }
 
 
     refresh() {
+        // @ts-expect-error(TODO:)
         this.api.getStructure(this.rtc, [this.describer], this.structureCache).get(this.describer).pipe(first()).subscribe(structure => this.setStructure(structure));
     }
 
@@ -130,6 +133,7 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
      */
     processStructure(wrapper: StructureProcessWrapper[]): Observable<SkeletonTreeNode> {
         if (!wrapper.length) {
+            // @ts-expect-error(TODO:)
             return of(null);
         }
 
@@ -159,6 +163,7 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
     /* ***   Tree Node Factory   *** */
 
     createNodeFromStructure(structure: XoStructureField): SkeletonTreeNode {
+        // @ts-expect-error(TODO:)
         let node: SkeletonTreeNode = null;
         if (structure instanceof XoStructurePrimitive) {
             node = this.createPrimitiveNode(structure);
@@ -188,12 +193,15 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
 
     getNewChildren(structure: XoStructureObject): Observable<XoStructureField[]> {
         const describer = <XoDescriber>{ rtc: structure.typeRtc, fqn: structure.typeFqn };
+        // @ts-expect-error(TODO:)
         return this.api.getStructure(structure.typeRtc, [describer], this.structureCache).get(describer).pipe(
             first(),
             map(enrichedStructure => {
                 const newChildren = enrichedStructure.children.filter(child => !structure.children.find(oldChild => {
                     const oldChildWithoutParent = oldChild.clone(true);
+                    // @ts-expect-error(TODO:)
                     oldChildWithoutParent.parent = null;
+                    // @ts-expect-error(TODO:)
                     child.parent = null;
                     return child.equals(oldChildWithoutParent);
                 }));
@@ -205,6 +213,7 @@ export class SkeletonTreeDataSource implements TreeNodeFactory, TreeNodeObserver
 
     getSubtypes(structure: XoStructureObject): Observable<XoStructureType[]> {
         const describer = <XoDescriber>{ rtc: structure.typeRtc, fqn: structure.typeFqn };
+        // @ts-expect-error(TODO:)
         return this.api.getSubtypes(structure.typeRtc, [describer]).get(describer).pipe(first());
     }
 

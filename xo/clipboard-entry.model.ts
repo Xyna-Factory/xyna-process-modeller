@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -44,7 +46,7 @@ export class XoClipboardEntry extends XoObject {
 
     afterDecode() {
         if (this.item) {
-            const data: XoClipboardEntryData = this.item.data as XoClipboardEntryData;
+            const data: XoClipboardEntryData = this.item.data;
             data.$clipboard = {
                 originalRtc: this.originalRtc,
                 originalFqn: this.originalFqn

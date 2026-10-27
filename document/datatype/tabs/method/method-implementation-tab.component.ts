@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, inject, ViewChild , signal} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, ViewChild, signal} from '@angular/core';
 import { outputToObservable } from '@angular/core/rxjs-interop';
 
 import { DataTypeService } from '@pmod/document/datatype.service';
@@ -23,12 +23,11 @@ import { XoChangeMemberMethodImplementationTypeRequest } from '@pmod/xo/change-m
 import { XoChangeMemberMethodReferenceRequest } from '@pmod/xo/change-member-method-reference-request.model';
 import { XoDynamicMethod } from '@pmod/xo/dynamic-method.model';
 import { XoMethod } from '@pmod/xo/method.model';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, XcI18nContextDirective, XcI18nTranslateDirective  } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcButtonComponent, XcFormAutocompleteComponent, XcIconButtonComponent, XcOptionItem, XcOptionItemStringOrUndefined, XcOptionItemTranslate, XcTooltipDirective } from '@zeta/xc';
 
 import { filter } from 'rxjs';
 
-import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { MethodImplementationComponent } from '../../method-implementation/method-implementation.component';
 import { DatatypeMethodTabComponent } from '../datatype-tab.component';
 
@@ -73,6 +72,7 @@ export class MethodImplementationTabComponent extends DatatypeMethodTabComponent
             ()    => this.method instanceof XoDynamicMethod ? this.method.reference : undefined,
             value => {
                 if (this.method instanceof XoDynamicMethod && this.method.reference !== value) {
+                    // @ts-expect-error(TODO:)
                     this.method.reference = value;
                     if (value) {
                         this.performMethodChange(new XoChangeMemberMethodReferenceRequest(undefined, value));
@@ -87,6 +87,7 @@ export class MethodImplementationTabComponent extends DatatypeMethodTabComponent
 
         this.untilDestroyed(this.injectedData.update).subscribe(() => {
             this.refreshImplementationTypeAutocomplete();
+            // @ts-expect-error(TODO:)
             this.referenceDataWrapper.preset(v => XcOptionItemStringOrUndefined(v));
             this.cdr.markForCheck();
         });
@@ -121,6 +122,7 @@ export class MethodImplementationTabComponent extends DatatypeMethodTabComponent
 
     @ViewChild('referenceAutocomplete', {static: false, read: XcFormAutocompleteComponent})
     set pathAutocomplete(value: XcFormAutocompleteComponent) {
+        // @ts-expect-error(TODO:)
         this.untilDestroyed(value ? outputToObservable(value.focus) : undefined)?.pipe(filter(() => !value.disabled)).subscribe(() => this.refreshReferenceAutocomplete());
     }
 }

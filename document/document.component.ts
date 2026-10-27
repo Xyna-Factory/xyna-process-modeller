@@ -77,6 +77,7 @@ export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponen
             .pipe(filter(model => model === this.document))
             .subscribe(model => this.componentMappingService.removeComponentsForRoot(model.item));
 
+        // @ts-expect-error(TODO:)
         foreignRtcObserver.next(null);
     }
 
@@ -111,8 +112,10 @@ export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponen
 
 
     protected sendNextAction() {
+        // @ts-expect-error(TODO:)
         const convertAction = (action: TriggeredAction): ModellingAction => {
             if (action) {
+                // @ts-expect-error(TODO:)
                 (<ModellingAction>action).subsequentAction = convertAction(action.subsequentAction);
                 (<ModellingAction>action).xmomItem = this.document.item;
                 (<ModellingAction>action).rtc = this.documentService.xmomService.runtimeContext;
@@ -126,6 +129,7 @@ export class DocumentComponent<R, D extends DocumentModel> extends XcTabComponen
             // peform action
             this.untilDestroyed(
                 this.documentService.performModellingAction(
+                    // @ts-expect-error(TODO:)
                     convertAction(action),
                     this.document.item
                 )

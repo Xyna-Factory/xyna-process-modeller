@@ -34,16 +34,22 @@ export class TemplateRow extends XoItem {
      * @return Actually added part (if merged, result !== part)
      */
     addPart(part: XoItem & TextItem, index?: number): (XoItem & TextItem) {
+        // @ts-expect-error(TODO:)
         index = isNaN(index) ? this.templateParts.length : index;
 
         // a formula must be preceded by a text
+        // @ts-expect-error(TODO:)
         if (part instanceof XoFormula && (index === 0 || this.templateParts[index - 1] instanceof XoFormula)) {
+            // @ts-expect-error(TODO:)
             this.templateParts.splice(index, 0, TemplateText.withText(''));
+            // @ts-expect-error(TODO:)
             index++;
         }
 
         // merge adjacent text-parts
+        // @ts-expect-error(TODO:)
         const leftPart = index > 0 ? this.templateParts[index - 1] : null;
+        // @ts-expect-error(TODO:)
         const rightPart = index < this.templateParts.length ? this.templateParts[index] : null;
         if (part instanceof TemplateText && leftPart instanceof TemplateText) {
             leftPart.setText(leftPart.getText() + part.getText());
@@ -54,6 +60,7 @@ export class TemplateRow extends XoItem {
             return rightPart;
         }
 
+        // @ts-expect-error(TODO:)
         this.templateParts.splice(index, 0, part);
         return part;
     }
@@ -89,9 +96,9 @@ export class TemplateRow extends XoItem {
         return this.templateParts.filter(part => !!part.getText()).map(part => part.getText()).join(' ') || '';
     }
 
-    private static _idcounter: number = 0;
+    private static _idcounter = 0;
     private static get idcounter(): number {
-        TemplateRow._idcounter = TemplateRow._idcounter + 1;
+        TemplateRow._idcounter += 1;
         return TemplateRow._idcounter;
     }
 

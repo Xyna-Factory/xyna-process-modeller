@@ -17,7 +17,7 @@
  */
 import { ChangeDetectionStrategy, Component, forwardRef, Input } from '@angular/core';
 
-import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
+import { XcI18nTranslateDirective } from '@zeta/i18n';
 import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoChangeCompensationRequest } from '../../../../xo/change-compensation-request.model';
 import { XoCompensation } from '../../../../xo/compensation.model';
@@ -49,6 +49,7 @@ export class CompensationComponent extends ModellingItemComponent {
     overrideCompensation(override: boolean) {
         this.performAction({
             type: ModellingActionType.change,
+            // @ts-expect-error(TODO:)
             objectId: undefined,    // filled by containing invocation
             request: XoChangeCompensationRequest.override(override)
         });

@@ -91,6 +91,7 @@ function getPascalCaseString(str: string): string {
 
     const detectAllNotAllowedChars = /([\s_-])/;
     let res: RegExpExecArray;
+    // @ts-expect-error(TODO:)
     while ((res = detectAllNotAllowedChars.exec(str))) {
         str = str.replace(res[0], '');
     }
@@ -161,6 +162,49 @@ function getIndentString(str: string, indent: string): string {
     return str.replace(/^/gm, indent);
 }
 
+
+export enum ZetaDecoratorType {
+    XoArrayClass = 'XoArrayClass',
+    XoObjectClass = 'XoObjectClass',
+    XoProperty = 'XoProperty',
+    XoTransient = 'XoTransient',
+    XoI18n = 'XoI18n',
+    XoEnumerated = 'XoEnumerated',
+    XoUnique = 'XoUnique'
+}
+
+export class ZetaDecorator implements StringifyClass {
+
+    private readonly args: string[];
+
+    // @ts-expect-error(TODO:)
+    private _importDestination: string;
+
+    get importDestination(): string {
+        return this._importDestination ? this._importDestination : ZETA_DEFAULT_DESTINATION;
+    }
+    set importDestination(value: string) {
+        this._importDestination = value;
+    }
+
+    constructor(public type: ZetaDecoratorType, ...args: string[]) {
+        this.args = args;
+    }
+
+    addArgument(value: string) {
+        this.args.push(value);
+    }
+
+    stringify() {
+        const args = this.args.join(', ');
+        return '@' + this.type + '(' + args + ')';
+    }
+
+    toString(): string {
+        return this.type;
+    }
+}
+
 /**
  * HARD CODE HERE: the pool of decorators, which exists for properties
  * the number of property decorators, used in the zeta framework, is known from the start
@@ -209,52 +253,14 @@ interface StringifyClass {
     stringify: (options?: any) => string;
 }
 
-export enum ZetaDecoratorType {
-    XoArrayClass = 'XoArrayClass',
-    XoObjectClass = 'XoObjectClass',
-    XoProperty = 'XoProperty',
-    XoTransient = 'XoTransient',
-    XoI18n = 'XoI18n',
-    XoEnumerated = 'XoEnumerated',
-    XoUnique = 'XoUnique'
-}
 
-export class ZetaDecorator implements StringifyClass {
-
-    private readonly args: string[];
-
-    private _importDestination: string;
-
-    get importDestination(): string {
-        return this._importDestination ? this._importDestination : ZETA_DEFAULT_DESTINATION;
-    }
-    set importDestination(value: string) {
-        this._importDestination = value;
-    }
-
-    constructor(public type: ZetaDecoratorType, ...args: string[]) {
-        this.args = args;
-    }
-
-    addArgument(value: string) {
-        this.args.push(value);
-    }
-
-    stringify() {
-        const args = this.args.join(', ');
-        return '@' + this.type + '(' + args + ')';
-    }
-
-    toString(): string {
-        return this.type;
-    }
-}
 
 export class TypeScriptImports implements StringifyClass {
     destinationTokenMap = new Map<string, Map<string, string>>();
 
     set(token: string, destination: string) {
         if (this.destinationTokenMap.has(destination)) {
+            // @ts-expect-error(TODO:)
             this.destinationTokenMap.get(destination).set(token, destination);
         } else {
             const tmp = new Map<string, string>();
@@ -268,6 +274,7 @@ export class TypeScriptImports implements StringifyClass {
         const lines: string[] = [];
         let i: number, tokens: string[];
         for (i = 0; i < dest.length; i++) {
+            // @ts-expect-error(TODO:)
             tokens = Array.from(this.destinationTokenMap.get(dest[i]).keys());
             lines.push('import { ' + tokens.join(', ') + ' } from ' + getTemplateString(dest[i]) + ';');
         }
@@ -278,22 +285,180 @@ export class TypeScriptImports implements StringifyClass {
         const dest = Array.from(this.destinationTokenMap.keys());
         let i: number;
         for (i = 0; i < dest.length; i++) {
+            // @ts-expect-error(TODO:)
             this.destinationTokenMap.get(dest[i]).clear();
         }
         this.destinationTokenMap.clear();
     }
 }
 
+class TemplateToken {
+    replaced = false;
+    // @ts-expect-error(TODO:)
+    replaceString: string;
+    constructor(public type: string, public args: string[]) { }
+}
+
+/**
+ * reads a template and extracts its tokens
+ * example token: #TOKEN_TYPE%all%args%are%optional# => type = 'TOKEN_TYPE', args = ['all', 'args', 'are', 'optional']
+ */
+class TemplateBuilder {
+
+    rawTokensRegEx = /#[A-Z_]+([%]{1}[\w\s\\]*)*#/gm;
+    // can only extract the token type but not its arguments because
+    // you should be able to give an argument containing only of spacebars, which will be ignored
+    // by regexp (maybe bug?)
+    typeExtractorRegEx = /^#([A-Z_]+){1}([%]{1}[\w\s\\]*)*#$/;
+    tokens: TemplateToken[] = [];
+
+    get template(): string {
+        return this.tmpl;
+    }
+
+    constructor(private tmpl: string) {
+        this._read();
+    }
+
+    private _read() {
+        const rawTokens = this.tmpl.match(this.rawTokensRegEx);
+        let str: string;
+        let res: RegExpExecArray, type: string, args: string[], argStr: string;
+        let token: TemplateToken;
+
+        // @ts-expect-error(TODO:)
+        for (str of rawTokens) {
+            // @ts-expect-error(TODO:)
+            res = this.typeExtractorRegEx.exec(str);
+            type = res[1];
+
+            // are there args in the rawToken
+            if (str.indexOf('%') > 1) {
+                // substring parameter explanation:
+                // type.length + 2 => type and first pound char and first percent char
+                // str.length - 1 => cutting out the 2nd pound char
+                // argStr => all arguments seperated by percent
+                argStr = str.substring(type.length + 2, str.length - 1);
+                args = argStr.split('%');
+            } else {
+                args = [];
+            }
+            token = new TemplateToken(type, args);
+            token.replaceString = str;
+            this.tokens.push(token);
+        }
+    }
+
+    // insert a string into a token
+    insert(token: TemplateToken, str: string) {
+        if (!token.replaced) {
+            this.tmpl = this.tmpl.replace(token.replaceString, str);
+            token.replaced = true;
+        }
+    }
+
+    // remove the token (the line of the token as well)
+    remove(token: TemplateToken, strBefore = '', strAfter = '') {
+        if (!token.replaced) {
+            const lineRegExp = new RegExp(strBefore + '^[.]*' + token.replaceString + '[.]*$\n' + strAfter, 'gm');
+            this.tmpl = this.tmpl.replace(lineRegExp, '');
+            token.replaced = true;
+        }
+    }
+}
+
+
+enum TemplateTokenType {
+    imports = 'IMPORTS',
+    objectDocumentation = 'OBJECT_DOCUMENTATION',
+    objectDecorators = 'OBJECT_DECORATORS',
+    objectClassBegin = 'OBJECT_CLASS_BEGIN',
+    objectProperties = 'OBJECT_PROPERTIES',
+    objectConstructor = 'OBJECT_CONSTRUCTOR',
+    objectClassEnd = 'OBJECT_CLASS_END',
+    arrayDecorators = 'ARRAY_DECORATORS',
+    arrayClassBegin = 'ARRAY_CLASS_BEGIN',
+    arrayClassEnd = 'ARRAY_CLASS_END'
+}
+
+// #OBJECT_PROPERTIES%identString%seperationString#
+
+const defaultDataTypeTemplate =
+    `#${TemplateTokenType.imports}#
+
+#${TemplateTokenType.objectDocumentation}#
+#${TemplateTokenType.objectDecorators}#
+#${TemplateTokenType.objectClassBegin}#
+
+
+#${TemplateTokenType.objectProperties}%    %\n\n#
+
+
+#${TemplateTokenType.objectConstructor}%    #
+
+
+#${TemplateTokenType.objectClassEnd}#
+
+#${TemplateTokenType.arrayDecorators}#
+#${TemplateTokenType.arrayClassBegin}#
+#${TemplateTokenType.arrayClassEnd}#
+`;
+
+
+export class DataTypeConversionOptions {
+    convertDocumentation = false;
+    convertInheritance = true;
+    convertChildProperties = false;
+    createConstructor = false;
+}
+
+export class PropertyConversionOptions {
+    convertDocumentation = false;
+
+    // @ts-expect-error(TODO:)
+    preinitilize: boolean;
+    // @ts-expect-error(TODO:)
+    value: string;
+
+    // @ts-expect-error(TODO:)
+    decoratorPool: ZetaDecorator[];
+    decorators: ZetaDecorator[] = [];
+
+    /**
+     * not recommended but sometimes necessary
+     * this method only works because ZetaDecoratorType is an enum out of string values
+     */
+    setDecoratorByArray(arr: string[]) {
+        let str: string, i: number;
+        this.decoratorPool = this.decoratorPool.concat(this.decorators);
+        this.decorators = [];
+        for (str of arr) {
+            for (i = 0; i < this.decoratorPool.length; i++) {
+                if (this.decoratorPool[i].type === str) {
+                    this.decorators.push(this.decoratorPool.splice(i, 1)[0]);
+                    i--; // TODO - might be necessary - check this!
+                }
+            }
+        }
+    }
+}
+
 export class DataTypeProperty implements StringifyClass {
 
 
+    // @ts-expect-error(TODO:)
     indentString: string;
+    // @ts-expect-error(TODO:)
     seperatorString: string;
 
+    // @ts-expect-error(TODO:)
     refPath: string;
+    // @ts-expect-error(TODO:)
     refName: string;
+    // @ts-expect-error(TODO:)
     name: string;
 
+    // @ts-expect-error(TODO:)
     private _javaType: string;
 
     get javaType(): string {
@@ -318,15 +483,21 @@ export class DataTypeProperty implements StringifyClass {
         }
     }
 
+    // @ts-expect-error(TODO:)
     type: string;
 
+    // @ts-expect-error(TODO:)
     label: string;
 
+    // @ts-expect-error(TODO:)
     isComplex: boolean;
 
+    // @ts-expect-error(TODO:)
     isList: boolean;
+    // @ts-expect-error(TODO:)
     isUniqueIdentifier: boolean; // being unique identifier in the xyna model, does not automatically mean in zeta as well
 
+    // @ts-expect-error(TODO:)
     documentation: string;
 
     options = new PropertyConversionOptions();
@@ -355,29 +526,38 @@ export class DataTypeProperty implements StringifyClass {
 
 export class DataTypeConvertable implements StringifyClass {
 
+    // @ts-expect-error(TODO:)
     template: string;
 
     imports: TypeScriptImports = new TypeScriptImports();
     objectClassDecorators: ZetaDecorator[] = [];
     arrayClassDecorators: ZetaDecorator[] = [];
 
+    // @ts-expect-error(TODO:)
     path: string;
+    // @ts-expect-error(TODO:)
     name: string;
+    // @ts-expect-error(TODO:)
     label: string;
+    // @ts-expect-error(TODO:)
     isChild: boolean;
 
     get zetaName(): string {
         return getZetaClassString(this.name);
     }
 
+    // @ts-expect-error(TODO:)
     basePath: string;
+    // @ts-expect-error(TODO:)
     baseName: string;
 
+    // @ts-expect-error(TODO:)
     documentation: string;
 
     childProperties: DataTypeProperty[] = [];
     properties: DataTypeProperty[] = [];
 
+    // @ts-expect-error(TODO:)
     filename: string;
 
     options = new DataTypeConversionOptions();
@@ -501,41 +681,6 @@ export class DataTypeConvertable implements StringifyClass {
 
 }
 
-export class DataTypeConversionOptions {
-    convertDocumentation = false;
-    convertInheritance = true;
-    convertChildProperties = false;
-    createConstructor = false;
-}
-
-export class PropertyConversionOptions {
-    convertDocumentation = false;
-
-    preinitilize: boolean;
-    value: string;
-
-    decoratorPool: ZetaDecorator[];
-    decorators: ZetaDecorator[] = [];
-
-    /**
-     * not recommended but sometimes necessary
-     * this method only works because ZetaDecoratorType is an enum out of string values
-     */
-    setDecoratorByArray(arr: string[]) {
-        let str: string, i: number;
-        this.decoratorPool = this.decoratorPool.concat(this.decorators);
-        this.decorators = [];
-        for (str of arr) {
-            for (i = 0; i < this.decoratorPool.length; i++) {
-                if (this.decoratorPool[i].type === str) {
-                    this.decorators.push(this.decoratorPool.splice(i, 1)[0]);
-                    i--; // TODO - might be necessary - check this!
-                }
-            }
-        }
-    }
-}
-
 @Injectable({ providedIn: 'root' })
 export class DataTypeConverterService {
 
@@ -546,16 +691,23 @@ export class DataTypeConverterService {
 
         const xmlDocument = this._domParser.parseFromString(xmlString, 'text/xml');
         const dataTypeRootNode = xmlDocument.querySelector(DATA_TYPE_ROOT_SELECTOR);
+        // @ts-expect-error(TODO:)
         const docNode = dataTypeRootNode.querySelector(DATA_TYPE_DOCUMENTATION_SELECTOR);
+        // @ts-expect-error(TODO:)
         const propertyNodes = dataTypeRootNode.querySelectorAll(DATA_TYPE_PROPERTIES_SELECTOR_ALL);
 
         datatype.template = defaultDataTypeTemplate; // template used in the stringify method
 
+        // @ts-expect-error(TODO:)
         datatype.path = dataTypeRootNode.getAttribute(DATA_TYPE_TYPE_PATH_ATTR);
+        // @ts-expect-error(TODO:)
         datatype.name = dataTypeRootNode.getAttribute(DATA_TYPE_TYPE_NAME_ATTR);
+        // @ts-expect-error(TODO:)
         datatype.label = dataTypeRootNode.getAttribute(DATA_TYPE_LABEL_ATTR);
 
+        // @ts-expect-error(TODO:)
         datatype.basePath = dataTypeRootNode.getAttribute(DATA_TYPE_BASE_TYPE_PATH_ATTR);
+        // @ts-expect-error(TODO:)
         datatype.baseName = dataTypeRootNode.getAttribute(DATA_TYPE_BASE_TYPE_NAME_ATTR);
 
         // data type needs to inherit from BaseStorable in order to be persisted in the database
@@ -573,9 +725,13 @@ export class DataTypeConverterService {
             node = propertyNodes.item(i);
             prop = new DataTypeProperty();
 
+            // @ts-expect-error(TODO:)
             prop.refPath = node.getAttribute(PROPERTY_REFERENCE_PATH_ATTR);
+            // @ts-expect-error(TODO:)
             prop.refName = node.getAttribute(PROPERTY_REFERENCE_NAME_ATTR);
+            // @ts-expect-error(TODO:)
             prop.name = node.getAttribute(PROPERTY_VARIABLE_NAME_ATTR);
+            // @ts-expect-error(TODO:)
             prop.label = node.getAttribute(PROPERTY_LABEL_ATTR);
             prop.isList = (node.getAttribute(PROPERTY_IS_LIST_ATTR) === 'true');
 
@@ -703,112 +859,3 @@ export class DataTypeConverterService {
         return prop;
     }
 }
-
-class TemplateToken {
-    replaced = false;
-    replaceString: string;
-    constructor(public type: string, public args: string[]) { }
-}
-
-/**
- * reads a template and extracts its tokens
- * example token: #TOKEN_TYPE%all%args%are%optional# => type = 'TOKEN_TYPE', args = ['all', 'args', 'are', 'optional']
- */
-class TemplateBuilder {
-
-    rawTokensRegEx = /#[A-Z_]+([%]{1}[\w\s\\]*)*#/gm;
-    // can only extract the token type but not its arguments because
-    // you should be able to give an argument containing only of spacebars, which will be ignored
-    // by regexp (maybe bug?)
-    typeExtractorRegEx = /^#([A-Z_]+){1}([%]{1}[\w\s\\]*)*#$/;
-    tokens: TemplateToken[] = [];
-
-    get template(): string {
-        return this.tmpl;
-    }
-
-    constructor(private tmpl: string) {
-        this._read();
-    }
-
-    private _read() {
-        const rawTokens = this.tmpl.match(this.rawTokensRegEx);
-        let str: string;
-        let res: RegExpExecArray, type: string, args: string[], argStr: string;
-        let token: TemplateToken;
-
-        for (str of rawTokens) {
-            res = this.typeExtractorRegEx.exec(str);
-            type = res[1];
-
-            // are there args in the rawToken
-            if (str.indexOf('%') > 1) {
-                // substring parameter explanation:
-                // type.length + 2 => type and first pound char and first percent char
-                // str.length - 1 => cutting out the 2nd pound char
-                // argStr => all arguments seperated by percent
-                argStr = str.substring(type.length + 2, str.length - 1);
-                args = argStr.split('%');
-            } else {
-                args = [];
-            }
-            token = new TemplateToken(type, args);
-            token.replaceString = str;
-            this.tokens.push(token);
-        }
-    }
-
-    // insert a string into a token
-    insert(token: TemplateToken, str: string) {
-        if (!token.replaced) {
-            this.tmpl = this.tmpl.replace(token.replaceString, str);
-            token.replaced = true;
-        }
-    }
-
-    // remove the token (the line of the token as well)
-    remove(token: TemplateToken, strBefore = '', strAfter = '') {
-        if (!token.replaced) {
-            const lineRegExp = new RegExp(strBefore + '^[.]*' + token.replaceString + '[.]*$\n' + strAfter, 'gm');
-            this.tmpl = this.tmpl.replace(lineRegExp, '');
-            token.replaced = true;
-        }
-    }
-}
-
-
-enum TemplateTokenType {
-    imports = 'IMPORTS',
-    objectDocumentation = 'OBJECT_DOCUMENTATION',
-    objectDecorators = 'OBJECT_DECORATORS',
-    objectClassBegin = 'OBJECT_CLASS_BEGIN',
-    objectProperties = 'OBJECT_PROPERTIES',
-    objectConstructor = 'OBJECT_CONSTRUCTOR',
-    objectClassEnd = 'OBJECT_CLASS_END',
-    arrayDecorators = 'ARRAY_DECORATORS',
-    arrayClassBegin = 'ARRAY_CLASS_BEGIN',
-    arrayClassEnd = 'ARRAY_CLASS_END'
-}
-
-// #OBJECT_PROPERTIES%identString%seperationString#
-
-const defaultDataTypeTemplate =
-    `#${TemplateTokenType.imports}#
-
-#${TemplateTokenType.objectDocumentation}#
-#${TemplateTokenType.objectDecorators}#
-#${TemplateTokenType.objectClassBegin}#
-
-
-#${TemplateTokenType.objectProperties}%    %\n\n#
-
-
-#${TemplateTokenType.objectConstructor}%    #
-
-
-#${TemplateTokenType.objectClassEnd}#
-
-#${TemplateTokenType.arrayDecorators}#
-#${TemplateTokenType.arrayClassBegin}#
-#${TemplateTokenType.arrayClassEnd}#
-`;

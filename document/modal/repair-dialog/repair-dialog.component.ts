@@ -19,7 +19,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent, XcIconComponent } from '@zeta/xc';
 
-import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XoRepairEntry, XoRepairEntryArray } from '../../../xo/repair-entry.model';
 import { repairDialog_translations_de_DE } from './locale/repair-dialog-translations.de-DE';
 import { repairDialog_translations_en_US } from './locale/repair-dialog-translations.en-US';

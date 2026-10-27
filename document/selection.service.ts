@@ -28,6 +28,7 @@ export class SelectionService {
     private _suppressNext = false;
 
     private readonly _doubleClickObjectSubject = new Subject<SelectableModellingObjectComponent>();
+    // @ts-expect-error(TODO:)
     private readonly _selectedObjectSubject = new BehaviorSubject<SelectableModellingObjectComponent>(null);
 
 
@@ -64,6 +65,7 @@ export class SelectionService {
 
 
     clearSelection() {
+        // @ts-expect-error(TODO:)
         this.selectedObject = null;
     }
 }

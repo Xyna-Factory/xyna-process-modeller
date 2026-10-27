@@ -24,7 +24,7 @@ import { FullQualifiedName } from '@zeta/api';
 import { copyToClipboard, KeyboardEventType, KeyDistributionService, pasteFromClipboard } from '@zeta/base';
 import { XcContentEditableDirective, XcIconButtonComponent, XcMenuItem, XcMenuServiceDirective, XcMenuTriggerDirective, XcStatusBarEntryType, XcStatusBarService } from '@zeta/xc';
 
-import { XcI18nContextDirective } from '../../../zeta/i18n';
+import { XcI18nContextDirective } from '@zeta/i18n';
 import { DeploymentState } from '../api/xmom-types';
 import { ModellingActionType, XmomState } from '../api/xmom.service';
 import { XoConnectionArray } from '../xo/connection.model';
@@ -71,8 +71,9 @@ export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowD
             const fqn = this.workflow.toFqn();
             const rtc = (this.workflow.$rtc ?? this.workflow.evaluatedRtc).runtimeContext();
             this.dialogService.custom(
+                // @ts-expect-error(TODO:)
                 WorkflowTesterDialogComponent,
-                <WorkflowTesterData>{
+                {
                     runtimeContext: rtc,
                     orderType: fqn.encode(),
                     input: this.workflow.runtimeInfo?.getInput()
@@ -139,7 +140,9 @@ export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowD
         this.menuItemCompare
     ];
 
+    // @ts-expect-error(TODO:)
     dataflow: XoConnectionArray;
+    // @ts-expect-error(TODO:)
     subscription: Subscription;
 
 
@@ -181,6 +184,7 @@ export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowD
             if (eventObject.key.toLowerCase() === 'c' && eventObject.ctrl && !this.dialogService.isDialogOpen()) {
                 const object = this.selectionService.selectedObject;
                 const activeElement = window.document.activeElement;
+                // @ts-expect-error(TODO:)
                 const textSelection = window.getSelection().toString();
                 if (object && !textSelection && (activeElement === object.getElementRef().nativeElement || activeElement === window.document.body)) {
                     if (eventObject.type === KeyboardEventType.KEY_TYPE_DOWN) {
@@ -209,6 +213,7 @@ export class WorkflowDocumentComponent extends DocumentComponent<void, WorkflowD
         this.untilDestroyed(this.keyService.keyEvents).pipe(filter(() => this.document.tabActive)).subscribe(eventObject => {
             if (eventObject.key.toLowerCase() === 'v' && eventObject.ctrl && !this.dialogService.isDialogOpen()) {
                 const activeElement = window.document.activeElement;
+                // @ts-expect-error(TODO:)
                 if (activeElement.getAttribute('contenteditable') !== XcContentEditableDirective.getContentEditableValue() && (this.elementRef.nativeElement.contains(activeElement) || activeElement === window.document.body)) {
                     if (eventObject.type === KeyboardEventType.KEY_TYPE_DOWN) {
                         eventObject.preventDefault();

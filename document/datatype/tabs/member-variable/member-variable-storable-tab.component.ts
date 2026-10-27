@@ -18,10 +18,9 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { XoChangeMemberVariableStorableRoleRequest } from '@pmod/xo/change-member-variable-storable-role-request.model';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, XcI18nTranslateDirective  } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcFormLabelComponent, XcOptionItemString, XcOptionItemTranslate } from '@zeta/xc';
 
-import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { StorablePropertiesAreaComponent } from '../../storable-properties-area/storable-properties-area.component';
 import { DatatypeVariableTabComponent } from '../datatype-tab.component';
 

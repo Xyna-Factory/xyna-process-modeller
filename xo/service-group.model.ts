@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -74,6 +76,7 @@ export class XoServiceGroup extends XoXmomItem {
                 // TODO: remove backwards compatibility
                 case 'methodsArea':
                 // TODO: rename to memberMethodsArea (same as in data type)
+                // eslint-disable-next-line no-fallthrough
                 case XoServiceGroup.METHODS_AREA:    this.methodsArea             = area as XoMemberMethodArea; break;
             }
         }

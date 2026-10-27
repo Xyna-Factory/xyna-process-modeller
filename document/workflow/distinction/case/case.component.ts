@@ -23,7 +23,7 @@ import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoCase } from '../../../../xo/case.model';
 import { XoChangeTextRequest } from '../../../../xo/change-text-request.model';
 import { ModellingItemComponent } from '../../shared/modelling-object.component';
-import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
+import { XcI18nTranslateDirective } from '@zeta/i18n';
 import { FormulaComponent } from '../../formula/formula.component';
 import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
@@ -37,6 +37,7 @@ import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 })
 export class CaseComponent extends ModellingItemComponent {
 
+    // @ts-expect-error(TODO:)
     readonly detachable = input<boolean>(undefined);
 
 

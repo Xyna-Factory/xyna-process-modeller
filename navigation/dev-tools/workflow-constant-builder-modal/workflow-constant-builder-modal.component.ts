@@ -21,7 +21,7 @@ import { ApiService, RuntimeContext } from '@zeta/api';
 import { downloadFile } from '@zeta/base';
 import { XcAutocompleteDataWrapper, XcButtonComponent, XcCheckboxComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormAutocompleteComponent, XcFormInputComponent, XcFormTextareaComponent, XcPanelComponent } from '@zeta/xc';
 
-import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { DocumentService } from '../../../document/document.service';
 import { FactoryService } from '../../factory.service';
 import { WorkflowConstantBuilder } from '../workflow-constant-builder.class';

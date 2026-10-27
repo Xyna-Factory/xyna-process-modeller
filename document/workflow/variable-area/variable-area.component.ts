@@ -38,6 +38,7 @@ import { VariableComponent } from '../variable/variable.component';
     imports: [ModDropAreaDirective, NgFor, VariableComponent, ModDraggableDirective]
 })
 export class VariableAreaComponent extends ModellingObjectComponent {
+    // @ts-expect-error(TODO:)
     private _kind: 'input-area' | 'output-area' | 'throws-area';
 
     readonly DragType = DragType;
@@ -58,6 +59,7 @@ export class VariableAreaComponent extends ModellingObjectComponent {
         if (moving && !xo.deletable) {
             return false;
         }
+        // @ts-expect-error(TODO:)
         return !this.variableArea.variables.find((variable, index) => index >= hoverEvent.index && !variable.deletable);
     };
 

@@ -89,6 +89,7 @@ export class DocumentService implements OnDestroy {
 
     private readonly documentListSubject = new BehaviorSubject<DocumentModel[]>([]);
     private readonly documentUpdateSubject = new Subject<{ item: DocumentItem; response: XoUpdateXmomItemResponse }>();
+    // @ts-expect-error(TODO:)
     private readonly selectedDocumentSubject = new BehaviorSubject<DocumentModel>(null);
     private readonly closeDocumentSubject = new Subject<DocumentModel>();
 
@@ -129,6 +130,7 @@ export class DocumentService implements OnDestroy {
         });
 
         const documentByEvent = (event: XMOMLocated): DocumentModel<DocumentItem> =>
+            // @ts-expect-error(TODO:)
             this.documents.find(document =>
                 document.item.$fqn === event.$fqn &&
                 document.item.$rtc.runtimeContext().equals(event.$rtc.toRuntimeContext())
@@ -186,6 +188,7 @@ export class DocumentService implements OnDestroy {
 
     private handleLock(document: DocumentModel<DocumentItem>, event: XoDocumentLock | XoDocumentUnlock) {
         document?.updateLock({
+            // @ts-expect-error(TODO:)
             userLock: event instanceof XoDocumentLock ? event.creator : undefined,
             rtcLock: document.lockInfo.rtcLock,
             readonly: document.lockInfo.readonly
@@ -213,7 +216,8 @@ export class DocumentService implements OnDestroy {
         //     errorMessage: message + (exceptionMessage ? ': ' + exceptionMessage : ''),
         //     stackTrace: stackTrace
         // });
-        this.dialogService.custom(ErrorDialogComponent, <ErrorDialogData>{
+        // @ts-expect-error(TODO:)
+        this.dialogService.custom(ErrorDialogComponent, {
             errorMessage: message + (errorMessage ? ': ' + errorMessage : ''),
             stackTrace: stackTrace
         }, null, 'allow-linebreak');
@@ -222,8 +226,9 @@ export class DocumentService implements OnDestroy {
 
     showErrorDialog(error: XoError) {
         this.dialogService.custom(
+            // @ts-expect-error(TODO:)
             ErrorDialogComponent,
-            <ErrorDialogData>{
+            {
                 errorMessage: this.i18n.translateInstant('This action did not work') + (error.message ? '\n"' + error.message + '"' : ''),
                 stackTrace: error.stacktrace
             },
@@ -328,6 +333,7 @@ export class DocumentService implements OnDestroy {
             this.documents.splice(index, 1);
 
             const newSelectedIndex = index < this.documents.length ? index : this.documents.length - 1;
+            // @ts-expect-error(TODO:)
             this.selectedDocument = (newSelectedIndex >= 0) ? this.documents[newSelectedIndex] : null;
 
             this.documentListSubject.next(this.documents);
@@ -392,6 +398,7 @@ export class DocumentService implements OnDestroy {
         const data: ModellingAction = {
             type: ModellingActionType.delete,
             request: new XoDeleteRequest(undefined, force),
+            // @ts-expect-error(TODO:)
             objectId: null,
             errorHandler,
             xmomItem,
@@ -419,6 +426,7 @@ export class DocumentService implements OnDestroy {
             switchMap(result => this.performModellingAction({
                 type: ModellingActionType.refactor,
                 request: XoRefactorRequest.refactorWith(result.path, result.label, result.force),
+                // @ts-expect-error(TODO:)
                 objectId: null,
                 xmomItem,
                 rtc
@@ -442,6 +450,7 @@ export class DocumentService implements OnDestroy {
             switchMap(result => this.performModellingAction({
                 type: ModellingActionType.replace,
                 request: XoReplaceDatatypeRequest.refactorWith(result.label, result.path),
+                // @ts-expect-error(TODO:)
                 objectId: null,
                 xmomItem,
                 rtc
@@ -493,6 +502,7 @@ export class DocumentService implements OnDestroy {
     private handleDocumentUpdate(documentModel: DocumentModel, updateResponse: XoUpdateXmomItemResponse, action: 'saved' | 'deployed') {
         this.handleXmomItemUpdate(documentModel.item, updateResponse, updateResponse.updates.data);
         // clear any locks, since the document can't be locked after a save-as and can't be saved or deployed when locked
+        // @ts-expect-error(TODO:)
         documentModel.updateLock(DocumentModel.UNLOCKED);
         // show status bar message
         this.statusBarService.display(
@@ -552,6 +562,7 @@ export class DocumentService implements OnDestroy {
      * @returns Open document model or undefined, if the document model has not been opened yet
      */
     private getOpenDocument(rtc: RuntimeContext, fqn: FullQualifiedName): DocumentModel {
+        // @ts-expect-error(TODO:)
         return this.documents.find(document => {
             const documentFqn = document.item.toFqn();
             const documentRtc = document.item.toRtc();
@@ -563,6 +574,7 @@ export class DocumentService implements OnDestroy {
     loadXmomObject(rtc: RuntimeContext, fqn: FullQualifiedName, type: XmomObjectType, repair = false, state: XmomState = XmomState.SAVED): Observable<XoGetXmomItemResponse> {
         // cancel, if document is marked as pending right now
         if (this.xmomService.isPendingXmomObject(rtc, fqn, type)) {
+            // @ts-expect-error(TODO:)
             return of(null);
         }
         // cancel, if document is already open
@@ -570,6 +582,7 @@ export class DocumentService implements OnDestroy {
         if (document) {
             // select document
             this.selectedDocument = document;
+            // @ts-expect-error(TODO:)
             return of(null);
         }
         // load xmom object
@@ -579,8 +592,9 @@ export class DocumentService implements OnDestroy {
                 if (err.error && err.status === 409) {
                     // show errors and ask, whether the document should be repaired
                     return this.dialogService.custom(
+                        // @ts-expect-error(TODO:)
                         RepairDialogComponent,
-                        <RepairDialogData>{
+                        {
                             repairEntries: new XoRepairsRequiredError().decode(err.error).repairs,
                             preRepair: true
                         }
@@ -612,6 +626,7 @@ export class DocumentService implements OnDestroy {
                 })
             );
         }
+        // @ts-expect-error(TODO:)
         return of(null);
     }
 
@@ -631,6 +646,7 @@ export class DocumentService implements OnDestroy {
                 })
             );
         }
+        // @ts-expect-error(TODO:)
         return of(null);
     }
 
@@ -787,6 +803,7 @@ export class DocumentService implements OnDestroy {
         // TODO: rewrite without subject. use pipe.
         const subj = new Subject<string[]>();
         rtc = rtc || this.xmomService.runtimeContext;
+        // @ts-expect-error(TODO:)
         this.xmomService.listXmomPaths(rtc, undefined, 'flat').subscribe({
             next: xmomPaths => {
                 const pathArr: string[] = [];
@@ -794,6 +811,7 @@ export class DocumentService implements OnDestroy {
                     if (obj.isAbsolute) {
                         pathArr.push(obj.path);
                     } else {
+                        // @ts-expect-error(TODO:)
                         obj.children.forEach(child => pathArr.push(child.path));
                     }
                 });
@@ -962,7 +980,8 @@ export class DocumentService implements OnDestroy {
                     finalize(() => documentModel.deploying = false),
                     catchError(err => {
                         const xo = err.error as XoError;
-                        this.dialogService.custom(ErrorDialogComponent, <ErrorDialogData>{
+                        // @ts-expect-error(TODO:)
+                        this.dialogService.custom(ErrorDialogComponent, {
                             errorMessage: xo.exceptionMessage,
                             stackTrace: xo.stacktrace
                         });
@@ -1016,7 +1035,7 @@ export class DocumentService implements OnDestroy {
                 filter(result => result),
                 switchMap(() => this.deployDocument(documentModel))
             )
-            : of(undefined)
+            : of(new XoUpdateXmomItemResponse())
         ).subscribe(() => downloadTemplate(
             documentModel.item.$fqn,
             documentModel.item.$rtc.runtimeContext().uniqueKey

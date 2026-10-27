@@ -21,7 +21,7 @@ import { XoGlobalStorablePropertyArea } from '@pmod/xo/global-storable-property-
 
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
 import { XcCheckboxComponent, XcFormLabelComponent } from '@zeta/xc';
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { XcI18nTranslateDirective } from '@zeta/i18n';
 
 
 @Component({
