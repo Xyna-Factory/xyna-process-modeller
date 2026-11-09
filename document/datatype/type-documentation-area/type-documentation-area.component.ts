@@ -26,7 +26,7 @@ import { XoChangeTextRequest } from '../../../xo/change-text-request.model';
 import { XoTextArea } from '../../../xo/text-area.model';
 import { PluginService } from '../../plugin.service';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcFormLabelComponent, XcFormTextareaComponent, XcDefinitionProxyComponent } from '@zeta/xc';
 
 
@@ -42,10 +42,13 @@ export class TypeDocumentationAreaComponent extends ModellingObjectComponent {
     protected readonly pluginService = inject(PluginService);
     protected readonly cdr = inject(ChangeDetectorRef);
 
+    // @ts-expect-error(TODO:)
     pluginBundles: XoDefinitionBundle[];
 
+    // @ts-expect-error(TODO:)
     documentation: string;
 
+    // @ts-expect-error(TODO:)
     readonly lines = input<number>(undefined);
 
 

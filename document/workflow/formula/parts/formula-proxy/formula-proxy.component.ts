@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, AfterViewInit, Component, ElementRef, inject, viewChild, input, output , signal} from '@angular/core';
+import { ChangeDetectionStrategy, AfterViewInit, Component, ElementRef, inject, viewChild, input, output, signal} from '@angular/core';
 import { XoFormula } from '@pmod/xo/formula.model';
 import { FormulaFunctionGroup, FormulaPartFunction } from '@pmod/xo/util/formula-parts/formula-part-function';
 
@@ -37,13 +37,16 @@ export class FormulaProxyComponent implements AfterViewInit, FormulaChildCompone
 
     private readonly _proxyInput = viewChild(XcFormAutocompleteComponent);
     private _optionElements: HTMLElement[] = [];
+    // @ts-expect-error(TODO:)
     private _selection: string;
 
+    // @ts-expect-error(TODO:)
     readonly formula = input<XoFormula>(undefined);
 
     readonly selectionChange = output<string>();
 
     proxyDataWrapper = new XcAutocompleteDataWrapper<string>(
+        // @ts-expect-error(TODO:)
         () => null,
         (value: string) => {
             this._selection = value;
@@ -66,11 +69,13 @@ export class FormulaProxyComponent implements AfterViewInit, FormulaChildCompone
     ngAfterViewInit() {
         const functions = FormulaPartFunction.functionsForGroup(this.formula()?.allowedFunctions ?? FormulaFunctionGroup.none);
         this.proxyDataWrapper.values = functions.map(f => ({ name: signal(f.label), value: f.xfl }));
+        // @ts-expect-error(TODO:)
         this._proxyInput().setFocus();
     }
 
 
     opened() {
+        // @ts-expect-error(TODO:)
         this._optionElements = this._proxyInput()?.trigger()?.autocomplete?.options?.map(option => option._getHostElement());
     }
 

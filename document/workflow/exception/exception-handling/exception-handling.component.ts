@@ -19,7 +19,7 @@ import { ChangeDetectionStrategy, Component, forwardRef, HostBinding, Input, inp
 
 import { coerceBoolean } from '@zeta/base';
 
-import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
+import { XcI18nTranslateDirective } from '@zeta/i18n';
 import { XoExceptionHandling } from '../../../../xo/exception-handling.model';
 import { ContentAreaComponent } from '../../content-area/content-area.component';
 import { ModellingItemComponent } from '../../shared/modelling-object.component';
@@ -39,6 +39,7 @@ export class ExceptionHandlingComponent extends ModellingItemComponent {
 
     @HostBinding('class.inline')
     get hostInline(): boolean {
+        // @ts-expect-error(TODO:)
         return this.inline();
     }
 

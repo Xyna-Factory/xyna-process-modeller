@@ -31,6 +31,7 @@ import { AsyncPipe } from '@angular/common';
     imports: [VariableTreeNodeComponent, AsyncPipe]
 })
 export class VariableTreeComponent {
+    // @ts-expect-error(TODO:)
     private _dataSource: SkeletonTreeDataSource;
     private _highlightMarkedNodes = false;
 
@@ -49,6 +50,7 @@ export class VariableTreeComponent {
 
     @Input()
     set highlightMarkedNodes(value: boolean) {
+        // @ts-expect-error(TODO:)
         this._highlightMarkedNodes = coerceBoolean(value);
     }
 

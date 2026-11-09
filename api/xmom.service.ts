@@ -139,7 +139,9 @@ export class XmomService {
 
     private readonly _clipboardSubject = new Subject<void>();
 
+    // @ts-expect-error(TODO:)
     private readonly _runtimeContextSubject = new BehaviorSubject<RuntimeContext>(null);
+    // @ts-expect-error(TODO:)
     private readonly _remoteDestinationsSubject = new BehaviorSubject<XoRemoteDestinationArray>(null);
 
     private readonly pendingXmomUrls = new Set<string>();
@@ -201,6 +203,7 @@ export class XmomService {
     }
 
 
+    // @ts-expect-error(TODO:)
     private urlFromAction(action: ModellingAction): { method: HttpMethod; url: string; options: { params: HttpParams } } {
         const url = this.getXmomObjectUrl(
             action.rtc,
@@ -300,6 +303,7 @@ export class XmomService {
                 workflow.typeLabelArea.$fqn = workflow.$fqn;
                 workflow.inputArea = new XoVariableArea();
                 workflow.outputArea = new XoVariableArea();
+                // @ts-expect-error(TODO:)
                 workflow.$rtc = xoRTC;
                 break;
             }
@@ -315,6 +319,7 @@ export class XmomService {
                 staticMethod.typeLabelArea.$fqn = staticMethod.$fqn;
                 staticMethod.inputArea = new XoVariableArea();
                 staticMethod.outputArea = new XoVariableArea();
+                // @ts-expect-error(TODO:)
                 staticMethod.$rtc = xoRTC;
                 break;
             }
@@ -330,6 +335,7 @@ export class XmomService {
                 dynamicMethod.typeLabelArea.$fqn = dynamicMethod.$fqn;
                 dynamicMethod.inputArea = new XoVariableArea();
                 dynamicMethod.outputArea = new XoVariableArea();
+                // @ts-expect-error(TODO:)
                 dynamicMethod.$rtc = xoRTC;
                 break;
             }
@@ -338,6 +344,7 @@ export class XmomService {
                 result = data;
                 data.$fqn = object.fqn;
                 data.label = object.label;
+                // @ts-expect-error(TODO:)
                 data.$rtc = xoRTC;
                 /** data.isAbstract @todo */
                 break;
@@ -347,6 +354,7 @@ export class XmomService {
                 result = exception;
                 exception.$fqn = object.fqn;
                 exception.label = object.label;
+                // @ts-expect-error(TODO:)
                 exception.$rtc = xoRTC;
                 /** exception.isAbstract @todo */
                 break;
@@ -356,6 +364,7 @@ export class XmomService {
                 result = serviceGroup;
                 serviceGroup.$fqn = object.fqn;
                 serviceGroup.label = object.label;
+                // @ts-expect-error(TODO:)
                 serviceGroup.$rtc = xoRTC;
                 break;
             }
@@ -403,6 +412,7 @@ export class XmomService {
     findXmomItems(rtc: RuntimeContext, queryParam: string, maxCount?: number, filterCondition?: FilterConditionData): Observable<XoXmomItem[]> {
         if (rtc && rtc !== RuntimeContext.undefined) {
             const url = 'runtimeContext/' + rtc.uniqueKey + '/xmom/objects';
+            // @ts-expect-error(TODO:)
             const payload = filterCondition ?? (maxCount > 0 ? { maxCount } : {});
             const params = { q: queryParam };
             return this.http.post(url, payload, this.getHttpParamsOption(params)).pipe(
@@ -513,6 +523,7 @@ export class XmomService {
                 return throwError(err);
             }),
             finalize(() => {
+                // @ts-expect-error(TODO:)
                 if (action.request.invalidatesClipboard(action.type, action.objectId)) {
                     this.invalidateClipboard();
                 }
@@ -656,6 +667,7 @@ export class XmomService {
         /**
          * @todo remove this as soon as XoRequest is accepted by the backend
          */
+        // @ts-expect-error(TODO:)
         delete payload.$meta;
         if ((<any>payload).content) {
             delete (<any>payload).content.$meta;
@@ -684,6 +696,7 @@ export class XmomService {
 
 
     undo(xmomItem: XoXmomItem): Observable<XoGetXmomItemResponse> {
+        // @ts-expect-error(TODO:)
         const url = this.getXmomObjectUrl(undefined, xmomItem.toFqn(), xmomItem.type, undefined, undefined, 'undo');
         return this.http.get(url).pipe(
             map((data: any) => new XoGetXmomItemResponse().decode(data))
@@ -692,6 +705,7 @@ export class XmomService {
 
 
     redo(xmomItem: XoXmomItem): Observable<XoGetXmomItemResponse> {
+        // @ts-expect-error(TODO:)
         const url = this.getXmomObjectUrl(undefined, xmomItem.toFqn(), xmomItem.type, undefined, undefined, 'redo');
         return this.http.get(url).pipe(
             map((data: any) => new XoGetXmomItemResponse().decode(data))

@@ -21,10 +21,9 @@ import { ChangeDetectionStrategy, Component, HostListener, inject, Input, output
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
 import { FullQualifiedName } from '@zeta/api';
 import { coerceBoolean } from '@zeta/base';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, XcI18nTranslateDirective  } from '@zeta/i18n';
 import { XcDialogService, XcIconButtonComponent, XcIconComponent, XcMenuItem, XcMenuServiceDirective, XcMenuTriggerDirective, XcTooltipDirective } from '@zeta/xc';
 
-import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { XmomObjectType } from '../../api/xmom-types';
 import { DocumentService } from '../../document/document.service';
 import { XoData } from '../../xo/data.model';
@@ -51,7 +50,9 @@ export class XMOMListItemComponent {
     private readonly documentService = inject(DocumentService);
 
 
+    // @ts-expect-error(TODO:)
     private _xmomItem: XoXmomItem | XoFactoryItem;
+    // @ts-expect-error(TODO:)
     private _xmomIconName: string;
     private _path = '';
     private _showFQN = false;
@@ -65,13 +66,13 @@ export class XMOMListItemComponent {
 
     constructor() {
         this.writableMenuItems = [
-            <XcMenuItem>{
+            {
                 name: signal('Open'),
                 icon: 'file',
                 translate: true,
                 click: () => this.selectXmomItem()
             },
-            <XcMenuItem>{
+            {
                 name: signal('Test Workflow...'),
                 icon: 'sp-launcher',
                 iconStyle: 'modeller',
@@ -79,20 +80,20 @@ export class XMOMListItemComponent {
                 visible: () => this.isWorkflow,
                 click: () => this.testWorkflow()
             },
-            <XcMenuItem>{
+            {
                 name: signal('Move/Rename...'),
                 icon: 'edit',
                 translate: true,
                 click: () => this.refactorXmomItem()
             },
-            <XcMenuItem>{
+            {
                 name: signal('Replace...'),
                 icon: 'edit',
                 translate: true,
                 visible: () => this.isDatatype,
                 click: () => this.replace()
             },
-            <XcMenuItem>{
+            {
                 name: signal('Delete from XMOM...'),
                 icon: 'delete',
                 translate: true,
@@ -104,6 +105,7 @@ export class XMOMListItemComponent {
     }
 
 
+    // @ts-expect-error(TODO:)
     private getIconNameFromType(): string {
         // Workflows
         if (this.xmomItem instanceof XoWorkflowInvocation || this.xmomItem.type === XmomObjectType.Workflow) {
@@ -300,7 +302,7 @@ export class XMOMListItemComponent {
             const rtc = (workflow.$rtc ?? workflow.evaluatedRtc).runtimeContext();
             this.dialogService.custom(
                 WorkflowTesterDialogComponent,
-                <WorkflowTesterData>{
+                {
                     runtimeContext: rtc,
                     orderType: fqn.encode()
                 }

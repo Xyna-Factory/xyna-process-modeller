@@ -44,16 +44,17 @@ import { XcIconButtonComponent } from '@zeta/xc';
 })
 export class ServiceAreaComponent extends ModellingObjectComponent {
 
+    // @ts-expect-error(TODO:)
     currentlyDraggedInheritedInstanceMethod: XoDynamicMethod;
 
     constructor() {
         super();
 
         // instantiate specific member models such that they aren't pruned for the release build
-         
+
         const dynamicMethod = new XoDynamicMethod();
         const staticMethod = new XoStaticMethod();
-         
+
     }
 
 
@@ -64,9 +65,11 @@ export class ServiceAreaComponent extends ModellingObjectComponent {
 
 
     canDrop = (xo: XoModellingItem, event?: ModDragEvent): boolean => {
+        // @ts-expect-error(TODO:)
         const serial = event.side === ModRelativeHoverSide.top || event.side === ModRelativeHoverSide.bottom;
 
         const isInheritedInstanceMethod = (xo as XoMethod).isInheritedInstanceMethod;
+        // @ts-expect-error(TODO:)
         this.currentlyDraggedInheritedInstanceMethod = isInheritedInstanceMethod ? xo as XoDynamicMethod : null;
 
         const xoFQN = xo.fqn.encode();

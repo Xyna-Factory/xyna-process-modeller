@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, HostBinding, inject, Input, input , signal} from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, inject, Input, input, signal} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
@@ -72,6 +72,7 @@ export class VariableComponent extends SelectableModellingObjectComponent {
 
     @HostBinding('class.placeholder')
     get hostIsPlaceholder(): boolean {
+        // @ts-expect-error(TODO:)
         return this.isPlaceholder();
     }
 
@@ -98,14 +99,15 @@ export class VariableComponent extends SelectableModellingObjectComponent {
                 !this.isLocked() || !!getConstant()
             );
 
-        this.constantMenuItem = <XcMenuItem>{
+        this.constantMenuItem = {
             name: signal(''),
             translate: true,
             visible: () => viewConstant(),
             click: () => {
                 this.dialogService.custom(
+                    // @ts-expect-error(TODO:)
                     ConstantDialogComponent,
-                    <ConstantDialogData>{
+                    {
                         rtc: this.getDocumentRtc(),
                         variable: this.variable,
                         constant: getConstant(),
@@ -115,6 +117,7 @@ export class VariableComponent extends SelectableModellingObjectComponent {
                     // Because it is possible to set null as a constant there is a symbol to check if the constant should be deleted
                     if (result === CONSTANT_DIALOG_DELETE_TOKEN) {
                         this.performAction({
+                            // @ts-expect-error(TODO:)
                             request: XoSetConstantRequest.withConstantObject(null, this.selectedBranch?.id),
                             type: ModellingActionType.deleteConstant,
                             objectId: this.variable.id
@@ -132,7 +135,7 @@ export class VariableComponent extends SelectableModellingObjectComponent {
             }
         };
         this.menuItems.unshift(
-            <XcMenuItem>{
+            {
                 name: signal('Open in new Tab'), translate: true,
                 visible: () => !!this.variable.$fqn, // prototype variable does not have an fqn
                 click: () => {
@@ -145,6 +148,7 @@ export class VariableComponent extends SelectableModellingObjectComponent {
                     if (this.variable.type === XmomObjectType.DataType) {
                         type = XmomObjectType.DataType;
                     }
+                    // @ts-expect-error(TODO:)
                     if (type) {
                         this.documentService.loadDocument(rtc, fqn, type);
                         void this.router.navigate(['xfm/Process-Modeller/']);
@@ -152,25 +156,26 @@ export class VariableComponent extends SelectableModellingObjectComponent {
                 }
             },
             this.constantMenuItem,
-            <XcMenuItem>{
+            {
                 name: signal('Convert into List'),
                 translate: true,
                 visible: () => !this.variable.isList && !this.readonly,
                 click: () => this.toggleMultiplicity()
             },
-            <XcMenuItem>{
+            {
                 name: signal('Convert into Single'),
                 translate: true,
                 visible: () => this.variable.isList && !this.readonly,
                 click: () => this.toggleMultiplicity()
             },
-            <XcMenuItem>{
+            {
                 name: signal('Convert into Data Type...'), translate: true,
                 visible: () => this.variable.isAbstract && !this.readonly, // prototype variable
                 click: () => {
                     this.dialogService.custom(
+                        // @ts-expect-error(TODO:)
                         LabelPathDialogComponent,
-                        <LabelPathDialogData>{
+                        {
                             header: this.i18n.translateInstant(LabelPathDialogComponent.HEADER_CONVERT_TO_DATA_TYPE),
                             confirm: this.i18n.translateInstant(LabelPathDialogComponent.CONFIRM_CREATE),
                             presetLabel: this.variable?.label ?? '',
@@ -190,7 +195,7 @@ export class VariableComponent extends SelectableModellingObjectComponent {
                     );
                 }
             },
-            <XcMenuItem>{
+            {
                 name: signal('Remove Dynamic Type'),
                 translate: true,
                 visible: () => this.hasDynamicType && this.variable.allowCast && !this.isLocked(),
@@ -278,6 +283,7 @@ export class VariableComponent extends SelectableModellingObjectComponent {
 
 
     get selectedBranch(): XoModellingItem {
+        // @ts-expect-error(TODO:)
         return !!this.branchSelection.selectedObject && !!this.variable ? this.variable.providingBranches.find(branch => branch === this.branchSelection.selectedObject.getModel()) : null;
     }
 
@@ -285,6 +291,7 @@ export class VariableComponent extends SelectableModellingObjectComponent {
     get linkStateIn(): string {
         const branch = this.selectedBranch;
         const branchId = branch ? branch.id : null;
+        // @ts-expect-error(TODO:)
         return this.variable.getLinkStateIn(branchId);
     }
 
@@ -335,6 +342,7 @@ export class VariableComponent extends SelectableModellingObjectComponent {
 
 
     get showMenu(): boolean {
+        // @ts-expect-error(TODO:)
         return this.hasMenu() && this.menuItems.some(menuItem => menuItem.visible?.(menuItem));
     }
 

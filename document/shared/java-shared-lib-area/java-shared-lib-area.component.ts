@@ -24,7 +24,7 @@ import { Subject, Subscription } from 'rxjs';
 import { XoJavaSharedLibrariesArea } from '../../../xo/java-shared-libraries-area.model';
 import { ModellingObjectComponent, TriggeredAction } from '../../workflow/shared/modelling-object.component';
 import { JavaSharedLibItemComponent, JavaSharedLibItemData } from './java-shared-lib-item.component';
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { XcI18nTranslateDirective } from '@zeta/i18n';
 
 
 @Component({

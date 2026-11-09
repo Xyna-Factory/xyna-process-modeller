@@ -28,11 +28,10 @@ import { XoGetXmomRelationsResponse } from '@pmod/xo/get-xmom-relations-response
 import { MessageBusService } from '@yggdrasil/events';
 import { ApiService, FullQualifiedName, XoApplication as XoApplicationZeta, XoRuntimeContext, XoWorkspace as XoWorkspaceZeta } from '@zeta/api';
 import { AuthService } from '@zeta/auth';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, XcI18nContextDirective, XcI18nTranslateDirective  } from '@zeta/i18n';
 import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcPanelComponent, XcTooltipDirective } from '@zeta/xc';
 import { XcHasRightDirective } from '@zeta/xc/shared/xc-has-right.directive';
 
-import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { DeploymentStateDetailComponent } from '../../../factorymanager/deployment-items/components/deployment-state-detail/deployment-state-detail.component';
 import { DocumentService } from '../../document/document.service';
 import { DocumentItem, DocumentModel } from '../../document/model/document.model';
@@ -59,9 +58,11 @@ export class DetailsComponent extends CommonNavigationComponent implements After
     private readonly xmomService = inject(XmomService);
     private readonly messageBus = inject(MessageBusService);
 
+    // @ts-expect-error(TODO:)
     private _deploymentItem: XoDeploymentItem;
     pendingDeploymentItem = false;
 
+    // @ts-expect-error(TODO:)
     relations: XoGetXmomRelationsResponse;
     hasRelations = false;
 
@@ -106,6 +107,7 @@ export class DetailsComponent extends CommonNavigationComponent implements After
     }
 
     get item(): DocumentItem {
+        // @ts-expect-error(TODO:)
         return this.document ? this.document.item : null;
     }
 
@@ -163,6 +165,7 @@ export class DetailsComponent extends CommonNavigationComponent implements After
     }
 
     getDeploymentItem() {
+        // @ts-expect-error(TODO:)
         this._deploymentItem = null;
         if (this.item && this.active) {
             this.pendingDeploymentItem = true;
@@ -184,6 +187,7 @@ export class DetailsComponent extends CommonNavigationComponent implements After
 
             // Get deployment state
             this.apiService
+                // @ts-expect-error(TODO:)
                 .startOrder(PMOD_RTC, DEPLOYMENT_ITEMS_ISWP.Details, [id, rtc], XoDeploymentItem).pipe(
                     finalize(() => {
                         this.pendingDeploymentItem = false;
@@ -200,6 +204,7 @@ export class DetailsComponent extends CommonNavigationComponent implements After
 
     getRelations() {
         this.hasRelations = false;
+        // @ts-expect-error(TODO:)
         this.relations = null;
         if (this.item && this.active) {
             this.xmomService.getXmomRelations(this.documentService.selectedDocument.item).subscribe(response => {

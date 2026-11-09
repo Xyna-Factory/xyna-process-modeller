@@ -18,7 +18,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { XcTooltipDirective } from '@zeta/xc';
 
-import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
+import { XcI18nTranslateDirective } from '@zeta/i18n';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 
 

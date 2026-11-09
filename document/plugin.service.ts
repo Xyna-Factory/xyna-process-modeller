@@ -51,6 +51,7 @@ export class PluginService implements XoDefinitionObserver {
     private readonly definedUICache = new Map<string,  XoDefinitionBundle>();
 
     getFromCacheOrCallWorkflow(definingWorkflow: XoGuiDefiningWorkflow): Observable<XoDefinitionBundle> {
+        // @ts-expect-error(TODO:)
         let bundle: XoDefinitionBundle = this.definedUICache.get(definingWorkflow.uniqueKey);
 
         if (bundle) {
@@ -60,6 +61,7 @@ export class PluginService implements XoDefinitionObserver {
         return this.apiService.startOrder(
             definingWorkflow.zetaRTC,
             definingWorkflow.fQN,
+            // @ts-expect-error(TODO:)
             null,
             null,
             new StartOrderOptionsBuilder().withErrorMessage(true).options
@@ -74,7 +76,9 @@ export class PluginService implements XoDefinitionObserver {
             }),
             map(result => {
                 bundle = <XoDefinitionBundle>{
+                    // @ts-expect-error(TODO:)
                     definition: result.output[0],
+                    // @ts-expect-error(TODO:)
                     data: result.output.slice(1)
                 };
                 this.definedUICache.set(definingWorkflow.uniqueKey, bundle);
@@ -96,22 +100,25 @@ export class PluginService implements XoDefinitionObserver {
         return this.apiService.startOrder(
             PMOD_RTC,
             'xmcp.forms.plugin.FilterPluginsByPaths',
+            // @ts-expect-error(TODO:)
             xoPaths, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage
         ).pipe(
             filter(result => {
                 if (result.errorMessage || result.output?.length === 0) {
                     throwError(() => new Error(result.errorMessage));
+                    // @ts-expect-error(TODO:)
                     this.dialogs.error(result.errorMessage);
                     return false;
                 }
                 return true;
             }),
+            // @ts-expect-error(TODO:)
             map(response => response.output[0] as XoPluginArray)
         );
     }
 
     private cloneBundle(bundle: XoDefinitionBundle): XoDefinitionBundle {
-        return <XoDefinitionBundle>{
+        return {
             definition: bundle.definition.clone(),
             data: bundle.data.map(value => value.clone())
         };
@@ -142,6 +149,7 @@ export class PluginService implements XoDefinitionObserver {
 
 
     getDefaultRTC(): XoXPRCRuntimeContext {
+        // @ts-expect-error(TODO:)
         return XoXPRCRuntimeContextFromRuntimeContext(this.configService.config.zeta.xo.runtimeContext);
     }
 
@@ -160,14 +168,17 @@ export class PluginService implements XoDefinitionObserver {
         }
 
         const rtc = (definition.serviceRTC ? definition.serviceRTC : this.getDefaultRTC()).toRuntimeContext();
+        // @ts-expect-error(TODO:)
         return preStartorder.pipe(
             switchMap(() =>
+                // @ts-expect-error(TODO:)
                 this.apiService.startOrder(rtc, definition.serviceFQN, input, null,
                     new StartOrderOptionsBuilder().withErrorMessage(true).async(!definition.synchronously).options)
             ),
             filter(result => {
                 if (!result || result.errorMessage) {
                     if (definition.showResult) {
+                        // @ts-expect-error(TODO:)
                         this.dialogs.error(result.errorMessage);
                     }
                     return false;

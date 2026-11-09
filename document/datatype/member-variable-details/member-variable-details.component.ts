@@ -40,6 +40,7 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
 
     protected readonly cdr = inject(ChangeDetectorRef);
 
+    // @ts-expect-error(TODO:)
     readonly dataTypeRTC = input<XoRuntimeContext>(null);
 
     @Input()
@@ -73,7 +74,7 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
         closable: false,
         component: MemberVariableBaseTabComponent,
         name: signal('Base'),
-        data: <DocumentTabData<VariableTabData>>{
+        data: {
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
             readonly: this.readonly,
@@ -85,7 +86,7 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
         closable: false,
         component: MetaTabComponent,
         name: signal('Meta'),
-        data: <DocumentTabData<MetaTabData>>{
+        data: {
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
             readonly: this.readonly,
@@ -97,7 +98,7 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
         closable: false,
         component: MemberVariableStorableTabComponent,
         name: signal('Storable'),
-        data: <DocumentTabData<VariableTabData>>{
+        data: {
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
             readonly: this.readonly,
@@ -106,6 +107,7 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
     };
 
     tabBarSelection: XcTabBarItem<DocumentTabData<any>>;
+    // @ts-expect-error(TODO:)
     tabBarItems: XcTabBarItem<DocumentTabData<any>>[];
 
     constructor() {
@@ -124,7 +126,9 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
     afterDocumentModelSet() {
         super.afterDocumentModelSet();
         this.tabBarItems.forEach(tabitem => {
+            // @ts-expect-error(TODO:)
             tabitem.data.documentModel = this.documentModel;
+            // @ts-expect-error(TODO:)
             tabitem.data.readonly = this.readonly;
         });
     }
@@ -132,6 +136,7 @@ export class MemberVariableDetailsComponent extends ModellingItemComponent imple
 
     protected lockedChanged() {
         this.tabBarItems.forEach(tabitem => {
+            // @ts-expect-error(TODO:)
             tabitem.data.readonly = this.readonly;
         });
         this.cdr.markForCheck();

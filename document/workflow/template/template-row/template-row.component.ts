@@ -56,8 +56,8 @@ export interface SwitchTemplateRowFocusEvent {
 })
 export class TemplateRowComponent extends ModellingObjectComponent {
 
-    private partWaitingForFocus: (XoItem & TextItem) = null;
-    private _textParts: QueryList<TemplatePartTextComponent>;
+    private partWaitingForFocus: (XoItem & TextItem) | null = null;
+    private _textParts: QueryList<TemplatePartTextComponent> | null = null;
 
     readonly lineNumberElement = viewChild<ElementRef>('number');
 
@@ -93,9 +93,13 @@ export class TemplateRowComponent extends ModellingObjectComponent {
         //  * right side has to be switched to left
         //  * respective element shall always be that one under the cursor (no switch to index+1 from the middle on)
         event.side = ModRelativeHoverSide.left;
+
+        // @ts-expect-error(TODO:)
         event.index = event.indexUnderCursor;
 
+        // @ts-expect-error(TODO:)
         const indentation = this.parts().at(event.indexUnderCursor)?.getLetterPositionFromFraction(event.s, event.t);
+        // @ts-expect-error(TODO:)
         return indentation;
     };
 
@@ -111,6 +115,7 @@ export class TemplateRowComponent extends ModellingObjectComponent {
         };
 
         // split text block into two, if variable has been dropped in between
+        // @ts-expect-error(TODO:)
         const partUnderCursor = this.row.templateParts[event.indexUnderCursor];
         let splitPart: TemplateText;
         if (partUnderCursor instanceof TemplateText) {
@@ -120,12 +125,14 @@ export class TemplateRowComponent extends ModellingObjectComponent {
                 partUnderCursor.setText(text.substring(0, pivot));
                 splitPart = new TemplateText();
                 splitPart.setText(text.substring(pivot));
+                // @ts-expect-error(TODO:)
                 event.index = event.indexUnderCursor + 1;
             }
         }
 
         // add formula and split text part, if any
         this.row.addPart(formula, event.index);
+        // @ts-expect-error(TODO:)
         if (splitPart) {
             this.row.addPart(splitPart, event.index < 0 ? event.index : event.index + 1);
         }
@@ -141,8 +148,8 @@ export class TemplateRowComponent extends ModellingObjectComponent {
 
     @HostListener('click', ['$event.target'])
     selectRow(target: Element) {
-        const hitStart = target === this.lineNumberElement().nativeElement;
-        const hitEnd = target === this.elementRef.nativeElement || target === this.dropArea().elementRef.nativeElement;
+        const hitStart = target === this.lineNumberElement()?.nativeElement;
+        const hitEnd = target === this.elementRef.nativeElement || target === this.dropArea()?.elementRef.nativeElement;
         if (hitStart && this.row.templateParts.length > 0) {
             this.focusPart(this.row.templateParts[0], 0);
         } else if (hitEnd) {
@@ -213,15 +220,19 @@ export class TemplateRowComponent extends ModellingObjectComponent {
             for (let i = partIndex - 1;
                 i >= 0 && !this.focusPart(this.row.templateParts[i]);
                 i--
-                 
-            );
+            // eslint-disable-next-line no-empty
+            ) {
+
+            }
         } else if (event.direction === 'RIGHT') {
             // focus next text-part
             for (let i = partIndex + 1;
                 i < this.row.templateParts.length && !this.focusPart(this.row.templateParts[i], 0);
                 i++
-                 
-            );
+            // eslint-disable-next-line no-empty
+            ) {
+
+            }
         } else if (event.direction === 'UP' || event.direction === 'DOWN') {
             this.switchRow.emit({
                 source: this.row,
@@ -238,7 +249,7 @@ export class TemplateRowComponent extends ModellingObjectComponent {
     private getCaretPosition(partIndex: number, caretIndex: number): number {
         let width = 0;
         for (let i = 0; i < Math.min(partIndex, this.parts().length); i++) {
-            width += this.parts().at(i).getWidth();
+            width += this.parts().at(i)?.getWidth() ?? 0;
         }
         // add local caret position inside part
         width += this.parts().at(partIndex)?.getLetterPositionFromIndex(caretIndex)?.dx ?? 0;
@@ -284,7 +295,7 @@ export class TemplateRowComponent extends ModellingObjectComponent {
 
         let i = 0;
         for (; i < this.parts().length; i++) {
-            const w = this.parts().at(i).getWidth();
+            const w = this.parts().at(i)?.getWidth() ?? 0;
             if (caretPosition > w) {
                 caretPosition -= w;
             } else {
@@ -299,7 +310,7 @@ export class TemplateRowComponent extends ModellingObjectComponent {
         }
 
         // transform caret position into caret index
-        const part = this.parts().at(i);
+        const part = this.parts().at(i) as TemplatePartComponent;
         const index = Math.min(Math.round(caretPosition / part.getWidth() * part.part.getText().length), part.part.getText().length);
 
         part.setFocus(index);

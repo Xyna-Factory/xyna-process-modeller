@@ -19,7 +19,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { XoDetailsItem } from '@pmod/xo/details-item.model';
 
-import { XcI18nContextDirective } from '../../../zeta/i18n';
+import { XcI18nContextDirective } from '@zeta/i18n';
 import { ModellingActionType } from '../api/xmom.service';
 import { XoDataTypeTypeLabelArea } from '../xo/data-type-type-label-area.model';
 import { XoDataType } from '../xo/data-type.model';

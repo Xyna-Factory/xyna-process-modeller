@@ -19,7 +19,7 @@ import { ChangeDetectionStrategy, Component, forwardRef, HostBinding, inject, In
 
 import { coerceBoolean } from '@zeta/base';
 
-import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
+import { XcI18nTranslateDirective } from '@zeta/i18n';
 import { XoExceptionHandlingArea } from '../../../../xo/exception-handling-area.model';
 import { WorkflowDetailLevelService } from '../../../workflow-detail-level.service';
 import { ModellingObjectComponent } from '../../shared/modelling-object.component';
@@ -43,6 +43,7 @@ export class ExceptionHandlingAreaComponent extends ModellingObjectComponent {
 
     @HostBinding('class.inline')
     get hostInline(): boolean {
+        // @ts-expect-error(TODO:)
         return this.inline();
     }
 
@@ -55,7 +56,9 @@ export class ExceptionHandlingAreaComponent extends ModellingObjectComponent {
     @Input()
     set exceptionHandlingArea(value: XoExceptionHandlingArea) {
         this.setModel(value);
+        // @ts-expect-error(TODO:)
         this.childIds.push(...this.exceptionHandlingArea.exceptionHandlings?.data.map(exceptionHandling => exceptionHandling.id) ?? []);
+        // @ts-expect-error(TODO:)
         this.childIds.push(...this.exceptionHandlingArea.compensations?.data.map(compensation => compensation.id) ?? []);
         this.updateEmptyState();
 
@@ -77,6 +80,7 @@ export class ExceptionHandlingAreaComponent extends ModellingObjectComponent {
 
         // if one child changes its collapsed state, re-evaluate empty-state
         this.untilDestroyed(this.detailLevelService.collapsedChange()).subscribe(id => {
+            // @ts-expect-error(TODO:)
             if (this.childIds.includes(id)) {
                 this.updateEmptyState();
             }

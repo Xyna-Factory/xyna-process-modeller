@@ -20,7 +20,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ApiService, FullQualifiedName, RuntimeContext, Xo, XoDescriber, XoStructureArray } from '@zeta/api';
 import { XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent, XcIconComponent, XcStructureTreeDataSource, XcTreeComponent } from '@zeta/xc';
 
-import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XoVariable } from '../../../xo/variable.model';
 import { constantDialog_translations_de_DE } from './locale/constant-dialog-translations.de-DE';
 import { constantDialog_translations_en_US } from './locale/constant-dialog-translations.en-US';
@@ -72,7 +72,9 @@ export class ConstantDialogComponent extends XcDialogComponent<Xo | typeof CONST
             rtc: constant?.rtc ?? rtc
         };
         // initialize tree data source
+        // @ts-expect-error(TODO:)
         this.dataSource = new XcStructureTreeDataSource(this.apiService, undefined, rtc, [describer]);
+        // @ts-expect-error(TODO:)
         this.dataSource.readonlyMode = this.injectedData.readonly;
         // set structure fallback to array, if list
         if (variable.isList) {

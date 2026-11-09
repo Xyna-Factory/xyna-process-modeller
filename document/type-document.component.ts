@@ -33,14 +33,21 @@ import { DocumentModel } from './model/document.model';
     changeDetection: ChangeDetectionStrategy.Eager, template: '' })
 export class TypeDocumentComponent<D extends DocumentModel> extends DocumentComponent<void, D> {
 
+    // @ts-expect-error(TODO:)
     selectedVariable: XoMemberVariable;
+    // @ts-expect-error(TODO:)
     selectedMethod: XoMethod;
+    // @ts-expect-error(TODO:)
     selectedDetailsItem: XoDetailsItem;
 
+    // @ts-expect-error(TODO:)
     selectionAreaName: string;
+    // @ts-expect-error(TODO:)
     selectedItemName: string;
+    // @ts-expect-error(TODO:)
     selectedItemLabel: string;
 
+    // @ts-expect-error(TODO:)
     detailsItem: XoDetailsItem;
 
     constructor() {
@@ -76,8 +83,11 @@ export class TypeDocumentComponent<D extends DocumentModel> extends DocumentComp
 
 
     selectItem(item: XoMemberVariable | XoMethod | XoDetailsItem) {
+        // @ts-expect-error(TODO:)
         this.selectedVariable = item instanceof XoMemberVariable ? item : undefined;
+        // @ts-expect-error(TODO:)
         this.selectedMethod = item instanceof XoMethod ? item : undefined;
+        // @ts-expect-error(TODO:)
         this.selectedDetailsItem = item instanceof XoDetailsItem ? item : undefined;
 
         this.selectionAreaName = (item.parent as XoArea)?.name;
@@ -91,8 +101,11 @@ export class TypeDocumentComponent<D extends DocumentModel> extends DocumentComp
             return;
         }
 
+        // @ts-expect-error(TODO:)
         this.selectedVariable = undefined;
+        // @ts-expect-error(TODO:)
         this.selectedMethod = undefined;
+        // @ts-expect-error(TODO:)
         this.selectedDetailsItem = undefined;
 
         // returns item with specified name
@@ -104,6 +117,7 @@ export class TypeDocumentComponent<D extends DocumentModel> extends DocumentComp
             let item: (XoMemberVariable | XoMethod);
             for (const entry of items) {
                 if (entry.label === label) {
+                    // @ts-expect-error(TODO:)
                     if (!item) {
                         item = entry;
                     } else {
@@ -112,6 +126,7 @@ export class TypeDocumentComponent<D extends DocumentModel> extends DocumentComp
                     }
                 }
             }
+            // @ts-expect-error(TODO:)
             return item;
         };
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy , signal} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy, signal} from '@angular/core';
 
 import { SelectionService } from '@pmod/document/selection.service';
 import { MappingMode, WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
@@ -76,12 +76,12 @@ export class MappingComponent extends ModellingItemComponent implements OnDestro
         super();
 
         this.defaultMenuItems = [
-            <XcMenuItem>{
+            {
                 name: signal(this.language.showHideDocumentation), translate: true,
                 visible: () => !!this.mapping.documentationArea,
                 click: () => this.detailLevelService.toggleCollapsed(this.mapping.documentationArea.id)
             },
-            <XcMenuItem>{
+            {
                 name: signal(this.language.sortAssignments), translate: true,
                 click: () => this.performAction({
                     type: ModellingActionType.sort,
@@ -89,11 +89,11 @@ export class MappingComponent extends ModellingItemComponent implements OnDestro
                     request: new XoRequest()
                 })
             },
-            <XcMenuItem>{
+            {
                 name: signal(this.language.showHideFormulas), translate: true,
                 click: () => this.toggleCollapsed()
             },
-            <XcMenuItem>{
+            {
                 name: signal(this.visualMode ? this.language.programmaticMode : this.language.visualMode), translate: true,
                 click: item => {
                     this.detailLevelService.setMappingMode(
@@ -182,12 +182,13 @@ export class MappingComponent extends ModellingItemComponent implements OnDestro
         this.menuItems = this.defaultMenuItems;
         this.menuItems.push(
             ...this.mapping.plugin.menuEntry.data.map(entry =>
-                <XcMenuItem>{
+                ({
                     name: signal(entry.navigationEntryLabel),
                     click: () => this.apiService.startOrder(
                         entry.runtimeContext.toRuntimeContext(),
                         entry.fQN,
                         this.mapping.plugin.context,
+                        // @ts-expect-error(TODO:)
                         null,
                         new StartOrderOptionsBuilder().withErrorMessage(true).options
                     ).pipe(
@@ -199,7 +200,7 @@ export class MappingComponent extends ModellingItemComponent implements OnDestro
                             return true;
                         })
                     ).subscribe()
-                }
+                })
             )
         );
     }

@@ -19,7 +19,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { XcButtonComponent, XcCheckboxComponent, XcDialogComponent, XcDialogWrapperComponent } from '@zeta/xc';
 
-import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { conflictDialog_translations_de_DE } from './locale/conflict-dialog-translations.de-DE';
 import { conflictDialog_translations_en_US } from './locale/conflict-dialog-translations.en-US';
 
@@ -47,6 +47,7 @@ export interface ConflictDialogData {
 export class ConflictDialogComponent extends XcDialogComponent<string, ConflictDialogData> {
     readonly i18nService = inject(I18nService);
 
+    // @ts-expect-error(TODO:)
     key: string;
 
 

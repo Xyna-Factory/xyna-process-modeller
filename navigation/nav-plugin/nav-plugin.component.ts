@@ -35,7 +35,9 @@ export class NavPluginComponent extends CommonNavigationComponent {
 
     readonly pluginService: PluginService = inject<PluginService>(PluginService);
 
+    // @ts-expect-error(TODO:)
     private _plugin: XoPlugin;
+    // @ts-expect-error(TODO:)
     private _bundle: XoDefinitionBundle;
 
     get bundle(): XoDefinitionBundle {
@@ -48,7 +50,7 @@ export class NavPluginComponent extends CommonNavigationComponent {
         this.requestBundle();
     }
 
-    readonly pluginNumber = input<number>(undefined, { alias: "plugin-number" });
+    readonly pluginNumber = input<number>(undefined, { alias: 'plugin-number' });
 
     private requestBundle() {
         const definingWorkflow: XoGuiDefiningWorkflow = new XoGuiDefiningWorkflow();

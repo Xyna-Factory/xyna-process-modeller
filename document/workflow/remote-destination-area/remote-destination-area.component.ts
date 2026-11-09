@@ -18,7 +18,7 @@
 import { ChangeDetectionStrategy, Component, inject, Input, signal } from '@angular/core';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcOptionItem } from '@zeta/xc';
 
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { XcI18nTranslateDirective } from '@zeta/i18n';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeRemoteDestinationRequest } from '../../../xo/change-remote-destination-request.model';
 import { XoRemoteDestinationArea } from '../../../xo/remote-destination-area.model';
@@ -44,6 +44,7 @@ export class RemoteDestinationAreaComponent extends ModellingObjectComponent {
             const change = !!this.remoteDestinationArea.usedDestination;
             this.performAction({
                 type: change ? ModellingActionType.change : ModellingActionType.insert,
+                // @ts-expect-error(TODO:)
                 request: XoChangeRemoteDestinationRequest.withName(value),
                 objectId: change ? this.remoteDestinationArea.usedDestination.id : this.remoteDestinationArea.id
             });
@@ -55,7 +56,7 @@ export class RemoteDestinationAreaComponent extends ModellingObjectComponent {
         super();
         this.documentService.xmomService.getRemoteDestinations().subscribe(remoteDestinations =>
             this.dataWrapper.values = [
-                <XcOptionItem>{ name: signal(''), value: '' },
+                { name: signal(''), value: '' },
                 ...remoteDestinations.data.map(rd => <XcOptionItem>{ name: signal(rd.name), value: rd.name })
             ]
         );

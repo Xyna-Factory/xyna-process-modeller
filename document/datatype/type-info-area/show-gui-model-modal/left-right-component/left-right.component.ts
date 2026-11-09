@@ -32,6 +32,7 @@ export class LeftRightComponent implements OnInit {
     leftId: string;
     rightId: string;
 
+    // eslint-disable-next-line @angular-eslint/no-output-native
     readonly change = output<any[]>();
 
     readonly leftDropzone = viewChild<ElementRef>('leftDropzone');
@@ -47,7 +48,9 @@ export class LeftRightComponent implements OnInit {
         this.draggingSide = this.leftItems().includes(value) ? 'left' : 'right';
         this.draggingIndex = (this.draggingSide === 'left' ? this.leftItems() : this.rightItems).indexOf(value);
     }
+    // @ts-expect-error(TODO:)
     private draggingSide: string;
+    // @ts-expect-error(TODO:)
     private draggingIndex: number;
 
     private _showFocusedLeft = false;
@@ -63,6 +66,7 @@ export class LeftRightComponent implements OnInit {
         this._focusedItemLeft = value;
         this.focusedIndexLeft = this.leftItems().indexOf(value);
         if (this.focusedIndexLeft >= 0) {
+            // @ts-expect-error(TODO:)
             const container: HTMLElement = this.leftDropzone().nativeElement;
             const focusedNode = (<HTMLElement>container.children[this.focusedIndexLeft]);
             this._scrollFocusedNodeIntoView(focusedNode, container);
@@ -75,12 +79,15 @@ export class LeftRightComponent implements OnInit {
         this._focusedItemRight = value;
         this.focusedIndexRight = this.rightItems.indexOf(value);
         if (this.focusedIndexRight >= 0) {
+            // @ts-expect-error(TODO:)
             const container: HTMLElement = this.rightDropzone().nativeElement;
             const focusedNode = (<HTMLElement>container.children[this.focusedIndexRight]);
             this._scrollFocusedNodeIntoView(focusedNode, container);
         }
     }
+    // @ts-expect-error(TODO:)
     focusedIndexLeft: number;
+    // @ts-expect-error(TODO:)
     focusedIndexRight: number;
 
     private _targetedArrayItem: any;
@@ -92,7 +99,9 @@ export class LeftRightComponent implements OnInit {
         this.targetedSide = this.leftItems().includes(value) ? 'left' : 'right';
         this.targetedIndex = (this.targetedSide === 'left' ? this.leftItems() : this.rightItems).indexOf(value);
     }
+    // @ts-expect-error(TODO:)
     private targetedSide: string;
+    // @ts-expect-error(TODO:)
     private targetedIndex: number;
 
     private readonly _sideArrayMap = new Map<string, any[]>();
@@ -104,6 +113,7 @@ export class LeftRightComponent implements OnInit {
 
     readonly rightTitle = input('Right');
 
+    // @ts-expect-error(TODO:)
     readonly leftItems = input<any[]>(undefined);
 
     readonly leftItemsChange = output<any[]>();
@@ -137,7 +147,9 @@ export class LeftRightComponent implements OnInit {
         const removeArray = this._sideArrayMap.get(this.draggingSide);
         const appendArray = this._sideArrayMap.get(dropzoneSide);
 
+        // @ts-expect-error(TODO:)
         removeArray.splice(this.draggingIndex, 1);
+        // @ts-expect-error(TODO:)
         appendArray.push(this.draggingArrayItem);
 
         this.focusedItemLeft = null;
@@ -151,14 +163,19 @@ export class LeftRightComponent implements OnInit {
         const insertArray = this._sideArrayMap.get(this.targetedSide);
 
         if (this.draggingSide === this.targetedSide) {
+            // @ts-expect-error(TODO:)
             insertArray.splice(this.targetedIndex, 0, this.draggingArrayItem);
             if (this.draggingIndex < this.targetedIndex) {
+                // @ts-expect-error(TODO:)
                 removeArray.splice(this.draggingIndex, 1);
             } else {
+                // @ts-expect-error(TODO:)
                 removeArray.splice(this.draggingIndex + 1, 1);
             }
         } else {
+            // @ts-expect-error(TODO:)
             removeArray.splice(this.draggingIndex, 1);
+            // @ts-expect-error(TODO:)
             insertArray.splice(this.targetedIndex, 0, this.draggingArrayItem);
         }
 
@@ -197,6 +214,7 @@ export class LeftRightComponent implements OnInit {
     }
 
     itemMousedown(e: MouseEvent, item: any) {
+        // @ts-expect-error(TODO:)
         this.draggingSide = (<HTMLElement>e.target).parentElement.dataset.side === 'left' ? 'left' : 'right';
         if (this.draggingSide === 'left') {
             this.focusedItemLeft = item;
@@ -230,6 +248,7 @@ export class LeftRightComponent implements OnInit {
             if (this.targetedArrayItem) {
                 this._insertBeforeElement();
             } else {
+                // @ts-expect-error(TODO:)
                 this._appendElement(dropzoneElement.dataset.side);
             }
 

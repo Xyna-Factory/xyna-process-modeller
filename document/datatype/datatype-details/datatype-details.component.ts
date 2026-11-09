@@ -47,6 +47,7 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
     protected readonly i18nService = inject(I18nService);
     protected readonly cdr = inject(ChangeDetectorRef);
 
+    // @ts-expect-error(TODO:)
     readonly dataTypeRTC = input<XoRuntimeContext>(null);
 
     @Input()
@@ -85,7 +86,7 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
         closable: false,
         component: DocumentationTabComponent,
         name: this.i18nService.translateSignal('pmod.datatype.type-documentation-area.documentation-label'),
-        data: <DocumentTabData<DocumentationTabData>>{
+        data: {
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
             readonly: this.readonly,
@@ -97,7 +98,7 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
         closable: false,
         component: MetaTabComponent,
         name: signal('Meta'),
-        data: <DocumentTabData<MetaTabData>>{
+        data: {
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
             readonly: this.readonly,
@@ -109,7 +110,7 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
         closable: false,
         component: DataTypeStorableTabComponent,
         name: signal('ODS Information'),
-        data: <DocumentTabData<XoDataType>>{
+        data: {
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
             readonly: this.readonly,
@@ -118,6 +119,7 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
     };
 
     tabBarSelection: XcTabBarItem<DocumentTabData<any>>;
+    // @ts-expect-error(TODO:)
     tabBarItems: XcTabBarItem<DocumentTabData<any>>[];
 
     constructor() {
@@ -133,13 +135,16 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
     afterDocumentModelSet() {
         super.afterDocumentModelSet();
         this.tabBarItems.forEach(tabitem => {
+            // @ts-expect-error(TODO:)
             tabitem.data.documentModel = this.documentModel;
+            // @ts-expect-error(TODO:)
             tabitem.data.readonly = this.readonly;
         });
     }
 
     protected lockedChanged() {
         this.tabBarItems.forEach(tabitem => {
+            // @ts-expect-error(TODO:)
             tabitem.data.readonly = this.readonly;
         });
         this.cdr.markForCheck();
@@ -147,13 +152,13 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
 
 
     private buildDocTabData(dataType: XoDataType): DocumentationTabData {
-        return <DocumentationTabData>{
+        return {
             documentationArea: dataType.documentationArea
         };
     }
 
     private buildMetaTabData(dataType: XoDataType): MetaTabData {
-        return <MetaTabData>{
+        return {
             metaTagArea: dataType.metaTagArea,
             objectIdKey: '',
             objectId: ''
@@ -185,14 +190,15 @@ export class DataTypeDetailsComponent extends ModellingItemComponent implements 
     }
 
     private createPluginTabItem(bundle: XoDefinitionBundle, tabName: string): XcTabBarItem<PluginTabData> {
-        return <XcTabBarItem<PluginTabData>> {
+        return  {
             closable: false,
             component: DataTypePluginTabComponent,
             name: signal(tabName || 'Plugin'),
+            // @ts-expect-error(TODO:)
             data: <PluginTabData>{
                 documentModel: this.documentModel,
                 performAction: this.performAction.bind(this),
-                update: of() as Observable<XoDataType>,
+                update: of(),
                 bundle: bundle
             }
         };

@@ -28,7 +28,7 @@ import { XoMemberMethodArea } from '../../../xo/member-method-area.model';
 import { XoMemberVariableArea } from '../../../xo/member-variable-area.model';
 import { PluginService } from '../../plugin.service';
 import { ModellingObjectComponent } from '../../workflow/shared/modelling-object.component';
-import { XcI18nPipe } from '../../../../../zeta/i18n';
+import { XcI18nPipe } from '@zeta/i18n';
 import { XcIconButtonComponent, XcDefinitionProxyComponent } from '@zeta/xc';
 
 
@@ -43,8 +43,10 @@ export class MemberAreaComponent extends ModellingObjectComponent {
 
     protected readonly pluginService = inject(PluginService);
 
+    // @ts-expect-error(TODO:)
     pluginBundles: XoDefinitionBundle[];
 
+    // @ts-expect-error(TODO:)
     readonly caption = input<string>(undefined);
 
     readonly collapsed = signal(false);
@@ -74,6 +76,7 @@ export class MemberAreaComponent extends ModellingObjectComponent {
             plugin = this.area.plugin;
         }
 
+        // @ts-expect-error(TODO:)
         if (plugin?.guiDefiningWorkflow) {
             combineLatest(
                 plugin.guiDefiningWorkflow.data.map(

@@ -20,10 +20,9 @@ import { switchMap, tap } from 'rxjs/operators';
 
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy, signal } from '@angular/core';
 import { DragType } from '@pmod/document/workflow/shared/drag-and-drop/mod-drag-and-drop.service';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, XcI18nTranslateDirective  } from '@zeta/i18n';
 import { XcDialogService, XcIconButtonComponent, XcIconComponent, XcMenuComponent, XcMenuItem, XcMenuTriggerDirective, XcTooltipDirective } from '@zeta/xc';
 
-import { XcI18nTranslateDirective } from '../../../zeta/i18n';
 import { XmomObjectType } from '../api/xmom-types';
 import { DocumentService } from '../document/document.service';
 import { TypeDocumentModel } from '../document/model/type-document.model';
@@ -185,7 +184,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
             iconName: 'tb-deploy',
             // deploy as is only allowed within the same RTC (PMOD-643)
             isDisabled: ds => ds.pendingModellingAction || ds.isSelectedDocumentDeploying || ds.selectedDocument.lockInfo.readonly || ds.selectedDocument.lockInfo.rtcLock,
-            isBusy: ds => ds.pendingModellingAction ||ds.isSelectedDocumentDeploying
+            isBusy: ds => ds.pendingModellingAction || ds.isSelectedDocumentDeploying
         },
         {
             name: ToolbarComponent.BUTTON_NAME_DOWNLOAD_TEMPLATE,
@@ -365,7 +364,9 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     ];
 
 
+    // @ts-expect-error(TODO:)
     private cdrSubscription: Subscription;
+    // @ts-expect-error(TODO:)
     private lockedSubscription: Subscription;
 
 

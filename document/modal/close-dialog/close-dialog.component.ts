@@ -19,7 +19,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent } from '@zeta/xc';
 
-import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { closeDialog_translations_de_DE } from './locale/close-dialog-translations.de-DE';
 import { closeDialog_translations_en_US } from './locale/close-dialog-translations.en-US';
 

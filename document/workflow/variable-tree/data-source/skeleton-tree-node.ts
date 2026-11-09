@@ -26,15 +26,19 @@ import { TreeNodeFactory, TreeNodeObserver } from './skeleton-tree-data-source';
 
 
 export abstract class SkeletonTreeNode implements GraphicallyRepresented<Element>, Draggable {
+    // @ts-expect-error(TODO:)
     private _structure: XoStructureField;
+    // @ts-expect-error(TODO:)
     private _xfl: string;
 
     /** Node is marked for some reason and can be rendered differently than an unmarked node */
     private readonly _marked$ = new BehaviorSubject<boolean>(false);
     private readonly _selected$ = new BehaviorSubject<boolean>(false);
 
+    // @ts-expect-error(TODO:)
     private readonly _graphicalRepresentation$ = new BehaviorSubject<Element>(null);
 
+    // @ts-expect-error(TODO:)
     protected _parent: ComplexSkeletonTreeNode;
 
     constructor(structure: XoStructureField, protected nodeFactory: TreeNodeFactory, protected nodeObservers: Set<TreeNodeObserver> = new Set<TreeNodeObserver>()) {
@@ -138,6 +142,7 @@ export abstract class SkeletonTreeNode implements GraphicallyRepresented<Element
 
 
     get typeLabel(): string {
+        // @ts-expect-error(TODO:)
         return this.getStructure().typeLabel;
     }
 
@@ -270,6 +275,7 @@ export class PrimitiveSkeletonTreeNode extends SkeletonTreeNode {
         if (path.path === this.getXFLExpression()) {
             return of(this);
         }
+        // @ts-expect-error(TODO:)
         return of(undefined);
     }
 
@@ -283,6 +289,7 @@ export class PrimitiveSkeletonTreeNode extends SkeletonTreeNode {
 
 export abstract class ComplexSkeletonTreeNode extends SkeletonTreeNode {
     protected _children: SkeletonTreeNode[] = [];
+    // @ts-expect-error(TODO:)
     private _sourceIndex: number;
     private _collapsed = true;
 
@@ -346,8 +353,10 @@ export abstract class ComplexSkeletonTreeNode extends SkeletonTreeNode {
 }
 
 export class ObjectSkeletonTreeNode extends ComplexSkeletonTreeNode {
+    // @ts-expect-error(TODO:)
     private readonly _subtypes = new BehaviorSubject<XoStructureType[]>(null);
     private readonly _markForCheckChildren = new BehaviorSubject<boolean>(true);
+    // @ts-expect-error(TODO:)
     private runningUpdateChildren: Observable<boolean> = undefined;
 
 
@@ -395,6 +404,7 @@ export class ObjectSkeletonTreeNode extends ComplexSkeletonTreeNode {
                             });
                             this.notifyObservers();
                             this._markForCheckChildren.next(false);
+                            // @ts-expect-error(TODO:)
                             this.runningUpdateChildren = undefined;
                             return true;
                         })
@@ -407,7 +417,7 @@ export class ObjectSkeletonTreeNode extends ComplexSkeletonTreeNode {
                     observer.next(false);
                     observer.complete();
                 }
-            });
+            }).catch(err => observer.error(err));
         });
     }
 
@@ -425,6 +435,7 @@ export class ObjectSkeletonTreeNode extends ComplexSkeletonTreeNode {
 
     match(path: RecursiveStructurePart, uncollapseWhileMatching = false): Observable<SkeletonTreeNode> {
         if (this.getXFLExpression() !== path.path) {
+            // @ts-expect-error(TODO:)
             return of(undefined);
         }
 
@@ -440,11 +451,13 @@ export class ObjectSkeletonTreeNode extends ComplexSkeletonTreeNode {
             return askChildrenForMatch();
         };
 
+        // @ts-expect-error(TODO:)
         if (path.fqn && path.fqn !== this.getStructure().typeFqn.encode(false)) {
             // wait for subtypes, to be initialized
             return this._subtypes.pipe(
                 filter(types => !!types),
                 first(),
+                // @ts-expect-error(TODO:)
                 map(types => types.find(subType => path.fqn === subType.typeFqn.encode(false))),
                 // if this node was never been uncollapsed, children need to be initialized.
                 switchMap(type => type ? this.setSubtypeStructure(type) : this.updateChildren()),
@@ -474,6 +487,7 @@ export class ArraySkeletonTreeNode extends ComplexSkeletonTreeNode {
 
     match(path: RecursiveStructurePart, uncollapseWhileMatching = false): Observable<SkeletonTreeNode> {
         if (this.getXFLExpression() !== path.path) {
+            // @ts-expect-error(TODO:)
             return of(undefined);
         }
 
@@ -494,6 +508,7 @@ export class ArraySkeletonTreeNode extends ComplexSkeletonTreeNode {
 
         // forkJoin errors, if incoming list is empty. If we have no children, we want to create a new one.
         const foundMatchingChildren = this.children.length > 0 ? this.children.map(child => child.match(path.child, uncollapseWhileMatching)) : [of(undefined)];
+        // @ts-expect-error(TODO:)
         return forkJoin(foundMatchingChildren).pipe(
             map(matches => matches.find(node => !!node)),
             // If no child match, create a new child, that will match. Because the matching of a potential new child is asynchronously, switchMap is needed.

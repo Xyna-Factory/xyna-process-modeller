@@ -26,7 +26,7 @@ import { XoVariable } from '../../../../xo/variable.model';
 import { ModellingObjectComponent } from '../../shared/modelling-object.component';
 import { NgFor } from '@angular/common';
 import { VariableComponent } from '../../variable/variable.component';
-import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
+import { XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcButtonComponent } from '@zeta/xc';
 
 
@@ -39,6 +39,7 @@ import { XcButtonComponent } from '@zeta/xc';
 })
 export class ItemBarAreaComponent extends ModellingObjectComponent {
 
+    // @ts-expect-error(TODO:)
     readonly branchArea = input<XoContentArea>(undefined);
 
 

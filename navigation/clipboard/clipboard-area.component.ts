@@ -28,7 +28,7 @@ import { XoFormula } from '../../xo/formula.model';
 import { XoContainerArea, XoModellingItem } from '../../xo/modelling-item.model';
 import { ClipboardItemComponent } from './clipboard-item.component';
 import { ModDraggableDirective } from '../../document/workflow/shared/drag-and-drop/mod-draggable.directive';
-import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
+import { XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcTooltipDirective } from '@zeta/xc';
 
 
@@ -41,6 +41,7 @@ import { XcTooltipDirective } from '@zeta/xc';
 })
 export class ClipboardAreaComponent {
 
+    // @ts-expect-error(TODO:)
     readonly clipboardArea = input<XoContainerArea>(undefined);
 
     readonly triggerAction = output<TriggeredAction>();
@@ -48,6 +49,7 @@ export class ClipboardAreaComponent {
     allowItem = (xoFqn: string, xoId?: string): boolean => true;
 
     canDrop = (xo: XoModellingItem, event?: ModDragEvent): boolean => {
+        // @ts-expect-error(TODO:)
         if (xo.id && (event.side === ModRelativeHoverSide.top || event.side === ModRelativeHoverSide.bottom)) {
             const fromClipboard = !!(xo.data as XoClipboardEntryData).$clipboard;
             const forbiddenItem = xo instanceof XoBranch || xo.parent instanceof XoFormula;
@@ -71,8 +73,9 @@ export class ClipboardAreaComponent {
     }
 
 
+    // @ts-expect-error(TODO:)
     getTooltip(item: XoModellingItem): string {
-        const data: XoClipboardEntryData = item.data as XoClipboardEntryData;
+        const data: XoClipboardEntryData = item.data;
         if (data.$clipboard) {
             const rtc = data.$clipboard.originalRtc?.runtimeContext().uniqueKey ?? '';
             const fqn = data.$clipboard.originalFqn ?? '';

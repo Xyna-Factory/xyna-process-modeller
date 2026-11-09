@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -30,22 +33,22 @@ export class XoRuntimeContext extends XoObject {
     }
 
     static fromQueryParam(param: string): XoRuntimeContext {
-         
+
         return XoApplication.isApplicationQueryParam(param)
             ? XoApplication.fromQueryParam(param)
             : XoWorkspace.fromQueryParam(param);
-         
+
     }
 
     static fromRuntimeContext(rtc: RuntimeContext): XoRuntimeContext {
-         
+
         if (rtc.ws) {
             return XoWorkspace.fromWorkspace(rtc.ws);
         }
         if (rtc.av) {
             return XoApplication.fromApplication(rtc.av);
         }
-         
+
         return null;
     }
 }

@@ -21,7 +21,7 @@ import { coerceBoolean, OutsideListenerService } from '@zeta/base';
 
 import { filter } from 'rxjs/operators';
 
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { XcI18nTranslateDirective } from '@zeta/i18n';
 import { XoWorkflow, XoWorkflowStub } from '../../../xo/workflow.model';
 import { DocumentService } from '../../document.service';
 import { SelectionService } from '../../selection.service';
@@ -43,7 +43,9 @@ export class WorkflowComponent extends ModellingItemComponent implements AfterVi
     protected readonly documentService = inject(DocumentService);
     private readonly selectionService = inject(SelectionService);
 
+    // @ts-expect-error(TODO:)
     private scrollListener: number;
+    // @ts-expect-error(TODO:)
     private clickListener: number;
     private currentScrollTop = 0;
     private currentScrollLeft = 0;
@@ -69,11 +71,11 @@ export class WorkflowComponent extends ModellingItemComponent implements AfterVi
         this.setModel(value);
     }
 
-    readonly onlyParentRuntimeInfo = input(false, { transform: coerceBoolean });
-
     get workflow(): XoWorkflow {
         return this.getModel() as XoWorkflow;
     }
+
+    readonly onlyParentRuntimeInfo = input(false, { transform: coerceBoolean });
 
     get hasWorkflowData() {
         return this.workflow && !(this.workflow instanceof XoWorkflowStub);
@@ -99,6 +101,7 @@ export class WorkflowComponent extends ModellingItemComponent implements AfterVi
         });
 
         this.clickListener = this.outsideListener.addOutsideListener(el, 'click', () => {
+            // @ts-expect-error(TODO:)
             this.selectionService.selectedObject = null;
         });
 

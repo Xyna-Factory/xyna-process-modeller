@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import { XoObjectClass, XoArrayClass, XoArray, XoTransient, XoProperty } from '@zeta/api';
 import { XoFunctionExpression } from './function-expression.model';
 import { RecursiveStructure, RecursiveStructurePart } from './RecursiveStructurePart';

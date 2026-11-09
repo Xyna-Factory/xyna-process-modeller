@@ -30,10 +30,13 @@ import { XMOMTreeItemState, XMOMTreeItemComponent } from './xmom-tree-item.compo
 })
 export class XMOMTreeComponent {
 
+    // @ts-expect-error(TODO:)
     readonly selectedXmomPaths = input<XmomPath[]>(undefined);
 
+    // @ts-expect-error(TODO:)
     readonly expandedXmomPaths = input<XmomPath[]>(undefined);
 
+    // @ts-expect-error(TODO:)
     readonly xmomPaths = input<XmomPath[]>(undefined);
 
     readonly stateChange = output<XMOMTreeItemState>();

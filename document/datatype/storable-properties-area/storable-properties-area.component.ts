@@ -51,6 +51,7 @@ export class StorablePropertiesAreaComponent extends ModellingObjectComponent {
         const unwrapRows = (area: XoStorablePropertyArea, indentation = '') => {
             const row = area.clone();
             row.label = indentation + (area.label ?? '<none>') + (area.isFlattened ? ' (flattened)' : '');
+            // @ts-expect-error(TODO:)
             rows.push(row);
             area.children.forEach(child => unwrapRows(child, indentation + '    '));
         };

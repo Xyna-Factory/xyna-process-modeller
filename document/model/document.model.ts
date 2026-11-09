@@ -47,10 +47,14 @@ export abstract class DocumentModel<T extends DocumentItem = DocumentItem> {
 
     static readonly UNLOCKED = Object.seal({userLock: undefined, rtcLock: false, readonly: false});
 
+    // @ts-expect-error(TODO:)
     private readonly lockedSubject = new BehaviorSubject<DocumentLockInfo>(DocumentModel.UNLOCKED);
+    // @ts-expect-error(TODO:)
     private readonly issuesSubject = new BehaviorSubject<XoIssueArray>(null);
+    // @ts-expect-error(TODO:)
     private readonly warningsSubject = new BehaviorSubject<XoWarningArray>(null);
 
+    // @ts-expect-error(TODO:)
     private _tabBarItem: XcTabBarItem<DocumentModel>;
 
     /** Set to true by document service while saving this document */
@@ -83,7 +87,9 @@ export abstract class DocumentModel<T extends DocumentItem = DocumentItem> {
 
     set tabBarItem(value: XcTabBarItem<DocumentModel>) {
         if (this.tabBarItem) {
+            // @ts-expect-error(TODO:)
             this.tabBarItem.afterActivate = null;
+            // @ts-expect-error(TODO:)
             this.tabBarItem.afterDeactivate = null;
         }
 

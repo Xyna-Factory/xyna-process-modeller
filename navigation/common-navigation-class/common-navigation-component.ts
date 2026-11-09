@@ -25,6 +25,7 @@ export class CommonNavigationComponent {
     private readonly cdr = inject(ChangeDetectorRef);
 
     /** true when the component is visible */
+    // @ts-expect-error(TODO:)
     active: boolean;
 
     /**

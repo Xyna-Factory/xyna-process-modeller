@@ -22,7 +22,7 @@ import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model
 import { ErrorItem } from '@pmod/xo/issue.model';
 
 import { ErrorService } from '../error.service';
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcIconButtonComponent, XcIconComponent, XcTooltipDirective } from '@zeta/xc';
 
 
@@ -37,14 +37,17 @@ export class ErrorItemComponent {
     private readonly documentService = inject(DocumentService);
     private readonly errorService = inject(ErrorService);
 
+    // @ts-expect-error(TODO:)
     readonly error = input<ErrorItem>(undefined);
 
+    // @ts-expect-error(TODO:)
     readonly checkable = input<boolean>(undefined);
 
     readonly errorSelectionChanged = output<ErrorItem>();
 
     readonly errorCheckedChanged = output<ErrorItem>();
 
+    // @ts-expect-error(TODO:)
     tmpElementRef: ElementRef;
 
 
@@ -53,6 +56,7 @@ export class ErrorItemComponent {
     }
 
     get item(): DocumentItem {
+        // @ts-expect-error(TODO:)
         return this.document ? this.document.item : null;
     }
 

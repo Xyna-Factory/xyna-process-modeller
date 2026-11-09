@@ -25,10 +25,9 @@ import { XoChangeMemberVariableFqnRequest } from '@pmod/xo/change-member-variabl
 import { XoChangeMemberVariablePrimitiveTypeRequest } from '@pmod/xo/change-member-variable-primitive-type-request.model';
 import { XoChangeTextRequest } from '@pmod/xo/change-text-request.model';
 import { FullQualifiedName } from '@zeta/api';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, XcI18nPipe, XcI18nTranslateDirective  } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcButtonComponent, XcFormAutocompleteComponent, XcFormInputComponent, XcFormValidatorRequiredDirective, XcOptionItemString, XcOptionItemStringOrUndefined, XcOptionItemTranslate, XcTooltipDirective } from '@zeta/xc';
 
-import { XcI18nPipe, XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
 import { TypeDocumentationAreaComponent } from '../../type-documentation-area/type-documentation-area.component';
 import { DatatypeVariableTabComponent } from '../datatype-tab.component';
 
@@ -66,12 +65,14 @@ export class MemberVariableBaseTabComponent extends DatatypeVariableTabComponent
             value => {
                 const primitive = MemberVariableBaseTabComponent.PRIMITIVE_TYPES.includes(value);
                 if (primitive && value !== this.memberVariable.primitiveType) {
+                    // @ts-expect-error(TODO:)
                     this.memberVariable.$fqn = undefined;
                     this.memberVariable.primitiveType = value;
                     this.performMemberVariableChange(new XoChangeMemberVariablePrimitiveTypeRequest(undefined, value));
                 }
                 if (!primitive && value !== this.memberVariable.$fqn) {
                     this.memberVariable.$fqn = value;
+                    // @ts-expect-error(TODO:)
                     this.memberVariable.primitiveType = undefined;
                     if (value) {
                         this.performMemberVariableChange(new XoChangeMemberVariableFqnRequest(undefined, value));
@@ -85,6 +86,7 @@ export class MemberVariableBaseTabComponent extends DatatypeVariableTabComponent
         );
 
         this.untilDestroyed(this.injectedData.update).subscribe(() => {
+            // @ts-expect-error(TODO:)
             this.dataTypeDataWrapper.preset(v => XcOptionItemStringOrUndefined(v));
         });
     }
@@ -94,6 +96,7 @@ export class MemberVariableBaseTabComponent extends DatatypeVariableTabComponent
         this.dataTypeService.getDataTypes(rtc.runtimeContext(), [DataTypeService.ANYTYPE]).subscribe(types => {
             this.dataTypeDataWrapper.values = [
                 ...MemberVariableBaseTabComponent.PRIMITIVE_TYPES.map(primitive => XcOptionItemTranslate(this.i18n, primitive)),
+                // @ts-expect-error(TODO:)
                 ...types.map(type => XcOptionItemString(type.typeFqn.uniqueKey))
             ];
         });
@@ -102,6 +105,7 @@ export class MemberVariableBaseTabComponent extends DatatypeVariableTabComponent
 
     @ViewChild('dataTypeAutocomplete', {static: false, read: XcFormAutocompleteComponent})
     set dataTypeAutocomplete(value: XcFormAutocompleteComponent) {
+        // @ts-expect-error(TODO:)
         this.untilDestroyed(value ? outputToObservable(value.focus) : undefined)?.pipe(filter(() => !value.disabled)).subscribe(() => this.refreshDataTypeAutocomplete());
     }
 

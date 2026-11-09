@@ -133,7 +133,9 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
     // ----------------------------------------------------
 
     private updateEditor(initial = false) {
-        if (!this.method) return;
+        if (!this.method) {
+            return;
+        }
 
         // PYTHON
         const readonly = this.readonly();
@@ -145,6 +147,7 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
                 this.pythonEditor.setValue(code);
             }
 
+            // @ts-expect-error(TODO:)
             this.pythonEditor.updateOptions({ readOnly: readonly });
         }
 
@@ -159,6 +162,7 @@ export class CodingComponent implements AfterViewInit, OnDestroy {
                 this.javaEditor.setValue(code);
             }
 
+            // @ts-expect-error(TODO:)
             this.javaEditor.updateOptions({ readOnly: readonly });
         }
 

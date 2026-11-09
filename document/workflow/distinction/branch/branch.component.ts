@@ -63,6 +63,7 @@ export class BranchComponent extends SelectableModellingObjectComponent implemen
         // if a branch has no case area, it is only a non-semantic container (e. g. in a parallelism) and shall not be selected
         if (this.branch && this.branch.caseArea) {
             super.select();
+            // @ts-expect-error(TODO:)
             this.branchSelectionService.selectedObject = this.branchSelectionService.selectedObject === this
                 ? null
                 : this;

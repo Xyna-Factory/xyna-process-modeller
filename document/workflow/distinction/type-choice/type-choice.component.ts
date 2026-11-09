@@ -17,7 +17,7 @@
  */
 import { ChangeDetectionStrategy, Component, forwardRef } from '@angular/core';
 
-import { XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
+import { XcI18nTranslateDirective } from '@zeta/i18n';
 import { ModellingActionType } from '../../../../api/xmom.service';
 import { XoRequest } from '../../../../xo/request.model';
 import { XoTypeChoice } from '../../../../xo/type-choice.model';

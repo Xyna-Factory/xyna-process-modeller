@@ -19,10 +19,9 @@ import { catchError, switchMap } from 'rxjs/operators';
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, XcI18nContextDirective, XcI18nTranslateDirective  } from '@zeta/i18n';
 import { XcButtonComponent, XcDialogService } from '@zeta/xc';
 
-import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { DocumentService } from '../../document/document.service';
 import { TriggeredAction } from '../../document/workflow/shared/modelling-object.component';
 import { XoError } from '../../xo/error.model';

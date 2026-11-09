@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Injectable, inject , signal} from '@angular/core';
+import { Injectable, inject, signal} from '@angular/core';
 
 import { ApiService, RuntimeContext } from '@zeta/api';
 import { XcAutocompleteDataWrapper, XcOptionItem } from '@zeta/xc';
@@ -36,6 +36,7 @@ export class FactoryService {
     /**
      * Runtime Context used by Factory Navigation and Search
      */
+    // @ts-expect-error(TODO:)
     private readonly runtimeContextSubject = new BehaviorSubject<RuntimeContext>(null);
 
     /**

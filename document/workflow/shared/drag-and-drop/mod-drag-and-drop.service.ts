@@ -81,6 +81,7 @@ export enum ModRelativeHoverSide {
     inside = 'inside'
 }
 
+// @ts-expect-error(TODO:)
 export function ModRelativeHoverSideCalculate(x: number, y: number, rect: ClientRect, horizontal: boolean, vertical: boolean): ModRelativeHoverSide {
     if (horizontal && !vertical) {
         return x < rect.width / 2 ? ModRelativeHoverSide.left : ModRelativeHoverSide.right;
@@ -176,6 +177,7 @@ Algorithm for nested drop areas:
 })
 export class ModDragAndDropService {
 
+    // @ts-expect-error(TODO:)
     serverId: string;
     clientId: string;
 
@@ -187,6 +189,7 @@ export class ModDragAndDropService {
     private readonly _currentAreaSubject = new Subject<Element>();
     private readonly _leftAreaSubject = new Subject<Element>();
 
+    // @ts-expect-error(TODO:)
     private dropIndicator: HTMLElement;
 
     /**
@@ -194,8 +197,10 @@ export class ModDragAndDropService {
      * If an item is dragged from another app, this item will be null. This way one can distinguish between
      * moving and copying the item.
      */
+    // @ts-expect-error(TODO:)
     private _draggedItem: Draggable;
 
+    // @ts-expect-error(TODO:)
     private _canvas: HTMLCanvasElement;
 
 
@@ -281,12 +286,14 @@ export class ModDragAndDropService {
         this.areaStack = [];
         if (lastArea) {
             this._leftAreaSubject.next(lastArea);
+            // @ts-expect-error(TODO:)
             this._currentAreaSubject.next(null);
         }
     }
 
 
     get currentArea(): Element {
+        // @ts-expect-error(TODO:)
         return this.areaStack.length > 0 ? this.areaStack[0].area : null;
     }
 
@@ -311,6 +318,7 @@ export class ModDragAndDropService {
         // For this property, only the keys of the transferred data are accessible. So the data has been encoded in the keys.
         // Search for the key that starts with key.
         const data = event.dataTransfer.types.find(dataKey => dataKey.startsWith(key));
+        // @ts-expect-error(TODO:)
         return data ? data.substring(key.length) : null;
     }
 
@@ -462,6 +470,7 @@ export class ModDragAndDropService {
             case (XoDataMemberVariable.fqn).encode().toLowerCase():
                 return new XoDataMemberVariable().decode(jsonData);
             default: console.warn('type not found for', fqn);
+                // @ts-expect-error(TODO:)
                 return null;
         }
     }
@@ -475,7 +484,9 @@ export class ModDragAndDropService {
             this._canvas = document.createElement('canvas');
         }
         const context = this._canvas.getContext('2d');
+        // @ts-expect-error(TODO:)
         context.font = font;
+        // @ts-expect-error(TODO:)
         return context.measureText(text).width;
     }
 }

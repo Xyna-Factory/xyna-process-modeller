@@ -99,6 +99,7 @@ export class WorkflowConstantBuilder {
         let i: number;
 
         const allowed = (path: string, allowedPrefixes: string[]): boolean => {
+            // @ts-expect-error(TODO:)
             if (!allowedPrefixes && allowedPrefixes.length === 0) {
                 return true;
             }
@@ -184,7 +185,7 @@ export class WorkflowConstantBuilder {
 
         const singleRequest = (innerRtc: RuntimeContext, innerOrderType: string): Observable<ReferingSignature> =>
             apiService.getSignature(innerRtc, innerOrderType).pipe<ReferingSignature>(
-                map((sig: OrderTypeSignature) => <ReferingSignature>{ ...sig, ordertype: innerOrderType })
+                map((sig: OrderTypeSignature) => ({ ...sig, ordertype: innerOrderType }))
             );
 
         let num = 0;

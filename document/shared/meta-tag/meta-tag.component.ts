@@ -22,7 +22,7 @@ import { XoChangeMetaTagRequest } from '@pmod/xo/change-meta-tag-request.model';
 import { XoDeleteRequest } from '@pmod/xo/delete-request.model';
 import { XoMetaTag } from '@pmod/xo/meta-tag.model';
 import { ModContentEditableDirective } from '../../workflow/shared/mod-content-editable.directive';
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 @Component({

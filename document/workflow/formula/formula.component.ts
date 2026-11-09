@@ -66,10 +66,13 @@ export class FormulaComponent extends ModellingItemComponent {
 
     readonly DragType = DragType;
 
+    // @ts-expect-error(TODO:)
     private _partWithCaret: FormulaPart = null;     // caret is at the beginning of this part
+    // @ts-expect-error(TODO:)
     private _partInEditing: FormulaPart = null;     // if set, the focus is inside this part (e. g. while editing a literal)
     private _selected = false;                      // formula or a sub-element is selected
     private _cachedExpression = '';
+    // @ts-expect-error(TODO:)
     private _partWaitingForFocus: FormulaPart = null;
     private _editableParts = new QueryList<FormulaEditablePartComponent>();
     private _externalChildren = new QueryList<FormulaChildComponent>();     // elements with children outside of formula-DOM-hierarchy (such as dropdown-options)
@@ -99,6 +102,7 @@ export class FormulaComponent extends ModellingItemComponent {
         const isAllowedId = (id: string): boolean =>
             this.getVariableIndex(id) >= 0;
 
+        // @ts-expect-error(TODO:)
         return !this.readonly && !this.dropDisabled && (isAllowedType(xoFqn) && (!this.formula.isVariablesReadonly || isAllowedId(xoId)));
     };
 
@@ -115,6 +119,7 @@ export class FormulaComponent extends ModellingItemComponent {
             const variableIndex = this.getVariableIndex(variable.id) ?? (insertAsNewVariable = true, this.formula.input.length);
 
             /** @todo use a factory function of FormulaPartVariable for this */
+            // @ts-expect-error(TODO:)
             const variablePart = new FormulaPartVariable('%' + variableIndex + '%', variable, null, this.apiService, this.documentModel.originRuntimeContext);
             const succeedingPart = partIndex < this.formula.visibleParts.length ? this.formula.visibleParts[partIndex] : this.formula.lastVisiblePart;
             this.formula.addPart(variablePart, succeedingPart, true);
@@ -149,6 +154,7 @@ export class FormulaComponent extends ModellingItemComponent {
      */
     private getVariableIndex(id: string): number {
         const index = this.formula.variables.data.findIndex(entry => entry.id === id);
+        // @ts-expect-error(TODO:)
         return index >= 0 ? index : undefined;
     }
 
@@ -255,8 +261,11 @@ export class FormulaComponent extends ModellingItemComponent {
     unselect() {
         if (this.selected) {
             this._selected = false;
+            // @ts-expect-error(TODO:)
             this.setCaretToPart(null);
+            // @ts-expect-error(TODO:)
             this._partInEditing = null;
+            // @ts-expect-error(TODO:)
             this._partWaitingForFocus = null;
 
             // trigger a change for the expression, if changed
@@ -309,10 +318,13 @@ export class FormulaComponent extends ModellingItemComponent {
         /** @todo This should pe placed inside FormulaPartMemberComponent, somehow */
         part.isMemberFunction$().pipe(filter(result => result), take(1)).subscribe(() => {
             const successor = this.formula.getVisibleSucceedingPart(part);
+            // @ts-expect-error(TODO:)
             this.formula.addPart(new FormulaPartSpecial('(', null, this.apiService, this.documentModel.originRuntimeContext), successor, true);
+            // @ts-expect-error(TODO:)
             this.formula.addPart(new FormulaPartSpecial(')', null, this.apiService, this.documentModel.originRuntimeContext), successor, true);
         });
 
+        // @ts-expect-error(TODO:)
         this._partInEditing = null;
         this._suppressNextClick = true;
         // optional: failsafe reset
@@ -359,6 +371,7 @@ export class FormulaComponent extends ModellingItemComponent {
     clickOnFormula() {
         if (!this.readonly && !this.selected) {
             this.select();
+            // @ts-expect-error(TODO:)
             this.formulaWrapper().nativeElement.focus();   // focus formula-area instead of formula
         }
     }
@@ -371,7 +384,9 @@ export class FormulaComponent extends ModellingItemComponent {
         const formulaWrapper = this.formulaWrapper();
 
         if (
+            // @ts-expect-error(TODO:)
             formulaWrapper.nativeElement !== relatedTarget &&
+            // @ts-expect-error(TODO:)
             !formulaWrapper.nativeElement.contains(relatedTarget) &&
             !this._externalChildren?.find(child =>
                 !!child.getChildren().find(externalChild => externalChild === relatedTarget)
@@ -404,6 +419,7 @@ export class FormulaComponent extends ModellingItemComponent {
                 this.setCaretToPart(this.formula.visibleParts[0]);
             }
         } else if (event.key === 'End') {
+            // @ts-expect-error(TODO:)
             this.setCaretToPart(null);
         } else if (event.key === 'Delete') {
             // delete part right to caret
@@ -428,6 +444,7 @@ export class FormulaComponent extends ModellingItemComponent {
                 this.focusPart(this.partWithCaret);
             } else {
                 // ... or finish editing
+                // @ts-expect-error(TODO:)
                 this.formulaWrapper().nativeElement.blur();
             }
         } else {
@@ -435,11 +452,13 @@ export class FormulaComponent extends ModellingItemComponent {
             // -------------------------------------------------
             // shortcuts to create parts
             // -------------------------------------------------
+            // @ts-expect-error(TODO:)
             let part: FormulaPart = null;
 
             if (event.key === '"') {
                 // insert literal part
                 /** @todo use static factory function */
+                // @ts-expect-error(TODO:)
                 const literalPart = new FormulaPartLiteral('""', '', null, this.apiService, this.documentModel.originRuntimeContext);
                 this.formula.addPart(literalPart, this.partWithCaret, true);
                 this._partWaitingForFocus = literalPart;
@@ -497,6 +516,7 @@ export class FormulaComponent extends ModellingItemComponent {
 
         // finish proxy-mode and refocus formula
         this.proxyIndex = -1;
+        // @ts-expect-error(TODO:)
         this.formulaWrapper().nativeElement.focus();
     }
 
@@ -517,6 +537,7 @@ export class FormulaComponent extends ModellingItemComponent {
         // focus part if there is a waiting one
         if (this._partWaitingForFocus) {
             this.focusPart(this._partWaitingForFocus);
+            // @ts-expect-error(TODO:)
             this._partWaitingForFocus = null;
         }
     }

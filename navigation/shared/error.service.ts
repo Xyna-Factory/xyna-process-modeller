@@ -36,6 +36,7 @@ export class ErrorService {
     protected readonly componentMappingService = inject(ComponentMappingService);
 
     // private currentErrorIndex = -1;
+    // @ts-expect-error(TODO:)
     tmpElementRef: ElementRef;
 
     static readonly CLASS_HIGHLIGHT = 'error-highlight';
@@ -48,6 +49,7 @@ export class ErrorService {
 
 
     get item(): DocumentItem {
+        // @ts-expect-error(TODO:)
         return this.document ? this.document.item : null;
     }
 

@@ -45,7 +45,7 @@ export class MemberVariableAreaComponent extends ModellingObjectComponent {
 
     constructor() {
         super();
-         
+
         const antiTreeShakingInstance = new XoDataMemberVariable();
     }
 

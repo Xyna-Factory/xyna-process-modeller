@@ -68,7 +68,7 @@ export class ExceptionTypeDetailsComponent extends ModellingItemComponent implem
         closable: false,
         component: DocumentationTabComponent,
         name: this.i18nService.translateSignal('pmod.datatype.type-documentation-area.documentation-label'),
-        data: <DocumentTabData<DocumentationTabData>>{
+        data: {
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
             readonly: this.readonly,
@@ -77,6 +77,7 @@ export class ExceptionTypeDetailsComponent extends ModellingItemComponent implem
     };
 
     tabBarSelection: XcTabBarItem<DocumentTabData<any>>;
+    // @ts-expect-error(TODO:)
     tabBarItems: XcTabBarItem<DocumentTabData<any>>[];
 
     constructor() {
@@ -93,13 +94,16 @@ export class ExceptionTypeDetailsComponent extends ModellingItemComponent implem
     afterDocumentModelSet() {
         super.afterDocumentModelSet();
         this.tabBarItems.forEach(tabitem => {
+            // @ts-expect-error(TODO:)
             tabitem.data.documentModel = this.documentModel;
+            // @ts-expect-error(TODO:)
             tabitem.data.readonly = this.readonly;
         });
     }
 
     protected lockedChanged() {
         this.tabBarItems.forEach(tabitem => {
+            // @ts-expect-error(TODO:)
             tabitem.data.readonly = this.readonly;
         });
         this.cdr.markForCheck();

@@ -41,7 +41,9 @@ export class DataTypeService {
 
     private getSubtypes(fqn: FullQualifiedName, rtc: RuntimeContext, excludeFqns: string[]): Observable<XoStructureType[]> {
         const describer: XoDescriber = {fqn, rtc};
+        // @ts-expect-error(TODO:)
         return this.apiService.getSubtypes(rtc, [describer]).get(describer).pipe(
+            // @ts-expect-error(TODO:)
             map(structureTypes => structureTypes.filter(structureType => !excludeFqns.includes(structureType.typeFqn.uniqueKey)))
         );
     }
@@ -79,7 +81,9 @@ export class DataTypeService {
             switchMap(exceptionStructureTypes => this.getDataTypes(rtc, excludeFqns).pipe(
                 map(structureTypes => structureTypes.filter(
                     structureType => !exceptionStructureTypes.find(exceptionStructureType =>
+                        // @ts-expect-error(TODO:)
                         structureType.typeRtc?.equals(exceptionStructureType.typeRtc) &&
+                        // @ts-expect-error(TODO:)
                         structureType.typeFqn?.equals(exceptionStructureType.typeFqn)
                     )
                 ))

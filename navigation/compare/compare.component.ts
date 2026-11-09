@@ -26,10 +26,9 @@ import { XoConnectionArray } from '@pmod/xo/connection.model';
 import { XoGetXmomItemResponse } from '@pmod/xo/get-xmom-item-response.model';
 import { XoWorkflow } from '@pmod/xo/workflow.model';
 import { FullQualifiedName } from '@zeta/api';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, XcI18nTranslateDirective  } from '@zeta/i18n';
 import { XcButtonComponent, XcDialogService } from '@zeta/xc';
 
-import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { DataflowComponent } from '../../document/workflow/dataflow/dataflow.component';
 import { ExceptionHandlingAreaComponent } from '../../document/workflow/exception/exception-handling-area/exception-handling-area.component';
 import { TypeLabelAreaComponent } from '../../document/workflow/type-label-area/type-label-area.component';
@@ -51,8 +50,11 @@ export class CompareComponent extends CommonNavigationComponent {
     protected i18n = inject(I18nService);
 
 
+    // @ts-expect-error(TODO:)
     workflow: XoWorkflow;
+    // @ts-expect-error(TODO:)
     dataflow: XoConnectionArray;
+    // @ts-expect-error(TODO:)
     document: DocumentModel<XoWorkflow>;
 
 

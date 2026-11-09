@@ -25,7 +25,7 @@ import { coerceBoolean, isString } from '@zeta/base';
 import { XcAutocompleteDataWrapper, XcButtonComponent, XcCheckboxComponent, XcDialogService, XcFormAutocompleteComponent, XcFormInputComponent, XcFormLabelComponent, XcFormValidatorRequiredDirective, XcOptionItemString, XcOptionItemStringOrUndefined, XcTooltipDirective } from '@zeta/xc';
 import { XcHasRightDirective } from '@zeta/xc/shared/xc-has-right.directive';
 
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { XcI18nTranslateDirective } from '@zeta/i18n';
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoChangeAbstractRequest } from '../../../xo/change-abstract-request.model';
 import { XoChangeBaseTypeRequest } from '../../../xo/change-base-type-request.model';
@@ -59,6 +59,7 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
     protected readonly dialogService = inject(XcDialogService);
     protected readonly cdr = inject(ChangeDetectorRef);
 
+    // @ts-expect-error(TODO:)
     private _isStorable: boolean;
 
     pathDataWrapper: XcAutocompleteDataWrapper;
@@ -113,6 +114,7 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
     //  Accessor queries cannot be migrated as they are too complex.
     @ViewChild('pathAutocomplete', { static: false, read: XcFormAutocompleteComponent })
     set pathAutocomplete(value: XcFormAutocompleteComponent) {
+        // @ts-expect-error(TODO:)
         this.untilDestroyed(value ? outputToObservable(value.focus) : undefined)?.pipe(filter(() => !value.disabled)).subscribe(() => this.refreshPathAutocomplete());
     }
 
@@ -121,6 +123,7 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
     //  Accessor queries cannot be migrated as they are too complex.
     @ViewChild('baseTypeAutocomplete', { static: false, read: XcFormAutocompleteComponent })
     set baseTypeAutocomplete(value: XcFormAutocompleteComponent) {
+        // @ts-expect-error(TODO:)
         this.untilDestroyed(value ? outputToObservable(value.focus) : undefined)?.pipe(filter(() => !value.disabled)).subscribe(() => this.refreshBaseTypeAutocomplete());
     }
 
@@ -139,6 +142,7 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
     set typeInfoArea(value: XoDataTypeTypeLabelArea & XoServiceGroupTypeLabelArea) {
         this.setModel(value);
         if (value) {
+            // @ts-expect-error(TODO:)
             this.baseTypeDataWrapper.preset(v => XcOptionItemStringOrUndefined(v));
             this.updateStorableFlag();
         }
@@ -242,7 +246,9 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
             ).afterDismiss().subscribe(result => {
                 if (result) {
                     this._isStorable = false;
+                    // @ts-expect-error(TODO:)
                     this.setBaseType(undefined, true);
+                    // @ts-expect-error(TODO:)
                     this.baseTypeDataWrapper.preset(v => XcOptionItemStringOrUndefined(v));
                 } else {
                     this.preventStorableCheckboxChange(true);
@@ -292,6 +298,7 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
                 // check, if base type is a subtype of storable
                 const rtc = this.typeDocument.item.toRtc();
                 this.dataTypeService.getStorableTypes(rtc).subscribe(structureTypes => {
+                    // @ts-expect-error(TODO:)
                     this._isStorable = structureTypes.some(structureType => structureType.typeFqn.uniqueKey === this.typeInfoArea.baseType);
                     this.cdr.detectChanges();
                 });
@@ -321,7 +328,9 @@ export class TypeInfoAreaComponent extends ModellingObjectComponent implements O
             if (this.isDataTypeDocument) {
                 observable = this.dataTypeService.getDataTypesWithoutExceptionTypes(rtc, [fqn, DataTypeService.ANYTYPE]);
             }
+            // @ts-expect-error(TODO:)
             observable?.subscribe(structureTypes =>
+                // @ts-expect-error(TODO:)
                 this.baseTypeDataWrapper.values = structureTypes.map(type => XcOptionItemString(type.typeFqn.uniqueKey))
             );
         }

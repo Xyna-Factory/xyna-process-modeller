@@ -22,7 +22,7 @@ import { ChangeDetectionStrategy, Component, inject, OnDestroy } from '@angular/
 import { ErrorItem, XoIssueArray } from '@pmod/xo/issue.model';
 import { XoWarningArray } from '@pmod/xo/warning.model';
 
-import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
+import { XcI18nTranslateDirective } from '@zeta/i18n';
 import { DocumentService } from '../../document/document.service';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
 import { ErrorItemComponent } from '../shared/error-item/error-item.component';
@@ -46,7 +46,9 @@ export class ErrorsComponent extends CommonNavigationComponent implements OnDest
     errors: ErrorItem[] = [];   // merged issues and warnings
 
     private readonly documentChangeSubscription: Subscription;
+    // @ts-expect-error(TODO:)
     private issuesChangeSubscription: Subscription;
+    // @ts-expect-error(TODO:)
     private warningsChangeSubscription: Subscription;
 
 

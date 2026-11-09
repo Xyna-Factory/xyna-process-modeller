@@ -42,6 +42,7 @@ export interface CreateAssignmentEvent {
 export class VariableTreeNodeComponent implements AfterViewInit, TreeNodeObserver {
     protected readonly cdr = inject(ChangeDetectorRef);
 
+    // @ts-expect-error(TODO:)
     private _node: SkeletonTreeNode;
     private _highlightMarks = false;
 
@@ -69,6 +70,7 @@ export class VariableTreeNodeComponent implements AfterViewInit, TreeNodeObserve
 
     @Input()
     set highlightMarks(value: boolean) {
+        // @ts-expect-error(TODO:)
         this._highlightMarks = coerceBoolean(value);
     }
 
@@ -85,6 +87,7 @@ export class VariableTreeNodeComponent implements AfterViewInit, TreeNodeObserve
 
 
     ngAfterViewInit(): void {
+        // @ts-expect-error(TODO:)
         this.node.graphicalRepresentation = this.nodeElement().nativeElement;
     }
 
@@ -113,6 +116,6 @@ export class VariableTreeNodeComponent implements AfterViewInit, TreeNodeObserve
     canDrop = (draggable: Draggable, hoverEvent?: ModDragEvent, dragEvent?: ModDnDEvent): boolean => draggable instanceof SkeletonTreeNode;
 
     dropped(event: ModDropEvent<Draggable>) {
-        this.assignedVariable.emit(<CreateAssignmentEvent>{ destination: this.node, source: event.item as SkeletonTreeNode });
+        this.assignedVariable.emit({ destination: this.node, source: event.item as SkeletonTreeNode });
     }
 }

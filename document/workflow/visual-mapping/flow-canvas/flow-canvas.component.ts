@@ -47,8 +47,11 @@ export class Flow {
     private readonly _flowDefinition: FlowDefinition;
     private outlet = new Vector2();
     private inlet = new Vector2();
+    // @ts-expect-error(TODO:)
     private path: SVGElement;
+    // @ts-expect-error(TODO:)
     private description: SVGElement;
+    // @ts-expect-error(TODO:)
     private endCircle: SVGElement;
 
     private _offset: Vector2;
@@ -195,18 +198,24 @@ export class FlowCanvasComponent implements AfterViewInit, OnDestroy {
 
 
     private readonly element = viewChild<ElementRef>('SVG');
+    // @ts-expect-error(TODO:)
     private view: SVGElement;
 
+    // @ts-expect-error(TODO:)
     private _flowDefinitions: FlowDefinition[];
     private _flows: Flow[] = [];
 
+    // @ts-expect-error(TODO:)
     private frameRequestCallback: FrameRequestCallback;
+    // @ts-expect-error(TODO:)
     private animationFrameHandle: number;
 
+    // @ts-expect-error(TODO:)
     private resizeObserver: ResizeObserver;
 
 
     ngAfterViewInit() {
+        // @ts-expect-error(TODO:)
         this.view = createSVGGroup(this.element().nativeElement);
         this.initFlow();
     }
@@ -233,6 +242,7 @@ export class FlowCanvasComponent implements AfterViewInit, OnDestroy {
 
     protected initFlow() {
         const parentOffset = (): Vector2 => {
+            // @ts-expect-error(TODO:)
             const parentOffsetRect = this.element().nativeElement.getBoundingClientRect();
             const offset = new Vector2(-parentOffsetRect.left, -parentOffsetRect.top);
             return offset;
@@ -256,6 +266,7 @@ export class FlowCanvasComponent implements AfterViewInit, OnDestroy {
                 const o = parentOffset();
                 this._flows.forEach(flow => flow.offset = o);
             });
+            // @ts-expect-error(TODO:)
             this.resizeObserver.observe(this.element().nativeElement);
         }
     }

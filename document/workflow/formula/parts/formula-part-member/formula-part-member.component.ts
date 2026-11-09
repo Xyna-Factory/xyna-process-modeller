@@ -58,6 +58,7 @@ export class FormulaPartMemberComponent extends FormulaEditablePartComponent imp
                 if (options.length > 0) {
                     this.memberDataWrapper.values = options;
                 } else {
+                    // @ts-expect-error(TODO:)
                     this.finishEditing(null);
                 }
             }
@@ -74,6 +75,7 @@ export class FormulaPartMemberComponent extends FormulaEditablePartComponent imp
 
 
     opened() {
+        // @ts-expect-error(TODO:)
         this._optionElements = this._memberInput()?.trigger()?.autocomplete?.options?.map(option => option._getHostElement());
     }
 
@@ -86,6 +88,7 @@ export class FormulaPartMemberComponent extends FormulaEditablePartComponent imp
          * As soon as the user clicks on a view element, the workflow-view gets updated, too.
          * Seems as if the ac-component prevents an update of the view for one cycle
          */
+        // @ts-expect-error(TODO:)
         this.finishEditing(null);
     }
 

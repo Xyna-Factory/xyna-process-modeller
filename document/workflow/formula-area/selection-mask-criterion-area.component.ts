@@ -21,7 +21,7 @@ import { XoInsertSelectionMaskRequest } from '@pmod/xo/insert-selection-mask-req
 
 import { XoInsertRequest } from '../../../xo/insert-request.model';
 import { FormulaAreaComponent } from './formula-area.component';
-import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { FormulaComponent } from '../formula/formula.component';
 import { XcFormLabelComponent, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 

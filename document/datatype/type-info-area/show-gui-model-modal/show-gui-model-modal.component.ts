@@ -16,11 +16,10 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { XcButtonComponent, XcCheckboxComponent, XcDialogWrapperComponent, XcFormDirective, XcFormInputComponent, XcFormTextareaComponent, XcMasterDetailComponent, XcPanelComponent } from '@zeta/xc';
+import { XcButtonComponent, XcCheckboxComponent, XcDialogWrapperComponent, XcFormDirective, XcFormInputComponent, XcFormTextareaComponent, XcMasterDetailComponent, XcPanelComponent, XcDialogComponent  } from '@zeta/xc';
 
-import { XcDialogComponent } from '@zeta/xc';
 
-import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../../zeta/i18n';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XoDataType } from '../../../../xo/data-type.model';
 import { DataTypeConvertable, DataTypeConverterService, DataTypeProperty } from './data-type-converter.service';
 import { LeftRightComponent } from './left-right-component/left-right.component';
@@ -44,7 +43,9 @@ export class ShowGuiModelModalComponent extends XcDialogComponent<void, ShowGuiM
     private readonly i18n = inject(I18nService);
 
 
+    // @ts-expect-error(TODO:)
     modelStr: string;
+    // @ts-expect-error(TODO:)
     convertable: DataTypeConvertable;
     copyAble = false;
 
@@ -103,7 +104,7 @@ export class ShowGuiModelModalComponent extends XcDialogComponent<void, ShowGuiM
             res = document.execCommand('Copy');
             document.body.removeChild(input);
         } else {
-             
+            // eslint-disable-next-line no-alert
             alert('Your browser does not allow to copy text to your clipboard');
         }
         return res;

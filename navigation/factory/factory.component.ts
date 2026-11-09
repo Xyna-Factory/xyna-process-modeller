@@ -22,7 +22,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, inject, viewChild } 
 import { MessageBusService } from '@yggdrasil/events';
 import { XcFormAutocompleteComponent } from '@zeta/xc';
 
-import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XmomPath } from '../../api/xmom.service';
 import { DocumentService } from '../../document/document.service';
 import { CommonNavigationComponent } from '../common-navigation-class/common-navigation-component';
@@ -66,6 +66,7 @@ export class FactoryComponent extends CommonNavigationComponent implements After
     xmomPaths = new Array<XmomPath>();
     flatPaths = new Set<string>();
 
+    // @ts-expect-error(TODO:)
     selectedPath: string;
 
     selectedPaths = new Set<string>();
@@ -88,6 +89,7 @@ export class FactoryComponent extends CommonNavigationComponent implements After
         ).pipe(
             debounceTime(500),
             switchMap(() =>
+                // @ts-expect-error(TODO:)
                 this.documentService.xmomService.listXmomPaths(this.factoryService.runtimeContext, undefined, 'compact')
             ),
             tap(xmomPaths => {
@@ -132,6 +134,7 @@ export class FactoryComponent extends CommonNavigationComponent implements After
     }
 
 
+    // @ts-expect-error(TODO:)
     findXmomPath(xmomPaths: XmomPath[], path: string): XmomPath {
         for (const xmomPath of xmomPaths) {
             if (xmomPath.path === path) {
@@ -168,6 +171,7 @@ export class FactoryComponent extends CommonNavigationComponent implements After
         const newPath = this.selectedPath !== path;
         if (forceReselect || newPath) {
             this.selectedPath = path;
+            // @ts-expect-error(TODO:)
             this.xmomList().listMultiple(paths, !newPath);
         }
     }
@@ -183,7 +187,7 @@ export class FactoryComponent extends CommonNavigationComponent implements After
         } else {
             this.selectedPaths.delete(state.path);
         }
-        
+
         if (state.expanded) {
             this.expandedPaths.add(state.path);
         } else {

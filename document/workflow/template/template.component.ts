@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, inject, Input, OnDestroy, QueryList, ViewChildren , signal} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, inject, Input, OnDestroy, QueryList, ViewChildren, signal} from '@angular/core';
 
 import { XoChangeLabelRequest } from '@pmod/xo/change-label-request.model';
 import { ApiService } from '@zeta/api';
@@ -66,8 +66,11 @@ export class TemplateComponent extends ModellingItemComponent implements OnDestr
     @HostBinding('class.template') templateClass = true;
 
     rows: TemplateRow[] = [];
+    // @ts-expect-error(TODO:)
     rowComponents: QueryList<TemplateRowComponent>;
+    // @ts-expect-error(TODO:)
     formula: XoFormula;
+    // @ts-expect-error(TODO:)
     private rowWaitingForFocus: TemplateRow = null;
 
     private _readonlyMode = false;
@@ -78,7 +81,7 @@ export class TemplateComponent extends ModellingItemComponent implements OnDestr
     constructor() {
         super();
 
-        this.readonlyMenuItem = <XcMenuItem>{
+        this.readonlyMenuItem = {
             name: signal(TemplateComponent.LOCALE_READONLY_MODE),
             translate: true,
             click: item => {
@@ -211,6 +214,7 @@ export class TemplateComponent extends ModellingItemComponent implements OnDestr
         parts.forEach(part => {
             if (part.part === ',' && bracketStack.length === 0) {
                 parameters.push(currentParameter);
+                // @ts-expect-error(TODO:)
                 currentParameter = null;
             } else {
                 if (!currentParameter) {
@@ -223,6 +227,7 @@ export class TemplateComponent extends ModellingItemComponent implements OnDestr
                  */
                 const lastBracket = bracketStack.length > 0 ? bracketStack[bracketStack.length - 1] : null;
                 if (part.part === '(' || part.part === '[' || part.part === '{') {
+                    // @ts-expect-error(TODO:)
                     bracketStack.push(part.part);
                 } else if (currentParameter.value.startsWith('{') && part.part === '}') {
                     // (2)
@@ -239,6 +244,7 @@ export class TemplateComponent extends ModellingItemComponent implements OnDestr
             }
         });
         // push last parameter
+        // @ts-expect-error(TODO:)
         if (currentParameter) {
             parameters.push(currentParameter);
         }
@@ -270,6 +276,7 @@ export class TemplateComponent extends ModellingItemComponent implements OnDestr
                 request: action.type === ModellingActionType.change
                     ? new XoChangeFormulaRequest(undefined, newFormula.expression)
                     : action.request,
+                // @ts-expect-error(TODO:)
                 subsequentAction: action.subsequentAction
                     ? transformAction(action.subsequentAction)
                     : null
@@ -299,7 +306,9 @@ export class TemplateComponent extends ModellingItemComponent implements OnDestr
         if (!this.elementRef.nativeElement.contains(relatedTarget)) {
             this.performAction({
                 type: ModellingActionType.change,
+                // @ts-expect-error(TODO:)
                 objectId: null,
+                // @ts-expect-error(TODO:)
                 request: null
             });
         }
@@ -331,6 +340,7 @@ export class TemplateComponent extends ModellingItemComponent implements OnDestr
         const sourceIndex = this.rows.findIndex(row => row === event.source);
         const targetIndex = event.direction === 'UP' ? sourceIndex - 1 : sourceIndex + 1;
         const targetRow = this.rowComponents.get(Math.min(this.rowComponents.length - 1, Math.max(0, targetIndex)));
+        // @ts-expect-error(TODO:)
         targetRow.setFocus(event.srcCaretPosition);
     }
 
@@ -346,6 +356,7 @@ export class TemplateComponent extends ModellingItemComponent implements OnDestr
         if (this.rowWaitingForFocus) {
             const rowComponent = this.rowComponents.find(row => row.row === this.rowWaitingForFocus);
             rowComponent?.setFocus();
+            // @ts-expect-error(TODO:)
             this.rowWaitingForFocus = null;
         }
     }

@@ -66,7 +66,7 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
         closable: false,
         component: MethodBaseTabComponent,
         name: signal('Base'),
-        data: <DocumentTabData<MethodTabData>>{
+        data: {
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
             readonly: this.readonly,
@@ -78,7 +78,7 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
         closable: false,
         component: MetaTabComponent,
         name: signal('Meta'),
-        data: <DocumentTabData<MetaTabData>>{
+        data: {
             documentModel: this.documentModel,
             performAction: this.performAction.bind(this),
             readonly: this.readonly,
@@ -122,9 +122,13 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
 
     afterDocumentModelSet() {
         super.afterDocumentModelSet();
-        if (!this.tabBarItems) return;
+        if (!this.tabBarItems) {
+            return;
+        }
         this.tabBarItems.forEach(tabitem => {
+            // @ts-expect-error(TODO:)
             tabitem.data.documentModel = this.documentModel;
+            // @ts-expect-error(TODO:)
             tabitem.data.readonly = this.readonly;
         });
     }
@@ -132,6 +136,7 @@ export class MethodDetailsComponent extends ModellingItemComponent implements On
 
     protected lockedChanged() {
         this.tabBarItems.forEach(tabitem => {
+            // @ts-expect-error(TODO:)
             tabitem.data.readonly = this.readonly;
         });
         this.cdr.markForCheck();

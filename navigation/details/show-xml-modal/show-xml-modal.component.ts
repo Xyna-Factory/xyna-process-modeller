@@ -19,7 +19,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormTextareaComponent } from '@zeta/xc';
 
-import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { showXMLModal_translations_de_DE } from './locale/show-xml-modal-translations.de-DE';
 import { showXMLModal_translations_en_US } from './locale/show-xml-modal-translations.en-US';
 
@@ -52,6 +52,7 @@ export class ShowXmlModalComponent extends XcDialogComponent<void, ShowXmlModalD
             case 'current':  return this.injectedData.current;
             case 'saved':    return this.injectedData.saved;
             case 'deployed': return this.injectedData.deployed;
+            // @ts-expect-error(TODO:)
             default: return undefined;
         }
     }

@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { NgFor } from '@angular/common';
-import { ChangeDetectionStrategy, Component, forwardRef, HostBinding, Input , signal} from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, HostBinding, Input, signal} from '@angular/core';
 
 import { ModellingActionType } from '../../../api/xmom.service';
 import { XoForeach } from '../../../xo/foreach.model';
@@ -50,7 +50,7 @@ export class ForeachComponent extends ModellingItemComponent {
                  translate: true,
                  visible: _ => !this.foreach.parallelExecution,
                  click: _ => this.toggleExecutionType()
-             },
+            },
              <XcMenuItem>{
                  name: signal('pmod.workflow.foreach.sequential-execution'),
                  translate: true,

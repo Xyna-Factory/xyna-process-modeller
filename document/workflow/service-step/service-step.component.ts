@@ -66,12 +66,12 @@ import { TemplateComponent } from '../template/template.component';
     forwardRef(() => TemplateComponent),
     forwardRef(() => ThrowComponent),
     forwardRef(() => TypeChoiceComponent)
-]
+    ]
 })
 export class ServiceStepComponent extends SelectableModellingObjectComponent implements AfterViewChecked, OnDestroy {
-    
+
     protected readonly cdr = inject(ChangeDetectorRef);
-    
+
     private _parentDirection: 'row' | 'column' = 'column';
     private readonly subscriptions: Subscription[] = [];
 
@@ -211,6 +211,7 @@ export class ServiceStepComponent extends SelectableModellingObjectComponent imp
     isDefaultCollapsed(): boolean {
         // A service step is just a generic container and shall not define a collapsed state.
         // The state is thus defined by the contained specific component
+        // @ts-expect-error(TODO:)
         return undefined;
     }
 }

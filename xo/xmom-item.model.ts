@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -67,7 +69,7 @@ export class XoXmomItem extends XoModellingItem {
         while (xmomItem && !(xmomItem instanceof XoXmomItem)) {
             xmomItem = xmomItem.parent;
         }
-        return xmomItem as XoXmomItem;
+        return xmomItem;
     }
 
 

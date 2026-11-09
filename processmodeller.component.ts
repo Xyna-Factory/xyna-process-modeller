@@ -19,7 +19,7 @@ import { ReplaySubject, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Injector, OnDestroy, OnInit, ViewChild, viewChild , signal} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Injector, OnDestroy, OnInit, ViewChild, viewChild, signal} from '@angular/core';
 import { ApiService, FullQualifiedName, RuntimeContext, RuntimeContextSelectionSettings } from '@zeta/api';
 import { KeyboardEventType, KeyDistributionService, OutsideListenerService } from '@zeta/base';
 import { I18nService, LocaleService, XcI18nContextDirective } from '@zeta/i18n';
@@ -70,14 +70,16 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
     private readonly errorService = inject(ErrorService);
 
 
+    // @ts-expect-error(TODO:)
     private runtimeContextChangeSubscription: Subscription;
 
     readonly toolBar = viewChild(ToolbarComponent);
 
     private urlProcessed = false;
 
+    // @ts-expect-error(TODO:)
     private _tabBar: XcTabBarComponent;
-    private _tabBarInitialized = new ReplaySubject<XcTabBarComponent>(1);
+    private readonly _tabBarInitialized = new ReplaySubject<XcTabBarComponent>(1);
 
     private openedDefaultWorkflow = false;
 
@@ -86,6 +88,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
     }
 
     get item(): DocumentItem {
+        // @ts-expect-error(TODO:)
         return this.document ? this.document.item : null;
     }
 
@@ -103,15 +106,15 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
     constructor() {
         super();
         const configService = inject(ConfigService);
-        if (configService.config['modeller']?.runtimeContext) {
-            if (configService.config['modeller'].runtimeContext.application) {
+        if (configService.config.modeller?.runtimeContext) {
+            if (configService.config.modeller.runtimeContext.application) {
                 PMOD_RTC = RuntimeContext.fromApplicationVersion(
-                    configService.config['modeller'].runtimeContext.application,
-                    configService.config['modeller'].runtimeContext.version
+                    configService.config.modeller.runtimeContext.application,
+                    configService.config.modeller.runtimeContext.version
                 );
-            } else if (configService.config['modeller'].runtimeContext.workspace) {
+            } else if (configService.config.modeller.runtimeContext.workspace) {
                 PMOD_RTC = RuntimeContext.fromWorkspace(
-                    configService.config['modeller'].runtimeContext.workspace
+                    configService.config.modeller.runtimeContext.workspace
                 );
             }
         }
@@ -155,6 +158,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
 
         this.documentService.selectionChange.subscribe(document => {
             if (this.tabBar) {
+                // @ts-expect-error(TODO:)
                 this.tabBar.selection = this.tabBar.items.find(item => item.data === document);
                 this.transformUrl();
             }
@@ -286,6 +290,7 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
         // open document(s) from URL
         this.urlProcessed = true;
         const describers = this.queryParamService.getParamsStartWith('tab')
+            // @ts-expect-error(TODO:)
             .map(tab => JSON.parse(decodeURI(tab.value)) as { rtc: string; fqn: string; type: XmomObjectType })
             .map(tab => ({
                 rtc: XoRuntimeContext.fromQueryParam(tab.rtc).runtimeContext(),
@@ -296,8 +301,9 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
         // open runtime context selection dialog, if no runtime context is set (preselect RTC from first tab in URL parameter)
         if (!this.apiService.runtimeContext) {
             this.dialogService.custom(
+                // @ts-expect-error(TODO:)
                 RuntimeContextSelectionComponent,
-                <RuntimeContextSelectionSettings>{
+                {
                     setRuntimeContext: true,
                     showWorkspaces: true,
                     showApplications: false,
@@ -389,13 +395,18 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
             } break;
         }
 
+        // @ts-expect-error(TODO:)
         document.tabBarItem = item;
+        // @ts-expect-error(TODO:)
         return item;
     }
 
 
     changeTab(event: XcTabBarItem<DocumentModel>) {
-        if (!event) return;
+        if (!event) {
+            return;
+        }
+        // @ts-expect-error(TODO:)
         this.documentService.selectedDocument = event.data;
     }
 
@@ -405,14 +416,16 @@ export class ProcessmodellerComponent extends RouteComponent implements OnInit, 
      * Any existing query params are being destroyed in the process.
      */
     private transformUrl() {
-        if (!this.urlProcessed) return;
+        if (!this.urlProcessed) {
+            return;
+        }
 
         this.queryParamService.removeParamsStartWith('tab');
 
         let i = 1;
         const tabs: XcTabBarItem[] = [];
         if (this.tabBar?.selection) {
-            tabs.push(this.tabBar.selection)
+            tabs.push(this.tabBar.selection);
         }
 
         tabs.forEach(item => {
