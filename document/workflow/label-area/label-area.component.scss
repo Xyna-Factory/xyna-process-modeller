@@ -89,6 +89,10 @@
 ::ng-deep .erroneous-runtime-info {
     label-area {
         background-color: $color-warn;
+
+        &.locked {
+            background-color: $color-warn;
+        }
     }
     service-step:not(.erroneous-runtime-info) label-area {
         background-color: $step-background-color;
