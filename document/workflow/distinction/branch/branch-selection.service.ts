@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 
 import { SelectionService } from '../../../selection.service';
 
@@ -23,8 +23,6 @@ import { SelectionService } from '../../../selection.service';
 /**
  * Service to solely track the selection of branches
  */
-@Injectable({
-    providedIn: 'root'
-})
+@Service()
 export class BranchSelectionService extends SelectionService {
 }

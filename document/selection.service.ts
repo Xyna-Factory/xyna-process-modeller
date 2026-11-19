@@ -15,14 +15,14 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { SelectableModellingObjectComponent } from './workflow/shared/selectable-modelling-object.component';
 
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class SelectionService {
 
     private _suppressNext = false;

@@ -15,16 +15,14 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 
 import { XoReferableObject } from '../xo/referable-object.model';
 import { DocumentItem } from './model/document.model';
 import { ModellingObjectComponent } from './workflow/shared/modelling-object.component';
 
 
-@Injectable({
-    providedIn: 'root'
-})
+@Service()
 export class ComponentMappingService {
     /**
      * (DocumentItem, string) -> ModellingObject

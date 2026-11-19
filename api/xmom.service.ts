@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { inject, Service } from '@angular/core';
 
 import { TriggeredAction } from '@pmod/document/workflow/shared/modelling-object.component';
 import { FilterConditionData } from '@pmod/navigation/search/search.component';
@@ -130,9 +130,7 @@ interface FactoryItem {
 
 
 
-@Injectable({
-    providedIn: 'root'
-})
+@Service()
 export class XmomService {
     private readonly http = inject(HttpClient);
 
