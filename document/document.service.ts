@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Injectable, OnDestroy, inject } from '@angular/core';
+import { OnDestroy, inject, Service } from '@angular/core';
 
 import { XoModellingItem } from '@pmod/xo/modelling-item.model';
 import { FQNRTC, MessageBusService, XMOMLocated, XoDocumentChange, XoDocumentLock, XoDocumentUnlock } from '@yggdrasil/events';
@@ -74,7 +74,7 @@ export interface CloseResult {
 }
 
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class DocumentService implements OnDestroy {
     private readonly i18n = inject(I18nService);
     private readonly apiService = inject(ApiService);

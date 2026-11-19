@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Injectable, inject } from '@angular/core';
+import { inject, Service } from '@angular/core';
 
 import { XoModellingItem } from '@pmod/xo/modelling-item.model';
 import { FullQualifiedName, Xo, XoJson } from '@zeta/api';
@@ -172,9 +172,7 @@ Algorithm for nested drop areas:
     enter: inside ? inc count : add onto stack at correct position
     leave: dec count; count == 0 => remove from stack
  */
-@Injectable({
-    providedIn: 'root'
-})
+@Service()
 export class ModDragAndDropService {
 
     // @ts-expect-error(TODO:)

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Injectable, inject } from '@angular/core';
+import { inject, Service } from '@angular/core';
 
 import { WorkflowDetailSettingsService } from '@pmod/workflow-detail-settings.service';
 
@@ -33,7 +33,7 @@ export enum MappingMode {
  * - one flag to display the FQNs throughout the whole Workflow
  * - mappingMode states for mappings
  */
-@Injectable({ providedIn: 'root' })
+@Service()
 export class WorkflowDetailLevelService {
     private readonly workflowSettings = inject(WorkflowDetailSettingsService);
 
